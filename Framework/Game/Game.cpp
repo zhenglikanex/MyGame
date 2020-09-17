@@ -11,7 +11,7 @@ Game::Game(Locator&& locator,GameMode mode)
 	registry_.set<Locator>(std::forward<Locator>(locator));
 	registry_.set<GameState>();
 	registry_.set<CommondGroup>();
-
+	
 	systems_.emplace_back(std::make_unique<SyncSystem>(registry_));
 }
 
@@ -30,6 +30,8 @@ bool Game::Initialize()
 		}
 	}
 
+	SaveSnapshot();
+
 	return true;
 }
 
@@ -37,37 +39,34 @@ void Game::Update(float dt)
 {
 	if (registry_.ctx<GameMode>() == GameMode::kClinet)
 	{
-		CheckPredictFrame();
+		UpdateClinet(dt);
 	}
+	else
+	{
+		UpdateServer(dt);
+	}
+}
+
+void Game::UpdateClinet(float dt)
+{
+	uint32_t mill_dt = dt * 1000;
 
 	auto& game_state = registry_.ctx<GameState>();
-
-	uint32_t mill_dt = dt * 1000;
 	game_state.run_time += mill_dt;
-	
+
 	while (game_state.run_time > game_state.run_frame * kFrameRate + kFrameRate)
 	{
 		bool predict = false;
 
-		if (registry_.ctx<GameMode>() == GameMode::kServer)
-		{
-			//生成没有收到当前帧的玩家commond
-			SetupCommonds(game_state.run_frame);
-		}
-
 		registry_.set<CommondGroup>(GetCommondGroup(game_state.run_frame));
 
-		if (registry_.ctx<GameMode>() == GameMode::kClinet)
+		if (registry_.ctx<CommondGroup>().value.size() < registry_.view<Player>().size() && game_state.run_frame - game_state.real_frame <= kMaxPredictFrame)
 		{
-			if (registry_.ctx<CommondGroup>().value.size() < registry_.view<Player>().size() && game_state.run_frame - game_state.real_frame < kMaxPredictFrame)
-			{
-				auto commond_group = PredictCommondGroup(game_state.run_frame);
-				registry_.set<CommondGroup>(commond_group);
-				predict_commond_groups_.emplace(game_state.run_frame, std::move(commond_group));
-				predict = true;
-			}
+			predict = true;
+			registry_.set<CommondGroup>(Predict(game_state.run_frame));
+			SaveSnapshot();
 		}
-		
+
 		if (registry_.ctx<CommondGroup>().value.size() == registry_.view<Player>().size())
 		{
 			for (auto& system : systems_)
@@ -84,12 +83,32 @@ void Game::Update(float dt)
 				++registry_.ctx<GameState>().real_frame;
 				++registry_.ctx<GameState>().run_frame;
 			}
+		}
+	}
+}
 
-			if (registry_.ctx<GameMode>() == GameMode::kClinet && snapshots_.size() > kMaxPredictFrame)
+void Game::UpdateServer(float dt)
+{
+	uint32_t mill_dt = dt * 1000;
+
+	auto& game_state = registry_.ctx<GameState>();
+	game_state.run_time += mill_dt;
+
+	while (game_state.run_time > game_state.run_frame * kFrameRate + kFrameRate)
+	{
+		//生成没有收到当前帧的玩家commond
+		SetupCommonds(game_state.run_frame);
+		registry_.set<CommondGroup>(GetCommondGroup(game_state.run_frame));
+		if (registry_.ctx<CommondGroup>().value.size() == registry_.view<Player>().size())
+		{
+			for (auto& system : systems_)
 			{
-				snapshots_.erase(snapshots_.begin());
+				system->Update(fixed16(0.33));
 			}
-			
+
+			++registry_.ctx<GameState>().real_frame;
+			++registry_.ctx<GameState>().run_frame;
+
 			SaveSnapshot();
 		}
 	}
@@ -116,6 +135,11 @@ void Game::InputCommond(uint32_t id,Commond&& commond)
 		std::vector<Commond> commonds;
 		commonds.emplace_back(std::move(commond));
 		commonds_map_.emplace(id, commonds);
+	}
+
+	if (registry_.ctx<GameMode>() == GameMode::kClinet)
+	{
+		CheckPredict();
 	}
 }
 
@@ -160,14 +184,7 @@ std::vector<CommondGroup> Game::GetAllCommondGroups()
 	return commond_groups;
 }
 
-CommondGroup Game::PredictCommondGroup(uint32_t frame)
-{
-	CommondGroup commond_group = GetCommondGroup(frame - 1);
-	//todo: 填充自己的上一帧的输入
-	return commond_group;
-}
-
-void Game::CheckPredictFrame()
+void Game::CheckPredict()
 {
 	auto game_state = registry_.ctx<GameState>();
 	for (uint32_t frame = game_state.real_frame; frame < game_state.run_frame; ++frame)
@@ -183,13 +200,14 @@ void Game::CheckPredictFrame()
 		{
 			predict_commond_groups_.erase(game_state.real_frame);
 			snapshots_.erase(game_state.real_frame);
-			++game_state.real_frame;
+			++registry_.ctx<GameState>().real_frame;
 		}
 		else
 		{
-			auto& snapshot = snapshots_.find(frame);
+			auto pre_frame = frame - 1;
+			auto& snapshot = snapshots_.find(pre_frame);
 			//registry_.reset(snapshot);	// todo恢复快照
-			game_state.run_frame = frame;
+			registry_.ctx<GameState>().real_frame = pre_frame;
 
 			// 清除预测的数据
 			predict_commond_groups_.clear();
@@ -201,7 +219,23 @@ void Game::CheckPredictFrame()
 	return;
 }
 
+
+CommondGroup Game::PredictCommondGroup(uint32_t frame)
+{
+	CommondGroup commond_group = GetCommondGroup(frame - 1);
+	//todo: 填充自己的上一帧的输入
+	return commond_group;
+}
+
+CommondGroup Game::Predict(uint32_t frame)
+{
+	auto commond_group = PredictCommondGroup(frame);
+	predict_commond_groups_.emplace(frame,commond_group);
+	return commond_group;
+}
+
 void Game::SaveSnapshot()
 {
-
+	Snapshot snapshot;
+	snapshots_.emplace(registry_.ctx<GameState>().run_frame,std::move(snapshot));
 }

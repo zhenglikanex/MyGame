@@ -29,14 +29,18 @@ public:
 	void Update(float dt);
 	void Finalize();
 	
+	void UpdateClinet(float dt);
+	void UpdateServer(float dt);
+
 	// 外部调用
 	void InputCommond(uint32_t id, Commond&& commond);
 	void SetupCommonds(uint32_t frame);
 	CommondGroup GetCommondGroup(uint32_t frame);
 	std::vector<CommondGroup> GetAllCommondGroups();
 
+	void CheckPredict();
+	CommondGroup Predict(uint32_t frame);
 	CommondGroup PredictCommondGroup(uint32_t frame);
-	void CheckPredictFrame();
 
 	void SaveSnapshot();
 private:
