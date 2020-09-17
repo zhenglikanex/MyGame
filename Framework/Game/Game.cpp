@@ -54,7 +54,9 @@ void Game::Update(float dt)
 			//生成没有收到当前帧的玩家commond
 			SetupCommonds(game_state.run_frame);
 		}
+
 		registry_.set<CommondGroup>(GetCommondGroup(game_state.run_frame));
+
 		if (registry_.ctx<GameMode>() == GameMode::kClinet)
 		{
 			if (registry_.ctx<CommondGroup>().value.size() < registry_.view<Player>().size() && game_state.run_frame - game_state.real_frame < kMaxPredictFrame)
