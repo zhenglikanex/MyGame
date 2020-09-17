@@ -7,7 +7,7 @@
 
 struct CommondGroup
 {
-	std::unordered_map<uint32_t, std::shared_ptr<Commond>> commonds;
+	std::unordered_map<uint32_t, Commond> value;
 
 	bool operator==(const CommondGroup& commonds)
 	{

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <memory>
 
 #include "Framework/Game/Service.hpp"
 
@@ -9,6 +10,8 @@
 class Locator
 {
 public:
+	using TypeGenerate = entt::family<Locator>;
+
 	Locator() = default;
 	~Locator() = default;
 	
@@ -18,27 +21,27 @@ public:
 	Locator& operator=(Locator&&) = default;
 
 	template<class Type>
-	void Set(std::unique_ptr<Type>&& service)
+	void Set(std::shared_ptr<Type> service)
 	{
-		auto id = entt::family<Type>::type;
-		services_.emplace(id, std::move(service));
+		auto id = TypeGenerate::type<Type>;
+		services_.emplace(id,service);
 	}
 
 	template<class Type>
 	void Reset()
 	{
-		auto id = entt::family<Type>::type;
+		auto id = TypeGenerate::type<Type>;
 		services_.erase(id);
 	}
 
 	template<class Type>
-	std::unique_ptr<Type>& Get()
+	std::shared_ptr<Type> Get()
 	{
-		auto id = entt::family<Type>::type;
+		auto id = TypeGenerate::type<Type>;
 		auto iter = services_.find(id);
 		if (iter != services_.end())
 		{
-			return std::dynamic_pointer_cast<Type>(*iter);
+			return std::dynamic_pointer_cast<Type>(iter->second);
 		}
 		return nullptr;
 	}
@@ -46,9 +49,10 @@ public:
 	template<class Type>
 	Type& Ref()
 	{
-		auto id = entt::family<Type>::type;
-		return *(services_[id]);
+		
+		auto id = TypeGenerate::type<Type>;
+		return *std::dynamic_pointer_cast<Type>(services_[id]);
 	}
 private:
-	std::unordered_map<uint32_t, std::unique_ptr<Service>> services_;
+	std::unordered_map<uint32_t, std::shared_ptr<Service>> services_;
 };

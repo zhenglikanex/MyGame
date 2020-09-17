@@ -12,7 +12,7 @@ Game::Game(Locator&& locator,GameMode mode)
 	registry_.set<GameState>();
 	registry_.set<CommondGroup>();
 
-	systems_.emplace_back(std::make_unique<SyncSystem>());
+	systems_.emplace_back(std::make_unique<SyncSystem>(registry_));
 }
 
 Game::~Game()
@@ -57,7 +57,7 @@ void Game::Update(float dt)
 		registry_.set<CommondGroup>(GetCommondGroup(game_state.run_frame));
 		if (registry_.ctx<GameMode>() == GameMode::kClinet)
 		{
-			if (registry_.ctx<CommondGroup>().commonds.size() < registry_.view<Player>().size() && game_state.run_frame - game_state.real_frame < kMaxPredictFrame)
+			if (registry_.ctx<CommondGroup>().value.size() < registry_.view<Player>().size() && game_state.run_frame - game_state.real_frame < kMaxPredictFrame)
 			{
 				auto commond_group = PredictCommondGroup(game_state.run_frame);
 				registry_.set<CommondGroup>(commond_group);
@@ -66,7 +66,7 @@ void Game::Update(float dt)
 			}
 		}
 		
-		if (registry_.ctx<CommondGroup>().commonds.size() == registry_.view<Player>().size())
+		if (registry_.ctx<CommondGroup>().value.size() == registry_.view<Player>().size())
 		{
 			for (auto& system : systems_)
 			{
@@ -141,7 +141,7 @@ CommondGroup Game::GetCommondGroup(uint32_t frame)
 	for(auto& it : commonds_map_)
 	{
 		if (it.second.size() > frame) {
-			commonds.commonds.emplace(it.first, it.second[frame]);
+			commonds.value.emplace(it.first, it.second[frame]);
 		}
 	}
 
@@ -171,7 +171,7 @@ void Game::CheckPredictFrame()
 	for (uint32_t frame = game_state.real_frame; frame < game_state.run_frame; ++frame)
 	{
 		auto commond_group = GetCommondGroup(frame);
-		if (commond_group.commonds.size() < registry_.view<Player>().size())
+		if (commond_group.value.size() < registry_.view<Player>().size())
 		{
 			return;
 		}

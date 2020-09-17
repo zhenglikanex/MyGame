@@ -8,6 +8,17 @@
 
 struct SyncSystem : public System
 {
+	SyncSystem(entt::registry& registry)
+		:System(registry)
+	{
+
+	}
+
+	virtual ~SyncSystem()
+	{
+
+	}
+
 	bool Initialize() override
 	{
 		return true;
