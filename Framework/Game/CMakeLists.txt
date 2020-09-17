@@ -1,0 +1,19 @@
+add_library(Game
+    Game.hpp
+    Game.cpp
+    GameDefin.hpp
+    System.hpp
+    Locator.hpp
+    FixedPoint.hpp
+    Service.hpp
+    ViewService.hpp
+    View.hpp
+    NetworkService.hpp
+    System/InputSystem.hpp
+    System/SyncSystem.hpp
+    Component/GameMode.hpp
+    Component/GameState.hpp
+    Component/CommondList.hpp
+    Component/Commond.hpp
+    Component/Player.hpp
+)

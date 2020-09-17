@@ -1,0 +1,10 @@
+build
+3rdparty/build
+*.lib
+bin
+# Cmake files
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+CMakeLists.txt.user
