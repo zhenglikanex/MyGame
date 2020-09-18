@@ -17,6 +17,7 @@ namespace network
 
 	void Network::Stop()
 	{
+		io_context_.stop();
 	}
 
 	void Network::AsyncAccept()
@@ -27,7 +28,7 @@ namespace network
 	void Network::AcceptHandler(const asio::error_code& ce,asio::ip::tcp::socket socket)
 	{
 		// 分配seesion的唯一id
-		uint32_t id = ++session_id_;
+		auto id = session_id_.fetch_add(1);
 
 		// 创建socket会话
 		SessionPtr session_ptr = std::make_shared<Session>(id, io_context_, std::move(socket));

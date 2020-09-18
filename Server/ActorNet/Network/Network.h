@@ -38,7 +38,7 @@ namespace network
 		Session::ReceiveHandler receive_handler_;
 		Session::CloseHandler close_handler_;
 
-		uint32_t session_id_;
+		std::atomic<uint32_t> session_id_;
 	};
 
 	typedef std::shared_ptr<Network> NetworkPtr;

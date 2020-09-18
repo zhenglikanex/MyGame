@@ -34,7 +34,7 @@ namespace actor_net
 			return actor_message;
 		}
 
-		return ActorMessagePtr();
+		return nullptr;
 	}
 
 	ActorMsgQueuePtr MessageCore::GetActorMsgQueue(actor_id id)

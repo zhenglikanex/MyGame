@@ -15,7 +15,6 @@ const uint32_t k_max_actor_count = 255;
 namespace actor_net
 {
 	ActorNet::ActorNet()
-		:quit_(false)
 	{
 
 	}
@@ -78,20 +77,6 @@ namespace actor_net
 		network_thread_ = std::thread([this]() {
 			network_ptr_->Run();
 		});
-
-		std::string str;
-		while (true)
-		{
-			getline(std::cin, str);
-			std::vector<uint8_t> data(str.size());
-			std::memcpy(data.data(),str.c_str(),data.size());
-			SendActorMessage("", "start_actor", data);
-			
-			if (quit_)
-			{
-				break;
-			}
-		}
 
 		return true;
 	}
@@ -218,7 +203,7 @@ namespace actor_net
 			return iter->second;
 		}
 
-		return IActorPtr();
+		return nullptr;
 	}
 
 	IActorPtr ActorNet::GetActorByName(const std::string& name)
@@ -226,7 +211,7 @@ namespace actor_net
 		auto id = GetActorIdByName(name);
 		if (id == k_invalid_actor_id)
 		{
-			return IActorPtr();
+			return nullptr;
 		}
 
 		return GetActorById(id);

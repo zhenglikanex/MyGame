@@ -46,8 +46,7 @@ IActorPtr ActorLoader::CreateActor(const std::string& lib_path)
 		}
 	}
 
-	// ·µ»Ø¸ö¿ÕÖ¸Õë
-	return IActorPtr();
+	return nullptr;
 }
 
 void* ActorLoader::GetActorInstance(const std::string& lib_path)

@@ -67,8 +67,6 @@ namespace actor_net
 	private:
 		uint32_t GenHandle();
 	private:
-		bool quit_;
-
 		uint32_t harbor_;
 		uint32_t handle_index_;
 
