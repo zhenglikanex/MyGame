@@ -3,7 +3,7 @@
 namespace network
 {
 	Network::Network(uint16_t port)
-		:acceptor_(io_context_,tcp::endpoint(tcp::v4(),port)), session_id_(0)
+		:acceptor_(io_context_,asio::ip::tcp::endpoint(asio::ip::tcp::v4(),port)), session_id_(0)
 	{
 		
 	}
@@ -24,7 +24,7 @@ namespace network
 		acceptor_.async_accept(std::bind(&Network::AcceptHandler, this, std::placeholders::_1, std::placeholders::_2)); //异步accept,socket建立连接后调用AcceptHandle
 	}
 
-	void Network::AcceptHandler(const boost::system::error_code& ce, tcp::socket socket)
+	void Network::AcceptHandler(const asio::error_code& ce,asio::ip::tcp::socket socket)
 	{
 		// 分配seesion的唯一id
 		uint32_t id = ++session_id_;

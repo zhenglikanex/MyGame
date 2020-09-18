@@ -1,8 +1,12 @@
 #include <thread>
 #include <chrono>
 
+#include <asio.hpp>
+
 #include "Framework/Game/Game.hpp"
 #include "Framework/Game/NetworkService.hpp"
+
+using namespace asio;
 
 class UnityNetworkService : public NetworkService
 {
@@ -14,6 +18,8 @@ class UnityNetworkService : public NetworkService
 
 int main()
 {
+	io_context context;
+
 	Locator locator;
 	locator.Set<NetworkService>(std::make_shared<UnityNetworkService>());
 	Game game(std::move(locator), GameMode::kClinet);

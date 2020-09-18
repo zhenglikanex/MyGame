@@ -3,12 +3,10 @@
 #include <memory>
 #include <array>
 #include <functional>
-#include <boost/asio.hpp>
 
 #include "Message.h"
 
-using namespace boost::asio;
-using namespace boost::asio::ip;
+#include "asio.hpp"
 
 namespace network
 {
@@ -31,10 +29,10 @@ namespace network
 		Session(const Session&) = delete;
 		Session& operator=(const Session&) = delete;
 
-		Session(session_id id,io_context& io_context,tcp::socket socket);
+		Session(session_id id,asio::io_context& io_context,asio::ip::tcp::socket socket);
 
 		uint32_t id() { return id_; }
-		tcp::socket& socket() { return socket_; }
+		asio::ip::tcp::socket& socket() { return socket_; }
 
 		void Start();
 		void Send(const Message& message, const SendCallback& callback = nullptr);
@@ -48,7 +46,7 @@ namespace network
 		void ReceiveBody();		// 读取消息体
 
 		session_id id_;				// 唯一id
-		tcp::socket socket_;
+		asio::ip::tcp::socket socket_;
 		std::array<uint8_t,Message::kHeaderSize + Message::kBodySize> recv_data_;
 		std::array<uint8_t, Message::kHeaderSize + Message::kBodySize> send_data_;
 

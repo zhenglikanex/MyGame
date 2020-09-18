@@ -3,7 +3,7 @@
 
 namespace network
 {
-	Session::Session(uint32_t id, io_context& io_context, tcp::socket socket)
+	Session::Session(uint32_t id,asio::io_context& io_context,asio::ip::tcp::socket socket)
 		:id_(id)
 		, socket_(std::move(socket))
 	{
@@ -28,8 +28,8 @@ namespace network
 		Message::Encode(send_data_.data(), message);
 
 		// 发送size字节后返回
-		boost::asio::async_write(socket_, boost::asio::buffer(send_data_, size),
-			[this, self, callback](const boost::system::error_code& ec, std::size_t /*length*/)
+		asio::async_write(socket_, asio::buffer(send_data_, size),
+			[this, self, callback](const asio::error_code& ec, std::size_t /*length*/)
 		{
 			if (callback)
 			{
@@ -43,8 +43,8 @@ namespace network
 		auto self(shared_from_this());
 
 		//读取Message::kHeaderSize个字节后返回
-		boost::asio::async_read(socket_,boost::asio::buffer(recv_data_,Message::kHeaderSize),
-			[this, self](const boost::system::error_code& ec, std::size_t /*length*/)
+		asio::async_read(socket_,asio::buffer(recv_data_,Message::kHeaderSize),
+			[this, self](const asio::error_code& ec, std::size_t /*length*/)
 		{
 			// 捕获session指针,使其在处理回调期间不会被销毁
 			if (!ec) {
@@ -66,9 +66,9 @@ namespace network
 		auto self(shared_from_this());
 
 		//读取body_size个字节后返回
-		boost::asio::async_read(socket_, boost::asio::buffer(recv_data_,message_.size()),
+		asio::async_read(socket_, asio::buffer(recv_data_,message_.size()),
 			// 这里不应该引用捕获message,message会被释放
-			[this, self](const boost::system::error_code& ec, std::size_t /*length*/)	
+			[this, self](const asio::error_code& ec, std::size_t /*length*/)	
 		{
 			// 捕获session指针,使其在处理回调期间不会被销毁
 			if (!ec) {

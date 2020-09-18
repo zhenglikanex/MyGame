@@ -16,7 +16,7 @@ namespace network
 		void Run();
 		void Stop();
 
-		io_context& io_context() { return io_context_; }
+		asio::io_context& io_context() { return io_context_; }
 
 		uint16_t port() const { return port_; }
 
@@ -27,10 +27,10 @@ namespace network
 	private:
 		// ¿ªÆôÒì²½¼àÌý
 		void AsyncAccept();
-		void AcceptHandler(const boost::system::error_code& ce, tcp::socket socket);
+		void AcceptHandler(const asio::error_code& ce, asio::ip::tcp::socket socket);
 
-		boost::asio::io_context io_context_;
-		tcp::acceptor acceptor_;
+		asio::io_context io_context_;
+		asio::ip::tcp::acceptor acceptor_;
 		uint16_t port_;
 
 		// session handler

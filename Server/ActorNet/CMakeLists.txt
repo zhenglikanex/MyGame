@@ -10,6 +10,8 @@ add_executable(ActorNet
     Common/Singleton.cpp
     Common/typedef.h
     Common/Util.h
+    Network/Network.h
+    Network/Network.cpp
     Network/ISessionHandler.h
     Network/Message.h 
     Network/Message.cpp
@@ -19,5 +21,9 @@ add_executable(ActorNet
     Network/Timer.cpp
     main.cpp
 )
+
+add_definitions(-D _WIN32_WINNT)
+add_definitions(-D ASIO_STANDALONE)
+
 
 SET_PROPERTY(TARGET ActorNet PROPERTY FOLDER "Server")
