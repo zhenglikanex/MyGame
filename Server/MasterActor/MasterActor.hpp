@@ -1,7 +1,9 @@
 #pragma once
-#include "IActor.h"
-#include "ActorMessage.h"
 
+#include "IActor.h"
+#include "ActorNet.h"
+#include "ActorMessage.h"
+#include "Network.h"
 using namespace actor_net;
 
 class MasterActor : public IActor
@@ -15,5 +17,5 @@ public:
 
 	void OnReceive(const ActorMessagePtr& actor_msg) override;
 private:
-
+	network::NetworkPtr network_ptr_;			// 用于分布式节点连接
 };

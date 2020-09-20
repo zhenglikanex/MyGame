@@ -11,15 +11,10 @@ namespace network
 		cur_size += sizeof(session);
 		message.set_session(session);
 		
-		Message::moudle_id_type moudle_id;
-		std::memcpy(&moudle_id, data + cur_size, sizeof(moudle_id));
-		cur_size += sizeof(moudle_id);
-		message.set_moudle_id(moudle_id);
-
-		Message::area_id_type area_id;
-		std::memcpy(&area_id, data + cur_size, sizeof(area_id));
-		cur_size += sizeof(area_id);
-		message.set_area_id(area_id);
+		Message::actor_id_type actor_id;
+		std::memcpy(&actor_id, data + cur_size, sizeof(actor_id));
+		cur_size += sizeof(actor_id);
+		message.set_actor_id(actor_id);
 
 		Message::proto_id_type proto_id;
 		std::memcpy(&proto_id, data + cur_size, sizeof(proto_id));
@@ -39,8 +34,7 @@ namespace network
 
 	Message::Message()
 		:session_(0)
-		, moudle_id_(0)
-		, area_id_(0)
+		, actor_id_(0)
 		, proto_id_(0)
 		, size_(0)
 		, cur_size_(0)
@@ -131,8 +125,7 @@ namespace network
 	void Message::Clear()
 	{
 		session_ = 0;
-		moudle_id_ = 0;
-		area_id_ = 0;
+		actor_id_ = 0;
 		proto_id_ = 0;
 		size_ = 0;
 		cur_size_ = 0;

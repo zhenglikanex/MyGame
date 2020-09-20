@@ -15,14 +15,23 @@
 
 namespace actor_net
 {
+	struct Config
+	{
+		uint32_t harbor;
+		uint32_t master;
+		std::string ip;
+		uint32_t port;
+		std::string master_ip;
+		uint32_t master_port;
+	};
+
 	class ActorNet : public std::enable_shared_from_this<ActorNet> , public network::ISessionHandlder
 	{
 	public:
-		const static uint32_t s_max_actor_count = 255;
+		const static uint32_t kMaxActorCount = 255;
 
-		ActorNet();
+		ActorNet(Config config);
 		~ActorNet();
-
 	private:
 		bool Init();
 
@@ -34,6 +43,7 @@ namespace actor_net
 		void set_harbor(uint32_t harbor) { harbor_ = harbor; }
 
 		uint32_t harbor() { harbor_; }
+		Config& config() const { return config_; }
 	public:
 		// 启动actor
 		void StartActor(const std::string& lib_path, const std::string& actor_name = "");
@@ -44,7 +54,8 @@ namespace actor_net
 
 		// 注册actor名字
 		void RegisterActorName(actor_id id, const std::string& name);
-		
+		void RegisterGlobalActorName(actor_id id, const std::string& name);
+
 		actor_id GetActorIdByName(const std::string& name);
 
 		IActorPtr GetActorById(actor_id id);
@@ -56,17 +67,16 @@ namespace actor_net
 		void SendActorMessage(const std::string& src_actor_name, const std::string& dest_actor_name, const std::vector<uint8_t>& data);
 
 		// 发送远程服务消息
-		void SendHarborMessage();
-
 	private:
 		// 会话处理函数
 		void SessionConnectHandler(const network::SessionPtr& session_ptr) override;
 		void SessionReceiveHandler(const network::SessionPtr& session_ptr, const network::Message& message) override;
 		void SessionCloseHander(const network::SessionPtr& session_ptr) override;
-
 	private:
 		uint32_t GenHandle();
 	private:
+		Config config_;
+
 		uint32_t harbor_;
 		uint32_t handle_index_;
 
@@ -78,8 +88,8 @@ namespace actor_net
 		std::mutex mutex_;
 		std::condition_variable condition_;
 
-		network::NetworkPtr network_ptr_;	// 底层网络通讯模块
-		std::thread network_thread_;		// network线程
+		network::NetworkPtr network_ptr_;			// 底层网络通讯模块
+		std::thread network_thread_;				// network线程
 		std::vector<std::thread> work_threads_;		// 工作线程;
 	};
 }

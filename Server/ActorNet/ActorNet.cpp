@@ -10,11 +10,10 @@
 #define HANDLE_MASK 0xffffff
 #define HANDLE_REMOTE_SHIFT 24
 
-const uint32_t k_max_actor_count = 255;
-
 namespace actor_net
 {
-	ActorNet::ActorNet()
+	ActorNet::ActorNet(Config config)
+		:config_(config)
 	{
 
 	}
@@ -26,22 +25,23 @@ namespace actor_net
 
 	bool ActorNet::Init()
 	{
-		// TODO;读取配置
-		uint32_t thread_count = std::thread::hardware_concurrency();
+		// 节点id
+		harbor_ = config_.harbor;
 
-		uint16_t prot = 5000;
-
-		// 加载Actor
-		StartActor("StartActor.dll","start_actor");
-
-		network_ptr_ = std::make_shared<network::Network>(prot);
+		network_ptr_ = std::make_shared<network::Network>(config_.port);
 		if (!network_ptr_)
 		{
 			//LOG network init fail
 			return false;
 		}
 
+		// 启动network线程
+		network_thread_ = std::thread([this]() {
+			network_ptr_->Run();
+			});
+
 		// 启动work线程
+		uint32_t thread_count = std::thread::hardware_concurrency();
 		for (uint32_t i = 0; i < thread_count; ++i)
 		{
 			work_threads_.emplace_back(std::thread(
@@ -73,10 +73,17 @@ namespace actor_net
 			}));
 		}
 
-		// 启动network线程
-		network_thread_ = std::thread([this]() {
-			network_ptr_->Run();
-		});
+		// 加载Actor
+		StartActor("StartActor.dll", "start_actor");
+
+		if (harbor_ == config_.master)
+		{
+			StartActor("StartActor.dll", "master_actor");
+		}
+		else
+		{
+			// 与master进行连接
+		}
 
 		return true;
 	}
@@ -105,7 +112,7 @@ namespace actor_net
 
 	void ActorNet::StartActor(const std::string& lib_path, const std::string& actor_name /* = "" */)
 	{
-		if (id_by_actor_map_.size() > k_max_actor_count)
+		if (id_by_actor_map_.size() > kMaxActorCount)
 		{
 			// TODO:log
 			return;
@@ -128,7 +135,6 @@ namespace actor_net
 			{
 				RegisterActorName(handle, actor_name);
 			}
-
 			// todo log actor启动成功
 		}
 	}
@@ -288,7 +294,7 @@ namespace actor_net
 
 	uint32_t ActorNet::GenHandle()
 	{
-		for (uint32_t handle_index = 1; handle_index <= k_max_actor_count; ++handle_index)
+		for (uint32_t handle_index = 1; handle_index <= kMaxActorCount; ++handle_index)
 		{
 			if (id_by_actor_map_.find(handle_index) == id_by_actor_map_.end())
 			{

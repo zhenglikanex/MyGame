@@ -5,6 +5,8 @@ project(MyGame)
 #设置文件夹归类
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 
+set(CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/3rdparty/lib/cmake")
+
 #添加目录引用
 include_directories("${PROJECT_SOURCE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/3rdparty/include")
