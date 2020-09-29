@@ -2,9 +2,9 @@
 
 #include <type_traits>
 
-#include "serialize/internal/noncopy.hpp"
-#include "serialize/traits.hpp"
-#include "serialize/access.hpp"
+#include "internal/noncopy.hpp"
+#include "traits.hpp"
+#include "access.hpp"
 
 namespace serialize
 {

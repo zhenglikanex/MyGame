@@ -16,11 +16,7 @@ set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -D_DEBUG")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/bin/debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin/release)
 
-if(NOT TARGET spdlog)
-    # Stand-alone build
-    find_package(spdlog REQUIRED)
-endif()
-
 add_subdirectory(Framework)
 add_subdirectory(Client)
 add_subdirectory(Server)
+add_subdirectory(Test)

@@ -1,8 +1,14 @@
 #include "Game.hpp"
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Commond.hpp"
-#include "Framework/Game/Component/CommondList.hpp"
 #include "Framework/Game/Component/Player.hpp"
+
+#include "Framework/Game/System/CommondProcessSystem.hpp"
+#include "Framework/Game/System/CreateViewSystem.hpp"
+#include "Framework/Game/System/MovementSystem.hpp"
+#include "Framework/Game/System/UpdateViewSystem.hpp"
+#include "Framework/Game/System/AnimationSystem.hpp"
+#include "Framework/game/System/CollisionSystem.hpp"
 #include "Framework/Game/System/SyncSystem.hpp"
 
 Game::Game(Locator&& locator,GameMode mode)	
@@ -12,6 +18,12 @@ Game::Game(Locator&& locator,GameMode mode)
 	registry_.set<GameState>();
 	registry_.set<CommondGroup>();
 	
+	systems_.emplace_back(std::make_unique<CommondProcessSystem>(registry_));
+	systems_.emplace_back(std::make_unique<CreateViewSystem>(registry_));
+	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
+	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
+	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
+	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<SyncSystem>(registry_));
 }
 

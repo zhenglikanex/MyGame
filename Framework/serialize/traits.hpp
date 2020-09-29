@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-#include "serialize/access.hpp"
+#include "access.hpp"
 
 namespace serialize
 {
