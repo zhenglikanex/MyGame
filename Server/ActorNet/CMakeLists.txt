@@ -22,9 +22,4 @@ add_executable(ActorNet
     main.cpp
 )
 
-add_definitions(-D _WIN32_WINNT)
-add_definitions(-D ASIO_STANDALONE)
-
-target_link_libraries(ActorNet PRIVATE spdlog::spdlog)
-
 SET_PROPERTY(TARGET ActorNet PROPERTY FOLDER "Server")

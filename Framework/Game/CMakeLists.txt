@@ -7,13 +7,23 @@ add_library(Game
     FixedPoint.hpp
     Service.hpp
     ViewService.hpp
-    View.hpp
+    IViewImpl.hpp
     NetworkService.hpp
+    Math.hpp
     System/InputSystem.hpp
+    System/AnimationSystem.hpp
+    System/CollisionSystem.hpp
+    System/CreateViewSystem.hpp
+    System/CommondProcessSystem.hpp
+    System/MovementSystem.hpp
+    System/UpdateViewSystem.hpp
     System/SyncSystem.hpp
     Component/GameMode.hpp
     Component/GameState.hpp
-    Component/CommondList.hpp
     Component/Commond.hpp
     Component/Player.hpp
+    Component/View.hpp
+    Component/Position.hpp
+    Component/Asset.hpp
+    Component/Movement.hpp
 )

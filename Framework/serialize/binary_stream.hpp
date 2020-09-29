@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <array>
-#include "serialize/internal/noncopy.hpp"
+#include "internal/noncopy.hpp"
 
 namespace serialize
 {

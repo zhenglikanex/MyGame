@@ -1,8 +1,8 @@
 #pragma once
 
-#include "serialize/internal/types.hpp"
-#include "serialize/archive.hpp"
-#include "serialize/binary_stream.hpp"
+#include "internal/types.hpp"
+#include "archive.hpp"
+#include "binary_stream.hpp"
 
 namespace serialize
 {

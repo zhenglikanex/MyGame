@@ -5,8 +5,8 @@
 
 #include "Framework/Game/Game.hpp"
 #include "Framework/Game/NetworkService.hpp"
-
-using namespace asio;
+#include "Framework/Game/ViewService.hpp"
+#include "Framework/Game/IViewImpl.hpp"
 
 class UnityNetworkService : public NetworkService
 {
@@ -18,8 +18,6 @@ class UnityNetworkService : public NetworkService
 
 int main()
 {
-	io_context context;
-
 	Locator locator;
 	locator.Set<NetworkService>(std::make_shared<UnityNetworkService>());
 	Game game(std::move(locator), GameMode::kClinet);
