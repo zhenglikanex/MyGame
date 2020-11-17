@@ -1,0 +1,30 @@
+// 登陆请求
+message ReqLogin {
+	optional string account = 1; // 账号
+	optional string password = 2; // 密码
+}
+//创建账号
+message ReqCreateAccount{
+	optional string account = 1; // 账号
+	optional string password = 2; // 密码
+}
+//创建角色
+message ReqCreateRole{
+	optional string uid = 1; // 用户ID
+	optional string user_name = 2; // 角色名
+}
+//获取角色基本信息
+message ReqGetRole{
+	optional string uid = 1; // 用户ID
+}
+//获取角色基本信息
+message ResGetRole{
+	optional string uid = 1; // 用户ID
+	optional string user_name = 2; // 角色名
+	optional int32 endurance = 3; // 耐力
+	optional int32 gold = 4;//金币
+	optional int32 wing = 5;//元宝
+	optional int32 lv = 6;//等级
+	optional int32 vip = 7;//vip等级
+	optional int32 head = 8;//头像
+}

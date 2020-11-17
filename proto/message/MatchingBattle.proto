@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+import "UserData.proto";
+
+// 请求匹配战斗
+message ReqMatchingBattle
+{
+}
+
+message RspMathingBattle
+{
+	bool status = 1;
+}
+
+// 进入选择英雄房间
+message EnterSelectHeroRoom
+{
+	UserData enemy_user_data = 1;
+}
+
+message ReqSelectHero
+{
+	int32 hero_id = 1;
+}
+
+message RspSelectHero
+{
+	bool status = 1;
+}
+
+// 更新其他玩家
+message UpdateRoomEnemyHero
+{
+	int32 hero_id = 1;
+}
+
+message LoadBattleSceneBegin
+{
+}
+
+message ReqLoadBattleSceneEnd
+{
+}
+
+message RspLoadBattleSceneEnd
+{
+	bool status = 1;
+}

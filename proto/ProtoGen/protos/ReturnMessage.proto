@@ -1,0 +1,5 @@
+// µÇÂ½
+message ResDefaultInfo {
+	optional int32 results = 1; // ½á¹û
+	optional string details = 2; // Ï¸½Ú
+}

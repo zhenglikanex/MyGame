@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "UserData.proto";
+
+message ReqLogin
+{
+	string account = 1;
+	string password = 2;
+}
+
+enum LoginError
+{
+	kLoginSuccess = 0;
+	kNotAccount = 1;			// 账号不存在
+	kUserNameOrPwdError = 2;	// 用户名或密码错误
+	kAccountOnline = 3;			// 账号在线;
+}
+
+message RspLogin
+{
+	LoginError status = 1;
+	UserData user_data = 2;
+}
