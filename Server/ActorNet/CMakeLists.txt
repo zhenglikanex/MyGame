@@ -20,6 +20,8 @@ add_executable(ActorNet
     Network/Timer.h
     Network/Timer.cpp
     main.cpp
+    ${PROTO_SRC}
 )
 
+target_link_libraries(ActorNet ${PROTOBUF_LIBRARY} ${PROTOBUF_LITE_LIBRARY})
 SET_PROPERTY(TARGET ActorNet PROPERTY FOLDER "Server")
