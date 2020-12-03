@@ -25,3 +25,6 @@ add_executable(ActorNet
 
 target_link_libraries(ActorNet ${PROTOBUF_LIBRARY} ${PROTOBUF_LITE_LIBRARY})
 SET_PROPERTY(TARGET ActorNet PROPERTY FOLDER "Server")
+
+#设置VS工作目录
+set_target_properties(ActorNet PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/Asset)

@@ -8,6 +8,7 @@ public class GameLoginState : FSMState
     {
         //切换到正式的场景
         //SceneManager.LoadScene(Global.ScenePath + "Main", LoadSceneMode.Single);
+        Debug.Log("enter login");
     }
 
     public override void Leave()

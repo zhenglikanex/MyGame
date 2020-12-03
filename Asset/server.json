@@ -1,0 +1,8 @@
+{
+    "harbor":1,
+    "master":0,
+    "ip":"127.0.0.1",
+    "port":5010,
+    "master_ip":"127.0.0.1",
+    "master_port":5011
+}

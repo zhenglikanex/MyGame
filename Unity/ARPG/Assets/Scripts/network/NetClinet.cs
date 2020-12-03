@@ -61,10 +61,13 @@ namespace network
         {
             //创建客户端连接对象
             socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            //连接到服务器
-            socket_.Connect(IPAddress.Parse(ip_), port_);
-            AsyncReceive();
             return true;
+        }
+
+        public void Connect(string ip,int port)
+        {
+            socket_.Connect(IPAddress.Parse(ip), port);
+            AsyncReceive();
         }
 
         #region 网络数据收发

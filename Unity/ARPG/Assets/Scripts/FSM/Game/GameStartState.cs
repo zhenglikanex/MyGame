@@ -25,6 +25,15 @@ public class GameStartState : FSMState {
             network.NetClient.Instance.MessageHandler = GameController.Instance.NetMessageHandler;
             network.NetClient.Instance.ResponseHandler = network.Responser.Instance.MessageHandler;
 
+            try
+            {
+                GameController.Instance.NetClient_.Connect("127.0.0.1", 5010);
+            }
+            catch(System.Exception e)
+            {
+                Debug.Log("NetClient Error:" + e.Message);
+            }
+
             // 注册网络消息
             InitAllNetController();
 

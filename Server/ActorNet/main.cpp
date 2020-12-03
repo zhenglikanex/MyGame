@@ -1,21 +1,25 @@
 #include <iostream>
 #include <memory>
+#include <fstream>
+#include <sstream>
 #include "ActorNet.h"
 #include "rapidjson/document.h"
 
-int main(int argc, char** argv)
+int main()
 {
-	if (argc < 1)
+	std::ifstream f("server.json");
+	if (!f)
 	{
-		return false;
+		std::cout << "·þÎñÆ÷ÅäÖÃ¼ÓÔØ´íÎó" << std::endl;
+		return -1;
 	}
 
 	rapidjson::Document doc;
-	doc.Parse(argv[0]);
-	if (doc.HasParseError() || doc.Empty())
 	{
-		std::cout << argv[0] << " load failed!" << std::endl;
-		return false;
+		std::stringstream ss;
+		ss << f.rdbuf();
+		f.close();
+		doc.Parse(ss.str().c_str());
 	}
 
 	actor_net::Config config;

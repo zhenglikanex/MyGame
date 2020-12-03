@@ -43,7 +43,7 @@ namespace actor_net
 		void set_harbor(uint32_t harbor) { harbor_ = harbor; }
 
 		uint32_t harbor() { harbor_; }
-		Config& config() const { return config_; }
+		const Config& config() const { return config_; }
 	public:
 		// Æô¶¯actor
 		void StartActor(const std::string& lib_path, const std::string& actor_name = "");
