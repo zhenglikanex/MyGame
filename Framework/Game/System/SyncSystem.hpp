@@ -46,7 +46,7 @@ struct SyncSystem : public System
 		}
 
 		// todo;
-		registry.ctx<Locator>().Get<NetworkService>()->Send(nullptr, 0);
+		//registry.ctx<Locator>().Get<NetworkService>()->Send(nullptr, 0);
 	}
 
 	void Finalize() override

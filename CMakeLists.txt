@@ -6,7 +6,9 @@ project(MyGame)
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/3rdparty/lib/cmake")
-
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}" CACHE PATH "${PROJECT_SOURCE_DIR}" FORCE)
+endif()
 #添加目录引用
 include_directories("${PROJECT_SOURCE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/3rdparty/include")
@@ -17,7 +19,6 @@ set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -D_DEBUG")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/bin/debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin/release)
-message(${CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG})
 
 set(PROTOBUF_LIB_PATH ${PROJECT_SOURCE_DIR}/3rdparty/lib/)
 message(${PROTOBUF_LIB_PATH})
@@ -31,5 +32,12 @@ file(GLOB_RECURSE PROTO_SRC ${PROJECT_SOURCE_DIR}/Framework/Proto/*.h ${PROJECT_
 
 add_subdirectory(Framework)
 add_subdirectory(Client)
-add_subdirectory(Server)
-add_subdirectory(Test)
+#add_subdirectory(Server)
+#add_subdirectory(Test)
+
+#安装MyGameClient到Unity Plugins目录下
+install(TARGETS MyGameClient
+    RUNTIME DESTINATION Unity/ARPG/Assets/Plugins
+    LIBRARY DESTINATION Unity/ARPG/Assets/Plugins
+    )
+install(FILES ${PROJECT_SOURCE_DIR}/bin/debug/MyGameClient.pdb DESTINATION Unity/ARPG/Assets/Plugins)

@@ -2,6 +2,7 @@
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Commond.hpp"
 #include "Framework/Game/Component/Player.hpp"
+#include "Framework/Game/Component/Asset.hpp"
 
 #include "Framework/Game/System/CommondProcessSystem.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
@@ -11,10 +12,10 @@
 #include "Framework/game/System/CollisionSystem.hpp"
 #include "Framework/Game/System/SyncSystem.hpp"
 
-Game::Game(Locator&& locator,GameMode mode)	
+Game::Game(Locator&& locator,GameMode mode,std::vector<Player>&& players)
 {
 	registry_.set<GameMode>(mode);
-	registry_.set<Locator>(std::forward<Locator>(locator));
+	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
 	registry_.set<CommondGroup>();
 	
@@ -25,6 +26,14 @@ Game::Game(Locator&& locator,GameMode mode)
 	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<SyncSystem>(registry_));
+
+	for (auto& player : players)
+	{
+		auto e = registry_.create();
+		registry_.emplace<Player>(e, player);
+		// todo ∂¡≈‰÷√
+		registry_.emplace<Asset>(e, "default_actor");
+	}
 }
 
 Game::~Game()

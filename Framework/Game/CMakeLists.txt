@@ -23,7 +23,7 @@ add_library(Game
     Component/Commond.hpp
     Component/Player.hpp
     Component/View.hpp
-    Component/Position.hpp
+    Component/Transform.hpp
     Component/Asset.hpp
     Component/Movement.hpp
 )

@@ -12,7 +12,7 @@
 // param1:函数名
 // param2:函数签名
 // param3:参数,json
-using UnityDelegate = const char*(*)(const char*,const char*,const char*);
+using UnityDelegate = const char*(*)(const char*,const char*);
 
 template<class T> struct TypeSig {  };
 template<> struct TypeSig<void> : std::integral_constant<char, 'V'> {};
@@ -46,22 +46,20 @@ public:
 	template<class R, class ... Args>
 	R CallUnity(std::string_view fun_name, Args&& ... args)
 	{
-		char fun_sig[sizeof...(args) + 2] = { TypeSig<std::remove_cv_t<R>>::value,TypeSig<std::remove_cv_t<std::decay_t<Args>>>::value...,0 };
-		std::cout << fun_sig << std::endl;
-
+		//char fun_sig[sizeof...(args) + 2] = { TypeSig<std::remove_cv_t<R>>::value,TypeSig<std::remove_cv_t<std::decay_t<Args>>>::value...,0 };
 		nlohmann::json json;
 		(json.push_back(args), ...);
 
 		std::string params = json.dump();
 		if constexpr (!std::is_void_v<R>)
 		{
-			std::string result = unity_delegate_(fun_name.data(), fun_sig, params.c_str());
-			nlohmann::json json_result = result;
-			return json_result.get<R>();
+			std::string str = unity_delegate_(fun_name.data(),params.c_str());
+			nlohmann::json json = nlohmann::json::parse(str);
+			return json["result"].get<R>();
 		}
 		else
 		{
-			unity_delegate_(fun_name.data(), fun_sig, params.c_str());
+			unity_delegate_(fun_name.data(),params.c_str());
 		}
 	}
 private:

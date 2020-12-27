@@ -5,7 +5,7 @@
 struct GameState
 {
 	GameState()
-		: real_frame(0),run_time(0)
+		: real_frame(0), run_frame(0),run_time(0)
 	{
 
 	}

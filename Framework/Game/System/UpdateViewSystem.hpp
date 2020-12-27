@@ -2,7 +2,7 @@
 
 #include "Framework/Game/System.hpp"
 #include "Framework/Game/Component/View.hpp"
-#include "Framework/Game/Component/Position.hpp"
+#include "Framework/Game/Component/Transform.hpp"
 
 struct UpdateViewSystem : public System
 {
@@ -16,10 +16,10 @@ struct UpdateViewSystem : public System
 
 	void Update(fixed16 dt) override
 	{
-		registry.view<const View, const Position>().each([](auto, const View& view, const Position& position) 
+		registry.view<const View, const Transform>().each([](auto, const View& view, const Transform& position) 
 		{
-			view.value->SetPosition(position.pos);
-			view.value->SetForward(position.forward);
+			//view.value->Move(position.pos);
+			//view.value->SetForward(position.forward);
 		});
 
 		// todo animation

@@ -13,7 +13,7 @@ def main():
 	exe_path = cur_dir + '\protoc\protoc.exe'
 	proto_path = " --proto_path={}\message ".format(cur_dir)
 	cpp_path = "{}/../Framework/Proto".format(cur_dir)
-	csharp_path = "{}/../Scripts/proto".format(cur_dir)
+	csharp_path = "{}/../Unity/ARPG/Assets/Resources/Scripts/proto".format(cur_dir)
 	cpp_out = " --cpp_out={} ".format(cpp_path)
 	csharp_out = " --csharp_out={} ".format(csharp_path)
 	if os.path.exists(cpp_path):

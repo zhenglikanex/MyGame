@@ -3,6 +3,7 @@
 #include "Framework/Game/System.hpp"
 #include "Framework/Game/Component/View.hpp"
 #include "Framework/Game/Component/Asset.hpp"
+#include "Framework/game/Component/Transform.hpp"
 
 struct CreateViewSystem : public System
 {
@@ -23,6 +24,11 @@ struct CreateViewSystem : public System
 			const auto& asset = view.get<Asset>(e);
 			auto v = locator.Ref<ViewService>().Create(asset.value);
 			registry.emplace<View>(e,std::move(v));
+			
+			Transform transform;
+			v->MovePosition(transform.pos);
+
+			registry.emplace<Transform>(e,std::move(transform));
 		}
 	}
 

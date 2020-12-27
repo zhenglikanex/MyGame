@@ -6,7 +6,10 @@
 
 int main()
 {
-	nlohmann::json json = 3.14;
-	std::cout << json << std::endl;
+	nlohmann::json json;
+	json["result"] = 0;
+	std::string str = json.dump();
+	nlohmann::json j1 = nlohmann::json::parse(str);
+	std::cout << j1["result"] << std::endl;
 	return 0;
 }

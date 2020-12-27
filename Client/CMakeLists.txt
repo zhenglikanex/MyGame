@@ -15,4 +15,3 @@ target_link_libraries(MyGameClient
     ${PROTOBUF_LIBRARY}
     ${PROTOBUF_LITE_LIBRARY}
 )
-

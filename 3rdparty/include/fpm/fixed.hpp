@@ -32,7 +32,7 @@ class fixed
 
 public:
     inline fixed() noexcept {}
-
+    
     // Converts an integral number to the fixed-point type.
     // Like static_cast, this truncates bits that don't fit.
     template <typename T, typename std::enable_if<std::is_integral<T>::value>::type* = nullptr>

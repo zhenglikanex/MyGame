@@ -1,6 +1,6 @@
 #include "Framework/Game/System.hpp"
 #include "Framework/Game/Component/Commond.hpp"
-#include "Framework/Game/Component/Position.hpp"
+#include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 
 struct MovementSystem : public System
@@ -15,7 +15,7 @@ struct MovementSystem : public System
 
 	void Update(fixed16 dt) override
 	{
-		registry.view<MovementCommond,Movement,Position>().each([](auto e,const MovementCommond& commond, const Movement& movement,Position& position)
+		registry.view<MovementCommond,Movement,Transform>().each([](auto e,const MovementCommond& commond, const Movement& movement,Transform& position)
 		{
 			position.forward = glm::normalize(vec3(commond.x_axis, 0, commond.y_axis));
 			position.pos += movement.velocity * position.forward;

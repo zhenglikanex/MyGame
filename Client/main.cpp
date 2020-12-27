@@ -20,11 +20,9 @@ class UnityNetworkService : public NetworkService
 
 int main()
 {
-	
-	HeroData data;
 	Locator locator;
 	locator.Set<NetworkService>(std::make_shared<UnityNetworkService>());
-	Game game(std::move(locator), GameMode::kClinet);
+	Game game(std::move(locator), GameMode::kClinet,std::vector<Player>());
 	float dt = 0;
 	while (true)
 	{

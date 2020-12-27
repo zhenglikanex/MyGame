@@ -11,16 +11,11 @@ public:
 
 	}
 
-	void SetPosition(const vec3& pos) override
-	{
-		
-	}
+	void UpdatePosition(const vec3& pos) override;
+	void UpdateForward(const vec3& forward) override;
+	void MovePosition(const vec3& pos) override;
+	void MoveForward(const vec3& forward) override;
 
-	void SetForward(const vec3& forward) override
-	{
-
-	}
-	
 	int GetHandle() const { return handle_; }
 private:
 	int handle_;

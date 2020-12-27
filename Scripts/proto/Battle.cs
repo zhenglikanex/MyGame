@@ -45,9 +45,11 @@ public static partial class BattleReflection {
           "YXVuY2hfcG9pbnRfehgGIAEoAhIWCg50YXJnZXRfcG9pbnRfeBgHIAEoAhIW",
           "Cg50YXJnZXRfcG9pbnRfeRgIIAEoAhIWCg50YXJnZXRfcG9pbnRfehgJIAEo",
           "AiILCglIZXJvRGVhdGgiDAoKSGVyb1Jldml2ZSIqCgpGbHlUZXh0TXNnEgwK",
-          "BGd1aWQYASABKAkSDgoGbnVtYmVyGAIgASgFKkAKDFN5bmNIZXJvVHlwZRIR",
-          "Cg1rU3luY1Bvc2l0aW9uEAASDgoKa1N5bmNTdGF0ZRABEg0KCWtTeW5jQXR0",
-          "chACYgZwcm90bzM="));
+          "BGd1aWQYASABKAkSDgoGbnVtYmVyGAIgASgFIioKClBsYXllckluZm8SCgoC",
+          "aWQYASABKA0SEAoIYWN0b3JfaWQYAiABKA0iNAoPR2FtZVBsYXllckluZm9z",
+          "EiEKDHBsYXllcl9pbmZvcxgBIAMoCzILLlBsYXllckluZm8qQAoMU3luY0hl",
+          "cm9UeXBlEhEKDWtTeW5jUG9zaXRpb24QABIOCgprU3luY1N0YXRlEAESDQoJ",
+          "a1N5bmNBdHRyEAJiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::SyncHeroType), }, new pbr::GeneratedClrTypeInfo[] {
@@ -61,7 +63,9 @@ public static partial class BattleReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::SyncSkill), global::SyncSkill.Parser, new[]{ "HeroGuid", "TargetGuid", "SkillId", "LaunchPointX", "LaunchPointY", "LaunchPointZ", "TargetPointX", "TargetPointY", "TargetPointZ" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::HeroDeath), global::HeroDeath.Parser, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::HeroRevive), global::HeroRevive.Parser, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::FlyTextMsg), global::FlyTextMsg.Parser, new[]{ "Guid", "Number" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::FlyTextMsg), global::FlyTextMsg.Parser, new[]{ "Guid", "Number" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerInfo), global::PlayerInfo.Parser, new[]{ "Id", "ActorId" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GamePlayerInfos), global::GamePlayerInfos.Parser, new[]{ "PlayerInfos" }, null, null, null)
         }));
   }
   #endregion
@@ -2495,6 +2499,260 @@ public sealed partial class FlyTextMsg : pb::IMessage<FlyTextMsg> {
         }
         case 16: {
           Number = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class PlayerInfo : pb::IMessage<PlayerInfo> {
+  private static readonly pb::MessageParser<PlayerInfo> _parser = new pb::MessageParser<PlayerInfo>(() => new PlayerInfo());
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<PlayerInfo> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::BattleReflection.Descriptor.MessageTypes[11]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public PlayerInfo() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public PlayerInfo(PlayerInfo other) : this() {
+    id_ = other.id_;
+    actorId_ = other.actorId_;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public PlayerInfo Clone() {
+    return new PlayerInfo(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private uint id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public uint Id {
+    get { return id_; }
+    set {
+      id_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "actor_id" field.</summary>
+  public const int ActorIdFieldNumber = 2;
+  private uint actorId_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public uint ActorId {
+    get { return actorId_; }
+    set {
+      actorId_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as PlayerInfo);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(PlayerInfo other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if (ActorId != other.ActorId) return false;
+    return true;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Id != 0) hash ^= Id.GetHashCode();
+    if (ActorId != 0) hash ^= ActorId.GetHashCode();
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (Id != 0) {
+      output.WriteRawTag(8);
+      output.WriteUInt32(Id);
+    }
+    if (ActorId != 0) {
+      output.WriteRawTag(16);
+      output.WriteUInt32(ActorId);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (Id != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
+    }
+    if (ActorId != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ActorId);
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(PlayerInfo other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Id != 0) {
+      Id = other.Id;
+    }
+    if (other.ActorId != 0) {
+      ActorId = other.ActorId;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          input.SkipLastField();
+          break;
+        case 8: {
+          Id = input.ReadUInt32();
+          break;
+        }
+        case 16: {
+          ActorId = input.ReadUInt32();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class GamePlayerInfos : pb::IMessage<GamePlayerInfos> {
+  private static readonly pb::MessageParser<GamePlayerInfos> _parser = new pb::MessageParser<GamePlayerInfos>(() => new GamePlayerInfos());
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<GamePlayerInfos> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::BattleReflection.Descriptor.MessageTypes[12]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public GamePlayerInfos() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public GamePlayerInfos(GamePlayerInfos other) : this() {
+    playerInfos_ = other.playerInfos_.Clone();
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public GamePlayerInfos Clone() {
+    return new GamePlayerInfos(this);
+  }
+
+  /// <summary>Field number for the "player_infos" field.</summary>
+  public const int PlayerInfosFieldNumber = 1;
+  private static readonly pb::FieldCodec<global::PlayerInfo> _repeated_playerInfos_codec
+      = pb::FieldCodec.ForMessage(10, global::PlayerInfo.Parser);
+  private readonly pbc::RepeatedField<global::PlayerInfo> playerInfos_ = new pbc::RepeatedField<global::PlayerInfo>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pbc::RepeatedField<global::PlayerInfo> PlayerInfos {
+    get { return playerInfos_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as GamePlayerInfos);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(GamePlayerInfos other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if(!playerInfos_.Equals(other.playerInfos_)) return false;
+    return true;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    hash ^= playerInfos_.GetHashCode();
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    playerInfos_.WriteTo(output, _repeated_playerInfos_codec);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    size += playerInfos_.CalculateSize(_repeated_playerInfos_codec);
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(GamePlayerInfos other) {
+    if (other == null) {
+      return;
+    }
+    playerInfos_.Add(other.playerInfos_);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          input.SkipLastField();
+          break;
+        case 10: {
+          playerInfos_.AddEntriesFrom(input, _repeated_playerInfos_codec);
           break;
         }
       }
