@@ -5,13 +5,14 @@
 
 #include "nlohmann/json.hpp"
 
-#ifndef EXPROT_DLL
-#define EXPROT_DLL __declspec(dllexport)
+#ifdef EXPORT
+#define EXPORT_DLL __declspec(dllexport)
+#else
+#define EXPORT_DLL __declspec(dllimport)
 #endif
 
 // param1:函数名
-// param2:函数签名
-// param3:参数,json
+// param2:json格式参数
 using UnityDelegate = const char*(*)(const char*,const char*);
 
 template<class T> struct TypeSig {  };
@@ -69,6 +70,5 @@ private:
 
 extern "C"
 {
-	// C++调用C#比较麻烦,稍微封装一下,C#调用C++直接导出接口
-	EXPROT_DLL void SetUnityDelegate(UnityDelegate delegate);
+	EXPORT_DLL void SetUnityDelegate(UnityDelegate delegate);
 }

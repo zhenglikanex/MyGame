@@ -63,25 +63,23 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
 #else
     public delegate string UnityDelegate(string func,string json_params);
-    [DllImport("MyGameClient")]
+    [DllImport("ClientProxy")]
     public static extern void SetUnityDelegate(UnityDelegate unity_delegate);
 
-    [DllImport("MyGameClient")]
+    [DllImport("ClientProxy")]
     public static extern void InitGame(byte[] data,int size);
 
-    [DllImport("MyGameClient")]
+    [DllImport("ClientProxy")]
     public static extern void DestoryGame();
 
-    [DllImport("MyGameClient")]
+    [DllImport("ClientProxy")]
     public static extern void UpdateGame(float dt);
 
-    public static void LoadDLL(string name)
-    {
-    }
+    [DllImport("ClientProxy")]
+    public static extern void LoadDLL();
 
-    public static void FreeDLL()
-    {
-    }
+    [DllImport("ClientProxy")]
+    public static extern void FreeDLL();
 #endif
 
     public static string UnityCallback(string func,string json_params)

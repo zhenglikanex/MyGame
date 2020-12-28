@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        CPlusPlusBridge.LoadDLL();
 #if UNITY_EDITOR
         //CPlusPlusBridge.LoadDLL("MyGameClient");
 #endif
@@ -102,6 +103,6 @@ public class GameController : MonoBehaviour
 
     void OnApplicationQuit()
     {
-
+        CPlusPlusBridge.FreeDLL();
     }
 }

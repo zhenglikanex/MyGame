@@ -32,12 +32,19 @@ file(GLOB_RECURSE PROTO_SRC ${PROJECT_SOURCE_DIR}/Framework/Proto/*.h ${PROJECT_
 
 add_subdirectory(Framework)
 add_subdirectory(Client)
-#add_subdirectory(Server)
+add_subdirectory(Server)
 #add_subdirectory(Test)
+add_subdirectory(ClientProxy)
 
 #安装MyGameClient到Unity Plugins目录下
 install(TARGETS MyGameClient
-    RUNTIME DESTINATION Unity/ARPG/Assets/Plugins
-    LIBRARY DESTINATION Unity/ARPG/Assets/Plugins
+    RUNTIME DESTINATION Unity/ARPG
+    LIBRARY DESTINATION Unity/ARPG
     )
-install(FILES ${PROJECT_SOURCE_DIR}/bin/debug/MyGameClient.pdb DESTINATION Unity/ARPG/Assets/Plugins)
+install(FILES ${PROJECT_SOURCE_DIR}/bin/debug/MyGameClient.pdb DESTINATION Unity/ARPG)
+
+install(TARGETS ClientProxy
+RUNTIME DESTINATION Unity/ARPG/Assets/Plugins
+LIBRARY DESTINATION Unity/ARPG/Assets/Plugins
+)
+install(FILES ${PROJECT_SOURCE_DIR}/bin/debug/ClientProxy.pdb DESTINATION Unity/ARPG/Assets/Plugins)

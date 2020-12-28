@@ -21,12 +21,12 @@ std::unique_ptr<Game> g_game = nullptr;
 
 extern "C"
 {
-	EXPROT_DLL void SetUnityDelegate(UnityDelegate delegate)
+	EXPORT_DLL void SetUnityDelegate(UnityDelegate delegate)
 	{
 		UnityBridge::Get().SetExecuteDelegate(delegate);
 	}
 
-	EXPROT_DLL void InitGame(const char* data,int32_t size)
+	EXPORT_DLL void InitGame(const char* data,int32_t size)
 	{
 		std::vector<Player> players;
 		GamePlayerInfos infos;
@@ -43,12 +43,12 @@ extern "C"
 		g_game->Initialize();
 	}
 
-	EXPROT_DLL void DestoryGame()
+	EXPORT_DLL void DestoryGame()
 	{
 		g_game = nullptr;
 	}
 
-	EXPROT_DLL void UpdateGame(float dt)
+	EXPORT_DLL void UpdateGame(float dt)
 	{
 		if (g_game)
 		{

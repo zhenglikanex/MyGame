@@ -1,0 +1,4 @@
+add_library(ClientProxy SHARED
+ClientProxy.hpp
+ClientProxy.cpp
+)
