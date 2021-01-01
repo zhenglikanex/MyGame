@@ -23,11 +23,11 @@ struct CreateViewSystem : public System
 		{
 			const auto& asset = view.get<Asset>(e);
 			auto v = locator.Ref<ViewService>().Create(asset.value);
-			registry.emplace<View>(e,std::move(v));
-			
+
 			Transform transform;
 			v->MovePosition(transform.pos);
 
+			registry.emplace<View>(e,std::move(v));
 			registry.emplace<Transform>(e,std::move(transform));
 		}
 	}

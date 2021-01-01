@@ -45,6 +45,7 @@ public:
 	void SaveSnapshot();
 
 	entt::registry& registry() { return registry_; }
+	uint32_t main_player_id() const { return main_player_id_; }
 private:
 	static const uint32_t kFrameRate = 33;	// 33毫秒更新频率
 	static const uint32_t kMaxPredictFrame = 60;	//最大预测60帧,2秒
@@ -54,6 +55,7 @@ private:
 	std::unordered_map<uint32_t, std::vector<Commond>> commonds_map_;
 	std::unordered_map<uint32_t, CommondGroup> predict_commond_groups_;
 	std::unordered_map<uint32_t, Snapshot> snapshots_;
+	uint32_t main_player_id_;
 };
 
 extern std::unique_ptr<Game> g_game;

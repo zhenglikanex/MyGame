@@ -3,6 +3,7 @@
 #include "Framework/Game/Component/Commond.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Asset.hpp"
+#include "Framework/Game/Component/MainPlayer.hpp"
 
 #include "Framework/Game/System/CommondProcessSystem.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
@@ -27,12 +28,18 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<Player>&& players)
 	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<SyncSystem>(registry_));
 
-	for (auto& player : players)
+	for (auto player : players)
 	{
 		auto e = registry_.create();
 		registry_.emplace<Player>(e, player);
-		// todo ¶ÁÅäÖÃ
-		registry_.emplace<Asset>(e, "default_actor");
+		
+		registry_.emplace<Asset>(e, "Hero");
+
+		Commond commond;
+		//InputCommond(player.id,std::move(commond));
+
+		main_player_id_ = player.id;
+		registry_.set<MainPlayer>(main_player_id_);
 	}
 }
 
@@ -77,6 +84,9 @@ void Game::UpdateClinet(float dt)
 
 	while (game_state.run_time > game_state.run_frame * kFrameRate + kFrameRate)
 	{
+		//todo:ä¸´æ—¶å¡«å……å¸§
+		InputCommond(main_player_id_, Commond());
+
 		bool predict = false;
 
 		registry_.set<CommondGroup>(GetCommondGroup(game_state.run_frame));
@@ -105,6 +115,11 @@ void Game::UpdateClinet(float dt)
 				++registry_.ctx<GameState>().run_frame;
 			}
 		}
+		else 
+		{
+			// å¦‚æœæ²¡æœ‰å½“å‰å¸§çš„å‘½ä»¤ï¼Œå°±è·³å‡ºå½“å‰é€»è¾‘å¸§
+			break;
+		}
 	}
 }
 
@@ -117,7 +132,7 @@ void Game::UpdateServer(float dt)
 
 	while (game_state.run_time > game_state.run_frame * kFrameRate + kFrameRate)
 	{
-		//Éú³ÉÃ»ÓĞÊÕµ½µ±Ç°Ö¡µÄÍæ¼Òcommond
+		//ç”Ÿæˆcommond
 		SetupCommonds(game_state.run_frame);
 		registry_.set<CommondGroup>(GetCommondGroup(game_state.run_frame));
 		if (registry_.ctx<CommondGroup>().value.size() == registry_.view<Player>().size())
@@ -160,7 +175,7 @@ void Game::InputCommond(uint32_t id,Commond&& commond)
 
 	if (registry_.ctx<GameMode>() == GameMode::kClinet)
 	{
-		CheckPredict();
+		//CheckPredict();
 	}
 }
 
@@ -227,10 +242,10 @@ void Game::CheckPredict()
 		{
 			auto pre_frame = frame - 1;
 			auto& snapshot = snapshots_.find(pre_frame);
-			//registry_.reset(snapshot);	// todo»Ö¸´¿ìÕÕ
+			//registry_.reset(snapshot);	// todoï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½
 			registry_.ctx<GameState>().real_frame = pre_frame;
 
-			// Çå³ıÔ¤²âµÄÊı¾İ
+			// ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			predict_commond_groups_.clear();
 			snapshots_.clear();
 			return;
@@ -244,7 +259,7 @@ void Game::CheckPredict()
 CommondGroup Game::PredictCommondGroup(uint32_t frame)
 {
 	CommondGroup commond_group = GetCommondGroup(frame - 1);
-	//todo: Ìî³ä×Ô¼ºµÄÉÏÒ»Ö¡µÄÊäÈë
+	//todo: å¡«å……è‡ªå·±çš„å‘½ä»¤
 	return commond_group;
 }
 

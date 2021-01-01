@@ -26,4 +26,5 @@ add_library(Game
     Component/Transform.hpp
     Component/Asset.hpp
     Component/Movement.hpp
+    Component/MainPlayer.hpp
 )

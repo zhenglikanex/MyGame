@@ -23,7 +23,7 @@ struct CommondProcessSystem : public System
 			if (iter != commond_group.value.end())
 			{
 				// movement commond
-				registry.emplace<MovementCommond>(e,iter->second.x_axis, iter->second.y_axis);
+				registry.emplace_or_replace<MovementCommond>(e,iter->second.x_axis, iter->second.y_axis);
 			}
 		}
 	}

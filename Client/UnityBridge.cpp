@@ -36,6 +36,7 @@ extern "C"
 			Player player;
 			player.id = iter->id();
 			player.actor_id = iter->actor_id();
+			players.emplace_back(std::move(player));
 		}
 		Locator locator;
 		locator.Set<ViewService>(std::make_shared<UnityViewService>());

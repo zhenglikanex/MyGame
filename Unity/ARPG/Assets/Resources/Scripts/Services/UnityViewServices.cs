@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,8 +33,9 @@ public class UnityViewServices : GlobalGameObjectSingleton<UnityViewServices>
             go.transform.SetParent(GameObject.Find("World").transform);
 
             return view;
-
         }
+
+        Debug.LogError(string.Format("CreateViewError:{}", asset));
         return null;
     }
 
