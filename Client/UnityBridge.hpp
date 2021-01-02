@@ -11,8 +11,8 @@
 #define EXPORT_DLL __declspec(dllimport)
 #endif
 
-// param1:º¯ÊıÃû
-// param2:json¸ñÊ½²ÎÊı
+// param1:å‡½æ•°å
+// param2:jsonæ ¼å¼å‚æ•°
 using UnityDelegate = const char*(*)(const char*,const char*);
 
 template<class T> struct TypeSig {  };
@@ -48,20 +48,40 @@ public:
 	R CallUnity(std::string_view fun_name, Args&& ... args)
 	{
 		//char fun_sig[sizeof...(args) + 2] = { TypeSig<std::remove_cv_t<R>>::value,TypeSig<std::remove_cv_t<std::decay_t<Args>>>::value...,0 };
-		nlohmann::json json;
-		(json.push_back(args), ...);
-
-		std::string params = json.dump();
-		if constexpr (!std::is_void_v<R>)
+		
+		if constexpr (sizeof...(Args) > 0)
 		{
-			std::string str = unity_delegate_(fun_name.data(),params.c_str());
-			nlohmann::json json = nlohmann::json::parse(str);
-			return json["result"].get<R>();
+			nlohmann::json json;
+			(json.push_back(args), ...);
+
+			std::string params = json.dump();
+
+			if constexpr (!std::is_void_v<R>)
+			{
+				std::string str = unity_delegate_(fun_name.data(), params.c_str());
+				nlohmann::json json = nlohmann::json::parse(str);
+				return json["result"].get<R>();
+			}
+			else
+			{
+				unity_delegate_(fun_name.data(), params.c_str());
+			}
 		}
 		else
 		{
-			unity_delegate_(fun_name.data(),params.c_str());
+			if constexpr (!std::is_void_v<R>)
+			{
+				std::string str = unity_delegate_(fun_name.data(),"");
+				nlohmann::json json = nlohmann::json::parse(str);
+				return json["result"].get<R>();
+			}
+			else
+			{
+				unity_delegate_(fun_name.data(),"");
+			}
 		}
+
+		
 	}
 private:
 	static UnityDelegate unity_delegate_;

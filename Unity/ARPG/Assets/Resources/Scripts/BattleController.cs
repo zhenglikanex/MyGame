@@ -5,6 +5,7 @@ using Google.Protobuf;
 
 public class BattleController : SceneGameObjectSingleton<BattleController>
 {
+    public uint MyId = 0;
     public bool IsBattleing
     {
         get;
@@ -43,7 +44,7 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
         if(!IsBattleing)
         {
             PlayerInfo player = new PlayerInfo();
-            player.Id = 1;
+            player.Id = MyId;
             player.ActorId = 1;
             GamePlayerInfos player_infos = new GamePlayerInfos();
             player_infos.PlayerInfos.Add(player);
@@ -60,6 +61,25 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
         {
             CPlusPlusBridge.DestoryGame();
             IsBattleing = false;
+        }
+    }
+
+    public void InputHandler()
+    {
+        if(IsBattleing)
+        {
+            GameCommond cmd = new GameCommond();
+            cmd.XAxis = Input.GetAxis("Horizontal");
+            cmd.YAxis = Input.GetAxis("Vertical");
+
+            cmd.Attack = false;
+            cmd.Jump = false;
+
+            GameCommondGroup group = new GameCommondGroup();
+            group.Commonds.Add(MyId, cmd);
+
+            var data = group.ToByteArray();
+            CPlusPlusBridge.GameInput(data, data.Length);
         }
     }
 }

@@ -22,12 +22,19 @@ public static partial class BattleReflection {
         string.Concat(
           "CgxCYXR0bGUucHJvdG8iKgoKUGxheWVySW5mbxIKCgJpZBgBIAEoDRIQCghh",
           "Y3Rvcl9pZBgCIAEoDSI0Cg9HYW1lUGxheWVySW5mb3MSIQoMcGxheWVyX2lu",
-          "Zm9zGAEgAygLMgsuUGxheWVySW5mb2IGcHJvdG8z"));
+          "Zm9zGAEgAygLMgsuUGxheWVySW5mbyJLCgtHYW1lQ29tbW9uZBIOCgZ4X2F4",
+          "aXMYASABKAISDgoGeV9heGlzGAIgASgCEgwKBGp1bXAYAyABKAgSDgoGYXR0",
+          "YWNrGAQgASgIIoQBChBHYW1lQ29tbW9uZEdyb3VwEjEKCGNvbW1vbmRzGAEg",
+          "AygLMh8uR2FtZUNvbW1vbmRHcm91cC5Db21tb25kc0VudHJ5Gj0KDUNvbW1v",
+          "bmRzRW50cnkSCwoDa2V5GAEgASgNEhsKBXZhbHVlGAIgASgLMgwuR2FtZUNv",
+          "bW1vbmQ6AjgBYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerInfo), global::PlayerInfo.Parser, new[]{ "Id", "ActorId" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::GamePlayerInfos), global::GamePlayerInfos.Parser, new[]{ "PlayerInfos" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::GamePlayerInfos), global::GamePlayerInfos.Parser, new[]{ "PlayerInfos" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GameCommond), global::GameCommond.Parser, new[]{ "XAxis", "YAxis", "Jump", "Attack" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GameCommondGroup), global::GameCommondGroup.Parser, new[]{ "Commonds" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
         }));
   }
   #endregion
@@ -280,6 +287,330 @@ public sealed partial class GamePlayerInfos : pb::IMessage<GamePlayerInfos> {
           break;
         case 10: {
           playerInfos_.AddEntriesFrom(input, _repeated_playerInfos_codec);
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class GameCommond : pb::IMessage<GameCommond> {
+  private static readonly pb::MessageParser<GameCommond> _parser = new pb::MessageParser<GameCommond>(() => new GameCommond());
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<GameCommond> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::BattleReflection.Descriptor.MessageTypes[2]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public GameCommond() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public GameCommond(GameCommond other) : this() {
+    xAxis_ = other.xAxis_;
+    yAxis_ = other.yAxis_;
+    jump_ = other.jump_;
+    attack_ = other.attack_;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public GameCommond Clone() {
+    return new GameCommond(this);
+  }
+
+  /// <summary>Field number for the "x_axis" field.</summary>
+  public const int XAxisFieldNumber = 1;
+  private float xAxis_;
+  /// <summary>
+  ///  摇杆输入
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float XAxis {
+    get { return xAxis_; }
+    set {
+      xAxis_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "y_axis" field.</summary>
+  public const int YAxisFieldNumber = 2;
+  private float yAxis_;
+  /// <summary>
+  ///  摇杆输入
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float YAxis {
+    get { return yAxis_; }
+    set {
+      yAxis_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "jump" field.</summary>
+  public const int JumpFieldNumber = 3;
+  private bool jump_;
+  /// <summary>
+  ///  其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Jump {
+    get { return jump_; }
+    set {
+      jump_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "attack" field.</summary>
+  public const int AttackFieldNumber = 4;
+  private bool attack_;
+  /// <summary>
+  /// bool skill1 = 5;
+  /// bool skill2 = 6;
+  /// bool skill3 = 7;
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Attack {
+    get { return attack_; }
+    set {
+      attack_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as GameCommond);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(GameCommond other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (XAxis != other.XAxis) return false;
+    if (YAxis != other.YAxis) return false;
+    if (Jump != other.Jump) return false;
+    if (Attack != other.Attack) return false;
+    return true;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (XAxis != 0F) hash ^= XAxis.GetHashCode();
+    if (YAxis != 0F) hash ^= YAxis.GetHashCode();
+    if (Jump != false) hash ^= Jump.GetHashCode();
+    if (Attack != false) hash ^= Attack.GetHashCode();
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (XAxis != 0F) {
+      output.WriteRawTag(13);
+      output.WriteFloat(XAxis);
+    }
+    if (YAxis != 0F) {
+      output.WriteRawTag(21);
+      output.WriteFloat(YAxis);
+    }
+    if (Jump != false) {
+      output.WriteRawTag(24);
+      output.WriteBool(Jump);
+    }
+    if (Attack != false) {
+      output.WriteRawTag(32);
+      output.WriteBool(Attack);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (XAxis != 0F) {
+      size += 1 + 4;
+    }
+    if (YAxis != 0F) {
+      size += 1 + 4;
+    }
+    if (Jump != false) {
+      size += 1 + 1;
+    }
+    if (Attack != false) {
+      size += 1 + 1;
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(GameCommond other) {
+    if (other == null) {
+      return;
+    }
+    if (other.XAxis != 0F) {
+      XAxis = other.XAxis;
+    }
+    if (other.YAxis != 0F) {
+      YAxis = other.YAxis;
+    }
+    if (other.Jump != false) {
+      Jump = other.Jump;
+    }
+    if (other.Attack != false) {
+      Attack = other.Attack;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          input.SkipLastField();
+          break;
+        case 13: {
+          XAxis = input.ReadFloat();
+          break;
+        }
+        case 21: {
+          YAxis = input.ReadFloat();
+          break;
+        }
+        case 24: {
+          Jump = input.ReadBool();
+          break;
+        }
+        case 32: {
+          Attack = input.ReadBool();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class GameCommondGroup : pb::IMessage<GameCommondGroup> {
+  private static readonly pb::MessageParser<GameCommondGroup> _parser = new pb::MessageParser<GameCommondGroup>(() => new GameCommondGroup());
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<GameCommondGroup> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::BattleReflection.Descriptor.MessageTypes[3]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public GameCommondGroup() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public GameCommondGroup(GameCommondGroup other) : this() {
+    commonds_ = other.commonds_.Clone();
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public GameCommondGroup Clone() {
+    return new GameCommondGroup(this);
+  }
+
+  /// <summary>Field number for the "commonds" field.</summary>
+  public const int CommondsFieldNumber = 1;
+  private static readonly pbc::MapField<uint, global::GameCommond>.Codec _map_commonds_codec
+      = new pbc::MapField<uint, global::GameCommond>.Codec(pb::FieldCodec.ForUInt32(8), pb::FieldCodec.ForMessage(18, global::GameCommond.Parser), 10);
+  private readonly pbc::MapField<uint, global::GameCommond> commonds_ = new pbc::MapField<uint, global::GameCommond>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pbc::MapField<uint, global::GameCommond> Commonds {
+    get { return commonds_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as GameCommondGroup);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(GameCommondGroup other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!Commonds.Equals(other.Commonds)) return false;
+    return true;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    hash ^= Commonds.GetHashCode();
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    commonds_.WriteTo(output, _map_commonds_codec);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    size += commonds_.CalculateSize(_map_commonds_codec);
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(GameCommondGroup other) {
+    if (other == null) {
+      return;
+    }
+    commonds_.Add(other.commonds_);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          input.SkipLastField();
+          break;
+        case 10: {
+          commonds_.AddEntriesFrom(input, _map_commonds_codec);
           break;
         }
       }

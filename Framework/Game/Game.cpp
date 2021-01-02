@@ -1,4 +1,10 @@
 #include "Game.hpp"
+
+#include <filesystem>
+
+#include "Framework/Game/InputService.hpp"
+#include "Framework/Game/LogService.hpp"
+
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Commond.hpp"
 #include "Framework/Game/Component/Player.hpp"
@@ -58,6 +64,9 @@ bool Game::Initialize()
 		}
 	}
 
+	auto& log_service = registry_.ctx<Locator>().Ref<const LogService>();
+	log_service.Info("current_path:{}", std::filesystem::current_path().string());
+
 	SaveSnapshot();
 
 	return true;
@@ -85,7 +94,10 @@ void Game::UpdateClinet(float dt)
 	while (game_state.run_time > game_state.run_frame * kFrameRate + kFrameRate)
 	{
 		//todo:临时填充帧
-		InputCommond(main_player_id_, Commond());
+		//InputCommond(main_player_id_, Commond());
+		// 进行
+		auto& input_service = registry_.ctx<Locator>().Ref<const InputService>();
+		input_service.InputHandler();
 
 		bool predict = false;
 

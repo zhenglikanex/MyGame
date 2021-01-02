@@ -26,6 +26,8 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
+#include <google/protobuf/map.h>
+#include <google/protobuf/map_field_inl.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
@@ -34,6 +36,8 @@ void protobuf_AddDesc_Battle_2eproto();
 void protobuf_AssignDesc_Battle_2eproto();
 void protobuf_ShutdownFile_Battle_2eproto();
 
+class GameCommond;
+class GameCommondGroup;
 class GamePlayerInfos;
 class PlayerInfo;
 
@@ -214,6 +218,205 @@ class GamePlayerInfos : public ::google::protobuf::Message /* @@protoc_insertion
   void InitAsDefaultInstance();
   static GamePlayerInfos* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class GameCommond : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:GameCommond) */ {
+ public:
+  GameCommond();
+  virtual ~GameCommond();
+
+  GameCommond(const GameCommond& from);
+
+  inline GameCommond& operator=(const GameCommond& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GameCommond& default_instance();
+
+  void Swap(GameCommond* other);
+
+  // implements Message ----------------------------------------------
+
+  inline GameCommond* New() const { return New(NULL); }
+
+  GameCommond* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GameCommond& from);
+  void MergeFrom(const GameCommond& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(GameCommond* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional float x_axis = 1;
+  void clear_x_axis();
+  static const int kXAxisFieldNumber = 1;
+  float x_axis() const;
+  void set_x_axis(float value);
+
+  // optional float y_axis = 2;
+  void clear_y_axis();
+  static const int kYAxisFieldNumber = 2;
+  float y_axis() const;
+  void set_y_axis(float value);
+
+  // optional bool jump = 3;
+  void clear_jump();
+  static const int kJumpFieldNumber = 3;
+  bool jump() const;
+  void set_jump(bool value);
+
+  // optional bool attack = 4;
+  void clear_attack();
+  static const int kAttackFieldNumber = 4;
+  bool attack() const;
+  void set_attack(bool value);
+
+  // @@protoc_insertion_point(class_scope:GameCommond)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  float x_axis_;
+  float y_axis_;
+  bool jump_;
+  bool attack_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_Battle_2eproto();
+  friend void protobuf_AssignDesc_Battle_2eproto();
+  friend void protobuf_ShutdownFile_Battle_2eproto();
+
+  void InitAsDefaultInstance();
+  static GameCommond* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GameCommondGroup : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:GameCommondGroup) */ {
+ public:
+  GameCommondGroup();
+  virtual ~GameCommondGroup();
+
+  GameCommondGroup(const GameCommondGroup& from);
+
+  inline GameCommondGroup& operator=(const GameCommondGroup& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GameCommondGroup& default_instance();
+
+  void Swap(GameCommondGroup* other);
+
+  // implements Message ----------------------------------------------
+
+  inline GameCommondGroup* New() const { return New(NULL); }
+
+  GameCommondGroup* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const GameCommondGroup& from);
+  void MergeFrom(const GameCommondGroup& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(GameCommondGroup* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+
+  // accessors -------------------------------------------------------
+
+  // map<uint32, .GameCommond> commonds = 1;
+  int commonds_size() const;
+  void clear_commonds();
+  static const int kCommondsFieldNumber = 1;
+  const ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >&
+      commonds() const;
+  ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >*
+      mutable_commonds();
+
+  // @@protoc_insertion_point(class_scope:GameCommondGroup)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  typedef ::google::protobuf::internal::MapEntryLite<
+      ::google::protobuf::uint32, ::GameCommond,
+      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
+      ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
+      0 >
+      GameCommondGroup_CommondsEntry;
+  ::google::protobuf::internal::MapField<
+      ::google::protobuf::uint32, ::GameCommond,
+      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
+      ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
+      0 > commonds_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_Battle_2eproto();
+  friend void protobuf_AssignDesc_Battle_2eproto();
+  friend void protobuf_ShutdownFile_Battle_2eproto();
+
+  void InitAsDefaultInstance();
+  static GameCommondGroup* default_instance_;
+};
 // ===================================================================
 
 
@@ -284,7 +487,93 @@ GamePlayerInfos::player_infos() const {
   return player_infos_;
 }
 
+// -------------------------------------------------------------------
+
+// GameCommond
+
+// optional float x_axis = 1;
+inline void GameCommond::clear_x_axis() {
+  x_axis_ = 0;
+}
+inline float GameCommond::x_axis() const {
+  // @@protoc_insertion_point(field_get:GameCommond.x_axis)
+  return x_axis_;
+}
+inline void GameCommond::set_x_axis(float value) {
+  
+  x_axis_ = value;
+  // @@protoc_insertion_point(field_set:GameCommond.x_axis)
+}
+
+// optional float y_axis = 2;
+inline void GameCommond::clear_y_axis() {
+  y_axis_ = 0;
+}
+inline float GameCommond::y_axis() const {
+  // @@protoc_insertion_point(field_get:GameCommond.y_axis)
+  return y_axis_;
+}
+inline void GameCommond::set_y_axis(float value) {
+  
+  y_axis_ = value;
+  // @@protoc_insertion_point(field_set:GameCommond.y_axis)
+}
+
+// optional bool jump = 3;
+inline void GameCommond::clear_jump() {
+  jump_ = false;
+}
+inline bool GameCommond::jump() const {
+  // @@protoc_insertion_point(field_get:GameCommond.jump)
+  return jump_;
+}
+inline void GameCommond::set_jump(bool value) {
+  
+  jump_ = value;
+  // @@protoc_insertion_point(field_set:GameCommond.jump)
+}
+
+// optional bool attack = 4;
+inline void GameCommond::clear_attack() {
+  attack_ = false;
+}
+inline bool GameCommond::attack() const {
+  // @@protoc_insertion_point(field_get:GameCommond.attack)
+  return attack_;
+}
+inline void GameCommond::set_attack(bool value) {
+  
+  attack_ = value;
+  // @@protoc_insertion_point(field_set:GameCommond.attack)
+}
+
+// -------------------------------------------------------------------
+
+// GameCommondGroup
+
+// map<uint32, .GameCommond> commonds = 1;
+inline int GameCommondGroup::commonds_size() const {
+  return commonds_.size();
+}
+inline void GameCommondGroup::clear_commonds() {
+  commonds_.Clear();
+}
+inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >&
+GameCommondGroup::commonds() const {
+  // @@protoc_insertion_point(field_map:GameCommondGroup.commonds)
+  return commonds_.GetMap();
+}
+inline ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >*
+GameCommondGroup::mutable_commonds() {
+  // @@protoc_insertion_point(field_mutable_map:GameCommondGroup.commonds)
+  return commonds_.MutableMap();
+}
+
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

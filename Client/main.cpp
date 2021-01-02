@@ -17,17 +17,3 @@ class UnityNetworkService : public NetworkService
 
 	}
 };
-
-int main()
-{
-	Locator locator;
-	locator.Set<NetworkService>(std::make_shared<UnityNetworkService>());
-	Game game(std::move(locator), GameMode::kClinet,std::vector<Player>());
-	float dt = 0;
-	while (true)
-	{
-		game.Update(dt);
-		std::this_thread::sleep_for(std::chrono::milliseconds(16));
-	}
-	return 0;
-}

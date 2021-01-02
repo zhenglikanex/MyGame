@@ -17,8 +17,10 @@ struct MovementSystem : public System
 	{
 		registry.view<MovementCommond,Movement,Transform>().each([](auto e,const MovementCommond& commond, const Movement& movement,Transform& position)
 		{
-			position.forward = glm::normalize(vec3(commond.x_axis, 0, commond.y_axis));
-			position.pos += movement.velocity * position.forward;
+				vec3 value = vec3(fixed16(0.1));
+				position.forward = glm::normalize(vec3(commond.x_axis, 0, commond.y_axis));
+
+				position.pos += movement.velocity * position.forward;
 		});
 	}
 

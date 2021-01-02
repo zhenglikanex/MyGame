@@ -57,4 +57,14 @@ extern "C"
 			fpFun(dt);
 		}
 	}
+
+	PROXY_DLL void GameInput(const char* data, int32_t size)
+	{
+		auto fpFun = (void(*)(const char*, int32_t))GetProcAddress(instance, "GameInput");
+		if (fpFun)
+		{
+			fpFun(data, size);
+		}
+	}
+	
 }

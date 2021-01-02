@@ -32,7 +32,7 @@ public:
 	void UpdateClinet(float dt);
 	void UpdateServer(float dt);
 
-	// Íâ²¿µ÷ÓÃ
+	// å¤–éƒ¨è°ƒç”¨
 	void InputCommond(uint32_t id, Commond&& commond);
 	void SetupCommonds(uint32_t frame);
 	CommondGroup GetCommondGroup(uint32_t frame);
@@ -47,8 +47,8 @@ public:
 	entt::registry& registry() { return registry_; }
 	uint32_t main_player_id() const { return main_player_id_; }
 private:
-	static const uint32_t kFrameRate = 33;	// 33ºÁÃë¸üĞÂÆµÂÊ
-	static const uint32_t kMaxPredictFrame = 60;	//×î´óÔ¤²â60Ö¡,2Ãë
+	static const uint32_t kFrameRate = 33;	// 33æ¯«ç§’æ›´æ–°é¢‘ç‡
+	static const uint32_t kMaxPredictFrame = 60;	//æœ€å¤§é¢„æµ‹60å¸§,2ç§’
 
 	entt::registry registry_;
 	std::vector<std::unique_ptr<System>> systems_;

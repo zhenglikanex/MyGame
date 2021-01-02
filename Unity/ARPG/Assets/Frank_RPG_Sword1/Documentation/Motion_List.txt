@@ -1,0 +1,86 @@
+01_Frank_RPG_Normal_Idle (Basic)
+02_Frank_RPG_Sword_Draw
+03_Frank_RPG_Sword_Combat_Idle
+04_Frank_RPG_Sword_Run01
+05_Frank_RPG_Sword_Run02
+06_Frank_RPG_Sword_Walk_Forward
+07_Frank_RPG_Sword_Step_Back
+08_Frank_RPG_Sword_Step_Left
+09_Frank_RPG_Sword_Step_Right
+10_Frank_RPG_Sword_Back Dash
+11_Frank_RPG_Sword_Dash
+12_Frank_RPG_Sword_Jump
+13_Frank_RPG_Sword_Putup
+
+14_Frank_RPG_Sword_Evade_Left
+15_Frank_RPG_Sword_Evade_Right
+16_Frank_RPG_Sword_Evade_Back
+
+
+17_Frank_RPG_Normal_Run
+18_Frank_RPG_Normal_Walk
+
+19_Frank_RPG_Sword_4way_Left
+20_Frank_RPG_Sword_4way_Right
+21_Frank_RPG_Sword_4way_Front
+22_Frank_RPG_Sword_4way_Back
+
+
+23_Frank_RPG_Sword_ParryingAtk
+24_Frank_RPG_Sword_Combo_A_set    (6Atks)
+25_Frank_RPG_Sword_Combo_B_set    (4Atks)
+26_Frank_RPG_Sword_Combo_C_set    (3Atks)
+27_Frank_RPG_Sword_Attack01
+28_Frank_RPG_Sword_Attack02
+29_Frank_RPG_Sword_Attack03
+30_Frank_RPG_Sword_Attack04
+31_Frank_RPG_Sword_Attack05
+
+
+32_Frank_RPG_Sword_Skill_01
+33_Frank_RPG_Sword_Skill_02
+34_Frank_RPG_Sword_Skill_03
+35_Frank_RPG_Sword_Skill_04
+
+
+36_Frank_RPG_Sword_Hit_01
+37_Frank_RPG_Sword_Hit_02
+38_Frank_RPG_Sword_Hit_KnockBack
+39_Frank_RPG_Sword_Hit_Air
+40_Frank_RPG_Sword_Hit_KnockDown
+41_Frank_RPG_Sword_Stun
+
+
+42_Frank_RPG_Sword_GetUp
+
+43_Frank_RPG_Sword_Guard
+44_Frank_RPG_Sword_Block
+
+45_Frank_RPG_Sword_Die_01
+46_Frank_RPG_Sword_Die_02
+
+
+
+--Combo_A_set    (6Atks)--
+
+47_Frank_RPG_Sword_Combo_A1
+48_Frank_RPG_Sword_Combo_A2
+49_Frank_RPG_Sword_Combo_A3
+50_Frank_RPG_Sword_Combo_A4
+51_Frank_RPG_Sword_Combo_A5
+
+
+--Combo_C_set    (4Atks)--
+
+52_Frank_RPG_Sword_Combo_B1
+53_Frank_RPG_Sword_Combo_B2
+54_Frank_RPG_Sword_Combo_B3
+55_Frank_RPG_Sword_Combo_B4
+
+
+
+--Combo_C_set    (3Atks)--
+
+56_Frank_RPG_Sword_Combo_C1
+57_Frank_RPG_Sword_Combo_C2
+58_Frank_RPG_Sword_Combo_C3

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,9 +32,13 @@ public class GameObjectPool : MonoBehaviour
         if(!go)
         {
             go = GameObject.Instantiate<GameObject>(prefab_);
+            PoolObject po = go.GetComponent<PoolObject>();
+            po.OwnerPoolName = Name;
         }
         go.SetActive(true);
-        go.GetComponent<PoolObject>().Init();
+        PoolObject obj = go.GetComponent<PoolObject>();
+        obj.IsUse = true;
+        obj.Init();
 
         return go;
     }
@@ -62,7 +66,9 @@ public class GameObjectPool : MonoBehaviour
         else
         {
             // 外部必须确保go恢复初始状态
-            go.GetComponent<PoolObject>().Clear();
+            PoolObject obj = go.GetComponent<PoolObject>();
+            obj.Clear();
+            obj.IsUse = false;
             go.SetActive(false);
             go.transform.SetParent(this.transform);
             caches_.Enqueue(go);
@@ -80,7 +86,7 @@ public class GameObjectPool : MonoBehaviour
                 go.transform.SetParent(this.transform);
                 go.SetActive(false);
 
-                go.AddComponent<PoolObject>().OwnerPoolName = Name;
+                go.GetComponent<PoolObject>().OwnerPoolName = Name;
 
                 caches_.Enqueue(go);
             }

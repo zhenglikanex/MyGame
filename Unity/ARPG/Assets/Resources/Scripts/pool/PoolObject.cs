@@ -1,19 +1,14 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PoolObject : MonoBehaviour {
 
     public bool IsUse = false;
-    public string OwnerPoolName
-    {
-        get;
-        set;
-    }
+    public string OwnerPoolName = "";
 
     public void Init()
     {
-        IsUse = true;
         OnInit();
     }
 
@@ -21,11 +16,10 @@ public class PoolObject : MonoBehaviour {
     {
 
     }
-
+    
     public void Clear()
     {
         OnClear();
-        IsUse = false;
     }
 
     public virtual void OnClear()

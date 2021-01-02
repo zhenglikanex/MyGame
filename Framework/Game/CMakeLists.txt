@@ -6,6 +6,8 @@ add_library(Game
     Locator.hpp
     FixedPoint.hpp
     Service.hpp
+    LogService.hpp
+    InputService.hpp
     ViewService.hpp
     IViewImpl.hpp
     NetworkService.hpp

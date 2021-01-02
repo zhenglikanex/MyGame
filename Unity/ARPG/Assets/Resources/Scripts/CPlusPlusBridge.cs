@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -80,11 +80,18 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
     [DllImport("ClientProxy")]
     public static extern void FreeDLL();
+
+    [DllImport("ClientProxy")]
+    public static extern void GameInput(byte[] data, int size);
 #endif
 
     public static string UnityCallback(string func,string json_params)
     {
-        object[] objs = LitJson.JsonMapper.ToObject<object[]>(json_params);
+        object[] objs = null;
+        if (json_params != "")
+        {
+            objs = LitJson.JsonMapper.ToObject<object[]>(json_params);
+        }
 
         Type t = typeof(CPlusPlusBridge);
         MethodInfo method = t.GetMethod(func);
@@ -126,5 +133,25 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     public static void UpdatePosition(int id,float x,float y,float z)
     {
         //UnityViewServices.Instance.UpdateView(int)
+    }
+
+    public static void InputHandler()
+    {
+        BattleController.Instance.InputHandler();
+    }
+
+    public static void LogInfo(string message)
+    {
+        Debug.Log(message);
+    }
+
+    public static void LogWarning(string message)
+    {
+        Debug.LogWarning(message);
+    }
+
+    public static void LogError(string message)
+    {
+        Debug.LogError(message);
     }
 }

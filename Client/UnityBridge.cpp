@@ -1,12 +1,14 @@
 #include "UnityBridge.hpp"
 
-#include "Client/UnityViewService.hpp"
-
 #include <thread>
 #include <chrono>
-
 #include <asio.hpp>
 
+#include "Client/UnityViewService.hpp"
+#include "Client/UnityLogService.hpp"
+#include "Client/UnityInputService.hpp"
+
+#include "Framework/Game/Math.hpp"
 #include "Framework/Game/Game.hpp"
 #include "Framework/Game/NetworkService.hpp"
 #include "Framework/Game/ViewService.hpp"
@@ -38,8 +40,12 @@ extern "C"
 			player.actor_id = iter->actor_id();
 			players.emplace_back(std::move(player));
 		}
+
 		Locator locator;
-		locator.Set<ViewService>(std::make_shared<UnityViewService>());
+		locator.Set<ViewService>(std::make_unique<UnityViewService>());
+		locator.Set<InputService>(std::make_unique<UnityInputService>());
+		locator.Set<LogService>(std::make_unique<UnityLogService>());
+
 		g_game = std::make_unique<Game>(std::move(locator), GameMode::kClinet,std::move(players));
 		g_game->Initialize();
 	}
@@ -54,6 +60,24 @@ extern "C"
 		if (g_game)
 		{
 			g_game->Update(dt);
+		}
+	}
+
+	EXPORT_DLL void GameInput(const char* data, int32_t size)
+	{
+		if (g_game)
+		{
+			GameCommondGroup group;
+			group.ParseFromArray(data, size);
+			for (auto iter = group.commonds().cbegin(); iter != group.commonds().cend(); ++iter)
+			{
+				
+				Commond cmd;
+				cmd.x_axis = fixed16(iter->second.x_axis());
+				cmd.y_axis = fixed16(iter->second.y_axis());
+
+				//g_game->InputCommond(iter->first,std::move(cmd));
+			}
 		}
 	}
 }

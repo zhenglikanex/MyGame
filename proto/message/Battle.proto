@@ -10,3 +10,21 @@ message GamePlayerInfos
 {
 	repeated PlayerInfo player_infos = 1;
 }
+
+message GameCommond
+{
+	float x_axis = 1;		// 摇杆输入
+	float y_axis = 2;		// 摇杆输入
+
+	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
+	bool jump = 3;
+	bool attack = 4;
+	//bool skill1 = 5;
+	//bool skill2 = 6;
+	//bool skill3 = 7;
+}
+
+message GameCommondGroup
+{
+	map<uint32,GameCommond> commonds = 1;
+}
