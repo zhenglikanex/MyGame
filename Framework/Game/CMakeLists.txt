@@ -8,9 +8,12 @@ add_library(Game
     Service.hpp
     LogService.hpp
     InputService.hpp
+    FileService.hpp
+    FileService.cpp
     ViewService.hpp
     IViewImpl.hpp
     NetworkService.hpp
+    Json.hpp
     Math.hpp
     System/InputSystem.hpp
     System/AnimationSystem.hpp
@@ -29,4 +32,12 @@ add_library(Game
     Component/Asset.hpp
     Component/Movement.hpp
     Component/MainPlayer.hpp
+
+    ConfigManager.hpp
+    ConfigManager.cpp
+
+    Data/Config.hpp
+    Data/Config.cpp
+    Data/RootMotionConfig.hpp
+    Data/RootMotionConfig.cpp
 )

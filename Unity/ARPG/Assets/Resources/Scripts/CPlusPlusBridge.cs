@@ -154,4 +154,14 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     {
         Debug.LogError(message);
     }
+
+    public static string OpenFile(string file)
+    {
+        var obj = Resources.Load(file);
+        if(obj)
+        {
+            return obj.ToString();
+        }
+        return "";
+    }
 }

@@ -20,49 +20,44 @@ public class ExportRootMotion : MonoBehaviour
     {
         JsonMapper.RegisterExporter<Vector2>((v, w) =>
         {
-            w.WriteObjectStart();//开始写入对象
-
+            w.WriteObjectStart();
             w.WritePropertyName("x");//写入属性名
-            w.Write(v.x.ToString("f3"));//写入值
+            w.Write(Math.Round(v.x, 3));//写入值
 
             w.WritePropertyName("y");
-            w.Write(v.y.ToString("f3"));
+            w.Write(Math.Round(v.y, 3));
 
             w.WriteObjectEnd();
         });
 
         JsonMapper.RegisterExporter<Vector3>((v, w) =>
         {
-            w.WriteObjectStart();//开始写入对象
-
+            w.WriteObjectStart();
             w.WritePropertyName("x");//写入属性名
-            w.Write(v.x.ToString("f3"));//写入值
+            w.Write(Math.Round(v.x, 3));//写入值
 
             w.WritePropertyName("y");
-            w.Write(v.y.ToString("f3"));
+            w.Write(Math.Round(v.y, 3));
 
             w.WritePropertyName("z");
-            w.Write(v.z.ToString("f3"));
-
+            w.Write(Math.Round(v.z, 3));
             w.WriteObjectEnd();
         });
 
         JsonMapper.RegisterExporter<Vector4>((v, w) =>
         {
-            w.WriteObjectStart();//开始写入对象
-
+            w.WriteObjectStart();
             w.WritePropertyName("x");//写入属性名
-            w.Write(v.x.ToString("f3"));//写入值
+            w.Write(Math.Round(v.x, 3));//写入值
 
             w.WritePropertyName("y");
-            w.Write(v.y.ToString("f3"));
+            w.Write(Math.Round(v.y, 3));
 
             w.WritePropertyName("z");
-            w.Write(v.z.ToString("f3"));
+            w.Write(Math.Round(v.z, 3));
 
             w.WritePropertyName("w");
-            w.Write(v.w.ToString("f3"));
-
+            w.Write(Math.Round(v.w, 3));
             w.WriteObjectEnd();
         });
 
@@ -78,7 +73,7 @@ public class ExportRootMotion : MonoBehaviour
                     var field = type.GetField(name);
                     w.WritePropertyName(name);
                     float value = (float)field.GetValue(v);
-                    w.Write(value.ToString("f3"));
+                    w.Write(Math.Round(value, 3));
                 }
             }
 
@@ -89,16 +84,16 @@ public class ExportRootMotion : MonoBehaviour
         {
             w.WriteObjectStart();
             w.WritePropertyName("x");//写入属性名
-            w.Write(v.x.ToString("f3"));//写入值
+            w.Write(Math.Round(v.x, 3));//写入值
 
             w.WritePropertyName("y");
-            w.Write(v.y.ToString("f3"));
+            w.Write(Math.Round(v.y,3));
 
             w.WritePropertyName("z");
-            w.Write(v.z.ToString("f3"));
+            w.Write(Math.Round(v.z, 3));
 
             w.WritePropertyName("w");
-            w.Write(v.w.ToString("f3"));
+            w.Write(Math.Round(v.w, 3));
             w.WriteObjectEnd();
         });
     }
@@ -111,6 +106,11 @@ public class ExportRootMotion : MonoBehaviour
         ReigsterJsonParse();
         var objects = FindObjectsOfType<ExportTarget>();
         Debug.Log("objects :" + objects.Length);
+
+        if(!Directory.Exists("Assets/Resources/Config/Anim/"))
+        {
+            Directory.CreateDirectory("Assets/Resources/Config/Anim/");
+        }
 
         foreach (var obj in objects)
         {
@@ -136,7 +136,7 @@ public class ExportRootMotion : MonoBehaviour
             anims.Add("Locomotion", root_motions);
 
             var json = JsonMapper.ToJson(anims);
-            FileStream f = new FileStream(string.Format("{0}RootMotion.json",obj.gameObject.name),FileMode.Create, FileAccess.Write);
+            FileStream f = new FileStream(string.Format("Assets/Resources/Config/Anim/{0}RootMotion.json", obj.gameObject.name),FileMode.Create, FileAccess.Write);
             StreamWriter stream = new StreamWriter(f);
             stream.Write(json);
             stream.Close();

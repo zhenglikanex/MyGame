@@ -11,6 +11,8 @@ add_library(MyGameClient SHARED
     UnityInputService.cpp
     UnityLogService.hpp
     UnityLogService.cpp
+    UnityFileService.hpp
+    UnityFileService.cpp
     ${PROTO_SRC}
 )
 

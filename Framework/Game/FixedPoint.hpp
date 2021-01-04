@@ -1,10 +1,26 @@
 #pragma once
 
-#include "fpm/fixed.hpp"
-#include "fpm/math.hpp"
+#include "Framework/Game/Json.hpp"
 #include "Framework/serialize/binary_archive.hpp"
 
+#include "fpm/fixed.hpp"
+#include "fpm/math.hpp"
+
 using fixed16 = fpm::fixed_16_16;
+
+namespace fpm
+{
+	// from_json函数需要定义在class的命名空间
+	void from_json(const json& j, fixed16& fixed)
+	{
+		float value;
+		j.get_to(value);
+		fixed = decltype(fixed)(value);
+	}
+}
+
+template <>
+struct std::is_constructible<std::string, fixed16> : std::true_type {};
 
 namespace serialize
 {
