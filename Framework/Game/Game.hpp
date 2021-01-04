@@ -59,6 +59,7 @@ private:
 	{
 		auto& locator = registry_.ctx<Locator>();
 		auto& file_service = locator.Ref<const FileService>();
+		auto& log_service = locator.Ref<const LogService>();
 		try
 		{
 			T config;
@@ -68,8 +69,8 @@ private:
 		}
 		catch (std::exception& e)
 		{
-			std::string error = fmt::format("{} load failed,error:{}", file, e.what());
-			assert(false && error.c_str());
+			log_service.Error("{} load failed,error:{}", file, e.what());
+			//assert(false && "load config failed!");
 		}
 	}
 

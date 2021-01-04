@@ -7,6 +7,7 @@
 #include "Client/UnityViewService.hpp"
 #include "Client/UnityLogService.hpp"
 #include "Client/UnityInputService.hpp"
+#include "Client/UnityFileService.hpp"
 
 #include "Framework/Game/Math.hpp"
 #include "Framework/Game/Game.hpp"
@@ -45,6 +46,7 @@ extern "C"
 		locator.Set<ViewService>(std::make_unique<UnityViewService>());
 		locator.Set<InputService>(std::make_unique<UnityInputService>());
 		locator.Set<LogService>(std::make_unique<UnityLogService>());
+		locator.Set<FileService>(std::make_unique<UnityFileService>());
 
 		g_game = std::make_unique<Game>(std::move(locator), GameMode::kClinet,std::move(players));
 		g_game->Initialize();
