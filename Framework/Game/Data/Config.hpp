@@ -19,8 +19,10 @@ struct is_arry_key
 	static constexpr bool value = std::is_base_of<base_array_key, T>::value;
 };
 
+class BaseConfig{};
+
 template<class ... Ts>
-class Config
+class Config : public BaseConfig
 {
 public:
 	template<class Key, class Value>
@@ -80,9 +82,10 @@ public:
 	using Entry = typename Map<Ts...>::value_type;
 
 	Config() = default;
-
+	Config(Config&&) = default;
+	Config& operator=(Config&&) = default;
 	Config(const Config&) = delete;
-	const Config& operator=(const Config&) = delete;
+	Config& operator=(const Config&) = delete;
 
 	void Load(const std::string& data)
 	{

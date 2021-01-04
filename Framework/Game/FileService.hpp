@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <string_view>
+#include <filesystem>
 
 #include "Framework/Game/Service.hpp"
 
@@ -14,7 +15,7 @@ public:
 	
 	virtual std::string OpenFile(std::string_view file) const;
 
-	void set_cur_path(std::string_view path) { cur_path_ = path; }
+	void set_cur_path(std::string_view path) { cur_path_ = std::filesystem::path(path).string(); }
 	const std::string& cur_path() const { return cur_path_; }
 private:
 	std::string cur_path_;

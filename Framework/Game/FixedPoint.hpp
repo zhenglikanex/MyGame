@@ -11,7 +11,7 @@ using fixed16 = fpm::fixed_16_16;
 namespace fpm
 {
 	// from_json函数需要定义在class的命名空间
-	void from_json(const json& j, fixed16& fixed)
+	inline void from_json(const json& j, fixed16& fixed)
 	{
 		float value;
 		j.get_to(value);

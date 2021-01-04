@@ -16,8 +16,10 @@
 #include "Framework/Game/System/MovementSystem.hpp"
 #include "Framework/Game/System/UpdateViewSystem.hpp"
 #include "Framework/Game/System/AnimationSystem.hpp"
-#include "Framework/game/System/CollisionSystem.hpp"
+#include "Framework/Game/System/CollisionSystem.hpp"
 #include "Framework/Game/System/SyncSystem.hpp"
+
+#include "Framework/Game/Data/RootMotionConfig.hpp"
 
 Game::Game(Locator&& locator,GameMode mode,std::vector<Player>&& players)
 {
@@ -65,7 +67,12 @@ bool Game::Initialize()
 	}
 
 	auto& log_service = registry_.ctx<Locator>().Ref<const LogService>();
-	log_service.Info("current_path:{}", std::filesystem::current_path().string());
+	auto& file_service = registry_.ctx<Locator>().Ref<FileService>();
+
+	file_service.set_cur_path(std::filesystem::current_path().string() + "/Assets/Resources/");
+	log_service.Info("current_path:{}", file_service.cur_path());
+	
+	LoadConfig<RootMotionConfig>("Config/Anim/HeroRootMotion.json");
 
 	SaveSnapshot();
 

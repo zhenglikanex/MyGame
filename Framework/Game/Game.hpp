@@ -4,6 +4,9 @@
 #include <memory>
 #include <chrono>
 #include <unordered_map>
+#include <cassert>
+
+#include "Framework/Game/FileService.hpp"
 
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/System.hpp"
@@ -12,7 +15,10 @@
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Commond.hpp"
 
+#include "Framework/Game/Data/Config.hpp"
+
 #include "entt/entt.hpp"
+#include "spdlog/fmt/fmt.h"
 
 class Snapshot
 {
@@ -47,7 +53,27 @@ public:
 	entt::registry& registry() { return registry_; }
 	uint32_t main_player_id() const { return main_player_id_; }
 private:
-	static const uint32_t kFrameRate = 33;	// 33毫秒更新频率
+	template<class T>
+	std::enable_if_t<std::is_base_of_v<BaseConfig,T>,void>
+		LoadConfig(const std::string& file)
+	{
+		auto& locator = registry_.ctx<Locator>();
+		auto& file_service = locator.Ref<const FileService>();
+		try
+		{
+			T config;
+			std::string data = file_service.OpenFile(file);
+			config.Load(data);
+			registry_.set<T>(std::move(config));
+		}
+		catch (std::exception& e)
+		{
+			std::string error = fmt::format("{} load failed,error:{}", file, e.what());
+			assert(false && error.c_str());
+		}
+	}
+
+	static const uint32_t kFrameRate = 33;			// 33毫秒更新频率
 	static const uint32_t kMaxPredictFrame = 60;	//最大预测60帧,2秒
 
 	entt::registry registry_;
