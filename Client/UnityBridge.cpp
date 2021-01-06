@@ -78,7 +78,7 @@ extern "C"
 				cmd.x_axis = fixed16(iter->second.x_axis());
 				cmd.y_axis = fixed16(iter->second.y_axis());
 
-				//g_game->InputCommond(iter->first,std::move(cmd));
+				g_game->InputCommond(iter->first,std::move(cmd));
 			}
 		}
 	}

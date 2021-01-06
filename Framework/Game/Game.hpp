@@ -45,7 +45,6 @@ public:
 	std::vector<CommondGroup> GetAllCommondGroups();
 
 	void CheckPredict();
-	CommondGroup Predict(uint32_t frame);
 	CommondGroup PredictCommondGroup(uint32_t frame);
 
 	void SaveSnapshot();

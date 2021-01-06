@@ -103,7 +103,7 @@ public:
 	const typename ValueType<ConfigMap, Args...>::type& GetEntry(Args&& ... args) const
 	{
 		using ReturnType = const typename ValueType<ConfigMap,Args...>::type&;
-		return GetEntryImpl<ReturnType>(const_cast<TConfig*>(this)->entries_, std::forward<Args>(args)...);
+		return GetEntryImpl<ReturnType>(const_cast<Config*>(this)->entries_, std::forward<Args>(args)...);
 	}
 private:
 	template<class ReturnType,class Container, class Key, class ... Args>

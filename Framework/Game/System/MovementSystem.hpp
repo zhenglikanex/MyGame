@@ -20,7 +20,7 @@ struct MovementSystem : public System
 				vec3 value = vec3(fixed16(0.1));
 				position.forward = glm::normalize(vec3(commond.x_axis, 0, commond.y_axis));
 
-				position.pos += movement.velocity * position.forward;
+				//position.pos += movement.velocity * position.forward;
 		});
 	}
 

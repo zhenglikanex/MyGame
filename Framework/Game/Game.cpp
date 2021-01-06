@@ -41,9 +41,7 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<Player>&& players)
 		auto e = registry_.create();
 		registry_.emplace<Player>(e, player);
 		
-		registry_.emplace<Asset>(e, "Hero");
-
-		Commond commond;
+		//Commond commond;
 		//InputCommond(player.id,std::move(commond));
 
 		main_player_id_ = player.id;
@@ -71,8 +69,14 @@ bool Game::Initialize()
 
 	file_service.set_cur_path(std::filesystem::current_path().string() + "/Assets/Resources/");
 	log_service.Info("current_path:{}", file_service.cur_path());
-	
+	auto root_motions = registry_.ctx<RootMotionConfig>().GetEntry("Locomotion");
 	LoadConfig<RootMotionConfig>("Config/Anim/HeroRootMotion.json");
+
+	for (auto e : registry_.view<Player>())
+	{
+		registry_.emplace<Asset>(e, "Hero");
+		registry_.emplace<Movement>(e, root_motions);
+	}
 
 	SaveSnapshot();
 
@@ -107,18 +111,17 @@ void Game::UpdateClinet(float dt)
 		input_service.InputHandler();
 
 		bool predict = false;
-
-		registry_.set<CommondGroup>(GetCommondGroup(game_state.run_frame));
-
-		if (registry_.ctx<CommondGroup>().value.size() < registry_.view<Player>().size() && game_state.run_frame - game_state.real_frame <= kMaxPredictFrame)
+		auto commond_group = GetCommondGroup(game_state.run_frame);
+		if (commond_group.value.size() < registry_.view<Player>().size() && game_state.run_frame - game_state.real_frame <= kMaxPredictFrame)
 		{
 			predict = true;
-			registry_.set<CommondGroup>(Predict(game_state.run_frame));
+			commond_group = PredictCommondGroup(game_state.run_frame);
 			SaveSnapshot();
 		}
 
-		if (registry_.ctx<CommondGroup>().value.size() == registry_.view<Player>().size())
+		if (commond_group.value.size() == registry_.view<Player>().size())
 		{
+			registry_.set<CommondGroup>(std::move(commond_group));
 			for (auto& system : systems_)
 			{
 				system->Update(fixed16(0.33));
@@ -189,7 +192,7 @@ void Game::InputCommond(uint32_t id,Commond&& commond)
 	{
 		std::vector<Commond> commonds;
 		commonds.emplace_back(std::move(commond));
-		commonds_map_.emplace(id, commonds);
+		commonds_map_.emplace(id, std::move(commonds));
 	}
 
 	if (registry_.ctx<GameMode>() == GameMode::kClinet)
@@ -277,16 +280,19 @@ void Game::CheckPredict()
 
 CommondGroup Game::PredictCommondGroup(uint32_t frame)
 {
-	CommondGroup commond_group = GetCommondGroup(frame - 1);
-	//todo: 填充自己的命令
-	return commond_group;
-}
+	CommondGroup commonds;
+	for (auto& it : commonds_map_)
+	{
+		if (it.second.size() > frame) {
+			commonds.value.emplace(it.first, it.second[frame]);
+		}
+		else
+		{
+			commonds.value.emplace(it.first, it.second.back());
+		}
+	}
 
-CommondGroup Game::Predict(uint32_t frame)
-{
-	auto commond_group = PredictCommondGroup(frame);
-	predict_commond_groups_.emplace(frame,commond_group);
-	return commond_group;
+	return commonds;
 }
 
 void Game::SaveSnapshot()

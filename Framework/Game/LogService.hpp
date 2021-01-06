@@ -8,6 +8,16 @@
 
 #include "spdlog/fmt/fmt.h"
 
+#ifdef DEBUG
+#define INFO(...) registry.ctx<Locator>().Ref<LogService>().Info(__VA_ARGS__);
+#define WARNING(...) registry.ctx<Locator>().Ref<LogService>().Warning(__VA_ARGS__);
+#define ERROR(...) registry.ctx<Locator>().Ref<LogService>().Error(__VA_ARGS__);
+#else
+#define INFO(...)
+#define WARNING(...)
+#define ERROR(...)
+#endif
+
 class LogService : public Service
 {
 public:
