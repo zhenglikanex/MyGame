@@ -32,6 +32,8 @@ add_library(Game
     Component/Asset.hpp
     Component/Movement.hpp
     Component/MainPlayer.hpp
+    Component/State.hpp
+
 
     ConfigManager.hpp
     ConfigManager.cpp

@@ -6,6 +6,8 @@
 
 struct UpdateViewSystem : public System
 {
+	entt::observer observer{ registry, entt::collector.update<Transform>().where<View>() };
+
 	UpdateViewSystem(entt::registry& _registry) : System(_registry) { }
 	~UpdateViewSystem() {}
 
@@ -16,13 +18,16 @@ struct UpdateViewSystem : public System
 
 	void Update(fixed16 dt) override
 	{
-		registry.view<const View, const Transform>().each([](auto, const View& view, const Transform& position) 
+		for (auto e : observer)
 		{
-			//view.value->Move(position.pos);
-			//view.value->SetForward(position.forward);
-		});
+			auto& view = registry.get<View>(e);
+			const auto& transform = registry.get<Transform>(e);
+			
+			view.value->MovePosition(transform.position);
+			view.value->MoveForward(transform.forward);
+		}
 
-		// todo animation
+		observer.clear();
 	}
 
 	void Finalize() override

@@ -27,11 +27,14 @@ struct CommondProcessSystem : public System
 			{
 				INFO("x_axis:{} y_axis:{}", static_cast<float>(iter->second.x_axis), static_cast<float>(iter->second.y_axis));
 				// movement commond
-				registry.emplace_or_replace<MovementCommond>(e,iter->second.x_axis, iter->second.y_axis);
+				if (iter->second.x_axis != fixed16(0.0) || iter->second.y_axis != fixed16(0.0))
+				{
+					registry.emplace_or_replace<MovementCommond>(e, iter->second.x_axis, iter->second.y_axis);
+				}
 			}
 		}
 	}
-
+	
 	void Finalize() override
 	{
 

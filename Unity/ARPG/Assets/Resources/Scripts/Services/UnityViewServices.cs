@@ -29,6 +29,7 @@ public class UnityViewServices : GlobalGameObjectSingleton<UnityViewServices>
             if(view)
             {
                 view.Id = GenViewId();
+                views.Add(view.Id, view);
             }
             go.transform.SetParent(GameObject.Find("World").transform);
 

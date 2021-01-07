@@ -25,7 +25,7 @@ struct CreateViewSystem : public System
 			auto v = locator.Ref<ViewService>().Create(asset.value);
 
 			Transform transform;
-			v->MovePosition(transform.pos);
+			v->MovePosition(transform.position);
 
 			registry.emplace<View>(e,std::move(v));
 			registry.emplace<Transform>(e,std::move(transform));

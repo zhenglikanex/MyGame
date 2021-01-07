@@ -87,6 +87,10 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
     public static string UnityCallback(string func,string json_params)
     {
+        if(func == "MovePosition")
+        {
+            Debug.LogError(json_params);
+        }
         object[] objs = null;
         if (json_params != "")
         {
@@ -104,6 +108,7 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
             } 
             catch(Exception e)
             {
+                Debug.LogError(e.ToString());
                 result = null;
             }
 
@@ -115,7 +120,6 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
                 return json_result;
             }
         }
-
         return "";
     }
 
@@ -132,7 +136,22 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
     public static void UpdatePosition(int id,float x,float y,float z)
     {
-        //UnityViewServices.Instance.UpdateView(int)
+        UnityViewServices.Instance.UpdatePosition(id, x, y, z);
+    }
+
+    public static void MovePosition(int id,double x,double y,double z)
+    {
+        UnityViewServices.Instance.MovePosition(id, (float)x, (float)y, (float)z);
+    }
+
+    public static void UpdateForward(int id,float x,float y,float z)
+    {
+        UnityViewServices.Instance.UpdateForward(id, x, y, z);
+    }
+
+    public static void MoveForward(int id,float x,float y,float z)
+    {
+        UnityViewServices.Instance.MoveForward(id, x, y, z);
     }
 
     public static void InputHandler()
