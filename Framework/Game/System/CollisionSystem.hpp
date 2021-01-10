@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Framework/Game/System.hpp"
 
 struct CollisionSystem : public System

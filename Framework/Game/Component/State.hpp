@@ -1,5 +1,3 @@
-#pragma once
-
 // 状态组件
 struct IdleState{};
 struct MovementState{};

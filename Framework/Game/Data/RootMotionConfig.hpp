@@ -2,7 +2,6 @@
 
 #include <unordered_map>
 
-#include "Framework/Game/LogService.hpp"
 #include "Framework/Game/Data/Config.hpp"
 #include "Framework/Game/Math.hpp"
 
@@ -15,8 +14,6 @@ struct RootMotion
 
 inline void from_json(const nlohmann::json& j, RootMotion& root_motion)
 {
-	INFO("from_json deltaPosition", j.at("deltaPosition").dump());
-	INFO("from_json deltaRotation", j.at("deltaRotation").dump());
 	j.at("deltaPosition").get_to(root_motion.delta_position);
 	j.at("deltaRotation").get_to(root_motion.delta_rotation);
 }

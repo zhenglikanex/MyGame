@@ -53,7 +53,7 @@ public:
 		{
 			nlohmann::json json;
 			(json.push_back(args), ...);
-			
+
 			std::string params = json.dump();
 
 			if constexpr (!std::is_void_v<R>)

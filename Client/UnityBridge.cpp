@@ -21,7 +21,6 @@ std::unique_ptr<UnityBridge> UnityBridge::instance_;
 UnityDelegate UnityBridge::unity_delegate_ = nullptr;
 
 std::unique_ptr<Game> g_game = nullptr;
-std::unique_ptr<LogService> g_log_service = std::make_unique<UnityLogService>();
 
 extern "C"
 {
@@ -46,6 +45,7 @@ extern "C"
 		Locator locator;
 		locator.Set<ViewService>(std::make_unique<UnityViewService>());
 		locator.Set<InputService>(std::make_unique<UnityInputService>());
+		locator.Set<LogService>(std::make_unique<UnityLogService>());
 		locator.Set<FileService>(std::make_unique<UnityFileService>());
 
 		g_game = std::make_unique<Game>(std::move(locator), GameMode::kClinet,std::move(players));

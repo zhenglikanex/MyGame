@@ -1,13 +1,10 @@
 #pragma once
 
-#include <cassert>
-
 #include "Framework/Game/Json.hpp"
 #include "Framework/serialize/binary_archive.hpp"
 
 #include "fpm/fixed.hpp"
 #include "fpm/math.hpp"
-#include "fpm/ios.hpp"
 
 using fixed16 = fpm::fixed_16_16;
 
@@ -18,7 +15,7 @@ namespace fpm
 	{
 		float value;
 		j.get_to(value);
-		fixed = fixed16(value);
+		fixed = decltype(fixed)(value);
 	}
 }
 

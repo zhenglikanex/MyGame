@@ -64,10 +64,11 @@ bool Game::Initialize()
 		}
 	}
 
+	auto& log_service = registry_.ctx<Locator>().Ref<const LogService>();
 	auto& file_service = registry_.ctx<Locator>().Ref<FileService>();
 
 	file_service.set_cur_path(std::filesystem::current_path().string() + "/Assets/Resources/");
-	//log_service.Info("current_path:{}", file_service.cur_path());
+	log_service.Info("current_path:{}", file_service.cur_path());
 	LoadConfig<RootMotionConfig>("Config/Anim/HeroRootMotion.json");
 
 	auto root_motions = registry_.ctx<RootMotionConfig>().GetEntry("Locomotion");
