@@ -6,6 +6,7 @@
 #include <sstream>
 #include <filesystem>
 
+
 int main()
 {
 	std::cout << std::filesystem::current_path().string() << std::endl;

@@ -87,16 +87,7 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
     public static string UnityCallback(string func,string json_params)
     {
-        if(func == "MovePosition")
-        {
-            Debug.LogError(json_params);
-        }
-        object[] objs = null;
-        if (json_params != "")
-        {
-            objs = LitJson.JsonMapper.ToObject<object[]>(json_params);
-        }
-
+        object[] objs = { json_params };
         Type t = typeof(CPlusPlusBridge);
         MethodInfo method = t.GetMethod(func);
         if (method != null)
@@ -108,6 +99,7 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
             } 
             catch(Exception e)
             {
+                Debug.Log(func + json_params);
                 Debug.LogError(e.ToString());
                 result = null;
             }
@@ -123,65 +115,101 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         return "";
     }
 
-    public static int CreateView(string asset)
+    public static int CreateView(string json)
     {
+        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
+        string asset = (string)param[0];
         UnityViewServices.Instance.CreateView(asset);
         return 0;
     }
 
-    public static void DestoryView(int id)
+    public static void DestoryView(string json)
     {
+        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
+        int id = (int)param[0];
         UnityViewServices.Instance.DestroyView(id);
     }
 
-    public static void UpdatePosition(int id,float x,float y,float z)
+    public static void UpdatePosition(string json)
     {
+        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
+        int id = (int)param[0];
+        float x = (float)param[1];
+        float y = (float)param[2];
+        float z = (float)param[3];
+
         UnityViewServices.Instance.UpdatePosition(id, x, y, z);
     }
 
-    public static void MovePosition(int id,double x,double y,double z)
+
+    public static void MovePosition(string json)
     {
+        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
+        int id = (int)param[0];
+        float x = Convert.ToSingle(param[1]);
+        float y = Convert.ToSingle(param[2]);
+        float z = Convert.ToSingle(param[3]);
         UnityViewServices.Instance.MovePosition(id, (float)x, (float)y, (float)z);
     }
 
-    public static void UpdateForward(int id,float x,float y,float z)
+    public static void UpdateForward(string json)
     {
+        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
+        int id = (int)param[0];
+        float x = (float)param[1];
+        float y = (float)param[2];
+        float z = (float)param[3];
         UnityViewServices.Instance.UpdateForward(id, x, y, z);
     }
 
-    public static void MoveForward(int id,float x,float y,float z)
+    public static void MoveForward(string json)
     {
+        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
+        int id = (int)param[0];
+        float x = Convert.ToSingle(param[1]);
+        float y = Convert.ToSingle(param[2]);
+        float z = Convert.ToSingle(param[3]);
         UnityViewServices.Instance.MoveForward(id, x, y, z);
     }
 
-    public static void InputHandler()
+    public static void InputHandler(string json)
     {
         BattleController.Instance.InputHandler();
     }
 
-    public static void LogInfo(string message)
+    public static void LogInfo(string json)
     {
+        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
+        string message = (string)param[0];
         Debug.Log(message);
     }
 
-    public static void LogWarning(string message)
+    public static void LogWarning(string json)
     {
+        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
+        string message = (string)param[0];
         Debug.LogWarning(message);
     }
 
-    public static void LogError(string message)
+    public static string OpenFile(string json)
     {
-        Debug.LogError(message);
-    }
-
-    public static string OpenFile(string file)
-    {
-        file = file.Substring(0,file.LastIndexOf("."));
+        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
+        string file = (string)param[0];
+        file = file.Substring(0, file.LastIndexOf("."));
         var obj = Resources.Load(file);
-        if(obj)
+        if (obj)
         {
             return obj.ToString();
         }
         return "";
     }
+
+    public static void LogError(string json)
+    {
+        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
+        string message = (string)param[0];
+        Debug.LogError(message);
+    }
+
+    
 }

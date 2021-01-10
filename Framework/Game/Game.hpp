@@ -7,18 +7,15 @@
 #include <cassert>
 
 #include "Framework/Game/FileService.hpp"
-
+#include "Framework/Game/LogService.hpp"
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/System.hpp"
 #include "Framework/Game/GameDefin.hpp"
-#include "Framework/Game/FixedPoint.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Commond.hpp"
-
 #include "Framework/Game/Data/Config.hpp"
 
 #include "entt/entt.hpp"
-#include "spdlog/fmt/fmt.h"
 
 class Snapshot
 {
@@ -58,7 +55,6 @@ private:
 	{
 		auto& locator = registry_.ctx<Locator>();
 		auto& file_service = locator.Ref<const FileService>();
-		auto& log_service = locator.Ref<const LogService>();
 		try
 		{
 			T config;
@@ -68,7 +64,7 @@ private:
 		}
 		catch (std::exception& e)
 		{
-			log_service.Error("{} load failed,error:{}", file, e.what());
+			ERROR("{} load failed,error:{}", file, e.what());
 			//assert(false && "load config failed!");
 		}
 	}

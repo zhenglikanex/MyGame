@@ -15,6 +15,7 @@ add_library(Game
     NetworkService.hpp
     Json.hpp
     Math.hpp
+    Fmt.hpp
     System/InputSystem.hpp
     System/AnimationSystem.hpp
     System/CollisionSystem.hpp
