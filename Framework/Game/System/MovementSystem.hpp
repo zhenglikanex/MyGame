@@ -31,17 +31,23 @@ struct MovementSystem : public System
 					movement.root_motions.cend(),
 					[&](const auto& value)
 					{
-						return fpm::abs(fixed16(commond.y_axis) - value.first) <= fixed16(0.1f);
+						auto axis = fpm::abs(fixed16(commond.y_axis));
+						if (axis == value.first)
+						{
+							return true;
+						}
+						return axis > value.first && axis - value.first < fixed16(0.1f);
 					});
 
 				INFO("y_axis:{} , delate_position x:{} y:{} z:{}", static_cast<float>(commond.y_axis),static_cast<float>(iter->second.delta_position.x), static_cast<float>(iter->second.delta_position.y), static_cast<float>(iter->second.delta_position.z));
+				if (iter != movement.root_motions.end())
+				{
+					auto delta_position = iter->second.delta_position * (dt / fixed16(0.33));
+					transform.position = old_trans.position + delta_position;
+					registry.replace<Transform>(e, transform);
 
-				auto delta_position = iter->second.delta_position *(dt / fixed16(0.33));
-				transform.position = old_trans.position + delta_position;
-
-				registry.replace<Transform>(e, transform);
-				
-				registry.remove<MovementCommond>(e);
+					registry.remove<MovementCommond>(e);
+				}
 			});
 	}
 

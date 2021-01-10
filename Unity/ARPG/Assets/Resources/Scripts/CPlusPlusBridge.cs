@@ -62,12 +62,12 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     }
 
 #else
-    public delegate string UnityDelegate(string func,string json_params);
+    public delegate string UnityDelegate(string func, string json_params);
     [DllImport("ClientProxy")]
     public static extern void SetUnityDelegate(UnityDelegate unity_delegate);
 
     [DllImport("ClientProxy")]
-    public static extern void InitGame(byte[] data,int size);
+    public static extern void InitGame(byte[] data, int size);
 
     [DllImport("ClientProxy")]
     public static extern void DestoryGame();
@@ -85,9 +85,14 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     public static extern void GameInput(byte[] data, int size);
 #endif
 
-    public static string UnityCallback(string func,string json_params)
+    public static string UnityCallback(string func, string json_params)
     {
-        object[] objs = { json_params };
+        object[] objs = null;
+        if (json_params != "")
+        {
+            objs = LitJson.JsonMapper.ToObject<object[]>(json_params);
+        }
+
         Type t = typeof(CPlusPlusBridge);
         MethodInfo method = t.GetMethod(func);
         if (method != null)
@@ -96,15 +101,14 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
             try
             {
                 result = method.Invoke(null, objs);
-            } 
-            catch(Exception e)
+            }
+            catch (Exception e)
             {
-                Debug.Log(func + json_params);
                 Debug.LogError(e.ToString());
                 result = null;
             }
 
-            if(result != null)
+            if (result != null)
             {
                 UnityResult unity_result = new UnityResult();
                 unity_result.result = result;
@@ -115,86 +119,59 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         return "";
     }
 
-    public static int CreateView(string json)
+    public static int CreateView(string asset)
     {
-        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
-        string asset = (string)param[0];
         UnityViewServices.Instance.CreateView(asset);
         return 0;
     }
 
-    public static void DestoryView(string json)
+    public static void DestoryView(int id)
     {
-        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
-        int id = (int)param[0];
         UnityViewServices.Instance.DestroyView(id);
     }
 
-    public static void UpdatePosition(string json)
+    public static void UpdatePosition(int id, double x, double y, double z)
     {
-        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
-        int id = (int)param[0];
-        float x = (float)param[1];
-        float y = (float)param[2];
-        float z = (float)param[3];
-
-        UnityViewServices.Instance.UpdatePosition(id, x, y, z);
+        UnityViewServices.Instance.UpdatePosition(id, (float)x, (float)y, (float)z);
     }
 
-
-    public static void MovePosition(string json)
+    public static void MovePosition(int id, double x, double y, double z)
     {
-        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
-        int id = (int)param[0];
-        float x = Convert.ToSingle(param[1]);
-        float y = Convert.ToSingle(param[2]);
-        float z = Convert.ToSingle(param[3]);
         UnityViewServices.Instance.MovePosition(id, (float)x, (float)y, (float)z);
     }
 
-    public static void UpdateForward(string json)
+    public static void UpdateForward(int id, double x, double y, double z)
     {
-        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
-        int id = (int)param[0];
-        float x = (float)param[1];
-        float y = (float)param[2];
-        float z = (float)param[3];
-        UnityViewServices.Instance.UpdateForward(id, x, y, z);
+        UnityViewServices.Instance.UpdateForward(id, (float)x, (float)y, (float)z);
     }
 
-    public static void MoveForward(string json)
+    public static void MoveForward(int id, double x, double y, double z)
     {
-        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
-        int id = (int)param[0];
-        float x = Convert.ToSingle(param[1]);
-        float y = Convert.ToSingle(param[2]);
-        float z = Convert.ToSingle(param[3]);
-        UnityViewServices.Instance.MoveForward(id, x, y, z);
+        UnityViewServices.Instance.MoveForward(id, (float)x, (float)y, (float)z);
     }
 
-    public static void InputHandler(string json)
+    public static void InputHandler()
     {
         BattleController.Instance.InputHandler();
     }
 
-    public static void LogInfo(string json)
+    public static void LogInfo(string message)
     {
-        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
-        string message = (string)param[0];
         Debug.Log(message);
     }
 
-    public static void LogWarning(string json)
+    public static void LogWarning(string message)
     {
-        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
-        string message = (string)param[0];
         Debug.LogWarning(message);
     }
 
-    public static string OpenFile(string json)
+    public static void LogError(string message)
     {
-        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
-        string file = (string)param[0];
+        Debug.LogError(message);
+    }
+
+    public static string OpenFile(string file)
+    {
         file = file.Substring(0, file.LastIndexOf("."));
         var obj = Resources.Load(file);
         if (obj)
@@ -203,13 +180,4 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         }
         return "";
     }
-
-    public static void LogError(string json)
-    {
-        object[] param = LitJson.JsonMapper.ToObject<object[]>(json);
-        string message = (string)param[0];
-        Debug.LogError(message);
-    }
-
-    
 }
