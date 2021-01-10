@@ -5,13 +5,12 @@
 #include <string_view>
 
 #include "Framework/Game/Service.hpp"
-
-#include "spdlog/fmt/fmt.h"
+#include "Framework/Game/Fmt.hpp"
 
 #ifdef DEBUG
-#define INFO(...) registry.ctx<Locator>().Ref<LogService>().Info(__VA_ARGS__);
-#define WARNING(...) registry.ctx<Locator>().Ref<LogService>().Warning(__VA_ARGS__);
-#define ERROR(...) registry.ctx<Locator>().Ref<LogService>().Error(__VA_ARGS__);
+#define INFO(...)  g_log_service->Info(__VA_ARGS__);
+#define WARNING(...) g_log_service->Warning(__VA_ARGS__);
+#define ERROR(...) g_log_service->Error(__VA_ARGS__);
 #else
 #define INFO(...)
 #define WARNING(...)
@@ -49,3 +48,5 @@ public:
 	virtual void Error(std::string_view view) const = 0;
 private:
 };
+
+extern std::unique_ptr<LogService> g_log_service;

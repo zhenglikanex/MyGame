@@ -29,7 +29,10 @@ void UnityViewImpl::MovePosition(const vec3& pos)
 	{
 		auto& locator = g_game->registry().ctx<Locator>();
 		auto& service = dynamic_cast<const UnityViewService&>(locator.Ref<ViewService>());
-		service.MovePosition(this, static_cast<float>(pos.x), static_cast<float>(pos.y), static_cast<float>(pos.z));
+		float x = static_cast<float>(pos.x);
+		float y = static_cast<float>(pos.y);
+		float z = static_cast<float>(pos.z);
+		service.MovePosition(this, x, y, z);
 	}
 }
 

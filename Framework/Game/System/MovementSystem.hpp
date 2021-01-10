@@ -1,3 +1,5 @@
+#pragma once
+
 #include <algorithm>
 
 #include "Framework/Game/System.hpp"
@@ -29,13 +31,12 @@ struct MovementSystem : public System
 					movement.root_motions.cend(),
 					[&](const auto& value)
 					{
-						return fixed16(commond.y_axis) - value.first <= fixed16(0.1f);
+						return fpm::abs(fixed16(commond.y_axis) - value.first) <= fixed16(0.1f);
 					});
-
 
 				INFO("y_axis:{} , delate_position x:{} y:{} z:{}", static_cast<float>(commond.y_axis),static_cast<float>(iter->second.delta_position.x), static_cast<float>(iter->second.delta_position.y), static_cast<float>(iter->second.delta_position.z));
 
-				auto delta_position = iter->second.delta_position * (dt / fixed16(0.33));
+				auto delta_position = iter->second.delta_position *(dt / fixed16(0.33));
 				transform.position = old_trans.position + delta_position;
 
 				registry.replace<Transform>(e, transform);

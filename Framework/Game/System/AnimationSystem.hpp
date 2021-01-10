@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Framework/Game/System.hpp"
 
 struct AnimationSystem : public System

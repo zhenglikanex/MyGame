@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/ViewService.hpp"
 #include "Framework/Game/System.hpp"
