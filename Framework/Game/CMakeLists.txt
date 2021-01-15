@@ -24,6 +24,7 @@ add_library(Game
     System/MovementSystem.hpp
     System/UpdateViewSystem.hpp
     System/SyncSystem.hpp
+    System/ActionStateMachineSystem.hpp
     Component/GameMode.hpp
     Component/GameState.hpp
     Component/Commond.hpp
@@ -34,6 +35,7 @@ add_library(Game
     Component/Movement.hpp
     Component/MainPlayer.hpp
     Component/State.hpp
+    Component/ActionState.hpp
 
 
     ConfigManager.hpp
