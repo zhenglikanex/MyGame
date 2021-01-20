@@ -74,7 +74,7 @@ extern "C"
 			for (auto iter = group.commonds().cbegin(); iter != group.commonds().cend(); ++iter)
 			{
 				
-				Commond cmd;
+				Command cmd;
 				cmd.x_axis = fixed16(iter->second.x_axis());
 				cmd.y_axis = fixed16(iter->second.y_axis());
 

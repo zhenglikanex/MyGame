@@ -10,12 +10,24 @@ enum class ActionStateType : uint8_t
 	kAttack,
 	kHurt,
 	kDeath,
-};
 
+	kMax
+};
 
 struct ActionState
 {
-	ActionStateType last_state;
 	ActionStateType cur_state;
-	float
+	fixed16 time;
+
+	ActionState() : cur_state(ActionStateType::kIdle),time(fixed16(0))
+	{
+		
+	}
+
+	ActionState(ActionStateType state) : cur_state(state),time(fixed16(0))
+	{
+
+	}
+
+	BAR(cur_state, time);
 };

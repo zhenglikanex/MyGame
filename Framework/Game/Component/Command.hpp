@@ -6,7 +6,7 @@
 #include "Framework/Game/FixedPoint.hpp"
 #include "Framework/serialize/binary_archive.hpp"
 
-struct Commond
+struct Command
 {
 	fixed16 x_axis;		// “°∏À ‰»Î
 	fixed16 y_axis;		// “°∏À ‰»Î
@@ -18,7 +18,7 @@ struct Commond
 	bool skill2;
 	bool skill3;
 
-	Commond()
+	Command()
 	{
 		Reset();
 	}
@@ -37,7 +37,7 @@ struct Commond
 	BAR(x_axis, y_axis, jump, attack, skill1, skill2, skill3)
 };
 
-struct MovementCommond
+struct Movementcommand
 {
 	fixed16 x_axis;
 	fixed16 y_axis;
@@ -45,21 +45,21 @@ struct MovementCommond
 	BAR(x_axis, y_axis);
 };
 
-struct JumpCommond
+struct Jumpcommand
 {
 	bool jump;
 	BAR(jump);
 };
 
-struct AttackCommond
+struct Attackcommand
 {
 };
 
-struct CommondGroup
+struct commandGroup
 {
-	std::unordered_map<uint32_t, Commond> value;
+	std::unordered_map<uint32_t, Command> value;
 
-	bool operator==(const CommondGroup& commonds)
+	bool operator==(const commandGroup& commands)
 	{
 		// todo:
 		return true;

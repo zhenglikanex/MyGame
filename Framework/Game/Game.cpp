@@ -6,12 +6,12 @@
 #include "Framework/Game/LogService.hpp"
 
 #include "Framework/Game/Component/GameState.hpp"
-#include "Framework/Game/Component/Commond.hpp"
+#include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Asset.hpp"
 #include "Framework/Game/Component/MainPlayer.hpp"
 
-#include "Framework/Game/System/CommondProcessSystem.hpp"
+#include "Framework/Game/System/CommandProcessSystem.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
 #include "Framework/Game/System/MovementSystem.hpp"
 #include "Framework/Game/System/UpdateViewSystem.hpp"
@@ -26,9 +26,9 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<Player>&& players)
 	registry_.set<GameMode>(mode);
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
-	registry_.set<CommondGroup>();
+	registry_.set<commandGroup>();
 	
-	systems_.emplace_back(std::make_unique<CommondProcessSystem>(registry_));
+	systems_.emplace_back(std::make_unique<CommandProcessSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CreateViewSystem>(registry_));
 	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
 	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
@@ -41,8 +41,8 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<Player>&& players)
 		auto e = registry_.create();
 		registry_.emplace<Player>(e, player);
 		
-		//Commond commond;
-		//InputCommond(player.id,std::move(commond));
+		//command command;
+		//Inputcommand(player.id,std::move(command));
 
 		main_player_id_ = player.id;
 		registry_.set<MainPlayer>(main_player_id_);
@@ -74,7 +74,6 @@ bool Game::Initialize()
 	for (auto e : registry_.view<Player>())
 	{
 		registry_.emplace<Asset>(e, "Hero");
-		registry_.emplace<Movement>(e, root_motions);
 	}
 
 	SaveSnapshot();
@@ -104,23 +103,24 @@ void Game::UpdateClinet(float dt)
 	while (game_state.run_time > game_state.run_frame * kFrameRate + kFrameRate)
 	{
 		//todo:临时填充帧
-		//InputCommond(main_player_id_, Commond());
+		//Inputcommand(main_player_id_, command());
 		// 进行
+		// todo:后面根据延迟调整自己的输入频率
 		auto& input_service = registry_.ctx<Locator>().Ref<const InputService>();
 		input_service.InputHandler();
 
 		bool predict = false;
-		auto commond_group = GetCommondGroup(game_state.run_frame);
-		if (commond_group.value.size() < registry_.view<Player>().size() && game_state.run_frame - game_state.real_frame <= kMaxPredictFrame)
+		auto command_group = GetcommandGroup(game_state.run_frame);
+		if (command_group.value.size() < registry_.view<Player>().size() && game_state.run_frame - game_state.real_frame <= kMaxPredictFrame)
 		{
 			predict = true;
-			commond_group = PredictCommondGroup(game_state.run_frame);
+			command_group = PredictcommandGroup(game_state.run_frame);
 			SaveSnapshot();
 		}
 
-		if (commond_group.value.size() == registry_.view<Player>().size())
+		if (command_group.value.size() == registry_.view<Player>().size())
 		{
-			registry_.set<CommondGroup>(std::move(commond_group));
+			registry_.set<commandGroup>(std::move(command_group));
 			for (auto& system : systems_)
 			{
 				system->Update(fixed16(0.33));
@@ -153,10 +153,10 @@ void Game::UpdateServer(float dt)
 
 	while (game_state.run_time > game_state.run_frame * kFrameRate + kFrameRate)
 	{
-		//生成commond
-		SetupCommonds(game_state.run_frame);
-		registry_.set<CommondGroup>(GetCommondGroup(game_state.run_frame));
-		if (registry_.ctx<CommondGroup>().value.size() == registry_.view<Player>().size())
+		//生成command
+		Setupcommands(game_state.run_frame);
+		registry_.set<commandGroup>(GetcommandGroup(game_state.run_frame));
+		if (registry_.ctx<commandGroup>().value.size() == registry_.view<Player>().size())
 		{
 			for (auto& system : systems_)
 			{
@@ -180,18 +180,18 @@ void Game::Finalize()
 	}
 }
 
-void Game::InputCommond(uint32_t id,Commond&& commond)
+void Game::Inputcommand(uint32_t id,Command&& command)
 {
-	auto iter = commonds_map_.find(id);
-	if(iter != commonds_map_.end())
+	auto iter = commands_map_.find(id);
+	if(iter != commands_map_.end())
 	{
-		iter->second.emplace_back(std::move(commond));
+		iter->second.emplace_back(std::move(command));
 	}
 	else
 	{
-		std::vector<Commond> commonds;
-		commonds.emplace_back(std::move(commond));
-		commonds_map_.emplace(id, std::move(commonds));
+		std::vector<Command> commands;
+		commands.emplace_back(std::move(command));
+		commands_map_.emplace(id, std::move(commands));
 	}
 
 	if (registry_.ctx<GameMode>() == GameMode::kClinet)
@@ -200,15 +200,15 @@ void Game::InputCommond(uint32_t id,Commond&& commond)
 	}
 }
 
-void Game::SetupCommonds(uint32_t frame)
+void Game::Setupcommands(uint32_t frame)
 {
 	if (registry_.ctx<GameMode>() == GameMode::kServer)
 	{
-		for (auto& it : commonds_map_)
+		for (auto& it : commands_map_)
 		{
 			if (it.second.size() == 0)
 			{
-				it.second.emplace_back(Commond());
+				it.second.emplace_back(Command());
 			}
 			else if (it.second.size() <= frame)
 			{
@@ -218,27 +218,27 @@ void Game::SetupCommonds(uint32_t frame)
 	}
 }
 
-CommondGroup Game::GetCommondGroup(uint32_t frame)
+commandGroup Game::GetcommandGroup(uint32_t frame)
 {
-	CommondGroup commonds;
-	for(auto& it : commonds_map_)
+	commandGroup commands;
+	for(auto& it : commands_map_)
 	{
 		if (it.second.size() > frame) {
-			commonds.value.emplace(it.first, it.second[frame]);
+			commands.value.emplace(it.first, it.second[frame]);
 		}
 	}
 
-	return commonds;
+	return commands;
 }
 
-std::vector<CommondGroup> Game::GetAllCommondGroups()
+std::vector<commandGroup> Game::GetAllcommandGroups()
 {
-	std::vector<CommondGroup> commond_groups;
+	std::vector<commandGroup> command_groups;
 	for (uint32_t frame = 0;frame <= registry_.ctx<GameState>().real_frame; ++frame)
 	{
-		commond_groups.emplace_back(GetCommondGroup(frame));
+		command_groups.emplace_back(GetcommandGroup(frame));
 	}
-	return commond_groups;
+	return command_groups;
 }
 
 void Game::CheckPredict()
@@ -246,16 +246,16 @@ void Game::CheckPredict()
 	auto game_state = registry_.ctx<GameState>();
 	for (uint32_t frame = game_state.real_frame; frame < game_state.run_frame; ++frame)
 	{
-		auto commond_group = GetCommondGroup(frame);
-		if (commond_group.value.size() < registry_.view<Player>().size())
+		auto command_group = GetcommandGroup(frame);
+		if (command_group.value.size() < registry_.view<Player>().size())
 		{
 			return;
 		}
 
-		auto& predict_commonds = predict_commond_groups_.find(frame)->second;
-		if (commond_group == predict_commonds)
+		auto& predict_commands = predict_command_groups_.find(frame)->second;
+		if (command_group == predict_commands)
 		{
-			predict_commond_groups_.erase(game_state.real_frame);
+			predict_command_groups_.erase(game_state.real_frame);
 			snapshots_.erase(game_state.real_frame);
 			++registry_.ctx<GameState>().real_frame;
 		}
@@ -267,7 +267,7 @@ void Game::CheckPredict()
 			registry_.ctx<GameState>().real_frame = pre_frame;
 
 			// ���Ԥ�������
-			predict_commond_groups_.clear();
+			predict_command_groups_.clear();
 			snapshots_.clear();
 			return;
 		}
@@ -277,21 +277,21 @@ void Game::CheckPredict()
 }
 
 
-CommondGroup Game::PredictCommondGroup(uint32_t frame)
+commandGroup Game::PredictcommandGroup(uint32_t frame)
 {
-	CommondGroup commonds;
-	for (auto& it : commonds_map_)
+	commandGroup commands;
+	for (auto& it : commands_map_)
 	{
 		if (it.second.size() > frame) {
-			commonds.value.emplace(it.first, it.second[frame]);
+			commands.value.emplace(it.first, it.second[frame]);
 		}
 		else
 		{
-			commonds.value.emplace(it.first, it.second.back());
+			commands.value.emplace(it.first, it.second.back());
 		}
 	}
 
-	return commonds;
+	return commands;
 }
 
 void Game::SaveSnapshot()

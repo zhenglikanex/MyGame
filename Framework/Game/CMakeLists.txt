@@ -1,7 +1,7 @@
 add_library(Game
+    GameConfig.hpp
     Game.hpp
     Game.cpp
-    GameDefin.hpp
     System.hpp
     Locator.hpp
     FixedPoint.hpp
@@ -16,18 +16,19 @@ add_library(Game
     Json.hpp
     Math.hpp
     Fmt.hpp
-    System/InputSystem.hpp
+
     System/AnimationSystem.hpp
     System/CollisionSystem.hpp
     System/CreateViewSystem.hpp
-    System/CommondProcessSystem.hpp
+    System/CommandProcessSystem.hpp
     System/MovementSystem.hpp
     System/UpdateViewSystem.hpp
     System/SyncSystem.hpp
     System/ActionStateMachineSystem.hpp
+
     Component/GameMode.hpp
     Component/GameState.hpp
-    Component/Commond.hpp
+    Component/Command.hpp
     Component/Player.hpp
     Component/View.hpp
     Component/Transform.hpp
@@ -36,7 +37,7 @@ add_library(Game
     Component/MainPlayer.hpp
     Component/State.hpp
     Component/ActionState.hpp
-
+    Component/Animation.hpp
 
     ConfigManager.hpp
     ConfigManager.cpp

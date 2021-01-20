@@ -33,7 +33,7 @@ file(GLOB_RECURSE PROTO_SRC ${PROJECT_SOURCE_DIR}/Framework/Proto/*.h ${PROJECT_
 add_subdirectory(Framework)
 add_subdirectory(Client)
 #add_subdirectory(Server)
-#add_subdirectory(Test)
+add_subdirectory(Test)
 add_subdirectory(ClientProxy)
 
 #安装MyGameClient到Unity Plugins目录下

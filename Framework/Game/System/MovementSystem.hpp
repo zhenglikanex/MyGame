@@ -3,10 +3,9 @@
 #include <algorithm>
 
 #include "Framework/Game/System.hpp"
-#include "Framework/Game/Component/Commond.hpp"
+#include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Movement.hpp"
-#include "Framework/Game/Component/State.hpp"
 
 struct MovementSystem : public System
 {
@@ -20,34 +19,34 @@ struct MovementSystem : public System
 
 	void Update(fixed16 dt) override
 	{
-		registry.view<MovementCommond, Movement, Transform>(entt::exclude<HurtState, AttackState, DeathState>).each(
-			[=](auto e, const MovementCommond& commond, const Movement& movement, const Transform& old_trans)
+		registry.view<Movementcommand, Movement, Transform>().each(
+			[=](auto e, const Movementcommand& command, const Movement& movement, const Transform& old_trans)
 			{
-				Transform transform;
+				//Transform transform;
 
-				//transform.forward = glm::normalize(vec3(commond.x_axis, 0, commond.y_axis));
-				decltype(Movement::root_motions)::const_iterator iter = std::find_if(
-					movement.root_motions.cbegin(), 
-					movement.root_motions.cend(),
-					[&](const auto& value)
-					{
-						auto axis = fpm::abs(fixed16(commond.y_axis));
-						if (axis == value.first)
-						{
-							return true;
-						}
-						return axis > value.first && axis - value.first < fixed16(0.1f);
-					});
+				////transform.forward = glm::normalize(vec3(command.x_axis, 0, command.y_axis));
+				//decltype(Movement::root_motions)::const_iterator iter = std::find_if(
+				//	movement.root_motions.cbegin(), 
+				//	movement.root_motions.cend(),
+				//	[&](const auto& value)
+				//	{
+				//		auto axis = fpm::abs(fixed16(command.y_axis));
+				//		if (axis == value.first)
+				//		{
+				//			return true;
+				//		}
+				//		return axis > value.first && axis - value.first < fixed16(0.1f);
+				//	});
 
-				INFO("y_axis:{} , delate_position x:{} y:{} z:{}", static_cast<float>(commond.y_axis),static_cast<float>(iter->second.delta_position.x), static_cast<float>(iter->second.delta_position.y), static_cast<float>(iter->second.delta_position.z));
-				if (iter != movement.root_motions.end())
-				{
-					auto delta_position = iter->second.delta_position * (dt / fixed16(0.33));
-					transform.position = old_trans.position + delta_position;
-					registry.replace<Transform>(e, transform);
+				//INFO("y_axis:{},delate_position x:{} y:{} z:{}", static_cast<float>(command.y_axis),static_cast<float>(iter->second.delta_position.x), static_cast<float>(iter->second.delta_position.y), static_cast<float>(iter->second.delta_position.z));
+				//if (iter != movement.root_motions.end())
+				//{
+				//	auto delta_position = iter->second.delta_position * (dt / fixed16(0.33));
+				//	transform.position = old_trans.position + delta_position;
+				//	registry.replace<Transform>(e, transform);
 
-					registry.remove<MovementCommond>(e);
-				}
+				//	registry.remove<Movementcommand>(e);
+				//}
 			});
 	}
 
