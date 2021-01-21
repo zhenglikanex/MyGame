@@ -7,12 +7,12 @@
 
 namespace GameConfig
 {
-	namespace Animation
+	namespace ActionAnimation
 	{
-		const std::string idle = "idle";
-		const std::string movement = "movement";
-		const std::string jump = "jump";
-		const std::string death = "death";
+		const std::string kIdle = "idle";
+		const std::string kMovement = "movement";
+		const std::string kJump = "jump";
+		const std::string kDeath = "death";
 	}
 
 	const fixed16 kFrameTime = fixed16(0.33);

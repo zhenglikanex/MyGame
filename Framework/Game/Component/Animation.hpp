@@ -13,8 +13,8 @@ struct Animation
 	fixed16 time;
 	bool is_done;
 	
-	Animation(uint32_t _id)
-		: name(_id)
+	Animation(std::string _name)
+		: name(_name)
 		, max_frame(0)
 		, time(0)
 		, is_done(false)

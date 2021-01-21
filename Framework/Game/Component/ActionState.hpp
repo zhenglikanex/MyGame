@@ -31,3 +31,13 @@ struct ActionState
 
 	BAR(cur_state, time);
 };
+
+struct EnterActionState
+{
+	ActionStateType value;
+};
+
+struct ExitActionState
+{
+	ActionStateType value;
+};

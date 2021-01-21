@@ -19,7 +19,7 @@ struct AnimationSystem : public System
 
 	void Update(fixed16 dt) override
 	{
-		for (auto e : registry.view<Animation>())
+		for (auto e : registry.view<View,Animation>())
 		{
 			auto& animation = registry.get<Animation>(e);
 			if (!animation.is_done)
