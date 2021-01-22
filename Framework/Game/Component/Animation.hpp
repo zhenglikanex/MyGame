@@ -9,17 +9,13 @@
 struct Animation
 {
 	std::string name;
-	uint32_t max_frame;
 	fixed16 time;
 	bool is_done;
-	
 	Animation(std::string _name)
 		: name(_name)
-		, max_frame(0)
 		, time(0)
 		, is_done(false)
 	{
-		// todo ¶Á±í
-		max_frame = 0;
 	}
 };
+

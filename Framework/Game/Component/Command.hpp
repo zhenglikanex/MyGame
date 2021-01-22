@@ -54,14 +54,3 @@ struct Jumpcommand
 struct Attackcommand
 {
 };
-
-struct commandGroup
-{
-	std::unordered_map<uint32_t, Command> value;
-
-	bool operator==(const commandGroup& commands)
-	{
-		// todo:
-		return true;
-	}
-};

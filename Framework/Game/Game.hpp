@@ -9,9 +9,12 @@
 #include "Framework/Game/FileService.hpp"
 #include "Framework/Game/LogService.hpp"
 #include "Framework/Game/Locator.hpp"
-#include "Framework/Game/System.hpp"
-#include "Framework/Game/Component/Player.hpp"
+#include "Framework/Game/PlayerInfo.hpp"
+
 #include "Framework/Game/Component/Command.hpp"
+
+#include "Framework/Game/System.hpp"
+
 #include "Framework/Game/Data/Config.hpp"
 
 #include "entt/entt.hpp"
@@ -27,10 +30,12 @@ enum class GameMode
 	kServer
 };
 
+using CommandGroup = std::unordered_map<uint32_t, Command>;
+
 class Game
 {
 public:
-	Game(Locator&& locator,GameMode mode,std::vector<Player>&& players);
+	Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players);
 	~Game();
 
 	bool Initialize();
@@ -41,19 +46,18 @@ public:
 	void UpdateServer(float dt);
 
 	// 外部调用
-	void Inputcommand(uint32_t id, Command&& command);
-	void Setupcommands(uint32_t frame);
-	commandGroup GetcommandGroup(uint32_t frame);
-	std::vector<commandGroup> GetAllcommandGroups();
+	void InputCommand(uint32_t id, Command&& command);
+	void SetupCommands(uint32_t frame);
+	Command PredictCommand(uint32_t id);
 
 	void CheckPredict();
-	commandGroup PredictcommandGroup(uint32_t frame);
-
 	void SaveSnapshot();
 
 	entt::registry& registry() { return registry_; }
-	uint32_t main_player_id() const { return main_player_id_; }
 private:
+	void LoadAllConfig();
+	void CreatePlayer();
+
 	template<class T>
 	std::enable_if_t<std::is_base_of_v<BaseConfig,T>,void>
 		LoadConfig(const std::string& file)
@@ -79,10 +83,11 @@ private:
 
 	entt::registry registry_;
 	std::vector<std::unique_ptr<System>> systems_;
-	std::unordered_map<uint32_t, std::vector<Command>> commands_map_;
-	std::unordered_map<uint32_t, commandGroup> predict_command_groups_;
+	std::vector<PlayerInfo> player_infos_;
+	std::unordered_map<uint32_t, std::vector<Command>> player_input_commands_;	// 玩家的输入队列
+	std::vector<CommandGroup> command_groups_;
+	std::unordered_map<uint32_t, CommandGroup> predict_command_groups_;
 	std::unordered_map<uint32_t, Snapshot> snapshots_;
-	uint32_t main_player_id_;
 };
 
 extern std::unique_ptr<Game> g_game;

@@ -45,3 +45,13 @@ void UnityViewImpl::MoveForward(const vec3& forward)
 		service.MoveForward(this, static_cast<float>(forward.x), static_cast<float>(forward.y), static_cast<float>(forward.z));
 	}
 }
+
+void UnityViewImpl::PlayAnimation(const std::string& name)
+{
+	if (g_game)
+	{
+		auto& locator = g_game->registry().ctx<Locator>();
+		auto& service = dynamic_cast<const UnityViewService&>(locator.Ref<ViewService>());
+		service.MoveForward(this, static_cast<float>(forward.x), static_cast<float>(forward.y), static_cast<float>(forward.z));
+	}
+}

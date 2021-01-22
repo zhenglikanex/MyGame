@@ -61,3 +61,13 @@ void UnityViewService::MoveForward(const IViewImpl* view, float x, float y, floa
 	auto& unity_view = dynamic_cast<const UnityViewImpl&>(*view);
 	UnityBridge::Get().CallUnity<void>("MoveForward", unity_view.GetHandle(),x,y,z);
 }
+
+void UnityViewService::PlayAnimation(const IViewImpl* view,std::string_view name) const
+{
+	if (!view)
+	{
+		return;
+	}
+	auto& unity_view = dynamic_cast<const UnityViewImpl&>(*view);
+	UnityBridge::Get().CallUnity<void>("PlayAnimation", unity_view.GetHandle(), name.data());
+}

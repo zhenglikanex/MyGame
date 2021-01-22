@@ -14,5 +14,6 @@ public:
 	void UpdateForward(const IViewImpl* view, float x, float y, float z) const;
 	void MovePosition(const IViewImpl* view, float x, float y, float z) const;
 	void MoveForward(const IViewImpl* view, float x, float y, float z) const;
+	void PlayAnimation(const IViewImpl* view, std::string_view name) const;
 private:
 };

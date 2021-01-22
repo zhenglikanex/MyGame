@@ -2,10 +2,12 @@
 
 #include "Framework/Game/GameConfig.hpp"
 
+#include "Framework/Game/Component/Asset.hpp"
 #include "Framework/Game/Component/Animation.hpp"
 
 #include "Framework/Game/System.hpp"
 
+#include "Framework/Game/Data/AnimationConfig.hpp"
 
 struct AnimationSystem : public System
 {
@@ -19,13 +21,18 @@ struct AnimationSystem : public System
 
 	void Update(fixed16 dt) override
 	{
-		for (auto e : registry.view<View,Animation>())
+		
+		const auto& animation_config = registry.ctx<AnimationConfig>();
+
+		for (auto e : registry.view<Asset,Animation>())
 		{
+			const auto& asset = registry.get<Asset>(e);
 			auto& animation = registry.get<Animation>(e);
+
 			if (!animation.is_done)
 			{
 				animation.time += dt;
-				animation.is_done = animation.time / GameConfig::kFrameTime >= fixed16(animation.max_frame);
+				//animation.is_done = animation.time / GameConfig::kFrameTime >= fixed16(animation.max_frame);
 			}
 		}
 	}

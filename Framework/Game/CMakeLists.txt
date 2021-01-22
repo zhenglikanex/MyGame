@@ -16,17 +16,18 @@ NetworkService.hpp
 Json.hpp
 Math.hpp
 Fmt.hpp
+PlayerInfo.hpp
 
-Utility/ActionStateUtility.hpp
+Utility/ActorStateUtility.hpp
+Utility/AnimationUtility.hpp
 
 System/AnimationSystem.hpp
 System/CollisionSystem.hpp
 System/CreateViewSystem.hpp
-System/CommandProcessSystem.hpp
 System/MovementSystem.hpp
 System/UpdateViewSystem.hpp
 System/SyncSystem.hpp
-System/ActionStateMachineSystem.hpp
+System/ActorStateSystem.hpp
 
 Component/GameMode.hpp
 Component/GameState.hpp
@@ -36,9 +37,7 @@ Component/View.hpp
 Component/Transform.hpp
 Component/Asset.hpp
 Component/Movement.hpp
-Component/MainPlayer.hpp
-Component/State.hpp
-Component/ActionState.hpp
+Component/ActorState.hpp
 Component/Animation.hpp
 
 ConfigManager.hpp
@@ -48,6 +47,7 @@ Data/Config.hpp
 Data/Config.cpp
 Data/RootMotionConfig.hpp
 Data/RootMotionConfig.cpp
+Data/AnimationConfig.hpp
 )
 
 foreach(_file ${file_list})
