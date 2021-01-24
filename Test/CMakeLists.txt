@@ -5,6 +5,10 @@ add_executable(Test
 target_link_libraries(Test
     Game
 )
+SET_PROPERTY(TARGET Test PROPERTY FOLDER "Test")
+
+add_subdirectory(OctTree)
 
 #设置VS工作目录
 set_target_properties(Test PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/Asset)
+
