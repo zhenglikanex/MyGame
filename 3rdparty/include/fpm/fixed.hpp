@@ -38,6 +38,10 @@ public:
 	{
         float v = std::stof(str);
         m_value = fixed(v).raw_value();
+
+#ifdef DEBUG
+		_raw_value_ = v;
+#endif
     }
 
     // Converts an integral number to the fixed-point type.
@@ -45,14 +49,22 @@ public:
     template <typename T, typename std::enable_if<std::is_integral<T>::value>::type* = nullptr>
     constexpr inline explicit fixed(T val) noexcept
         : m_value(static_cast<BaseType>(val * FRACTION_MULT))
-    {}
+    {
+#ifdef DEBUG
+		_raw_value_ = val;
+#endif
+	}
 
     // Converts an floating-point number to the fixed-point type.
     // Like static_cast, this truncates bits that don't fit.
     template <typename T, typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr>
     constexpr inline explicit fixed(T val) noexcept
         : m_value(static_cast<BaseType>(std::round(val * FRACTION_MULT)))
-    {}
+    {
+#ifdef DEBUG
+		_raw_value_ = val;
+#endif
+	}
 
     // Explicit conversion to a floating-point type
     template <typename T, typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr>
@@ -184,6 +196,9 @@ public:
 
 private:
     BaseType m_value;
+#ifdef DEBUG
+	float _raw_value_;
+#endif
 };
 
 //

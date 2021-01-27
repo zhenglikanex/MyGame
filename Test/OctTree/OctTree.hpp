@@ -172,7 +172,8 @@ private:
 		if (depth <= 0) return nullptr;
 
 		Node* node = new Node(AABB(c,r));
-		
+
+
 		vec3 offset(fixed16(0));
 		for (int i = 0; i < 8; ++i)
 		{
@@ -183,7 +184,7 @@ private:
 
 			node->children[i] = BuildTree(c + offset, r * fixed16(0.5f), depth - 1);
 		}
-
+		
 		return node;
 	}
 	void Insert(Node* tree, const AABB& aabb) 
