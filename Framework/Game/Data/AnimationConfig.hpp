@@ -15,11 +15,13 @@ struct RootMotion
 	vec3 delta_rotation;
 };
 
-struct AnimationInfo
+struct AnimationClipInfo
 {
 	uint32_t length;
 	std::unordered_map<fixed16, RootMotion> root_motions;
 };
+
+using AnimationInfo = std::unordered_map<std::string, AnimationClipInfo>;
 
 inline void from_json(const nlohmann::json& j, RootMotion& root_motion)
 {
@@ -27,14 +29,13 @@ inline void from_json(const nlohmann::json& j, RootMotion& root_motion)
 	j.at("deltaRotation").get_to(root_motion.delta_rotation);
 }
 
-inline void from_json(const nlohmann::json& j, AnimationInfo& animation_info)
+inline void from_json(const nlohmann::json& j, AnimationClipInfo& animation_info)
 {
 	j.at("length").get_to(animation_info.length);
 	j.at("root_motions").get_to(animation_info.root_motions);
 }
 
 /*
- * key1 模型名字
- * key2 动画名字
+ * key动画名字 名字
  */
-using AnimationConfig = Config<std::string, std::string, AnimationInfo>;
+using AnimationConfig = Config<std::string,AnimationInfo>;

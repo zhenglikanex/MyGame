@@ -5,7 +5,7 @@
 #include "Framework/serialize/binary_archive.hpp"
 #include "Framework/serialize/types/string.hpp"
 
-struct Asset
+struct ViewAsset
 {
 	std::string value;
 	

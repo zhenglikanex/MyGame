@@ -2,14 +2,14 @@
 
 #include "Framework/Game/Component/View.hpp"
 #include "Framework/Game/Component/Transform.hpp"
-#include "Framework/Game/Component/Animation.hpp"
+#include "Framework/Game/Component/AnimationClip.hpp"
 
 #include "Framework/Game/System.hpp"
 
 struct UpdateViewSystem : public System
 {
 	entt::observer mover{ registry, entt::collector.group<Transform>().update<Transform>().where<View>() };
-	entt::observer animator{ registry,entt::collector.group<Animation>().update<Animation>().where<View>() };
+	entt::observer animator{ registry,entt::collector.group<AnimationClip>().update<AnimationClip>().where<View>() };
 
 	UpdateViewSystem(entt::registry& _registry) : System(_registry) { }
 	~UpdateViewSystem() {}
@@ -27,10 +27,11 @@ struct UpdateViewSystem : public System
 
 	void UpdateTransform()
 	{
+		auto entt_view = registry.view<View, Transform>();
 		for (auto e : mover)
 		{
-			auto& view = registry.get<View>(e);
-			const auto& transform = registry.get<Transform>(e);
+			auto& view = entt_view.get<View>(e);
+			const auto& transform = entt_view.get<Transform>(e);
 
 			view.value->MovePosition(transform.position);
 			view.value->MoveForward(transform.forward);
@@ -41,12 +42,13 @@ struct UpdateViewSystem : public System
 
 	void UpdateAnimation()
 	{
+		auto entt_view = registry.view<View,AnimationClip>();
 		for (auto e : animator)
 		{
-			auto& view = registry.get<View>(e);
-			const auto& animation = registry.get<Animation>(e);
+			auto& view = entt_view.get<View>(e);
+			const auto& clip = entt_view.get<AnimationClip>(e);
 
-			view.value->PlayAnimation(animation.name);
+			view.value->PlayAnimation(clip.name);
 		}
 
 		animator.clear();

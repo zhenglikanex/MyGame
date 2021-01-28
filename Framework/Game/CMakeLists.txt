@@ -26,8 +26,9 @@ System/CollisionSystem.hpp
 System/CreateViewSystem.hpp
 System/MovementSystem.hpp
 System/UpdateViewSystem.hpp
-System/SyncSystem.hpp
 System/ActorStateSystem.hpp
+System/CreateAnimationSystem.hpp
+System/RootMotionSystem.hpp
 
 Component/GameMode.hpp
 Component/GameState.hpp
@@ -35,10 +36,12 @@ Component/Command.hpp
 Component/Player.hpp
 Component/View.hpp
 Component/Transform.hpp
-Component/Asset.hpp
+Component/ViewAsset.hpp
+Component/AnimationAsset.hpp
 Component/Movement.hpp
 Component/ActorState.hpp
 Component/Animation.hpp
+Component/AnimationClip.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp

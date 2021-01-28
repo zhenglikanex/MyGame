@@ -9,14 +9,15 @@
 #include "Framework/Game/Locator.hpp"
 
 #include "Framework/Game/Component/Command.hpp"
-#include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/ActorState.hpp"
 #include "Framework/Game/Component/Animation.hpp"
-#include "Framework/Game/Component/Asset.hpp"
+#include "Framework/Game/Component/AnimationClip.hpp"
 
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
+
+#include "Framework/Game/Fmt.hpp"
 
 /*
  * 状态会在下一帧进行实际
@@ -32,21 +33,21 @@ struct ActorStateSystem : public System
 		State(entt::registry& _registry) : registry(_registry) {}
 		virtual ~State() = 0 {}
 
-		virtual ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const Animation& animation, const Command& command) 
+		virtual ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation_clip, const Command& command)
 		{
-			return action_state.cur_state; 
+			return action_state.cur_state;
 		}
 
 		virtual void OnEnter(entt::entity e, const EnterActorState& action_state) { }
 		virtual void OnExit(entt::entity e, const ExitActorState& action_state) { }
-		virtual void OnUpdate(entt::entity e,const Command& command) { }
+		virtual void OnUpdate(entt::entity e,const Command& command,const AnimationClip& animction_clip) { }
 	};
 
 	struct IdleState : State
 	{
 		IdleState(entt::registry& _registry) : State(_registry) {}
 
-		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const Animation& animation, const Command& command) override
+		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation, const Command& command) override
 		{
 			if (command.x_axis > fixed16(0) || command.y_axis > fixed16(0))
 			{
@@ -58,17 +59,17 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			registry.emplace_or_replace<Animation>(e, GameConfig::ActionAnimation::kIdle);
+			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
 		}
 
-		void OnUpdate(entt::entity e, const Command& command) override { }
+		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override { }
 	};
 
 	struct MovementState : State
 	{
 		MovementState(entt::registry& _registry) : State(_registry) {}
 
-		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const Animation& animation, const Command& command) override
+		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation, const Command& command) override
 		{
 			if (command.attack)
 			{
@@ -90,19 +91,30 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			registry.emplace_or_replace<Animation>(e, GameConfig::ActionAnimation::kIdle);
+
 		}
 
-		void OnUpdate(entt::entity e, const Command& command) override { }
+		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override
+		{
+			// 移动动画通过动画混合得到,这类动画数据的时候将混合参数作为key导出所有离散的动画数据
+			auto axis = fpm::floor(command.y_axis * 10) / 10;
+			std::string name = fmt::format("{}{}", GameConfig::ActionAnimation::kMovement, axis.raw_value());
+			if (name == animction_clip.name)
+			{
+				return;
+			}
+
+			registry.emplace_or_replace<AnimationClip>(e, name);
+		}
 	};
 
 	struct JumpState : State
 	{
 		JumpState(entt::registry& _registry) : State(_registry) {}
 
-		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const Animation& animation, const Command& command) override
+		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animtion_clip, const Command& command) override
 		{
-			if (animation.is_done)
+			if (animtion_clip.is_done)
 			{
 				return ActorStateType::kIdle;
 			}
@@ -112,19 +124,19 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			registry.emplace_or_replace<Animation>(e, GameConfig::ActionAnimation::kIdle);
+			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
 		}
 
-		void OnUpdate(entt::entity e, const Command& command) override { }
+		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override { }
 	};
 
 	struct AttackState : State
 	{
 		AttackState(entt::registry& _registry) : State(_registry) {}
 
-		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const Animation& animation, const Command& command) override
+		ActorStateType OnTransition(entt::entity e, const ActorState& action_state,  const AnimationClip& animtion_clip, const Command& command) override
 		{
-			if (animation.is_done)
+			if (animtion_clip.is_done)
 			{
 				return ActorStateType::kIdle;
 			}
@@ -134,19 +146,19 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			registry.emplace_or_replace<Animation>(e, GameConfig::ActionAnimation::kIdle);
+			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
 		}
 
-		void OnUpdate(entt::entity e, const Command& command) override { }
+		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override { }
 	};
 
 	struct HurtState : State
 	{
 		HurtState(entt::registry& _registry) : State(_registry) {}
 
-		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const Animation& animation, const Command& command) override
+		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animtion_clip, const Command& command) override
 		{
-			if (animation.is_done)
+			if (animtion_clip.is_done)
 			{
 				return ActorStateType::kIdle;
 			}
@@ -156,10 +168,10 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			registry.emplace_or_replace<Animation>(e, GameConfig::ActionAnimation::kIdle);
+			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
 		}
 
-		void OnUpdate(entt::entity e, const Command& command) override { }
+		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override { }
 	};
 
 	struct DeathState : State
@@ -168,10 +180,10 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			registry.emplace_or_replace<Animation>(e, GameConfig::ActionAnimation::kIdle);
+			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
 		}
 
-		void OnUpdate(entt::entity e, const Command& command) override { }
+		void OnUpdate(entt::entity e, const Command& command,const AnimationClip& animction_clip) override { }
 	};
 
 	std::array<std::unique_ptr<State>, (size_t)ActorStateType::kMax> states;
@@ -198,29 +210,33 @@ struct ActorStateSystem : public System
 		OnTransition(dt);
 		OnExit();
 		OnEnter();
+
+		ProcessCurState();
 	}
 
 	void OnTransition(fixed16 dt)
 	{
-		for (auto e : registry.view<ActorState, Animation, Command>(entt::exclude_t<EnterActorState, ExitActorState>{}))
+		auto view = registry.view<ActorState,AnimationClip, Command>(entt::exclude<EnterActorState, ExitActorState>);
+		for (auto e : view)
 		{
-			auto& action_state = registry.get<ActorState>(e);
-			const auto& animation = registry.get<Animation>(e);
-			const auto& command = registry.get<Command>(e);
+			auto& action_state = view.get<ActorState>(e);
+			const auto& animation_clip = view.get<AnimationClip>(e);
+			const auto& command = view.get<Command>(e);
 
 			action_state.time += dt;
 
 			auto& executor = states[(size_t)action_state.cur_state];
-			auto next_state = executor->OnTransition(e, action_state, animation, command);
+			auto next_state = executor->OnTransition(e, action_state,animation_clip, command);
 			ActionStateUtility::ChangeState(registry, e, next_state);
 		}
 	}
 
 	void OnExit()
 	{
-		for (auto e : registry.view<ExitActorState>())
+		auto view = registry.view<ExitActorState>();
+		for (auto e : view)
 		{
-			auto& exit_state = registry.get<ExitActorState>(e);
+			auto& exit_state = view.get<ExitActorState>(e);
 
 			auto& executor = states[(size_t)exit_state.value];
 			executor->OnExit(e, exit_state);
@@ -229,9 +245,10 @@ struct ActorStateSystem : public System
 
 	void OnEnter()
 	{
-		for (auto e : registry.view<EnterActorState>())
+		auto view = registry.view<EnterActorState>();
+		for (auto e : view)
 		{
-			auto& enter_state = registry.get<EnterActorState>(e);
+			auto& enter_state = view.get<EnterActorState>(e);
 			
 			auto& executor = states[(size_t)enter_state.value];
 			executor->OnEnter(e,enter_state);
@@ -242,12 +259,15 @@ struct ActorStateSystem : public System
 
 	void ProcessCurState()
 	{
-		for (auto e : registry.view<ActorState,Command>())
+		auto view = registry.view<ActorState, Command, AnimationClip>();
+		for (auto e : view)
 		{
-			auto& action_state = registry.get<ActorState>(e);
-			auto& command = registry.get<Command>(e);
+			auto& action_state = view.get<ActorState>(e);
+			auto& command = view.get<Command>(e);
+			auto& animction_clip = view.get<AnimationClip>(e);
+
 			auto& executor = states[(size_t)action_state.cur_state];
-			executor->OnUpdate(e, command);
+			executor->OnUpdate(e, command,animction_clip);
 		}
 	}
 
