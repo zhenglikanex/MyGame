@@ -17,6 +17,7 @@ Json.hpp
 Math.hpp
 Fmt.hpp
 PlayerInfo.hpp
+Hash.hpp
 
 Utility/ActorStateUtility.hpp
 Utility/AnimationUtility.hpp
@@ -29,6 +30,7 @@ System/UpdateViewSystem.hpp
 System/ActorStateSystem.hpp
 System/CreateAnimationSystem.hpp
 System/RootMotionSystem.hpp
+System/SkillStateSystem.hpp
 
 Component/GameMode.hpp
 Component/GameState.hpp
@@ -42,6 +44,7 @@ Component/Movement.hpp
 Component/ActorState.hpp
 Component/Animation.hpp
 Component/AnimationClip.hpp
+Component/SkillState.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp

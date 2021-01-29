@@ -91,7 +91,7 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-
+			
 		}
 
 		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override
