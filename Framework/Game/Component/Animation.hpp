@@ -11,7 +11,7 @@
 
 struct Animation
 {
-	const AnimationInfo * const value;
+	const AnimationInfo* value;
 
 	Animation(const AnimationInfo* _value)
 		:value(_value)

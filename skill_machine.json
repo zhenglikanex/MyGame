@@ -1,0 +1,28 @@
+{
+	"state1":[
+		{
+			"state2":[
+				 {
+					 "var_name":"var_name",
+					 "var_value":"target",
+					 "var_type":"float"
+				},
+				{
+					"var_name":"var_name",
+					"var_value":"target",
+					"var_type":"float"
+			   	}
+			 ],
+			"state3":[
+				{
+					"var_name":"var_name",
+					"var_value":"target",
+					"var_type":"float"
+			   	}
+			 ]
+		},
+		{}
+	],
+	
+	"state2":[{}]
+}

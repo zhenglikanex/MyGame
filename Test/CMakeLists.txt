@@ -2,9 +2,7 @@ add_executable(Test
     main.cpp
 )
 
-target_link_libraries(Test
-    Game
-)
+
 SET_PROPERTY(TARGET Test PROPERTY FOLDER "Test")
 
 add_subdirectory(OctTree)

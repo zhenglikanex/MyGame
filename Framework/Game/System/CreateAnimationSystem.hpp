@@ -15,6 +15,16 @@ struct CreateAnimationSystem : System
 
 	}
 
+	~CreateAnimationSystem()
+	{
+
+	}
+
+	bool Initialize() override
+	{
+		return true;
+	}
+
 	void Update(fixed16 dt)
 	{
 		auto view = registry.view<AnimationAsset>(entt::exclude_t<Animation>{});
@@ -24,7 +34,12 @@ struct CreateAnimationSystem : System
 			
 			const auto& animation_config = registry.ctx<AnimationConfig>();
 			auto& animation_info = animation_config.GetEntry(asset.value);
-			registry.emplace<Animation>(e, &animation_config);
+			registry.emplace<Animation>(e, &animation_info);
 		}
+	}
+
+	void Finalize()
+	{
+		
 	}
 };

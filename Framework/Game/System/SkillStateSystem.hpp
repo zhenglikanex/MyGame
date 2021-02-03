@@ -13,8 +13,14 @@ struct SkillStateSystem : System
 
 	void Update(fixed16 dt)
 	{
-		
-	}
+		auto view = registry.view<SkillCommand, SkillState, SkillStateMachine>();
+		for (auto e : view)
+		{
+			auto& command = view.get<SkillCommand>(e);
+			auto& state = view.get<SkillState>(e);
+			auto& skill_state_matchine = view.get<SkillStateMachine>(e);
 
-	
+
+		}
+	}
 };

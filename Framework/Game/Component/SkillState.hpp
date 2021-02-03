@@ -26,3 +26,13 @@ struct ExitSkillState
 {
 	uint32_t value;
 };
+
+struct SkillCommand
+{
+	uint32_t skill;
+};
+
+struct SkillStateMachine
+{
+	
+};

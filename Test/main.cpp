@@ -1,22 +1,10 @@
 #pragma once
 
-#include "entt/entt.hpp"
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <filesystem>
-
-struct Test
-{
-	int a;
-};
+#include "Framework/Game/Component/Animation.hpp"
 
 int main()
-{	
-	entt::registry r;
-	entt::observer o{ r,entt::collector.group<Test>().update<> };
-	entt::observer o1{ r,entt::collector.update<Test>() };
-
-	system("pause");
+{
+	std::vector<Animation> anims;
+	std::cout << anims.size() << std::endl;
 	return 0;
 }

@@ -5,5 +5,5 @@
 struct PlayerInfo
 {
 	uint32_t id;
-	std::string asset;
+	std::string actor_asset;
 };

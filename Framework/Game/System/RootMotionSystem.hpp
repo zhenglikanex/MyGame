@@ -32,7 +32,7 @@ struct RootMotionSystem : public System
 				{
 					if (auto it = iter->second.root_motions.find(animtion_clip.time); it != iter->second.root_motions.end())
 					{
-						registry.replace<Transform>(e, transform.position + it->second.delta_position, transform.forward);
+						//registry.replace<Transform>(e, transform.position + it->second.delta_position, transform.forward);
 						//todo:
 						//registry.emplace_or_replace<Movement>();
 					}

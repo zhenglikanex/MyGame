@@ -31,6 +31,7 @@ System/ActorStateSystem.hpp
 System/CreateAnimationSystem.hpp
 System/RootMotionSystem.hpp
 System/SkillStateSystem.hpp
+System/CreateActorSystem.hpp
 
 Component/GameMode.hpp
 Component/GameState.hpp
@@ -45,6 +46,8 @@ Component/ActorState.hpp
 Component/Animation.hpp
 Component/AnimationClip.hpp
 Component/SkillState.hpp
+Component/BoundingBox.hpp
+Component/ActorAsset.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp
@@ -54,6 +57,7 @@ Data/Config.cpp
 Data/RootMotionConfig.hpp
 Data/RootMotionConfig.cpp
 Data/AnimationConfig.hpp
+Data/ActorConfig.hpp
 )
 
 foreach(_file ${file_list})

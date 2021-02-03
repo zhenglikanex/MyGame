@@ -61,20 +61,20 @@ TEST_CASE_METHOD(Test, "OctTree")
 	std::vector<AABB> aabbs;
 	aabbs.reserve(10000);
 	std::vector<AABB> collisions;
-	OctTree tree(vec3(fixed16(0)), vec3(fixed16(1000)), 7);
+	OctTree tree(vec3(fixed16(0)), vec3(fixed16(1000)), 5);
 
 	entt::registry registry;
 	auto te = registry.create();
 	BuildTree(registry, te, vec3(fixed16(0)), vec3(fixed16(1000)), 7);
 
-	for (int i = 0; i < 2500; ++i)
+	for (int i = 0; i < 1000; ++i)
 	{
 		aabbs.emplace_back(vec3(fixed16(c(e))), vec3(fixed16(r(e))));
 	}
 
 	{
 		AutoTimer t;
-		for (int i = 0; i < 2500; ++i)
+		for (int i = 0; i < 1000; ++i)
 		{
 			tree.Insert(aabbs[i]);
 		}
@@ -82,7 +82,7 @@ TEST_CASE_METHOD(Test, "OctTree")
 
 	{
 		AutoTimer t("ecs tree");
-		for (int i = 0; i < 2500; ++i)
+		for (int i = 0; i < 1000; ++i)
 		{
 			auto e = registry.create();
 			registry.emplace<AABB>(e, aabbs[i]);
@@ -94,7 +94,7 @@ TEST_CASE_METHOD(Test, "OctTree")
 	int cnt1 = 0, cnt2 = 0;
 	{
 		AutoTimer t;
-		for (int i = 0; i < 2500; ++i)
+		for (int i = 0; i < 1000; ++i)
 		{
 			for (int j = 0; j < aabbs.size(); ++j)
 			{
@@ -111,7 +111,7 @@ TEST_CASE_METHOD(Test, "OctTree")
 
 		objects.reserve(100000);
 		AutoTimer t("oct");
-		for (int i = 0; i < 2500; ++i)
+		for (int i = 0; i < 1000; ++i)
 		{
 			tree.GetCollisionObject(aabbs[i], objects);
 			//cnt2 += objects.size();

@@ -13,7 +13,9 @@ public class Actor : UnityView
     // Update is called once per frame
     void Update()
     {
-        
+        var animator = GetComponent<Animator>();
+        animator.SetFloat("forward", 2.0f);
+        //Debug.Log(animator.deltaPosition);
     }
 
     public override void OnInit()
@@ -48,5 +50,15 @@ public class Actor : UnityView
     {
         Vector3 forward = new Vector3(x, y, z);
         transform.forward = forward;
+    }
+
+    public void OnAnimatorMove()
+    {
+        var animator = GetComponent<Animator>();
+        var state = animator.GetCurrentAnimatorStateInfo(0);
+        var p = state.normalizedTime - (int)state.normalizedTime;
+        var time = p * state.length;
+        //transform.position += animator.deltaPosition;
+        Debug.Log(string.Format("time:{0},z:{1}", time, animator.velocity.z));
     }
 }

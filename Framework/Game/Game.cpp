@@ -24,8 +24,6 @@
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
 
-#include "Framework/Game/Data/RootMotionConfig.hpp"
-
 Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 {
 	registry_.set<GameMode>(mode);
@@ -36,7 +34,7 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	systems_.emplace_back(std::make_unique<CreateAnimationSystem>(registry_));
 	systems_.emplace_back(std::make_unique<ActorStateSystem>(registry_));
 	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
-	systems_.emplace_back(std::make_unique<RootMotionConfig>(registry_));
+	systems_.emplace_back(std::make_unique<RootMotionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
 	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
@@ -247,10 +245,10 @@ void Game::CheckPredict()
 }
 
 
-CommandGroup Game::PredictCommandGroup(uint32_t frame)
-{
-	return CommandGroup();
-}
+//CommandGroup Game::PredictCommandGroup(uint32_t frame)
+//{
+//	return CommandGroup();
+//}
 
 void Game::SaveSnapshot()
 {
@@ -263,14 +261,14 @@ void Game::CreatePlayer()
 	for (auto& player_info : player_infos_)
 	{
 		auto e = registry_.create();
+		
 		registry_.emplace<ViewAsset>(e,player_info.asset);
 		registry_.emplace<Player>(e,player_info.id);
-		registry_.emplace<>()
 		ActionStateUtility::ChangeState(registry_, e, ActorStateType::kIdle);
 	}
 }
 
 void Game::LoadAllConfig()
 {
-	LoadConfig<RootMotionConfig>("Config/Anim/HeroRootMotion.json");
+	
 }
