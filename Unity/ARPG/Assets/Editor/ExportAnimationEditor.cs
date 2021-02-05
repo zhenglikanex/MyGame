@@ -8,6 +8,7 @@ using LitJson;
 
 public class RootMotion
 {
+    public float time;
     public Vector3 velocity;
     public Vector3 angularVelocity;
 }
@@ -17,11 +18,17 @@ public class Bone
     public Matrix4x4 transform;
 }
 
+public class Skeleton
+{
+    public float time;
+    public Dictionary<string, Bone> bones = new Dictionary<string, Bone>();
+}
+
 public class ConfigAnimationClip
 {
     public float length;
-    public Dictionary<float, RootMotion> rootMotions = new Dictionary<float, RootMotion>();
-    public Dictionary<float, Dictionary<string, Bone>> bones = new Dictionary<float, Dictionary<string, Bone>>();
+    public List<RootMotion> rootMotions = new List<RootMotion>();
+    public List<Skeleton> skeletons = new List<Skeleton>();
 }
 
 public class ConfigAnimation
@@ -198,12 +205,14 @@ public class ExportAnimationEditor : EditorWindow
 
                             // rootmotion
                             RootMotion rootMotion = new RootMotion();
+                            rootMotion.time = time;
                             rootMotion.velocity = animator.velocity;
                             rootMotion.angularVelocity = animator.angularVelocity;
-                            clip.rootMotions.Add(time, rootMotion);
+                            clip.rootMotions.Add(rootMotion);
 
                             //bones
-                            var bones = new Dictionary<string, Bone>();
+                            var skeleton = new Skeleton();
+                            skeleton.time = time;
                             foreach (var name in exportBoneNames)
                             {
                                 var go = GetGameObject(animator.gameObject, name);
@@ -211,10 +220,10 @@ public class ExportAnimationEditor : EditorWindow
                                 {
                                     var bone = new Bone();
                                     bone.transform = go.transform.worldToLocalMatrix;
-                                    bones.Add(name, bone);
+                                    skeleton.bones.Add(name, bone);
                                 }
                             }
-                            clip.bones.Add(time, bones);
+                            clip.skeletons.Add(skeleton);
 
                             time += dt;
 
@@ -224,8 +233,8 @@ public class ExportAnimationEditor : EditorWindow
                         bool flag = false;
                         foreach (var rootMotion in clip.rootMotions)
                         {
-                            var velocity = rootMotion.Value.velocity;
-                            var angularVelocity = rootMotion.Value.angularVelocity;
+                            var velocity = rootMotion.velocity;
+                            var angularVelocity = rootMotion.angularVelocity;
                             Debug.Log(velocity.z);
                             if (velocity.x > 0.0001f || velocity.y > 0.0001f || velocity.z > 0.0001f || angularVelocity.x > 0.0001f || angularVelocity.y > 0.0001f || angularVelocity.z > 0.0001f)
                             {
@@ -260,12 +269,14 @@ public class ExportAnimationEditor : EditorWindow
                         animator.Update(dt);
 
                         RootMotion rootMotion = new RootMotion();
+                        rootMotion.time = time;
                         rootMotion.velocity = animator.velocity;
                         rootMotion.angularVelocity = animator.angularVelocity;
-                        clip.rootMotions.Add(time, rootMotion);
+                        clip.rootMotions.Add(rootMotion);
 
                         //bones
-                        var bones = new Dictionary<string, Bone>();
+                        var skeleton = new Skeleton();
+                        skeleton.time = time;
                         foreach (var name in exportBoneNames)
                         {
                             var go = GetGameObject(animator.gameObject, name);
@@ -273,10 +284,10 @@ public class ExportAnimationEditor : EditorWindow
                             {
                                 var bone = new Bone();
                                 bone.transform = go.transform.worldToLocalMatrix;
-                                bones.Add(name, bone);
+                                skeleton.bones.Add(name, bone);
                             }
                         }
-                        clip.bones.Add(time, bones);
+                        clip.skeletons.Add(skeleton);
 
                         time += dt;
 
@@ -286,8 +297,8 @@ public class ExportAnimationEditor : EditorWindow
                     bool flag = false;
                     foreach (var rootMotion in clip.rootMotions)
                     {
-                        var velocity = rootMotion.Value.velocity;
-                        var angularVelocity = rootMotion.Value.angularVelocity;
+                        var velocity = rootMotion.velocity;
+                        var angularVelocity = rootMotion.angularVelocity;
                         Debug.Log(velocity.z);
                         if (velocity.x > 0.0001f || velocity.y > 0.0001f || velocity.z > 0.0001f || angularVelocity.x > 0.0001f || angularVelocity.y > 0.0001f || angularVelocity.z > 0.0001f)
                         {
