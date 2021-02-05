@@ -4,6 +4,7 @@
 
 #include "Framework/Game/Component/Animation.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
+
 #include "Framework/Game/System.hpp"
 
 
@@ -27,16 +28,22 @@ struct AnimationSystem : public System
 			{
 				auto& animation_clip = view.get<AnimationClip>(e);
 
+				// loop play
+				if (animation_clip.is_done)
+				{
+					animation_clip.is_done = false;
+					animation_clip.time = fixed16(0);
+				}
+
 				if (!animation_clip.is_done)
 				{
 					animation_clip.time += dt;
-					//animation.is_done = animation.time / GameConfig::kFrameTime >= fixed16(animation.max_frame);
 				}
 
-				auto iter = animation.value->find(animation_clip.name);
-				if (iter != animation.value->end())
+				auto iter = animation.value->clips.find(animation_clip.name);
+				if (iter != animation.value->clips.cend())
 				{
-					if (animation_clip.time >= iter->second.length * GameConfig::kFrameTime)
+					if (animation_clip.time >= iter->second.length)
 					{
 						animation_clip.is_done = true;
 					}

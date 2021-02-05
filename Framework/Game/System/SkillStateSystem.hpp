@@ -19,8 +19,6 @@ struct SkillStateSystem : System
 			auto& command = view.get<SkillCommand>(e);
 			auto& state = view.get<SkillState>(e);
 			auto& skill_state_matchine = view.get<SkillStateMachine>(e);
-
-
 		}
 	}
 };

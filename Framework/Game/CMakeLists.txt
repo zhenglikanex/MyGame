@@ -18,6 +18,7 @@ Math.hpp
 Fmt.hpp
 PlayerInfo.hpp
 Hash.hpp
+Collision.hpp
 
 Utility/ActorStateUtility.hpp
 Utility/AnimationUtility.hpp
@@ -48,14 +49,14 @@ Component/AnimationClip.hpp
 Component/SkillState.hpp
 Component/BoundingBox.hpp
 Component/ActorAsset.hpp
+Component/Weapon.hpp
+Component/Hit.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp
 
 Data/Config.hpp
 Data/Config.cpp
-Data/RootMotionConfig.hpp
-Data/RootMotionConfig.cpp
 Data/AnimationConfig.hpp
 Data/ActorConfig.hpp
 )

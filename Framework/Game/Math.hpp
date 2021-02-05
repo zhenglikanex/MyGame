@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Fmt.hpp"
+
 #include "Framework/Game/FixedPoint.hpp"
 #include "Framework/serialize/binary_archive.hpp"
 
@@ -12,6 +14,12 @@ using vec4 = glm::vec<4, fixed16, glm::defaultp>;
 using mat3 = glm::mat<3, 3, fixed16, glm::defaultp>;
 using mat4 = glm::mat<4, 4, fixed16, glm::defaultp>;
 using quat = glm::qua<fixed16, glm::defaultp>;
+
+template<class T>
+T zero()
+{
+	return T(fixed16(0));
+}
 
 namespace glm
 {
@@ -31,6 +39,19 @@ namespace glm
 		j.at("y").get_to(q.y);
 		j.at("z").get_to(q.z);
 		j.at("w").get_to(q.w);
+	}
+
+	template<glm::length_t col, glm::length_t row, class T, glm::qualifier Q>
+	void from_json(const json& json, glm::mat<col, row, T, Q>& mat)
+	{
+		for (int i = 0; i < col; ++i)
+		{
+			for (int j = 0; j < row; ++j)
+			{
+				std::string key = fmt::format("m{0}{1}", i, j);
+				json.at(key).get_to(mat[i][j]);
+			}
+		}
 	}
 }
 

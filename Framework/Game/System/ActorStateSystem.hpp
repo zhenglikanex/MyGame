@@ -97,8 +97,10 @@ struct ActorStateSystem : public System
 		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override
 		{
 			// 移动动画通过动画混合得到,这类动画数据的时候将混合参数作为key导出所有离散的动画数据
-			auto axis = fpm::floor(command.y_axis * 10) / 10;
-			std::string name = fmt::format("{}{}", GameConfig::ActionAnimation::kMovement, axis.raw_value());
+			
+			// todo:存在浮点数问题
+			auto y = static_cast<float>(command.y_axis);
+			std::string name = fmt::format("{}|{.1f}", GameConfig::ActionAnimation::kMovement, y);
 			if (name == animction_clip.name)
 			{
 				return;
@@ -267,7 +269,7 @@ struct ActorStateSystem : public System
 			auto& animction_clip = view.get<AnimationClip>(e);
 
 			auto& executor = states[(size_t)action_state.cur_state];
-			executor->OnUpdate(e, command,animction_clip);
+			executor->OnUpdate(e, command, animction_clip);
 		}
 	}
 

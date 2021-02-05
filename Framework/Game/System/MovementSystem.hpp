@@ -25,7 +25,8 @@ struct MovementSystem : public System
 			const auto& movement = view.get<Movement>(e);
 			auto& transform = view.get<Transform>(e);
 
-			//
+			// todo:
+			registry.replace<Transform>(e, transform.position + movement.velocity * dt);
 		}
 	}
 

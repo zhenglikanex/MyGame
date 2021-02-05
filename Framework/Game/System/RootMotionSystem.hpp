@@ -18,23 +18,25 @@ struct RootMotionSystem : public System
 
 	void Update(fixed16 dt) override
 	{
-		auto view = registry.view<Animation,AnimationClip,Transform>();
+		auto view = registry.view<Animation,AnimationClip>();
 		for (auto e : view)
 		{
 			auto& animtion = view.get<Animation>(e);
 			auto& animtion_clip = view.get<AnimationClip>(e);
-			auto& transform = view.get<Transform>(e);
 
 			if (animtion.value)
 			{
-				auto iter = animtion.value->find(animtion_clip.name);
-				if (iter != animtion.value->end())
+				auto iter = animtion.value->clips.find(animtion_clip.name);
+				if (iter != animtion.value->clips.end())
 				{
-					if (auto it = iter->second.root_motions.find(animtion_clip.time); it != iter->second.root_motions.end())
+					auto it = std::find_if(iter->second.root_motions.cbegin(), iter->second.root_motions.cend(), [&animtion_clip](const RootMotion& root_motion)
 					{
-						//registry.replace<Transform>(e, transform.position + it->second.delta_position, transform.forward);
-						//todo:
-						//registry.emplace_or_replace<Movement>();
+						return animtion_clip.time >= root_motion.time;
+					});
+
+					if (it != iter->second.root_motions.cend())
+					{
+						registry.emplace_or_replace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
 					}
 				}
 			}

@@ -9,6 +9,8 @@
 
 struct CreateAnimationSystem : System
 {
+	std::unordered_map<std::string, AnimationInfo> animation_infos;
+
 	CreateAnimationSystem(entt::registry& registry) 
 		: System(registry)
 	{
@@ -31,9 +33,7 @@ struct CreateAnimationSystem : System
 		for (auto e : view)
 		{
 			auto& asset = view.get<AnimationAsset>(e);
-			
-			const auto& animation_config = registry.ctx<AnimationConfig>();
-			auto& animation_info = animation_config.GetEntry(asset.value);
+			auto& animation_info = GetAnimationInfo(asset.value);
 			registry.emplace<Animation>(e, &animation_info);
 		}
 	}
@@ -41,5 +41,26 @@ struct CreateAnimationSystem : System
 	void Finalize()
 	{
 		
+	}
+
+	const AnimationInfo& GetAnimationInfo(const std::string& name)
+	{
+		auto iter = animation_infos.find(name);
+		if (iter != animation_infos.end())
+		{
+			return iter->second;
+		}
+		else
+		{
+			auto& locator = registry.ctx<Locator>();
+			auto content = locator.Ref<FileService>().OpenFile(name);
+
+			assert(content != "" && "not anim info");
+
+			nlohmann::json j = nlohmann::json::parse(content);
+			animation_infos.emplace(name,j.get<AnimationInfo>());
+
+			return animation_infos[name];
+		}
 	}
 };

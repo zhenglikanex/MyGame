@@ -9,7 +9,7 @@ struct Transform
 	{
 
 	}
-	Transform(vec3 _pos, vec3 _foward)
+	Transform(const vec3& _pos, const vec3& _foward)
 		:position(_pos),forward(_foward)
 	{
 	}

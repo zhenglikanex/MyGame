@@ -261,8 +261,7 @@ void Game::CreatePlayer()
 	for (auto& player_info : player_infos_)
 	{
 		auto e = registry_.create();
-		
-		registry_.emplace<ViewAsset>(e,player_info.asset);
+	
 		registry_.emplace<Player>(e,player_info.id);
 		ActionStateUtility::ChangeState(registry_, e, ActorStateType::kIdle);
 	}
