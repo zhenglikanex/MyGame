@@ -83,7 +83,7 @@ public class ExportActorInfoEditor : EditorWindow
                 continue;
             }
             ActorInfo info = new ActorInfo();
-            info.modelAsset = go.name + ".prefab";
+            info.modelAsset = go.name;
             info.animAsset = go.name + ".json";
             info.bodyCollision = GetCollisionInfo(bodyCollision);
             info.weaponCollision = GetCollisionInfo(weaponCollision);

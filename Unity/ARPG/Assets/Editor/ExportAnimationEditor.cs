@@ -178,11 +178,10 @@ public class ExportAnimationEditor : EditorWindow
             ConfigAnimation cfgAnimation = new ConfigAnimation();
 
             var animator = Instantiate(item.target);
-            
+            animator.applyRootMotion = true;
+
             foreach (var animation in item.animations)
             {
-                
-
                 if (animation.isBlendTree)
                 {
                     float step = Math.Max(animation.step, 0.01f);
@@ -193,7 +192,7 @@ public class ExportAnimationEditor : EditorWindow
 
                         animator.SetFloat(animation.param,param);
                         animator.Play(animation.name,0,0);
-                        animator.Update(dt);    //多更新一个dt去掉0的情况
+                        animator.Update(0);    //多更新一个dt去掉0的情况
 
                         var state = animator.GetCurrentAnimatorStateInfo(0);
                         clip.length = state.length;
@@ -201,7 +200,6 @@ public class ExportAnimationEditor : EditorWindow
                         float time = 0.0f;
                         do
                         {
-                            animator.Update(dt);
 
                             // rootmotion
                             RootMotion rootMotion = new RootMotion();
@@ -209,6 +207,8 @@ public class ExportAnimationEditor : EditorWindow
                             rootMotion.velocity = animator.velocity;
                             rootMotion.angularVelocity = animator.angularVelocity;
                             clip.rootMotions.Add(rootMotion);
+
+                            Debug.Log(string.Format("{0}   {1}", state.length, animator.GetCurrentAnimatorStateInfo(0).length));
 
                             //bones
                             var skeleton = new Skeleton();
@@ -225,6 +225,8 @@ public class ExportAnimationEditor : EditorWindow
                             }
                             clip.skeletons.Add(skeleton);
 
+                            animator.Update(dt);
+
                             time += dt;
 
                         } while (time < state.length);
@@ -235,7 +237,6 @@ public class ExportAnimationEditor : EditorWindow
                         {
                             var velocity = rootMotion.velocity;
                             var angularVelocity = rootMotion.angularVelocity;
-                            Debug.Log(velocity.z);
                             if (velocity.x > 0.0001f || velocity.y > 0.0001f || velocity.z > 0.0001f || angularVelocity.x > 0.0001f || angularVelocity.y > 0.0001f || angularVelocity.z > 0.0001f)
                             {
                                 flag = true;
@@ -250,7 +251,7 @@ public class ExportAnimationEditor : EditorWindow
 
                         
                         
-                        cfgAnimation.clips.Add(string.Format("{0}{1}", animation.name,param), clip);
+                        cfgAnimation.clips.Add(string.Format("{0}|{1:F1}", animation.name,param), clip);
                     }
                 }
                 else
@@ -258,7 +259,7 @@ public class ExportAnimationEditor : EditorWindow
                     ConfigAnimationClip clip = new ConfigAnimationClip();
 
                     animator.Play(animation.name, 0, 0);
-                    animator.Update(dt);    //多更新一个dt去掉0的情况
+                    animator.Update(0);    //多更新一个dt去掉0的情况
 
                     var state = animator.GetCurrentAnimatorStateInfo(0);
                     clip.length = state.length;
@@ -266,8 +267,6 @@ public class ExportAnimationEditor : EditorWindow
                     float time = 0.0f;
                     do
                     {
-                        animator.Update(dt);
-
                         RootMotion rootMotion = new RootMotion();
                         rootMotion.time = time;
                         rootMotion.velocity = animator.velocity;
@@ -288,6 +287,8 @@ public class ExportAnimationEditor : EditorWindow
                             }
                         }
                         clip.skeletons.Add(skeleton);
+
+                        animator.Update(dt);
 
                         time += dt;
 

@@ -47,4 +47,9 @@ public class UnityView : PoolObject
     {
 
     }
+
+    public virtual void PlayAnim(string str)
+    {
+
+    }
 }

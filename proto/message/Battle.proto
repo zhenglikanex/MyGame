@@ -1,9 +1,11 @@
 syntax = "proto3";
 
+package Proto;
+
 message PlayerInfo
 {
 	uint32 id = 1;
-	uint32 actor_id = 2;
+	string actor_asset = 2;
 }
 
 message GamePlayerInfos

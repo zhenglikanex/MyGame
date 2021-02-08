@@ -17,6 +17,8 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
+namespace Proto {
+
 namespace {
 
 const ::google::protobuf::Descriptor* PlayerInfo_descriptor_ = NULL;
@@ -46,7 +48,7 @@ void protobuf_AssignDesc_Battle_2eproto() {
   PlayerInfo_descriptor_ = file->message_type(0);
   static const int PlayerInfo_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PlayerInfo, id_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PlayerInfo, actor_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PlayerInfo, actor_asset_),
   };
   PlayerInfo_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -133,7 +135,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         GameCommondGroup_CommondsEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::google::protobuf::uint32,
-            ::GameCommond,
+            ::Proto::GameCommond,
             ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -161,15 +163,15 @@ void protobuf_AddDesc_Battle_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\014Battle.proto\"*\n\nPlayerInfo\022\n\n\002id\030\001 \001(\r"
-    "\022\020\n\010actor_id\030\002 \001(\r\"4\n\017GamePlayerInfos\022!\n"
-    "\014player_infos\030\001 \003(\0132\013.PlayerInfo\"K\n\013Game"
-    "Commond\022\016\n\006x_axis\030\001 \001(\002\022\016\n\006y_axis\030\002 \001(\002\022"
-    "\014\n\004jump\030\003 \001(\010\022\016\n\006attack\030\004 \001(\010\"\204\001\n\020GameCo"
-    "mmondGroup\0221\n\010commonds\030\001 \003(\0132\037.GameCommo"
-    "ndGroup.CommondsEntry\032=\n\rCommondsEntry\022\013"
-    "\n\003key\030\001 \001(\r\022\033\n\005value\030\002 \001(\0132\014.GameCommond"
-    ":\0028\001b\006proto3", 332);
+    "\n\014Battle.proto\022\005Proto\"-\n\nPlayerInfo\022\n\n\002i"
+    "d\030\001 \001(\r\022\023\n\013actor_asset\030\002 \001(\t\":\n\017GamePlay"
+    "erInfos\022\'\n\014player_infos\030\001 \003(\0132\021.Proto.Pl"
+    "ayerInfo\"K\n\013GameCommond\022\016\n\006x_axis\030\001 \001(\002\022"
+    "\016\n\006y_axis\030\002 \001(\002\022\014\n\004jump\030\003 \001(\010\022\016\n\006attack\030"
+    "\004 \001(\010\"\220\001\n\020GameCommondGroup\0227\n\010commonds\030\001"
+    " \003(\0132%.Proto.GameCommondGroup.CommondsEn"
+    "try\032C\n\rCommondsEntry\022\013\n\003key\030\001 \001(\r\022!\n\005val"
+    "ue\030\002 \001(\0132\022.Proto.GameCommond:\0028\001b\006proto3", 360);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Battle.proto", &protobuf_RegisterTypes);
   PlayerInfo::default_instance_ = new PlayerInfo();
@@ -194,13 +196,13 @@ struct StaticDescriptorInitializer_Battle_2eproto {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int PlayerInfo::kIdFieldNumber;
-const int PlayerInfo::kActorIdFieldNumber;
+const int PlayerInfo::kActorAssetFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PlayerInfo::PlayerInfo()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:PlayerInfo)
+  // @@protoc_insertion_point(constructor:Proto.PlayerInfo)
 }
 
 void PlayerInfo::InitAsDefaultInstance() {
@@ -212,22 +214,24 @@ PlayerInfo::PlayerInfo(const PlayerInfo& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:PlayerInfo)
+  // @@protoc_insertion_point(copy_constructor:Proto.PlayerInfo)
 }
 
 void PlayerInfo::SharedCtor() {
     _is_default_instance_ = false;
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   id_ = 0u;
-  actor_id_ = 0u;
+  actor_asset_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 PlayerInfo::~PlayerInfo() {
-  // @@protoc_insertion_point(destructor:PlayerInfo)
+  // @@protoc_insertion_point(destructor:Proto.PlayerInfo)
   SharedDtor();
 }
 
 void PlayerInfo::SharedDtor() {
+  actor_asset_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != default_instance_) {
   }
 }
@@ -258,35 +262,16 @@ PlayerInfo* PlayerInfo::New(::google::protobuf::Arena* arena) const {
 }
 
 void PlayerInfo::Clear() {
-// @@protoc_insertion_point(message_clear_start:PlayerInfo)
-#if defined(__clang__)
-#define ZR_HELPER_(f) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(PlayerInfo, f) \
-  _Pragma("clang diagnostic pop")
-#else
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<PlayerInfo*>(16)->f)
-#endif
-
-#define ZR_(first, last) do {\
-  ::memset(&first, 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
-
-  ZR_(id_, actor_id_);
-
-#undef ZR_HELPER_
-#undef ZR_
-
+// @@protoc_insertion_point(message_clear_start:Proto.PlayerInfo)
+  id_ = 0u;
+  actor_asset_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 bool PlayerInfo::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:PlayerInfo)
+  // @@protoc_insertion_point(parse_start:Proto.PlayerInfo)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -302,18 +287,20 @@ bool PlayerInfo::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_actor_id;
+        if (input->ExpectTag(18)) goto parse_actor_asset;
         break;
       }
 
-      // optional uint32 actor_id = 2;
+      // optional string actor_asset = 2;
       case 2: {
-        if (tag == 16) {
-         parse_actor_id:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &actor_id_)));
-
+        if (tag == 18) {
+         parse_actor_asset:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_actor_asset()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->actor_asset().data(), this->actor_asset().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "Proto.PlayerInfo.actor_asset"));
         } else {
           goto handle_unusual;
         }
@@ -334,49 +321,60 @@ bool PlayerInfo::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:PlayerInfo)
+  // @@protoc_insertion_point(parse_success:Proto.PlayerInfo)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:PlayerInfo)
+  // @@protoc_insertion_point(parse_failure:Proto.PlayerInfo)
   return false;
 #undef DO_
 }
 
 void PlayerInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:PlayerInfo)
+  // @@protoc_insertion_point(serialize_start:Proto.PlayerInfo)
   // optional uint32 id = 1;
   if (this->id() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
   }
 
-  // optional uint32 actor_id = 2;
-  if (this->actor_id() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->actor_id(), output);
+  // optional string actor_asset = 2;
+  if (this->actor_asset().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->actor_asset().data(), this->actor_asset().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "Proto.PlayerInfo.actor_asset");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->actor_asset(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:PlayerInfo)
+  // @@protoc_insertion_point(serialize_end:Proto.PlayerInfo)
 }
 
 ::google::protobuf::uint8* PlayerInfo::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:PlayerInfo)
+  // @@protoc_insertion_point(serialize_to_array_start:Proto.PlayerInfo)
   // optional uint32 id = 1;
   if (this->id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->id(), target);
   }
 
-  // optional uint32 actor_id = 2;
-  if (this->actor_id() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->actor_id(), target);
+  // optional string actor_asset = 2;
+  if (this->actor_asset().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->actor_asset().data(), this->actor_asset().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "Proto.PlayerInfo.actor_asset");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->actor_asset(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:PlayerInfo)
+  // @@protoc_insertion_point(serialize_to_array_end:Proto.PlayerInfo)
   return target;
 }
 
 int PlayerInfo::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:PlayerInfo)
+// @@protoc_insertion_point(message_byte_size_start:Proto.PlayerInfo)
   int total_size = 0;
 
   // optional uint32 id = 1;
@@ -386,11 +384,11 @@ int PlayerInfo::ByteSize() const {
         this->id());
   }
 
-  // optional uint32 actor_id = 2;
-  if (this->actor_id() != 0) {
+  // optional string actor_asset = 2;
+  if (this->actor_asset().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->actor_id());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->actor_asset());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -400,7 +398,7 @@ int PlayerInfo::ByteSize() const {
 }
 
 void PlayerInfo::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:PlayerInfo)
+// @@protoc_insertion_point(generalized_merge_from_start:Proto.PlayerInfo)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -408,36 +406,37 @@ void PlayerInfo::MergeFrom(const ::google::protobuf::Message& from) {
       ::google::protobuf::internal::DynamicCastToGenerated<const PlayerInfo>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PlayerInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Proto.PlayerInfo)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:PlayerInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Proto.PlayerInfo)
     MergeFrom(*source);
   }
 }
 
 void PlayerInfo::MergeFrom(const PlayerInfo& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:PlayerInfo)
+// @@protoc_insertion_point(class_specific_merge_from_start:Proto.PlayerInfo)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
   if (from.id() != 0) {
     set_id(from.id());
   }
-  if (from.actor_id() != 0) {
-    set_actor_id(from.actor_id());
+  if (from.actor_asset().size() > 0) {
+
+    actor_asset_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.actor_asset_);
   }
 }
 
 void PlayerInfo::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:PlayerInfo)
+// @@protoc_insertion_point(generalized_copy_from_start:Proto.PlayerInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void PlayerInfo::CopyFrom(const PlayerInfo& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:PlayerInfo)
+// @@protoc_insertion_point(class_specific_copy_from_start:Proto.PlayerInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -454,7 +453,7 @@ void PlayerInfo::Swap(PlayerInfo* other) {
 }
 void PlayerInfo::InternalSwap(PlayerInfo* other) {
   std::swap(id_, other->id_);
-  std::swap(actor_id_, other->actor_id_);
+  actor_asset_.Swap(&other->actor_asset_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -475,27 +474,57 @@ void PlayerInfo::clear_id() {
   id_ = 0u;
 }
  ::google::protobuf::uint32 PlayerInfo::id() const {
-  // @@protoc_insertion_point(field_get:PlayerInfo.id)
+  // @@protoc_insertion_point(field_get:Proto.PlayerInfo.id)
   return id_;
 }
  void PlayerInfo::set_id(::google::protobuf::uint32 value) {
   
   id_ = value;
-  // @@protoc_insertion_point(field_set:PlayerInfo.id)
+  // @@protoc_insertion_point(field_set:Proto.PlayerInfo.id)
 }
 
-// optional uint32 actor_id = 2;
-void PlayerInfo::clear_actor_id() {
-  actor_id_ = 0u;
+// optional string actor_asset = 2;
+void PlayerInfo::clear_actor_asset() {
+  actor_asset_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- ::google::protobuf::uint32 PlayerInfo::actor_id() const {
-  // @@protoc_insertion_point(field_get:PlayerInfo.actor_id)
-  return actor_id_;
+ const ::std::string& PlayerInfo::actor_asset() const {
+  // @@protoc_insertion_point(field_get:Proto.PlayerInfo.actor_asset)
+  return actor_asset_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- void PlayerInfo::set_actor_id(::google::protobuf::uint32 value) {
+ void PlayerInfo::set_actor_asset(const ::std::string& value) {
   
-  actor_id_ = value;
-  // @@protoc_insertion_point(field_set:PlayerInfo.actor_id)
+  actor_asset_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Proto.PlayerInfo.actor_asset)
+}
+ void PlayerInfo::set_actor_asset(const char* value) {
+  
+  actor_asset_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Proto.PlayerInfo.actor_asset)
+}
+ void PlayerInfo::set_actor_asset(const char* value, size_t size) {
+  
+  actor_asset_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Proto.PlayerInfo.actor_asset)
+}
+ ::std::string* PlayerInfo::mutable_actor_asset() {
+  
+  // @@protoc_insertion_point(field_mutable:Proto.PlayerInfo.actor_asset)
+  return actor_asset_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* PlayerInfo::release_actor_asset() {
+  // @@protoc_insertion_point(field_release:Proto.PlayerInfo.actor_asset)
+  
+  return actor_asset_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void PlayerInfo::set_allocated_actor_asset(::std::string* actor_asset) {
+  if (actor_asset != NULL) {
+    
+  } else {
+    
+  }
+  actor_asset_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), actor_asset);
+  // @@protoc_insertion_point(field_set_allocated:Proto.PlayerInfo.actor_asset)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -509,7 +538,7 @@ const int GamePlayerInfos::kPlayerInfosFieldNumber;
 GamePlayerInfos::GamePlayerInfos()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:GamePlayerInfos)
+  // @@protoc_insertion_point(constructor:Proto.GamePlayerInfos)
 }
 
 void GamePlayerInfos::InitAsDefaultInstance() {
@@ -521,7 +550,7 @@ GamePlayerInfos::GamePlayerInfos(const GamePlayerInfos& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:GamePlayerInfos)
+  // @@protoc_insertion_point(copy_constructor:Proto.GamePlayerInfos)
 }
 
 void GamePlayerInfos::SharedCtor() {
@@ -530,7 +559,7 @@ void GamePlayerInfos::SharedCtor() {
 }
 
 GamePlayerInfos::~GamePlayerInfos() {
-  // @@protoc_insertion_point(destructor:GamePlayerInfos)
+  // @@protoc_insertion_point(destructor:Proto.GamePlayerInfos)
   SharedDtor();
 }
 
@@ -565,7 +594,7 @@ GamePlayerInfos* GamePlayerInfos::New(::google::protobuf::Arena* arena) const {
 }
 
 void GamePlayerInfos::Clear() {
-// @@protoc_insertion_point(message_clear_start:GamePlayerInfos)
+// @@protoc_insertion_point(message_clear_start:Proto.GamePlayerInfos)
   player_infos_.Clear();
 }
 
@@ -573,13 +602,13 @@ bool GamePlayerInfos::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:GamePlayerInfos)
+  // @@protoc_insertion_point(parse_start:Proto.GamePlayerInfos)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .PlayerInfo player_infos = 1;
+      // repeated .Proto.PlayerInfo player_infos = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -608,45 +637,45 @@ bool GamePlayerInfos::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:GamePlayerInfos)
+  // @@protoc_insertion_point(parse_success:Proto.GamePlayerInfos)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:GamePlayerInfos)
+  // @@protoc_insertion_point(parse_failure:Proto.GamePlayerInfos)
   return false;
 #undef DO_
 }
 
 void GamePlayerInfos::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:GamePlayerInfos)
-  // repeated .PlayerInfo player_infos = 1;
+  // @@protoc_insertion_point(serialize_start:Proto.GamePlayerInfos)
+  // repeated .Proto.PlayerInfo player_infos = 1;
   for (unsigned int i = 0, n = this->player_infos_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->player_infos(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:GamePlayerInfos)
+  // @@protoc_insertion_point(serialize_end:Proto.GamePlayerInfos)
 }
 
 ::google::protobuf::uint8* GamePlayerInfos::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:GamePlayerInfos)
-  // repeated .PlayerInfo player_infos = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:Proto.GamePlayerInfos)
+  // repeated .Proto.PlayerInfo player_infos = 1;
   for (unsigned int i = 0, n = this->player_infos_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
         1, this->player_infos(i), false, target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:GamePlayerInfos)
+  // @@protoc_insertion_point(serialize_to_array_end:Proto.GamePlayerInfos)
   return target;
 }
 
 int GamePlayerInfos::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:GamePlayerInfos)
+// @@protoc_insertion_point(message_byte_size_start:Proto.GamePlayerInfos)
   int total_size = 0;
 
-  // repeated .PlayerInfo player_infos = 1;
+  // repeated .Proto.PlayerInfo player_infos = 1;
   total_size += 1 * this->player_infos_size();
   for (int i = 0; i < this->player_infos_size(); i++) {
     total_size +=
@@ -661,7 +690,7 @@ int GamePlayerInfos::ByteSize() const {
 }
 
 void GamePlayerInfos::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:GamePlayerInfos)
+// @@protoc_insertion_point(generalized_merge_from_start:Proto.GamePlayerInfos)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -669,16 +698,16 @@ void GamePlayerInfos::MergeFrom(const ::google::protobuf::Message& from) {
       ::google::protobuf::internal::DynamicCastToGenerated<const GamePlayerInfos>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:GamePlayerInfos)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Proto.GamePlayerInfos)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:GamePlayerInfos)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Proto.GamePlayerInfos)
     MergeFrom(*source);
   }
 }
 
 void GamePlayerInfos::MergeFrom(const GamePlayerInfos& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:GamePlayerInfos)
+// @@protoc_insertion_point(class_specific_merge_from_start:Proto.GamePlayerInfos)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -686,14 +715,14 @@ void GamePlayerInfos::MergeFrom(const GamePlayerInfos& from) {
 }
 
 void GamePlayerInfos::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:GamePlayerInfos)
+// @@protoc_insertion_point(generalized_copy_from_start:Proto.GamePlayerInfos)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void GamePlayerInfos::CopyFrom(const GamePlayerInfos& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:GamePlayerInfos)
+// @@protoc_insertion_point(class_specific_copy_from_start:Proto.GamePlayerInfos)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -725,33 +754,33 @@ void GamePlayerInfos::InternalSwap(GamePlayerInfos* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // GamePlayerInfos
 
-// repeated .PlayerInfo player_infos = 1;
+// repeated .Proto.PlayerInfo player_infos = 1;
 int GamePlayerInfos::player_infos_size() const {
   return player_infos_.size();
 }
 void GamePlayerInfos::clear_player_infos() {
   player_infos_.Clear();
 }
-const ::PlayerInfo& GamePlayerInfos::player_infos(int index) const {
-  // @@protoc_insertion_point(field_get:GamePlayerInfos.player_infos)
+const ::Proto::PlayerInfo& GamePlayerInfos::player_infos(int index) const {
+  // @@protoc_insertion_point(field_get:Proto.GamePlayerInfos.player_infos)
   return player_infos_.Get(index);
 }
-::PlayerInfo* GamePlayerInfos::mutable_player_infos(int index) {
-  // @@protoc_insertion_point(field_mutable:GamePlayerInfos.player_infos)
+::Proto::PlayerInfo* GamePlayerInfos::mutable_player_infos(int index) {
+  // @@protoc_insertion_point(field_mutable:Proto.GamePlayerInfos.player_infos)
   return player_infos_.Mutable(index);
 }
-::PlayerInfo* GamePlayerInfos::add_player_infos() {
-  // @@protoc_insertion_point(field_add:GamePlayerInfos.player_infos)
+::Proto::PlayerInfo* GamePlayerInfos::add_player_infos() {
+  // @@protoc_insertion_point(field_add:Proto.GamePlayerInfos.player_infos)
   return player_infos_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::PlayerInfo >*
+::google::protobuf::RepeatedPtrField< ::Proto::PlayerInfo >*
 GamePlayerInfos::mutable_player_infos() {
-  // @@protoc_insertion_point(field_mutable_list:GamePlayerInfos.player_infos)
+  // @@protoc_insertion_point(field_mutable_list:Proto.GamePlayerInfos.player_infos)
   return &player_infos_;
 }
-const ::google::protobuf::RepeatedPtrField< ::PlayerInfo >&
+const ::google::protobuf::RepeatedPtrField< ::Proto::PlayerInfo >&
 GamePlayerInfos::player_infos() const {
-  // @@protoc_insertion_point(field_list:GamePlayerInfos.player_infos)
+  // @@protoc_insertion_point(field_list:Proto.GamePlayerInfos.player_infos)
   return player_infos_;
 }
 
@@ -769,7 +798,7 @@ const int GameCommond::kAttackFieldNumber;
 GameCommond::GameCommond()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:GameCommond)
+  // @@protoc_insertion_point(constructor:Proto.GameCommond)
 }
 
 void GameCommond::InitAsDefaultInstance() {
@@ -781,7 +810,7 @@ GameCommond::GameCommond(const GameCommond& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:GameCommond)
+  // @@protoc_insertion_point(copy_constructor:Proto.GameCommond)
 }
 
 void GameCommond::SharedCtor() {
@@ -794,7 +823,7 @@ void GameCommond::SharedCtor() {
 }
 
 GameCommond::~GameCommond() {
-  // @@protoc_insertion_point(destructor:GameCommond)
+  // @@protoc_insertion_point(destructor:Proto.GameCommond)
   SharedDtor();
 }
 
@@ -829,7 +858,7 @@ GameCommond* GameCommond::New(::google::protobuf::Arena* arena) const {
 }
 
 void GameCommond::Clear() {
-// @@protoc_insertion_point(message_clear_start:GameCommond)
+// @@protoc_insertion_point(message_clear_start:Proto.GameCommond)
 #if defined(__clang__)
 #define ZR_HELPER_(f) \
   _Pragma("clang diagnostic push") \
@@ -857,7 +886,7 @@ bool GameCommond::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:GameCommond)
+  // @@protoc_insertion_point(parse_start:Proto.GameCommond)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -935,17 +964,17 @@ bool GameCommond::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:GameCommond)
+  // @@protoc_insertion_point(parse_success:Proto.GameCommond)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:GameCommond)
+  // @@protoc_insertion_point(parse_failure:Proto.GameCommond)
   return false;
 #undef DO_
 }
 
 void GameCommond::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:GameCommond)
+  // @@protoc_insertion_point(serialize_start:Proto.GameCommond)
   // optional float x_axis = 1;
   if (this->x_axis() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(1, this->x_axis(), output);
@@ -966,12 +995,12 @@ void GameCommond::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(4, this->attack(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:GameCommond)
+  // @@protoc_insertion_point(serialize_end:Proto.GameCommond)
 }
 
 ::google::protobuf::uint8* GameCommond::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:GameCommond)
+  // @@protoc_insertion_point(serialize_to_array_start:Proto.GameCommond)
   // optional float x_axis = 1;
   if (this->x_axis() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(1, this->x_axis(), target);
@@ -992,12 +1021,12 @@ void GameCommond::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->attack(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:GameCommond)
+  // @@protoc_insertion_point(serialize_to_array_end:Proto.GameCommond)
   return target;
 }
 
 int GameCommond::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:GameCommond)
+// @@protoc_insertion_point(message_byte_size_start:Proto.GameCommond)
   int total_size = 0;
 
   // optional float x_axis = 1;
@@ -1027,7 +1056,7 @@ int GameCommond::ByteSize() const {
 }
 
 void GameCommond::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:GameCommond)
+// @@protoc_insertion_point(generalized_merge_from_start:Proto.GameCommond)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -1035,16 +1064,16 @@ void GameCommond::MergeFrom(const ::google::protobuf::Message& from) {
       ::google::protobuf::internal::DynamicCastToGenerated<const GameCommond>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:GameCommond)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Proto.GameCommond)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:GameCommond)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Proto.GameCommond)
     MergeFrom(*source);
   }
 }
 
 void GameCommond::MergeFrom(const GameCommond& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:GameCommond)
+// @@protoc_insertion_point(class_specific_merge_from_start:Proto.GameCommond)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -1063,14 +1092,14 @@ void GameCommond::MergeFrom(const GameCommond& from) {
 }
 
 void GameCommond::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:GameCommond)
+// @@protoc_insertion_point(generalized_copy_from_start:Proto.GameCommond)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void GameCommond::CopyFrom(const GameCommond& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:GameCommond)
+// @@protoc_insertion_point(class_specific_copy_from_start:Proto.GameCommond)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1110,13 +1139,13 @@ void GameCommond::clear_x_axis() {
   x_axis_ = 0;
 }
  float GameCommond::x_axis() const {
-  // @@protoc_insertion_point(field_get:GameCommond.x_axis)
+  // @@protoc_insertion_point(field_get:Proto.GameCommond.x_axis)
   return x_axis_;
 }
  void GameCommond::set_x_axis(float value) {
   
   x_axis_ = value;
-  // @@protoc_insertion_point(field_set:GameCommond.x_axis)
+  // @@protoc_insertion_point(field_set:Proto.GameCommond.x_axis)
 }
 
 // optional float y_axis = 2;
@@ -1124,13 +1153,13 @@ void GameCommond::clear_y_axis() {
   y_axis_ = 0;
 }
  float GameCommond::y_axis() const {
-  // @@protoc_insertion_point(field_get:GameCommond.y_axis)
+  // @@protoc_insertion_point(field_get:Proto.GameCommond.y_axis)
   return y_axis_;
 }
  void GameCommond::set_y_axis(float value) {
   
   y_axis_ = value;
-  // @@protoc_insertion_point(field_set:GameCommond.y_axis)
+  // @@protoc_insertion_point(field_set:Proto.GameCommond.y_axis)
 }
 
 // optional bool jump = 3;
@@ -1138,13 +1167,13 @@ void GameCommond::clear_jump() {
   jump_ = false;
 }
  bool GameCommond::jump() const {
-  // @@protoc_insertion_point(field_get:GameCommond.jump)
+  // @@protoc_insertion_point(field_get:Proto.GameCommond.jump)
   return jump_;
 }
  void GameCommond::set_jump(bool value) {
   
   jump_ = value;
-  // @@protoc_insertion_point(field_set:GameCommond.jump)
+  // @@protoc_insertion_point(field_set:Proto.GameCommond.jump)
 }
 
 // optional bool attack = 4;
@@ -1152,13 +1181,13 @@ void GameCommond::clear_attack() {
   attack_ = false;
 }
  bool GameCommond::attack() const {
-  // @@protoc_insertion_point(field_get:GameCommond.attack)
+  // @@protoc_insertion_point(field_get:Proto.GameCommond.attack)
   return attack_;
 }
  void GameCommond::set_attack(bool value) {
   
   attack_ = value;
-  // @@protoc_insertion_point(field_set:GameCommond.attack)
+  // @@protoc_insertion_point(field_set:Proto.GameCommond.attack)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1172,7 +1201,7 @@ const int GameCommondGroup::kCommondsFieldNumber;
 GameCommondGroup::GameCommondGroup()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:GameCommondGroup)
+  // @@protoc_insertion_point(constructor:Proto.GameCommondGroup)
 }
 
 void GameCommondGroup::InitAsDefaultInstance() {
@@ -1184,7 +1213,7 @@ GameCommondGroup::GameCommondGroup(const GameCommondGroup& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:GameCommondGroup)
+  // @@protoc_insertion_point(copy_constructor:Proto.GameCommondGroup)
 }
 
 void GameCommondGroup::SharedCtor() {
@@ -1193,11 +1222,11 @@ void GameCommondGroup::SharedCtor() {
   commonds_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   commonds_.SetEntryDescriptor(
-      &::GameCommondGroup_CommondsEntry_descriptor_);
+      &::Proto::GameCommondGroup_CommondsEntry_descriptor_);
 }
 
 GameCommondGroup::~GameCommondGroup() {
-  // @@protoc_insertion_point(destructor:GameCommondGroup)
+  // @@protoc_insertion_point(destructor:Proto.GameCommondGroup)
   SharedDtor();
 }
 
@@ -1232,7 +1261,7 @@ GameCommondGroup* GameCommondGroup::New(::google::protobuf::Arena* arena) const 
 }
 
 void GameCommondGroup::Clear() {
-// @@protoc_insertion_point(message_clear_start:GameCommondGroup)
+// @@protoc_insertion_point(message_clear_start:Proto.GameCommondGroup)
   commonds_.Clear();
 }
 
@@ -1240,23 +1269,23 @@ bool GameCommondGroup::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:GameCommondGroup)
+  // @@protoc_insertion_point(parse_start:Proto.GameCommondGroup)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // map<uint32, .GameCommond> commonds = 1;
+      // map<uint32, .Proto.GameCommond> commonds = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
          parse_loop_commonds:
           GameCommondGroup_CommondsEntry::Parser< ::google::protobuf::internal::MapField<
-              ::google::protobuf::uint32, ::GameCommond,
+              ::google::protobuf::uint32, ::Proto::GameCommond,
               ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
               ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
               0 >,
-            ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond > > parser(&commonds_);
+            ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond > > parser(&commonds_);
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
               input, &parser));
         } else {
@@ -1281,20 +1310,20 @@ bool GameCommondGroup::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:GameCommondGroup)
+  // @@protoc_insertion_point(parse_success:Proto.GameCommondGroup)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:GameCommondGroup)
+  // @@protoc_insertion_point(parse_failure:Proto.GameCommondGroup)
   return false;
 #undef DO_
 }
 
 void GameCommondGroup::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:GameCommondGroup)
-  // map<uint32, .GameCommond> commonds = 1;
+  // @@protoc_insertion_point(serialize_start:Proto.GameCommondGroup)
+  // map<uint32, .Proto.GameCommond> commonds = 1;
   if (!this->commonds().empty()) {
-    typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >::const_pointer
+    typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >::const_pointer
         ConstPtr;
     typedef ::google::protobuf::internal::SortItem< ::google::protobuf::uint32, ConstPtr > SortItem;
     typedef ::google::protobuf::internal::CompareByFirstField<SortItem> Less;
@@ -1303,9 +1332,9 @@ void GameCommondGroup::SerializeWithCachedSizes(
         this->commonds().size() > 1) {
       ::google::protobuf::scoped_array<SortItem> items(
           new SortItem[this->commonds().size()]);
-      typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >::size_type size_type;
+      typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >::size_type size_type;
       size_type n = 0;
-      for (::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >::const_iterator
           it = this->commonds().begin();
           it != this->commonds().end(); ++it, ++n) {
         items[n] = SortItem(&*it);
@@ -1320,7 +1349,7 @@ void GameCommondGroup::SerializeWithCachedSizes(
       }
     } else {
       ::google::protobuf::scoped_ptr<GameCommondGroup_CommondsEntry> entry;
-      for (::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >::const_iterator
           it = this->commonds().begin();
           it != this->commonds().end(); ++it) {
         entry.reset(commonds_.NewEntryWrapper(
@@ -1331,15 +1360,15 @@ void GameCommondGroup::SerializeWithCachedSizes(
     }
   }
 
-  // @@protoc_insertion_point(serialize_end:GameCommondGroup)
+  // @@protoc_insertion_point(serialize_end:Proto.GameCommondGroup)
 }
 
 ::google::protobuf::uint8* GameCommondGroup::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:GameCommondGroup)
-  // map<uint32, .GameCommond> commonds = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:Proto.GameCommondGroup)
+  // map<uint32, .Proto.GameCommond> commonds = 1;
   if (!this->commonds().empty()) {
-    typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >::const_pointer
+    typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >::const_pointer
         ConstPtr;
     typedef ::google::protobuf::internal::SortItem< ::google::protobuf::uint32, ConstPtr > SortItem;
     typedef ::google::protobuf::internal::CompareByFirstField<SortItem> Less;
@@ -1348,9 +1377,9 @@ void GameCommondGroup::SerializeWithCachedSizes(
         this->commonds().size() > 1) {
       ::google::protobuf::scoped_array<SortItem> items(
           new SortItem[this->commonds().size()]);
-      typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >::size_type size_type;
+      typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >::size_type size_type;
       size_type n = 0;
-      for (::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >::const_iterator
           it = this->commonds().begin();
           it != this->commonds().end(); ++it, ++n) {
         items[n] = SortItem(&*it);
@@ -1367,7 +1396,7 @@ void GameCommondGroup::SerializeWithCachedSizes(
       }
     } else {
       ::google::protobuf::scoped_ptr<GameCommondGroup_CommondsEntry> entry;
-      for (::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >::const_iterator
+      for (::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >::const_iterator
           it = this->commonds().begin();
           it != this->commonds().end(); ++it) {
         entry.reset(commonds_.NewEntryWrapper(
@@ -1380,19 +1409,19 @@ void GameCommondGroup::SerializeWithCachedSizes(
     }
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:GameCommondGroup)
+  // @@protoc_insertion_point(serialize_to_array_end:Proto.GameCommondGroup)
   return target;
 }
 
 int GameCommondGroup::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:GameCommondGroup)
+// @@protoc_insertion_point(message_byte_size_start:Proto.GameCommondGroup)
   int total_size = 0;
 
-  // map<uint32, .GameCommond> commonds = 1;
+  // map<uint32, .Proto.GameCommond> commonds = 1;
   total_size += 1 * this->commonds_size();
   {
     ::google::protobuf::scoped_ptr<GameCommondGroup_CommondsEntry> entry;
-    for (::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >::const_iterator
+    for (::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >::const_iterator
         it = this->commonds().begin();
         it != this->commonds().end(); ++it) {
       entry.reset(commonds_.NewEntryWrapper(it->first, it->second));
@@ -1408,7 +1437,7 @@ int GameCommondGroup::ByteSize() const {
 }
 
 void GameCommondGroup::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:GameCommondGroup)
+// @@protoc_insertion_point(generalized_merge_from_start:Proto.GameCommondGroup)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -1416,16 +1445,16 @@ void GameCommondGroup::MergeFrom(const ::google::protobuf::Message& from) {
       ::google::protobuf::internal::DynamicCastToGenerated<const GameCommondGroup>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:GameCommondGroup)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Proto.GameCommondGroup)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:GameCommondGroup)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Proto.GameCommondGroup)
     MergeFrom(*source);
   }
 }
 
 void GameCommondGroup::MergeFrom(const GameCommondGroup& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:GameCommondGroup)
+// @@protoc_insertion_point(class_specific_merge_from_start:Proto.GameCommondGroup)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -1433,14 +1462,14 @@ void GameCommondGroup::MergeFrom(const GameCommondGroup& from) {
 }
 
 void GameCommondGroup::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:GameCommondGroup)
+// @@protoc_insertion_point(generalized_copy_from_start:Proto.GameCommondGroup)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void GameCommondGroup::CopyFrom(const GameCommondGroup& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:GameCommondGroup)
+// @@protoc_insertion_point(class_specific_copy_from_start:Proto.GameCommondGroup)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1472,26 +1501,28 @@ void GameCommondGroup::InternalSwap(GameCommondGroup* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // GameCommondGroup
 
-// map<uint32, .GameCommond> commonds = 1;
+// map<uint32, .Proto.GameCommond> commonds = 1;
 int GameCommondGroup::commonds_size() const {
   return commonds_.size();
 }
 void GameCommondGroup::clear_commonds() {
   commonds_.Clear();
 }
- const ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >&
+ const ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >&
 GameCommondGroup::commonds() const {
-  // @@protoc_insertion_point(field_map:GameCommondGroup.commonds)
+  // @@protoc_insertion_point(field_map:Proto.GameCommondGroup.commonds)
   return commonds_.GetMap();
 }
- ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >*
+ ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >*
 GameCommondGroup::mutable_commonds() {
-  // @@protoc_insertion_point(field_mutable_map:GameCommondGroup.commonds)
+  // @@protoc_insertion_point(field_mutable_map:Proto.GameCommondGroup.commonds)
   return commonds_.MutableMap();
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
+
+}  // namespace Proto
 
 // @@protoc_insertion_point(global_scope)

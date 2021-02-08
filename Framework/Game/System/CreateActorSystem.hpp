@@ -20,6 +20,7 @@
 
 struct CreateActorSystem : public System
 {
+	const std::string path = "Config/Actor/";
 	std::unordered_map<std::string, ActorInfo> actor_infos;
 
 	CreateActorSystem(entt::registry& _registry) : System(_registry) { }
@@ -60,15 +61,15 @@ struct CreateActorSystem : public System
 		else
 		{
 			auto& locator = registry.ctx<Locator>();
-			auto content = locator.Ref<FileService>().OpenFile(name);
+			auto content = locator.Ref<FileService>().OpenFile(path + name);
 			
 			assert(content != "" && "not actor info");
 
 			nlohmann::json j = nlohmann::json::parse(content);
-			ActorInfo info(j.at("modelAsset"), j.at("animAsset"), GetBoundingBox(j.at("bodyCollision")), GetBoundingBox(j.at("weaponCollision")));
-			actor_infos.emplace(name, std::move(info));
+			ActorInfo info(j.at("modelAsset").get<std::string>(), j.at("animAsset").get<std::string>(), GetBoundingBox(j.at("bodyCollision")), GetBoundingBox(j.at("weaponCollision")));
+			auto ret = actor_infos.emplace(name, info);
 
-			return actor_infos[name];
+			return ret.first->second;
 		}
 	}
 };

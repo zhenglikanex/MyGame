@@ -121,8 +121,12 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
     public static int CreateView(string asset)
     {
-        UnityViewServices.Instance.CreateView(asset);
-        return 0;
+        var view = UnityViewServices.Instance.CreateView(asset);
+        if(view)
+        {
+            return view.Id;
+        }
+        return -1;
     }
 
     public static void DestoryView(int id)
@@ -148,6 +152,11 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     public static void MoveForward(int id, double x, double y, double z)
     {
         UnityViewServices.Instance.MoveForward(id, (float)x, (float)y, (float)z);
+    }
+    
+    public static void PlayAnimation(int id,string str)
+    {
+        UnityViewServices.Instance.PlayAnim(id, str);
     }
 
     public static void InputHandler()

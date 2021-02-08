@@ -98,15 +98,22 @@ struct ActorStateSystem : public System
 		{
 			// 移动动画通过动画混合得到,这类动画数据的时候将混合参数作为key导出所有离散的动画数据
 			
-			// todo:存在浮点数问题
-			auto y = static_cast<float>(command.y_axis);
-			std::string name = fmt::format("{}|{.1f}", GameConfig::ActionAnimation::kMovement, y);
+			// todo:存在浮点数问题,这里会四舍五入所有问题应该不是很大？
+			std::string name = fmt::format("{}|{:.1f}", GameConfig::ActionAnimation::kLocomotion, static_cast<float>(command.y_axis));
 			if (name == animction_clip.name)
 			{
 				return;
 			}
 
-			registry.emplace_or_replace<AnimationClip>(e, name);
+			auto animation_clip = registry.try_get<AnimationClip>(e);
+			if (animation_clip && animation_clip->name.find(GameConfig::ActionAnimation::kLocomotion) != std::string::npos)
+			{
+				registry.replace<AnimationClip>(e, name,animation_clip->time);
+			}
+			else
+			{
+				registry.emplace_or_replace<AnimationClip>(e, name);
+			}
 		}
 	};
 
@@ -213,7 +220,7 @@ struct ActorStateSystem : public System
 		OnExit();
 		OnEnter();
 
-		ProcessCurState();
+		ProcessCurState(dt);
 	}
 
 	void OnTransition(fixed16 dt)
@@ -224,8 +231,6 @@ struct ActorStateSystem : public System
 			auto& action_state = view.get<ActorState>(e);
 			const auto& animation_clip = view.get<AnimationClip>(e);
 			const auto& command = view.get<Command>(e);
-
-			action_state.time += dt;
 
 			auto& executor = states[(size_t)action_state.cur_state];
 			auto next_state = executor->OnTransition(e, action_state,animation_clip, command);
@@ -259,7 +264,7 @@ struct ActorStateSystem : public System
 		}
 	}
 
-	void ProcessCurState()
+	void ProcessCurState(fixed16 dt)
 	{
 		auto view = registry.view<ActorState, Command, AnimationClip>();
 		for (auto e : view)
@@ -267,6 +272,8 @@ struct ActorStateSystem : public System
 			auto& action_state = view.get<ActorState>(e);
 			auto& command = view.get<Command>(e);
 			auto& animction_clip = view.get<AnimationClip>(e);
+
+			action_state.time += dt;
 
 			auto& executor = states[(size_t)action_state.cur_state];
 			executor->OnUpdate(e, command, animction_clip);

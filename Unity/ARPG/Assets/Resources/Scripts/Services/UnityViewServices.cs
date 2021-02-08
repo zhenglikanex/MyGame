@@ -33,8 +33,8 @@ public class UnityViewServices : GlobalGameObjectSingleton<UnityViewServices>
             }
             go.transform.SetParent(GameObject.Find("World").transform);
 
-            // todo，暂时加载这里
-            var controller = Camera.main.gameObject.AddComponent<CameraController>();
+            // todo:暂时加载这里
+            var controller = Camera.main.gameObject.GetComponent<CameraController>();
             controller.LockTarget(go.transform, false);
 
             return view;
@@ -87,6 +87,15 @@ public class UnityViewServices : GlobalGameObjectSingleton<UnityViewServices>
         {
             var view = views[id];
             view.MoveForward(x, y, z);
+        }
+    }
+
+    public void PlayAnim(int id,string str)
+    {
+        if(views.ContainsKey(id))
+        {
+            var view = views[id];
+            view.PlayAnim(str);
         }
     }
 

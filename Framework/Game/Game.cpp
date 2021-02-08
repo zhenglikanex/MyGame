@@ -8,11 +8,9 @@
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/Player.hpp"
-#include "Framework/Game/Component/ViewAsset.hpp"
-#include "Framework/Game/Component/ActorState.hpp"
-#include "Framework/Game/Component/AnimationAsset.hpp"
-#include "Framework/Game/Component/Animation.hpp"
+#include "Framework/Game/Component/ActorAsset.hpp"
 
+#include "Framework/Game/System/CreateActorSystem.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
 #include "Framework/Game/System/CreateAnimationSystem.hpp"
 #include "Framework/Game/System/ActorStateSystem.hpp"
@@ -25,17 +23,19 @@
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
 
 Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
+	:player_infos_(players)
 {
 	registry_.set<GameMode>(mode);
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
 	
+	systems_.emplace_back(std::make_unique<CreateActorSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CreateViewSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CreateAnimationSystem>(registry_));
 	systems_.emplace_back(std::make_unique<ActorStateSystem>(registry_));
-	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
 	systems_.emplace_back(std::make_unique<RootMotionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
+	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
 	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
 }
@@ -94,7 +94,7 @@ void Game::UpdateClinet(float dt)
 
 		SetupCommands(game_state.run_frame);
 
-		if (command_groups_.size() < game_state.run_frame)
+		if (command_groups_.size() <= game_state.run_frame)
 		{
 			return;
 		}
@@ -194,6 +194,8 @@ void Game::SetupCommands(uint32_t frame)
 			group.emplace(e.first, e.second[frame]);
 		}
 	}
+
+	command_groups_.push_back(std::move(group));
 }
 
 Command Game::PredictCommand(uint32_t id)
@@ -263,7 +265,7 @@ void Game::CreatePlayer()
 		auto e = registry_.create();
 	
 		registry_.emplace<Player>(e,player_info.id);
-		ActionStateUtility::ChangeState(registry_, e, ActorStateType::kIdle);
+		registry_.emplace<ActorAsset>(e,player_info.actor_asset);
 	}
 }
 
