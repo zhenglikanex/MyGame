@@ -55,3 +55,13 @@ void UnityViewImpl::PlayAnimation(const std::string& name)
 		service.PlayAnimation(this, name);
 	}
 }
+
+void UnityViewImpl::PlayAnimation(const std::string& name, float normalized_time)
+{
+	if (g_game)
+	{
+		auto& locator = g_game->registry().ctx<Locator>();
+		auto& service = dynamic_cast<const UnityViewService&>(locator.Ref<ViewService>());
+		service.PlayAnimation(this, name,normalized_time);
+	}
+}

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Actor : UnityView
 {
     private Animator animator;
+    private Quaternion TargetRotation { get; set; }
 
     private void Awake()
     {
@@ -14,7 +15,7 @@ public class Actor : UnityView
     // Start is called before the first frame update
     void Start()
     {
-        
+        TargetRotation = transform.rotation;
     }
 
     // Update is called once per frame
@@ -35,7 +36,7 @@ public class Actor : UnityView
     public override void UpdatePosition(float x, float y, float z)
     {
         Vector3 pos = new Vector3(x, y, z);
-        transform.localPosition = pos;
+        transform.position = pos;
     }
 
     public override void UpdateForward(float x, float y, float z)
@@ -47,7 +48,7 @@ public class Actor : UnityView
     public override void MovePosition(float x, float y, float z)
     {
         Vector3 pos = new Vector3(x, y, z);
-        transform.localPosition = pos;
+        transform.position = pos;
     }
 
     public override void MoveForward(float x, float y, float z)
@@ -63,15 +64,29 @@ public class Actor : UnityView
         {
             string name = anim_params[0];
             string param = anim_params[1];
-            if(name == "Locomotion")
+            if (name == "Locomotion")
+            {
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName(name))
+                {
+                    animator.Play(name);
+                }
+                else
+                {
+                    Debug.LogError("!!!!!!!");
+                }
+                animator.SetFloat("forward", float.Parse(param));
+                Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                Debug.Log(float.Parse(param));
+            }
+            else
             {
                 animator.Play(name);
-                animator.SetFloat("forward", float.Parse(param));
             }
         }
         else
         {
-            
+            animator.SetFloat("forward",0);
+            animator.Play(name);
         }
     }
 

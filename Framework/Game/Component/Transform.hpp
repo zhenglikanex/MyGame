@@ -5,7 +5,7 @@
 struct Transform
 {
 	Transform()
-		:position(vec3(fixed16(0))),forward(vec3(fixed16(0)))
+		:position(vec3(fixed16(0))),forward(vec3(fixed16(0),fixed16(0),fixed16(1)))
 	{
 
 	}

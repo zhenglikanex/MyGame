@@ -27,7 +27,6 @@ struct AnimationSystem : public System
 			if (animation.value)
 			{
 				auto& animation_clip = view.get<AnimationClip>(e);
-				INFO("clip {} {} {}", animation_clip.name, animation_clip.time, animation_clip.is_done);
 				// loop play
 				if (animation_clip.is_done)
 				{
@@ -46,7 +45,6 @@ struct AnimationSystem : public System
 					if (animation_clip.time >= iter->second.length)
 					{
 						animation_clip.is_done = true;
-						INFO("clip {} {} {}", animation_clip.name, animation_clip.time,animation_clip.is_done);
 					}
 				}
 			}

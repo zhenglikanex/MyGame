@@ -36,8 +36,22 @@ struct RootMotionSystem : public System
 
 					if (it != iter->second.root_motions.crend())
 					{
+						auto movement = registry.try_get<Movement>(e);
+						if (movement)
+						{
+							movement->velocity = it->velocity;
+							movement->angular_velocity = it->angular_velocity;
+						}
+						else
+						{
+							registry.emplace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
+						}
 						//registry.emplace_or_replace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
-						registry.emplace_or_replace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
+						//registry.emplace_or_replace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
+					}
+					else
+					{
+						registry.remove_if_exists<Movement>(e);
 					}
 				}
 			}

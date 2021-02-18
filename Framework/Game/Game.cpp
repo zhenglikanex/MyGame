@@ -3,7 +3,7 @@
 #include <filesystem>
 
 #include "Framework/Game/InputService.hpp"
-#include "Framework/Game/LogService.hpp"
+#include "Framework/Game/DebugService.hpp"
 
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Command.hpp"
@@ -19,6 +19,7 @@
 #include "Framework/Game/System/AnimationSystem.hpp"
 #include "Framework/Game/System/CollisionSystem.hpp"
 #include "Framework/Game/System/RootMotionSystem.hpp"
+#include "Framework/Game/System/DebugSystem.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
 
@@ -35,9 +36,13 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	systems_.emplace_back(std::make_unique<ActorStateSystem>(registry_));
 	systems_.emplace_back(std::make_unique<RootMotionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
-	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
 	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
+	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
+
+#ifdef DEBUG
+	systems_.emplace_back(std::make_unique<DebugSystem>(registry_));
+#endif
 }
 
 Game::~Game()

@@ -7,9 +7,7 @@ using System;
 public class BattleController : SceneGameObjectSingleton<BattleController>
 {
 
-    public GameObject go;
     public uint MyId = 0;
-    public int count = 0;
     public bool IsBattleing
     {
         get;
@@ -35,11 +33,6 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
         if(IsBattleing)
         {
             CPlusPlusBridge.UpdateGame(Time.deltaTime);
-            ++count;
-            if (!go.activeSelf && count > 2)
-            {
-                go.SetActive(true);
-            }
         }
     }
 

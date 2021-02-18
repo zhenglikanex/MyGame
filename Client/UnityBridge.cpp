@@ -5,7 +5,7 @@
 #include <asio.hpp>
 
 #include "Client/UnityViewService.hpp"
-#include "Client/UnityLogService.hpp"
+#include "Client/UnityDebugService.hpp"
 #include "Client/UnityInputService.hpp"
 #include "Client/UnityFileService.hpp"
 
@@ -25,7 +25,7 @@ std::unique_ptr<UnityBridge> UnityBridge::instance_;
 UnityDelegate UnityBridge::unity_delegate_ = nullptr;
 
 std::unique_ptr<Game> g_game = nullptr;
-std::unique_ptr<LogService> g_log_service = std::make_unique<UnityLogService>();
+std::unique_ptr<DebugService> g_debug_service = std::make_unique<UnityDebugService>();
 
 extern "C"
 {
@@ -79,9 +79,8 @@ extern "C"
 			{
 				
 				Command cmd;
-				cmd.x_axis = fixed16(iter->second.x_axis());
-				cmd.y_axis = fixed16(iter->second.y_axis());
-
+				cmd.x_axis = fixed16(std::abs(iter->second.x_axis()) < 0.1 ? 0 : iter->second.x_axis());
+				cmd.y_axis = fixed16(std::abs(iter->second.y_axis()) < 0.1 ? 0 : iter->second.y_axis());
 				g_game->InputCommand(iter->first,std::move(cmd));
 			}
 		}

@@ -5,19 +5,30 @@
 #include <algorithm>
 
 #include "Framework/Game/GameConfig.hpp"
-#include "Framework/Game/LogService.hpp"
+#include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/Locator.hpp"
 
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/ActorState.hpp"
 #include "Framework/Game/Component/Animation.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
+#include "Framework/Game/Component/Movement.hpp"
 
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
 
 #include "Framework/Game/Fmt.hpp"
+
+inline vec2 SquareToCircle(const vec2& input)
+{
+	vec2 output = zero<vec2>();
+
+	output.x = input.x * sqrt(1 - (input.y * input.y) / fixed16(2.0f));
+	output.y = input.y * sqrt(1 - (input.x * input.x) / fixed16(2.0f));
+
+	return output;
+}
 
 /*
  * 状态会在下一帧进行实际
@@ -49,7 +60,7 @@ struct ActorStateSystem : public System
 
 		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation, const Command& command) override
 		{
-			if (command.x_axis > fixed16(0) || command.y_axis > fixed16(0))
+			if (command.x_axis != fixed16(0) || command.y_axis != fixed16(0))
 			{
 				return ActorStateType::kMovement;
 			}
@@ -81,7 +92,7 @@ struct ActorStateSystem : public System
 				return ActorStateType::kJump;
 			}
 
-			if (command.x_axis <= fixed16(0) && command.y_axis <= fixed16(0))
+			if (command.x_axis == fixed16(0) && command.y_axis == fixed16(0))
 			{	
 				return ActorStateType::kIdle;
 			}
@@ -96,10 +107,26 @@ struct ActorStateSystem : public System
 
 		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override
 		{
-			// 移动动画通过动画混合得到,这类动画数据的时候将混合参数作为key导出所有离散的动画数据
-			
+			vec2 input = SquareToCircle(vec2(command.x_axis, command.y_axis));
+
+			//旋转
+			auto forward = glm::normalize(vec3(input.x, fixed16(0), input.y));
+			auto movement = registry.try_get<Movement>(e);
+			if (movement)
+			{
+				movement->forward = forward;
+			}
+			else
+			{
+				registry.emplace<Movement>(e, forward, zero<vec3>(), zero<vec3>());
+			}
+
+			INFO("input {}", glm::length(input));
+
+			// 移动
+			// 移动动画通过动画混合得到,这类动画数据的时候将混合参数作为key导出所有离散的动画数据	
 			// todo:存在浮点数问题,这里会四舍五入所有问题应该不是很大？
-			std::string name = fmt::format("{}|{:.1f}", GameConfig::ActionAnimation::kLocomotion, static_cast<float>(command.y_axis));
+			std::string name = fmt::format("{}|{:.1f}", GameConfig::ActionAnimation::kLocomotion,glm::length(input));
 			if (name == animction_clip.name)
 			{
 				return;

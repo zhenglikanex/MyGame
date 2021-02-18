@@ -179,6 +179,37 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         Debug.LogError(message);
     }
 
+    public static void DrawCube(
+        double pos_x, double pos_y, double pos_z,
+        double rot_x, double rot_y, double rot_z, double rot_w,
+        double size_x, double size_y, double size_z)
+    {
+        DebugManager.Instance.DrawCube(
+            new Vector3((float)pos_x, (float)pos_y, (float)pos_z),
+            new Quaternion((float)rot_x, (float)rot_y, (float)rot_z, (float)rot_w),
+            new Vector3((float)size_x, (float)size_y, (float)size_z));
+    }
+
+    public static void DrawSphere(
+        double pos_x, double pos_y, double pos_z,
+        double radius)
+    {
+        DebugManager.Instance.DrawSphere(
+            new Vector3((float)pos_x, (float)pos_y, (float)pos_z),
+            (float)radius);
+    }
+
+    public static void DrawCapsule(
+        double pos_x, double pos_y, double pos_z,
+        double rot_x, double rot_y, double rot_z, double rot_w,
+        double height, double radius)
+    {
+        DebugManager.Instance.DrawCapsule(
+            new Vector3((float)pos_x, (float)pos_y, (float)pos_z),
+            new Quaternion((float)rot_x, (float)rot_y, (float)rot_z, (float)rot_w),
+            (float)height, (float)radius);
+    }
+
     public static string OpenFile(string file)
     {
         file = file.Substring(0, file.LastIndexOf("."));

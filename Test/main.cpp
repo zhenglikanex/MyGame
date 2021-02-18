@@ -43,8 +43,15 @@ public:
 int main()
 {
 
+	fixed16 min = std::numeric_limits<fixed16>::min();
+	fixed16 max = std::numeric_limits<fixed16>::max();
+	auto fvmin = static_cast<float>(min);
+	auto fv = static_cast<float>(max);
+	
+
 	std::string s1 =  fmt::format("this is {:.1f}", fixed16(0.16));
 	std::string s = fmt::format("{:.1f}", 0.54f);
+
 
 
 	AutoTimer t("fopen");
