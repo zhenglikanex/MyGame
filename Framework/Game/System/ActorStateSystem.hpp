@@ -13,6 +13,7 @@
 #include "Framework/Game/Component/Animation.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
+#include "Framework/Game/Component/SkillState.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -182,10 +183,15 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
+			//registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
+			
 		}
 
-		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override { }
+		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override 
+		{
+			// todo:判断有没有技能树
+			registry.emplace_or_replace<SkillCommand>(e, command.skill);
+		}
 	};
 
 	struct HurtState : State
@@ -204,7 +210,7 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
+			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kHurt);
 		}
 
 		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override { }
@@ -216,7 +222,7 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
+			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kDeath);
 		}
 
 		void OnUpdate(entt::entity e, const Command& command,const AnimationClip& animction_clip) override { }

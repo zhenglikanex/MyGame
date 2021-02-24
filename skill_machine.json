@@ -1,28 +1,33 @@
 {
-	"state1":[
-		{
-			"state2":[
-				 {
-					 "var_name":"var_name",
-					 "var_value":"target",
-					 "var_type":"float"
-				},
-				{
-					"var_name":"var_name",
-					"var_value":"target",
-					"var_type":"float"
-			   	}
-			 ],
-			"state3":[
-				{
-					"var_name":"var_name",
-					"var_value":"target",
-					"var_type":"float"
-			   	}
-			 ]
-		},
-		{}
-	],
-	
-	"state2":[{}]
+  "entry": "state1",
+  "states": {
+    "state1": {
+      "anim_name": "name",
+      "anim_events": [
+        {
+          "name": "name",
+          "time": 1.5
+        }
+      ],
+      "transitions": [
+        {
+          "name": "state2",
+          "conditions": [
+            {
+              "name": "var",
+              "type": "float",
+              "value": "1000",
+              "check_type": "gerater"
+            },
+            {
+              "var_name": "var",
+              "var_type": "float",
+              "var_value": "1000",
+              "check_type": "gerater"
+            }
+          ]
+        }
+      ]
+    }
+  }
 }

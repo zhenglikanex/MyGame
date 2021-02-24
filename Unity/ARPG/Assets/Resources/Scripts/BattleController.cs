@@ -32,6 +32,7 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
     {
         if(IsBattleing)
         {
+            //Debug.Log(string.Format("deltaTime {0}", Time.deltaTime));
             CPlusPlusBridge.UpdateGame(Time.deltaTime);
         }
     }
@@ -72,6 +73,7 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
     {
         if(IsBattleing)
         {
+            DebugManager.Instance.Clear();
             Proto.GameCommond cmd = new Proto.GameCommond();
             cmd.XAxis = Input.GetAxis("Horizontal");
             cmd.YAxis = Input.GetAxis("Vertical");

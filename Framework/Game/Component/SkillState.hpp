@@ -30,6 +30,10 @@ struct ExitSkillState
 struct SkillCommand
 {
 	uint32_t skill;
+
+	SkillCommand(uint32_t _skill)
+		:skill(_skill)
+	{}
 };
 
 struct SkillStateMachine

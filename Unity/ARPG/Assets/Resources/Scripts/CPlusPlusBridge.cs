@@ -92,7 +92,6 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         {
             objs = LitJson.JsonMapper.ToObject<object[]>(json_params);
         }
-
         Type t = typeof(CPlusPlusBridge);
         MethodInfo method = t.GetMethod(func);
         if (method != null)
@@ -100,10 +99,12 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
             object result;
             try
             {
+                //Debug.LogError(string.Format("name : {0} params :{1}", func, json_params));
                 result = method.Invoke(null, objs);
             }
             catch (Exception e)
             {
+                Debug.LogError(string.Format("name : {0} params :{1}", func,json_params));
                 Debug.LogError(e.ToString());
                 result = null;
             }

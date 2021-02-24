@@ -4,6 +4,7 @@
 #include "Framework/Game/DebugService.hpp"
 
 #include "Framework/Game/Component/BoundingBox.hpp"
+#include "Framework/Game/Component/Transform.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -24,9 +25,10 @@ struct DebugSystem : public System
 
 	void DrawBoundingBox()
 	{
-		auto view = registry.view<BoundingBox>();
+		auto view = registry.view<Transform,BoundingBox>();
 		for (auto e : view)
 		{
+			const auto& transform = view.get<Transform>(e);
 			const auto& box = view.get<BoundingBox>(e);
 			if (box.type == BoundingBoxType::kAABB)
 			{
@@ -39,7 +41,7 @@ struct DebugSystem : public System
 			}
 			else if (box.type == BoundingBoxType::kCapsule)
 			{
-				g_debug_service->DrawCapsule(zero<vec3>(), quat(fixed16(1), fixed16(0), fixed16(0), fixed16(0)), glm::distance(box.capsule.b, box.capsule.a), box.capsule.r);
+				g_debug_service->DrawCapsule(transform.position, quat(fixed16(1), fixed16(0), fixed16(0), fixed16(0)), glm::distance(box.capsule.b, box.capsule.a), box.capsule.r);
 			}
 			else if (box.type == BoundingBoxType::kSphere)
 			{

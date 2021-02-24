@@ -12,6 +12,7 @@ namespace GameConfig
 		const std::string kIdle = "Idle";
 		const std::string kLocomotion = "Locomotion";
 		const std::string kJump = "Jump";
+		const std::string kHurt = "Hurt";
 		const std::string kDeath = "Death";
 	}
 

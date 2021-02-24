@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DebugManager : SceneGameObjectSingleton<DebugManager>
 {
-    private readonly string Path = "Debug/BoundingBox/";
+    private readonly string Path = "Prefab/Debug/BoundingBox/";
     private Dictionary<string, List<Transform>> groups_ = new Dictionary<string, List<Transform>>();
 
     // Start is called before the first frame update
@@ -16,14 +16,14 @@ public class DebugManager : SceneGameObjectSingleton<DebugManager>
     // Update is called once per frame
     void Update()
     {
-        Clear();
+        
     }
 
     public void Clear()
     {
-        foreach(var item in groups_)
+        foreach (var item in groups_)
         {
-            foreach(var obj in item.Value)
+            foreach (var obj in item.Value)
             {
                 obj.gameObject.SetActive(false);
             }
@@ -36,6 +36,7 @@ public class DebugManager : SceneGameObjectSingleton<DebugManager>
         if(transform)
         {
             transform.parent = this.transform;
+            position.y += size.y * 0.5f;
             transform.position = position;
             transform.rotation = rotation;
             transform.localScale = size;
@@ -59,9 +60,10 @@ public class DebugManager : SceneGameObjectSingleton<DebugManager>
         if (transform)
         {
             transform.parent = this.transform;
+            position.y += height * 0.5f;
             transform.position = position;
             transform.rotation = rotation;
-            transform.localScale = new Vector3(radius * 2, height / 2, radius * 2);
+            transform.localScale = new Vector3(radius * 2, height * 0.5f, radius * 2);
         }
     }
 
