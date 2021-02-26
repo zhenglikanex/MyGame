@@ -19,16 +19,12 @@ namespace ActionStateUtility
 	{
 		if (registry.has<ActorState>(e))
 		{
-			if (registry.has<ActorState>(e))
-			{
-				auto action_state = registry.get<ActorState>(e);
-				ChangeState(registry, e, action_state, state);
-			}
-			else
-			{
-				registry.emplace_or_replace<EnterActorState>(e, state);
-			}
-			
+			auto action_state = registry.get<ActorState>(e);
+			ChangeState(registry, e, action_state, state);
+		}
+		else
+		{
+			registry.emplace_or_replace<EnterActorState>(e, state);
 		}
 	}
 };

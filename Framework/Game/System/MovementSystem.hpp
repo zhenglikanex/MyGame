@@ -2,10 +2,13 @@
 
 #include <algorithm>
 
-#include "Framework/Game/System.hpp"
+#include "Framework/Game/DebugService.hpp"
+
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Movement.hpp"
+
+#include "Framework/Game/System.hpp"
 
 struct MovementSystem : public System
 {
@@ -26,7 +29,15 @@ struct MovementSystem : public System
 			auto& transform = view.get<Transform>(e);
 
 			// todo:
-			registry.replace<Transform>(e, transform.position + movement.velocity * dt);
+			auto position = transform.position + movement.forward * movement.velocity.z * dt;
+			auto v = movement.forward * movement.velocity * dt;
+
+			if (position != transform.position || movement.forward != transform.forward)
+			{
+				INFO("movment {} {} {} {} {} {} ", v.x, v.y, v.z, movement.forward.x, movement.forward.y, movement.forward.z);
+				INFO("velocity {} {} {} {} {} {} ", v.x, v.y, v.z, movement.velocity.x, movement.velocity.y, movement.velocity.z);
+				registry.replace<Transform>(e, position, movement.forward);
+			}
 		}
 	}
 

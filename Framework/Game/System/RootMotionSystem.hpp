@@ -29,14 +29,29 @@ struct RootMotionSystem : public System
 				auto iter = animtion.value->clips.find(animtion_clip.name);
 				if (iter != animtion.value->clips.end())
 				{
-					auto it = std::find_if(iter->second.root_motions.cbegin(), iter->second.root_motions.cend(), [&animtion_clip](const RootMotion& root_motion)
+					auto it = std::find_if(iter->second.root_motions.crbegin(), iter->second.root_motions.crend(), [&animtion_clip](const RootMotion& root_motion)
 					{
 						return animtion_clip.time >= root_motion.time;
 					});
 
-					if (it != iter->second.root_motions.cend())
+					if (it != iter->second.root_motions.crend())
 					{
-						registry.emplace_or_replace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
+						auto movement = registry.try_get<Movement>(e);
+						if (movement)
+						{
+							movement->velocity = it->velocity;
+							movement->angular_velocity = it->angular_velocity;
+						}
+						else
+						{
+							registry.emplace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
+						}
+						//registry.emplace_or_replace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
+						//registry.emplace_or_replace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
+					}
+					else
+					{
+						registry.remove_if_exists<Movement>(e);
 					}
 				}
 			}

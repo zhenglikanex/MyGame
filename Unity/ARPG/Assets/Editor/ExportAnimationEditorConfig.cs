@@ -26,7 +26,7 @@ public class EditorAnimation
 
 public class ExportAnimationEditorConfig : ScriptableObject
 {
-    public int FrameRate = 33;
+    public int FrameRate = 30;
     [SerializeField]
     public List<EditorAnimation> animators = new List<EditorAnimation>();
 }

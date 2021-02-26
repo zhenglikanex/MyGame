@@ -92,7 +92,6 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         {
             objs = LitJson.JsonMapper.ToObject<object[]>(json_params);
         }
-
         Type t = typeof(CPlusPlusBridge);
         MethodInfo method = t.GetMethod(func);
         if (method != null)
@@ -100,10 +99,12 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
             object result;
             try
             {
+                //Debug.LogError(string.Format("name : {0} params :{1}", func, json_params));
                 result = method.Invoke(null, objs);
             }
             catch (Exception e)
             {
+                Debug.LogError(string.Format("name : {0} params :{1}", func,json_params));
                 Debug.LogError(e.ToString());
                 result = null;
             }
@@ -121,8 +122,12 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
     public static int CreateView(string asset)
     {
-        UnityViewServices.Instance.CreateView(asset);
-        return 0;
+        var view = UnityViewServices.Instance.CreateView(asset);
+        if(view)
+        {
+            return view.Id;
+        }
+        return -1;
     }
 
     public static void DestoryView(int id)
@@ -149,6 +154,11 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     {
         UnityViewServices.Instance.MoveForward(id, (float)x, (float)y, (float)z);
     }
+    
+    public static void PlayAnimation(int id,string str)
+    {
+        UnityViewServices.Instance.PlayAnim(id, str);
+    }
 
     public static void InputHandler()
     {
@@ -168,6 +178,37 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     public static void LogError(string message)
     {
         Debug.LogError(message);
+    }
+
+    public static void DrawCube(
+        double pos_x, double pos_y, double pos_z,
+        double rot_x, double rot_y, double rot_z, double rot_w,
+        double size_x, double size_y, double size_z)
+    {
+        DebugManager.Instance.DrawCube(
+            new Vector3((float)pos_x, (float)pos_y, (float)pos_z),
+            new Quaternion((float)rot_x, (float)rot_y, (float)rot_z, (float)rot_w),
+            new Vector3((float)size_x, (float)size_y, (float)size_z));
+    }
+
+    public static void DrawSphere(
+        double pos_x, double pos_y, double pos_z,
+        double radius)
+    {
+        DebugManager.Instance.DrawSphere(
+            new Vector3((float)pos_x, (float)pos_y, (float)pos_z),
+            (float)radius);
+    }
+
+    public static void DrawCapsule(
+        double pos_x, double pos_y, double pos_z,
+        double rot_x, double rot_y, double rot_z, double rot_w,
+        double height, double radius)
+    {
+        DebugManager.Instance.DrawCapsule(
+            new Vector3((float)pos_x, (float)pos_y, (float)pos_z),
+            new Quaternion((float)rot_x, (float)rot_y, (float)rot_z, (float)rot_w),
+            (float)height, (float)radius);
     }
 
     public static string OpenFile(string file)

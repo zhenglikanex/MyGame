@@ -13,10 +13,7 @@ struct Command
 
 	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
 	bool jump;
-	bool attack;
-	bool skill1;
-	bool skill2;
-	bool skill3;
+	uint32_t skill;
 
 	Command()
 	{
@@ -28,13 +25,10 @@ struct Command
 		x_axis = fixed16(0);
 		y_axis = fixed16(0);
 		jump = false;
-		attack = false;
-		skill1 = false;
-		skill2 = false;
-		skill3 = false;
+		skill = 0;
 	}
 
-	BAR(x_axis, y_axis, jump, attack, skill1, skill2, skill3)
+	BAR(x_axis, y_axis, jump,skill)
 };
 
 struct Movementcommand

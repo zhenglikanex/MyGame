@@ -53,7 +53,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 975227071}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.3
   m_Height: 1.8
   m_Direction: 1
@@ -707,7 +707,7 @@ Transform:
   m_LocalRotation: {x: -0.00000005960469, y: -0.00000008940692, z: -0.000000104308086,
     w: 1}
   m_LocalPosition: {x: 0.000000038146972, y: 0, z: 0.000000076293944}
-  m_LocalScale: {x: 1, y: 0.999999, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6041327360710154451}
   m_Father: {fileID: 4489234835244779067}
@@ -2017,7 +2017,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 193d3905910dd8a4bb21607f0b779ae0, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -3174,7 +3174,7 @@ BoxCollider:
   m_GameObject: {fileID: 6399610108707771174}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.33262372, y: 0.07972358, z: 1.1935353}
   m_Center: {x: 0.004863463, y: 0.00000028230232, z: 0.41850206}

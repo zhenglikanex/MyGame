@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Framework/Game/Data/AnimationConfig.hpp"
 #include "Framework/Game/FileService.hpp"
+#include "Framework/Game/Fmt.hpp"
 #include <vector>
 #include <chrono>
 #include <fstream>
@@ -41,8 +42,18 @@ public:
 
 int main()
 {
+
+	fixed16 min = std::numeric_limits<fixed16>::min();
+	fixed16 max = std::numeric_limits<fixed16>::max();
+	auto fvmin = static_cast<float>(min);
+	auto fv = static_cast<float>(max);
 	
-	
+
+	std::string s1 =  fmt::format("this is {:.1f}", fixed16(0.16));
+	std::string s = fmt::format("{:.1f}", 0.54f);
+
+
+
 	AutoTimer t("fopen");
 	FILE *f = NULL;
 	long len = 0;
@@ -60,9 +71,10 @@ int main()
 	data[len] = '\0';
 	fclose(f);
 	
-	nlohmann::json j = nlohmann::json::parse(data);
+	
 	{
 		AutoTimer t("parse json");
+		nlohmann::json j = nlohmann::json::parse(data);
 		auto anim_info = j.get<AnimationInfo>();
 	}
 

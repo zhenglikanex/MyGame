@@ -5,7 +5,7 @@
 #include <asio.hpp>
 
 #include "Client/UnityViewService.hpp"
-#include "Client/UnityLogService.hpp"
+#include "Client/UnityDebugService.hpp"
 #include "Client/UnityInputService.hpp"
 #include "Client/UnityFileService.hpp"
 
@@ -17,11 +17,15 @@
 
 #include "Framework/Proto/Battle.pb.h"
 
+#ifndef _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
+#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS 1
+#endif
+
 std::unique_ptr<UnityBridge> UnityBridge::instance_;
 UnityDelegate UnityBridge::unity_delegate_ = nullptr;
 
 std::unique_ptr<Game> g_game = nullptr;
-std::unique_ptr<LogService> g_log_service = std::make_unique<UnityLogService>();
+std::unique_ptr<DebugService> g_debug_service = std::make_unique<UnityDebugService>();
 
 extern "C"
 {
@@ -32,14 +36,14 @@ extern "C"
 
 	EXPORT_DLL void InitGame(const char* data,int32_t size)
 	{
-		std::vector<Player> players;
-		GamePlayerInfos infos;
+		std::vector<PlayerInfo> players;
+		Proto::GamePlayerInfos infos;
 		infos.ParseFromArray(data, size);
 		for (auto iter = infos.player_infos().cbegin(); iter < infos.player_infos().cend(); ++iter)
 		{
-			Player player;
+			PlayerInfo player;
 			player.id = iter->id();
-			player.actor_id = iter->actor_id();
+			player.actor_asset = iter->actor_asset();
 			players.emplace_back(std::move(player));
 		}
 
@@ -69,16 +73,15 @@ extern "C"
 	{
 		if (g_game)
 		{
-			GameCommondGroup group;
+			Proto::GameCommondGroup group;
 			group.ParseFromArray(data, size);
 			for (auto iter = group.commonds().cbegin(); iter != group.commonds().cend(); ++iter)
 			{
 				
 				Command cmd;
-				cmd.x_axis = fixed16(iter->second.x_axis());
-				cmd.y_axis = fixed16(iter->second.y_axis());
-
-				g_game->InputCommond(iter->first,std::move(cmd));
+				cmd.x_axis = fixed16(std::abs(iter->second.x_axis()) < 0.1 ? 0 : iter->second.x_axis());
+				cmd.y_axis = fixed16(std::abs(iter->second.y_axis()) < 0.1 ? 0 : iter->second.y_axis());
+				g_game->InputCommand(iter->first,std::move(cmd));
 			}
 		}
 	}

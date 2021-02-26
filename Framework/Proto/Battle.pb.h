@@ -31,6 +31,8 @@
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
+namespace Proto {
+
 // Internal implementation detail -- do not call these.
 void protobuf_AddDesc_Battle_2eproto();
 void protobuf_AssignDesc_Battle_2eproto();
@@ -43,7 +45,7 @@ class PlayerInfo;
 
 // ===================================================================
 
-class PlayerInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PlayerInfo) */ {
+class PlayerInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.PlayerInfo) */ {
  public:
   PlayerInfo();
   virtual ~PlayerInfo();
@@ -109,19 +111,24 @@ class PlayerInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::uint32 id() const;
   void set_id(::google::protobuf::uint32 value);
 
-  // optional uint32 actor_id = 2;
-  void clear_actor_id();
-  static const int kActorIdFieldNumber = 2;
-  ::google::protobuf::uint32 actor_id() const;
-  void set_actor_id(::google::protobuf::uint32 value);
+  // optional string actor_asset = 2;
+  void clear_actor_asset();
+  static const int kActorAssetFieldNumber = 2;
+  const ::std::string& actor_asset() const;
+  void set_actor_asset(const ::std::string& value);
+  void set_actor_asset(const char* value);
+  void set_actor_asset(const char* value, size_t size);
+  ::std::string* mutable_actor_asset();
+  ::std::string* release_actor_asset();
+  void set_allocated_actor_asset(::std::string* actor_asset);
 
-  // @@protoc_insertion_point(class_scope:PlayerInfo)
+  // @@protoc_insertion_point(class_scope:Proto.PlayerInfo)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
+  ::google::protobuf::internal::ArenaStringPtr actor_asset_;
   ::google::protobuf::uint32 id_;
-  ::google::protobuf::uint32 actor_id_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
   friend void protobuf_AssignDesc_Battle_2eproto();
@@ -132,7 +139,7 @@ class PlayerInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
 };
 // -------------------------------------------------------------------
 
-class GamePlayerInfos : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:GamePlayerInfos) */ {
+class GamePlayerInfos : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.GamePlayerInfos) */ {
  public:
   GamePlayerInfos();
   virtual ~GamePlayerInfos();
@@ -192,24 +199,24 @@ class GamePlayerInfos : public ::google::protobuf::Message /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
-  // repeated .PlayerInfo player_infos = 1;
+  // repeated .Proto.PlayerInfo player_infos = 1;
   int player_infos_size() const;
   void clear_player_infos();
   static const int kPlayerInfosFieldNumber = 1;
-  const ::PlayerInfo& player_infos(int index) const;
-  ::PlayerInfo* mutable_player_infos(int index);
-  ::PlayerInfo* add_player_infos();
-  ::google::protobuf::RepeatedPtrField< ::PlayerInfo >*
+  const ::Proto::PlayerInfo& player_infos(int index) const;
+  ::Proto::PlayerInfo* mutable_player_infos(int index);
+  ::Proto::PlayerInfo* add_player_infos();
+  ::google::protobuf::RepeatedPtrField< ::Proto::PlayerInfo >*
       mutable_player_infos();
-  const ::google::protobuf::RepeatedPtrField< ::PlayerInfo >&
+  const ::google::protobuf::RepeatedPtrField< ::Proto::PlayerInfo >&
       player_infos() const;
 
-  // @@protoc_insertion_point(class_scope:GamePlayerInfos)
+  // @@protoc_insertion_point(class_scope:Proto.GamePlayerInfos)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::PlayerInfo > player_infos_;
+  ::google::protobuf::RepeatedPtrField< ::Proto::PlayerInfo > player_infos_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
   friend void protobuf_AssignDesc_Battle_2eproto();
@@ -220,7 +227,7 @@ class GamePlayerInfos : public ::google::protobuf::Message /* @@protoc_insertion
 };
 // -------------------------------------------------------------------
 
-class GameCommond : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:GameCommond) */ {
+class GameCommond : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.GameCommond) */ {
  public:
   GameCommond();
   virtual ~GameCommond();
@@ -304,7 +311,7 @@ class GameCommond : public ::google::protobuf::Message /* @@protoc_insertion_poi
   bool attack() const;
   void set_attack(bool value);
 
-  // @@protoc_insertion_point(class_scope:GameCommond)
+  // @@protoc_insertion_point(class_scope:Proto.GameCommond)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -323,7 +330,7 @@ class GameCommond : public ::google::protobuf::Message /* @@protoc_insertion_poi
 };
 // -------------------------------------------------------------------
 
-class GameCommondGroup : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:GameCommondGroup) */ {
+class GameCommondGroup : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.GameCommondGroup) */ {
  public:
   GameCommondGroup();
   virtual ~GameCommondGroup();
@@ -384,28 +391,28 @@ class GameCommondGroup : public ::google::protobuf::Message /* @@protoc_insertio
 
   // accessors -------------------------------------------------------
 
-  // map<uint32, .GameCommond> commonds = 1;
+  // map<uint32, .Proto.GameCommond> commonds = 1;
   int commonds_size() const;
   void clear_commonds();
   static const int kCommondsFieldNumber = 1;
-  const ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >&
+  const ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >&
       commonds() const;
-  ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >*
+  ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >*
       mutable_commonds();
 
-  // @@protoc_insertion_point(class_scope:GameCommondGroup)
+  // @@protoc_insertion_point(class_scope:Proto.GameCommondGroup)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::google::protobuf::uint32, ::GameCommond,
+      ::google::protobuf::uint32, ::Proto::GameCommond,
       ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       GameCommondGroup_CommondsEntry;
   ::google::protobuf::internal::MapField<
-      ::google::protobuf::uint32, ::GameCommond,
+      ::google::protobuf::uint32, ::Proto::GameCommond,
       ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > commonds_;
@@ -430,60 +437,90 @@ inline void PlayerInfo::clear_id() {
   id_ = 0u;
 }
 inline ::google::protobuf::uint32 PlayerInfo::id() const {
-  // @@protoc_insertion_point(field_get:PlayerInfo.id)
+  // @@protoc_insertion_point(field_get:Proto.PlayerInfo.id)
   return id_;
 }
 inline void PlayerInfo::set_id(::google::protobuf::uint32 value) {
   
   id_ = value;
-  // @@protoc_insertion_point(field_set:PlayerInfo.id)
+  // @@protoc_insertion_point(field_set:Proto.PlayerInfo.id)
 }
 
-// optional uint32 actor_id = 2;
-inline void PlayerInfo::clear_actor_id() {
-  actor_id_ = 0u;
+// optional string actor_asset = 2;
+inline void PlayerInfo::clear_actor_asset() {
+  actor_asset_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::google::protobuf::uint32 PlayerInfo::actor_id() const {
-  // @@protoc_insertion_point(field_get:PlayerInfo.actor_id)
-  return actor_id_;
+inline const ::std::string& PlayerInfo::actor_asset() const {
+  // @@protoc_insertion_point(field_get:Proto.PlayerInfo.actor_asset)
+  return actor_asset_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void PlayerInfo::set_actor_id(::google::protobuf::uint32 value) {
+inline void PlayerInfo::set_actor_asset(const ::std::string& value) {
   
-  actor_id_ = value;
-  // @@protoc_insertion_point(field_set:PlayerInfo.actor_id)
+  actor_asset_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Proto.PlayerInfo.actor_asset)
+}
+inline void PlayerInfo::set_actor_asset(const char* value) {
+  
+  actor_asset_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Proto.PlayerInfo.actor_asset)
+}
+inline void PlayerInfo::set_actor_asset(const char* value, size_t size) {
+  
+  actor_asset_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Proto.PlayerInfo.actor_asset)
+}
+inline ::std::string* PlayerInfo::mutable_actor_asset() {
+  
+  // @@protoc_insertion_point(field_mutable:Proto.PlayerInfo.actor_asset)
+  return actor_asset_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PlayerInfo::release_actor_asset() {
+  // @@protoc_insertion_point(field_release:Proto.PlayerInfo.actor_asset)
+  
+  return actor_asset_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PlayerInfo::set_allocated_actor_asset(::std::string* actor_asset) {
+  if (actor_asset != NULL) {
+    
+  } else {
+    
+  }
+  actor_asset_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), actor_asset);
+  // @@protoc_insertion_point(field_set_allocated:Proto.PlayerInfo.actor_asset)
 }
 
 // -------------------------------------------------------------------
 
 // GamePlayerInfos
 
-// repeated .PlayerInfo player_infos = 1;
+// repeated .Proto.PlayerInfo player_infos = 1;
 inline int GamePlayerInfos::player_infos_size() const {
   return player_infos_.size();
 }
 inline void GamePlayerInfos::clear_player_infos() {
   player_infos_.Clear();
 }
-inline const ::PlayerInfo& GamePlayerInfos::player_infos(int index) const {
-  // @@protoc_insertion_point(field_get:GamePlayerInfos.player_infos)
+inline const ::Proto::PlayerInfo& GamePlayerInfos::player_infos(int index) const {
+  // @@protoc_insertion_point(field_get:Proto.GamePlayerInfos.player_infos)
   return player_infos_.Get(index);
 }
-inline ::PlayerInfo* GamePlayerInfos::mutable_player_infos(int index) {
-  // @@protoc_insertion_point(field_mutable:GamePlayerInfos.player_infos)
+inline ::Proto::PlayerInfo* GamePlayerInfos::mutable_player_infos(int index) {
+  // @@protoc_insertion_point(field_mutable:Proto.GamePlayerInfos.player_infos)
   return player_infos_.Mutable(index);
 }
-inline ::PlayerInfo* GamePlayerInfos::add_player_infos() {
-  // @@protoc_insertion_point(field_add:GamePlayerInfos.player_infos)
+inline ::Proto::PlayerInfo* GamePlayerInfos::add_player_infos() {
+  // @@protoc_insertion_point(field_add:Proto.GamePlayerInfos.player_infos)
   return player_infos_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::PlayerInfo >*
+inline ::google::protobuf::RepeatedPtrField< ::Proto::PlayerInfo >*
 GamePlayerInfos::mutable_player_infos() {
-  // @@protoc_insertion_point(field_mutable_list:GamePlayerInfos.player_infos)
+  // @@protoc_insertion_point(field_mutable_list:Proto.GamePlayerInfos.player_infos)
   return &player_infos_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::PlayerInfo >&
+inline const ::google::protobuf::RepeatedPtrField< ::Proto::PlayerInfo >&
 GamePlayerInfos::player_infos() const {
-  // @@protoc_insertion_point(field_list:GamePlayerInfos.player_infos)
+  // @@protoc_insertion_point(field_list:Proto.GamePlayerInfos.player_infos)
   return player_infos_;
 }
 
@@ -496,13 +533,13 @@ inline void GameCommond::clear_x_axis() {
   x_axis_ = 0;
 }
 inline float GameCommond::x_axis() const {
-  // @@protoc_insertion_point(field_get:GameCommond.x_axis)
+  // @@protoc_insertion_point(field_get:Proto.GameCommond.x_axis)
   return x_axis_;
 }
 inline void GameCommond::set_x_axis(float value) {
   
   x_axis_ = value;
-  // @@protoc_insertion_point(field_set:GameCommond.x_axis)
+  // @@protoc_insertion_point(field_set:Proto.GameCommond.x_axis)
 }
 
 // optional float y_axis = 2;
@@ -510,13 +547,13 @@ inline void GameCommond::clear_y_axis() {
   y_axis_ = 0;
 }
 inline float GameCommond::y_axis() const {
-  // @@protoc_insertion_point(field_get:GameCommond.y_axis)
+  // @@protoc_insertion_point(field_get:Proto.GameCommond.y_axis)
   return y_axis_;
 }
 inline void GameCommond::set_y_axis(float value) {
   
   y_axis_ = value;
-  // @@protoc_insertion_point(field_set:GameCommond.y_axis)
+  // @@protoc_insertion_point(field_set:Proto.GameCommond.y_axis)
 }
 
 // optional bool jump = 3;
@@ -524,13 +561,13 @@ inline void GameCommond::clear_jump() {
   jump_ = false;
 }
 inline bool GameCommond::jump() const {
-  // @@protoc_insertion_point(field_get:GameCommond.jump)
+  // @@protoc_insertion_point(field_get:Proto.GameCommond.jump)
   return jump_;
 }
 inline void GameCommond::set_jump(bool value) {
   
   jump_ = value;
-  // @@protoc_insertion_point(field_set:GameCommond.jump)
+  // @@protoc_insertion_point(field_set:Proto.GameCommond.jump)
 }
 
 // optional bool attack = 4;
@@ -538,34 +575,34 @@ inline void GameCommond::clear_attack() {
   attack_ = false;
 }
 inline bool GameCommond::attack() const {
-  // @@protoc_insertion_point(field_get:GameCommond.attack)
+  // @@protoc_insertion_point(field_get:Proto.GameCommond.attack)
   return attack_;
 }
 inline void GameCommond::set_attack(bool value) {
   
   attack_ = value;
-  // @@protoc_insertion_point(field_set:GameCommond.attack)
+  // @@protoc_insertion_point(field_set:Proto.GameCommond.attack)
 }
 
 // -------------------------------------------------------------------
 
 // GameCommondGroup
 
-// map<uint32, .GameCommond> commonds = 1;
+// map<uint32, .Proto.GameCommond> commonds = 1;
 inline int GameCommondGroup::commonds_size() const {
   return commonds_.size();
 }
 inline void GameCommondGroup::clear_commonds() {
   commonds_.Clear();
 }
-inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >&
+inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >&
 GameCommondGroup::commonds() const {
-  // @@protoc_insertion_point(field_map:GameCommondGroup.commonds)
+  // @@protoc_insertion_point(field_map:Proto.GameCommondGroup.commonds)
   return commonds_.GetMap();
 }
-inline ::google::protobuf::Map< ::google::protobuf::uint32, ::GameCommond >*
+inline ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >*
 GameCommondGroup::mutable_commonds() {
-  // @@protoc_insertion_point(field_mutable_map:GameCommondGroup.commonds)
+  // @@protoc_insertion_point(field_mutable_map:Proto.GameCommondGroup.commonds)
   return commonds_.MutableMap();
 }
 
@@ -578,6 +615,8 @@ GameCommondGroup::mutable_commonds() {
 
 
 // @@protoc_insertion_point(namespace_scope)
+
+}  // namespace Proto
 
 // @@protoc_insertion_point(global_scope)
 

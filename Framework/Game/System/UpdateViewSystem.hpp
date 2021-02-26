@@ -33,8 +33,9 @@ struct UpdateViewSystem : public System
 			auto& view = entt_view.get<View>(e);
 			const auto& transform = entt_view.get<Transform>(e);
 
-			view.value->MovePosition(transform.position);
-			view.value->MoveForward(transform.forward);
+			view.value->UpdatePosition(transform.position);
+			view.value->UpdateForward(transform.forward);
+			//view.value->MoveForward(transform.forward);
 		}
 
 		mover.clear();
@@ -42,13 +43,28 @@ struct UpdateViewSystem : public System
 
 	void UpdateAnimation()
 	{
-		auto entt_view = registry.view<View,AnimationClip>();
+		auto entt_view = registry.view<View,Animation,AnimationClip>();
 		for (auto e : animator)
 		{
 			auto& view = entt_view.get<View>(e);
+			auto& animation = entt_view.get<Animation>(e);
 			const auto& clip = entt_view.get<AnimationClip>(e);
+			
 
 			view.value->PlayAnimation(clip.name);
+			/*if (clip.time == fixed16(0.0f))
+			{
+				
+			}
+			else
+			{
+				auto iter = animation.value->clips.find(clip.name);
+				if (iter != animation.value->clips.end())
+				{
+					auto time = clip.time / iter->second.length;
+					view.value->PlayAnimation(clip.name, static_cast<float>(time));
+				}
+			}*/
 		}
 
 		animator.clear();

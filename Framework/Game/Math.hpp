@@ -5,8 +5,13 @@
 #include "Framework/Game/FixedPoint.hpp"
 #include "Framework/serialize/binary_archive.hpp"
 
+#ifndef GLM_ENABLE_EXPERIMENTAL
+#define GLM_ENABLE_EXPERIMENTAL
+#endif
+
 #include "glm/glm.hpp"
 #include "glm/detail/type_quat.hpp"
+#include "glm/gtx/compatibility.hpp"
 
 using vec2 = glm::vec<2, fixed16, glm::defaultp>;
 using vec3 = glm::vec<3, fixed16, glm::defaultp>;

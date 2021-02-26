@@ -27,7 +27,6 @@ struct AnimationSystem : public System
 			if (animation.value)
 			{
 				auto& animation_clip = view.get<AnimationClip>(e);
-
 				// loop play
 				if (animation_clip.is_done)
 				{

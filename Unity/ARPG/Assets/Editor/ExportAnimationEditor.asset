@@ -23,11 +23,9 @@ MonoBehaviour:
       step: 0.1
       param: forward
       isBlendTree: 1
-      skeletons: []
-    - name: Test
+    - name: Idle
       min: 0
       max: 0
       step: 0.1
       param: 
       isBlendTree: 0
-      skeletons: []

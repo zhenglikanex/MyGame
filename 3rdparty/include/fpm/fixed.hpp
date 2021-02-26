@@ -47,7 +47,7 @@ public:
     // Converts an integral number to the fixed-point type.
     // Like static_cast, this truncates bits that don't fit.
     template <typename T, typename std::enable_if<std::is_integral<T>::value>::type* = nullptr>
-    constexpr inline explicit fixed(T val) noexcept
+    constexpr inline fixed(T val) noexcept
         : m_value(static_cast<BaseType>(val * FRACTION_MULT))
     {
 #ifdef DEBUG
@@ -58,7 +58,7 @@ public:
     // Converts an floating-point number to the fixed-point type.
     // Like static_cast, this truncates bits that don't fit.
     template <typename T, typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr>
-    constexpr inline explicit fixed(T val) noexcept
+    constexpr inline fixed(T val) noexcept
         : m_value(static_cast<BaseType>(std::round(val * FRACTION_MULT)))
     {
 #ifdef DEBUG
@@ -136,6 +136,9 @@ public:
     inline fixed& operator+=(const fixed& y) noexcept
     {
         m_value += y.m_value;
+#ifdef DEBUG
+		_raw_value_ += y._raw_value_;
+#endif
         return *this;
     }
 
@@ -143,12 +146,18 @@ public:
     inline fixed& operator+=(I y) noexcept
     {
         m_value += y * FRACTION_MULT;
+#ifdef DEBUG
+		_raw_value_ += y
+#endif
         return *this;
     }
 
     inline fixed& operator-=(const fixed& y) noexcept
     {
         m_value -= y.m_value;
+#ifdef DEBUG
+        _raw_value_ -= y._raw_value_;
+#endif
         return *this;
     }
 
@@ -156,6 +165,9 @@ public:
     inline fixed& operator-=(I y) noexcept
     {
         m_value -= y * FRACTION_MULT;
+#ifdef DEBUG
+		_raw_value_ -= y
+#endif
         return *this;
     }
 
@@ -166,6 +178,9 @@ public:
         // We do this by multiplying by two before dividing and adding the LSB to the real result.
         auto value = (static_cast<IntermediateType>(m_value) * y.m_value) / (FRACTION_MULT / 2);
         m_value = static_cast<BaseType>((value / 2) + (value % 2));
+#ifdef DEBUG
+        _raw_value_ *= y._raw_value_;
+#endif
         return *this;
     }
 
@@ -173,6 +188,9 @@ public:
     inline fixed& operator*=(I y) noexcept
     {
         m_value *= y;
+#ifdef DEBUG
+		_raw_value_ *= y;
+#endif
         return *this;
     }
 
@@ -184,6 +202,10 @@ public:
         // We do this by multiplying by two before dividing and adding the LSB to the real result.
         auto value = (static_cast<IntermediateType>(m_value) * FRACTION_MULT * 2) / y.m_value;
         m_value = static_cast<BaseType>((value / 2) + (value % 2));
+
+#ifdef DEBUG
+		_raw_value_ /= y._raw_value_;
+#endif
         return *this;
     }
 
@@ -191,6 +213,9 @@ public:
     inline fixed& operator/=(I y) noexcept
     {
         m_value /= y;
+#ifdef DEBUG
+		_raw_value_ *= y;
+#endif
         return *this;
     }
 

@@ -9,6 +9,7 @@
 
 struct CreateAnimationSystem : System
 {
+	const std::string path = "Config/Anim/";
 	std::unordered_map<std::string, AnimationInfo> animation_infos;
 
 	CreateAnimationSystem(entt::registry& registry) 
@@ -53,7 +54,7 @@ struct CreateAnimationSystem : System
 		else
 		{
 			auto& locator = registry.ctx<Locator>();
-			auto content = locator.Ref<FileService>().OpenFile(name);
+			auto content = locator.Ref<FileService>().OpenFile(path + name);
 
 			assert(content != "" && "not anim info");
 

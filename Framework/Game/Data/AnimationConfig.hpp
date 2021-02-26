@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <string>
 
-#include "Framework/Game/LogService.hpp"
+#include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/Math.hpp"
 
 #include "Framework/Game/Data/Config.hpp"

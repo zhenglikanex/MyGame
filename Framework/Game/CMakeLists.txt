@@ -6,7 +6,7 @@ System.hpp
 Locator.hpp
 FixedPoint.hpp
 Service.hpp
-LogService.hpp
+DebugService.hpp
 InputService.hpp
 FileService.hpp
 FileService.cpp
@@ -33,6 +33,7 @@ System/CreateAnimationSystem.hpp
 System/RootMotionSystem.hpp
 System/SkillStateSystem.hpp
 System/CreateActorSystem.hpp
+System/DebugSystem.hpp
 
 Component/GameMode.hpp
 Component/GameState.hpp

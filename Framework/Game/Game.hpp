@@ -7,7 +7,7 @@
 #include <cassert>
 
 #include "Framework/Game/FileService.hpp"
-#include "Framework/Game/LogService.hpp"
+#include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/PlayerInfo.hpp"
 

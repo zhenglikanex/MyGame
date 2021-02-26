@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class Actor : UnityView
 {
+    private Animator animator;
+    private Quaternion TargetRotation { get; set; }
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        TargetRotation = transform.rotation;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var animator = GetComponent<Animator>();
-        animator.SetFloat("forward", 2.0f);
-        //Debug.Log(animator.deltaPosition);
     }
 
     public override void OnInit()
@@ -31,7 +36,7 @@ public class Actor : UnityView
     public override void UpdatePosition(float x, float y, float z)
     {
         Vector3 pos = new Vector3(x, y, z);
-        transform.localPosition = pos;
+        transform.position = pos;
     }
 
     public override void UpdateForward(float x, float y, float z)
@@ -40,10 +45,10 @@ public class Actor : UnityView
         transform.forward = forward;
     }
 
-    public override void MovePosition(float x,float y,float z)
+    public override void MovePosition(float x, float y, float z)
     {
         Vector3 pos = new Vector3(x, y, z);
-        transform.localPosition = pos;
+        transform.position = pos;
     }
 
     public override void MoveForward(float x, float y, float z)
@@ -52,13 +57,37 @@ public class Actor : UnityView
         transform.forward = forward;
     }
 
-    public void OnAnimatorMove()
+    public override void PlayAnim(string str)
     {
-        var animator = GetComponent<Animator>();
-        var state = animator.GetCurrentAnimatorStateInfo(0);
-        var p = state.normalizedTime - (int)state.normalizedTime;
-        var time = p * state.length;
-        //transform.position += animator.deltaPosition;
-        Debug.Log(string.Format("time:{0},z:{1}", time, animator.velocity.z));
+        string[] anim_params = str.Split('|');
+        if (anim_params.Length == 2)
+        {
+            string name = anim_params[0];
+            string param = anim_params[1];
+            if (name == "Locomotion")
+            {
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName(name))
+                {
+                    animator.Play(name);
+                }
+                else
+                {
+                    Debug.LogError("!!!!!!!");
+                }
+                animator.SetFloat("forward", float.Parse(param));
+                Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                Debug.Log(float.Parse(param));
+            }
+            else
+            {
+                animator.Play(name);
+            }
+        }
+        else
+        {
+            animator.SetFloat("forward",0);
+            animator.Play(name);
+        }
     }
+
 }
