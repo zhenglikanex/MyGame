@@ -39,7 +39,7 @@
             {
               "name": "state_time",
               "type": "float",
-              "check_type": "greater",
+              "check_type": "greater_and_equals",
               "value": "0.4"
             }
           ]

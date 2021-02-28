@@ -33,6 +33,7 @@ System/CreateAnimationSystem.hpp
 System/RootMotionSystem.hpp
 System/SkillStateSystem.hpp
 System/CreateActorSystem.hpp
+System/CreateSkillGraphSystem.hpp
 System/DebugSystem.hpp
 
 Component/GameMode.hpp
@@ -52,6 +53,7 @@ Component/BoundingBox.hpp
 Component/ActorAsset.hpp
 Component/Weapon.hpp
 Component/Hit.hpp
+Component/SkillGraphAsset.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp
@@ -60,6 +62,8 @@ Data/Config.hpp
 Data/Config.cpp
 Data/AnimationConfig.hpp
 Data/ActorConfig.hpp
+Data/SkillGraph.hpp
+Data/SkillGraph.cpp
 )
 
 foreach(_file ${file_list})

@@ -9,6 +9,7 @@
 #include "Framework/Game/Component/ActorState.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
 #include "Framework/Game/Component/AnimationAsset.hpp"
+#include "Framework/Game/Component/SkillGraphAsset.hpp"
 #include "Framework/Game/Component/BoundingBox.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
 
@@ -40,6 +41,7 @@ struct CreateActorSystem : public System
 			auto actor_info = GetActorInfo(asset.value);
 			registry.emplace<ViewAsset>(e, actor_info.model_asset);
 			registry.emplace<AnimationAsset>(e, actor_info.anim_asset);
+			registry.emplace<SkillGraphAsset>(e, actor_info.anim_asset);
 			registry.emplace<BoundingBox>(e, actor_info.body);
 			registry.emplace<Weapon>(e, actor_info.weapon);
 			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);

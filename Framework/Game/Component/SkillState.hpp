@@ -1,42 +1,64 @@
 #pragma once
 
+#include <unordered_set>
+
 #include "Framework/Game/FixedPoint.hpp"
+
+#include "Framework/Game/Data/SkillGraph.hpp"
 
 #include "Framework/serialize/binary_archive.hpp"
 
 struct SkillState
 {
-	uint32_t cur_state;
+	std::string name;
 	fixed16 time;
+	std::unordered_set<std::string> executed_events;
 
-	SkillState(uint32_t state) : cur_state(state), time(fixed16(0))
+	SkillState(std::string_view _name) : name(_name), time(fixed16(0))
 	{
-
 	}
 
-	BAR(cur_state, time);
+	//BAR(_name, time,executed_events);
 };
 
 struct EnterSkillState
 {
-	uint32_t value;
+	std::string name;
+
+	EnterSkillState(std::string_view _name)
+		:name(_name)
+	{
+
+	}
 };
 
 struct ExitSkillState
 {
-	uint32_t value;
+	std::string name;
+
+	ExitSkillState(std::string_view _name)
+		:name(_name)
+	{
+
+	}
 };
 
-struct SkillCommand
+struct SkillParams
 {
-	uint32_t skill;
+	std::unordered_map<std::string, SkillGraphInfo::Param> value;
 
-	SkillCommand(uint32_t _skill)
-		:skill(_skill)
-	{}
+	SkillParams()
+	{
+	}
 };
 
-struct SkillStateMachine
+struct SkillGraph
 {
-	
+	SkillGraphInfo* value;
+
+	SkillGraph(SkillGraphInfo* _value)
+		:value(_value)
+	{
+
+	}
 };

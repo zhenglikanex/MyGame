@@ -83,7 +83,7 @@ struct ActorStateSystem : public System
 
 		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation, const Command& command) override
 		{
-			if (command.attack)
+			if (command.skill != 0)
 			{
 				return ActorStateType::kAttack;
 			}
@@ -183,14 +183,39 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			//registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
-			
+			// 判断是否通过技能图执行
+			auto skill_grpah = registry.try_get<SkillGraph>(e);
+			if (skill_grpah != nullptr)
+			{
+				auto& skill_grpah = registry.get<SkillGraph>(e);
+				registry.emplace_or_replace<SkillState>(e, skill_grpah.value->entry());
+				auto skill_params =  registry.emplace_or_replace<SkillParams>(e);
+				skill_params.value.clear();
+				
+				SkillGraphInfo::Param skill;
+				skill.int_value = 0;
+				skill_params.value.emplace("skill", skill);
+
+				SkillGraphInfo::Param state_time;
+				skill.float_value = fixed16(0);
+				skill_params.value.emplace("state_time", state_time);
+			}
 		}
 
 		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override 
 		{
-			// todo:判断有没有技能树
-			registry.emplace_or_replace<SkillCommand>(e, command.skill);
+			auto skill_params = registry.try_get<SkillParams>(e);
+			if (skill_params != nullptr)
+			{
+				auto& skill = skill_params->value["skill"];
+				if (skill.int_value != 0)
+				{
+					skill.int_value = command.skill;
+				}
+
+				auto& state_time = skill_params->value["state_time"];
+				state_time.float_value = animction_clip.time;
+			}
 		}
 	};
 

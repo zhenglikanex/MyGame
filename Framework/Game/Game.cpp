@@ -13,12 +13,14 @@
 #include "Framework/Game/System/CreateActorSystem.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
 #include "Framework/Game/System/CreateAnimationSystem.hpp"
+#include "Framework/Game/System/CreateSkillGraphSystem.hpp"
 #include "Framework/Game/System/ActorStateSystem.hpp"
 #include "Framework/Game/System/MovementSystem.hpp"
 #include "Framework/Game/System/UpdateViewSystem.hpp"
 #include "Framework/Game/System/AnimationSystem.hpp"
 #include "Framework/Game/System/CollisionSystem.hpp"
 #include "Framework/Game/System/RootMotionSystem.hpp"
+#include "Framework/Game/System/SkillStateSystem.hpp"
 #include "Framework/Game/System/DebugSystem.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
@@ -33,12 +35,14 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	systems_.emplace_back(std::make_unique<CreateActorSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CreateViewSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CreateAnimationSystem>(registry_));
+	systems_.emplace_back(std::make_unique<CreateSkillGraphSystem>(registry_));
 	systems_.emplace_back(std::make_unique<ActorStateSystem>(registry_));
+	systems_.emplace_back(std::make_unique<SkillStateSystem>(registry_));
 	systems_.emplace_back(std::make_unique<RootMotionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
-	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
 	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
+	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
 
 #ifdef DEBUG
 	systems_.emplace_back(std::make_unique<DebugSystem>(registry_));
