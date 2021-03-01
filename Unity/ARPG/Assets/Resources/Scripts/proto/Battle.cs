@@ -24,18 +24,18 @@ namespace Proto {
           string.Concat(
             "CgxCYXR0bGUucHJvdG8SBVByb3RvIi0KClBsYXllckluZm8SCgoCaWQYASAB",
             "KA0SEwoLYWN0b3JfYXNzZXQYAiABKAkiOgoPR2FtZVBsYXllckluZm9zEicK",
-            "DHBsYXllcl9pbmZvcxgBIAMoCzIRLlByb3RvLlBsYXllckluZm8iSwoLR2Ft",
+            "DHBsYXllcl9pbmZvcxgBIAMoCzIRLlByb3RvLlBsYXllckluZm8iSgoLR2Ft",
             "ZUNvbW1vbmQSDgoGeF9heGlzGAEgASgCEg4KBnlfYXhpcxgCIAEoAhIMCgRq",
-            "dW1wGAMgASgIEg4KBmF0dGFjaxgEIAEoCCKQAQoQR2FtZUNvbW1vbmRHcm91",
-            "cBI3Cghjb21tb25kcxgBIAMoCzIlLlByb3RvLkdhbWVDb21tb25kR3JvdXAu",
-            "Q29tbW9uZHNFbnRyeRpDCg1Db21tb25kc0VudHJ5EgsKA2tleRgBIAEoDRIh",
-            "CgV2YWx1ZRgCIAEoCzISLlByb3RvLkdhbWVDb21tb25kOgI4AWIGcHJvdG8z"));
+            "dW1wGAMgASgIEg0KBXNraWxsGAQgASgFIpABChBHYW1lQ29tbW9uZEdyb3Vw",
+            "EjcKCGNvbW1vbmRzGAEgAygLMiUuUHJvdG8uR2FtZUNvbW1vbmRHcm91cC5D",
+            "b21tb25kc0VudHJ5GkMKDUNvbW1vbmRzRW50cnkSCwoDa2V5GAEgASgNEiEK",
+            "BXZhbHVlGAIgASgLMhIuUHJvdG8uR2FtZUNvbW1vbmQ6AjgBYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerInfo), global::Proto.PlayerInfo.Parser, new[]{ "Id", "ActorAsset" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GamePlayerInfos), global::Proto.GamePlayerInfos.Parser, new[]{ "PlayerInfos" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommond), global::Proto.GameCommond.Parser, new[]{ "XAxis", "YAxis", "Jump", "Attack" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommond), global::Proto.GameCommond.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommondGroup), global::Proto.GameCommondGroup.Parser, new[]{ "Commonds" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
     }
@@ -324,7 +324,7 @@ namespace Proto {
       xAxis_ = other.xAxis_;
       yAxis_ = other.yAxis_;
       jump_ = other.jump_;
-      attack_ = other.attack_;
+      skill_ = other.skill_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -374,19 +374,19 @@ namespace Proto {
       }
     }
 
-    /// <summary>Field number for the "attack" field.</summary>
-    public const int AttackFieldNumber = 4;
-    private bool attack_;
+    /// <summary>Field number for the "skill" field.</summary>
+    public const int SkillFieldNumber = 4;
+    private int skill_;
     /// <summary>
     /// bool skill1 = 5;
     /// bool skill2 = 6;
     /// bool skill3 = 7;
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Attack {
-      get { return attack_; }
+    public int Skill {
+      get { return skill_; }
       set {
-        attack_ = value;
+        skill_ = value;
       }
     }
 
@@ -406,7 +406,7 @@ namespace Proto {
       if (XAxis != other.XAxis) return false;
       if (YAxis != other.YAxis) return false;
       if (Jump != other.Jump) return false;
-      if (Attack != other.Attack) return false;
+      if (Skill != other.Skill) return false;
       return true;
     }
 
@@ -416,7 +416,7 @@ namespace Proto {
       if (XAxis != 0F) hash ^= XAxis.GetHashCode();
       if (YAxis != 0F) hash ^= YAxis.GetHashCode();
       if (Jump != false) hash ^= Jump.GetHashCode();
-      if (Attack != false) hash ^= Attack.GetHashCode();
+      if (Skill != 0) hash ^= Skill.GetHashCode();
       return hash;
     }
 
@@ -439,9 +439,9 @@ namespace Proto {
         output.WriteRawTag(24);
         output.WriteBool(Jump);
       }
-      if (Attack != false) {
+      if (Skill != 0) {
         output.WriteRawTag(32);
-        output.WriteBool(Attack);
+        output.WriteInt32(Skill);
       }
     }
 
@@ -457,8 +457,8 @@ namespace Proto {
       if (Jump != false) {
         size += 1 + 1;
       }
-      if (Attack != false) {
-        size += 1 + 1;
+      if (Skill != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Skill);
       }
       return size;
     }
@@ -477,8 +477,8 @@ namespace Proto {
       if (other.Jump != false) {
         Jump = other.Jump;
       }
-      if (other.Attack != false) {
-        Attack = other.Attack;
+      if (other.Skill != 0) {
+        Skill = other.Skill;
       }
     }
 
@@ -503,7 +503,7 @@ namespace Proto {
             break;
           }
           case 32: {
-            Attack = input.ReadBool();
+            Skill = input.ReadInt32();
             break;
           }
         }

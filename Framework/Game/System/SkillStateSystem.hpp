@@ -41,7 +41,9 @@ struct SkillStateSystem : System
 		}*/
 
 		OnTransition(dt);
-
+		OnExit();
+		OnEnter();
+		ProcessCurState();
 	}
 
 	template<class T>
@@ -54,7 +56,7 @@ struct SkillStateSystem : System
 
 		case SkillGraphInfo::Skill::Transition::Condition::CheckType::kGreater:
 			return value > target;
-			
+
 		case SkillGraphInfo::Skill::Transition::Condition::CheckType::kLess:
 			return value < target;
 
@@ -110,10 +112,11 @@ struct SkillStateSystem : System
 					{
 					case SkillGraphInfo::Skill::Transition::Condition::ConditionType::kNone:
 						assert(false);
+						break;
 
 					case SkillGraphInfo::Skill::Transition::Condition::ConditionType::kInt:
 						can_trans = CheckCondition(iter->second.int_value, condition.value().int_value, condition.check_type());
-						
+						break;
 					case SkillGraphInfo::Skill::Transition::Condition::ConditionType::kFloat:
 						can_trans = CheckCondition(iter->second.float_value, condition.value().float_value, condition.check_type());
 						break;
@@ -145,6 +148,13 @@ struct SkillStateSystem : System
 					registry.emplace<ExitSkillState>(e, skill.name());
 					registry.emplace<EnterSkillState>(e, transition.next_skill());
 					break;
+				}
+				else
+				{
+					if (animation_clip.is_done)
+					{
+						registry.remove<SkillState>(e);
+					}
 				}
 			}
 		}

@@ -20,7 +20,7 @@ message GameCommond
 
 	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
 	bool jump = 3;
-	bool attack = 4;
+	int32 skill = 4;
 	//bool skill1 = 5;
 	//bool skill2 = 6;
 	//bool skill3 = 7;

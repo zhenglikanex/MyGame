@@ -81,7 +81,7 @@ void protobuf_AssignDesc_Battle_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommond, x_axis_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommond, y_axis_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommond, jump_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommond, attack_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommond, skill_),
   };
   GameCommond_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -166,12 +166,12 @@ void protobuf_AddDesc_Battle_2eproto() {
     "\n\014Battle.proto\022\005Proto\"-\n\nPlayerInfo\022\n\n\002i"
     "d\030\001 \001(\r\022\023\n\013actor_asset\030\002 \001(\t\":\n\017GamePlay"
     "erInfos\022\'\n\014player_infos\030\001 \003(\0132\021.Proto.Pl"
-    "ayerInfo\"K\n\013GameCommond\022\016\n\006x_axis\030\001 \001(\002\022"
-    "\016\n\006y_axis\030\002 \001(\002\022\014\n\004jump\030\003 \001(\010\022\016\n\006attack\030"
-    "\004 \001(\010\"\220\001\n\020GameCommondGroup\0227\n\010commonds\030\001"
-    " \003(\0132%.Proto.GameCommondGroup.CommondsEn"
-    "try\032C\n\rCommondsEntry\022\013\n\003key\030\001 \001(\r\022!\n\005val"
-    "ue\030\002 \001(\0132\022.Proto.GameCommond:\0028\001b\006proto3", 360);
+    "ayerInfo\"J\n\013GameCommond\022\016\n\006x_axis\030\001 \001(\002\022"
+    "\016\n\006y_axis\030\002 \001(\002\022\014\n\004jump\030\003 \001(\010\022\r\n\005skill\030\004"
+    " \001(\005\"\220\001\n\020GameCommondGroup\0227\n\010commonds\030\001 "
+    "\003(\0132%.Proto.GameCommondGroup.CommondsEnt"
+    "ry\032C\n\rCommondsEntry\022\013\n\003key\030\001 \001(\r\022!\n\005valu"
+    "e\030\002 \001(\0132\022.Proto.GameCommond:\0028\001b\006proto3", 359);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Battle.proto", &protobuf_RegisterTypes);
   PlayerInfo::default_instance_ = new PlayerInfo();
@@ -792,7 +792,7 @@ GamePlayerInfos::player_infos() const {
 const int GameCommond::kXAxisFieldNumber;
 const int GameCommond::kYAxisFieldNumber;
 const int GameCommond::kJumpFieldNumber;
-const int GameCommond::kAttackFieldNumber;
+const int GameCommond::kSkillFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 GameCommond::GameCommond()
@@ -819,7 +819,7 @@ void GameCommond::SharedCtor() {
   x_axis_ = 0;
   y_axis_ = 0;
   jump_ = false;
-  attack_ = false;
+  skill_ = 0;
 }
 
 GameCommond::~GameCommond() {
@@ -875,7 +875,7 @@ void GameCommond::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(x_axis_, attack_);
+  ZR_(x_axis_, skill_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -932,17 +932,17 @@ bool GameCommond::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_attack;
+        if (input->ExpectTag(32)) goto parse_skill;
         break;
       }
 
-      // optional bool attack = 4;
+      // optional int32 skill = 4;
       case 4: {
         if (tag == 32) {
-         parse_attack:
+         parse_skill:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &attack_)));
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &skill_)));
 
         } else {
           goto handle_unusual;
@@ -990,9 +990,9 @@ void GameCommond::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->jump(), output);
   }
 
-  // optional bool attack = 4;
-  if (this->attack() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(4, this->attack(), output);
+  // optional int32 skill = 4;
+  if (this->skill() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->skill(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:Proto.GameCommond)
@@ -1016,9 +1016,9 @@ void GameCommond::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->jump(), target);
   }
 
-  // optional bool attack = 4;
-  if (this->attack() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->attack(), target);
+  // optional int32 skill = 4;
+  if (this->skill() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->skill(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:Proto.GameCommond)
@@ -1044,9 +1044,11 @@ int GameCommond::ByteSize() const {
     total_size += 1 + 1;
   }
 
-  // optional bool attack = 4;
-  if (this->attack() != 0) {
-    total_size += 1 + 1;
+  // optional int32 skill = 4;
+  if (this->skill() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->skill());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -1086,8 +1088,8 @@ void GameCommond::MergeFrom(const GameCommond& from) {
   if (from.jump() != 0) {
     set_jump(from.jump());
   }
-  if (from.attack() != 0) {
-    set_attack(from.attack());
+  if (from.skill() != 0) {
+    set_skill(from.skill());
   }
 }
 
@@ -1118,7 +1120,7 @@ void GameCommond::InternalSwap(GameCommond* other) {
   std::swap(x_axis_, other->x_axis_);
   std::swap(y_axis_, other->y_axis_);
   std::swap(jump_, other->jump_);
-  std::swap(attack_, other->attack_);
+  std::swap(skill_, other->skill_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1176,18 +1178,18 @@ void GameCommond::clear_jump() {
   // @@protoc_insertion_point(field_set:Proto.GameCommond.jump)
 }
 
-// optional bool attack = 4;
-void GameCommond::clear_attack() {
-  attack_ = false;
+// optional int32 skill = 4;
+void GameCommond::clear_skill() {
+  skill_ = 0;
 }
- bool GameCommond::attack() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommond.attack)
-  return attack_;
+ ::google::protobuf::int32 GameCommond::skill() const {
+  // @@protoc_insertion_point(field_get:Proto.GameCommond.skill)
+  return skill_;
 }
- void GameCommond::set_attack(bool value) {
+ void GameCommond::set_skill(::google::protobuf::int32 value) {
   
-  attack_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommond.attack)
+  skill_ = value;
+  // @@protoc_insertion_point(field_set:Proto.GameCommond.skill)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

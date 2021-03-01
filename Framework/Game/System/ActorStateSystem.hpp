@@ -61,6 +61,11 @@ struct ActorStateSystem : public System
 
 		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation, const Command& command) override
 		{
+			if (command.skill != 0)
+			{
+				return ActorStateType::kAttack;
+			}
+
 			if (command.x_axis != fixed16(0) || command.y_axis != fixed16(0))
 			{
 				return ActorStateType::kMovement;
@@ -208,7 +213,7 @@ struct ActorStateSystem : public System
 			if (skill_params != nullptr)
 			{
 				auto& skill = skill_params->value["skill"];
-				if (skill.int_value != 0)
+				if (skill.int_value == 0)
 				{
 					skill.int_value = command.skill;
 				}

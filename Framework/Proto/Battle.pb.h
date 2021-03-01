@@ -305,11 +305,11 @@ class GameCommond : public ::google::protobuf::Message /* @@protoc_insertion_poi
   bool jump() const;
   void set_jump(bool value);
 
-  // optional bool attack = 4;
-  void clear_attack();
-  static const int kAttackFieldNumber = 4;
-  bool attack() const;
-  void set_attack(bool value);
+  // optional int32 skill = 4;
+  void clear_skill();
+  static const int kSkillFieldNumber = 4;
+  ::google::protobuf::int32 skill() const;
+  void set_skill(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:Proto.GameCommond)
  private:
@@ -319,7 +319,7 @@ class GameCommond : public ::google::protobuf::Message /* @@protoc_insertion_poi
   float x_axis_;
   float y_axis_;
   bool jump_;
-  bool attack_;
+  ::google::protobuf::int32 skill_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
   friend void protobuf_AssignDesc_Battle_2eproto();
@@ -570,18 +570,18 @@ inline void GameCommond::set_jump(bool value) {
   // @@protoc_insertion_point(field_set:Proto.GameCommond.jump)
 }
 
-// optional bool attack = 4;
-inline void GameCommond::clear_attack() {
-  attack_ = false;
+// optional int32 skill = 4;
+inline void GameCommond::clear_skill() {
+  skill_ = 0;
 }
-inline bool GameCommond::attack() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommond.attack)
-  return attack_;
+inline ::google::protobuf::int32 GameCommond::skill() const {
+  // @@protoc_insertion_point(field_get:Proto.GameCommond.skill)
+  return skill_;
 }
-inline void GameCommond::set_attack(bool value) {
+inline void GameCommond::set_skill(::google::protobuf::int32 value) {
   
-  attack_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommond.attack)
+  skill_ = value;
+  // @@protoc_insertion_point(field_set:Proto.GameCommond.skill)
 }
 
 // -------------------------------------------------------------------

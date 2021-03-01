@@ -147,10 +147,11 @@ inline void from_json(const json& j, SkillGraphInfo::Skill::Transition::Conditio
 	else if (str == "anim")
 	{
 		condition.condition_type_ = SkillGraphInfo::Skill::Transition::Condition::ConditionType::kAnim;
+		return;
 	}
 
 	// check_type
-	j.at("check_type").at("str");
+	j.at("check_type").get_to(str);
 	if (str == "greater")
 	{
 		condition.check_type_ = SkillGraphInfo::Skill::Transition::Condition::CheckType::kGreater;
@@ -158,6 +159,10 @@ inline void from_json(const json& j, SkillGraphInfo::Skill::Transition::Conditio
 	else if (str == "less")
 	{
 		condition.check_type_ = SkillGraphInfo::Skill::Transition::Condition::CheckType::kLess;
+	}
+	else if (str == "equals")
+	{
+		condition.check_type_ = SkillGraphInfo::Skill::Transition::Condition::CheckType::kEquals;
 	}
 	else if (str == "not_equals")
 	{
@@ -215,8 +220,12 @@ inline void from_json(const json& j, SkillGraphInfo::Skill::AnimEvent& anim_even
 
 inline void from_json(const json& j, SkillGraphInfo::Skill& skill)
 {
-	j.at("anim_name").get_to(skill.anim_name_);
-	j.at("anim_event").get_to(skill.anim_events_);
+	if (j.at("anim_name").is_string())
+	{
+		j.at("anim_name").get_to(skill.anim_name_);
+	}
+	j.at("anim_events").get_to(skill.anim_events_);
+	j.at("transitions").get_to(skill.transitions_);
 }
 
 inline void from_json(const json& j, SkillGraphInfo& skill_graph)

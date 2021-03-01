@@ -62,21 +62,21 @@ public class Actor : UnityView
         string[] anim_params = str.Split('|');
         if (anim_params.Length == 2)
         {
-            string name = anim_params[0];
-            string param = anim_params[1];
-            if (name == "Locomotion")
+            string animName = anim_params[0];
+            string animParam = anim_params[1];
+            if (animName == "Locomotion")
             {
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName(name))
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animName))
                 {
-                    animator.Play(name);
+                    animator.Play(animName);
                 }
                 else
                 {
                     Debug.LogError("!!!!!!!");
                 }
-                animator.SetFloat("forward", float.Parse(param));
+                animator.SetFloat("forward", float.Parse(animParam));
                 Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-                Debug.Log(float.Parse(param));
+                Debug.Log(float.Parse(animParam));
             }
             else
             {
@@ -85,8 +85,10 @@ public class Actor : UnityView
         }
         else
         {
-            animator.SetFloat("forward",0);
-            animator.Play(name);
+            string animName = str;
+            Debug.Log(name);
+            //animator.SetFloat("forward", 0);
+            animator.Play(animName);
         }
     }
 

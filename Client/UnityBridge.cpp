@@ -81,6 +81,7 @@ extern "C"
 				Command cmd;
 				cmd.x_axis = fixed16(std::abs(iter->second.x_axis()) < 0.1 ? 0 : iter->second.x_axis());
 				cmd.y_axis = fixed16(std::abs(iter->second.y_axis()) < 0.1 ? 0 : iter->second.y_axis());
+				cmd.skill = iter->second.skill();
 				g_game->InputCommand(iter->first,std::move(cmd));
 			}
 		}
