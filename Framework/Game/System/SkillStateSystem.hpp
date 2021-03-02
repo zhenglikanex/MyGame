@@ -13,7 +13,7 @@ struct SkillStateSystem : System
 
 	SkillStateSystem(entt::registry& registry) : System(registry)
 	{
-		events.emplace("OnResetSkillParams", [this](entt::entity e, const SkillGraph& skill_graph, const SkillState& skill_state,SkillParams& skill_params)
+		events.emplace("OnResetSkillParam", [this](entt::entity e, const SkillGraph& skill_graph, const SkillState& skill_state,SkillParams& skill_params)
 			{
 				skill_params.value.find("skill")->second.int_value = 0;
 			});
@@ -196,10 +196,10 @@ struct SkillStateSystem : System
 			auto skill = skill_graph.value->GetSkillByName(skill_state.name);
 			for (auto& anim_event : skill.anim_events())
 			{
-				if (animation_clip.time >= anim_event.time() && skill_state.executed_events.find(anim_event.name()) != skill_state.executed_events.end())
+				if (animation_clip.time >= anim_event.time() && skill_state.executed_events.find(anim_event.name()) == skill_state.executed_events.end())
 				{
 					auto iter = events.find(anim_event.name());
-					if (iter == events.end())
+					if (iter != events.end())
 					{
 						iter->second(e, skill_graph, skill_state, skill_params);
 						skill_state.executed_events.emplace(anim_event.name());

@@ -91,5 +91,5 @@ public class Actor : UnityView
             animator.Play(animName);
         }
     }
-
+    
 }

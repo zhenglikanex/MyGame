@@ -149,18 +149,10 @@ MonoBehaviour:
   desc: 
   transitions:
   - conditions:
-    - type: 3
-      name: exit anim
-      checkTypeInt: 0
-      valueInt: 0
-      checkTypeFloat: 0
-      valueFloat: 0
-      checkTypeBool: 0
-      valueBool: 1
     - type: 0
       name: skill
       checkTypeInt: 2
-      valueInt: 100050
+      valueInt: 100010
       checkTypeFloat: 0
       valueFloat: 0
       checkTypeBool: 0
@@ -311,18 +303,10 @@ MonoBehaviour:
   desc: 
   transitions:
   - conditions:
-    - type: 3
-      name: exit anim
-      checkTypeInt: 0
-      valueInt: 0
-      checkTypeFloat: 0
-      valueFloat: 0
-      checkTypeBool: 0
-      valueBool: 1
     - type: 0
       name: skill
       checkTypeInt: 2
-      valueInt: 100030
+      valueInt: 100010
       checkTypeFloat: 0
       valueFloat: 0
       checkTypeBool: 0
@@ -397,18 +381,10 @@ MonoBehaviour:
   desc: 
   transitions:
   - conditions:
-    - type: 3
-      name: exit anim
-      checkTypeInt: 0
-      valueInt: 0
-      checkTypeFloat: 0
-      valueFloat: 0
-      checkTypeBool: 0
-      valueBool: 1
     - type: 0
       name: skill
       checkTypeInt: 2
-      valueInt: 100040
+      valueInt: 100010
       checkTypeFloat: 0
       valueFloat: 0
       checkTypeBool: 0
@@ -486,7 +462,7 @@ MonoBehaviour:
     - type: 0
       name: skill
       checkTypeInt: 2
-      valueInt: 100020
+      valueInt: 100010
       checkTypeFloat: 0
       valueFloat: 0
       checkTypeBool: 0
