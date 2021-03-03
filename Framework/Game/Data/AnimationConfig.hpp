@@ -27,6 +27,7 @@ struct Bone
 
 struct Skeleton
 {
+	fixed16 time;
 	std::unordered_map<std::string, Bone> bones;
 };
 
@@ -56,6 +57,7 @@ inline void from_json(const nlohmann::json& j, Bone& bone)
 
 inline void from_json(const nlohmann::json& j, Skeleton& skeleton)
 {
+	j.at("time").get_to(skeleton.time);
 	j.at("bones").get_to(skeleton.bones);
 }
 

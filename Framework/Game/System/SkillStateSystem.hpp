@@ -9,14 +9,25 @@
 
 struct SkillStateSystem : System
 {
-	std::unordered_map < std::string, std::function<void(entt::entity, const SkillGraph&, const SkillState&,SkillParams&)>> events;
+	std::unordered_map<std::string, std::function<void(entt::entity, const SkillGraph&, const SkillState&, SkillParams&)>> events;
 
 	SkillStateSystem(entt::registry& registry) : System(registry)
 	{
 		events.emplace("OnResetSkillParam", [this](entt::entity e, const SkillGraph& skill_graph, const SkillState& skill_state,SkillParams& skill_params)
-			{
-				skill_params.value.find("skill")->second.int_value = 0;
-			});
+		{
+			skill_params.value.find("skill")->second.int_value = 0;
+		});
+
+		events.emplace("OnSkillBegin", [this](entt::entity e, const SkillGraph& skill_graph, const SkillState& skill_state, SkillParams& skill_params)
+		{
+			// todo:读取单个技能配置根据技能配置创建技能
+			
+		});
+
+		events.emplace("OnSkillEnd", [this](entt::entity e, const SkillGraph& skill_graph, const SkillState& skill_state, SkillParams& skill_params)
+		{
+			
+		});
 	}
 
 	~SkillStateSystem()
@@ -31,15 +42,6 @@ struct SkillStateSystem : System
 
 	void Update(fixed16 dt)
 	{
-		/*auto view = registry.view<SkillParams, SkillState,SkillGraph>();
-		for (auto e : view)
-		{
-			auto& command = view.get<SkillParams>(e);
-			auto& state = view.get<SkillState>(e);
-			auto& skill_state_matchine = view.get<>(e);
-
-		}*/
-
 		OnTransition(dt);
 		OnExit();
 		OnEnter();
@@ -53,6 +55,7 @@ struct SkillStateSystem : System
 		{
 		case SkillGraphInfo::Skill::Transition::Condition::CheckType::kNone:
 			assert(false);
+			return false;
 
 		case SkillGraphInfo::Skill::Transition::Condition::CheckType::kGreater:
 			return value > target;
