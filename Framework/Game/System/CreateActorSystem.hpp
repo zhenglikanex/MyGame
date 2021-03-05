@@ -12,12 +12,14 @@
 #include "Framework/Game/Component/SkillGraphAsset.hpp"
 #include "Framework/Game/Component/BoundingBox.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
+#include "Framework/Game/Component/Attributes.hpp"
 
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Data/ActorConfig.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
+
 
 struct CreateActorSystem : public System
 {
@@ -45,6 +47,12 @@ struct CreateActorSystem : public System
 			registry.emplace<BoundingBox>(e, actor_info.body);
 			registry.emplace<Weapon>(e, actor_info.weapon);
 			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
+
+			//todo 插入actor自身属性和武器属性
+			std::array<Attribute, (size_t)AttributeType::kMax> attributes{ { CalculateType::kNumerical,fixed16(100) } };
+			auto& attribute_units = registry.emplace<AttributeUnitList>(e);
+			attribute_units.value.emplace_back(e, e, attributes);	// todo actor
+			attribute_units.value.emplace_back(e, e, attributes);	// todo wepon
 		}
 	}
 

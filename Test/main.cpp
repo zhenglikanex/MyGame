@@ -11,6 +11,8 @@
 #include <fstream>
 #include <sstream>
 
+#include "Framework/Game/Math.hpp"
+
 class Timer
 {
 public:
@@ -42,6 +44,7 @@ public:
 
 int main()
 {
+	std::array<fixed16, 10> arr;
 
 	fixed16 min = std::numeric_limits<fixed16>::min();
 	fixed16 max = std::numeric_limits<fixed16>::max();

@@ -2,10 +2,13 @@
 
 #include <functional>
 
-#include "Framework/Game/System.hpp"
-
 #include "Framework/Game/Component/SkillState.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
+#include "Framework/Game/Component/Skill.hpp"
+#include "Framework/Game/Component/Weapon.hpp"
+#include "Framework/Game/Component/Transform.hpp"
+
+#include "Framework/Game/System.hpp"
 
 struct SkillStateSystem : System
 {
@@ -18,15 +21,28 @@ struct SkillStateSystem : System
 			skill_params.value.find("skill")->second.int_value = 0;
 		});
 
-		events.emplace("OnSkillBegin", [this](entt::entity e, const SkillGraph& skill_graph, const SkillState& skill_state, SkillParams& skill_params)
+		events.emplace("OnLaunchSkillBegin", [this](entt::entity e, const SkillGraph& skill_graph, const SkillState& skill_state, SkillParams& skill_params)
 		{
 			// todo:读取单个技能配置根据技能配置创建技能
-			
-		});
+			SkillType type = SkillType::kNotLockAnim;
+			if (type == SkillType::kNotLockAnim)
+			{
+				auto skill = this->registry.create();
 
-		events.emplace("OnSkillEnd", [this](entt::entity e, const SkillGraph& skill_graph, const SkillState& skill_state, SkillParams& skill_params)
-		{
-			
+				auto weapon = this->registry.try_get<Weapon>(e);
+				if (weapon)
+				{
+					this->registry.emplace<Skill>(skill, e, fixed16(0.5));
+					this->registry.emplace<SkillAttacthBone>(skill, skill_state.name, "RightWepon");
+					this->registry.emplace<BoundingBox>(skill, weapon->bounding_box);
+
+					auto transform = this->registry.try_get<Transform>(e);
+					if (transform)
+					{
+						this->registry.emplace<Transform>(e, *transform);
+					}
+				}
+			}
 		});
 	}
 

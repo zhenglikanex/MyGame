@@ -22,6 +22,8 @@
 #include "Framework/Game/System/RootMotionSystem.hpp"
 #include "Framework/Game/System/SkillStateSystem.hpp"
 #include "Framework/Game/System/DebugSystem.hpp"
+#include "Framework/Game/System/HealthSystem.hpp"
+#include "Framework/Game/System/ModifyHealthSystem.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
 
@@ -36,6 +38,8 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	systems_.emplace_back(std::make_unique<CreateViewSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CreateAnimationSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CreateSkillGraphSystem>(registry_));
+	systems_.emplace_back(std::make_unique<HealthSystem>(registry_));
+	systems_.emplace_back(std::make_unique<ModifyHealthSystem>(registry_));
 	systems_.emplace_back(std::make_unique<ActorStateSystem>(registry_));
 	systems_.emplace_back(std::make_unique<SkillStateSystem>(registry_));
 	systems_.emplace_back(std::make_unique<RootMotionSystem>(registry_));

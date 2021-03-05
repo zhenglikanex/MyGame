@@ -34,4 +34,4 @@ struct ModifyHealthSystem : public System
 	{
 
 	}
-}
+};
