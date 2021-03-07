@@ -31,7 +31,7 @@ struct OBB {
 	OBB(const vec3& _c,const vec3& x_axis,const vec3& y_axis,const vec3& z_axis,const vec3& _e)
 		: c(_c) 
 		, u{x_axis,y_axis,z_axis}
-		, e(e)
+		, e(_e)
 	{
 	}
 };

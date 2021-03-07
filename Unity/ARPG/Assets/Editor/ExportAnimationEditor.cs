@@ -178,20 +178,88 @@ public class ExportAnimationEditor : EditorWindow
             ConfigAnimation cfgAnimation = new ConfigAnimation();
 
             var animator = Instantiate(item.target);
+            animator.transform.position = Vector3.zero;
             animator.applyRootMotion = true;
-
-            foreach (var animation in item.animations)
-            {
-                if (animation.isBlendTree)
+            Scheduler.Instance.DelayCall(() => {
+                foreach (var animation in item.animations)
                 {
-                    float step = Math.Max(animation.step, 0.01f);
-                    for(float param = animation.min; param < animation.max + step; param += step)
+                    if (animation.isBlendTree)
                     {
-                        param = (float)Math.Round(param, 1);
+                        float step = Math.Max(animation.step, 0.01f);
+                        for (float param = animation.min; param < animation.max + step; param += step)
+                        {
+                            param = (float)Math.Round(param, 1);
+                            ConfigAnimationClip clip = new ConfigAnimationClip();
+
+                            animator.transform.position = Vector3.zero;
+                            animator.SetFloat(animation.param, param);
+                            animator.Play(animation.name, 0, 0);
+                            animator.Update(0);    //多更新一个dt去掉0的情况
+
+                            var state = animator.GetCurrentAnimatorStateInfo(0);
+                            clip.length = state.length;
+
+                            float time = 0.0f;
+                            do
+                            {
+
+                                // rootmotion
+                                RootMotion rootMotion = new RootMotion();
+                                rootMotion.time = time;
+                                rootMotion.velocity = animator.velocity;
+                                rootMotion.angularVelocity = animator.angularVelocity;
+                                clip.rootMotions.Add(rootMotion);
+
+                                Debug.Log(string.Format("{0}   {1}", state.length, animator.GetCurrentAnimatorStateInfo(0).length));
+
+                                //bones
+                                var skeleton = new Skeleton();
+                                skeleton.time = time;
+                                foreach (var name in exportBoneNames)
+                                {
+                                    var go = GetGameObject(animator.gameObject, name);
+                                    if (go != null)
+                                    {
+                                        var bone = new Bone();
+                                        bone.transform = go.transform.parent.localToWorldMatrix.transpose;
+                                        skeleton.bones.Add(name, bone);
+                                    }
+                                }
+                                clip.skeletons.Add(skeleton);
+
+                                animator.Update(dt);
+
+                                time += dt;
+
+                            } while (time < state.length);
+
+                            //如果没有有效的rootmtion值删除所有数据
+                            bool flag = false;
+                            foreach (var rootMotion in clip.rootMotions)
+                            {
+                                var velocity = rootMotion.velocity;
+                                var angularVelocity = rootMotion.angularVelocity;
+                                if (velocity.x > 0.0001f || velocity.y > 0.0001f || velocity.z > 0.0001f || angularVelocity.x > 0.0001f || angularVelocity.y > 0.0001f || angularVelocity.z > 0.0001f)
+                                {
+                                    flag = true;
+                                    break;
+                                }
+                            }
+
+                            if (!flag)
+                            {
+                                clip.rootMotions.Clear();
+                            }
+
+                            cfgAnimation.clips.Add(string.Format("{0}|{1:F1}", animation.name, param), clip);
+                        }
+                    }
+                    else
+                    {
                         ConfigAnimationClip clip = new ConfigAnimationClip();
 
-                        animator.SetFloat(animation.param,param);
-                        animator.Play(animation.name,0,0);
+                        animator.transform.position = Vector3.zero;
+                        animator.Play(animation.name, 0, 0);
                         animator.Update(0);    //多更新一个dt去掉0的情况
 
                         var state = animator.GetCurrentAnimatorStateInfo(0);
@@ -200,15 +268,11 @@ public class ExportAnimationEditor : EditorWindow
                         float time = 0.0f;
                         do
                         {
-
-                            // rootmotion
                             RootMotion rootMotion = new RootMotion();
                             rootMotion.time = time;
                             rootMotion.velocity = animator.velocity;
                             rootMotion.angularVelocity = animator.angularVelocity;
                             clip.rootMotions.Add(rootMotion);
-
-                            Debug.Log(string.Format("{0}   {1}", state.length, animator.GetCurrentAnimatorStateInfo(0).length));
 
                             //bones
                             var skeleton = new Skeleton();
@@ -219,7 +283,12 @@ public class ExportAnimationEditor : EditorWindow
                                 if (go != null)
                                 {
                                     var bone = new Bone();
-                                    bone.transform = go.transform.worldToLocalMatrix;
+                                    bone.transform = go.transform.parent.localToWorldMatrix.transpose;
+                                    if (animation.name == "skill100010")
+                                    {
+                                        var pos = go.transform.position;
+                                    }
+
                                     skeleton.bones.Add(name, bone);
                                 }
                             }
@@ -237,6 +306,7 @@ public class ExportAnimationEditor : EditorWindow
                         {
                             var velocity = rootMotion.velocity;
                             var angularVelocity = rootMotion.angularVelocity;
+                            Debug.Log(velocity.z);
                             if (velocity.x > 0.0001f || velocity.y > 0.0001f || velocity.z > 0.0001f || angularVelocity.x > 0.0001f || angularVelocity.y > 0.0001f || angularVelocity.z > 0.0001f)
                             {
                                 flag = true;
@@ -249,81 +319,19 @@ public class ExportAnimationEditor : EditorWindow
                             clip.rootMotions.Clear();
                         }
 
-                        
-                        
-                        cfgAnimation.clips.Add(string.Format("{0}|{1:F1}", animation.name,param), clip);
+                        cfgAnimation.clips.Add(animation.name, clip);
                     }
                 }
-                else
-                {
-                    ConfigAnimationClip clip = new ConfigAnimationClip();
 
-                    animator.Play(animation.name, 0, 0);
-                    animator.Update(0);    //多更新一个dt去掉0的情况
+                var json = JsonMapper.ToJson(cfgAnimation);
+                FileStream f = new FileStream(string.Format("Assets/Resources/Config/Anim/{0}.json", item.target.gameObject.name), FileMode.Create, FileAccess.Write);
+                StreamWriter stream = new StreamWriter(f);
+                stream.Write(json);
+                stream.Close();
+            }, 1);
+            
 
-                    var state = animator.GetCurrentAnimatorStateInfo(0);
-                    clip.length = state.length;
-
-                    float time = 0.0f;
-                    do
-                    {
-                        RootMotion rootMotion = new RootMotion();
-                        rootMotion.time = time;
-                        rootMotion.velocity = animator.velocity;
-                        rootMotion.angularVelocity = animator.angularVelocity;
-                        clip.rootMotions.Add(rootMotion);
-
-                        //bones
-                        var skeleton = new Skeleton();
-                        skeleton.time = time;
-                        foreach (var name in exportBoneNames)
-                        {
-                            var go = GetGameObject(animator.gameObject, name);
-                            if (go != null)
-                            {
-                                var bone = new Bone();
-                                bone.transform = go.transform.worldToLocalMatrix;
-                                skeleton.bones.Add(name, bone);
-                            }
-                        }
-                        clip.skeletons.Add(skeleton);
-
-                        animator.Update(dt);
-
-                        time += dt;
-
-                    } while (time < state.length);
-
-                    //如果没有有效的rootmtion值删除所有数据
-                    bool flag = false;
-                    foreach (var rootMotion in clip.rootMotions)
-                    {
-                        var velocity = rootMotion.velocity;
-                        var angularVelocity = rootMotion.angularVelocity;
-                        Debug.Log(velocity.z);
-                        if (velocity.x > 0.0001f || velocity.y > 0.0001f || velocity.z > 0.0001f || angularVelocity.x > 0.0001f || angularVelocity.y > 0.0001f || angularVelocity.z > 0.0001f)
-                        {
-                            flag = true;
-                            break;
-                        }
-                    }
-
-                    if (!flag)
-                    {
-                        clip.rootMotions.Clear();
-                    }
-
-                    cfgAnimation.clips.Add(animation.name, clip);
-                }
-            }
-
-            var json = JsonMapper.ToJson(cfgAnimation);
-            FileStream f = new FileStream(string.Format("Assets/Resources/Config/Anim/{0}.json", item.target.gameObject.name), FileMode.Create, FileAccess.Write);
-            StreamWriter stream = new StreamWriter(f);
-            stream.Write(json);
-            stream.Close();
-
-            DestroyImmediate(animator.gameObject);
+            //DestroyImmediate(animator.gameObject);
         }
     }
 

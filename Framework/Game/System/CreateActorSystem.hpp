@@ -4,6 +4,7 @@
 
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/FileService.hpp"
+#include "Framework/Game/Math.hpp"
 
 #include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/ActorState.hpp"
@@ -13,6 +14,7 @@
 #include "Framework/Game/Component/BoundingBox.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Attributes.hpp"
+#include "Framework/Game/Component/Transform.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -49,10 +51,15 @@ struct CreateActorSystem : public System
 			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
 
 			//todo 插入actor自身属性和武器属性
-			std::array<Attribute, (size_t)AttributeType::kMax> attributes{ { CalculateType::kNumerical,fixed16(100) } };
+			std::array<Attribute, (size_t)AttributeType::kMax> attributes{ Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
 			auto& attribute_units = registry.emplace<AttributeUnitList>(e);
-			attribute_units.value.emplace_back(e, e, attributes);	// todo actor
-			attribute_units.value.emplace_back(e, e, attributes);	// todo wepon
+			attribute_units.value.emplace_back(AttributeUnit{ e, attributes });	// todo actor
+			attribute_units.value.emplace_back(AttributeUnit{ e, attributes });	// todo wepon
+
+			// 调试
+			auto weapon = registry.create();
+			registry.emplace<BoundingBox>(weapon, actor_info.weapon);
+			registry.emplace<Transform>(weapon);
 		}
 	}
 

@@ -12,6 +12,7 @@
 #include <sstream>
 
 #include "Framework/Game/Math.hpp"
+#include "Framework/Game/Component/Attributes.hpp"
 
 class Timer
 {
@@ -44,8 +45,7 @@ public:
 
 int main()
 {
-	std::array<fixed16, 10> arr;
-
+	
 	fixed16 min = std::numeric_limits<fixed16>::min();
 	fixed16 max = std::numeric_limits<fixed16>::max();
 	auto fvmin = static_cast<float>(min);

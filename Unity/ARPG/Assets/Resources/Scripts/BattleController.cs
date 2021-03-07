@@ -85,7 +85,6 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
             cmd.XAxis = Input.GetAxis("Horizontal");
             cmd.YAxis = Input.GetAxis("Vertical");
             cmd.Skill = skill;
-            Debug.Log(cmd.Skill);
             cmd.Jump = false;
 
             Proto.GameCommondGroup group = new Proto.GameCommondGroup();

@@ -30,19 +30,20 @@ struct SkillSystem : public System
 
 	void UpdateSkillTranform()
 	{
-		auto view = registry.view<Skill, SkillAttacthAnimationClip, Transform>();
+		auto view = registry.view<Skill, SkillAttacthBone, Transform>();
 		for (auto e : view)
 		{
 			const auto& skill = view.get<Skill>(e);
-			const auto& attacth_anim_clip = view.get<SkillAttacthAnimationClip>(e);
+			const auto& attacth_anim_clip = view.get<SkillAttacthBone>(e);
 			auto& tranform = view.get<Transform>(e);
 
 			if (registry.valid(skill.owner))
 			{
+				const auto owner_transform = registry.try_get<Transform>(skill.owner);
 				const auto animation = registry.try_get<Animation>(skill.owner);
 				const auto anim_clip = registry.try_get<AnimationClip>(skill.owner);
 
-				if (animation != nullptr && anim_clip != nullptr && anim_clip->name == attacth_anim_clip.anim_name)
+				if (owner_transform && animation && anim_clip && anim_clip->name == attacth_anim_clip.anim_name)
 				{
 					auto iter = animation->value->clips.find(anim_clip->name);
 					if (iter != animation->value->clips.end())
@@ -57,7 +58,10 @@ struct SkillSystem : public System
 							auto bone_it = it->bones.find(attacth_anim_clip.bone_name);
 							if (bone_it != it->bones.end())
 							{
-								tranform.position = bone_it->second.transform * vec4(tranform.position, fixed16(1.0f));
+								tranform.position = bone_it->second.transform[3];
+								INFO("time {:0.4f} x {:0.3f} y{:0.3f} z{:0.3f}", it->time, tranform.position.x, tranform.position.y, tranform.position.z);
+								tranform.position += owner_transform->position;
+								tranform.mat = bone_it->second.transform;
 							}
 						}
 					}

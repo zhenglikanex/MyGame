@@ -52,6 +52,7 @@ inline void from_json(const nlohmann::json& j, RootMotion& root_motion)
 
 inline void from_json(const nlohmann::json& j, Bone& bone)
 {
+	auto str = j.dump();
 	j.at("transform").get_to(bone.transform);
 }
 

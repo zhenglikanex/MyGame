@@ -36,11 +36,17 @@ public class DebugManager : SceneGameObjectSingleton<DebugManager>
         if(transform)
         {
             transform.parent = this.transform;
-            position.y += size.y * 0.5f;
+            //position.y += size.y * 0.5f;
             transform.position = position;
             transform.rotation = rotation;
             transform.localScale = size;
+
+            Matrix4x4 mat = Matrix4x4.Rotate(rotation);
+            Matrix4x4 mat2 = transform.worldToLocalMatrix;
+            Debug.Log("111");
         }
+
+        
     }
 
     public void DrawSphere(Vector3 position,float radius)

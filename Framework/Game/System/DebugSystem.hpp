@@ -37,7 +37,9 @@ struct DebugSystem : public System
 			else if(box.type == BoundingBoxType::kOBB)
 			{
 				mat3 mat(box.obb.u[0], box.obb.u[1], box.obb.u[2]);
-				g_debug_service->DrawCube(box.obb.c, quat(mat), box.obb.e * fixed16(2));
+				auto qut = quat(transform.mat);
+				auto pos = box.obb.c * glm::inverse(qut);
+				g_debug_service->DrawCube(transform.position + pos, quat(transform.mat), box.obb.e * fixed16(2));
 			}
 			else if (box.type == BoundingBoxType::kCapsule)
 			{

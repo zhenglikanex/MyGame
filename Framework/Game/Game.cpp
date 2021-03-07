@@ -24,6 +24,7 @@
 #include "Framework/Game/System/DebugSystem.hpp"
 #include "Framework/Game/System/HealthSystem.hpp"
 #include "Framework/Game/System/ModifyHealthSystem.hpp"
+#include "Framework/Game/System/SkillSystem.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
 
@@ -44,6 +45,7 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	systems_.emplace_back(std::make_unique<SkillStateSystem>(registry_));
 	systems_.emplace_back(std::make_unique<RootMotionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
+	systems_.emplace_back(std::make_unique<SkillSystem>(registry_));
 	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
@@ -92,7 +94,7 @@ void Game::Update(float dt)
 
 void Game::UpdateClinet(float dt)
 {
-	uint32_t mill_dt = dt * 1000;
+	uint32_t mill_dt = static_cast<uint32_t>(dt * 1000);
 
 	auto& game_state = registry_.ctx<GameState>();
 	game_state.run_time += mill_dt;
@@ -145,7 +147,7 @@ void Game::UpdateClinet(float dt)
 
 void Game::UpdateServer(float dt)
 {
-	uint32_t mill_dt = dt * 1000;
+	uint32_t mill_dt = static_cast<uint32_t>(dt * 1000);
 
 	auto& game_state = registry_.ctx<GameState>();
 	game_state.run_time += mill_dt;

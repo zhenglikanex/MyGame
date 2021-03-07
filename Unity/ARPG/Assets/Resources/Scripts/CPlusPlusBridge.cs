@@ -214,9 +214,10 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     public static string OpenFile(string file)
     {
         file = file.Substring(0, file.LastIndexOf("."));
-        var obj = Resources.Load(file);
+        var obj = Resources.Load(file);        
         if (obj)
         {
+            Debug.Log(obj.ToString());
             return obj.ToString();
         }
         return "";

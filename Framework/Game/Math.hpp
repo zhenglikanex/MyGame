@@ -49,6 +49,7 @@ namespace glm
 	template<glm::length_t col, glm::length_t row, class T, glm::qualifier Q>
 	void from_json(const json& json, glm::mat<col, row, T, Q>& mat)
 	{
+		std::string str = json.dump();
 		for (int i = 0; i < col; ++i)
 		{
 			for (int j = 0; j < row; ++j)

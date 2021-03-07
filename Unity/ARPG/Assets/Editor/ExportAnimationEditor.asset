@@ -19,11 +19,41 @@ MonoBehaviour:
     animations:
     - name: Locomotion
       min: 0
-      max: 2
+      max: 1
       step: 0.1
       param: forward
       isBlendTree: 1
     - name: Idle
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: skill100010
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: skill100020
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: skill100030
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: skill100040
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: skill100050
       min: 0
       max: 0
       step: 0.1

@@ -1,6 +1,0 @@
-{
-	"modelAsset":""
-	"animationAsset":""
-	"hitCollision":{},
-	"weaponCollision":{}
-}

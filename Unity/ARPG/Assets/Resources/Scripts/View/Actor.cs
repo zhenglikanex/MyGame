@@ -6,10 +6,12 @@ public class Actor : UnityView
 {
     private Animator animator;
     private Quaternion TargetRotation { get; set; }
+    public Transform weapon;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        
     }
 
     // Start is called before the first frame update
@@ -21,6 +23,11 @@ public class Actor : UnityView
     // Update is called once per frame
     void Update()
     {
+        if(weapon)
+        {
+            if(animator.GetCurrentAnimatorStateInfo(0).IsName("skill100010"))
+                Debug.Log(string.Format("anim {0} time {1} x{2} y {3} z {4}", animator.GetCurrentAnimatorStateInfo(0).IsName("skill100010"), animator.GetCurrentAnimatorStateInfo(0).normalizedTime * animator.GetCurrentAnimatorStateInfo(0).length, weapon.position.x, weapon.position.y, weapon.position.z));
+        }
     }
 
     public override void OnInit()
@@ -87,6 +94,7 @@ public class Actor : UnityView
         {
             string animName = str;
             Debug.Log(name);
+            
             //animator.SetFloat("forward", 0);
             animator.Play(animName);
         }

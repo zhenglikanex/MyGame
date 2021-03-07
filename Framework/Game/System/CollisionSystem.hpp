@@ -44,27 +44,26 @@ struct CollisionSystem : public System
 
 	void UpdateCollision(fixed16 dt)
 	{
-		//todo:后面用八叉树替换
+		//todo:后面用八叉树替换,暂时不管重复碰撞
 		auto view = registry.view<BoundingBox,ContactList>();
+		
 		for (auto it1 = view.begin(); it1 != view.end(); ++it1)
 		{
 			auto e1 = *it1;
 			const auto& box1 = view.get<BoundingBox>(e1);
-			auto& contact_list1 = view.get<ContactList>(e1);
-			for (auto it2 = ++it1; it2 != view.end(); ++it2)
+			auto& contact_list = view.get<ContactList>(e1);
+			for (auto it2 = view.begin(); it2 != view.end(); ++it2)
 			{
 				auto e2 = *it2;
 				const auto& box2 = view.get<BoundingBox>(e2);
-				auto& contact_list2 = view.get<ContactList>(e2);
-				if (TestCollision(box1, box2))
+				if (e1 != e2 && TestCollision(box1, box2))
 				{
-					contact_list1.value.emplace_back(Contact{ e2 });
-					contact_list2.value.emplace_back(Contact{ e1 });
+					contact_list.value.emplace_back(Contact{ e2 });
 				}
 			}
 		}
 	}
-
+	
 	int TestCollision(const BoundingBox& box1, const BoundingBox& box2)
 	{
 		if (box1.type == BoundingBoxType::kAABB)

@@ -74,8 +74,9 @@ public class ExportActorInfoEditor : EditorWindow
        
         foreach (var asset in assets)
         {
-            var go = AssetDatabase.LoadAssetAtPath<GameObject>(asset);
-
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(asset);
+            var go = Instantiate<GameObject>(prefab);
+            
             var bodyCollision = GetCollider(go, bodyCollisionName);
             var weaponCollision = GetCollider(go, weaponCollisionName);
             if (!bodyCollision || !weaponCollision)
@@ -83,8 +84,8 @@ public class ExportActorInfoEditor : EditorWindow
                 continue;
             }
             ActorInfo info = new ActorInfo();
-            info.modelAsset = go.name;
-            info.animAsset = go.name + ".json";
+            info.modelAsset = prefab.name;
+            info.animAsset = prefab.name + ".json";
             info.bodyCollision = GetCollisionInfo(bodyCollision);
             info.weaponCollision = GetCollisionInfo(weaponCollision);
 
@@ -94,10 +95,12 @@ public class ExportActorInfoEditor : EditorWindow
             }
 
             var json = JsonMapper.ToJson(info);
-            FileStream f = new FileStream(string.Format("Assets/Resources/Config/Actor/{0}.json", go.gameObject.name), FileMode.Create, FileAccess.Write);
+            FileStream f = new FileStream(string.Format("Assets/Resources/Config/Actor/{0}.json", prefab.gameObject.name), FileMode.Create, FileAccess.Write);
             StreamWriter stream = new StreamWriter(f);
             stream.Write(json);
             stream.Close();
+
+            //DestroyImmediate(go);
         }
     }
 
@@ -120,11 +123,16 @@ public class ExportActorInfoEditor : EditorWindow
         if (collider.GetType() == typeof(BoxCollider))
         {
             var boxCollider = (BoxCollider)collider;
+            var box = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            box.transform.SetParent(boxCollider.transform.parent);
+            box.transform.localScale = boxCollider.size;
+            box.transform.localPosition = boxCollider.center;
+            box.transform.localRotation = Quaternion.identity;
+           
             OBBCollision collision = new OBBCollision();
-            collision.c = boxCollider.center;
-            collision.u = collider.gameObject.transform.worldToLocalMatrix;
+            collision.c = box.transform.localPosition;
+            collision.u = box.transform.parent.localToWorldMatrix.transpose;
             collision.e = boxCollider.size / 2.0f;
-
             return collision;
         }
         else if (collider.GetType() == typeof(CapsuleCollider))

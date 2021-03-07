@@ -21,7 +21,7 @@ struct SkillStateSystem : System
 			skill_params.value.find("skill")->second.int_value = 0;
 		});
 
-		events.emplace("OnLaunchSkillBegin", [this](entt::entity e, const SkillGraph& skill_graph, const SkillState& skill_state, SkillParams& skill_params)
+		events.emplace("OnLaunchSkill", [this](entt::entity e, const SkillGraph& skill_graph, const SkillState& skill_state, SkillParams& skill_params)
 		{
 			// todo:读取单个技能配置根据技能配置创建技能
 			SkillType type = SkillType::kNotLockAnim;
@@ -33,13 +33,13 @@ struct SkillStateSystem : System
 				if (weapon)
 				{
 					this->registry.emplace<Skill>(skill, e, fixed16(0.5));
-					this->registry.emplace<SkillAttacthBone>(skill, skill_state.name, "RightWepon");
+					this->registry.emplace<SkillAttacthBone>(skill, skill_state.name, "RightWeapon");
 					this->registry.emplace<BoundingBox>(skill, weapon->bounding_box);
 
 					auto transform = this->registry.try_get<Transform>(e);
 					if (transform)
 					{
-						this->registry.emplace<Transform>(e, *transform);
+						this->registry.emplace<Transform>(skill, *transform);
 					}
 				}
 			}

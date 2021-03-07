@@ -170,6 +170,8 @@ MonoBehaviour:
   animEvents:
   - time: 0.13
     eventName: OnResetSkillParam
+  - time: 0
+    eventName: OnLaunchSkill
 --- !u!114 &114396603546363852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +247,9 @@ MonoBehaviour:
   transitions: []
   animClip: {fileID: 1102708893035750206, guid: 193d3905910dd8a4bb21607f0b779ae0,
     type: 2}
-  animEvents: []
+  animEvents:
+  - time: 0
+    eventName: OnLaunchSkill
 --- !u!114 &114626546051322010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +328,8 @@ MonoBehaviour:
   animEvents:
   - time: 0.1
     eventName: OnResetSkillParam
+  - time: 0
+    eventName: OnLaunchSkill
 --- !u!114 &114653156807520664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,6 +408,8 @@ MonoBehaviour:
   animEvents:
   - time: 0.3
     eventName: OnResetSkillParam
+  - time: 0
+    eventName: OnLaunchSkill
 --- !u!114 &114852326696173880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,3 +488,5 @@ MonoBehaviour:
   animEvents:
   - time: 0.2
     eventName: OnResetSkillParam
+  - time: 0
+    eventName: OnLaunchSkill

@@ -106,7 +106,7 @@ public:
 
 		const std::string& name() const { return name_; }
 		const std::string& anim_name() const { return anim_name_; }
-		const std::vector<AnimEvent>& const anim_events() const { return anim_events_; }
+		const std::vector<AnimEvent>& anim_events() const { return anim_events_; }
 		const std::vector<Transition>& transitions() const { return transitions_; }
 	private:
 		std::string name_;

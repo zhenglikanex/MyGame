@@ -8,8 +8,8 @@
 
 struct UpdateViewSystem : public System
 {
-	entt::observer mover{ registry, entt::collector.group<Transform>().update<Transform>().where<View>() };
-	entt::observer animator{ registry,entt::collector.group<AnimationClip>().update<AnimationClip>().where<View>() };
+	entt::observer mover{ registry, entt::collector.group<Transform,View>().update<Transform>() };
+	entt::observer animator{ registry,entt::collector.group<AnimationClip,View>().update<AnimationClip>() };
 
 	UpdateViewSystem(entt::registry& _registry) : System(_registry) { }
 	~UpdateViewSystem() {}

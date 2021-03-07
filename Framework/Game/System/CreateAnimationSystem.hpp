@@ -58,6 +58,8 @@ struct CreateAnimationSystem : System
 
 			assert(content != "" && "not anim info");
 
+			INFO("anim :{0}", content);
+
 			nlohmann::json j = nlohmann::json::parse(content);
 			animation_infos.emplace(name,j.get<AnimationInfo>());
 
