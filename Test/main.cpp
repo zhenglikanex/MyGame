@@ -45,7 +45,13 @@ public:
 
 int main()
 {
+	glm::radians(vec3(0, 0, 0));
+	quat q1(vec3(0, 90, 0));
+	quat q(fixed16(0), fixed16(0.85), fixed16(0), fixed16(0.52));
+	auto v = vec3(0, 0, 1) * q;
+	auto v2 = vec3(0, 0, 1) * q1;
 	
+
 	fixed16 min = std::numeric_limits<fixed16>::min();
 	fixed16 max = std::numeric_limits<fixed16>::max();
 	auto fvmin = static_cast<float>(min);

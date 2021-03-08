@@ -20,10 +20,40 @@ using mat3 = glm::mat<3, 3, fixed16, glm::defaultp>;
 using mat4 = glm::mat<4, 4, fixed16, glm::defaultp>;
 using quat = glm::qua<fixed16, glm::defaultp>;
 
+namespace glm
+{
+	using fpm::sin;
+	using fpm::cos;
+}
+
 template<class T>
 T zero()
 {
 	return T(fixed16(0));
+}
+
+inline quat FromToRotation(const vec3& from, const vec3& to)
+{
+	if (from.x > fixed16(0) && from.z >= fixed16(0))
+	{
+		
+	}
+	else if (from.x < fixed16(0) && from.z >= fixed16(0))
+	{
+
+	}
+	else if (from.x <= fixed16(0) && from.z < fixed16(0))
+	{
+
+	}
+	else if (from.x >= fixed16(0) && from.z < fixed16(0))
+	{
+		
+	}
+	else
+	{
+		return quat(0, 0, 0, 1);
+	}
 }
 
 namespace glm

@@ -23,11 +23,7 @@ public class Actor : UnityView
     // Update is called once per frame
     void Update()
     {
-        if(weapon)
-        {
-            if(animator.GetCurrentAnimatorStateInfo(0).IsName("skill100010"))
-                Debug.Log(string.Format("anim {0} time {1} x{2} y {3} z {4}", animator.GetCurrentAnimatorStateInfo(0).IsName("skill100010"), animator.GetCurrentAnimatorStateInfo(0).normalizedTime * animator.GetCurrentAnimatorStateInfo(0).length, weapon.position.x, weapon.position.y, weapon.position.z));
-        }
+        Debug.Log(transform.rotation);
     }
 
     public override void OnInit()
@@ -46,10 +42,9 @@ public class Actor : UnityView
         transform.position = pos;
     }
 
-    public override void UpdateForward(float x, float y, float z)
+    public override void UpdateRotation(float x, float y, float z,float w)
     {
-        Vector3 forward = new Vector3(x, y, z);
-        transform.forward = forward;
+        transform.rotation = new Quaternion(x, y, z, w);
     }
 
     public override void MovePosition(float x, float y, float z)
@@ -58,10 +53,9 @@ public class Actor : UnityView
         transform.position = pos;
     }
 
-    public override void MoveForward(float x, float y, float z)
+    public override void MoveRotation(float x, float y, float z,float w)
     {
-        Vector3 forward = new Vector3(x, y, z);
-        transform.forward = forward;
+        transform.rotation = new Quaternion(x, y, z, w);
     }
 
     public override void PlayAnim(string str)

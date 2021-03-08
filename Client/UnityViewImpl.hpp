@@ -12,9 +12,9 @@ public:
 	}
 
 	void UpdatePosition(const vec3& pos) override;
-	void UpdateForward(const vec3& forward) override;
+	void UpdateRotation(const quat& rotation) override;
 	void MovePosition(const vec3& pos) override;
-	void MoveForward(const vec3& forward) override;
+	void MoveRotation(const quat& rotation) override;
 	void PlayAnimation(const std::string& name) override;
 	void PlayAnimation(const std::string& name, float noramlized_time) override;
 

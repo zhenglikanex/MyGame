@@ -34,8 +34,7 @@ struct UpdateViewSystem : public System
 			const auto& transform = entt_view.get<Transform>(e);
 
 			view.value->UpdatePosition(transform.position);
-			view.value->UpdateForward(transform.forward);
-			//view.value->MoveForward(transform.forward);
+			view.value->UpdateRotation(transform.rotation);
 		}
 
 		mover.clear();

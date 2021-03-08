@@ -24,9 +24,12 @@
 inline vec2 SquareToCircle(const vec2& input)
 {
 	vec2 output = zero<vec2>();
+	
+	output.x = input.x * sqrt(fixed16(1) - (input.y * input.y) / fixed16(2.0f));
+	output.y = input.y * sqrt(fixed16(1) - (input.x * input.x) / fixed16(2.0f));
 
-	output.x = input.x * sqrt(1 - (input.y * input.y) / fixed16(2.0f));
-	output.y = input.y * sqrt(1 - (input.x * input.x) / fixed16(2.0f));
+	auto x = static_cast<float>(output.x);
+	auto y = static_cast<float>(output.y);
 
 	return output;
 }

@@ -145,14 +145,14 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         UnityViewServices.Instance.MovePosition(id, (float)x, (float)y, (float)z);
     }
 
-    public static void UpdateForward(int id, double x, double y, double z)
+    public static void UpdateRotation(int id, double x, double y, double z, double w)
     {
-        UnityViewServices.Instance.UpdateForward(id, (float)x, (float)y, (float)z);
+        UnityViewServices.Instance.UpdateRotation(id, (float)x, (float)y, (float)z,(float)w);
     }
 
-    public static void MoveForward(int id, double x, double y, double z)
+    public static void MoveForward(int id, double x, double y, double z,double w)
     {
-        UnityViewServices.Instance.MoveForward(id, (float)x, (float)y, (float)z);
+        UnityViewServices.Instance.MoveRotation(id, (float)x, (float)y, (float)z,(float)w);
     }
     
     public static void PlayAnimation(int id,string str)

@@ -29,7 +29,7 @@ void UnityViewService::UpdatePosition(const IViewImpl* view, float x, float y, f
 	UnityBridge::Get().CallUnity<void>("UpdatePosition", unity_view.GetHandle(),x,y,z);
 }
 
-void UnityViewService::UpdateForward(const IViewImpl* view, float x, float y, float z) const
+void UnityViewService::UpdateRotation(const IViewImpl* view, float x, float y, float z, float w) const
 {
 	if (!view)
 	{
@@ -37,7 +37,7 @@ void UnityViewService::UpdateForward(const IViewImpl* view, float x, float y, fl
 	}
 
 	auto& unity_view = dynamic_cast<const UnityViewImpl&>(*view);
-	UnityBridge::Get().CallUnity<void>("UpdateForward", unity_view.GetHandle(),x,y,z);
+	UnityBridge::Get().CallUnity<void>("UpdateRotation", unity_view.GetHandle(),x,y,z,w);
 }
 
 void UnityViewService::MovePosition(const IViewImpl* view, float x, float y, float z) const
@@ -51,7 +51,7 @@ void UnityViewService::MovePosition(const IViewImpl* view, float x, float y, flo
 	UnityBridge::Get().CallUnity<void>("MovePosition", unity_view.GetHandle(),x,y,z);
 }
 
-void UnityViewService::MoveForward(const IViewImpl* view, float x, float y, float z) const
+void UnityViewService::MoveRotation(const IViewImpl* view, float x, float y, float z, float w) const
 {
 	if (!view)
 	{
@@ -59,7 +59,7 @@ void UnityViewService::MoveForward(const IViewImpl* view, float x, float y, floa
 	}
 
 	auto& unity_view = dynamic_cast<const UnityViewImpl&>(*view);
-	UnityBridge::Get().CallUnity<void>("MoveForward", unity_view.GetHandle(),x,y,z);
+	UnityBridge::Get().CallUnity<void>("MoveRotation", unity_view.GetHandle(),x,y,z,w);
 }
 
 void UnityViewService::PlayAnimation(const IViewImpl* view,std::string_view name) const

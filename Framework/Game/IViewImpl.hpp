@@ -9,9 +9,9 @@ public:
 	virtual ~IViewImpl() = 0 {}
 	
 	virtual void UpdatePosition(const vec3& pos) = 0;
-	virtual void UpdateForward(const vec3& forward) = 0;
+	virtual void UpdateRotation(const quat& rotation) = 0;
 	virtual void MovePosition(const vec3& pos) = 0;
-	virtual void MoveForward(const vec3& forward) = 0;
+	virtual void MoveRotation(const quat& rotation) = 0;
 	virtual void PlayAnimation(const std::string& name) = 0;
 	virtual void PlayAnimation(const std::string& name, float noramlized_time) = 0;
 };

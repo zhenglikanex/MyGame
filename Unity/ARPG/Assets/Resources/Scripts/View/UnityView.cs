@@ -33,7 +33,7 @@ public class UnityView : PoolObject
         
     }
 
-    public virtual void UpdateForward(float x,float y,float z)
+    public virtual void UpdateRotation(float x,float y,float z, float w)
     {
 
     }
@@ -43,7 +43,7 @@ public class UnityView : PoolObject
 
     }
 
-    public virtual void MoveForward(float x,float y,float z)
+    public virtual void MoveRotation(float x,float y,float z, float w)
     {
 
     }

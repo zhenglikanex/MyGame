@@ -63,12 +63,12 @@ public class UnityViewServices : GlobalGameObjectSingleton<UnityViewServices>
         }
     }
 
-    public void UpdateForward(int id,float x,float y,float z)
+    public void UpdateRotation(int id,float x,float y,float z, float w)
     {
         if (views.ContainsKey(id))
         {
             var view = views[id];
-            view.UpdateForward(x, y, z);
+            view.UpdateRotation(x, y, z,w);
         }
     }
 
@@ -81,12 +81,12 @@ public class UnityViewServices : GlobalGameObjectSingleton<UnityViewServices>
         }
     }
 
-    public void MoveForward(int id,float x,float y,float z)
+    public void MoveRotation(int id,float x,float y,float z, float w)
     {
         if (views.ContainsKey(id))
         {
             var view = views[id];
-            view.MoveForward(x, y, z);
+            view.MoveRotation(x, y, z,w);
         }
     }
 

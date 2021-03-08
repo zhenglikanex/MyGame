@@ -28,7 +28,12 @@ class fixed
     static constexpr BaseType FRACTION_MULT = BaseType(1) << FractionBits;
 
     struct raw_construct_tag {};
-    constexpr inline fixed(BaseType val, raw_construct_tag) noexcept : m_value(val) {}
+    constexpr inline fixed(BaseType val, raw_construct_tag) noexcept : m_value(val), _raw_value_(0.0f)
+    {
+#ifdef DEBUG
+        _raw_value_ = static_cast<float>(*this);
+#endif
+    }
 
 public:
     inline fixed() noexcept {}
@@ -166,7 +171,7 @@ public:
     {
         m_value -= y * FRACTION_MULT;
 #ifdef DEBUG
-		_raw_value_ -= y
+        _raw_value_ -= y;
 #endif
         return *this;
     }

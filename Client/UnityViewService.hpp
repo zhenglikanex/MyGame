@@ -11,9 +11,9 @@ public:
 	void Destory(const std::unique_ptr<IViewImpl>& view) const override;
 
 	void UpdatePosition(const IViewImpl* view,float x,float y,float z) const;
-	void UpdateForward(const IViewImpl* view, float x, float y, float z) const;
+	void UpdateRotation(const IViewImpl* view, float x, float y, float z, float w) const;
 	void MovePosition(const IViewImpl* view, float x, float y, float z) const;
-	void MoveForward(const IViewImpl* view, float x, float y, float z) const;
+	void MoveRotation(const IViewImpl* view, float x, float y, float z, float w) const;
 	void PlayAnimation(const IViewImpl* view, std::string_view name) const;
 	void PlayAnimation(const IViewImpl* view, std::string_view name,float normalized_time) const;
 private:

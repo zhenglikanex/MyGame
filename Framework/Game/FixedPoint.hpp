@@ -9,7 +9,10 @@
 #include "fpm/math.hpp"
 #include "fpm/ios.hpp"
 
-using fixed16 = fpm::fixed_16_16;
+using fpm::sin;
+using fpm::cos;
+
+using fixed16 = fpm::fixed_8_24;
 
 namespace fpm
 {

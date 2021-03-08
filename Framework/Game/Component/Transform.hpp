@@ -5,17 +5,20 @@
 struct Transform
 {
 	Transform()
-		:position(zero<vec3>()),forward(zero<vec3>()), mat(zero<mat4>())
+		: position(zero<vec3>())
+		, mat(zero<mat4>())
+		, rotation(quat(zero<vec3>()))
 	{
 
 	}
-	Transform(const vec3& _pos, const vec3& _foward)
-		:position(_pos),forward(_foward),mat(zero<mat4>())
+	Transform(const vec3& _pos, const quat& _rotation)
+		:position(_pos)
+		,mat(zero<mat4>())
+		, rotation(_rotation)
 	{
 	}
 
 	vec3 position;
-	vec3 forward;
 	mat4 mat;
-	BAR(position,forward);
+	quat rotation;
 };
