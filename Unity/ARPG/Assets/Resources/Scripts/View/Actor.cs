@@ -23,7 +23,7 @@ public class Actor : UnityView
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(transform.rotation);
+        
     }
 
     public override void OnInit()
@@ -45,6 +45,7 @@ public class Actor : UnityView
     public override void UpdateRotation(float x, float y, float z,float w)
     {
         transform.rotation = new Quaternion(x, y, z, w);
+        //transform.rotation = Quaternion.Euler(0, 180, 0);
     }
 
     public override void MovePosition(float x, float y, float z)
@@ -76,8 +77,6 @@ public class Actor : UnityView
                     Debug.LogError("!!!!!!!");
                 }
                 animator.SetFloat("forward", float.Parse(animParam));
-                Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-                Debug.Log(float.Parse(animParam));
             }
             else
             {

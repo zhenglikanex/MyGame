@@ -1,6 +1,7 @@
 #include "Game.hpp"
 
 #include <filesystem>
+#include <chrono>
 
 #include "Framework/Game/InputService.hpp"
 #include "Framework/Game/DebugService.hpp"
@@ -82,6 +83,9 @@ bool Game::Initialize()
 
 void Game::Update(float dt)
 {
+
+	auto start = std::chrono::system_clock::now();
+		
 	if (registry_.ctx<GameMode>() == GameMode::kClinet)
 	{
 		UpdateClinet(dt);
@@ -90,6 +94,9 @@ void Game::Update(float dt)
 	{
 		UpdateServer(dt);
 	}
+	auto t = std::chrono::duration<double>(std::chrono::system_clock::now() - start).count();
+	INFO("cpp time {}", t * 1000);
+
 }
 
 void Game::UpdateClinet(float dt)

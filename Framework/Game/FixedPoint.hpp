@@ -12,7 +12,7 @@
 using fpm::sin;
 using fpm::cos;
 
-using fixed16 = fpm::fixed_8_24;
+using fixed16 = fpm::fixed_16_16;
 
 namespace fpm
 {

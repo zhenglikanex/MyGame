@@ -12,45 +12,15 @@
 
 inline quat ForwardRotation(const vec3& forward)
 {
-	if (forward.x > fixed16(0) && forward.z >= fixed16(0))
+	if (forward.x >= fixed16(0))
 	{
-		if (forward.z == fixed16(0))
-		{
-			return quat(vec3(0, glm::radians(fixed16(90)), 0));
-		}
-		
-		return quat(vec3(0, fpm::acos(glm::dot(forward, vec3(0.0, 0.0, 1.0))), 0));
-	}
-	else if (forward.x < fixed16(0) && forward.z >= fixed16(0))
-	{
-		if (forward.z == fixed16(0))
-		{
-			return quat(vec3(0, -glm::radians(fixed16(90)), 0));
-		}
-
-		return quat(vec3(0, -fpm::acos(glm::dot(forward, vec3(0.0, 0.0, 1.0))), 0));
-	}
-	else if (forward.x <= fixed16(0) && forward.z < fixed16(0))
-	{
-		if (forward.x == fixed16(0))
-		{
-			quat(vec3(0, glm::radians(fixed16(-180)), 0));
-		}
-
-		return quat(vec3(0, -fpm::acos(glm::dot(forward, vec3(0.0, 0.0, 1.0))) - fixed16(90), 0));
-	}
-	else if (forward.x >= fixed16(0) && forward.z < fixed16(0))
-	{
-		if (forward.x == fixed16(0))
-		{
-			quat(vec3(0, 0, 0));
-		}
-
-		return quat(vec3(0, fpm::acos(glm::dot(forward, vec3(0.0, 0.0, 1.0))) + fixed16(90), 0));
+		auto cos = glm::clamp(glm::dot(forward, vec3(0.0, 0.0, 1.0)), fixed16(-1), fixed16(1));
+		return quat(vec3(0, fpm::acos(cos), 0));
 	}
 	else
 	{
-		return quat(fixed16(0), fixed16(0), fixed16(0), fixed16(1));
+		auto cos = glm::clamp(glm::dot(forward, vec3(0.0, 0.0, 1.0)), fixed16(-1), fixed16(1));
+		return quat(vec3(0, -fpm::acos(cos), 0));
 	}
 }
 
@@ -78,10 +48,7 @@ struct MovementSystem : public System
 			auto v = movement.forward * movement.velocity * dt;
 
 			if (position != transform.position || rotation != transform.rotation)
-			{
-				INFO("movment {} {} {} {} {} {} ", v.x, v.y, v.z, movement.forward.x, movement.forward.y, movement.forward.z);
-				INFO("velocity {} {} {} {} {} {} ", v.x, v.y, v.z, movement.velocity.x, movement.velocity.y, movement.velocity.z);
-				
+			{	
 				registry.replace<Transform>(e, position, rotation);
 			}
 		}

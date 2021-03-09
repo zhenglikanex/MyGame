@@ -59,7 +59,6 @@ struct SkillSystem : public System
 							if (bone_it != it->bones.end())
 							{
 								tranform.position = bone_it->second.transform[3];
-								INFO("time {:0.4f} x {:0.3f} y{:0.3f} z{:0.3f}", it->time, tranform.position.x, tranform.position.y, tranform.position.z);
 								tranform.position += owner_transform->position;
 								tranform.mat = bone_it->second.transform;
 							}
