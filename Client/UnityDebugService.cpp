@@ -34,12 +34,12 @@ void UnityDebugService::DrawSphere(const vec3& position, fixed16 radius) const
 		static_cast<float>(radius));
 }
 
-void UnityDebugService::DrawCapsule(const vec3& position, const quat& rotation, fixed16 height, fixed16 radius) const
+void UnityDebugService::DrawCapsule(const vec3& position, const vec3& a, const vec3& b, fixed16 radius) const
 {
 	UnityBridge::Get().CallUnity<void>(
 		"DrawCapsule",
 		static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z),
-		static_cast<float>(rotation.x), static_cast<float>(rotation.y), static_cast<float>(rotation.z), static_cast<float>(rotation.w),
-		static_cast<float>(height),
+		static_cast<float>(a.x), static_cast<float>(a.y), static_cast<float>(a.z),
+		static_cast<float>(b.x), static_cast<float>(b.y), static_cast<float>(b.z),
 		static_cast<float>(radius));
 }

@@ -28,14 +28,38 @@ struct SkillSystem : public System
 		UpdateSkillTime(dt);
 	}
 
+	const Bone* GetBone(const Animation* animation,const AnimationClip* clip,const std::string& bone)
+	{
+		auto iter = animation->value->clips.find(clip->name);
+		if (iter != animation->value->clips.end())
+		{
+			auto it = std::find_if(iter->second.skeletons.crbegin(), iter->second.skeletons.crend(), [clip](const Skeleton& skeleton)
+				{
+					return clip->time >= skeleton.time;
+				});
+
+			if (it != iter->second.skeletons.crend())
+			{
+				auto bone_it = it->bones.find(bone);
+				if (bone_it != it->bones.end())
+				{
+					return &bone_it->second;
+				}
+			}
+		}
+		
+		return nullptr;
+	}
+
 	void UpdateSkillTranform()
 	{
-		auto view = registry.view<Skill, SkillAttacthBone, Transform>();
+		auto view = registry.view<Skill, SkillAttacthBone, Transform, BoundingBox>();
 		for (auto e : view)
 		{
 			const auto& skill = view.get<Skill>(e);
 			const auto& attacth_anim_clip = view.get<SkillAttacthBone>(e);
-			auto& tranform = view.get<Transform>(e);
+			auto& transform = view.get<Transform>(e);
+			const auto& bounding_box = view.get<BoundingBox>(e);
 
 			if (registry.valid(skill.owner))
 			{
@@ -45,24 +69,14 @@ struct SkillSystem : public System
 
 				if (owner_transform && animation && anim_clip && anim_clip->name == attacth_anim_clip.anim_name)
 				{
-					auto iter = animation->value->clips.find(anim_clip->name);
-					if (iter != animation->value->clips.end())
+					auto bone = GetBone(animation, anim_clip, attacth_anim_clip.bone_name);
+					if (bone)
 					{
-						auto it = std::find_if(iter->second.skeletons.crbegin(), iter->second.skeletons.crend(), [anim_clip](const Skeleton& skeleton)
-						{
-							return anim_clip->time >= skeleton.time;
-						});
-
-						if (it != iter->second.skeletons.crend())
-						{
-							auto bone_it = it->bones.find(attacth_anim_clip.bone_name);
-							if (bone_it != it->bones.end())
-							{
-								tranform.position = bone_it->second.transform[3];
-								tranform.position += owner_transform->position;
-								tranform.mat = bone_it->second.transform;
-							}
-						}
+						mat4 role_transform(owner_transform->rotation);
+						role_transform[3] = vec4(owner_transform->position, fixed16(1));
+						mat4 box_transform = role_transform * bone->transform;
+						transform.position = box_transform[3];
+						transform.rotation = quat(box_transform);
 					}
 				}
 			}

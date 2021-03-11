@@ -37,7 +37,7 @@ public class DebugManager : SceneGameObjectSingleton<DebugManager>
         {
             transform.parent = this.transform;
             transform.position = position;
-            transform.rotation = rotation;
+            transform.localRotation = rotation;
             transform.localScale = size;
         }
 
@@ -55,16 +55,15 @@ public class DebugManager : SceneGameObjectSingleton<DebugManager>
         }
     }
 
-    public void DrawCapsule(Vector3 position, Quaternion rotation,float height,float radius)
+    public void DrawCapsule(Vector3 position,Vector3 a,Vector3 b,float radius)
     {
         var transform = GetCapsule();
         if (transform)
         {
             transform.parent = this.transform;
-            position.y += height * 0.5f;
             transform.position = position;
-            transform.rotation = rotation;
-            transform.localScale = new Vector3(radius * 2, height * 0.5f, radius * 2);
+            transform.localRotation = Quaternion.FromToRotation(Vector3.up,(b - a).normalized);
+            transform.localScale = new Vector3(radius * 2, Vector3.Distance(a,b) * 0.5f, radius * 2);
         }
     }
 

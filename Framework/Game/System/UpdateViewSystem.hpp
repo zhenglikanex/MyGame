@@ -6,6 +6,12 @@
 
 #include "Framework/Game/System.hpp"
 
+void func(const entt::registry& reg, entt::entity e)
+{
+	auto move = reg.get<Movement>(e);
+	int a = 10;
+}
+
 struct UpdateViewSystem : public System
 {
 	entt::observer mover{ registry, entt::collector.group<Transform,View>().update<Transform>() };
@@ -16,6 +22,7 @@ struct UpdateViewSystem : public System
 
 	bool Initialize() override
 	{
+		registry.on_update<Transform>().connect<&func>();
 		return true;
 	}
 

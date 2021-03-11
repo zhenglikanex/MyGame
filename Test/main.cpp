@@ -45,6 +45,12 @@ public:
 
 int main()
 {
+	auto mat = glm::translate(glm::identity<mat4>(), vec3(5, 6, 7)) * mat4(quat(vec3(60, 30, 50)));
+	auto mat2 = mat4(quat(vec3(60, 30, 50))) * glm::translate(glm::identity<mat4>(), vec3(5, 6, 7));
+	auto mat3 = mat4(quat(vec3(60, 30, 50)));
+	mat3[3] = vec4(5, 6, 7,1);
+
+	fixed16 v22;int
 	fixed16 v = 0.01745329251994329576923690768489;
 	auto a = fixed16(-180.0);
 	float f1 = static_cast<float>(a);

@@ -100,7 +100,7 @@ public class ExportActorInfoEditor : EditorWindow
             stream.Write(json);
             stream.Close();
 
-            //DestroyImmediate(go);
+            DestroyImmediate(go);
         }
     }
 
@@ -123,15 +123,10 @@ public class ExportActorInfoEditor : EditorWindow
         if (collider.GetType() == typeof(BoxCollider))
         {
             var boxCollider = (BoxCollider)collider;
-            var box = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            box.transform.SetParent(boxCollider.transform.parent);
-            box.transform.localScale = boxCollider.size;
-            box.transform.localPosition = boxCollider.center;
-            box.transform.localRotation = Quaternion.identity;
            
             OBBCollision collision = new OBBCollision();
-            collision.c = box.transform.localPosition;
-            collision.u = box.transform.parent.localToWorldMatrix.transpose;
+            collision.c = boxCollider.center;
+            collision.u = boxCollider.transform.localToWorldMatrix;
             collision.e = boxCollider.size / 2.0f;
             return collision;
         }
@@ -142,20 +137,20 @@ public class ExportActorInfoEditor : EditorWindow
             
             if(capsuleCollider.direction == 0)      //x
             {
-                collision.a = capsuleCollider.center - Vector3.right * (capsuleCollider.height * 0.5f);
-                collision.b = capsuleCollider.center + Vector3.right * (capsuleCollider.height * 0.5f);
+                collision.a = capsuleCollider.center - collider.transform.localRotation * Vector3.right * (capsuleCollider.height * 0.5f);
+                collision.b = capsuleCollider.center + collider.transform.localRotation * Vector3.right * (capsuleCollider.height * 0.5f);
                 collision.r = capsuleCollider.radius;
             }
             else if(capsuleCollider.direction == 1) //y
             {
-                collision.a = capsuleCollider.center - Vector3.up * (capsuleCollider.height * 0.5f);
-                collision.b = capsuleCollider.center + Vector3.up * (capsuleCollider.height * 0.5f);
+                collision.a = capsuleCollider.center - collider.transform.localRotation * Vector3.up * (capsuleCollider.height * 0.5f);
+                collision.b = capsuleCollider.center + collider.transform.localRotation * Vector3.up * (capsuleCollider.height * 0.5f);
                 collision.r = capsuleCollider.radius;
             }
             else if(capsuleCollider.direction == 2) //z
             {
-                collision.a = capsuleCollider.center - Vector3.forward * (capsuleCollider.height * 0.5f);
-                collision.b = capsuleCollider.center + Vector3.forward * (capsuleCollider.height * 0.5f);
+                collision.a = capsuleCollider.center - collider.transform.localRotation * Vector3.forward * (capsuleCollider.height * 0.5f);
+                collision.b = capsuleCollider.center + collider.transform.localRotation * Vector3.forward * (capsuleCollider.height * 0.5f);
                 collision.r = capsuleCollider.radius;
             }
 

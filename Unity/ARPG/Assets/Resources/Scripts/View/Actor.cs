@@ -85,9 +85,12 @@ public class Actor : UnityView
         }
         else
         {
+            if(str == "skill100010")
+            {
+                //Time.timeScale = 0;
+            }
             string animName = str;
             Debug.Log(name);
-            
             //animator.SetFloat("forward", 0);
             animator.Play(animName);
         }

@@ -30,24 +30,34 @@ struct DebugSystem : public System
 		{
 			const auto& transform = view.get<Transform>(e);
 			const auto& box = view.get<BoundingBox>(e);
+
+			auto mat = glm::mat4_cast(transform.rotation);
+			mat[3] = vec4(transform.position, fixed16(1));
+
 			if (box.type == BoundingBoxType::kAABB)
 			{
-				g_debug_service->DrawCube(box.aabb.c, quat(fixed16(1), fixed16(0), fixed16(0), fixed16(0)), box.aabb.r * fixed16(2));
+				g_debug_service->DrawCube(transform.position + box.aabb.c, quat(vec3(0, 0, 0)), box.aabb.r * fixed16(2));
 			}
 			else if(box.type == BoundingBoxType::kOBB)
 			{
-				mat3 mat(box.obb.u[0], box.obb.u[1], box.obb.u[2]);
-				auto qut = quat(transform.mat);
-				auto pos = box.obb.c * glm::inverse(qut);
-				g_debug_service->DrawCube(transform.position + pos, quat(transform.mat), box.obb.e * fixed16(2));
+				mat4 obb_mat(vec4(box.obb.u[0], 0), vec4(box.obb.u[0], 0), vec4(box.obb.u[0], 0), vec4(0, 0, 0, 1));
+				mat *= obb_mat;
+				vec3 position(mat[3]);
+				quat rotation(mat);
+
+				g_debug_service->DrawCube(position, rotation, box.obb.e * fixed16(2));
 			}
 			else if (box.type == BoundingBoxType::kCapsule)
 			{
-				g_debug_service->DrawCapsule(transform.position, quat(fixed16(1), fixed16(0), fixed16(0), fixed16(0)), glm::distance(box.capsule.b, box.capsule.a), box.capsule.r);
+				auto a = (mat * glm::translate(glm::identity<mat4>(), box.capsule.a))[3];
+				auto b = (mat * glm::translate(glm::identity<mat4>(), box.capsule.b))[3];
+				auto position = a + (b - a) * fixed16(0.5);
+
+				g_debug_service->DrawCapsule(position, a, b, box.capsule.r);
 			}
 			else if (box.type == BoundingBoxType::kSphere)
 			{
-				g_debug_service->DrawSphere(box.sphere.c, box.sphere.r);
+				g_debug_service->DrawSphere(transform.position + box.sphere.c, box.sphere.r);
 			}
 		}
 	}

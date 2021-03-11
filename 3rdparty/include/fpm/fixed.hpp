@@ -36,7 +36,7 @@ class fixed
     }
 
 public:
-    inline fixed() noexcept {}
+    fixed() = default;
     
     // Converts an string to the fixed-point type.
 	constexpr inline explicit fixed(std::string str) noexcept

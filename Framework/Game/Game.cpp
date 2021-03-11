@@ -84,7 +84,7 @@ bool Game::Initialize()
 void Game::Update(float dt)
 {
 
-	auto start = std::chrono::system_clock::now();
+	
 		
 	if (registry_.ctx<GameMode>() == GameMode::kClinet)
 	{
@@ -94,8 +94,7 @@ void Game::Update(float dt)
 	{
 		UpdateServer(dt);
 	}
-	auto t = std::chrono::duration<double>(std::chrono::system_clock::now() - start).count();
-	INFO("cpp time {}", t * 1000);
+	
 
 }
 
@@ -111,6 +110,8 @@ void Game::UpdateClinet(float dt)
 	// todo:后面根据延迟调整自己的输入频率
 	while (game_state.run_time > game_state.run_frame * kFrameRate + kFrameRate)
 	{
+		auto start = std::chrono::system_clock::now();
+
 		auto& input_service = registry_.ctx<Locator>().Ref<const InputService>();
 		input_service.InputHandler();
 
@@ -149,6 +150,9 @@ void Game::UpdateClinet(float dt)
 
 		registry_.clear<Command>();
 		++registry_.ctx<GameState>().run_frame;
+
+		auto t = std::chrono::duration<double>(std::chrono::system_clock::now() - start).count();
+		INFO("cpp time {}", t * 1000);
 	}
 }
 

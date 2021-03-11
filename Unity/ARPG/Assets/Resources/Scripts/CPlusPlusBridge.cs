@@ -202,13 +202,15 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
     public static void DrawCapsule(
         double pos_x, double pos_y, double pos_z,
-        double rot_x, double rot_y, double rot_z, double rot_w,
-        double height, double radius)
+        double a_x,double a_y,double a_z,
+        double b_x, double b_y, double b_z,
+        double radius)
     {
         DebugManager.Instance.DrawCapsule(
             new Vector3((float)pos_x, (float)pos_y, (float)pos_z),
-            new Quaternion((float)rot_x, (float)rot_y, (float)rot_z, (float)rot_w),
-            (float)height, (float)radius);
+            new Vector3((float)a_x, (float)a_y, (float)a_z),
+            new Vector3((float)b_x, (float)b_y, (float)b_z),
+            (float)radius);
     }
 
     public static string OpenFile(string file)

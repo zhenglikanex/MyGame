@@ -221,7 +221,7 @@ public class ExportAnimationEditor : EditorWindow
                                     if (go != null)
                                     {
                                         var bone = new Bone();
-                                        bone.transform = go.transform.parent.localToWorldMatrix.transpose;
+                                        bone.transform = go.transform.parent.localToWorldMatrix;
                                         skeleton.bones.Add(name, bone);
                                     }
                                 }
@@ -283,12 +283,7 @@ public class ExportAnimationEditor : EditorWindow
                                 if (go != null)
                                 {
                                     var bone = new Bone();
-                                    bone.transform = go.transform.parent.localToWorldMatrix.transpose;
-                                    if (animation.name == "skill100010")
-                                    {
-                                        var pos = go.transform.position;
-                                    }
-
+                                    bone.transform = go.transform.parent.localToWorldMatrix;
                                     skeleton.bones.Add(name, bone);
                                 }
                             }
@@ -328,10 +323,9 @@ public class ExportAnimationEditor : EditorWindow
                 StreamWriter stream = new StreamWriter(f);
                 stream.Write(json);
                 stream.Close();
-            }, 1);
-            
 
-            //DestroyImmediate(animator.gameObject);
+                DestroyImmediate(animator.gameObject);
+            }, 1);
         }
     }
 
@@ -382,6 +376,7 @@ public class ExportAnimationEditor : EditorWindow
 
         JsonMapper.RegisterExporter<Matrix4x4>((v, w) =>
         {
+            v = v.transpose; //unity的m[i,j]对用glm中的m[j,i]
             w.WriteObjectStart();//开始写入对象
             Type type = typeof(Matrix4x4);
             for (int i = 0; i < 4; ++i)
