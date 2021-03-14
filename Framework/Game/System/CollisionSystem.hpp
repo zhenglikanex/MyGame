@@ -35,7 +35,7 @@ struct CollisionSystem : public System
 
 	void CreateContactList()
 	{
-		auto view = registry.view<BoundingBox>(entt::exclude<ContactList>);
+		auto view = registry.view<Collider>(entt::exclude<ContactList>);
 		for (auto e : view)
 		{
 			registry.emplace<ContactList>(e);
@@ -45,17 +45,17 @@ struct CollisionSystem : public System
 	void UpdateCollision(fixed16 dt)
 	{
 		//todo:后面用八叉树替换,暂时不管重复碰撞
-		auto view = registry.view<BoundingBox,ContactList>();
+		auto view = registry.view<Collider,ContactList>();
 		
 		for (auto it1 = view.begin(); it1 != view.end(); ++it1)
 		{
 			auto e1 = *it1;
-			const auto& box1 = view.get<BoundingBox>(e1);
+			const auto& box1 = view.get<Collider>(e1);
 			auto& contact_list = view.get<ContactList>(e1);
 			for (auto it2 = view.begin(); it2 != view.end(); ++it2)
 			{
 				auto e2 = *it2;
-				const auto& box2 = view.get<BoundingBox>(e2);
+				const auto& box2 = view.get<Collider>(e2);
 				if (e1 != e2 && TestCollision(box1, box2))
 				{
 					contact_list.value.emplace_back(Contact{ e2 });
@@ -64,7 +64,7 @@ struct CollisionSystem : public System
 		}
 	}
 	
-	int TestCollision(const BoundingBox& box1, const BoundingBox& box2)
+	int TestCollision(const Collider& box1, const Collider& box2)
 	{
 		if (box1.type == BoundingBoxType::kAABB)
 		{
@@ -87,7 +87,7 @@ struct CollisionSystem : public System
 	}
 
 	template<class T>
-	int TestCollision(const T& primitive,const BoundingBox& box)
+	int TestCollision(const T& primitive,const Collider& box)
 	{
 		/*if (box.type == BoundingBoxType::kAABB)
 		{

@@ -19,9 +19,12 @@ Fmt.hpp
 PlayerInfo.hpp
 Hash.hpp
 Collision.hpp
+Collision.cpp
+Geometry.hpp
 
 Utility/ActorStateUtility.hpp
 Utility/AnimationUtility.hpp
+Utility/CollisionUtility.hpp
 
 System/AnimationSystem.hpp
 System/CollisionSystem.hpp
@@ -52,7 +55,7 @@ Component/ActorState.hpp
 Component/Animation.hpp
 Component/AnimationClip.hpp
 Component/SkillState.hpp
-Component/BoundingBox.hpp
+Component/Collider.hpp
 Component/ActorAsset.hpp
 Component/Weapon.hpp
 Component/Hit.hpp
@@ -61,6 +64,7 @@ Component/Skill.hpp
 Component/Contact.hpp
 Component/Health.hpp
 Component/Attributes.hpp
+Component/ColliderInfo.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp
@@ -69,6 +73,7 @@ Data/Config.hpp
 Data/Config.cpp
 Data/AnimationConfig.hpp
 Data/ActorConfig.hpp
+Data/ColliderConfig.hpp
 Data/SkillGraph.hpp
 Data/SkillGraph.cpp
 )

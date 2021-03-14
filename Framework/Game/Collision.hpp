@@ -1,114 +1,57 @@
 #pragma once
 
-#include "Framework/Game/Math.hpp"
-
-struct Sphere {
-	vec3 c; // Sphere center
-	fixed16 r; // Sphere radius
-
-	Sphere(const vec3& _c, fixed16 _r)
-		: c(_c)
-		, r(_r)
-	{
-	}
-};
-
-struct AABB {
-	vec3 c; // center point of AABB
-	vec3 r; // radius or halfwidth extents (rx, ry, rz)
-	AABB(const vec3& _c,const vec3& _r)
-		: c(_c)
-		, r(_r)
-	{
-	}
-};
-
-struct OBB {
-	vec3 c;     // OBB center point
-	vec3 u[3]; // Local x-, y-, and z-axes
-	vec3 e;    // Positive halfwidth extents of OBB along each axis
-
-	OBB(const vec3& _c,const vec3& x_axis,const vec3& y_axis,const vec3& z_axis,const vec3& _e)
-		: c(_c) 
-		, u{x_axis,y_axis,z_axis}
-		, e(_e)
-	{
-	}
-};
-
-struct Capsule {
-	vec3 a;      // Medial line segment start point
-	vec3 b;      // Medial line segment end point
-	fixed16 r;      // Radius
-
-	Capsule(const vec3& _a, const vec3& _b, fixed16 _r)
-		: a(_a)
-		, b(_b)
-		, r(_r)
-	{
-	}
-};
-
-struct Ray
-{
-	vec3 p;
-	vec3 d;
-
-	Ray(const vec3& _p, const vec3& _d)
-		: p(_p)
-		, d(_d)
-	{
-	}
-};
+#include "Framework/Game/Geometry.hpp"
 
 // Given point p, return point q on (or in) OBB b, closest to p
-void ClosestPtPointOBB(const vec3& p, const OBB& b, vec3& q)
+void ClosestPtPointOBB(const vec3& p, const OBB& b,const mat4& b_transform,vec3& q)
 {
-	vec3 d = p - b.c;
+	vec3 b_c = vec3(b_transform[3]);
+	vec3 d = p - b_c;
 	// Start result at center of box; make steps from there
-	q = b.c;
+	q = b_c;
 	// For each OBB axis...
 	for (int i = 0; i < 3; i++) {
+		vec3 axis(b_transform[i]);
 		// ...project d onto that axis to get the distance
 		// along the axis of d from the box center
-		fixed16 dist = glm::dot(d, b.u[i]);
+		fixed16 dist = glm::dot(d, axis);
 		// If distance farther than the box extents, clamp to the box
 		if (dist > b.e[i]) dist = b.e[i];
 		if (dist < -b.e[i]) dist = -b.e[i];
 		// Step that distance along the axis to get world coordinate
-		q += dist * b.u[i];
+		q += dist * axis;
 	}
 }
 
 // Computes the square distance between a point p and an AABB b
-fixed16 SqDistPointAABB(const vec3& p, const AABB& b)
-{
-	fixed16 sqDist = fixed16(0.0f);
-	for (int i = 0; i < 3; i++) {
-		// For each axis count any excess distance outside box extents
-		fixed16 v = p[i];
-		fixed16 min = b.c[i] - b.r[i];
-		fixed16 max = b.c[i] + b.r[i];
-		if (v < min) sqDist += (min - v) * (min - v);
-		if (v > max) sqDist += (v - max) * (v - max);
-	}
-	return sqDist;
-}
+//fixed16 SqDistPointAABB(const vec3& p, const AABB& b)
+//{
+//	fixed16 sqDist = fixed16(0.0f);
+//	for (int i = 0; i < 3; i++) {
+//		// For each axis count any excess distance outside box extents
+//		fixed16 v = p[i];
+//		fixed16 min = b.c[i] - b.r[i];
+//		fixed16 max = b.c[i] + b.r[i];
+//		if (v < min) sqDist += (min - v) * (min - v);
+//		if (v > max) sqDist += (v - max) * (v - max);
+//	}
+//	return sqDist;
+//}
 
 // Given point p, return the point q on or in AABB b, that is closest to p
-void ClosestPtPointAABB(vec3 p, AABB b, vec3& q)
-{
-	// For each coordinate axis, if the point coordinate value is
-	// outside box, clamp it to the box, else keep it as is
-	for (int i = 0; i < 3; i++) {
-		fixed16 v = p[i];
-		fixed16 min = b.c[i] - b.r[i];
-		fixed16 max = b.c[i] + b.r[i];
-		if (v < min) v = min; // v = max(v, b.min[i])
-		if (v > max) v = max; // v = min(v, b.max[i])
-		q[i] = v;
-	}
-}
+//void ClosestPtPointAABB(vec3 p, AABB b, vec3& q)
+//{
+//	// For each coordinate axis, if the point coordinate value is
+//	// outside box, clamp it to the box, else keep it as is
+//	for (int i = 0; i < 3; i++) {
+//		fixed16 v = p[i];
+//		fixed16 min = b.c[i] - b.r[i];
+//		fixed16 max = b.c[i] + b.r[i];
+//		if (v < min) v = min; // v = max(v, b.min[i])
+//		if (v > max) v = max; // v = min(v, b.max[i])
+//		q[i] = v;
+//	}
+//}
 
 fixed16 ClosestPtSegmentSegment(vec3 p1, vec3 q1, vec3 p2, vec3 q2,
 	fixed16& s, fixed16& t, vec3& c1, vec3& c2)
@@ -188,25 +131,61 @@ fixed16 SqDistPointSegment(vec3 a, vec3 b, vec3 c)
 	return glm::dot(ac, ac) - e * e / f;
 }
 
-int TestCollision(const Sphere& a, const Sphere& b)
+inline int TestSphereSphere(const Sphere& a, const Sphere& b,const mat4& a_transform,const mat4& b_transform)
 {
+	auto a_c = vec3(a_transform[3]);
+	auto b_c = vec3(b_transform[3]);
 	// 中心点距离是否超过半径之和
-	auto d = a.c - b.c;
+	auto d = a_c - b_c;
 	auto dist2 = glm::dot(d, d);
 	auto radius_sum = a.r + b.r;
 	// 避免开平方操作
 	return dist2 <= radius_sum * radius_sum;
 }
 
-int TestCollision(const AABB& a, const AABB& b)
+// Returns true if sphere s intersects OBB b, false otherwise.
+inline int TestSphereOBB(const Sphere& s, const OBB& b, const mat4& s_transform, const mat4& b_transform)
 {
-	if (fpm::abs(a.c[0] - b.c[0]) > (a.r[0] + b.r[0])) return 0;
-	if (fpm::abs(a.c[1] - b.c[1]) > (a.r[1] + b.r[1])) return 0;
-	if (fpm::abs(a.c[2] - b.c[2]) > (a.r[2] + b.r[2])) return 0;
-	return 1;
+	vec3 p;
+	vec3 s_c(s_transform[3]);
+
+	// Find point p on OBB closest to sphere center
+	ClosestPtPointOBB(s_c, b, b_transform, p);
+
+	// Sphere and OBB intersect if the (squared) distance from sphere
+	// center to point p is less than the (squared) sphere radius
+	vec3 v = p - s_c;
+	return glm::dot(v, v) <= s.r * s.r;
 }
 
-int TestCollision(const OBB& a, const OBB& b)
+// Returns true if sphere s intersects OBB b, false otherwise.
+// The point p on the OBB closest to the sphere center is also returned
+inline int TestSphereOBB(const Sphere& s, const OBB& b, const mat4& s_transform, const mat4& b_transform, vec3& p)
+{
+	vec3 s_c(s_transform[3]);
+	// Find point p on OBB closest to sphere center
+	ClosestPtPointOBB(s_c, b, b_transform, p);
+
+	// Sphere and OBB intersect if the (squared) distance from sphere
+	// center to point p is less than the (squared) sphere radius
+	auto v = p - s_c;
+	return glm::dot(v, v) <= s.r * s.r;
+}
+
+inline int TestSphereCapsule(const Sphere& s, const Capsule& capsule, const mat4& s_transform, const mat4& c_transform)
+{
+	vec3 c_a(c_transform[3]);
+	vec3 c_b(c_transform * vec4(0, capsule.h, 0, 1));
+
+	// Compute (squared) distance between sphere center and capsule line segment
+	fixed16 dist2 = SqDistPointSegment(c_a, c_b, s_transform[3]);
+
+	// If (squared) distance smaller than (squared) sum of radii, they collide
+	fixed16 radius = s.r + capsule.r;
+	return dist2 <= radius * radius;
+}
+
+inline int TestObbObb(const OBB& a, const OBB& b,const mat4& a_transform,const mat4& b_transform)
 {
 	fixed16 ra, rb;
 	mat3 R(fixed16(0.0f)), AbsR(fixed16(0.0f));
@@ -214,12 +193,12 @@ int TestCollision(const OBB& a, const OBB& b)
 	// Compute rotation matrix expressing b in a's coordinate frame
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
-			R[i][j] = glm::dot(a.u[i], b.u[j]);
+			R[i][j] = glm::dot(vec3(a_transform[i]), vec3(b_transform[j]));
 
 	// Compute translation vector t
-	vec3 t = b.c - a.c;
+	vec3 t = vec3(b_transform[3]) - vec3(b_transform[3]);
 	// Bring translation into a's coordinate frame
-	t = vec3(glm::dot(t, a.u[0]), glm::dot(t, a.u[1]), glm::dot(t, a.u[2]));
+	t = vec3(glm::dot(t, vec3(a_transform[0])), glm::dot(t, vec3(a_transform[1])), glm::dot(t, vec3(a_transform[2])));
 
 	// Compute common subexpressions. Add in an epsilon term to
 	// counteract arithmetic errors when two edges are parallel and
@@ -291,75 +270,55 @@ int TestCollision(const OBB& a, const OBB& b)
 	return 1;
 }
 
-int TestCollision(const Sphere& s, const Capsule& capsule)
+inline int TestObbCapsule(const OBB& b, const Capsule& c,const mat4& b_transform,const mat4& c_transform)
 {
-	// Compute (squared) distance between sphere center and capsule line segment
-	fixed16 dist2 = SqDistPointSegment(capsule.a, capsule.b, s.c);
-
-	// If (squared) distance smaller than (squared) sum of radii, they collide
-	fixed16 radius = s.r + capsule.r;
-	return dist2 <= radius * radius;
+	// todo:暂时不支持这个碰撞
+	assert(false && "Support TestObbCapsule!");
+	
+	return 0;
 }
 
-int TestCollision(const Capsule& capsule1, const Capsule& capsule2)
+int TestCapsuleCapsule(const Capsule& capsule1, const Capsule& capsule2,const mat4& transform1,const mat4& transform2)
 {
 	// Compute (squared) distance between the inner structures of the capsules
 	fixed16 s, t;
 	vec3 c1(fixed16(0)), c2(fixed16(0));
-	fixed16 dist2 = ClosestPtSegmentSegment(capsule1.a, capsule1.b,
-		capsule2.a, capsule2.b, s, t, c1, c2);
+	vec3 c1_a(transform1[3]);
+	vec3 c1_b(transform1 * vec4(0, capsule1.h, 0, 1));
+	vec3 c2_a(transform2[3]);
+	vec3 c2_b(transform2 * vec4(0, capsule2.h, 0, 1));
+
+	fixed16 dist2 = ClosestPtSegmentSegment(c1_a, c1_b,
+		c2_a, c2_b, s, t, c1, c2);
 
 	// If (squared) distance smaller than (squared) sum of radii, they collide
 	auto radius = capsule1.r + capsule2.r;
 	return dist2 <= radius * radius;
 }
 
-// Returns true if sphere s intersects AABB b, false otherwise
-int TestCollision(const Sphere& s, const AABB& b)
+int TestAabbAabb(const AABB& aabb1, const AABB& aabb2, const mat4& transform1, const mat4& transform2)
 {
-	// Compute squared distance between sphere center and AABB
-	fixed16 sqDist = SqDistPointAABB(s.c, b);
+	vec3 c1(transform1[3]);
+	vec3 c2(transform2[3]);
 
-	// Sphere and AABB intersect if the (squared) distance
-	// between them is less than the (squared) sphere radius
-	return sqDist <= s.r * s.r;
-}
-
-int TestCollision(const Sphere& s, const AABB& b, vec3& p)
-{
-	// Find point p on AABB closest to sphere center
-	ClosestPtPointAABB(s.c, b, p);
-
-	// Sphere and AABB intersect if the (squared) distance from sphere
-	// center to point p is less than the (squared) sphere radius
-	vec3 v = p - s.c;
-	return glm::dot(v, v) <= s.r * s.r;
-}
-
-// Returns true if sphere s intersects OBB b, false otherwise.
-// The point p on the OBB closest to the sphere center is also returned
-int TestCollision(const Sphere& s, const OBB& b, vec3& p)
-{
-	// Find point p on OBB closest to sphere center
-	ClosestPtPointOBB(s.c, b, p);
-
-	// Sphere and OBB intersect if the (squared) distance from sphere
-	// center to point p is less than the (squared) sphere radius
-	vec3 v = p - s.c;
-	return glm::dot(v, v) <= s.r * s.r;
+	if (fpm::abs(c1[0] - c2[0]) > (aabb1.r[0] + aabb2.r[0])) return 0;
+	if (fpm::abs(c1[1] - c2[1]) > (aabb1.r[1] + aabb2.r[1])) return 0;
+	if (fpm::abs(c1[2] - c2[2]) > (aabb1.r[2] + aabb2.r[2])) return 0;
+	return 1;
 }
 
 // Intersect ray R(t) = p + t*d against AABB a. When intersecting,
 // return intersection distance tmin and point q of intersection
-int IntersectRayAABB(const vec3& p, const vec3& d, const AABB& a, fixed16& tmin, vec3& q)
+int IntersectRayAABB(const vec3& p, const vec3& d, const AABB& a, const mat4& a_transform, fixed16& tmin, vec3& q)
 {
-	tmin = fixed16(0.0f);          // set to -FLT_MAX to get first hit on line
+	vec3 a_c(a_transform[3]);
+		tmin = fixed16(0.0f);          // set to -FLT_MAX to get first hit on line
 	fixed16 tmax = std::numeric_limits<fixed16>::max(); // set to max distance ray can travel (for segment)
 
 	// For all three slabs
 	for (int i = 0; i < 3; i++) {
-		fixed16 min = a.c[i] - a.r[i];
-		fixed16 max = a.c[i] + a.r[i];
+		fixed16 min = a_c[i] - a.r[i];
+		fixed16 max = a_c[i] + a.r[i];
 		if (fpm::abs(d[i]) < std::numeric_limits<fixed16>::epsilon()) {
 			// Ray is parallel to slab. No hit if origin not within slab
 			if (p[i] < min || p[i] > max) return 0;
@@ -384,10 +343,11 @@ int IntersectRayAABB(const vec3& p, const vec3& d, const AABB& a, fixed16& tmin,
 }
 
 // Test if segment specified by points p0 and p1 intersects AABB b
-int TestSegmentAABB(const vec3& p0, const vec3& p1, const AABB& b)
+int TestSegmentAABB(const vec3& p0, const vec3& p1, const AABB& b, const mat4& b_transform)
 {
+	vec3 b_c(b_transform[3]);
 	vec3 e = b.r;             // Box halflength extents
-	vec3 m = (p0 + p1) * fixed16(0.5f) - b.c;       // Segment midpoint Translate box and segment to origin
+	vec3 m = (p0 + p1) * fixed16(0.5f) - b_c;       // Segment midpoint Translate box and segment to origin
 	vec3 d = p1 - m;                // Segment halflength vector
 
 	// Try world coordinate axes as separating axes
@@ -410,3 +370,73 @@ int TestSegmentAABB(const vec3& p0, const vec3& p1, const AABB& b)
 	// No separating axis found; segment must be overlapping AABB
 	return 1;
 }
+
+inline int TestSphereSphere(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
+{
+	assert(geometry1.type() == GeometryType::kSphere && "TestSphereSphere Geometry1 Error!");
+	assert(geometry2.type() == GeometryType::kSphere && "TestSphereSphere Geometry2 Error!");
+
+	const auto& sphere1 = geometry1.sphere;
+	const auto& sphere2 = geometry2.sphere;
+
+	return TestSphereSphere(sphere1, sphere2, transform1, transform2);
+}
+
+inline int TestSphereBox(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
+{
+	assert(geometry1.type() == GeometryType::kSphere && "TestSphereBox Geometry1 Error!");
+	assert(geometry2.type() == GeometryType::kBox && "TestSphereBox Geometry2 Error!");
+
+	const auto& sphere = geometry1.sphere;
+	const auto& box = geometry2.box;
+
+	return TestSphereBox(sphere, box, transform1, transform2);
+}
+
+inline int TestSphereCapsule(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
+{
+	assert(geometry1.type() == GeometryType::kSphere && "TestSphereCapsule Geometry1 Error!");
+	assert(geometry2.type() == GeometryType::kCapsule && "TestSphereCapsule Geometry2 Error!");
+
+	const auto& sphere = geometry1.sphere;
+	const auto& capsule = geometry2.capsule;
+
+	return TestSphereCapsule(sphere, capsule, transform1, transform2);
+}
+
+inline int TestBoxBox(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
+{
+	assert(geometry1.type() == GeometryType::kBox && "TestBoxBox Geometry1 Error!");
+	assert(geometry2.type() == GeometryType::kBox && "TestBoxBox Geometry2 Error!");
+
+	const auto& box1 = geometry1.box;
+	const auto& box2 = geometry2.box;
+
+	return TestBoxBox(box1, box2, transform1, transform2);
+}
+
+inline int TestBoxCapsule(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
+{
+	assert(geometry1.type() == GeometryType::kBox && "TestBoxCapsule Geometry1 Error!");
+	assert(geometry2.type() == GeometryType::kCapsule && "TestBoxCapsule Geometry2 Error!");
+
+	const auto& box = geometry1.box;
+	const auto& capsule = geometry2.capsule;
+
+	return TestBoxCapsule(box, capsule, transform1, transform2);
+}
+
+inline int TestCapsuleCapsule(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
+{
+	assert(geometry1.type() == GeometryType::kCapsule && "TestCapsuleCapsule Geometry1 Error!");
+	assert(geometry2.type() == GeometryType::kCapsule && "TestCapsuleCapsule Geometry2 Error!");
+
+	const auto& capsule1 = geometry1.capsule;
+	const auto& capsule2 = geometry2.capsule;
+
+	return TestCapsuleCapsule(capsule1, capsule2, transform1, transform2);
+}
+
+using TestGeometryFunc = int(*)(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2);
+
+extern TestGeometryFunc g_GeometryTestFuncTable[][(uint8_t)GeometryType::kMax];

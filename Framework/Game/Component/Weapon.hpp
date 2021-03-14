@@ -5,10 +5,10 @@
 
 struct Weapon
 {
-	BoundingBox bounding_box;
+	Collider bounding_box;
 	std::vector<Attribute> attributes;
 
-	Weapon(const BoundingBox& box)
+	Weapon(const Collider& box)
 		:bounding_box(box)
 	{
 

@@ -53,13 +53,13 @@ struct SkillSystem : public System
 
 	void UpdateSkillTranform()
 	{
-		auto view = registry.view<Skill, SkillAttacthBone, Transform, BoundingBox>();
+		auto view = registry.view<Skill, SkillAttacthBone, Transform, Collider>();
 		for (auto e : view)
 		{
 			const auto& skill = view.get<Skill>(e);
 			const auto& attacth_anim_clip = view.get<SkillAttacthBone>(e);
 			auto& transform = view.get<Transform>(e);
-			const auto& bounding_box = view.get<BoundingBox>(e);
+			const auto& bounding_box = view.get<Collider>(e);
 
 			if (registry.valid(skill.owner))
 			{

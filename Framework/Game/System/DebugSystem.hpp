@@ -25,11 +25,11 @@ struct DebugSystem : public System
 
 	void DrawBoundingBox()
 	{
-		auto view = registry.view<Transform,BoundingBox>();
+		auto view = registry.view<Transform,Collider>();
 		for (auto e : view)
 		{
 			const auto& transform = view.get<Transform>(e);
-			const auto& box = view.get<BoundingBox>(e);
+			const auto& box = view.get<Collider>(e);
 
 			auto mat = glm::mat4_cast(transform.rotation);
 			mat[3] = vec4(transform.position, fixed16(1));

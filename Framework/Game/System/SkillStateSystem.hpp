@@ -34,7 +34,7 @@ struct SkillStateSystem : System
 				{
 					this->registry.emplace<Skill>(skill, e, fixed16(0.5));
 					this->registry.emplace<SkillAttacthBone>(skill, skill_state.name, "RightWeapon");
-					this->registry.emplace<BoundingBox>(skill, weapon->bounding_box);
+					this->registry.emplace<Collider>(skill, weapon->bounding_box);
 
 					auto transform = this->registry.try_get<Transform>(e);
 					if (transform)

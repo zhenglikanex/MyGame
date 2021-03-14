@@ -3,62 +3,26 @@
 #include "Framework/Game/Collision.hpp"
 #include "Framework/Game/Json.hpp"
 
-enum class BoundingBoxType
+struct Collider
 {
-	kSphere,
-	kAABB,
-	kOBB,
-	kCapsule,
-};
+	Geometry geometry;
+	bool trigger;
 
-
-struct BoundingBox
-{
-	BoundingBoxType type;
-	union
-	{
-		Sphere sphere;
-		AABB aabb;
-		OBB obb;
-		Capsule capsule;
-	};
-
-	BoundingBox(const Sphere& _sphere)
-		: type(BoundingBoxType::kSphere)
-		, sphere(_sphere)
-	{
-
-	}
-
-	BoundingBox(const AABB& _aabb)
-		: type(BoundingBoxType::kAABB)
-		, aabb(_aabb)
-	{
-
-	}
-
-	BoundingBox(const OBB& _obb)
-		: type(BoundingBoxType::kOBB)
-		, obb(_obb)
-	{
-
-	}
-
-	BoundingBox(const Capsule& _capsule)
-		: type(BoundingBoxType::kCapsule)
-		, capsule(_capsule)
+	Collider(const Geometry& _gemoetry, bool _trigger)
+		:geometry(_gemoetry)
+		, trigger(_trigger)
 	{
 
 	}
 };
 
-inline BoundingBox GetBoundingBox(std::string_view str)
+inline Collider GetCollider(std::string_view str)
 {
 	nlohmann::json json = nlohmann::json::parse(str);
-	return GetBoundingBox(json);
+	return GetCollider(json);
 }
 
-inline BoundingBox GetBoundingBox(const nlohmann::json& json)
+inline Collider GetCollider(const nlohmann::json& json)
 {
 	std::string type = json["type"];
 
@@ -72,8 +36,8 @@ inline BoundingBox GetBoundingBox(const nlohmann::json& json)
 		fixed16 r = fixed16(0);
 		json.at("r").get_to(r);
 
-		BoundingBox box(Sphere(c, r));
-		return box;
+		Collider collider(Geometry(Sphere(c, r)),true);
+		return collider;
 	}
 	else if (type == "aabb")
 	{
@@ -83,8 +47,8 @@ inline BoundingBox GetBoundingBox(const nlohmann::json& json)
 		vec3 r = zero<vec3>();
 		json.at("r").get_to(r);
 
-		BoundingBox box(AABB(c,r));
-		return box;
+		Collider collider(Geometry(AABB(c,r)),true);
+		return collider;
 	}
 	else if (type == "obb")
 	{
@@ -97,8 +61,8 @@ inline BoundingBox GetBoundingBox(const nlohmann::json& json)
 		vec3 e = zero<vec3>();
 		json.at("e").get_to(e);
 
-		BoundingBox box(OBB(c,u[0], u[1], u[2],e));
-		return box;
+		Collider collider(Geometry(OBB(c,u[0], u[1], u[2],e)),true);
+		return collider;
 	}
 	else
 	{
@@ -111,7 +75,7 @@ inline BoundingBox GetBoundingBox(const nlohmann::json& json)
 		fixed16 r = fixed16(0);
 		json.at("r").get_to(r);
 
-		BoundingBox box(Capsule(a,b,r));
-		return box;
+		Collider collider(Geometry(Capsule(a,b,r)),true);
+		return collider;
 	}
 }

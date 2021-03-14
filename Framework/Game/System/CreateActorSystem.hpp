@@ -46,7 +46,7 @@ struct CreateActorSystem : public System
 			registry.emplace<ViewAsset>(e, actor_info.model_asset);
 			registry.emplace<AnimationAsset>(e, actor_info.anim_asset);
 			registry.emplace<SkillGraphAsset>(e, actor_info.anim_asset);
-			registry.emplace<BoundingBox>(e, actor_info.body);
+			registry.emplace<Collider>(e, actor_info.body);
 			registry.emplace<Weapon>(e, actor_info.weapon);
 			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
 
@@ -58,7 +58,7 @@ struct CreateActorSystem : public System
 
 			// ต๗สิ
 			auto weapon = registry.create();
-			registry.emplace<BoundingBox>(weapon, actor_info.weapon);
+			registry.emplace<Collider>(weapon, actor_info.weapon);
 			registry.emplace<Transform>(weapon);
 		}
 	}
