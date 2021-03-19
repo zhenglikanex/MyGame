@@ -11,7 +11,8 @@
 #include "Framework/Game/Component/ViewAsset.hpp"
 #include "Framework/Game/Component/AnimationAsset.hpp"
 #include "Framework/Game/Component/SkillGraphAsset.hpp"
-#include "Framework/Game/Component/BoundingBox.hpp"
+#include "Framework/Game/Component/ColliderInfo.hpp"
+#include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Attributes.hpp"
 #include "Framework/Game/Component/Transform.hpp"
@@ -42,12 +43,16 @@ struct CreateActorSystem : public System
 		for (auto e : view)
 		{
 			const auto& asset = view.get<ActorAsset>(e);
-			auto actor_info = GetActorInfo(asset.value);
-			registry.emplace<ViewAsset>(e, actor_info.model_asset);
-			registry.emplace<AnimationAsset>(e, actor_info.anim_asset);
-			registry.emplace<SkillGraphAsset>(e, actor_info.anim_asset);
-			registry.emplace<Collider>(e, actor_info.body);
-			registry.emplace<Weapon>(e, actor_info.weapon);
+			auto& actor_info = GetActorInfo(asset.value);
+			registry.emplace<ViewAsset>(e, actor_info.model_asset());
+			registry.emplace<AnimationAsset>(e, actor_info.anim_asset());
+			registry.emplace<SkillGraphAsset>(e, actor_info.anim_asset());
+
+			auto& info = registry.emplace<ColliderInfo>(e, actor_info.body());
+			info.collider = CreateBodyCollider(e, info);
+
+			registry.emplace<Weapon>(e, actor_info.weapon());
+
 			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
 
 			//todo 插入actor自身属性和武器属性
@@ -58,9 +63,16 @@ struct CreateActorSystem : public System
 
 			// 调试
 			auto weapon = registry.create();
-			registry.emplace<Collider>(weapon, actor_info.weapon);
-			registry.emplace<Transform>(weapon);
+			registry.emplace<Collider>(weapon,actor_info.weapon().geometry,actor_info.weapon().tigger,entt::null);
+			registry.emplace<Transform>(weapon,actor_info.weapon().transform);
 		}
+	}
+
+	entt::entity CreateBodyCollider(entt::entity e,ColliderInfo& info)
+	{
+		auto collider = registry.create();
+		registry.emplace<Collider>(collider, info.geometry, info.tigger,e);
+		return collider;
 	}
 
 	void Finalize() override
@@ -83,8 +95,7 @@ struct CreateActorSystem : public System
 			assert(content != "" && "not actor info");
 
 			nlohmann::json j = nlohmann::json::parse(content);
-			ActorInfo info(j.at("modelAsset").get<std::string>(), j.at("animAsset").get<std::string>(), GetBoundingBox(j.at("bodyCollision")), GetBoundingBox(j.at("weaponCollision")));
-			auto ret = actor_infos.emplace(name, info);
+			auto ret = actor_infos.emplace(name, j.get<ActorInfo>());
 
 			return ret.first->second;
 		}

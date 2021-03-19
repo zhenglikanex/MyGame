@@ -5,6 +5,7 @@
 struct AABB 
 {
 	vec3 r; // radius or halfwidth extents (rx, ry, rz)
+	
 	AABB(const vec3& _r)
 		: r(_r)
 	{
@@ -14,6 +15,8 @@ struct AABB
 struct Sphere 
 {
 	fixed16 r; // Sphere radius
+
+	Sphere() = default;
 
 	Sphere(fixed16 _r)
 		: r(_r)
@@ -30,6 +33,8 @@ struct OBB
 {
 	vec3 e;    // Positive halfwidth extents of OBB along each axis
 
+	OBB() = default;
+
 	OBB(const vec3& _e)
 		: e(_e)
 	{
@@ -37,7 +42,7 @@ struct OBB
 
 	AABB GetAABB() const
 	{
-		return AABB(vec3(e, e, e));
+		return AABB(e);
 	}
 };
 
@@ -46,8 +51,10 @@ struct Capsule
 	fixed16 h;
 	fixed16 r;      // Radius
 
-	Capsule(fixed16 _r)
-		: r(_r)
+	Capsule() = default;
+
+	Capsule(fixed16 _h, fixed16 _r)
+		:h(_h), r(_r)
 	{
 	}
 
@@ -61,6 +68,8 @@ struct Ray
 {
 	vec3 p;
 	vec3 d;
+
+	Ray() = default;
 
 	Ray(const vec3& _p, const vec3& _d)
 		: p(_p)
@@ -80,30 +89,27 @@ enum class GeometryType : uint8_t
 class Geometry
 {
 public:
-	union 
-	{
-		Sphere sphere;
-		OBB box;
-		Capsule capsule;
-	};
+	
 
-	Geometry(const Sphere& _sphere)
+	Geometry() = default;
+
+	explicit Geometry(const Sphere& _sphere)
 		: type_(GeometryType::kSphere)
-		, sphere(_sphere)
+		, sphere_(_sphere)
 	{
 
 	}
 
-	Geometry(const OBB& _obb)
+	explicit Geometry(const OBB& _obb)
 		: type_(GeometryType::kBox)
-		, box(_obb)
+		, box_(_obb)
 	{
 
 	}
 
-	Geometry(const Capsule& _capsule)
+	explicit Geometry(const Capsule& _capsule)
 		: type_(GeometryType::kCapsule)
-		, capsule(_capsule)
+		, capsule_(_capsule)
 	{
 
 	}
@@ -112,15 +118,15 @@ public:
 	{
 		if (type_ == GeometryType::kSphere)
 		{
-			return sphere.GetAABB();
+			return sphere_.GetAABB();
 		}
 		else if (type_ == GeometryType::kBox)
 		{
-			return box.GetAABB();
+			return box_.GetAABB();
 		}
 		else if (type_ == GeometryType::kCapsule)
 		{
-			return capsule.GetAABB();
+			return capsule_.GetAABB();
 		}
 
 		assert(false);
@@ -128,6 +134,34 @@ public:
 
 	GeometryType type() const { return type_; }
 
+	const Sphere& sphere() const
+	{
+		assert(type_ != GeometryType::kSphere && "type is not sphere");
+
+		return sphere_;
+	}
+
+	const OBB& box() const
+	{
+		assert(type_ != GeometryType::kBox && "type is not sphere");
+
+		return box_;
+	}
+
+	const Capsule& capsule() const
+	{
+		assert(type_ != GeometryType::kCapsule && "type is not sphere");
+
+		return capsule_;
+	}
+
 private:
+	union
+	{
+		Sphere sphere_;
+		OBB box_;
+		Capsule capsule_;
+	};
+
 	GeometryType type_;
 };

@@ -2,7 +2,7 @@
 
 #include "Framework/Game/Component/Skill.hpp"
 #include "Framework/Game/Component/Transform.hpp"
-#include "Framework/Game/Component/BoundingBox.hpp"
+#include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Animation.hpp"
 #include "Framework/Game/Component/Contact.hpp"
@@ -53,13 +53,11 @@ struct SkillSystem : public System
 
 	void UpdateSkillTranform()
 	{
-		auto view = registry.view<Skill, SkillAttacthBone, Transform, Collider>();
+		auto view = registry.view<Skill, SkillAttacthBone, Transform>();
 		for (auto e : view)
 		{
 			const auto& skill = view.get<Skill>(e);
 			const auto& attacth_anim_clip = view.get<SkillAttacthBone>(e);
-			auto& transform = view.get<Transform>(e);
-			const auto& bounding_box = view.get<Collider>(e);
 
 			if (registry.valid(skill.owner))
 			{
@@ -72,11 +70,8 @@ struct SkillSystem : public System
 					auto bone = GetBone(animation, anim_clip, attacth_anim_clip.bone_name);
 					if (bone)
 					{
-						mat4 role_transform(owner_transform->rotation);
-						role_transform[3] = vec4(owner_transform->position, fixed16(1));
-						mat4 box_transform = role_transform * bone->transform;
-						transform.position = box_transform[3];
-						transform.rotation = quat(box_transform);
+						auto m = owner_transform->GetMatrix4x4() * bone->transform;
+						registry.emplace_or_replace<Transform>(e,m);
 					}
 				}
 			}
@@ -109,15 +104,12 @@ struct SkillSystem : public System
 			const auto& skill = view.get<Skill>(e);
 			for (auto target : skill.targets)
 			{
-				if (!registry.valid(target))
+				if (registry.valid(target) && registry.has<ModifyHealthList>(target))
 				{
-					continue;
-				}
-
-				auto modify_health_list = registry.try_get<ModifyHealthList>(target);
-				if (modify_health_list)
-				{
-					modify_health_list->value.emplace_back(std::move(GetSkillModifyHealth(skill)));
+					registry.patch<ModifyHealthList>(e, [&skill, this](ModifyHealthList &comp) 
+					{ 
+						comp.value.emplace_back(GetSkillModifyHealth(skill)); 
+					});
 				}
 
 				//todo£ºÌí¼Óbuff

@@ -3,7 +3,7 @@
 #include "Framework/Game/Geometry.hpp"
 
 // Given point p, return point q on (or in) OBB b, closest to p
-void ClosestPtPointOBB(const vec3& p, const OBB& b,const mat4& b_transform,vec3& q)
+inline void ClosestPtPointOBB(const vec3& p, const OBB& b,const mat4& b_transform,vec3& q)
 {
 	vec3 b_c = vec3(b_transform[3]);
 	vec3 d = p - b_c;
@@ -53,7 +53,7 @@ void ClosestPtPointOBB(const vec3& p, const OBB& b,const mat4& b_transform,vec3&
 //	}
 //}
 
-fixed16 ClosestPtSegmentSegment(vec3 p1, vec3 q1, vec3 p2, vec3 q2,
+inline fixed16 ClosestPtSegmentSegment(vec3 p1, vec3 q1, vec3 p2, vec3 q2,
 	fixed16& s, fixed16& t, vec3& c1, vec3& c2)
 {
 	vec3 d1 = q1 - p1; // Direction vector of segment S1
@@ -119,7 +119,7 @@ fixed16 ClosestPtSegmentSegment(vec3 p1, vec3 q1, vec3 p2, vec3 q2,
 	return glm::dot(c1 - c2, c1 - c2);
 }
 
-fixed16 SqDistPointSegment(vec3 a, vec3 b, vec3 c)
+inline fixed16 SqDistPointSegment(vec3 a, vec3 b, vec3 c)
 {
 	vec3 ab = b - a, ac = c - a, bc = c - b;
 	fixed16 e = glm::dot(ac, ab);
@@ -278,7 +278,7 @@ inline int TestObbCapsule(const OBB& b, const Capsule& c,const mat4& b_transform
 	return 0;
 }
 
-int TestCapsuleCapsule(const Capsule& capsule1, const Capsule& capsule2,const mat4& transform1,const mat4& transform2)
+inline int TestCapsuleCapsule(const Capsule& capsule1, const Capsule& capsule2,const mat4& transform1,const mat4& transform2)
 {
 	// Compute (squared) distance between the inner structures of the capsules
 	fixed16 s, t;
@@ -296,7 +296,7 @@ int TestCapsuleCapsule(const Capsule& capsule1, const Capsule& capsule2,const ma
 	return dist2 <= radius * radius;
 }
 
-int TestAabbAabb(const AABB& aabb1, const AABB& aabb2, const mat4& transform1, const mat4& transform2)
+inline int TestAabbAabb(const AABB& aabb1, const AABB& aabb2, const mat4& transform1, const mat4& transform2)
 {
 	vec3 c1(transform1[3]);
 	vec3 c2(transform2[3]);
@@ -309,7 +309,7 @@ int TestAabbAabb(const AABB& aabb1, const AABB& aabb2, const mat4& transform1, c
 
 // Intersect ray R(t) = p + t*d against AABB a. When intersecting,
 // return intersection distance tmin and point q of intersection
-int IntersectRayAABB(const vec3& p, const vec3& d, const AABB& a, const mat4& a_transform, fixed16& tmin, vec3& q)
+inline int IntersectRayAABB(const vec3& p, const vec3& d, const AABB& a, const mat4& a_transform, fixed16& tmin, vec3& q)
 {
 	vec3 a_c(a_transform[3]);
 		tmin = fixed16(0.0f);          // set to -FLT_MAX to get first hit on line
@@ -343,7 +343,7 @@ int IntersectRayAABB(const vec3& p, const vec3& d, const AABB& a, const mat4& a_
 }
 
 // Test if segment specified by points p0 and p1 intersects AABB b
-int TestSegmentAABB(const vec3& p0, const vec3& p1, const AABB& b, const mat4& b_transform)
+inline int TestSegmentAABB(const vec3& p0, const vec3& p1, const AABB& b, const mat4& b_transform)
 {
 	vec3 b_c(b_transform[3]);
 	vec3 e = b.r;             // Box halflength extents
@@ -373,66 +373,48 @@ int TestSegmentAABB(const vec3& p0, const vec3& p1, const AABB& b, const mat4& b
 
 inline int TestSphereSphere(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
 {
-	assert(geometry1.type() == GeometryType::kSphere && "TestSphereSphere Geometry1 Error!");
-	assert(geometry2.type() == GeometryType::kSphere && "TestSphereSphere Geometry2 Error!");
-
-	const auto& sphere1 = geometry1.sphere;
-	const auto& sphere2 = geometry2.sphere;
+	const auto& sphere1 = geometry1.sphere();
+	const auto& sphere2 = geometry2.sphere();
 
 	return TestSphereSphere(sphere1, sphere2, transform1, transform2);
 }
 
 inline int TestSphereBox(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
 {
-	assert(geometry1.type() == GeometryType::kSphere && "TestSphereBox Geometry1 Error!");
-	assert(geometry2.type() == GeometryType::kBox && "TestSphereBox Geometry2 Error!");
+	const auto& sphere = geometry1.sphere();
+	const auto& box = geometry2.box();
 
-	const auto& sphere = geometry1.sphere;
-	const auto& box = geometry2.box;
-
-	return TestSphereBox(sphere, box, transform1, transform2);
+	return TestSphereOBB(sphere, box, transform1, transform2);
 }
 
 inline int TestSphereCapsule(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
 {
-	assert(geometry1.type() == GeometryType::kSphere && "TestSphereCapsule Geometry1 Error!");
-	assert(geometry2.type() == GeometryType::kCapsule && "TestSphereCapsule Geometry2 Error!");
-
-	const auto& sphere = geometry1.sphere;
-	const auto& capsule = geometry2.capsule;
+	const auto& sphere = geometry1.sphere();
+	const auto& capsule = geometry2.capsule();
 
 	return TestSphereCapsule(sphere, capsule, transform1, transform2);
 }
 
 inline int TestBoxBox(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
 {
-	assert(geometry1.type() == GeometryType::kBox && "TestBoxBox Geometry1 Error!");
-	assert(geometry2.type() == GeometryType::kBox && "TestBoxBox Geometry2 Error!");
+	const auto& box1 = geometry1.box();
+	const auto& box2 = geometry2.box();
 
-	const auto& box1 = geometry1.box;
-	const auto& box2 = geometry2.box;
-
-	return TestBoxBox(box1, box2, transform1, transform2);
+	return TestObbObb(box1, box2, transform1, transform2);
 }
 
 inline int TestBoxCapsule(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
 {
-	assert(geometry1.type() == GeometryType::kBox && "TestBoxCapsule Geometry1 Error!");
-	assert(geometry2.type() == GeometryType::kCapsule && "TestBoxCapsule Geometry2 Error!");
+	const auto& box = geometry1.box();
+	const auto& capsule = geometry2.capsule();
 
-	const auto& box = geometry1.box;
-	const auto& capsule = geometry2.capsule;
-
-	return TestBoxCapsule(box, capsule, transform1, transform2);
+	return TestObbCapsule(box, capsule, transform1, transform2);
 }
 
 inline int TestCapsuleCapsule(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2)
 {
-	assert(geometry1.type() == GeometryType::kCapsule && "TestCapsuleCapsule Geometry1 Error!");
-	assert(geometry2.type() == GeometryType::kCapsule && "TestCapsuleCapsule Geometry2 Error!");
-
-	const auto& capsule1 = geometry1.capsule;
-	const auto& capsule2 = geometry2.capsule;
+	const auto& capsule1 = geometry1.capsule();
+	const auto& capsule2 = geometry2.capsule();
 
 	return TestCapsuleCapsule(capsule1, capsule2, transform1, transform2);
 }

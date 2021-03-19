@@ -2,13 +2,17 @@
 
 #include "Framework/Game/Collision.hpp"
 
-#include "Framework/Game/Component/BoundingBox.hpp"
 #include "Framework/Game/Component/Contact.hpp"
+#include "Framework/Game/Component/ColliderInfo.hpp"
+#include "Framework/Game/Component/Collider.hpp"
+#include "Framework/Game/Component/Matrix4x4.hpp"
 
 #include "Framework/Game/System.hpp"
 
 struct CollisionSystem : public System
 {
+	entt::observer mover{ registry, entt::collector.group<Matrix4x4,Collider>().update<Matrix4x4>() };
+
 	CollisionSystem(entt::registry& _registry) : System(_registry) { }
 	~CollisionSystem() {}
 
@@ -23,19 +27,9 @@ struct CollisionSystem : public System
 		UpdateCollision(dt);
 	}
 
-	void LateUpdate(fixed16 dt)
-	{
-		auto view = registry.view<ContactList>();
-		for (auto e : view)
-		{
-			auto& contact_list = view.get<ContactList>(e);
-			contact_list.value.clear();
-		}
-	}
-
 	void CreateContactList()
 	{
-		auto view = registry.view<Collider>(entt::exclude<ContactList>);
+		auto view = registry.view<ColliderInfo>(entt::exclude<ContactList>);
 		for (auto e : view)
 		{
 			registry.emplace<ContactList>(e);
@@ -45,68 +39,42 @@ struct CollisionSystem : public System
 	void UpdateCollision(fixed16 dt)
 	{
 		//todo:后面用八叉树替换,暂时不管重复碰撞
-		auto view = registry.view<Collider,ContactList>();
-		
-		for (auto it1 = view.begin(); it1 != view.end(); ++it1)
+		auto view = registry.view<Matrix4x4,Collider>();
+
+		for (auto it1 = mover.begin(); it1 != mover.end(); ++it1)
 		{
 			auto e1 = *it1;
-			const auto& box1 = view.get<Collider>(e1);
-			auto& contact_list = view.get<ContactList>(e1);
+			const auto& transform1 = view.get<Matrix4x4>(e1);
+			const auto& collider1 = view.get<Collider>(e1);
+			
+			ContactList* contact_list = registry.valid(collider1.owner) ? registry.try_get<ContactList>(collider1.owner) : nullptr;
+
 			for (auto it2 = view.begin(); it2 != view.end(); ++it2)
 			{
 				auto e2 = *it2;
-				const auto& box2 = view.get<Collider>(e2);
-				if (e1 != e2 && TestCollision(box1, box2))
+				const auto& transform2 = view.get<Matrix4x4>(e1);
+				const auto& collider2 = view.get<Collider>(e2);
+
+				auto type1 = (size_t)collider1.geometry.type();
+				auto type2 = (size_t)collider2.geometry.type();
+				auto func = g_GeometryTestFuncTable[type1][type2] != 0 ? g_GeometryTestFuncTable[type1][type2] : g_GeometryTestFuncTable[type2][type1];
+
+				if (e1 != e2 && func(collider1.geometry,collider2.geometry,transform1.value,transform2.value))
 				{
-					contact_list.value.emplace_back(Contact{ e2 });
+					contact_list->value.emplace_back(Contact{ e2 });
 				}
 			}
 		}
 	}
-	
-	int TestCollision(const Collider& box1, const Collider& box2)
+
+	void LateUpdate(fixed16 dt)
 	{
-		if (box1.type == BoundingBoxType::kAABB)
+		auto view = registry.view<ContactList>();
+		for (auto e : view)
 		{
-			return TestCollision(box1.aabb, box2);
+			auto& contact_list = view.get<ContactList>(e);
+			contact_list.value.clear();
 		}
-		else if (box1.type == BoundingBoxType::kOBB)
-		{
-			return TestCollision(box1.obb, box2);
-		}
-		else if (box1.type == BoundingBoxType::kCapsule)
-		{
-			return TestCollision(box1.capsule, box2);
-		}
-		else if (box1.type == BoundingBoxType::kSphere)
-		{
-			return TestCollision(box1.sphere, box2);
-		}
-
-		return 0;
-	}
-
-	template<class T>
-	int TestCollision(const T& primitive,const Collider& box)
-	{
-		/*if (box.type == BoundingBoxType::kAABB)
-		{
-			return ::TestCollision(primitive, box.aabb);
-		}
-		else if (box.type == BoundingBoxType::kOBB)
-		{
-			return ::TestCollision(primitive, box.obb);
-		}
-		else if (box.type == BoundingBoxType::kCapsule)
-		{
-			return ::TestCollision(primitive, box.capsule);
-		}
-		else if (box.type == BoundingBoxType::kSphere)
-		{
-			return ::TestCollision(primitive, box.sphere);
-		}*/
-
-		return 0;
 	}
 
 	void Finalize() override

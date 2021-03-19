@@ -3,7 +3,6 @@
 #include "Framework/Game/Json.hpp"
 #include "rapidjson/document.h"
 #include <iostream>
-#include "Framework/Game/Data/AnimationConfig.hpp"
 #include "Framework/Game/FileService.hpp"
 #include "Framework/Game/Fmt.hpp"
 #include <vector>
@@ -13,6 +12,7 @@
 
 #include "Framework/Game/Math.hpp"
 #include "Framework/Game/Component/Attributes.hpp"
+#include "Framework/Game/Component/ColliderInfo.hpp"
 
 class Timer
 {
@@ -50,7 +50,7 @@ int main()
 	auto mat3 = mat4(quat(vec3(60, 30, 50)));
 	mat3[3] = vec4(5, 6, 7,1);
 
-	fixed16 v22;int
+	fixed16 v22;
 	fixed16 v = 0.01745329251994329576923690768489;
 	auto a = fixed16(-180.0);
 	float f1 = static_cast<float>(a);
@@ -90,13 +90,5 @@ int main()
 	fread(data, 1, len, f);
 	data[len] = '\0';
 	fclose(f);
-	
-	
-	{
-		AutoTimer t("parse json");
-		nlohmann::json j = nlohmann::json::parse(data);
-		auto anim_info = j.get<AnimationInfo>();
-	}
-
 	return 0;
 }

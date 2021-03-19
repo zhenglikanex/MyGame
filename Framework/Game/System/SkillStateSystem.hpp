@@ -3,7 +3,6 @@
 #include <functional>
 
 #include "Framework/Game/Component/SkillState.hpp"
-#include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Skill.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Transform.hpp"
@@ -27,20 +26,19 @@ struct SkillStateSystem : System
 			SkillType type = SkillType::kNotLockAnim;
 			if (type == SkillType::kNotLockAnim)
 			{
-				auto skill = this->registry.create();
-
 				auto weapon = this->registry.try_get<Weapon>(e);
 				if (weapon)
 				{
+					// todo:好的做法应该引入层级结构，创建Bone节点,挂到actor下面，再将skill挂到bone下面，先偷个懒
+					auto skill = this->registry.create();
 					this->registry.emplace<Skill>(skill, e, fixed16(0.5));
 					this->registry.emplace<SkillAttacthBone>(skill, skill_state.name, "RightWeapon");
-					this->registry.emplace<Collider>(skill, weapon->bounding_box);
+					this->registry.emplace<Transform>(skill);
+					auto& info = this->registry.emplace<ColliderInfo>(skill,weapon->collider_info);
 
-					auto transform = this->registry.try_get<Transform>(e);
-					if (transform)
-					{
-						this->registry.emplace<Transform>(skill, *transform);
-					}
+					auto collider = this->registry.create();
+					this->registry.emplace<Collider>(collider,info.geometry,info.tigger,skill);
+					info.collider = collider;
 				}
 			}
 		});

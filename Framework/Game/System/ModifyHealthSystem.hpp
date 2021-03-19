@@ -6,6 +6,8 @@
 
 struct ModifyHealthSystem : public System
 {
+	entt::observer modify_list{ registry, entt::collector.group<Health,ModifyHealthList>().update<ModifyHealthList>() };
+
 	ModifyHealthSystem(entt::registry& _registry) : System(_registry) { }
 	~ModifyHealthSystem() {}
 
@@ -20,13 +22,15 @@ struct ModifyHealthSystem : public System
 		for (auto e : view)
 		{
 			auto& health = view.get<Health>(e);
-			const auto& modify_health_list = view.get<ModifyHealthList>(e);
+			auto& modify_health_list = view.get<ModifyHealthList>(e);
 
 			// todo可以放到脚本中计算
 			for (auto& modify_health : modify_health_list.value)
 			{
 				
 			}
+
+			modify_health_list.value.clear();
 		}
 	}
 

@@ -3,8 +3,8 @@
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/DebugService.hpp"
 
-#include "Framework/Game/Component/BoundingBox.hpp"
-#include "Framework/Game/Component/Transform.hpp"
+#include "Framework/Game/Component/Collider.hpp"
+#include "Framework/Game/Component/Matrix4x4.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -20,44 +20,29 @@ struct DebugSystem : public System
 
 	void Update(fixed16 dt) override
 	{
-		DrawBoundingBox();
+		DrawCollider();
 	}
 
-	void DrawBoundingBox()
+	void DrawCollider()
 	{
-		auto view = registry.view<Transform,Collider>();
+		auto view = registry.view<Matrix4x4,Collider>();
 		for (auto e : view)
 		{
-			const auto& transform = view.get<Transform>(e);
-			const auto& box = view.get<Collider>(e);
+			const auto& transform = view.get<Matrix4x4>(e);
+			const auto& collider = view.get<Collider>(e);
 
-			auto mat = glm::mat4_cast(transform.rotation);
-			mat[3] = vec4(transform.position, fixed16(1));
-
-			if (box.type == BoundingBoxType::kAABB)
+			if (collider.geometry.type() == GeometryType::kBox)
 			{
-				g_debug_service->DrawCube(transform.position + box.aabb.c, quat(vec3(0, 0, 0)), box.aabb.r * fixed16(2));
+				quat q = glm::quat_cast(transform.value);
+				g_debug_service->DrawCube(transform.value[3], q, collider.geometry.box().e * fixed16(2.0f));
 			}
-			else if(box.type == BoundingBoxType::kOBB)
+			else if(collider.geometry.type() == GeometryType::kCapsule)
 			{
-				mat4 obb_mat(vec4(box.obb.u[0], 0), vec4(box.obb.u[0], 0), vec4(box.obb.u[0], 0), vec4(0, 0, 0, 1));
-				mat *= obb_mat;
-				vec3 position(mat[3]);
-				quat rotation(mat);
-
-				g_debug_service->DrawCube(position, rotation, box.obb.e * fixed16(2));
+				
 			}
-			else if (box.type == BoundingBoxType::kCapsule)
+			else if (collider.geometry.type() == GeometryType::kSphere)
 			{
-				auto a = (mat * glm::translate(glm::identity<mat4>(), box.capsule.a))[3];
-				auto b = (mat * glm::translate(glm::identity<mat4>(), box.capsule.b))[3];
-				auto position = a + (b - a) * fixed16(0.5);
-
-				g_debug_service->DrawCapsule(position, a, b, box.capsule.r);
-			}
-			else if (box.type == BoundingBoxType::kSphere)
-			{
-				g_debug_service->DrawSphere(transform.position + box.sphere.c, box.sphere.r);
+				g_debug_service->DrawSphere(transform.value[3], collider.geometry.sphere().r);
 			}
 		}
 	}
