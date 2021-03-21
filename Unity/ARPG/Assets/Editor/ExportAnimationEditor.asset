@@ -59,3 +59,9 @@ MonoBehaviour:
       step: 0.1
       param: 
       isBlendTree: 0
+    - name: Hurt
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0

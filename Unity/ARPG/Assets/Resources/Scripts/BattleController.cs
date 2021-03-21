@@ -56,8 +56,12 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
             Proto.PlayerInfo player = new Proto.PlayerInfo();
             player.Id = MyId;
             player.ActorAsset = "hero.json";
+            Proto.PlayerInfo player2 = new Proto.PlayerInfo();
+            player2.Id = 1;
+            player2.ActorAsset = "hero.json";
             Proto.GamePlayerInfos player_infos = new Proto.GamePlayerInfos();
             player_infos.PlayerInfos.Add(player);
+            player_infos.PlayerInfos.Add(player2);
             var data = player_infos.ToByteArray();
             CPlusPlusBridge.InitGame(data, data.Length);
 

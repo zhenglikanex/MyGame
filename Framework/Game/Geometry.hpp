@@ -136,21 +136,21 @@ public:
 
 	const Sphere& sphere() const
 	{
-		assert(type_ != GeometryType::kSphere && "type is not sphere");
+		assert(type_ == GeometryType::kSphere && "type is not sphere");
 
 		return sphere_;
 	}
 
 	const OBB& box() const
 	{
-		assert(type_ != GeometryType::kBox && "type is not sphere");
+		assert(type_ == GeometryType::kBox && "type is not box");
 
 		return box_;
 	}
 
 	const Capsule& capsule() const
 	{
-		assert(type_ != GeometryType::kCapsule && "type is not sphere");
+		assert(type_ == GeometryType::kCapsule && "type is not capsule");
 
 		return capsule_;
 	}

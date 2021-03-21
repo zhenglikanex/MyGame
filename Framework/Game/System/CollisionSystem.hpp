@@ -11,7 +11,7 @@
 
 struct CollisionSystem : public System
 {
-	entt::observer mover{ registry, entt::collector.group<Matrix4x4,Collider>().update<Matrix4x4>() };
+	entt::observer mover{ registry, entt::collector.group<Matrix4x4,Collider>().update<Matrix4x4>().where<Collider>() };
 
 	CollisionSystem(entt::registry& _registry) : System(_registry) { }
 	~CollisionSystem() {}
@@ -24,6 +24,7 @@ struct CollisionSystem : public System
 	void Update(fixed16 dt) override
 	{
 		CreateContactList();
+		ClearContactList();
 		UpdateCollision(dt);
 	}
 
@@ -33,6 +34,16 @@ struct CollisionSystem : public System
 		for (auto e : view)
 		{
 			registry.emplace<ContactList>(e);
+		}
+	}
+
+	void ClearContactList()
+	{
+		auto view = registry.view<ContactList>();
+		for (auto e : view)
+		{
+			auto& contact_list = view.get<ContactList>(e);
+			contact_list.value.clear();
 		}
 	}
 
@@ -52,30 +63,26 @@ struct CollisionSystem : public System
 			for (auto it2 = view.begin(); it2 != view.end(); ++it2)
 			{
 				auto e2 = *it2;
-				const auto& transform2 = view.get<Matrix4x4>(e1);
+				const auto& transform2 = view.get<Matrix4x4>(e2);
 				const auto& collider2 = view.get<Collider>(e2);
 
 				auto type1 = (size_t)collider1.geometry.type();
 				auto type2 = (size_t)collider2.geometry.type();
-				auto func = g_GeometryTestFuncTable[type1][type2] != 0 ? g_GeometryTestFuncTable[type1][type2] : g_GeometryTestFuncTable[type2][type1];
-
-				if (e1 != e2 && func(collider1.geometry,collider2.geometry,transform1.value,transform2.value))
+				auto func = g_TestGeometryFuncTable[type1][type2] != nullptr ? g_TestGeometryFuncTable[type1][type2] : g_TestGeometryFuncTable[type2][type1];
+				
+				if (e1 != e2 && func && func(collider1.geometry,collider2.geometry,transform1.value,transform2.value))
 				{
-					contact_list->value.emplace_back(Contact{ e2 });
+					INFO("collision");
+
+					if (contact_list)
+					{
+						contact_list->value.emplace_back(Contact{ collider2.owner });
+					}
 				}
 			}
 		}
 	}
-
-	void LateUpdate(fixed16 dt)
-	{
-		auto view = registry.view<ContactList>();
-		for (auto e : view)
-		{
-			auto& contact_list = view.get<ContactList>(e);
-			contact_list.value.clear();
-		}
-	}
+	
 
 	void Finalize() override
 	{

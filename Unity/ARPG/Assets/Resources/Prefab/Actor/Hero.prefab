@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 975227072}
   - component: {fileID: 975227074}
-  - component: {fileID: 975227073}
+  - component: {fileID: 7735313085453858036}
   m_Layer: 0
   m_Name: BodyCollision
   m_TagString: EditorOnly
@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d967ba1b149abc04c82134f8e2e07524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &975227073
-CapsuleCollider:
+--- !u!65 &7735313085453858036
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -53,10 +53,9 @@ CapsuleCollider:
   m_GameObject: {fileID: 975227071}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.3
-  m_Height: 1.8
-  m_Direction: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 1.8, z: 0.4}
   m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!1 &2692675026095649535
 GameObject:

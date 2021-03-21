@@ -6,7 +6,7 @@
 
 struct HealthSystem : public System
 {
-	entt::observer update_list{ registry,entt::collector.group<Health,AttributeUnitList>().update<AttributeUnitList>() };
+	entt::observer update_list{ registry,entt::collector.group<Health,AttributeUnitList>().update<AttributeUnitList>().where<Health>() };
 
 	HealthSystem(entt::registry& _registry) : System(_registry) { }
 	~HealthSystem() {}

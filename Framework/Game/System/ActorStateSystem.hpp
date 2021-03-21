@@ -287,6 +287,9 @@ struct ActorStateSystem : public System
 		OnEnter();
 
 		ProcessCurState(dt);
+
+		registry.clear<EnterActorState>();
+		registry.clear<ExitActorState>();
 	}
 
 	void OnTransition(fixed16 dt)
@@ -348,8 +351,7 @@ struct ActorStateSystem : public System
 
 	void LateUpdate(fixed16 dt) override
 	{
-		registry.clear<EnterActorState>();
-		registry.clear<ExitActorState>();
+		
 	}
 
 	void Finalize() override

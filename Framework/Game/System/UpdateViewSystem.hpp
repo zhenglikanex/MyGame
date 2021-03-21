@@ -8,14 +8,14 @@
 
 void func(const entt::registry& reg, entt::entity e)
 {
-	auto move = reg.get<Movement>(e);
-	int a = 10;
+	//auto move = reg.get<Movement>(e);
+	//int a = 10;
 }
 
 struct UpdateViewSystem : public System
 {
-	entt::observer mover{ registry, entt::collector.group<Transform,View>().update<Transform>() };
-	entt::observer animator{ registry,entt::collector.group<AnimationClip,View>().update<AnimationClip>() };
+	entt::observer mover{ registry, entt::collector.group<Transform,View>().update<Transform>().where<View>() };
+	entt::observer animator{ registry,entt::collector.group<AnimationClip,View>().update<AnimationClip>().where<View>() };
 
 	UpdateViewSystem(entt::registry& _registry) : System(_registry) { }
 	~UpdateViewSystem() {}

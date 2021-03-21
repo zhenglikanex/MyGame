@@ -33,11 +33,11 @@ struct SkillStateSystem : System
 					auto skill = this->registry.create();
 					this->registry.emplace<Skill>(skill, e, fixed16(0.5));
 					this->registry.emplace<SkillAttacthBone>(skill, skill_state.name, "RightWeapon");
-					this->registry.emplace<Transform>(skill);
+					this->registry.emplace<Transform>(skill,this->registry.get<Transform>(e));
 					auto& info = this->registry.emplace<ColliderInfo>(skill,weapon->collider_info);
 
 					auto collider = this->registry.create();
-					this->registry.emplace<Collider>(collider,info.geometry,info.tigger,skill);
+					this->registry.emplace<Collider>(collider,info.geometry,info.trigger,skill);
 					info.collider = collider;
 				}
 			}

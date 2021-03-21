@@ -26,6 +26,7 @@
 #include "Framework/Game/System/HealthSystem.hpp"
 #include "Framework/Game/System/ModifyHealthSystem.hpp"
 #include "Framework/Game/System/SkillSystem.hpp"
+#include "Framework/Game/System/UpdateColliderTransformSystem.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
 
@@ -47,8 +48,9 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	systems_.emplace_back(std::make_unique<RootMotionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
 	systems_.emplace_back(std::make_unique<SkillSystem>(registry_));
-	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
+	systems_.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
+	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
 	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
 
 #ifdef DEBUG
@@ -152,7 +154,7 @@ void Game::UpdateClinet(float dt)
 		++registry_.ctx<GameState>().run_frame;
 
 		auto t = std::chrono::duration<double>(std::chrono::system_clock::now() - start).count();
-		INFO("cpp time {}", t * 1000);
+		//INFO("cpp time {}", t * 1000);
 	}
 }
 
@@ -213,7 +215,14 @@ void Game::SetupCommands(uint32_t frame)
 	{
 		if (e.second.size() <= frame)
 		{
-			group.emplace(e.first, e.second.back());
+			if (e.second.empty())
+			{
+				group.emplace(e.first, Command());
+			}
+			else
+			{
+				group.emplace(e.first, e.second.back());
+			}
 		}
 		else
 		{
@@ -292,6 +301,8 @@ void Game::CreatePlayer()
 	
 		registry_.emplace<Player>(e,player_info.id);
 		registry_.emplace<ActorAsset>(e,player_info.actor_asset);
+
+		player_input_commands_.emplace(player_info.id, std::vector<Command>());
 	}
 }
 

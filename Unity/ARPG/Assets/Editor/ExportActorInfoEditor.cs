@@ -16,10 +16,10 @@ public class ExportActorInfoEditor : EditorWindow
 
     public class OBBCollision : Collision
     {
-        public string type = "obb";
-        public Vector3 c;     // OBB center point
-        public Matrix4x4 u; // Transform
+        public string type = "box";
+        public Matrix4x4  transform; // Transform
         public Vector3 e;   //Positive halfwidth extents of OBB along each axis
+        public bool trigger;
     }
 
     public class CapsuleCollision : Collision
@@ -28,6 +28,7 @@ public class ExportActorInfoEditor : EditorWindow
         public Vector3 a;      // Medial line segment start point
         public Vector3 b;      // Medial line segment end point
         public float r;      // Radius
+        public bool tigger;
     }
 
     public class ActorInfo
@@ -125,9 +126,9 @@ public class ExportActorInfoEditor : EditorWindow
             var boxCollider = (BoxCollider)collider;
            
             OBBCollision collision = new OBBCollision();
-            collision.c = boxCollider.center;
-            collision.u = boxCollider.transform.localToWorldMatrix;
+            collision.transform = Matrix4x4.Translate(boxCollider.center);
             collision.e = boxCollider.size / 2.0f;
+            collision.trigger = boxCollider.isTrigger;
             return collision;
         }
         else if (collider.GetType() == typeof(CapsuleCollider))

@@ -196,9 +196,10 @@ inline int TestObbObb(const OBB& a, const OBB& b,const mat4& a_transform,const m
 			R[i][j] = glm::dot(vec3(a_transform[i]), vec3(b_transform[j]));
 
 	// Compute translation vector t
-	vec3 t = vec3(b_transform[3]) - vec3(b_transform[3]);
+	vec3 t = vec3(b_transform[3]) - vec3(a_transform[3]);
 	// Bring translation into a's coordinate frame
-	t = vec3(glm::dot(t, vec3(a_transform[0])), glm::dot(t, vec3(a_transform[1])), glm::dot(t, vec3(a_transform[2])));
+	t = mat3(a_transform) * t;
+	//t = vec3(glm::dot(t, vec3(a_transform[0])), glm::dot(t, vec3(a_transform[1])), glm::dot(t, vec3(a_transform[2])));
 
 	// Compute common subexpressions. Add in an epsilon term to
 	// counteract arithmetic errors when two edges are parallel and
@@ -421,4 +422,4 @@ inline int TestCapsuleCapsule(const Geometry& geometry1, const Geometry& geometr
 
 using TestGeometryFunc = int(*)(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2);
 
-extern TestGeometryFunc g_GeometryTestFuncTable[][(uint8_t)GeometryType::kMax];
+extern TestGeometryFunc g_TestGeometryFuncTable[][(uint8_t)GeometryType::kMax];

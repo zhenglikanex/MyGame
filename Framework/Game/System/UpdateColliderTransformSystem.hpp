@@ -11,7 +11,7 @@
 
 struct UpdateColliderTransformSystem : public System
 {
-	entt::observer mover{ registry, entt::collector.group<Transform,ColliderInfo>().update<Transform>() };
+	entt::observer mover{ registry, entt::collector.group<Transform,ColliderInfo>().update<Transform>().where<ColliderInfo>() };
 
 	UpdateColliderTransformSystem(entt::registry& _registry) : System(_registry) { }
 	~UpdateColliderTransformSystem() {}
@@ -36,7 +36,7 @@ struct UpdateColliderTransformSystem : public System
 			}
 		}
 	}
-
+	
 	void LateUpdate(fixed16 dt)
 	{
 	}

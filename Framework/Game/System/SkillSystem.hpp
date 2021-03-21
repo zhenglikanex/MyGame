@@ -2,11 +2,12 @@
 
 #include "Framework/Game/Component/Skill.hpp"
 #include "Framework/Game/Component/Transform.hpp"
-#include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Animation.hpp"
 #include "Framework/Game/Component/Contact.hpp"
 #include "Framework/Game/Component/Health.hpp"
+
+#include "Framework/Game/Utility/ActorStateUtility.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -88,7 +89,7 @@ struct SkillSystem : public System
 
 			for (const auto& contact : contact_list.value)
 			{
-				if (registry.valid(contact.entity) && registry.has<ModifyHealthList>(contact.entity))
+				if (contact.entity != skill.owner && registry.valid(contact.entity) && registry.has<ModifyHealthList>(contact.entity))
 				{
 					skill.targets.emplace_back(contact.entity);
 				}
@@ -101,12 +102,15 @@ struct SkillSystem : public System
 		auto view = registry.view<Skill>();
 		for (auto e : view)
 		{
-			const auto& skill = view.get<Skill>(e);
+			auto& skill = view.get<Skill>(e);
 			for (auto target : skill.targets)
 			{
-				if (registry.valid(target) && registry.has<ModifyHealthList>(target))
+				if (registry.valid(target) && registry.has<ModifyHealthList>(target) && skill.hit_target.find(target) == skill.hit_target.end())
 				{
-					registry.patch<ModifyHealthList>(e, [&skill, this](ModifyHealthList &comp) 
+					INFO("hit target");
+					ActionStateUtility::ChangeState(registry, target, ActorStateType::kHurt);
+					skill.hit_target.emplace(target);
+					registry.patch<ModifyHealthList>(target, [&skill, this](ModifyHealthList &comp) 
 					{ 
 						comp.value.emplace_back(GetSkillModifyHealth(skill)); 
 					});
@@ -131,6 +135,14 @@ struct SkillSystem : public System
 			skill.time += dt;
 			if (skill.time >= skill.life)
 			{
+				auto collider_info = registry.try_get<ColliderInfo>(e);
+				if (collider_info)
+				{
+					if (registry.valid(e))
+					{
+						registry.destroy(collider_info->collider);
+					}
+				}
 				registry.destroy(e);
 			}
 		}

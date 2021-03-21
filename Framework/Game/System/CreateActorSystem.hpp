@@ -16,6 +16,7 @@
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Attributes.hpp"
 #include "Framework/Game/Component/Transform.hpp"
+#include "Framework/Game/Component/Health.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -61,17 +62,20 @@ struct CreateActorSystem : public System
 			attribute_units.value.emplace_back(AttributeUnit{ e, attributes });	// todo actor
 			attribute_units.value.emplace_back(AttributeUnit{ e, attributes });	// todo wepon
 
+			//可以被攻击
+			registry.emplace<ModifyHealthList>(e);
+
 			// 调试
-			auto weapon = registry.create();
-			registry.emplace<Collider>(weapon,actor_info.weapon().geometry,actor_info.weapon().tigger,entt::null);
-			registry.emplace<Transform>(weapon,actor_info.weapon().transform);
+			/*auto weapon = registry.create();
+			registry.emplace<Collider>(weapon,actor_info.weapon().geometry,actor_info.weapon().trigger,entt::null);
+			registry.emplace<Transform>(weapon,actor_info.weapon().transform);*/
 		}
 	}
 
 	entt::entity CreateBodyCollider(entt::entity e,ColliderInfo& info)
 	{
 		auto collider = registry.create();
-		registry.emplace<Collider>(collider, info.geometry, info.tigger,e);
+		registry.emplace<Collider>(collider, info.geometry, info.trigger,e);
 		return collider;
 	}
 
