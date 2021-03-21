@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "Framework/Game/FixedPoint.hpp"
-#include "Framework/serialize/binary_archive.hpp"
 
 struct Command
 {
@@ -28,23 +27,5 @@ struct Command
 		skill = 0;
 	}
 
-	BAR(x_axis, y_axis, jump,skill)
-};
-
-struct Movementcommand
-{
-	fixed16 x_axis;
-	fixed16 y_axis;
-
-	BAR(x_axis, y_axis);
-};
-
-struct Jumpcommand
-{
-	bool jump;
-	BAR(jump);
-};
-
-struct Attackcommand
-{
+	//BAR(x_axis, y_axis, jump,skill)
 };

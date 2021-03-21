@@ -16,6 +16,7 @@ endif()
 #添加目录引用
 include_directories("${PROJECT_SOURCE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/3rdparty/include")
+include_directories("${PROJECT_SOURCE_DIR}/Framework/Kanex/Src")
 
 #define debug
 set (CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG -D_DEBUG")

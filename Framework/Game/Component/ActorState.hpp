@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Framework/serialize/binary_archive.hpp"
+#include "Kanex.hpp"
 
 enum class ActorStateType : uint8_t
 {
@@ -29,7 +29,7 @@ struct ActorState
 
 	}
 
-	BAR(cur_state, time);
+	//BAR(cur_state, time);
 };
 
 struct EnterActorState

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cassert>
 #include <vector>
 #include <iostream>
 #include <array>
@@ -40,6 +39,8 @@ namespace kanex
 		}
 
 		void ResetRead() { read_cursor_ = 0; }
+
+		bool IsFinish() const { return write_cursor_ == read_cursor_; }
  
 		void Reserve(size_t capactiy) { buffer_.reserve(capactiy); }
 		size_t Size() const { return buffer_.size(); }
