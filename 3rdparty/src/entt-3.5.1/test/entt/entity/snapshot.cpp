@@ -68,6 +68,11 @@ private:
 struct a_component {};
 
 struct another_component {
+	another_component(int k, int v)
+		:key(k),value(v)
+	{
+
+	}
     int key;
     int value;
 };
@@ -82,6 +87,49 @@ struct map_component {
     std::map<int, entt::entity> values;
     std::map<entt::entity, entt::entity> both;
 };
+
+TEST(Snapshot, Dump1) {
+	using traits_type = entt::entt_traits<entt::entity>;
+
+	entt::registry registry;
+
+	const auto e0 = registry.create();
+	registry.emplace<int>(e0, 42);
+	registry.emplace<char>(e0, 'c');
+	registry.emplace<double>(e0, .1);
+
+	const auto e1 = registry.create();
+
+	const auto e2 = registry.create();
+	registry.emplace<int>(e2, 3);
+
+	const auto e3 = registry.create();
+	registry.emplace<a_component>(e3);
+	registry.emplace<char>(e3, '0');
+
+	registry.destroy(e1);
+	auto v1 = registry.current(e1);
+
+	using storage_type = std::tuple<
+		std::queue<typename traits_type::entity_type>,
+		std::queue<entt::entity>,
+		std::queue<int>,
+		std::queue<char>,
+		std::queue<double>,
+		std::queue<a_component>,
+		std::queue<another_component>
+	>;
+
+	storage_type storage;
+	output_archive<storage_type> output{ storage };
+	input_archive<storage_type> input{ storage };
+
+	entt::snapshot{ registry }.component<another_component>(output);
+	registry.clear();
+
+	entt::snapshot_loader{ registry }.component<another_component>(input).orphans();
+
+}
 
 TEST(Snapshot, Dump) {
     using traits_type = entt::entt_traits<entt::entity>;

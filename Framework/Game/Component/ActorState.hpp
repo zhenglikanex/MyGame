@@ -28,16 +28,42 @@ struct ActorState
 	{
 
 	}
-
-	//BAR(cur_state, time);
 };
 
 struct EnterActorState
 {
 	ActorStateType value;
+
+	EnterActorState()
+		: value(ActorStateType::kMax)
+	{
+
+	}
+
+	EnterActorState(ActorStateType _value)
+		:value(_value)
+	{
+
+	}
 };
 
 struct ExitActorState
 {
 	ActorStateType value;
+
+	ExitActorState()
+		: value(ActorStateType::kMax)
+	{
+
+	}
+
+	ExitActorState(ActorStateType _value)
+		:value(_value)
+	{
+
+	}
 };
+
+NON_MEMEBER_BAR(ActorState, obj.cur_state, obj.time);
+NON_MEMEBER_BAR(ExitActorState,obj.value);
+NON_MEMEBER_BAR(EnterActorState, obj.value);

@@ -5,8 +5,12 @@ project(MyGame)
 #添加camke模块
 include(cmake/common.cmake)
 
-#设置文件夹归类
+#设置文件夹归�?
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
+
+if(WIN32)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
+endif()
 
 set(CMAKE_PREFIX_PATH "${PROJECT_SOURCE_DIR}/3rdparty/lib/cmake")
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -41,7 +45,7 @@ add_subdirectory(Client)
 add_subdirectory(Test)
 add_subdirectory(ClientProxy)
 
-#安装MyGameClient到Unity Plugins目录下
+#安装MyGameClient到Unity Plugins目录�?
 install(TARGETS MyGameClient
     RUNTIME DESTINATION Unity/ARPG
     LIBRARY DESTINATION Unity/ARPG

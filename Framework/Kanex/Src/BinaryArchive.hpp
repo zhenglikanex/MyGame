@@ -68,4 +68,13 @@ namespace kanex
 	void Serialize(kanex::BinaryInputArchive& ar)					\
 	{																\
 		ar(__VA_ARGS__);											\
-	}																
+	}									
+
+#define NON_MEMEBER_BAR(class_name,...)								\
+namespace kanex {													\
+template<class Archive>												\
+void Serialize(Archive& ar, class_name& obj)						\
+{																	\
+	ar(__VA_ARGS__);												\
+}																	\
+}

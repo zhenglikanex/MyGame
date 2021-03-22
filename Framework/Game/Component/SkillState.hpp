@@ -6,8 +6,6 @@
 
 #include "Framework/Game/Data/SkillGraph.hpp"
 
-#include "Framework/serialize/binary_archive.hpp"
-
 struct SkillState
 {
 	std::string name;

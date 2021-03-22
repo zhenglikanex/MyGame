@@ -71,7 +71,7 @@ struct SkillSystem : public System
 					auto bone = GetBone(animation, anim_clip, attacth_anim_clip.bone_name);
 					if (bone)
 					{
-						auto m = owner_transform->GetMatrix4x4() * bone->transform;
+						auto m = GetMatrix4x4(*owner_transform) * bone->transform;
 						registry.emplace_or_replace<Transform>(e,m);
 					}
 				}

@@ -55,7 +55,8 @@ namespace kanex
 	};																												\
 	template<class T,class A>																						\
 	struct has_non_member_##name : std::integral_constant<bool,has_non_member_##name##_impl<T,A>::value> {};				\
-	
+
+
 	// ∂®“Âhas_memeber_Serialize°¢Save°¢Load
 	SERIALIZE_MAKE_HAS_MEMEBER_TEST(Serialize);
 	SERIALIZE_MAKE_HAS_MEMEBER_TEST(Save);
