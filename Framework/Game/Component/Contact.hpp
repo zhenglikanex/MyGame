@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "Kanex.hpp"
+
 #include "3rdparty/include/entt/entt.hpp"
 
 
@@ -19,3 +21,6 @@ struct ContactList
 	{
 	}
 };
+
+NON_MEMEBER_BAR(Contact, obj.entity);
+NON_MEMEBER_BAR(ContactList, obj.value);

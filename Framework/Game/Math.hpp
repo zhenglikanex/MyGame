@@ -69,8 +69,8 @@ namespace glm
 namespace kanex
 {
 
-	template<class Archive,glm::length_t N, class T, glm::qualifier Q>
-	void Save(Archive& ar,const glm::vec<N,T,Q>& v)
+	template<class Archive, glm::length_t N, class T, glm::qualifier Q>
+	void Save(Archive& ar, const glm::vec<N, T, Q>& v)
 	{
 		for (glm::length_t i = 0; i < N; ++i)
 		{
@@ -79,7 +79,7 @@ namespace kanex
 	}
 
 	template<class Archive, glm::length_t N, class T, glm::qualifier Q>
-	void Load(Archive& ar,glm::vec<N, T, Q>& v)
+	void Load(Archive& ar, glm::vec<N, T, Q>& v)
 	{
 		for (glm::length_t i = 0; i < N; ++i)
 		{
@@ -87,7 +87,7 @@ namespace kanex
 		}
 	}
 
-	template<class Archive,glm::length_t N,class T,glm::qualifier Q>
+	template<class Archive, glm::length_t N, class T, glm::qualifier Q>
 	void Save(Archive& ar, const glm::mat<N, N, T, Q>& m)
 	{
 		for (glm::length_t i = 0; i < N; ++i)
@@ -100,7 +100,7 @@ namespace kanex
 	}
 
 	template<class Archive, glm::length_t N, class T, glm::qualifier Q>
-	void Load(Archive& ar,glm::mat<N,N,T,Q>& m)
+	void Load(Archive& ar, glm::mat<N, N, T, Q>& m)
 	{
 		for (glm::length_t i = 0; i < N; ++i)
 		{

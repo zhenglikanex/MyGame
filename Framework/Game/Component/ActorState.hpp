@@ -65,5 +65,5 @@ struct ExitActorState
 };
 
 NON_MEMEBER_BAR(ActorState, obj.cur_state, obj.time);
-NON_MEMEBER_BAR(ExitActorState,obj.value);
+NON_MEMEBER_BAR(ExitActorState, obj.value);
 NON_MEMEBER_BAR(EnterActorState, obj.value);

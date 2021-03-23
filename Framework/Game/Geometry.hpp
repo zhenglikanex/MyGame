@@ -2,6 +2,8 @@
 
 #include "Framework/Game/Math.hpp"
 
+#include "Kanex.hpp"
+
 struct AABB 
 {
 	vec3 r; // radius or halfwidth extents (rx, ry, rz)
@@ -78,6 +80,10 @@ struct Ray
 	}
 };
 
+NON_MEMEBER_BAR(Sphere, obj.r);
+NON_MEMEBER_BAR(OBB, obj.e);
+NON_MEMEBER_BAR(Capsule, obj.h, obj.r);
+
 enum class GeometryType : uint8_t
 {
 	kSphere,
@@ -89,8 +95,6 @@ enum class GeometryType : uint8_t
 class Geometry
 {
 public:
-	
-
 	Geometry() = default;
 
 	explicit Geometry(const Sphere& _sphere)
@@ -155,6 +159,39 @@ public:
 		return capsule_;
 	}
 
+	void Save(kanex::BinaryOutputArchive& ar) const
+	{
+		ar(type_);
+		if (type_ == GeometryType::kSphere)
+		{
+			ar(sphere_);
+		}
+		else if (type_ == GeometryType::kBox)
+		{
+			ar(box_);
+		}
+		else if (type_ == GeometryType::kCapsule)
+		{
+			ar(capsule_);
+		}
+	}
+
+	void Load(kanex::BinaryInputArchive& ar)
+	{
+		ar(type_);
+		if (type_ == GeometryType::kSphere)
+		{
+			ar(sphere_);
+		}
+		else if (type_ == GeometryType::kBox)
+		{
+			ar(box_);
+		}
+		else if (type_ == GeometryType::kCapsule)
+		{
+			ar(capsule_);
+		}
+	}
 private:
 	union
 	{

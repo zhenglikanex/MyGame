@@ -107,12 +107,20 @@ namespace kanex
 			kanex::Serialize(*self_, data);
 		}
 
-		//通过非成员函数Save
+		//通过非成员函数Load
 		template<class T>
 		std::enable_if_t<has_non_member_Load<T, ArchiveType>::value, void>
 			SerializeImpl(T& data)
 		{
 			Load(*self_, data);
+		}
+
+		//通过成员函数Load
+		template<class T>
+		std::enable_if_t<has_member_Load<T, ArchiveType>::value, void>
+			SerializeImpl(T& data)
+		{
+			Access::Load(*self_, data);
 		}
 
 		template<class T>

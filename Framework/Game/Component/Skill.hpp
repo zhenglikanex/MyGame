@@ -5,6 +5,8 @@
 
 #include "Framework/Game/Math.hpp"
 
+#include "Kanex.hpp"
+
 #include "3rdparty/include/entt/entt.hpp"
 
 // 技能有移动方式
@@ -30,6 +32,8 @@ struct Skill
 	std::vector<entt::entity> targets;
 	std::unordered_set<entt::entity> hit_target;
 
+	Skill() = default;
+
 	Skill(entt::entity _owner, fixed16 _life)
 		: owner(_owner)
 		, life(_life)
@@ -51,3 +55,5 @@ struct SkillAttacthBone
 
 	}
 };
+
+//NON_MEMEBER_BAR(Skill, obj.owner, obj.life, obj.time, obj.targets, obj.hit_target);

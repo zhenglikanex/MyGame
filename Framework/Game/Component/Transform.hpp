@@ -37,4 +37,4 @@ inline mat4 GetMatrix4x4(const Transform& transform)
 	return m;
 }
 
-//NON_MEMEBER_BAR(Transform, obj.position);
+NON_MEMEBER_BAR(Transform, obj.position, obj.rotation);

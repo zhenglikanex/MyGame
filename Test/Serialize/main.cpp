@@ -1,11 +1,18 @@
 #define CATCH_CONFIG_MAIN
 
 #include "3rdparty/include/catch2/catch.hpp"
+#include <chrono>
+#include "Kanex.hpp"
+#include "3rdparty/include/glm/gtc/quaternion.hpp"
 #include "Framework/Game/Math.hpp"
-#include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/ActorState.hpp"
+#include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
-//#include "Framework/Game/Component/Transform.hpp"
+#include "Framework/Game/Component/Transform.hpp"
+#include "Framework/Game/Component/Contact.hpp"
+#include "Framework/Game/Component/Attributes.hpp"
+#include "Framework/Game/Component/Health.hpp"
+#include "Framework/Game/Component/Collider.hpp"
 
 struct Serialize
 {
@@ -43,6 +50,7 @@ public:
 	Timer timer;
 	std::string name;
 };
+
 
 TEST_CASE_METHOD(Serialize, "Fixed")
 {
@@ -110,9 +118,32 @@ TEST_CASE_METHOD(Serialize, "Math")
 	REQUIRE(vec == out);
 	REQUIRE(buffer.IsFinish());
 
-	
-	mat4 src3 = glm::identity<mat4>();
+	quat src3 = glm::identity<quat>();
 	oar(src3);
+	
+	quat out3;
+	iar(out3);
+
+	REQUIRE(src3 == out3);
+	REQUIRE(buffer.IsFinish());
+
+	mat4 src4 = glm::identity<mat4>();
+	oar(src4);
+
+	mat4 out4;
+	iar(out4);
+
+	REQUIRE(src4 == out4);
+	
+
+	vec4 src5(1.7, 8.9, 104,3.0);
+	oar(src5);
+
+	vec4 out5;
+	iar(out5);
+
+	REQUIRE(src5 == out5);
+	REQUIRE(buffer.IsFinish());
 }
 
 TEST_CASE_METHOD(Serialize, "AnimationClip")
@@ -178,16 +209,144 @@ TEST_CASE_METHOD(Serialize, "Movement")
 	REQUIRE(buffer.IsFinish());
 }
 
-//TEST_CASE_METHOD(Serialize,"Transform")
-//{
-//	Transform output(vec3(0.222,0.333,0.1),quat(10,20,30,40));
-//	
-//	//oar(output);
-//	
-//	Transform input;
-//	//iar(input);
-//
-//	REQUIRE(output.position == input.position);
-//	REQUIRE(output.rotation == output.rotation);
-//	REQUIRE(buffer.IsFinish());
-//}
+TEST_CASE_METHOD(Serialize, "Transform")
+{
+	std::vector<Transform> outvec;
+	Transform output(vec3(0.222, 0.333, 0.1), quat(10, 20, 30, 40));
+	outvec.push_back(output);
+	outvec.push_back(output);
+	outvec.push_back(output);
+	oar(output);
+	oar(outvec);
+
+	std::vector<Transform> invec;
+	Transform input;
+	iar(input);
+	iar(invec);
+
+	REQUIRE(output.position == input.position);
+	REQUIRE(output.rotation == output.rotation);
+	REQUIRE(invec.size() == outvec.size());
+	REQUIRE(buffer.IsFinish());
+}
+
+TEST_CASE_METHOD(Serialize, "Contact")
+{
+	ContactList output;
+	output.value.push_back(Contact{ (entt::entity)10 });
+	output.value.push_back(Contact{ (entt::entity)31 });
+	output.value.push_back(Contact{ (entt::entity)20 });
+
+	oar(output);
+
+	ContactList input;
+	iar(input);
+
+	REQUIRE(output.value[0].entity == input.value[0].entity);
+	REQUIRE(output.value[1].entity == input.value[1].entity);
+	REQUIRE(output.value[2].entity == input.value[2].entity);
+	REQUIRE(buffer.IsFinish());
+}
+
+TEST_CASE_METHOD(Serialize, "Attributes")
+{
+	AttributeUnitList output;
+	AttributeArray attributes{ Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
+	output.value.emplace_back(entt::null, attributes);
+	output.value.emplace_back((entt::entity)100, attributes);
+	
+	oar(output);
+
+	AttributeUnitList input;
+	iar(input);
+	
+
+	for (int i = 0; i < output.value.size(); ++i)
+	{
+		REQUIRE(input.value[i].owner == output.value[i].owner);
+		for (int j = 0; j < output.value[i].attributes.size(); ++j)
+		{
+			REQUIRE(input.value[i].attributes[i].calc_type == output.value[i].attributes[i].calc_type);
+			REQUIRE(input.value[i].attributes[i].value == output.value[i].attributes[i].value);
+		}
+	}
+
+	REQUIRE(buffer.IsFinish());
+}
+
+TEST_CASE_METHOD(Serialize, "Health")
+{
+	Health output;
+	output.cur = { Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
+	output.max = { Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
+
+	oar(output);
+	
+	Health input;
+	iar(input);
+
+	for (int i = 0; i < output.cur.size(); ++i)
+	{
+		REQUIRE(input.cur[i].calc_type == output.cur[i].calc_type);
+		REQUIRE(input.cur[i].value == output.cur[i].value);
+
+		REQUIRE(input.max[i].calc_type == output.max[i].calc_type);
+		REQUIRE(input.max[i].value == output.max[i].value);
+	}
+
+	REQUIRE(buffer.IsFinish());
+
+	ModifyHealthList output1;
+	output1.value.emplace_back(AttributeType::kHp, ModifyType::kNowPercentage, 10);
+	output1.value.emplace_back(AttributeType::kDamage, ModifyType::kNumerical, 0.32);
+
+	oar(output1);
+
+	ModifyHealthList input1;
+	iar(input1);
+
+	REQUIRE(output1.value.size() == input1.value.size());
+	for (int i = 0; i < output1.value.size(); ++i)
+	{
+		REQUIRE(output1.value[i].attribute_type == input1.value[i].attribute_type);
+		REQUIRE(output1.value[i].modify_type == input1.value[i].modify_type);
+		REQUIRE(output1.value[i].value == input1.value[i].value);
+	}
+	REQUIRE(buffer.IsFinish());
+}
+
+TEST_CASE_METHOD(Serialize, "Collider")
+{
+	Collider output1(Geometry(Sphere(10)), true, entt::entity(10));
+	Collider output2(Geometry(OBB(vec3(50))), false, entt::entity(10));
+	Collider output3(Geometry(Capsule(10.2, 0.3)), true, entt::entity(10));	
+	oar(output1);
+	oar(output2);
+	oar(output3);
+
+	Collider input1;
+	Collider input2;
+	Collider input3;
+
+	iar(input1);
+	iar(input2);
+	iar(input3);
+
+	REQUIRE(output1.geometry.type() == input1.geometry.type());
+	REQUIRE(output1.geometry.sphere().r == input1.geometry.sphere().r);
+	REQUIRE(output1.trigger == input1.trigger);
+	REQUIRE(output1.owner == input1.owner);
+
+	REQUIRE(output2.geometry.type() == input2.geometry.type());
+	REQUIRE(output2.geometry.box().e == input2.geometry.box().e);
+	REQUIRE(output2.trigger == input2.trigger);
+	REQUIRE(output2.owner == input2.owner);
+
+	REQUIRE(output3.geometry.type() == input3.geometry.type());
+	REQUIRE(output3.geometry.capsule().h == input3.geometry.capsule().h);
+	REQUIRE(output3.geometry.capsule().r == input3.geometry.capsule().r);
+	REQUIRE(output3.trigger == input3.trigger);
+	REQUIRE(output3.owner == input3.owner);
+
+	REQUIRE(buffer.IsFinish());
+}

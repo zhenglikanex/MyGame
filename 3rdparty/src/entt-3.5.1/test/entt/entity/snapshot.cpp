@@ -68,11 +68,7 @@ private:
 struct a_component {};
 
 struct another_component {
-	another_component(int k, int v)
-		:key(k),value(v)
-	{
 
-	}
     int key;
     int value;
 };

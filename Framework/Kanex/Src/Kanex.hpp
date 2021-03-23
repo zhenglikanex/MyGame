@@ -7,3 +7,4 @@
 #include "Types/Set.hpp"
 #include "Types/String.hpp"
 #include "Types/Vector.hpp"
+#include "Types/Array.hpp"

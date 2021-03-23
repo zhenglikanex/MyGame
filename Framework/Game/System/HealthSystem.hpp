@@ -68,7 +68,7 @@ struct HealthSystem : public System
 				}
 				else
 				{
-					health.max[index] += attribute.value;
+					health.max[index].value += attribute.value;
 				}
 			}
 		}
@@ -77,7 +77,7 @@ struct HealthSystem : public System
 		{
 			if (percentages[index] != fixed16(0))
 			{
-				health.max[index] *= percentages[index];
+				health.max[index].value *= percentages[index];
 				percentages[index] = fixed16(0);
 			}
 		}
