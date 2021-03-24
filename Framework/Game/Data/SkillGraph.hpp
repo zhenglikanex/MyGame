@@ -13,9 +13,10 @@ public:
 
 	struct Param
 	{
-		Param() 
+		Param()
 			:int_value(0)
 		{
+
 		}
 
 		union
@@ -232,4 +233,32 @@ inline void from_json(const json& j, SkillGraphInfo& skill_graph)
 {
 	j.at("entry").get_to(skill_graph.entry_);
 	j.at("states").get_to(skill_graph.skills_);
+}
+
+
+namespace kanex
+{
+	void Save(BinaryOutputArchive& ar,const SkillGraphInfo::Param& param)
+	{
+		if constexpr (sizeof(int) > sizeof(fixed16))
+		{
+			ar(param.int_value);
+		}
+		else
+		{
+			ar(param.float_value);
+		}
+	}
+
+	void Load(BinaryInputArchive& ar,SkillGraphInfo::Param& param)
+	{
+		if constexpr (sizeof(int) > sizeof(fixed16))
+		{
+			ar(param.int_value);
+		}
+		else
+		{
+			ar(param.float_value);
+		}
+	}
 }

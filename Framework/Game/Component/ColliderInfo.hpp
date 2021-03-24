@@ -9,7 +9,6 @@ struct ColliderInfo
 	Geometry geometry;
 	mat4 transform;
 	bool trigger;
-
 	entt::entity collider;
 
 	ColliderInfo()
@@ -53,3 +52,4 @@ inline void from_json(const nlohmann::json& j, ColliderInfo& info)
 	j.at("transform").get_to(info.transform);
 	j.at("trigger").get_to(info.trigger);
 }
+

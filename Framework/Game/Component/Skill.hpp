@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <unordered_set>
+#include <string_view>
 
 #include "Framework/Game/Math.hpp"
 
@@ -48,7 +49,9 @@ struct SkillAttacthBone
 	std::string anim_name;
 	std::string bone_name;
 
-	SkillAttacthBone(const std::string& _anim_name, const std::string& _bone_name)
+	SkillAttacthBone() = default;
+
+	SkillAttacthBone(std::string_view _anim_name,std::string_view _bone_name)
 		: anim_name(_anim_name)
 		, bone_name(_bone_name)
 	{
@@ -56,4 +59,5 @@ struct SkillAttacthBone
 	}
 };
 
-//NON_MEMEBER_BAR(Skill, obj.owner, obj.life, obj.time, obj.targets, obj.hit_target);
+NON_MEMEBER_BAR(Skill, obj.owner, obj.life, obj.time, obj.targets, obj.hit_target);
+NON_MEMEBER_BAR(SkillAttacthBone, obj.anim_name, obj.bone_name);

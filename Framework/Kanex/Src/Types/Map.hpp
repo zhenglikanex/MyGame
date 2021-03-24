@@ -67,7 +67,6 @@ namespace kanex
 		detail::size_type size;
 		ar(size);
 
-		auto iter = map.begin();
 		for (detail::size_type i = 0; i < size; ++i)
 		{
 			K key;
@@ -75,8 +74,7 @@ namespace kanex
 			ar(key);
 			ar(value);
 
-			// µ¹Ðò²åÈë
-			iter = map.emplace_hint(iter, std::move(key), std::move(value));
+			map.emplace(std::move(key), std::move(value));
 		}
 	}
 
@@ -102,7 +100,6 @@ namespace kanex
 		detail::size_type size;
 		ar(size);
 
-		auto iter = map.begin();
 		for (detail::size_type i = 0; i < size; ++i)
 		{
 			K key;
@@ -110,9 +107,7 @@ namespace kanex
 			ar(key);
 			ar(value);
 
-			// µ¹Ðò²åÈë
-			iter = map.emplace_hint(iter, std::move(key), std::move(value));
+			map.emplace(std::move(key), std::move(value));
 		}
 	}
-	
 }
