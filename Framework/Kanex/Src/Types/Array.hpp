@@ -32,6 +32,16 @@ namespace kanex
 		{
 			ar(array[i]);
 		}
+
+		//Save(ar, array, std::make_index_sequence<Size>{});
+	}
+
+	template<class Archive, class T, size_t Size,size_t ...Indexes>
+	std::enable_if_t<is_output_serializable<Archive, T>::value
+		&& !std::is_arithmetic_v<T>>
+		Save(Archive& ar, const std::array<T, Size>& array, std::index_sequence<Indexes...>)
+	{
+		ar(std::get<Indexes>(array)...);
 	}
 
 	template<class Archive, class T, size_t Size>

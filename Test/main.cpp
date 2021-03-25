@@ -1,44 +1,38 @@
 #pragma once
 
-#include <iostream>
+#include <type_traits>
 #include <chrono>
-#include <string>
-
-#include "3rdparty/include/glm/glm.hpp"
-#include "3rdparty/include/glm/gtc/quaternion.hpp"
-
-
 #include "Kanex.hpp"
+#include "3rdparty/include/glm/gtc/quaternion.hpp"
+#include "Framework/Game/Math.hpp"
+#include "Framework/Game/Component/ActorState.hpp"
+#include "Framework/Game/Component/AnimationClip.hpp"
+#include "Framework/Game/Component/Movement.hpp"
+#include "Framework/Game/Component/Transform.hpp"
+#include "Framework/Game/Component/Contact.hpp"
+#include "Framework/Game/Component/Attributes.hpp"
+#include "Framework/Game/Component/Health.hpp"
+#include "Framework/Game/Component/Collider.hpp"
+#include "Framework/Game/Component/Skill.hpp"
+#include "Framework/Game/Component/SkillState.hpp"
+#include "Framework/Game/Component/ColliderInfo.hpp"
 
-namespace kanex
-{
-
-	inline void Save(BinaryOutputArchive& ar, const glm::quat& q)
-	{
-
-	}
-
-	inline void Load(BinaryInputArchive& ar, const glm::quat& q)
-	{
-
-	}
-
-}
+#include "3rdparty/include/entt/entt.hpp"
 
 class Timer
 {
 public:
 	Timer()
 	{
-		start_ = std::chrono::system_clock::now();
+		start_ = std::chrono::steady_clock::now();
 	}
 
 	double Elapsed()
 	{
-		return std::chrono::duration<double>(std::chrono::system_clock::now() - start_).count();
+		return std::chrono::duration<double>(std::chrono::steady_clock::now() - start_).count();
 	}
 private:
-	std::chrono::system_clock::time_point start_;
+	std::chrono::steady_clock::time_point start_;
 };
 
 class AutoTimer
@@ -54,25 +48,126 @@ public:
 	std::string name;
 };
 
+
 int main()
 {
-	decltype(Load(std::declval<kanex::BinaryInputArchive>(), std::declval<glm::quat>()), std::true_type()) type_value;
+	kanex::Buffer buffer{ 36744 };
+	kanex::BinaryStream stream{ buffer };
+	kanex::BinaryOutputArchive oar{ stream };
+	kanex::BinaryInputArchive iar{ stream };
 
-	AutoTimer t("fopen");
-	FILE *f = NULL;
-	long len = 0;
+	entt::registry registry;
+	AttributeUnitList output;
+	AttributeArray attributes{ Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
+	output.value.emplace_back(entt::null, attributes);
+	output.value.emplace_back((entt::entity)100, attributes);
 
-	/* open in read binary mode */
-	f = fopen("Hero.json", "rb");
-	/* get the length */
-	fseek(f, 0, SEEK_END);
-	len = ftell(f);
-	fseek(f, 0, SEEK_SET);
+	Health health;
+	health.cur = { Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
+	health.max = { Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
 
-	char* data = (char*)malloc(len + 1);
+	Skill output1;
+	output1.owner = entt::entity(300);
+	output1.life = fixed16(10);
+	output1.time = fixed16(33311.22);
+	output1.targets.push_back(entt::entity(3333));
+	output1.targets.push_back(entt::entity(3333));
+	output1.targets.push_back(entt::entity(3322));
+	output1.hit_target.emplace(entt::entity(3322));
+	output1.hit_target.emplace(entt::entity(33221));
+	output1.hit_target.emplace(entt::entity(33221));
 
-	fread(data, 1, len, f);
-	data[len] = '\0';
-	fclose(f);
+	{
+		AutoTimer t("snapshot");
+		for (int i = 0; i < 300; ++i)
+		{
+			auto e = entt::handle(registry, registry.create());
+			e.emplace<AnimationClip>("11222233");
+			e.emplace<Movement>(vec3(100, 200, 3), vec3(10, 20, 30.3), vec3(30, 20, 20));
+			e.emplace<Transform>(vec3(0.222, 0.333, 0.1), quat(10, 20, 30, 40));
+			e.emplace<ColliderInfo>(Geometry(Sphere(10)), glm::identity<mat4>(), true, entt::entity(300));
+			e.emplace<SkillState>("eeeee");
+			e.emplace<Collider>(Geometry(Sphere(10)), true, entt::entity(10));
+			e.emplace<ActorState>(ActorStateType::kAttack);
+			e.emplace<AttributeUnitList>(output);
+			e.emplace<Health>(health);
+			e.emplace<Skill>(output1);
+		}
+	}
+	
+	{
+		AutoTimer t("snapshot");
+		entt::snapshot{ registry }.entities(oar)
+			.component<
+			AnimationClip,
+			Movement,
+			Transform,
+			ColliderInfo,
+			SkillState,
+			Collider,
+			ActorState,
+			AttributeUnitList,
+			Health>(oar);
+	}
+	buffer.Clear();
+	{
+		AutoTimer t("snapshot");
+		entt::snapshot{ registry }.entities(oar)
+			.component<
+			AnimationClip,
+			Movement,
+			Transform,
+			ColliderInfo,
+			SkillState,
+			Collider,
+			ActorState,
+			AttributeUnitList,
+			Health
+			>(oar);
+	}
+	buffer.Clear();
+	{
+		AutoTimer t("snapshot");
+		entt::snapshot{ registry }.entities(oar)
+			.component<
+			AnimationClip,
+			Movement,
+			Transform,
+			ColliderInfo,
+			SkillState,
+			Collider,
+			ActorState,
+			AttributeUnitList,
+			Health>(oar);
+	}
+
+	entt::registry reg;
+	reg.reserve<AnimationClip,
+		Movement,
+		Transform,
+		ColliderInfo,
+		SkillState,
+		Collider,
+		ActorState,
+		AttributeUnitList,
+		Health>(500);
+	reg.reserve(500);
+
+	{
+		AutoTimer t("load");
+		entt::snapshot_loader{ reg }.entities(iar)
+			.component<
+			AnimationClip,
+			Movement,
+			Transform,
+			ColliderInfo,
+			SkillState,
+			Collider,
+			ActorState,
+			AttributeUnitList,
+			Health>(iar);
+	}
+
+	system("pause");
 	return 0;
 }

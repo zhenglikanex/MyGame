@@ -11,8 +11,13 @@ struct ColliderInfo
 	bool trigger;
 	entt::entity collider;
 
-	ColliderInfo()
-		:collider(entt::null)
+	ColliderInfo() = default;
+
+	ColliderInfo(const Geometry& _geometry, const mat4& _transform, bool _trigger, entt::entity _collider)
+		: geometry(_geometry)
+		, transform(_transform)
+		, trigger(_trigger)
+		, collider(_collider)
 	{
 
 	}
@@ -53,3 +58,4 @@ inline void from_json(const nlohmann::json& j, ColliderInfo& info)
 	j.at("trigger").get_to(info.trigger);
 }
 
+NON_MEMEBER_BAR(ColliderInfo, obj.geometry, obj.transform, obj.trigger, obj.collider);

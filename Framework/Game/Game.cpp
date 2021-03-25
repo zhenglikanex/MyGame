@@ -96,8 +96,6 @@ void Game::Update(float dt)
 	{
 		UpdateServer(dt);
 	}
-	
-
 }
 
 void Game::UpdateClinet(float dt)
@@ -282,15 +280,23 @@ void Game::CheckPredict()
 }
 
 
-//CommandGroup Game::PredictCommandGroup(uint32_t frame)
-//{
-//	return CommandGroup();
-//}
-
 void Game::SaveSnapshot()
 {
-	Snapshot snapshot;
-	snapshots_.emplace(registry_.ctx<GameState>().run_frame,std::move(snapshot));
+	auto& game_state = registry_.ctx<GameState>();
+
+	auto& snapshot = snapshots_.pop();
+	snapshot.frame = game_state.run_frame;
+	snapshot.buffer.Clear();
+
+	kanex::BinaryStream stream(snapshot.buffer);
+	kanex::BinaryOutputArchive ar(stream);
+	
+	//entt::snapshot{registry_}.entities.
+}
+
+void Game::LoadSnapshot()
+{
+
 }
 
 void Game::CreatePlayer()

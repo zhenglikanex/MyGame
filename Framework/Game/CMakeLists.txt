@@ -21,6 +21,7 @@ Hash.hpp
 Collision.hpp
 Collision.cpp
 Geometry.hpp
+RingArray.hpp
 
 Utility/ActorStateUtility.hpp
 Utility/AnimationUtility.hpp

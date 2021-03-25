@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+#include "Kanex.hpp"
+
 struct GameState
 {
 	GameState()
@@ -14,3 +16,5 @@ struct GameState
 	uint32_t run_frame;		// 当前运行帧,包含预测帧
 	uint32_t run_time;
 };
+
+NON_MEMEBER_BAR(GameState, obj.real_frame, obj.run_frame, obj.run_time);

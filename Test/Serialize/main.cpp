@@ -15,10 +15,13 @@
 #include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/Skill.hpp"
 #include "Framework/Game/Component/SkillState.hpp"
+#include "Framework/Game/Component/ColliderInfo.hpp"
+
+#include "3rdparty/include/entt/entt.hpp"
 
 struct Serialize
 {
-	kanex::Buffer buffer{ 1000 };
+	kanex::Buffer buffer{ 10000000 };
 	kanex::BinaryStream stream{ buffer };
 	kanex::BinaryOutputArchive oar{ stream };
 	kanex::BinaryInputArchive iar{ stream };
@@ -478,4 +481,112 @@ TEST_CASE_METHOD(Serialize, "SkillState")
 	REQUIRE(output5.float_value == input5.float_value);
 	
 	REQUIRE(buffer.IsFinish());
+}
+
+TEST_CASE_METHOD(Serialize, "ColliderInfo")
+{
+	ColliderInfo output1(Geometry(Sphere(10)), glm::identity<mat4>(), true, entt::entity(300));
+	
+	oar(output1);
+
+	ColliderInfo intput1;
+	iar(intput1);
+
+	REQUIRE(output1.geometry.sphere().r == intput1.geometry.sphere().r);
+	REQUIRE(output1.transform == intput1.transform);
+	REQUIRE(output1.trigger == intput1.trigger);
+	REQUIRE(output1.collider == intput1.collider);
+	REQUIRE(buffer.IsFinish());
+}
+
+TEST_CASE_METHOD(Serialize, "entt")
+{
+	entt::registry registry;
+	auto e1 = registry.create();
+	registry.emplace<AnimationClip>(e1, "123");
+	auto e2 = registry.create();
+	registry.emplace<ColliderInfo>(e2,Geometry(Sphere(10)), glm::identity<mat4>(), true,e1);
+	auto e3 = registry.create();
+	auto e4 = registry.create();
+
+	entt::snapshot { registry }.entities(oar).component<AnimationClip,ColliderInfo>(oar);
+
+	entt::registry reg2;
+	entt::snapshot_loader{ reg2 }
+		.entities(iar)
+		.component<AnimationClip, ColliderInfo>(iar);
+	
+	reg2;
+	REQUIRE(buffer.IsFinish());
+}
+
+TEST_CASE_METHOD(Serialize, "SnapshotPerformance")
+{
+	entt::registry registry;
+	AttributeUnitList output;
+	AttributeArray attributes{ Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
+	output.value.emplace_back(entt::null, attributes);
+	output.value.emplace_back((entt::entity)100, attributes);
+
+	Health health;
+	health.cur = { Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
+	health.max = { Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
+
+	Skill output1;
+	output1.owner = entt::entity(300);
+	output1.life = fixed16(10);
+	output1.time = fixed16(33311.22);
+	output1.targets.push_back(entt::entity(3333));
+	output1.targets.push_back(entt::entity(3333));
+	output1.targets.push_back(entt::entity(3322));
+	output1.hit_target.emplace(entt::entity(3322));
+	output1.hit_target.emplace(entt::entity(33221));
+	output1.hit_target.emplace(entt::entity(33221));
+
+	for (int i = 0; i < 10; ++i)
+	{
+		auto e = entt::handle(registry, registry.create());
+		e.emplace<AnimationClip>("11222233");
+		e.emplace<Movement>(vec3(100, 200, 3), vec3(10, 20, 30.3), vec3(30, 20, 20));
+		e.emplace<Transform>(vec3(0.222, 0.333, 0.1), quat(10, 20, 30, 40));
+		e.emplace<ColliderInfo>(Geometry(Sphere(10)), glm::identity<mat4>(), true, entt::entity(300));
+		e.emplace<SkillState>("eeeee");
+		e.emplace<Collider>(Geometry(Sphere(10)), true, entt::entity(10));
+		e.emplace<ActorState>(ActorStateType::kAttack);
+		e.emplace<AttributeUnitList>(output);
+		e.emplace<Health>(health);
+		e.emplace<Skill>(output1);
+	}
+	{
+		AutoTimer t("snapshot");
+		entt::snapshot{ registry }.entities(oar)
+			.component<
+				AnimationClip,
+				Movement,
+				Transform,
+				ColliderInfo,
+				SkillState,
+				Collider,
+				ActorState,
+				AttributeUnitList,
+				Health,
+				Skill>(oar);
+	}
+	buffer.Clear();
+	{
+		AutoTimer t("snapshot");
+		entt::snapshot{ registry }.entities(oar)
+			.component<
+			AnimationClip,
+			Movement,
+			Transform,
+			ColliderInfo,
+			SkillState,
+			Collider,
+			ActorState,
+			AttributeUnitList,
+			Health,
+			Skill
+			>(oar);
+	}
 }

@@ -10,6 +10,7 @@
 #include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/PlayerInfo.hpp"
+#include "Framework/Game/RingArray.hpp"
 
 #include "Framework/Game/Component/Command.hpp"
 
@@ -17,11 +18,14 @@
 
 #include "Framework/Game/Data/Config.hpp"
 
-#include "entt/entt.hpp"
+#include "Kanex.hpp"
 
-class Snapshot
+#include "3rdparty/include/entt/entt.hpp"
+
+struct Snapshot
 {
-	
+	uint32_t frame;
+	kanex::Buffer buffer{1024};
 };
 
 enum class GameMode
@@ -34,6 +38,9 @@ using CommandGroup = std::unordered_map<uint32_t, Command>;
 
 class Game
 {
+public:
+	static const uint32_t kFrameRate = 33;			// 33毫秒更新频率
+	static const uint32_t kMaxPredictFrame = 60;	//最大预测60帧,2秒
 public:
 	Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players);
 	~Game();
@@ -51,7 +58,9 @@ public:
 	Command PredictCommand(uint32_t id);
 
 	void CheckPredict();
+
 	void SaveSnapshot();
+	void LoadSnapshot();
 
 	entt::registry& registry() { return registry_; }
 private:
@@ -78,16 +87,13 @@ private:
 		}
 	}
 
-	static const uint32_t kFrameRate = 33;			// 33毫秒更新频率
-	static const uint32_t kMaxPredictFrame = 60;	//最大预测60帧,2秒
-
 	entt::registry registry_;
 	std::vector<std::unique_ptr<System>> systems_;
 	std::vector<PlayerInfo> player_infos_;
 	std::unordered_map<uint32_t, std::vector<Command>> player_input_commands_;	// 玩家的输入队列
 	std::vector<CommandGroup> command_groups_;
 	std::unordered_map<uint32_t, CommandGroup> predict_command_groups_;
-	std::unordered_map<uint32_t, Snapshot> snapshots_;
+	RingArray<Snapshot, 30> snapshots_;
 };
 
 extern std::unique_ptr<Game> g_game;
