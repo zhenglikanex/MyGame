@@ -14,3 +14,5 @@ struct AnimationAsset
 
 	}
 };
+
+NON_MEMEBER_BAR(AnimationAsset, obj.value);

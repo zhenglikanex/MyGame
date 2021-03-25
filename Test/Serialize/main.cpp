@@ -16,6 +16,7 @@
 #include "Framework/Game/Component/Skill.hpp"
 #include "Framework/Game/Component/SkillState.hpp"
 #include "Framework/Game/Component/ColliderInfo.hpp"
+#include "Framework/Game/Component/ActorAsset.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -55,6 +56,19 @@ public:
 	Timer timer;
 	std::string name;
 };
+
+TEST_CASE_METHOD(Serialize, "ActorAsset")
+{
+	ActorAsset output("131231231");
+
+	oar(output);
+
+	ActorAsset input;
+
+	iar(input);
+
+	REQUIRE(output.value == input.value);
+}
 
 
 TEST_CASE_METHOD(Serialize, "Fixed")

@@ -28,7 +28,7 @@
 #include "Framework/Game/System/SkillSystem.hpp"
 #include "Framework/Game/System/UpdateColliderTransformSystem.hpp"
 
-#include "Framework/Game/Utility/ActorStateUtility.hpp"
+#include "Framework/Game/Utility/ActorUtility.hpp"
 
 Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	:player_infos_(players)
@@ -290,8 +290,14 @@ void Game::SaveSnapshot()
 
 	kanex::BinaryStream stream(snapshot.buffer);
 	kanex::BinaryOutputArchive ar(stream);
-	
-	//entt::snapshot{registry_}.entities.
+	entt::snapshot{ registry_ }
+		.entities(ar)
+		.component<
+		ActorAsset,
+		AnimationAsset,
+
+		>(ar);
+
 }
 
 void Game::LoadSnapshot()
@@ -303,11 +309,7 @@ void Game::CreatePlayer()
 {
 	for (auto& player_info : player_infos_)
 	{
-		auto e = registry_.create();
-	
-		registry_.emplace<Player>(e,player_info.id);
-		registry_.emplace<ActorAsset>(e,player_info.actor_asset);
-
+		ActorUtiltiy::CreatePlayer(registry_, player_info.id, player_info.actor_asset);
 		player_input_commands_.emplace(player_info.id, std::vector<Command>());
 	}
 }

@@ -2,10 +2,12 @@
 
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/ViewService.hpp"
-#include "Framework/Game/System.hpp"
+
 #include "Framework/Game/Component/View.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
 #include "Framework/game/Component/Transform.hpp"
+
+#include "Framework/Game/System.hpp"
 
 struct CreateViewSystem : public System
 {
@@ -20,17 +22,17 @@ struct CreateViewSystem : public System
 	void Update(fixed16 dt) override
 	{	
 		auto& locator = registry.ctx<Locator>();
-		auto view = registry.view<ViewAsset>(entt::exclude<View>);
+		auto view = registry.view<ViewAsset,Transform>(entt::exclude<View>);
 		for (auto e : view)
 		{
 			const auto& asset = view.get<ViewAsset>(e);
-			auto v = locator.Ref<ViewService>().Create(asset.value);
+			const auto& transform = view.get<Transform>(e);
 
-			Transform transform;
+			auto v = locator.Ref<ViewService>().Create(asset.value);
 			v->MovePosition(transform.position);
+			v->MoveRotation(transform.rotation);
 
 			registry.emplace<View>(e,std::move(v));
-			registry.emplace<Transform>(e,std::move(transform));
 		}
 	}
 

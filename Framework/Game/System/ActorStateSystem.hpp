@@ -193,10 +193,9 @@ struct ActorStateSystem : public System
 		{
 			// 判断是否通过技能图执行
 			auto skill_grpah = registry.try_get<SkillGraph>(e);
-			if (skill_grpah != nullptr)
+			if (skill_grpah != nullptr && skill_grpah->value != nullptr)
 			{
-				auto& skill_grpah = registry.get<SkillGraph>(e);
-				registry.emplace_or_replace<SkillState>(e, skill_grpah.value->entry());
+				registry.emplace_or_replace<SkillState>(e, skill_grpah->value->entry());
 				auto skill_params =  registry.emplace_or_replace<SkillParams>(e);
 				skill_params.value.clear();
 				

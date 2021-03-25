@@ -3,6 +3,8 @@
 #include <string>
 #include <string_view>
 
+#include "Kanex.hpp"
+
 struct ActorAsset
 {
 	std::string value;
@@ -15,3 +17,5 @@ struct ActorAsset
 
 	}
 };
+
+NON_MEMEBER_BAR(ActorAsset, obj.value);

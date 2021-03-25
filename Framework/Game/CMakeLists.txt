@@ -26,6 +26,7 @@ RingArray.hpp
 Utility/ActorStateUtility.hpp
 Utility/AnimationUtility.hpp
 Utility/CollisionUtility.hpp
+Utility/ActorUtility.hpp
 
 System/AnimationSystem.hpp
 System/CollisionSystem.hpp

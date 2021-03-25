@@ -12,18 +12,14 @@
 #include "Framework/Game/Component/AnimationAsset.hpp"
 #include "Framework/Game/Component/SkillGraphAsset.hpp"
 #include "Framework/Game/Component/ColliderInfo.hpp"
-#include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Attributes.hpp"
-#include "Framework/Game/Component/Transform.hpp"
-#include "Framework/Game/Component/Health.hpp"
 
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Data/ActorConfig.hpp"
 
-#include "Framework/Game/Utility/ActorStateUtility.hpp"
-
+#include "Framework/Game/Utility/ActorUtility.hpp"
 
 struct CreateActorSystem : public System
 {
@@ -44,31 +40,26 @@ struct CreateActorSystem : public System
 		for (auto e : view)
 		{
 			const auto& asset = view.get<ActorAsset>(e);
+
 			auto& actor_info = GetActorInfo(asset.value);
 			registry.emplace<ViewAsset>(e, actor_info.model_asset());
 			registry.emplace<AnimationAsset>(e, actor_info.anim_asset());
-			registry.emplace<SkillGraphAsset>(e, actor_info.anim_asset());
+
+			if (actor_info.skill_graph_asset().empty())
+			{
+				registry.emplace<SkillGraphAsset>(e, actor_info.skill_graph_asset());
+			}
 
 			auto& info = registry.emplace<ColliderInfo>(e, actor_info.body());
 			info.collider = CreateBodyCollider(e, info);
 
 			registry.emplace<Weapon>(e, actor_info.weapon());
 
-			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
-
 			//todo 插入actor自身属性和武器属性
 			AttributeArray attributes{ Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
 			auto& attribute_units = registry.emplace<AttributeUnitList>(e);
 			attribute_units.value.emplace_back(AttributeUnit{ e, attributes });	// todo actor
 			attribute_units.value.emplace_back(AttributeUnit{ e, attributes });	// todo wepon
-
-			//可以被攻击
-			registry.emplace<ModifyHealthList>(e);
-
-			// 调试
-			/*auto weapon = registry.create();
-			registry.emplace<Collider>(weapon,actor_info.weapon().geometry,actor_info.weapon().trigger,entt::null);
-			registry.emplace<Transform>(weapon,actor_info.weapon().transform);*/
 		}
 	}
 
@@ -104,4 +95,5 @@ struct CreateActorSystem : public System
 			return ret.first->second;
 		}
 	}
+
 };

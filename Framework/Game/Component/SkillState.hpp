@@ -59,7 +59,7 @@ struct SkillParams
 
 struct SkillGraph
 {
-	SkillGraphInfo* value;
+	const SkillGraphInfo* value;
 
 	SkillGraph(SkillGraphInfo* _value)
 		:value(_value)

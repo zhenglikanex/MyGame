@@ -79,7 +79,7 @@ int main()
 
 	{
 		AutoTimer t("snapshot");
-		for (int i = 0; i < 300; ++i)
+		for (int i = 0; i < 1000; ++i)
 		{
 			auto e = entt::handle(registry, registry.create());
 			e.emplace<AnimationClip>("11222233");

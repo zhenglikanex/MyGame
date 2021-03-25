@@ -9,7 +9,7 @@ namespace kanex
 {
 	template<class Archive, class T, size_t Size>
 	std::enable_if_t<is_output_serializable<Archive, detail::BinaryData<T>>::value
-		&& std::is_arithmetic_v<T>>
+		&& std::is_pod_v<T>>
 		Save(Archive& ar, const std::array<T, Size>& array)
 	{
 		ar(detail::MakeBinaryData(array.data(), sizeof(T) * Size));
@@ -17,7 +17,7 @@ namespace kanex
 
 	template<class Archive, class T, size_t Size>
 	std::enable_if_t<is_input_serializable<Archive, detail::BinaryData<T>>::value
-		&& std::is_arithmetic_v<T>>
+		&& std::is_pod_v<T>>
 		Load(Archive& ar,std::array<T, Size>& array)
 	{
 		ar(detail::MakeBinaryData(array.data(), sizeof(T) * Size));
@@ -25,7 +25,7 @@ namespace kanex
 
 	template<class Archive, class T, size_t Size>
 	std::enable_if_t<is_output_serializable<Archive, T>::value
-		&& !std::is_arithmetic_v<T>>
+		&& !std::is_pod_v<T>>
 		Save(Archive& ar, const std::array<T, Size>& array)
 	{
 		for (size_t i = 0; i < Size; ++i)
@@ -38,7 +38,7 @@ namespace kanex
 
 	template<class Archive, class T, size_t Size,size_t ...Indexes>
 	std::enable_if_t<is_output_serializable<Archive, T>::value
-		&& !std::is_arithmetic_v<T>>
+		&& !std::is_pod_v<T>>
 		Save(Archive& ar, const std::array<T, Size>& array, std::index_sequence<Indexes...>)
 	{
 		ar(std::get<Indexes>(array)...);
@@ -46,7 +46,7 @@ namespace kanex
 
 	template<class Archive, class T, size_t Size>
 	std::enable_if_t<is_input_serializable<Archive, T>::value
-		&& !std::is_arithmetic_v<T> && !std::is_same_v<T, bool>>
+		&& !std::is_pod_v<T>>
 		Load(Archive& ar, std::array<T, Size>& array)
 	{
 		for (size_t i = 0; i < Size; ++i)

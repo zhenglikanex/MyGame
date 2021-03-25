@@ -2,9 +2,12 @@
 
 #include <unordered_map>
 #include <string>
+#include <unordered_map>
+#include <mutex>
 
+#include "Framework/Game/Locator.hpp"
+#include "Framework/Game/FileService.hpp"
 #include "Framework/Game/Math.hpp"
-
 
 struct RootMotion
 {
@@ -78,3 +81,47 @@ inline void from_json(const nlohmann::json& j, AnimationInfo& animation_info)
 	animation_info.clips.reserve(clips.size());
 	clips.get_to(animation_info.clips);
 }
+
+class AnimationInfoManager
+{
+public:
+	AnimationInfoManager(entt::registry registry)
+		: registry_(registry)
+	{
+
+	}
+
+	const AnimationInfo& GetAnimationInfo(const std::string& name)
+	{
+#ifdef SERVER
+		// todo:偷懒,服务器应该提供一个无锁的实现,暂时加个锁
+		std::unique_lock<std::mutex> lock(mutex_);
+#endif
+		auto iter = animation_infos_.find(name);
+		if (iter != animation_infos_.end())
+		{
+			return iter->second;
+		}
+		else
+		{
+			auto& locator = registry_.ctx<Locator>();
+			auto content = locator.Ref<FileService>().OpenFile(path + name);
+
+			assert(content != "" && "not anim info");
+
+			nlohmann::json j = nlohmann::json::parse(content);
+			animation_infos_.emplace(name, j.get<AnimationInfo>());
+
+			return animation_infos_[name];
+		}
+	}
+
+private:
+#ifdef SERVER
+	// todo:偷懒,服务器应该体统一个无锁的实现,暂时加个锁
+	std::mutex mutex_;
+#endif
+	const std::string path = "Config/Anim/";
+	std::unordered_map<std::string, AnimationInfo> animation_infos_;
+	entt::registry& registry_;
+};

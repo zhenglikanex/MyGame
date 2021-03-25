@@ -4,9 +4,9 @@
 
 #include "entt/entt.hpp"
 
-namespace ActionStateUtility
+struct ActionStateUtility
 {
-	inline void ChangeState(entt::registry& registry, entt::entity e, const ActorState& action_state, ActorStateType state)
+	static void ChangeState(entt::registry& registry, entt::entity e, const ActorState& action_state, ActorStateType state)
 	{
 		if (action_state.cur_state != state)
 		{
@@ -15,7 +15,7 @@ namespace ActionStateUtility
 		}
 	}
 
-	inline void ChangeState(entt::registry& registry, entt::entity e, ActorStateType state)
+	static void ChangeState(entt::registry& registry, entt::entity e, ActorStateType state)
 	{
 		if (registry.has<ActorState>(e))
 		{

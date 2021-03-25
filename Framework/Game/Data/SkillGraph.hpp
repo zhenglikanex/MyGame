@@ -262,3 +262,11 @@ namespace kanex
 		}
 	}
 }
+
+class SkillGraphInfoManager
+{
+public:
+
+private:
+
+};
