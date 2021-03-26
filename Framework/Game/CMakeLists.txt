@@ -45,7 +45,6 @@ System/ModifyHealthSystem.hpp
 System/HealthSystem.hpp
 System/UpdateColliderTransformSystem.hpp
 
-Component/GameMode.hpp
 Component/GameState.hpp
 Component/Command.hpp
 Component/Player.hpp
@@ -61,7 +60,6 @@ Component/SkillState.hpp
 Component/Collider.hpp
 Component/ActorAsset.hpp
 Component/Weapon.hpp
-Component/Hit.hpp
 Component/SkillGraphAsset.hpp
 Component/Skill.hpp
 Component/Contact.hpp

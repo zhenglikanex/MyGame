@@ -9,15 +9,22 @@
 
 #include "Framework/Game/System.hpp"
 
-struct CollisionSystem : public System
+struct CollisionSystem : public ObserverSystem
 {
-	entt::observer mover{ registry, entt::collector.group<Matrix4x4,Collider>().update<Matrix4x4>().where<Collider>() };
+	entt::observer* mover;
 
-	CollisionSystem(entt::registry& _registry) : System(_registry) { }
+	CollisionSystem(entt::registry& _registry)
+		: ObserverSystem(_registry)
+		, mover(nullptr)
+	{
+
+	}
+
 	~CollisionSystem() {}
 
 	bool Initialize() override
 	{
+		Connect();
 		return true;
 	}
 
@@ -52,7 +59,7 @@ struct CollisionSystem : public System
 		//todo:后面用八叉树替换,暂时不管重复碰撞
 		auto view = registry.view<Matrix4x4,Collider>();
 
-		for (auto it1 = mover.begin(); it1 != mover.end(); ++it1)
+		for (auto it1 = mover->begin(); it1 != mover->end(); ++it1)
 		{
 			auto e1 = *it1;
 			const auto& transform1 = view.get<Matrix4x4>(e1);
@@ -87,5 +94,16 @@ struct CollisionSystem : public System
 	void Finalize() override
 	{
 
+	}
+
+	void Connect() override
+	{
+		mover = CreateObserver(entt::collector.group<Matrix4x4, Collider>().update<Matrix4x4>().where<Collider>());
+	}
+
+	void Disconnect() override
+	{
+		RemoveObserver(mover);
+		mover = nullptr;
 	}
 };

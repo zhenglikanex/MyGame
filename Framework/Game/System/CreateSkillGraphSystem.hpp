@@ -28,6 +28,7 @@ struct CreateSkillGraphSystem : public System
 		for (auto e : view)
 		{
 			const auto& asset = view.get<SkillGraphAsset>(e);
+
 			auto& skill_graph_info = GetSkillGraphInfo(asset.value);
 			registry.emplace<SkillGraph>(e, &skill_graph_info);
 		}
@@ -38,6 +39,10 @@ struct CreateSkillGraphSystem : public System
 
 	}
 
+	// todo:
+	// 应该单独拿出来做个Manager，方便预加载资源，偷个懒
+	//1. 如果作为一个单例则服务器会有并发问题(可以考虑无锁实现)
+	//2. 如果作为一个实例实现则会存在多份资源
 	SkillGraphInfo& GetSkillGraphInfo(const std::string& name)
 	{
 		auto iter = skill_graph_infos.find(name);

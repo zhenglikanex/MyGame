@@ -5,6 +5,7 @@
 #include <chrono>
 #include <unordered_map>
 #include <cassert>
+#include <cstdint>
 
 #include "Framework/Game/FileService.hpp"
 #include "Framework/Game/DebugService.hpp"
@@ -87,8 +88,12 @@ private:
 		}
 	}
 
+	uint32_t run_time_;
+	GameMode game_mode_;
+
 	entt::registry registry_;
 	std::vector<std::unique_ptr<System>> systems_;
+	std::vector<std::unique_ptr<ObserverSystem>> observer_systems_;
 	std::vector<PlayerInfo> player_infos_;
 	std::unordered_map<uint32_t, std::vector<Command>> player_input_commands_;	// 玩家的输入队列
 	std::vector<CommandGroup> command_groups_;

@@ -2,6 +2,8 @@
 
 #include "Framework/Game/Math.hpp"
 
+#include "Kanex.hpp"
+
 struct Matrix4x4
 {
 	mat4 value;
@@ -18,3 +20,5 @@ struct Matrix4x4
 
 	}
 };
+
+NON_MEMEBER_BAR(Matrix4x4, obj.value);

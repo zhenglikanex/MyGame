@@ -4,7 +4,6 @@
 
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/FileService.hpp"
-#include "Framework/Game/Math.hpp"
 
 #include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/ActorState.hpp"
@@ -18,8 +17,6 @@
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Data/ActorConfig.hpp"
-
-#include "Framework/Game/Utility/ActorUtility.hpp"
 
 struct CreateActorSystem : public System
 {
@@ -42,8 +39,10 @@ struct CreateActorSystem : public System
 			const auto& asset = view.get<ActorAsset>(e);
 
 			auto& actor_info = GetActorInfo(asset.value);
+			registry.emplace<ModifyHealthList>(e);
 			registry.emplace<ViewAsset>(e, actor_info.model_asset());
 			registry.emplace<AnimationAsset>(e, actor_info.anim_asset());
+			registry.emplace<Weapon>(e, actor_info.weapon());
 
 			if (actor_info.skill_graph_asset().empty())
 			{
@@ -53,13 +52,13 @@ struct CreateActorSystem : public System
 			auto& info = registry.emplace<ColliderInfo>(e, actor_info.body());
 			info.collider = CreateBodyCollider(e, info);
 
-			registry.emplace<Weapon>(e, actor_info.weapon());
-
 			//todo 插入actor自身属性和武器属性
 			AttributeArray attributes{ Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
 			auto& attribute_units = registry.emplace<AttributeUnitList>(e);
 			attribute_units.value.emplace_back(AttributeUnit{ e, attributes });	// todo actor
 			attribute_units.value.emplace_back(AttributeUnit{ e, attributes });	// todo wepon
+
+			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);	
 		}
 	}
 
@@ -75,6 +74,10 @@ struct CreateActorSystem : public System
 
 	}
 
+	// todo:
+	// 应该单独拿出来做个Manager，方便预加载资源，偷个懒
+	//1. 如果作为一个单例则服务器会有并发问题(可以考虑无锁实现)
+	//2. 如果作为一个实例实现则会存在多份资源
 	const ActorInfo& GetActorInfo(const std::string& name)
 	{
 		auto iter = actor_infos.find(name);

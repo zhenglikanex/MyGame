@@ -17,6 +17,11 @@
 #include "Framework/Game/Component/SkillState.hpp"
 #include "Framework/Game/Component/ColliderInfo.hpp"
 #include "Framework/Game/Component/ActorAsset.hpp"
+#include "Framework/Game/Component/Player.hpp"
+#include "Framework/Game/Component/Weapon.hpp"
+#include "Framework/Game/Component/Matrix4x4.hpp"
+#include "Framework/Game/Component/Command.hpp"
+#include "Framework/Game/Component/SkillGraphAsset.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -68,6 +73,20 @@ TEST_CASE_METHOD(Serialize, "ActorAsset")
 	iar(input);
 
 	REQUIRE(output.value == input.value);
+}
+
+TEST_CASE_METHOD(Serialize, "SkillGraphAsset")
+{
+	SkillGraphAsset output("131231231");
+
+	oar(output);
+
+	SkillGraphAsset input;
+
+	iar(input);
+
+	REQUIRE(output.value == input.value);
+	REQUIRE(buffer.IsFinish());
 }
 
 
@@ -246,6 +265,24 @@ TEST_CASE_METHOD(Serialize, "Transform")
 	REQUIRE(output.position == input.position);
 	REQUIRE(output.rotation == output.rotation);
 	REQUIRE(invec.size() == outvec.size());
+	REQUIRE(buffer.IsFinish());
+}
+
+TEST_CASE_METHOD(Serialize, "Weapon")
+{
+	ColliderInfo info(Geometry(Sphere(10)), glm::identity<mat4>(), true, entt::entity(300));
+	Weapon output(info);
+	output.attributes.emplace_back(Attribute{ CalculateType::kNumerical,fixed16(100) });
+	oar(output);
+
+	Weapon input;
+	iar(input);
+
+	REQUIRE(output.collider_info.geometry.type() == input.collider_info.geometry.type());
+	REQUIRE(output.collider_info.transform == input.collider_info.transform);
+	REQUIRE(output.collider_info.trigger == input.collider_info.trigger);
+	REQUIRE(output.attributes[0].calc_type == input.attributes[0].calc_type);
+	REQUIRE(output.attributes[0].value == input.attributes[0].value);
 	REQUIRE(buffer.IsFinish());
 }
 
@@ -510,6 +547,50 @@ TEST_CASE_METHOD(Serialize, "ColliderInfo")
 	REQUIRE(output1.transform == intput1.transform);
 	REQUIRE(output1.trigger == intput1.trigger);
 	REQUIRE(output1.collider == intput1.collider);
+	REQUIRE(buffer.IsFinish());
+}
+
+TEST_CASE_METHOD(Serialize, "Player")
+{
+	Player output1(111);
+
+	oar(output1);
+
+	Player intput1;
+	iar(intput1);
+
+	REQUIRE(output1.id == intput1.id);
+	REQUIRE(buffer.IsFinish());
+}
+
+TEST_CASE_METHOD(Serialize, "Matrix4x4")
+{
+	Matrix4x4 output1;
+
+	oar(output1);
+
+	Matrix4x4 intput1;
+	iar(intput1);
+
+	REQUIRE(output1.value == intput1.value);
+	REQUIRE(buffer.IsFinish());
+}
+
+TEST_CASE_METHOD(Serialize, "Command")
+{
+	Command output1;
+	output1.x_axis = 100;
+	output1.y_axis = 100;
+
+	oar(output1);
+
+	Command intput1;
+	iar(intput1);
+
+	REQUIRE(output1.x_axis == intput1.x_axis);
+	REQUIRE(output1.y_axis == intput1.y_axis);
+	REQUIRE(output1.skill == intput1.skill);
+	REQUIRE(output1.jump == intput1.jump);
 	REQUIRE(buffer.IsFinish());
 }
 

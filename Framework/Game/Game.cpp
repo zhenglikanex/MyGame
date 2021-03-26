@@ -31,12 +31,12 @@
 #include "Framework/Game/Utility/ActorUtility.hpp"
 
 Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
-	:player_infos_(players)
+	: player_infos_(players)
+	, game_mode_(mode)
 {
-	registry_.set<GameMode>(mode);
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
-	
+
 	systems_.emplace_back(std::make_unique<CreateActorSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CreateViewSystem>(registry_));
 	systems_.emplace_back(std::make_unique<CreateAnimationSystem>(registry_));
@@ -48,10 +48,13 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	systems_.emplace_back(std::make_unique<RootMotionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
 	systems_.emplace_back(std::make_unique<SkillSystem>(registry_));
-	systems_.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry_));
-	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
 	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
-	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
+
+	// 注意对于observer监听的处理必须都在本帧完成处理
+	// 即带有observer的system必须在放倒执行顺序的最后
+	observer_systems_.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry_));
+	observer_systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
+	observer_systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
 
 #ifdef DEBUG
 	systems_.emplace_back(std::make_unique<DebugSystem>(registry_));
@@ -73,6 +76,14 @@ bool Game::Initialize()
 		}
 	}
 
+	for (auto& system : observer_systems_)
+	{
+		if (!system->Initialize())
+		{
+			return false;
+		}
+	}
+
 	auto& file_service = registry_.ctx<Locator>().Ref<FileService>();
 	file_service.set_cur_path(std::filesystem::current_path().string() + "/Assets/Resources/");
 
@@ -85,10 +96,7 @@ bool Game::Initialize()
 
 void Game::Update(float dt)
 {
-
-	
-		
-	if (registry_.ctx<GameMode>() == GameMode::kClinet)
+	if (game_mode_ == GameMode::kClinet)
 	{
 		UpdateClinet(dt);
 	}
@@ -101,14 +109,14 @@ void Game::Update(float dt)
 void Game::UpdateClinet(float dt)
 {
 	uint32_t mill_dt = static_cast<uint32_t>(dt * 1000);
+	run_time_ += mill_dt;
 
 	auto& game_state = registry_.ctx<GameState>();
-	game_state.run_time += mill_dt;
 
 	// todo 检查预测
 
 	// todo:后面根据延迟调整自己的输入频率
-	while (game_state.run_time > game_state.run_frame * kFrameRate + kFrameRate)
+	while (run_time_ > game_state.run_frame * kFrameRate + kFrameRate)
 	{
 		auto start = std::chrono::system_clock::now();
 
@@ -159,11 +167,10 @@ void Game::UpdateClinet(float dt)
 void Game::UpdateServer(float dt)
 {
 	uint32_t mill_dt = static_cast<uint32_t>(dt * 1000);
+	run_time_ += mill_dt;
 
 	auto& game_state = registry_.ctx<GameState>();
-	game_state.run_time += mill_dt;
-
-	while (game_state.run_time > game_state.run_frame * kFrameRate + kFrameRate)
+	while (run_time_ > game_state.run_frame * kFrameRate + kFrameRate)
 	{
 		//生成command
 		/*Setupcommands(game_state.run_frame);
@@ -290,25 +297,93 @@ void Game::SaveSnapshot()
 
 	kanex::BinaryStream stream(snapshot.buffer);
 	kanex::BinaryOutputArchive ar(stream);
+
 	entt::snapshot{ registry_ }
 		.entities(ar)
 		.component<
 		ActorAsset,
+		ActorState,
+		ExitSkillState,
+		EnterActorState,
 		AnimationAsset,
-
+		AnimationClip,
+		AttributeUnitList,
+		Collider,
+		ColliderInfo,
+		Command,
+		ContactList,
+		Health,
+		ModifyHealthList,
+		Matrix4x4,
+		Movement,
+		Player,
+		Skill,
+		SkillAttacthBone,
+		SkillGraphAsset,
+		SkillState,
+		EnterSkillState,
+		ExitSkillState,
+		SkillParams,
+		Transform,
+		ViewAsset,
+		Weapon
 		>(ar);
 
+	ar(registry_.ctx<GameState>());
 }
 
 void Game::LoadSnapshot()
 {
+	auto& game_state = registry_.ctx<GameState>();
 
+	auto& snapshot = snapshots_.pop();
+
+	kanex::BinaryStream stream(snapshot.buffer);
+	kanex::BinaryInputArchive ar(stream);
+
+	auto temp = std::move(registry_);
+	entt::snapshot_loader{ temp }
+		.entities(ar)
+		.component <
+		ActorAsset,
+		ActorState,
+		ExitSkillState,
+		EnterActorState,
+		AnimationAsset,
+		AnimationClip,
+		AttributeUnitList,
+		Collider,
+		ColliderInfo,
+		Command,
+		ContactList,
+		Health,
+		ModifyHealthList,
+		Matrix4x4,
+		Movement,
+		Player,
+		Skill,
+		SkillAttacthBone,
+		SkillGraphAsset,
+		SkillState,
+		EnterSkillState,
+		ExitSkillState,
+		SkillParams,
+		Transform,
+		ViewAsset,
+		Weapon
+		> (ar);
+
+	ar(temp.ctx<GameState>());
+
+	registry_ = std::move(temp);
+	
+	// 清理
 }
 
 void Game::CreatePlayer()
 {
 	for (auto& player_info : player_infos_)
-	{
+	{ 
 		ActorUtiltiy::CreatePlayer(registry_, player_info.id, player_info.actor_asset);
 		player_input_commands_.emplace(player_info.id, std::vector<Command>());
 	}

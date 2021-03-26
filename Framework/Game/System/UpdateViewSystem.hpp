@@ -12,17 +12,25 @@ void func(const entt::registry& reg, entt::entity e)
 	//int a = 10;
 }
 
-struct UpdateViewSystem : public System
+struct UpdateViewSystem : public ObserverSystem
 {
-	entt::observer mover{ registry, entt::collector.group<Transform,View>().update<Transform>().where<View>() };
-	entt::observer animator{ registry,entt::collector.group<AnimationClip,View>().update<AnimationClip>().where<View>() };
+	entt::observer* mover;
+	entt::observer* animator;
 
-	UpdateViewSystem(entt::registry& _registry) : System(_registry) { }
+	UpdateViewSystem(entt::registry& _registry) 
+		: ObserverSystem(_registry) 
+		, mover(nullptr)
+		, animator(nullptr)
+	{
+
+	}
+
 	~UpdateViewSystem() {}
 
 	bool Initialize() override
 	{
 		registry.on_update<Transform>().connect<&func>();
+		Connect();
 		return true;
 	}
 
@@ -35,7 +43,7 @@ struct UpdateViewSystem : public System
 	void UpdateTransform()
 	{
 		auto entt_view = registry.view<View, Transform>();
-		for (auto e : mover)
+		for (auto e : *mover)
 		{
 			auto& view = entt_view.get<View>(e);
 			const auto& transform = entt_view.get<Transform>(e);
@@ -43,14 +51,12 @@ struct UpdateViewSystem : public System
 			view.value->UpdatePosition(transform.position);
 			view.value->UpdateRotation(transform.rotation);
 		}
-
-		mover.clear();
 	}
 
 	void UpdateAnimation()
 	{
 		auto entt_view = registry.view<View,Animation,AnimationClip>();
-		for (auto e : animator)
+		for (auto e : *animator)
 		{
 			auto& view = entt_view.get<View>(e);
 			auto& animation = entt_view.get<Animation>(e);
@@ -72,11 +78,17 @@ struct UpdateViewSystem : public System
 				}
 			}*/
 		}
-
-		animator.clear();
 	}
 
 	void Finalize() override
 	{
+
+	}
+
+	// 注意因为观察对象包含view,所以在回滚的时候需要不需要清掉
+	void Connect() override
+	{
+		mover = CreateObserver(entt::collector.group<Transform, View>().update<Transform>().where<View>());
+		animator = CreateObserver(entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>());
 	}
 };

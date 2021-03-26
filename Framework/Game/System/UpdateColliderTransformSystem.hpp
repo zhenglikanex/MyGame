@@ -9,22 +9,29 @@
 
 #include "Framework/Game/System.hpp"
 
-struct UpdateColliderTransformSystem : public System
+struct UpdateColliderTransformSystem : public ObserverSystem
 {
-	entt::observer mover{ registry, entt::collector.group<Transform,ColliderInfo>().update<Transform>().where<ColliderInfo>() };
+	entt::observer* mover;
 
-	UpdateColliderTransformSystem(entt::registry& _registry) : System(_registry) { }
+	UpdateColliderTransformSystem(entt::registry& _registry)
+		: ObserverSystem(_registry)
+		, mover(nullptr)
+	{
+
+	}
+
 	~UpdateColliderTransformSystem() {}
 
 	bool Initialize() override
 	{
+		Connect();
 		return true;
 	}
 
 	void Update(fixed16 dt) override
 	{
 		auto view = registry.view<const Transform, const ColliderInfo>();
-		for (auto e : mover)
+		for (auto e : *mover)
 		{
 			auto[transform, collider_info] = view.get<const Transform, const ColliderInfo>(e);
 
@@ -35,14 +42,28 @@ struct UpdateColliderTransformSystem : public System
 				registry.emplace_or_replace<Matrix4x4>(collider_info.collider, mat * collider_info.transform);
 			}
 		}
+
+		mover->clear();
 	}
 	
 	void LateUpdate(fixed16 dt)
 	{
+
 	}
 
 	void Finalize() override
 	{
 
+	}
+
+	void Connect() override
+	{
+		mover = CreateObserver(entt::collector.group<Transform, ColliderInfo>().update<Transform>().where<ColliderInfo>());
+	}
+
+	void Disconnect() override
+	{
+		RemoveObserver(mover);
+		mover = nullptr;
 	}
 };

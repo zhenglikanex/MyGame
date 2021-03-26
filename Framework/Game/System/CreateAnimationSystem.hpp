@@ -44,6 +44,10 @@ struct CreateAnimationSystem : System
 		
 	}
 
+	// todo:
+	// 应该单独拿出来做个Manager，方便预加载资源，偷个懒
+	//1. 如果作为一个单例则服务器会有并发问题(可以考虑无锁实现)
+	//2. 如果作为一个实例实现则会存在多份资源
 	const AnimationInfo& GetAnimationInfo(const std::string& name)
 	{
 		auto iter = animation_infos.find(name);
