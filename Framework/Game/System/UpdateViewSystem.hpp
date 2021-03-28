@@ -14,6 +14,8 @@ void func(const entt::registry& reg, entt::entity e)
 
 struct UpdateViewSystem : public ObserverSystem
 {
+	
+
 	entt::observer* mover;
 	entt::observer* animator;
 
@@ -30,7 +32,10 @@ struct UpdateViewSystem : public ObserverSystem
 	bool Initialize() override
 	{
 		registry.on_update<Transform>().connect<&func>();
-		Connect();
+
+		mover = CreateObserver(entt::collector.group<Transform, View>().update<Transform>().where<View>());
+		animator = CreateObserver(entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>());
+
 		return true;
 	}
 
@@ -62,11 +67,9 @@ struct UpdateViewSystem : public ObserverSystem
 			auto& animation = entt_view.get<Animation>(e);
 			const auto& clip = entt_view.get<AnimationClip>(e);
 			
-
-			view.value->PlayAnimation(clip.name);
-			/*if (clip.time == fixed16(0.0f))
+			if (clip.time == fixed16(0.0f))
 			{
-				
+				view.value->PlayAnimation(clip.name);
 			}
 			else
 			{
@@ -76,7 +79,7 @@ struct UpdateViewSystem : public ObserverSystem
 					auto time = clip.time / iter->second.length;
 					view.value->PlayAnimation(clip.name, static_cast<float>(time));
 				}
-			}*/
+			}
 		}
 	}
 
@@ -88,7 +91,13 @@ struct UpdateViewSystem : public ObserverSystem
 	// 注意因为观察对象包含view,所以在回滚的时候需要不需要清掉
 	void Connect() override
 	{
-		mover = CreateObserver(entt::collector.group<Transform, View>().update<Transform>().where<View>());
-		animator = CreateObserver(entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>());
+		mover->connect(registry,entt::collector.group<Transform, View>().update<Transform>().where<View>());
+		animator->connect(registry,entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>());
+	}
+
+	void Disconnect() override
+	{
+		mover->disconnect();
+		animator->disconnect();
 	}
 };

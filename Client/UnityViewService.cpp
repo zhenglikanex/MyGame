@@ -7,14 +7,14 @@ std::unique_ptr<IViewImpl> UnityViewService::Create(std::string_view asset) cons
 	return std::make_unique<UnityViewImpl>(UnityBridge::Get().CallUnity<uint32_t>("CreateView", asset.data()));
 }
 
-void UnityViewService::Destory(const std::unique_ptr<IViewImpl>& view) const
+void UnityViewService::Destory(const IViewImpl* view) const
 {
 	if (!view)
 	{
 		return;
 	}
 
-	auto unity_view = dynamic_cast<const UnityViewImpl&>(*view);
+	auto& unity_view = dynamic_cast<const UnityViewImpl&>(*view);
 	UnityBridge::Get().CallUnity<void>("DestoryView", unity_view.GetHandle());
 }
 
@@ -79,5 +79,5 @@ void UnityViewService::PlayAnimation(const IViewImpl* view, std::string_view nam
 		return;
 	}
 	auto& unity_view = dynamic_cast<const UnityViewImpl&>(*view);
-	UnityBridge::Get().CallUnity<void>("PlayAnimation", unity_view.GetHandle(), name.data(),normalized_time);
+	UnityBridge::Get().CallUnity<void>("PlayAnimationToTime", unity_view.GetHandle(), name.data(),normalized_time);
 }

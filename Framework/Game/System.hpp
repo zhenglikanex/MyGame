@@ -30,40 +30,20 @@ struct ObserverSystem : System
 	template<class Matcher>
 	entt::observer* CreateObserver(Matcher&& matcher)
 	{
-		return observers_.emplace_back(registry,std::forward(matcher));
+		return observers_.emplace_back(std::make_unique<entt::observer>(registry,std::forward<Matcher>(matcher))).get();
 	}
 
-	void RemoveObserver(entt::observer* observer)
-	{
-		auto iter = std::find_if(observers_.begin(), observers_.end(), [observer](const entt::observer& ob)
-		{
-			return &ob == observer;
-		});
-
-		if (iter != observers_.end())
-		{
-			observers_.erase(iter);
-		}
-	}
-
-	virtual void Connect()
-	{
-		
-	}
-
-	virtual void Disconnect()
-	{
-
-	}
+	virtual void Connect() = 0;
+	virtual void Disconnect() = 0;
 
 	virtual void Clear()
 	{
 		for (auto& observer : observers_)
 		{
-			observer.clear();
+			observer->clear();
 		}
 	}
 
 private:
-	std::vector<entt::observer> observers_;
+	std::vector<std::unique_ptr<entt::observer>> observers_;
 };

@@ -17,4 +17,7 @@ namespace GameConfig
 	}
 
 	const fixed16 kFrameTime = fixed16(0.03333334f);
+	const float kDefaultInputFrame = 0.03333334f;
+	constexpr uint32_t kMaxPredictFrame = 300;
+	const uint32_t kMaxOnceFrameRunNum = 2;
 }

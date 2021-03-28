@@ -76,6 +76,9 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     public static extern void UpdateGame(float dt);
 
     [DllImport("ClientProxy")]
+    public static extern void GameRollback();
+
+    [DllImport("ClientProxy")]
     public static extern void LoadDLL();
 
     [DllImport("ClientProxy")]
@@ -158,6 +161,11 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     public static void PlayAnimation(int id,string str)
     {
         UnityViewServices.Instance.PlayAnim(id, str);
+    }
+
+    public static void PlayAnimationToTime(int id, string str,double time)
+    {
+        UnityViewServices.Instance.PlayAnim(id, str,(float)time);
     }
 
     public static void InputHandler()

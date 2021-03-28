@@ -10,8 +10,6 @@
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Player.hpp"
 
-#include "Framework/Game/Utility/ActorStateUtility.hpp"
-
 #include "3rdparty/include/entt/entt.hpp"
 
 struct ActorUtiltiy
@@ -25,6 +23,8 @@ struct ActorUtiltiy
 
 		// 通过createactoresystem创建具体actor信息
 		reg.emplace<ActorAsset>(e,actor_asset);
+		
+		return e;
 	}
 
 	static entt::entity CreateMonster(entt::registry& reg, uint32_t id, const std::string& actore_asset, const vec3& position = vec3(0, 0, 0), const quat& rotation = glm::identity<quat>())

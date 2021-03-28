@@ -31,8 +31,13 @@
 #include "Framework/Game/Utility/ActorUtility.hpp"
 
 Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
-	: player_infos_(players)
-	, game_mode_(mode)
+	: game_mode_(mode)
+	, run_time_(0)
+	, run_frame_(0)
+	, real_frame_(0)
+	, input_frame_rate_(GameConfig::kDefaultInputFrame)
+	, player_infos_(players)
+	
 {
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
@@ -49,12 +54,9 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
 	systems_.emplace_back(std::make_unique<SkillSystem>(registry_));
 	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
-
-	// 注意对于observer监听的处理必须都在本帧完成处理
-	// 即带有observer的system必须在放倒执行顺序的最后
-	observer_systems_.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry_));
-	observer_systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
-	observer_systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
+	systems_.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry_));
+	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
+	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
 
 #ifdef DEBUG
 	systems_.emplace_back(std::make_unique<DebugSystem>(registry_));
@@ -63,7 +65,7 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 
 Game::~Game()
 {
-
+	registry_.clear();
 }
 
 bool Game::Initialize()
@@ -76,19 +78,10 @@ bool Game::Initialize()
 		}
 	}
 
-	for (auto& system : observer_systems_)
-	{
-		if (!system->Initialize())
-		{
-			return false;
-		}
-	}
-
 	auto& file_service = registry_.ctx<Locator>().Ref<FileService>();
 	file_service.set_cur_path(std::filesystem::current_path().string() + "/Assets/Resources/");
 
 	LoadAllConfig();
-
 	CreatePlayer();
 
 	return true;
@@ -96,59 +89,62 @@ bool Game::Initialize()
 
 void Game::Update(float dt)
 {
+	run_time_ += dt;
+
+	UpdateInput();
+
 	if (game_mode_ == GameMode::kClinet)
 	{
-		UpdateClinet(dt);
+		UpdateClinet();
 	}
 	else
 	{
-		UpdateServer(dt);
+		UpdateServer();
 	}
 }
 
-void Game::UpdateClinet(float dt)
+void Game::UpdateClinet()
 {
-	uint32_t mill_dt = static_cast<uint32_t>(dt * 1000);
-	run_time_ += mill_dt;
-
+	int run_frame_times = 0;
 	auto& game_state = registry_.ctx<GameState>();
-
-	// todo 检查预测
-
-	// todo:后面根据延迟调整自己的输入频率
-	while (run_time_ > game_state.run_frame * kFrameRate + kFrameRate)
+	while (true)
 	{
-		auto start = std::chrono::system_clock::now();
-
-		auto& input_service = registry_.ctx<Locator>().Ref<const InputService>();
-		input_service.InputHandler();
-
-		SetupCommands(game_state.run_frame);
-
-		if (command_groups_.size() <= game_state.run_frame)
+		auto& command_group = command_groups_[game_state.run_frame % command_groups_.size()];
+		if (command_group.frame != game_state.run_frame || run_frame_times >= GameConfig::kMaxOnceFrameRunNum)
 		{
 			return;
 		}
 
-		auto command_group = command_groups_[game_state.run_frame];
+		// 如果是预测执行,保存快照
+		if (game_state.run_frame > real_frame_)
+		{
+			SaveSnapshot();
+		}
+
 		for (auto e : registry_.view<Player>())
 		{
 			const auto& player = registry_.get<Player>(e);
-			auto iter = command_group.find(player.id);
-			if (iter != command_group.end())
+			auto iter = command_group.commands.find(player.id);
+			if (iter != command_group.commands.end())
 			{
 				registry_.emplace_or_replace<Command>(e, iter->second);
 			}
 		}
 
-		if (registry_.view<Command>().size() < registry_.view<Player>().size())
-		{
-			return;
-		}
-
 		for (auto& system : systems_)
 		{
-			system->Update(GameConfig::kFrameTime);
+			if (dynamic_cast<CreateViewSystem*>(system.get()))
+			{
+				if (game_state.run_frame + 1 >= run_frame_)
+				{
+					system->Update(GameConfig::kFrameTime);
+				}
+			}
+			else 
+			{
+				system->Update(GameConfig::kFrameTime);
+			}
+			
 		}
 
 		for (auto& system : systems_)
@@ -156,37 +152,27 @@ void Game::UpdateClinet(float dt)
 			system->LateUpdate(GameConfig::kFrameTime);
 		}
 
+		for (auto& system : systems_)
+		{
+			auto observer_system = dynamic_cast<ObserverSystem*>(system.get());
+			if (observer_system != nullptr)
+			{
+				observer_system->Clear();
+			}
+		}
+
 		registry_.clear<Command>();
 		++registry_.ctx<GameState>().run_frame;
 
-		auto t = std::chrono::duration<double>(std::chrono::system_clock::now() - start).count();
-		//INFO("cpp time {}", t * 1000);
+		++run_frame_times;
+
+		INFO("Client");
 	}
 }
 
-void Game::UpdateServer(float dt)
+void Game::UpdateServer()
 {
-	uint32_t mill_dt = static_cast<uint32_t>(dt * 1000);
-	run_time_ += mill_dt;
-
-	auto& game_state = registry_.ctx<GameState>();
-	while (run_time_ > game_state.run_frame * kFrameRate + kFrameRate)
-	{
-		//生成command
-		/*Setupcommands(game_state.run_frame);
-		if (registry_.ctx<commandGroup>().value.size() == registry_.view<Player>().size())
-		{
-			for (auto& system : systems_)
-			{
-				system->Update(fixed16(0.33));
-			}
-
-			++registry_.ctx<GameState>().real_frame;
-			++registry_.ctx<GameState>().run_frame;
-
-			SaveSnapshot();
-		}*/
-	}
+	
 }
 
 void Game::Finalize()
@@ -198,100 +184,67 @@ void Game::Finalize()
 	}
 }
 
-void Game::InputCommand(uint32_t id,Command&& command)
-{
-	auto iter = player_input_commands_.find(id);
-	if (iter != player_input_commands_.end())
+void Game::UpdateInput()
+{	
+	while (run_time_ > run_frame_ * input_frame_rate_ + input_frame_rate_)
 	{
-		iter->second.emplace_back(std::move(command));
-	}
-	else
-	{
-		std::vector<Command> commands;
-		commands.emplace_back(command);
-		player_input_commands_.emplace(id, std::move(commands));
-	}
-}
+		auto& group = command_groups_[run_frame_ % command_groups_.size()];
+		group.frame = run_frame_;
+		group.commands.clear();
 
-void Game::SetupCommands(uint32_t frame)
-{
-	CommandGroup group;
-	for (auto& e : player_input_commands_)
-	{
-		if (e.second.size() <= frame)
+		//会触发InputCommand,相当于getcommands
+		auto& input_service = registry_.ctx<Locator>().Ref<const InputService>();
+		input_service.InputHandler();
+
+		//预测玩家操作
+		if (group.commands.size() < player_infos_.size())
 		{
-			if (e.second.empty())
+			if (run_frame_ == 0)
 			{
-				group.emplace(e.first, Command());
+				for (auto& player_info : player_infos_)
+				{
+					if (group.commands.find(player_info.id) == group.commands.end())
+					{
+						group.commands.emplace(player_info.id, Command());
+					}
+				}
 			}
 			else
 			{
-				group.emplace(e.first, e.second.back());
+				// 简单的用上一帧命令填充(后续预测优化)
+				auto& last_group = command_groups_[(run_frame_ - 1) % command_groups_.size()];
+				for (auto& last_command : last_group.commands)
+				{
+					if (group.commands.find(last_command.first) == group.commands.end())
+					{
+						group.commands.emplace(last_command.first, last_command.second);
+					}
+				}
 			}
+
+			++run_frame_;
 		}
 		else
 		{
-			group.emplace(e.first, e.second[frame]);
+			++real_frame_;
+			++run_frame_;
 		}
-	}
 
-	command_groups_.push_back(std::move(group));
+		INFO("INPUT");
+	}
 }
 
-Command Game::PredictCommand(uint32_t id)
+void Game::InputCommand(uint32_t id,Command&& command)
 {
-	auto iter = player_input_commands_.find(id);
-	if (iter != player_input_commands_.end())
-	{
-		if (!iter->second.empty())
-		{
-			return iter->second.back();
-		}
-	}
-
-	return Command();
+	auto& group = command_groups_[run_frame_ % command_groups_.size()];
+	group.commands.emplace(id,std::move(command));
 }
-
-void Game::CheckPredict()
-{
-	auto game_state = registry_.ctx<GameState>();
-	for (uint32_t frame = game_state.real_frame; frame < game_state.run_frame; ++frame)
-	{
-		//auto command_group = GetCommandGroup(frame);
-		//if (command_group.value.size() < registry_.view<Player>().size())
-		//{
-		//	return;
-		//}
-
-		//auto& predict_commands = predict_command_groups_.find(frame)->second;
-		//if (command_group == predict_commands)
-		//{
-		//	predict_command_groups_.erase(game_state.real_frame);
-		//	snapshots_.erase(game_state.real_frame);
-		//	++registry_.ctx<GameState>().real_frame;
-		//}
-		//else
-		//{
-		//	auto pre_frame = frame - 1;
-		//	auto& snapshot = snapshots_.find(pre_frame);
-		//	//registry_.reset(snapshot);	// todo
-		//	registry_.ctx<GameState>().real_frame = pre_frame;
-
-		//	predict_command_groups_.clear();
-		//	snapshots_.clear();
-		//	return;
-		//}
-	}
-
-	return;
-}
-
 
 void Game::SaveSnapshot()
 {
 	auto& game_state = registry_.ctx<GameState>();
 
-	auto& snapshot = snapshots_.pop();
+	auto& snapshot = snapshots_[game_state.run_frame % snapshots_.size()];
 	snapshot.frame = game_state.run_frame;
 	snapshot.buffer.Clear();
 
@@ -332,17 +285,28 @@ void Game::SaveSnapshot()
 	ar(registry_.ctx<GameState>());
 }
 
-void Game::LoadSnapshot()
+void Game::Rollback(uint32_t frame)
 {
 	auto& game_state = registry_.ctx<GameState>();
 
-	auto& snapshot = snapshots_.pop();
+	auto& snapshot = snapshots_[frame % snapshots_.size()];
 
+	assert(snapshot.frame == frame);
+
+	// 取消observer的监听防止错误触发
+	for (auto& system : systems_)
+	{
+		auto observer_system = dynamic_cast<ObserverSystem*>(system.get());
+		if (observer_system != nullptr)
+		{
+			observer_system->Disconnect();
+		}
+	}
+
+	registry_.clear();
 	kanex::BinaryStream stream(snapshot.buffer);
 	kanex::BinaryInputArchive ar(stream);
-
-	auto temp = std::move(registry_);
-	entt::snapshot_loader{ temp }
+	entt::snapshot_loader{ registry_ }
 		.entities(ar)
 		.component <
 		ActorAsset,
@@ -373,11 +337,17 @@ void Game::LoadSnapshot()
 		Weapon
 		> (ar);
 
-	ar(temp.ctx<GameState>());
+	ar(registry_.ctx<GameState>());
 
-	registry_ = std::move(temp);
-	
-	// 清理
+	// 重新监听
+	for (auto& system : systems_)
+	{
+		auto observer_system = dynamic_cast<ObserverSystem*>(system.get());
+		if (observer_system != nullptr)
+		{
+			observer_system->Connect();
+		}
+	}
 }
 
 void Game::CreatePlayer()
@@ -385,7 +355,6 @@ void Game::CreatePlayer()
 	for (auto& player_info : player_infos_)
 	{ 
 		ActorUtiltiy::CreatePlayer(registry_, player_info.id, player_info.actor_asset);
-		player_input_commands_.emplace(player_info.id, std::vector<Command>());
 	}
 }
 

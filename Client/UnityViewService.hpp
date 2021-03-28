@@ -8,7 +8,7 @@ public:
 	
 public:
 	std::unique_ptr<IViewImpl> Create(std::string_view asset) const override;
-	void Destory(const std::unique_ptr<IViewImpl>& view) const override;
+	void Destory(const IViewImpl* view) const override;
 
 	void UpdatePosition(const IViewImpl* view,float x,float y,float z) const;
 	void UpdateRotation(const IViewImpl* view, float x, float y, float z, float w) const;

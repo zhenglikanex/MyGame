@@ -86,4 +86,13 @@ extern "C"
 			}
 		}
 	}
+
+	EXPORT_DLL void GameRollback()
+	{
+		if (g_game)
+		{
+			uint32_t min = 0;
+			g_game->Rollback(std::max(min,g_game->run_frame() - 100));
+		}
+	}
 }

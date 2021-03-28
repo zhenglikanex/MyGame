@@ -24,7 +24,7 @@ struct UpdateColliderTransformSystem : public ObserverSystem
 
 	bool Initialize() override
 	{
-		Connect();
+		mover = CreateObserver(entt::collector.group<Transform, ColliderInfo>().update<Transform>().where<ColliderInfo>());
 		return true;
 	}
 
@@ -58,12 +58,11 @@ struct UpdateColliderTransformSystem : public ObserverSystem
 
 	void Connect() override
 	{
-		mover = CreateObserver(entt::collector.group<Transform, ColliderInfo>().update<Transform>().where<ColliderInfo>());
+		mover->connect(registry, entt::collector.group<Transform, ColliderInfo>().update<Transform>().where<ColliderInfo>());
 	}
 
 	void Disconnect() override
 	{
-		RemoveObserver(mover);
-		mover = nullptr;
+		mover->disconnect();
 	}
 };

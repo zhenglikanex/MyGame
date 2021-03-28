@@ -91,4 +91,5 @@ private:
 extern "C"
 {
 	EXPORT_DLL void SetUnityDelegate(UnityDelegate delegate);
+	EXPORT_DLL void GameRollback();
 }

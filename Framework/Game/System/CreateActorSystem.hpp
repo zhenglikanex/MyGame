@@ -13,10 +13,14 @@
 #include "Framework/Game/Component/ColliderInfo.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Attributes.hpp"
+#include "Framework/Game/Component/Health.hpp"
+#include "Framework/Game/Component/Collider.hpp"
 
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Data/ActorConfig.hpp"
+
+#include "Framework/Game/Utility/ActorStateUtility.hpp"
 
 struct CreateActorSystem : public System
 {
@@ -44,7 +48,7 @@ struct CreateActorSystem : public System
 			registry.emplace<AnimationAsset>(e, actor_info.anim_asset());
 			registry.emplace<Weapon>(e, actor_info.weapon());
 
-			if (actor_info.skill_graph_asset().empty())
+			if (!actor_info.skill_graph_asset().empty())
 			{
 				registry.emplace<SkillGraphAsset>(e, actor_info.skill_graph_asset());
 			}

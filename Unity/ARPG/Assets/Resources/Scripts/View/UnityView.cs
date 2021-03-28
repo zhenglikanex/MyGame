@@ -48,7 +48,12 @@ public class UnityView : PoolObject
 
     }
 
-    public virtual void PlayAnim(string str)
+    public virtual void PlayAnim(string name)
+    {
+
+    }
+
+    public virtual void PlayAnim(string name,float time)
     {
 
     }

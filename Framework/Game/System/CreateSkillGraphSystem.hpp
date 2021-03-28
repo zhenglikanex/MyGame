@@ -6,8 +6,11 @@
 #include "Framework/Game/FileService.hpp"
 
 #include "Framework/Game/Component/SkillGraphAsset.hpp"
+#include "Framework/Game/Component/SkillState.hpp"
 
 #include "Framework/Game/System.hpp"
+
+#include "Framework/Game/Data/SkillGraph.hpp"
 
 struct CreateSkillGraphSystem : public System
 {

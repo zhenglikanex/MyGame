@@ -6,7 +6,9 @@
 #include <unordered_map>
 #include <cassert>
 #include <cstdint>
+#include <queue>
 
+#include "Framework/Game/GameConfig.hpp"
 #include "Framework/Game/FileService.hpp"
 #include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/Locator.hpp"
@@ -35,13 +37,22 @@ enum class GameMode
 	kServer
 };
 
-using CommandGroup = std::unordered_map<uint32_t, Command>;
+using CommandGroupO = std::unordered_map<uint32_t, Command>;
+
+struct CommandGroup
+{
+	uint32_t frame;
+	std::unordered_map<uint32_t, Command> commands;
+
+	CommandGroup()
+		: frame(std::numeric_limits<uint32_t>::max())
+	{
+
+	}
+};
 
 class Game
 {
-public:
-	static const uint32_t kFrameRate = 33;			// 33毫秒更新频率
-	static const uint32_t kMaxPredictFrame = 60;	//最大预测60帧,2秒
 public:
 	Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players);
 	~Game();
@@ -50,19 +61,18 @@ public:
 	void Update(float dt);
 	void Finalize();
 	
-	void UpdateClinet(float dt);
-	void UpdateServer(float dt);
+	void UpdateInput();
+	void UpdateClinet();
+	void UpdateServer();
 
 	// 外部调用
 	void InputCommand(uint32_t id, Command&& command);
 	void SetupCommands(uint32_t frame);
-	Command PredictCommand(uint32_t id);
-
-	void CheckPredict();
 
 	void SaveSnapshot();
-	void LoadSnapshot();
-
+	void Rollback(uint32_t frame);
+	
+	uint32_t run_frame() { return run_frame_; }
 	entt::registry& registry() { return registry_; }
 private:
 	void LoadAllConfig();
@@ -88,17 +98,17 @@ private:
 		}
 	}
 
-	uint32_t run_time_;
 	GameMode game_mode_;
-
+	float run_time_;		// 注意,这个浮点数不会引起不同步的问题
+	uint32_t run_frame_;
+	uint32_t real_frame_;
+	float input_frame_rate_;	// 注意,这个浮点数不会引起不同步的问题
+	
 	entt::registry registry_;
 	std::vector<std::unique_ptr<System>> systems_;
-	std::vector<std::unique_ptr<ObserverSystem>> observer_systems_;
 	std::vector<PlayerInfo> player_infos_;
-	std::unordered_map<uint32_t, std::vector<Command>> player_input_commands_;	// 玩家的输入队列
-	std::vector<CommandGroup> command_groups_;
-	std::unordered_map<uint32_t, CommandGroup> predict_command_groups_;
-	RingArray<Snapshot, 30> snapshots_;
+	std::array<CommandGroup, GameConfig::kMaxPredictFrame> command_groups_;
+	std::array<Snapshot,GameConfig::kMaxPredictFrame> snapshots_;
 };
 
 extern std::unique_ptr<Game> g_game;

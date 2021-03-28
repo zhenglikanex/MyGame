@@ -95,5 +95,41 @@ public class Actor : UnityView
             animator.Play(animName);
         }
     }
-    
+
+    public override void PlayAnim(string str,float time)
+    {
+        string[] anim_params = str.Split('|');
+        if (anim_params.Length == 2)
+        {
+            string animName = anim_params[0];
+            string animParam = anim_params[1];
+            if (animName == "Locomotion")
+            {
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animName))
+                {
+                    animator.Play(animName,0,time);
+                }
+                else
+                {
+                    Debug.LogError("!!!!!!!");
+                }
+                animator.SetFloat("forward", float.Parse(animParam));
+            }
+            else
+            {
+                animator.Play(name,0,time);
+            }
+        }
+        else
+        {
+            if (str == "skill100010")
+            {
+                //Time.timeScale = 0;
+            }
+            string animName = str;
+            Debug.Log(name);
+            //animator.SetFloat("forward", 0);
+            animator.Play(animName,0,time);
+        }
+    }
 }

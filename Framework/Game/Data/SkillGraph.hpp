@@ -238,7 +238,7 @@ inline void from_json(const json& j, SkillGraphInfo& skill_graph)
 
 namespace kanex
 {
-	void Save(BinaryOutputArchive& ar,const SkillGraphInfo::Param& param)
+	inline void Save(BinaryOutputArchive& ar,const SkillGraphInfo::Param& param)
 	{
 		if constexpr (sizeof(int) > sizeof(fixed16))
 		{
@@ -250,7 +250,7 @@ namespace kanex
 		}
 	}
 
-	void Load(BinaryInputArchive& ar,SkillGraphInfo::Param& param)
+	inline void Load(BinaryInputArchive& ar,SkillGraphInfo::Param& param)
 	{
 		if constexpr (sizeof(int) > sizeof(fixed16))
 		{

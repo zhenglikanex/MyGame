@@ -14,7 +14,10 @@ public:
 	using TypeGenerate = entt::family<Locator>;
 
 	Locator() = default;
-	~Locator() = default;
+	~Locator()
+	{
+		int a = 10;
+	}
 	
 	Locator(const Locator&) = delete;
 	Locator(Locator&&) = default;

@@ -24,7 +24,7 @@ struct CollisionSystem : public ObserverSystem
 
 	bool Initialize() override
 	{
-		Connect();
+		mover = CreateObserver(entt::collector.group<Matrix4x4, Collider>().update<Matrix4x4>().where<Collider>());
 		return true;
 	}
 
@@ -98,12 +98,11 @@ struct CollisionSystem : public ObserverSystem
 
 	void Connect() override
 	{
-		mover = CreateObserver(entt::collector.group<Matrix4x4, Collider>().update<Matrix4x4>().where<Collider>());
+		mover->connect(registry,entt::collector.group<Matrix4x4, Collider>().update<Matrix4x4>().where<Collider>());
 	}
 
 	void Disconnect() override
 	{
-		RemoveObserver(mover);
-		mover = nullptr;
+		mover->disconnect();
 	}
 };

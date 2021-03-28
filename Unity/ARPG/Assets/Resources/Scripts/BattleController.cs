@@ -34,13 +34,18 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
     {
         if(IsBattleing)
         {
+            if (Input.GetKeyDown("r"))
+            {
+                CPlusPlusBridge.GameRollback();
+            }
+
             //Debug.Log(string.Format("deltaTime {0}", Time.deltaTime));
             CPlusPlusBridge.UpdateGame(Time.deltaTime);
 
             if(skill == 0)
             {
                 skill = Input.GetKeyDown("j") ? 100010 : 0;
-            }
+            }   
         }
     }
 

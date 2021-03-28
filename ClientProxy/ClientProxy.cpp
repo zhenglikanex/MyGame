@@ -67,4 +67,12 @@ extern "C"
 		}
 	}
 	
+	PROXY_DLL void GameRollback()
+	{
+		auto fpFun = (void(*)())GetProcAddress(instance, "GameRollback");
+		if (fpFun)
+		{
+			fpFun();
+		}
+	}
 }

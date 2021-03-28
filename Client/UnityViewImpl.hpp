@@ -6,10 +6,7 @@ class UnityViewImpl : public IViewImpl
 {
 public:
 	UnityViewImpl(int handle) :handle_(handle) {}
-	~UnityViewImpl()
-	{
-
-	}
+	~UnityViewImpl();
 
 	void UpdatePosition(const vec3& pos) override;
 	void UpdateRotation(const quat& rotation) override;

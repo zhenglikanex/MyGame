@@ -3,6 +3,17 @@
 #include "Framework/Game/Game.hpp"
 #include "Client/UnityViewService.hpp"
 
+UnityViewImpl::~UnityViewImpl()
+{
+	if (g_game)
+	{
+		// ctx数据会先于locator
+		auto& locator = g_game->registry().ctx<Locator>();
+		auto& service = dynamic_cast<const UnityViewService&>(locator.Ref<ViewService>());
+		service.Destory(this);
+	}
+}
+
 void UnityViewImpl::UpdatePosition(const vec3& pos)
 {
 	if (g_game)
