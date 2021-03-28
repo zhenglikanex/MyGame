@@ -23,7 +23,13 @@ add_executable(ActorNet
     ${PROTO_SRC}
 )
 
-target_link_libraries(ActorNet ${PROTOBUF_LIBRARY} ${PROTOBUF_LITE_LIBRARY})
+target_link_libraries(ActorNet 
+     debug ${PROTOBUF_LIBRARY_DEBUG} 
+     debug ${PROTOBUF_LITE_LIBRARY_DEBUG}
+     optimized ${PROTOBUF_LIBRARY}
+     optimized ${PROTOBUF_LITE_LIBRARY} 
+)
+
 SET_PROPERTY(TARGET ActorNet PROPERTY FOLDER "Server")
 
 #设置VS工作目录

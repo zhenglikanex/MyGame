@@ -3,7 +3,8 @@ import os,sys
 
 path = os.getcwd() + "/"
 
-CMakeTemplate = "add_library({0}Actor {0}Actor.hpp {0}Actor.cpp)"
+CMakeTemplate = "add_library({0}Actor {0}Actor.hpp {0}Actor.cpp) \n\
+SET_PROPERTY(TARGET MasterActor PROPERTY FOLDER \"Server\")"
 HeadTemplte = "#pragma once\n\
 #include \"IActor.h\"\n\
 #include \"ActorMessage.h\"\n\

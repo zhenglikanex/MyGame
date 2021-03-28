@@ -35,8 +35,8 @@ message(${PROTOBUF_LIB_PATH})
 #寻找protobuf
 find_library(PROTOBUF_LIBRARY_DEBUG NAMES libprotobufd PATHS ${PROTOBUF_LIB_PATH})
 find_library(PROTOBUF_LITE_LIBRARY_DEBUG NAMES libprotobuf-lited PATHS ${PROTOBUF_LIB_PATH})
-find_library(PROTOBUF_LIBRARY NAMES libprotobufPATHS ${PROTOBUF_LIB_PATH})
-find_library(PROTOBUF_LITE_LIBRARY NAMES libprotobuf-litePATHS ${PROTOBUF_LIB_PATH})
+find_library(PROTOBUF_LIBRARY NAMES libprotobuf PATHS ${PROTOBUF_LIB_PATH})
+find_library(PROTOBUF_LITE_LIBRARY NAMES libprotobuf-lite PATHS ${PROTOBUF_LIB_PATH})
 
 #收集proto文件
 file(GLOB_RECURSE PROTO_SRC ${PROJECT_SOURCE_DIR}/Framework/Proto/*.h ${PROJECT_SOURCE_DIR}/Framework/Proto/*.cc)
