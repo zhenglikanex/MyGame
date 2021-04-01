@@ -49,22 +49,22 @@ namespace actor_net
 		void StartActor(const std::string& lib_path, const std::string& actor_name = "");
 
 		// 杀死actor
-		void KillActor(actor_id id);
+		void KillActor(ActorId id);
 		void KillActor(const std::string& name);
 
 		// 注册actor名字
-		void RegisterActorName(actor_id id, const std::string& name);
-		void RegisterGlobalActorName(actor_id id, const std::string& name);
+		void RegisterActorName(ActorId id, const std::string& name);
+		void RegisterGlobalActorName(ActorId id, const std::string& name);
 
-		actor_id GetActorIdByName(const std::string& name);
+		ActorId GetActorIdByName(const std::string& name) const;
 
-		IActorPtr GetActorById(actor_id id);
-		IActorPtr GetActorByName(const std::string& name);
+		IActorPtr GetActorById(ActorId id) const;
+		IActorPtr GetActorByName(const std::string& name) const;
 	public:
 		// 发送本地服务消息
-		void SendActorMessage(const ActorMessagePtr& acotr_msg);
-		void SendActorMessage(actor_id src_id, actor_id dest_id,const std::vector<uint8_t>& data);
-		void SendActorMessage(const std::string& src_actor_name, const std::string& dest_actor_name, const std::vector<uint8_t>& data);
+		void SendActorMessage(ActorMessage&& acotr_msg);
+		void SendActorMessage(ActorId src_id, ActorId dest_id,std::vector<uint8_t>&& data);
+		void SendActorMessage(const std::string& src_actor_name, const std::string& dest_actor_name,std::vector<uint8_t>&& data);
 
 		// 发送远程服务消息
 	private:
@@ -80,8 +80,8 @@ namespace actor_net
 		uint32_t harbor_;
 		uint32_t handle_index_;
 
-		std::unordered_map<std::string, actor_id> name_by_acotr_id_map_;
-		std::unordered_map<actor_id, IActorPtr> id_by_actor_map_;
+		std::unordered_map<std::string, ActorId> name_by_acotr_id_map_;
+		std::unordered_map<ActorId, IActorPtr> id_by_actor_map_;
 
 		MessageCore message_core_;
 

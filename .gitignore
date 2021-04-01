@@ -1,4 +1,5 @@
 build
+UnityApp
 3rdparty/build
 *.lib
 bin

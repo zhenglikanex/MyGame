@@ -12,56 +12,56 @@ public class UnityResult
 
 public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 {
-#if !UNITY_EDITOR
-    private static IntPtr nativeLibraryPtr;
+//#if !UNITY_EDITOR
+//    private static IntPtr nativeLibraryPtr;
 
-    public delegate void InitGame(byte[] data, int size);
-    public delegate void DestoryGame();
-    public delegate void UpdateGame(float dt);
+//    public delegate void InitGame(byte[] data, int size);
+//    public delegate void DestoryGame();
+//    public delegate void UpdateGame(float dt);
 
-    public delegate void SetUnityDelegate(UnityDelegate unity_delegate);
-    public delegate string UnityDelegate(string func, string json_params);
-    public static void CSetUnityDelegate(UnityDelegate unity_delegate)
-    {
-        Native.Invoke<SetUnityDelegate>(nativeLibraryPtr, unity_delegate);
-    }
+//    public delegate void SetUnityDelegate(UnityDelegate unity_delegate);
+//    public delegate string UnityDelegate(string func, string json_params);
+//    public static void CSetUnityDelegate(UnityDelegate unity_delegate)
+//    {
+//        Native.Invoke<SetUnityDelegate>(nativeLibraryPtr, unity_delegate);
+//    }
 
-    public static void CInitGame(byte[] data, int size)
-    {
-        Native.Invoke<InitGame>(nativeLibraryPtr,data,size);
-    }
+//    public static void CInitGame(byte[] data, int size)
+//    {
+//        Native.Invoke<InitGame>(nativeLibraryPtr,data,size);
+//    }
 
-    public static void CDestoryGame()
-    {
-        Native.Invoke<DestoryGame>(nativeLibraryPtr);
-    }
+//    public static void CDestoryGame()
+//    {
+//        Native.Invoke<DestoryGame>(nativeLibraryPtr);
+//    }
 
-    public static void CUpdateGame(float dt)
-    {
-        Native.Invoke<UpdateGame>(nativeLibraryPtr,dt);
-    }
+//    public static void CUpdateGame(float dt)
+//    {
+//        Native.Invoke<UpdateGame>(nativeLibraryPtr,dt);
+//    }
 
-    public static void LoadDLL(string name)
-    {
-        if (nativeLibraryPtr != IntPtr.Zero) return;
+//    public static void LoadDLL(string name)
+//    {
+//        if (nativeLibraryPtr != IntPtr.Zero) return;
 
-        nativeLibraryPtr = Native.LoadLibrary(name);
-        if (nativeLibraryPtr == IntPtr.Zero)
-        {
-            Debug.LogError("Failed to load native library");
-        }
-    }
+//        nativeLibraryPtr = Native.LoadLibrary(name);
+//        if (nativeLibraryPtr == IntPtr.Zero)
+//        {
+//            Debug.LogError("Failed to load native library");
+//        }
+//    }
 
-    public static void FreeDLL()
-    {
-        if (nativeLibraryPtr == IntPtr.Zero) return;
+//    public static void FreeDLL()
+//    {
+//        if (nativeLibraryPtr == IntPtr.Zero) return;
 
-        Debug.Log(Native.FreeLibrary(nativeLibraryPtr)
-                      ? "Native library successfully unloaded."
-                      : "Native library could not be unloaded.");
-    }
+//        Debug.Log(Native.FreeLibrary(nativeLibraryPtr)
+//                      ? "Native library successfully unloaded."
+//                      : "Native library could not be unloaded.");
+//    }
 
-#else
+//#else
     public delegate string UnityDelegate(string func, string json_params);
     [DllImport("ClientProxy")]
     public static extern void SetUnityDelegate(UnityDelegate unity_delegate);
@@ -86,7 +86,7 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
     [DllImport("ClientProxy")]
     public static extern void GameInput(byte[] data, int size);
-#endif
+//#endif
 
     public static string UnityCallback(string func, string json_params)
     {

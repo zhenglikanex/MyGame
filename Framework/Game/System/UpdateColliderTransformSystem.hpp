@@ -33,12 +33,12 @@ struct UpdateColliderTransformSystem : public ObserverSystem
 		auto view = registry.view<const Transform, const ColliderInfo>();
 		for (auto e : *mover)
 		{
-			auto[transform, collider_info] = view.get<const Transform, const ColliderInfo>(e);
+			auto [transform, collider_info] = view.get<const Transform, const ColliderInfo>(e);
 
 			if (registry.valid(collider_info.collider) && registry.has<Collider>(collider_info.collider))
 			{
 				mat4 mat = glm::mat4_cast(transform.rotation);
-				mat[3] = vec4(transform.position,1);
+				mat[3] = vec4(transform.position, 1);
 				registry.emplace_or_replace<Matrix4x4>(collider_info.collider, mat * collider_info.transform);
 			}
 		}

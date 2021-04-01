@@ -17,7 +17,7 @@ public class GameBattleState : FSMState
         if (prefab)
         {
             GameObjectPool pool = PoolManager.Instance.RegisterPool("Hero", prefab);
-            pool.AlllocCapacity(20);
+            pool.AlllocCapacity(100);
         }
 
         // 加载战斗场景

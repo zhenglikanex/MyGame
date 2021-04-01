@@ -44,7 +44,7 @@ namespace kanex
 		bool IsFinish() const { return write_cursor_ == read_cursor_; }
  
 		void Reserve(size_t capactiy) { buffer_.reserve(capactiy); }
-		size_t Size() const { return buffer_.size(); }
+		size_t Size() const { return write_cursor_; }
 		const char* GetData() const { return buffer_.data(); }
 	private:
 		std::vector<char> buffer_;

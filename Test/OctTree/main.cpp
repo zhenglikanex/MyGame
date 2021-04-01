@@ -60,41 +60,42 @@ TEST_CASE_METHOD(Test, "OctTree")
 	std::uniform_real_distribution<float>r(0, 10);
 	std::vector<AABB> aabbs;
 	aabbs.reserve(10000);
-	std::vector<AABB> collisions;
+	std::vector<Capsule> collisions;
 	OctTree tree(vec3(fixed16(0)), vec3(fixed16(1000)), 5);
 
 	entt::registry registry;
 	auto te = registry.create();
 	BuildTree(registry, te, vec3(fixed16(0)), vec3(fixed16(1000)), 7);
 
-	for (int i = 0; i < 1000; ++i)
+	for (int i = 0; i < 10000; ++i)
 	{
-		aabbs.emplace_back(vec3(fixed16(c(e))), vec3(fixed16(r(e))));
+		AABB obb = { vec3(10),vec3(20) };
+		aabbs.emplace_back(obb);
 	}
 
-	{
-		AutoTimer t;
-		for (int i = 0; i < 1000; ++i)
-		{
-			tree.Insert(aabbs[i]);
-		}
-	}
+	//{
+	//	AutoTimer t;
+	//	for (int i = 0; i < 1000; ++i)
+	//	{
+	//		tree.Insert(aabbs[i]);
+	//	}
+	//}
 
-	{
-		AutoTimer t("ecs tree");
-		for (int i = 0; i < 1000; ++i)
-		{
-			auto e = registry.create();
-			registry.emplace<AABB>(e, aabbs[i]);
-			Insert(registry, te, e);
-		}
-	}
+	//{
+	//	AutoTimer t("ecs tree");
+	//	for (int i = 0; i < 1000; ++i)
+	//	{
+	//		auto e = registry.create();
+	//		registry.emplace<AABB>(e, aabbs[i]);
+	//		Insert(registry, te, e);
+	//	}
+	//}
 
 
 	int cnt1 = 0, cnt2 = 0;
 	{
-		AutoTimer t;
-		for (int i = 0; i < 1000; ++i)
+		AutoTimer t("obb");
+		for (int i = 0; i < 10000; ++i)
 		{
 			for (int j = 0; j < aabbs.size(); ++j)
 			{
@@ -106,31 +107,31 @@ TEST_CASE_METHOD(Test, "OctTree")
 		}
 	}
 
-	std::vector<const AABB*> objects;
-	{
+	//std::vector<const AABB*> objects;
+	//{
 
-		objects.reserve(100000);
-		AutoTimer t("oct");
-		for (int i = 0; i < 1000; ++i)
-		{
-			tree.GetCollisionObject(aabbs[i], objects);
-			//cnt2 += objects.size();
-		}
-	}
+	//	objects.reserve(100000);
+	//	AutoTimer t("oct");
+	//	for (int i = 0; i < 1000; ++i)
+	//	{
+	//		tree.GetCollisionObject(aabbs[i], objects);
+	//		//cnt2 += objects.size();
+	//	}
+	//}
 
-	std::vector<entt::entity> entites;
-	{
-		objects.reserve(100000);
-		AutoTimer t("ecs");
-		auto view = registry.view<AABB>();
-		for (auto e : view)
-		{
-			 GetCollsions(registry, te, e, entites);
-		}
-	}
+	//std::vector<entt::entity> entites;
+	//{
+	//	objects.reserve(100000);
+	//	AutoTimer t("ecs");
+	//	auto view = registry.view<AABB>();
+	//	for (auto e : view)
+	//	{
+	//		 GetCollsions(registry, te, e, entites);
+	//	}
+	//}
 
-	REQUIRE(cnt1 == objects.size());
-	REQUIRE(cnt1 == entites.size());
+	//REQUIRE(cnt1 == objects.size());
+	//REQUIRE(cnt1 == entites.size());
 }
 
 

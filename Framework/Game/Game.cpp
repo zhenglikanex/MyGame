@@ -144,7 +144,6 @@ void Game::UpdateClinet()
 			{
 				system->Update(GameConfig::kFrameTime);
 			}
-			
 		}
 
 		for (auto& system : systems_)
@@ -205,7 +204,7 @@ void Game::UpdateInput()
 				{
 					if (group.commands.find(player_info.id) == group.commands.end())
 					{
-						group.commands.emplace(player_info.id, Command());
+						group.commands.emplace(player_info.id, group.commands[0]);
 					}
 				}
 			}
@@ -217,7 +216,7 @@ void Game::UpdateInput()
 				{
 					if (group.commands.find(last_command.first) == group.commands.end())
 					{
-						group.commands.emplace(last_command.first, last_command.second);
+						group.commands.emplace(last_command.first, group.commands[0]);
 					}
 				}
 			}

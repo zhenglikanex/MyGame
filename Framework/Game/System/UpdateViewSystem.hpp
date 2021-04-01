@@ -6,12 +6,6 @@
 
 #include "Framework/Game/System.hpp"
 
-void func(const entt::registry& reg, entt::entity e)
-{
-	//auto move = reg.get<Movement>(e);
-	//int a = 10;
-}
-
 struct UpdateViewSystem : public ObserverSystem
 {
 	
@@ -31,8 +25,6 @@ struct UpdateViewSystem : public ObserverSystem
 
 	bool Initialize() override
 	{
-		registry.on_update<Transform>().connect<&func>();
-
 		mover = CreateObserver(entt::collector.group<Transform, View>().update<Transform>().where<View>());
 		animator = CreateObserver(entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>());
 

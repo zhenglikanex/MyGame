@@ -6,6 +6,7 @@
 #include "Primitive.hpp"
 
 #include "glm/glm.hpp"
+#include "Framework/Game/Math.hpp"
 
 struct Contact
 {
@@ -305,33 +306,33 @@ int TestCollision(const Sphere& s,const OBB& b,vec3& p)
 // return intersection distance tmin and point q of intersection
 int IntersectRayAABB(const vec3& p, const vec3& d,const AABB& a, fixed16& tmin, vec3& q)
 {
-    tmin = fixed16(0.0f);          // set to -FLT_MAX to get first hit on line
-    fixed16 tmax = std::numeric_limits<fixed16>::max(); // set to max distance ray can travel (for segment)
+    //tmin = fixed16(0.0f);          // set to -FLT_MAX to get first hit on line
+    //fixed16 tmax = std::numeric_limits<fixed16>::max(); // set to max distance ray can travel (for segment)
 
-    // For all three slabs
-    for (int i = 0; i < 3; i++) {
-        fixed16 min = a.c[i] - a.r[i];
-        fixed16 max = a.c[i] + a.r[i];
-        if (fpm::abs(d[i]) < std::numeric_limits<fixed16>::epsilon()) {
-            // Ray is parallel to slab. No hit if origin not within slab
-            if (p[i] < min || p[i] > max) return 0;
-        }
-        else {
-            // Compute intersection t value of ray with near and far plane of slab
-            fixed16 ood = fixed16(1.0f) / d[i];
-            fixed16 t1 = (min - p[i]) * ood;
-            fixed16 t2 = (max - p[i]) * ood;
-            // Make t1 be intersection with near plane, t2 with far plane
-            if (t1 > t2) std::swap(t1, t2);
-            // Compute the intersection of slab intersections intervals
-            tmin = std::max(tmin, t1);
-            tmax = std::min(tmax, t2);
-            // Exit with no collision as soon as slab intersection becomes empty
-            if (tmin > tmax) return 0;
-        }
-    }
-    // Ray intersects all 3 slabs. Return point (q) and intersection t value (tmin) 
-    q = p + d * tmin;
+    //// For all three slabs
+    //for (int i = 0; i < 3; i++) {
+    //    fixed16 min = a.c[i] - a.r[i];
+    //    fixed16 max = a.c[i] + a.r[i];
+    //    if (fpm::abs(d[i]) < std::numeric_limits<fixed16>::epsilon()) {
+    //        // Ray is parallel to slab. No hit if origin not within slab
+    //        if (p[i] < min || p[i] > max) return 0;
+    //    }
+    //    else {
+    //        // Compute intersection t value of ray with near and far plane of slab
+    //        fixed16 ood = fixed16(1.0f) / d[i];
+    //        fixed16 t1 = (min - p[i]) * ood;
+    //        fixed16 t2 = (max - p[i]) * ood;
+    //        // Make t1 be intersection with near plane, t2 with far plane
+    //        if (t1 > t2) std::swap(t1, t2);
+    //        // Compute the intersection of slab intersections intervals
+    //        tmin = std::max(tmin, t1);
+    //        tmax = std::min(tmax, t2);
+    //        // Exit with no collision as soon as slab intersection becomes empty
+    //        if (tmin > tmax) return 0;
+    //    }
+    //}
+    //// Ray intersects all 3 slabs. Return point (q) and intersection t value (tmin) 
+    //q = p + d * tmin;
     return 1;
 }
 

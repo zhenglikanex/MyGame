@@ -9,14 +9,14 @@ namespace actor_net
 	class ActorNet;
 	class ActorMessage;
 
-	typedef uint32_t actor_id;
-	const actor_id k_invalid_actor_id = 0;
+	typedef uint32_t ActorId;
+	const ActorId kNull = 0;
 
 	// 服务服务抽象接口
 	class IActor
 	{
 	public:
-		IActor(){}
+		IActor() :id_(kNull) { }
 		virtual ~IActor() = 0 { }
 
 		virtual bool Init(const std::shared_ptr<ActorNet>& actor_net_ptr)
@@ -31,19 +31,19 @@ namespace actor_net
 
 		}
 
-		virtual void OnReceive(const std::shared_ptr<ActorMessage>& actor_msg) = 0;
+		virtual void OnReceive(ActorMessage&& actor_msg) = 0;
 
-		void set_id(actor_id id) { id_ = id; };
-		actor_id id() { return id_; }
+		void set_id(ActorId id) { id_ = id; };
+		ActorId id() { return id_; }
 		
 	protected:
-		void SendActorMessage(const std::shared_ptr<ActorMessage>& actor_msg)
+		void SendActorMessage(ActorMessage&& actor_msg)
 		{
 
 		}
 
 		std::shared_ptr<ActorNet> actor_net_ptr_;
-		actor_id id_;
+		ActorId id_;
 	};
 
 	typedef std::shared_ptr<IActor> IActorPtr;

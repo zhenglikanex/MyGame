@@ -47,27 +47,45 @@ namespace actor_net
 			work_threads_.emplace_back(std::thread(
 				[this]() 
 			{
-				// TODO 进行消息调度
+				std::shared_ptr<MessageQueue> message_queue = nullptr;
 				while (true)
 				{
+					while (!message_queue)
 					{
-						std::unique_lock<std::mutex> lock(mutex_);
-
-						ActorMessagePtr actor_msg_ptr;
-
-						// 取出消息,如果没有消息沉睡线程;
-						while ( !(actor_msg_ptr = message_core_.PopActorMessage()) )
+						// 弹出消息队列,保证消息队列不会被并发
+						message_queue = message_core_.PopMessageQueue();
+						if (!message_queue)
 						{
-							condition_.wait(lock);
+							break;
 						}
 
-						// 取出目标actor
-						auto actor = GetActorById(actor_msg_ptr->dest_id());
-						if (actor)
-						{
-							// 进行消息处理
-							actor->OnReceive(actor_msg_ptr);
-						}
+						std::unique_lock lock(mutex_);
+						condition_.wait(lock);
+					}
+
+					auto actor = GetActorById(message_queue->actor_id());
+					if (!actor)
+					{
+						message_queue = message_core_.PopMessageQueue();
+						continue;
+					}
+
+					if (message_queue->IsEmpty())
+					{
+						message_queue = message_core_.PopMessageQueue();
+						//不放回message_core中,等到有消息插入再放回,防止线程空转
+						continue;
+					}
+
+					actor->OnReceive(message_queue->Pop());
+
+					auto next_queue = message_core_.PopMessageQueue();
+					if (next_queue)
+					{
+						// 如果不为空重新放回消息中心,等待下一次调度
+						// 如果为空只有一个actor要处理,没必要继续放回
+						message_core_.PushMessgeQueue(message_queue);
+						message_queue = next_queue;
 					}
 				}
 			}));
@@ -108,6 +126,14 @@ namespace actor_net
 		{
 			network_thread_.join();
 		}
+
+		for (auto& thread : work_threads_)
+		{
+			if (thread.joinable())
+			{
+				thread.join();
+			}
+		}
 	}
 
 	void ActorNet::StartActor(const std::string& lib_path, const std::string& actor_name /* = "" */)
@@ -139,7 +165,7 @@ namespace actor_net
 		}
 	}
 
-	void ActorNet::KillActor(actor_id id)
+	void ActorNet::KillActor(ActorId id)
 	{
 		auto iter = id_by_actor_map_.find(id);
 		if (iter != id_by_actor_map_.end())
@@ -168,7 +194,7 @@ namespace actor_net
 		}
 	}
 
-	void ActorNet::RegisterActorName(actor_id id, const std::string& name)
+	void ActorNet::RegisterActorName(ActorId id, const std::string& name)
 	{
 		for (auto& entry : name_by_acotr_id_map_)
 		{
@@ -190,19 +216,28 @@ namespace actor_net
 		name_by_acotr_id_map_.insert(std::make_pair(name, id));
 	}
 
-	actor_id ActorNet::GetActorIdByName(const std::string& name)
+	void ActorNet::RegisterGlobalActorName(ActorId id, const std::string& name)
 	{
+		// todo:
+	}
+
+	ActorId ActorNet::GetActorIdByName(const std::string& name) const
+	{
+		std::unique_lock lock(mutex_);
+
 		auto iter = name_by_acotr_id_map_.find(name);
 		if (iter != name_by_acotr_id_map_.end())
 		{
 			return iter->second;
 		}
 
-		return k_invalid_actor_id;
+		return kNull;
 	}
 
-	IActorPtr ActorNet::GetActorById(actor_id id)
+	IActorPtr ActorNet::GetActorById(ActorId id) const
 	{
+		std::unique_lock lock(mutex_);
+
 		auto iter = id_by_actor_map_.find(id);
 		if (iter != id_by_actor_map_.end())
 		{
@@ -212,10 +247,10 @@ namespace actor_net
 		return nullptr;
 	}
 
-	IActorPtr ActorNet::GetActorByName(const std::string& name)
+	IActorPtr ActorNet::GetActorByName(const std::string& name) const
 	{
 		auto id = GetActorIdByName(name);
-		if (id == k_invalid_actor_id)
+		if (id == kNull)
 		{
 			return nullptr;
 		}
@@ -223,14 +258,14 @@ namespace actor_net
 		return GetActorById(id);
 	}
 
-	void ActorNet::SendActorMessage(const ActorMessagePtr& acotr_msg)
+	void ActorNet::SendActorMessage(ActorMessage&& acotr_msg)
 	{
 		// TODO:
 		// 判断是否本地服务还是远程服务
 		if (true)
 		{
 			// 本地服务消息
-			message_core_.PushActorMessage(acotr_msg->dest_id(), acotr_msg);
+			message_core_.PushActorMessage(acotr_msg.dest_id(), std::move(acotr_msg));
 
 			// 唤醒一条线程
 			condition_.notify_one();
@@ -241,32 +276,21 @@ namespace actor_net
 		}
 	}
 
-	void ActorNet::SendActorMessage(actor_id src_id, actor_id dest_id, const std::vector<uint8_t>& data)
+	void ActorNet::SendActorMessage(ActorId src_id, ActorId dest_id,std::vector<uint8_t>&& data)
 	{
-		ActorMessagePtr message = std::make_shared<ActorMessage>();
-		message->set_src_id(src_id);
-		message->set_dest_id(dest_id);
-		message->Write(data.data(), data.size());
+		ActorMessage message;
+		message.set_src_id(src_id);
+		message.set_dest_id(dest_id);
+		message.set_data(std::move(data));
+		message.Write(data.data(), data.size());
 		
-		SendActorMessage(message);
+		SendActorMessage(std::move(message));
 	}
 
-	void ActorNet::SendActorMessage(const std::string& src_actor_name, const std::string& dest_actor_name, const std::vector<uint8_t>& data)
+	void ActorNet::SendActorMessage(const std::string& src_actor_name, const std::string& dest_actor_name,std::vector<uint8_t>&& data)
 	{
-		actor_id src_actor_id = 0;
-		actor_id dest_actor_id = 0;
-
-		auto iter = name_by_acotr_id_map_.find(src_actor_name);
-		if (iter != name_by_acotr_id_map_.end())
-		{
-			src_actor_id = iter->second;
-		}
-
-		iter = name_by_acotr_id_map_.find(dest_actor_name);
-		if (iter != name_by_acotr_id_map_.end())
-		{
-			dest_actor_id = iter->second;
-		}
+		ActorId src_actor_id = GetActorIdByName(src_actor_name);
+		ActorId dest_actor_id = GetActorIdByName(dest_actor_name);
 
 		if (dest_actor_id <= 0)
 		{
@@ -274,7 +298,7 @@ namespace actor_net
 			return;
 		}
 
-		SendActorMessage(src_actor_id, dest_actor_id, data);
+		SendActorMessage(src_actor_id, dest_actor_id,std::move(data));
 	}
 
 	void ActorNet::SessionConnectHandler(const network::SessionPtr& session_ptr)

@@ -305,10 +305,10 @@ namespace SkillEditor
         {
             foreach(var node in nodes)
             {
-                if(node.name == "Entry" && typeof(SkillEditor.Entry) == node.GetType())
-                {
-                    return node as Entry;
-                }
+                //if(node.name == "Entry" && typeof(SkillEditor.Entry) == node.GetType())
+                //{
+                //    return node as Entry;
+                //}
             }
 
             return null;

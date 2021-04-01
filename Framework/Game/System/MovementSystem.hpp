@@ -45,7 +45,6 @@ struct MovementSystem : public System
 			// todo:
 			auto position = transform.position + movement.forward * movement.velocity.z * dt;
 			auto rotation = ForwardRotation(movement.forward);
-			auto v = movement.forward * movement.velocity * dt;
 
 			if (position != transform.position || rotation != transform.rotation)
 			{	

@@ -44,7 +44,7 @@ int main()
 			std::vector<uint8_t> data(str.size());
 			std::memcpy(data.data(), str.c_str(), data.size());
 
-			actor_net->SendActorMessage("", "start_actor", data);
+			actor_net->SendActorMessage("", "start_actor", std::move(data));
 
 			if (str == "quit")
 			{

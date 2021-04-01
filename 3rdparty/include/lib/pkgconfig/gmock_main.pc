@@ -1,5 +1,5 @@
-libdir=D:/project/MyGame/3rdparty/include/lib
-includedir=D:/project/MyGame/3rdparty/include/include
+libdir=E:/MyProject/MyGame/3rdparty/include/lib
+includedir=E:/MyProject/MyGame/3rdparty/include/include
 
 Name: gmock_main
 Description: GoogleMock (with main() function)

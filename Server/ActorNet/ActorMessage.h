@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <any>
 
 #include "IActor.h"
 
@@ -12,7 +13,7 @@ namespace actor_net
 	class ActorMessage
 	{
 	public:
-		enum MessageType
+		enum class MessageType : uint8_t
 		{
 			kMsgTypeSystem,		// 系统消息(即主线程发过来的消息)
 			kMsgTypeActor,		// Actor之间的消息
@@ -27,47 +28,63 @@ namespace actor_net
 			, dest_id_(0)
 			, type_(MessageType::kMsgTypeActor)
 			, session_(0)
-			, cur_size_(0)
 		{
 
 		}
 
-		actor_id src_id() { return src_id_; }
-		actor_id dest_id() { return dest_id_; }
-		MessageType type() { return type_; }
-		session_type session() const { return session_; }
-		size_t size() { return data_.size(); }
-		const std::vector<uint8_t>& data() { return data_; }
-
-		void set_src_id(actor_id src_id) { src_id_ = src_id; }
-		void set_dest_id(actor_id dest_id) { dest_id_ = dest_id; }
-		void set_type(MessageType type) { type_ = type; }
-		void set_session(session_type session) { session_ = session; }
-
-		void Write(const void* data, uint32_t size)
+		ActorMessage(ActorId src_id, ActorId dest_id, MessageType type, session_type session,std::any&& data)
+			: src_id_(src_id)
+			, dest_id_(dest_id)
+			, type_(type)
+			, session_(session)
+			, data_(std::move(data))
 		{
-			data_.resize(data_.size() + size);
-			std::memcpy(data_.data(), data, size);
+
 		}
-		void Read(void* out, uint32_t size)
+
+		ActorMessage(ActorMessage&& rhs) noexcept
+			: src_id_(rhs.src_id_)
+			, dest_id_(rhs.dest_id_)
+			, type_(rhs.type_)
+			, session_(rhs.session_)
+			, data_(std::move(rhs.data_))
 		{
-			if (cur_size_ >= data_.size() || cur_size_ + size >= data_.size())
+
+		}
+
+		ActorMessage& operator=(ActorMessage&& rhs) noexcept
+		{
+			if (&rhs == this)
 			{
-				return;
+				return *this;
 			}
 
-			std::memcpy(out, data_.data() + cur_size_, size);
+			src_id_ = rhs.src_id_;
+			dest_id_ = rhs.dest_id_;
+			type_ = rhs.type_;
+			session_ = rhs.session_;
+			data_(std::move(rhs.data_));
 		}
+
+		ActorMessage(const ActorMessage&) = delete;
+		ActorMessage& operator=(const ActorMessage&) = delete;
+
+		ActorId src_id() const { return src_id_; }
+		ActorId dest_id() const { return dest_id_; }
+		MessageType type() const { return type_; }
+		session_type session() const { return session_; }
+
+		void set_src_id(ActorId src_id) { src_id_ = src_id; }
+		void set_dest_id(ActorId dest_id) { dest_id_ = dest_id; }
+		void set_type(MessageType type) { type_ = type; }
+		void set_session(session_type session) { session_ = session; }
 	private:
-		actor_id src_id_;
-		actor_id dest_id_;
+		ActorId src_id_;
+		ActorId dest_id_;
 		MessageType type_;
 		session_type session_;
-		std::size_t cur_size_;
-		std::vector<uint8_t> data_;
+		std::any data_;
 	};
-
-	typedef std::shared_ptr<ActorMessage> ActorMessagePtr;
 }
 
 #endif

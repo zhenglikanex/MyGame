@@ -111,7 +111,7 @@ public class Actor : UnityView
                 }
                 else
                 {
-                    Debug.LogError("!!!!!!!");
+                    //Debug.LogError("!!!!!!!");
                 }
                 animator.SetFloat("forward", float.Parse(animParam));
             }
@@ -127,7 +127,7 @@ public class Actor : UnityView
                 //Time.timeScale = 0;
             }
             string animName = str;
-            Debug.Log(name);
+            //Debug.Log(name);
             //animator.SetFloat("forward", 0);
             animator.Play(animName,0,time);
         }

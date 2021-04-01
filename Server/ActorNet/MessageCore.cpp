@@ -2,55 +2,93 @@
 
 namespace actor_net
 {
-	// 插入一条服务消息
-	void MessageCore::PushActorMessage(actor_id id,const ActorMessagePtr& actor_message)
+	MessageQueue::MessageQueue(ActorId id)
+		: actor_id_(id)
 	{
-		std::unique_lock<std::mutex> lock(mutex_);
-		
-		// 获取服务的消息队列
-		auto actor_msg_queue_ptr = GetActorMsgQueue(id);
-		actor_msg_queue_ptr->second.push(actor_message);
+
 	}
 
-	// 顺序弹出一条ActorMessage
-	ActorMessagePtr MessageCore::PopActorMessage()
+	bool MessageQueue::IsEmpty() const 
+	{
+		return messages_.empty();
+	}
+
+	void MessageQueue::Push(ActorMessage&& message)
+	{
+		std::unique_lock<std::mutex> lock(mutex_);
+		messages_.push(std::move(message));
+	}
+
+	ActorMessage MessageQueue::Pop()
 	{
 		std::unique_lock<std::mutex> lock(mutex_);
 
-		// 循环遍历所有消息队列
-		for (size_t i = 0; i < actor_msg_queues_.size(); ++i)
+		assert(IsEmpty() && "mesage queue is empty !");
+
+		auto message = std::move(messages_.front());
+		messages_.pop();
+		return message;
+	}
+
+	bool MessageCore::IsEmtpy() const
+	{
+		return actor_msg_queues_.empty();
+	}
+
+	void MessageCore::PushActorMessage(ActorId id,ActorMessage&& actor_message)
+	{
+		auto queue = GetMessageQueueById(id);
+		if (queue->IsEmpty())
 		{
-			// 弹出一个服务队列
-			auto actor_msg_queue_ptr = actor_msg_queues_.back();
-			actor_msg_queues_.pop();
-			
-			// 将这个队列放入末尾
-			actor_msg_queues_.push(actor_msg_queue_ptr);
-
-			// 弹出一个消息
-			auto actor_message = actor_msg_queue_ptr->second.back();
-			actor_msg_queue_ptr->second.pop();
-
-			return actor_message;
+			actor_msg_queues_.push(queue);
 		}
 
-		return nullptr;
+		queue->Push(std::move(actor_message));
 	}
 
-	ActorMsgQueuePtr MessageCore::GetActorMsgQueue(actor_id id)
+	void MessageCore::PushMessgeQueue(const std::shared_ptr<MessageQueue>& queue)
 	{
+		std::unique_lock lock(mutex_);
+		actor_msg_queues_.push(queue);
+	}
+
+	std::shared_ptr<actor_net::MessageQueue> MessageCore::PopMessageQueue()
+	{
+		std::unique_lock lock(mutex_);
+
+		if (actor_msg_queues_.empty())
+		{
+			return nullptr;
+		}
+
+		auto queue = actor_msg_queues_.front();
+		actor_msg_queues_.pop();
+		return queue;
+	}
+
+	void MessageCore::RemoveMessageQueueById(ActorId id)
+	{
+		std::unique_lock lock(mutex_);
+		id_by_queue_map_.erase(id);
+	}
+
+	std::shared_ptr<MessageQueue> MessageCore::GetMessageQueueById(ActorId id)
+	{
+		std::unique_lock lock(mutex_);
+
 		auto iter = id_by_queue_map_.find(id);
 		if (iter != id_by_queue_map_.end())
 		{
 			return iter->second;
 		}
 
-		// 创建服务消息队列
-		auto actor_msg_queue_ptr = std::make_shared<std::pair<actor_id, MessageQueue>>(std::make_pair(id, MessageQueue()));
+		auto queue = std::make_shared<MessageQueue>();
+		actor_msg_queues_.push(queue);
+		id_by_queue_map_.emplace(id, queue);
 
-		actor_msg_queues_.push(actor_msg_queue_ptr);
-		id_by_queue_map_.insert(std::make_pair(id, actor_msg_queue_ptr));
-
-		return actor_msg_queue_ptr;
+		return queue;
 	}
+
+	
+
 }
