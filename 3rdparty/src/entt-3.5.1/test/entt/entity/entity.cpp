@@ -6,7 +6,7 @@
 
 TEST(Entity, Null) {
     using traits_type = entt::entt_traits<entt::entity>;
-
+    entt::null
     entt::registry registry{};
     const auto entity = registry.create();
 

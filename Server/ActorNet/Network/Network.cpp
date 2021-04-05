@@ -3,7 +3,9 @@
 namespace network
 {
 	Network::Network(uint16_t port)
-		:acceptor_(io_context_,asio::ip::tcp::endpoint(asio::ip::tcp::v4(),port)), session_id_(0)
+		: port_(port)
+		, acceptor_(io_context_,asio::ip::tcp::endpoint(asio::ip::tcp::v4(),port))
+		, session_id_(0)
 	{
 		
 	}
@@ -23,6 +25,7 @@ namespace network
 	void Network::AsyncAccept()
 	{
 		acceptor_.async_accept(std::bind(&Network::AcceptHandler, this, std::placeholders::_1, std::placeholders::_2)); //异步accept,socket建立连接后调用AcceptHandle
+		
 	}
 
 	void Network::AcceptHandler(const asio::error_code& ce,asio::ip::tcp::socket socket)

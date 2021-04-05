@@ -6,12 +6,18 @@
 
 namespace network
 {
+
+
 	// 网络通信类
 	// 监听客户端连接请求（async_accept）。与某个客户端建立socket连接后，为它创建一个session
 	class Network
 	{
 	public:
 		Network(uint16_t port);
+		Network(const Network&) = delete;
+		Network(Network&&) = delete;
+		Network& operator=(const Network&) = delete;
+		Network& operator=(Network&&) = delete;
 
 		void Run();
 		void Stop();
@@ -23,15 +29,14 @@ namespace network
 		void set_connect_handler(const Session::ConnectHandler& handler) { connect_handler_ = handler; }
 		void set_receive_handler(const Session::ReceiveHandler& handler) { receive_handler_ = handler; }
 		void set_close_handler(const Session::CloseHandler& handler) { close_handler_ = handler; }
-
 	private:
 		// 开启异步监听
 		void AsyncAccept();
 		void AcceptHandler(const asio::error_code& ce, asio::ip::tcp::socket socket);
 
 		asio::io_context io_context_;
-		asio::ip::tcp::acceptor acceptor_;
 		uint16_t port_;
+		asio::ip::tcp::acceptor acceptor_;
 
 		// session handler
 		Session::ConnectHandler connect_handler_;

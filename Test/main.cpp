@@ -51,6 +51,13 @@ public:
 
 int main()
 {
+	std::cout << std::numeric_limits<uint16_t>::max() << std::endl;
+	std::cout << (1 << 16) << std::endl;
+	std::string a;
+	std::string_view sv = a;
+	std::unordered_map<std::string, int> mmp;
+	mmp.find(sv.data());
+
 	kanex::Buffer buffer{ 36744 };
 	kanex::BinaryStream stream{ buffer };
 	kanex::BinaryOutputArchive oar{ stream };

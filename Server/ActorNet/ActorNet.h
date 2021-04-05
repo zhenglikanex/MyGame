@@ -40,45 +40,34 @@ namespace actor_net
 		void Stop();
 
 	public:
-		void set_harbor(uint32_t harbor) { harbor_ = harbor; }
-
-		uint32_t harbor() { harbor_; }
 		const Config& config() const { return config_; }
 	public:
+		
+
 		// 启动actor
-		void StartActor(const std::string& lib_path, const std::string& actor_name = "");
+		ActorId StartActor(const std::string& lib_path, const std::string& actor_name);
+		ActorId StartUniqeActor(const std::string& lib_path, const std::string& actor_name);
 
 		// 杀死actor
 		void KillActor(ActorId id);
 		void KillActor(const std::string& name);
+		void KillAllActor();
+		
+		ActorId QueryActorId(const std::string& name);
 
-		// 注册actor名字
-		void RegisterActorName(ActorId id, const std::string& name);
-		void RegisterGlobalActorName(ActorId id, const std::string& name);
-
-		ActorId GetActorIdByName(const std::string& name) const;
-
-		IActorPtr GetActorById(ActorId id) const;
-		IActorPtr GetActorByName(const std::string& name) const;
+		IActorPtr GetActorById(ActorId id);
+		IActorPtr GetActorByName(const std::string& name);
 	public:
-		// 发送本地服务消息
+	public:
 		void SendActorMessage(ActorMessage&& acotr_msg);
-		void SendActorMessage(ActorId src_id, ActorId dest_id,std::vector<uint8_t>&& data);
-		void SendActorMessage(const std::string& src_actor_name, const std::string& dest_actor_name,std::vector<uint8_t>&& data);
-
-		// 发送远程服务消息
+		void SendActorMessage(ActorId src_id, ActorId dest_id, ActorMessage::SessionType session, ActorMessage::MessageType type, std::string_view name, std::any&& data);
+		void SendActorMessage(ActorId src_id, const std::string& dest_actor_name,ActorMessage::SessionType session,ActorMessage::MessageType type,std::string_view name,std::any&& data);
 	private:
-		// 会话处理函数
-		void SessionConnectHandler(const network::SessionPtr& session_ptr) override;
-		void SessionReceiveHandler(const network::SessionPtr& session_ptr, const network::Message& message) override;
-		void SessionCloseHander(const network::SessionPtr& session_ptr) override;
+		void RegisterActorName(ActorId id, const std::string& name);
 	private:
-		uint32_t GenHandle();
+		uint32_t GenHandle() const;
 	private:
 		Config config_;
-
-		uint32_t harbor_;
-		uint32_t handle_index_;
 
 		std::unordered_map<std::string, ActorId> name_by_acotr_id_map_;
 		std::unordered_map<ActorId, IActorPtr> id_by_actor_map_;
@@ -87,10 +76,7 @@ namespace actor_net
 
 		std::mutex mutex_;
 		std::condition_variable condition_;
-
-		network::NetworkPtr network_ptr_;			// 底层网络通讯模块
-		std::thread network_thread_;				// network线程
-		std::vector<std::thread> work_threads_;		// 工作线程;
+		std::vector<std::thread> work_threads_;		// 工作线程
 	};
 }
 

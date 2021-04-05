@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <string>
 
 namespace actor_net
 {
@@ -10,7 +11,7 @@ namespace actor_net
 	class ActorMessage;
 
 	typedef uint32_t ActorId;
-	const ActorId kNull = 0;
+	const ActorId kNull = std::numeric_limits<uint32_t>::max();
 
 	// 服务服务抽象接口
 	class IActor
@@ -34,15 +35,12 @@ namespace actor_net
 		virtual void OnReceive(ActorMessage&& actor_msg) = 0;
 
 		void set_id(ActorId id) { id_ = id; };
+		void set_name(const std::string& name) { name_ = name; }
 		ActorId id() { return id_; }
-		
+		const std::string& name() const { return name_; }
 	protected:
-		void SendActorMessage(ActorMessage&& actor_msg)
-		{
-
-		}
-
 		std::shared_ptr<ActorNet> actor_net_ptr_;
+		std::string name_;
 		ActorId id_;
 	};
 

@@ -206,6 +206,7 @@ TEST(RuntimeView, ExcludedComponents) {
 
     const auto e0 = registry.create();
     registry.emplace<int>(e0);
+    registry.emplace()
 
     const auto e1 = registry.create();
     registry.emplace<int>(e1);

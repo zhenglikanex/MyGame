@@ -23,7 +23,7 @@ namespace actor_net
 	{
 		std::unique_lock<std::mutex> lock(mutex_);
 
-		assert(IsEmpty() && "mesage queue is empty !");
+		assert(!IsEmpty() && "mesage queue is empty !");
 
 		auto message = std::move(messages_.front());
 		messages_.pop();
@@ -82,7 +82,7 @@ namespace actor_net
 			return iter->second;
 		}
 
-		auto queue = std::make_shared<MessageQueue>();
+		auto queue = std::make_shared<MessageQueue>(id);
 		actor_msg_queues_.push(queue);
 		id_by_queue_map_.emplace(id, queue);
 

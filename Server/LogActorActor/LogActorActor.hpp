@@ -13,7 +13,7 @@ public:
 	bool Init(const std::shared_ptr<ActorNet>& actor_net) override;
 	void Stop() override;
 
-	void OnReceive(const ActorMessagePtr& actor_msg) override;
+	void OnReceive(ActorMessage&& actor_msg) override;
 private:
 
 };

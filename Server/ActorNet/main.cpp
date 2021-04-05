@@ -41,15 +41,13 @@ int main()
 		while (true)
 		{
 			getline(std::cin, str);
-			std::vector<uint8_t> data(str.size());
-			std::memcpy(data.data(), str.c_str(), data.size());
-
-			actor_net->SendActorMessage("", "start_actor", std::move(data));
 
 			if (str == "quit")
 			{
 				break;
 			}
+
+			actor_net->SendActorMessage("", "start_actor",std::any(std::move(str)));
 		}
 	}
 	actor_net->Stop();

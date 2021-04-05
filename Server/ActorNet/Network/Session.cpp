@@ -4,8 +4,10 @@
 namespace network
 {
 	Session::Session(uint32_t id,asio::io_context& io_context,asio::ip::tcp::socket socket)
-		:id_(id)
+		: id_(id)
 		, socket_(std::move(socket))
+		, recv_data_{ 0 }
+		, send_data_ { 0 }
 	{
 
 	}

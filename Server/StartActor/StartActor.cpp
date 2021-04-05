@@ -1,5 +1,5 @@
 #include "StartActor.h"
-#include <iostream>
+#include "ActorNet.h"
 
 StartActor::StartActor()
 {
@@ -27,13 +27,10 @@ void StartActor::Stop()
 
 }
 
-void StartActor::OnReceive(const ActorMessagePtr& actor_msg)
+void StartActor::OnReceive(ActorMessage&& actor_msg)
 {
-	char* p = new char[actor_msg->size() + 1];
-	std::memcpy(p, actor_msg->data().data(), actor_msg->size());
-	p[actor_msg->size()] = '\0';
-
-	std::cout << p << std::endl;
+	auto& [lib_name,actor_name] = std::any_cast<std::tuple<std::string, std::string>>(actor_msg.data());
+	actor_net_ptr_->StartActor(lib_name, actor_name);
 }
 
 ACTOR_IMPLEMENT(StartActor)

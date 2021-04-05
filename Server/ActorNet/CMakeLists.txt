@@ -4,19 +4,22 @@ add_executable(ActorNet
     ActorNet.h
     ActorNet.cpp
     IActor.h
+    ActorMessage.h
     MessageCore.h
     MessageCore.cpp
     Common/Singleton.h
     Common/Singleton.cpp
     Common/typedef.h
     Common/Util.h
+    Network/NetworkActor.hpp
+    Network/NetworkActor.cpp
+    Network/Connection.hpp
+    Network/Connection.cpp
     Network/Network.h
     Network/Network.cpp
     Network/ISessionHandler.h
     Network/Message.h 
     Network/Message.cpp
-    Network/Session.h 
-    Network/Session.cpp
     Network/Timer.h
     Network/Timer.cpp
     main.cpp

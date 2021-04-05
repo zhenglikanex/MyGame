@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <any>
+#include <string_view>
 
 #include "IActor.h"
 
@@ -15,28 +16,28 @@ namespace actor_net
 	public:
 		enum class MessageType : uint8_t
 		{
-			kMsgTypeSystem,		// 系统消息(即主线程发过来的消息)
-			kMsgTypeActor,		// Actor之间的消息
-			kMsgTypeResponse,	// Response消息
+			kTypeSystem,		// 系统消息(即主线程发过来的消息)
+			kTypeSocket,		// socket消息
+			kTypeResponse,		// Response消息
+			kTypeActor,
 		};
 
-		typedef uint32_t session_type;
-		typedef uint32_t size_type;
+		typedef uint32_t SessionType;
 
 		ActorMessage()
 			:src_id_(0)
 			, dest_id_(0)
-			, type_(MessageType::kMsgTypeActor)
 			, session_(0)
+			, type_(MessageType::kTypeActor)
 		{
 
 		}
 
-		ActorMessage(ActorId src_id, ActorId dest_id, MessageType type, session_type session,std::any&& data)
+		ActorMessage(ActorId src_id, ActorId dest_id, SessionType session, MessageType type,std::any&& data)
 			: src_id_(src_id)
 			, dest_id_(dest_id)
-			, type_(type)
 			, session_(session)
+			, type_(type)
 			, data_(std::move(data))
 		{
 
@@ -63,7 +64,6 @@ namespace actor_net
 			dest_id_ = rhs.dest_id_;
 			type_ = rhs.type_;
 			session_ = rhs.session_;
-			data_(std::move(rhs.data_));
 		}
 
 		ActorMessage(const ActorMessage&) = delete;
@@ -71,18 +71,23 @@ namespace actor_net
 
 		ActorId src_id() const { return src_id_; }
 		ActorId dest_id() const { return dest_id_; }
+		SessionType session() const { return session_; }
 		MessageType type() const { return type_; }
-		session_type session() const { return session_; }
+		const std::string& name() const { return name_; }
+		std::any& data() { return data_; }
 
 		void set_src_id(ActorId src_id) { src_id_ = src_id; }
 		void set_dest_id(ActorId dest_id) { dest_id_ = dest_id; }
+		void set_session(SessionType session) { session_ = session; }
 		void set_type(MessageType type) { type_ = type; }
-		void set_session(session_type session) { session_ = session; }
+		void set_name(std::string_view name) { name_ = name; }
+		void set_data(std::any&& data) { data_ = data; }
 	private:
 		ActorId src_id_;
 		ActorId dest_id_;
+		SessionType session_;
 		MessageType type_;
-		session_type session_;
+		std::string name_;
 		std::any data_;
 	};
 }

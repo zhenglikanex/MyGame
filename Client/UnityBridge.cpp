@@ -75,6 +75,7 @@ extern "C"
 		{
 			Proto::GameCommondGroup group;
 			group.ParseFromArray(data, size);
+
 			for (auto iter = group.commonds().cbegin(); iter != group.commonds().cend(); ++iter)
 			{
 				
