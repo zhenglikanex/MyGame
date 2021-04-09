@@ -48,9 +48,33 @@ public:
 	std::string name;
 };
 
+void func(std::unordered_map<std::string_view, int>& map)
+{
+	map.emplace("1111113312111111111111111111111111111111111111111111111111133333333333333333324444444444444411111111111113333333", 10);
+	map.emplace("1111113313", 10);
+	map.emplace("1111113314", 10);
+	map.emplace("1111113315", 10);
+	map.emplace("1111113316", 10);
+	map.emplace("1111113317", 10);
+	map.emplace(std::string("1111111111111333333333333333333244444444444444"), 10);
+}
+
+
+class TTT
+{
+public:
+	TTT(int i)
+	{
+
+	}
+private:
+	int i_;
+};
 
 int main()
 {
+	std::unordered_map<int, TTT> map;
+
 	std::cout << std::numeric_limits<uint16_t>::max() << std::endl;
 	std::cout << (1 << 16) << std::endl;
 	std::string a;

@@ -1,19 +1,17 @@
 #include "ActorNet.h"
 
 #include <thread>
+#include <tuple>
 
 #include "MessageCore.h"
 #include "ActorMessage.h"
 #include "ActorLoader.h"
 
-// reserve high 8 bits for remote id
-#define HANDLE_MASK 0xffffff
-#define HANDLE_REMOTE_SHIFT 24
-
 namespace actor_net
 {
 	ActorNet::ActorNet(Config config)
 		: config_(config)
+		, alloc_id_(0)
 	{
 
 	}
@@ -25,8 +23,13 @@ namespace actor_net
 
 	bool ActorNet::Init()
 	{
+		network_actor_ = std::make_unique<NetworkActor>(shared_from_this());
+		network_threads_ = std::thread([this]{
+			network_actor_->Run();
+		});
+
 		// 启动work线程
-		uint32_t thread_count = std::thread::hardware_concurrency();
+		uint32_t thread_count = std::thread::hardware_concurrency() - 2;
 		for (uint32_t i = 0; i < thread_count; ++i)
 		{
 			work_threads_.emplace_back(std::thread(
@@ -37,7 +40,7 @@ namespace actor_net
 				{
 					while (!message_queue)
 					{
-						// 弹出消息队列,保证消息队列不会被并发
+						// 弹出消息队列,保证消息队列不会被多个线程获取
 						message_queue = message_core_.PopMessageQueue();
 						if (message_queue)
 						{
@@ -77,7 +80,7 @@ namespace actor_net
 		}
 
 		// 加载Actor
-		StartActor("StartActor.dll", "start_actor");
+		StartActor("StartActor.dll");
 
 		return true;
 	}
@@ -98,10 +101,6 @@ namespace actor_net
 	void ActorNet::Stop()
 	{
 		// 等待线程执行完毕
-		if (network_thread_.joinable())
-		{
-			network_thread_.join();
-		}
 
 		for (auto& thread : work_threads_)
 		{
@@ -114,43 +113,52 @@ namespace actor_net
 		KillAllActor();
 	}
 
-	ActorId ActorNet::StartActor(const std::string& lib_path, const std::string& actor_name /* = "" */)
+	ActorId ActorNet::StartActor(const std::string& lib_path)
 	{
 		std::unique_lock lock(mutex_);
-		auto actor = ActorLoader::GetInstance()->CreateActor(lib_path);
-		// 注意:这里actor直接持有actor_net的shared_ptr,actor_net保证会主动释放actor
-		if (actor && actor->Init(shared_from_this()))
+		uint32_t handle = GenHandle();
+		if (handle != kNull)
 		{
-			uint32_t handle = GenHandle();
-			actor->set_id(handle);
-
-			id_by_actor_map_.insert(std::make_pair(handle, actor));
-			// todo log actor启动成功
-
-			return handle;
+			auto actor = ActorLoader::GetInstance()->CreateActor(lib_path,handle);
+			// 注意:这里actor直接持有actor_net的shared_ptr,actor_net保证会主动释放actor
+			if (actor)
+			{
+				if (actor->Init(shared_from_this()))
+				{
+					// todo log actor启动成功
+					id_by_actor_map_.insert(std::make_pair(handle, actor));
+				}
+				return handle;
+			}
 		}
-
+		
 		return kNull;
 	}
 
-	actor_net::ActorId ActorNet::StartUniqeActor(const std::string& lib_path, const std::string& actor_name)
+	ActorId ActorNet::StartUniqeActor(const std::string& lib_path, const std::string& actor_name)
 	{
 		std::unique_lock lock(mutex_);
-		auto actor = ActorLoader::GetInstance()->CreateActor(lib_path);
-		// 注意:这里actor直接持有actor_net的shared_ptr,actor_net保证会主动释放actor
-		if (actor && actor->Init(shared_from_this()))
+
+		if (name_by_acotr_id_map_.find(actor_name) != name_by_acotr_id_map_.end())
 		{
-			uint32_t handle = GenHandle();
-			actor->set_id(handle);
-			id_by_actor_map_.insert(std::make_pair(handle, actor));
+			return kNull;
+		}
 
-			
-
-			// todo log actor启动成功
-
-			RegisterActorName(handle, actor_name);
-
-			return handle;
+		uint32_t handle = GenHandle();
+		if (handle != kNull)
+		{
+			auto actor = ActorLoader::GetInstance()->CreateActor(lib_path, handle);
+			// 注意:这里actor直接持有actor_net的shared_ptr,actor_net保证会主动释放actor
+			if (actor)
+			{
+				if (actor->Init(shared_from_this()))
+				{
+					RegisterActorName(handle, actor_name);
+					// todo log actor启动成功
+					id_by_actor_map_.insert(std::make_pair(handle, actor));
+				}
+				return handle;
+			}
 		}
 
 		return kNull;
@@ -211,7 +219,7 @@ namespace actor_net
 		return kNull;
 	}
 
-	IActorPtr ActorNet::GetActorById(ActorId id)
+	ActorPtr ActorNet::GetActorById(ActorId id)
 	{
 		std::unique_lock lock(mutex_);
 
@@ -224,7 +232,7 @@ namespace actor_net
 		return nullptr;
 	}
 
-	IActorPtr ActorNet::GetActorByName(const std::string& name)
+	ActorPtr ActorNet::GetActorByName(const std::string& name)
 	{
 		auto id = QueryActorId(name);
 		if (id == kNull)
@@ -233,6 +241,42 @@ namespace actor_net
 		}
 
 		return GetActorById(id);
+	}
+
+	void ActorNet::CreateTcpServer(uint32_t src,uint16_t port)
+	{
+		network_actor_->Post(ActorMessage(src, 0, 0, ActorMessage::MessageType::kTypeNetwork,"tcp",port));
+	}
+
+	void ActorNet::CloseTcpServer(uint32_t src)
+	{
+		network_actor_->Post(ActorMessage(src, 0, 0, ActorMessage::MessageType::kTypeNetwork, "close_tcp_server"));
+	}
+
+	void ActorNet::TcpSend(uint16_t connection_id, Buffer&& data)
+	{
+		
+		network_actor_->Post(ActorMessage(0, 0, 0, ActorMessage::MessageType::kTypeNetwork, "tcp_send", std::make_tuple(connection_id, std::move(data))));
+	}
+
+	void ActorNet::TcpClose(uint16_t connection_id)
+	{
+		network_actor_->Post(ActorMessage(0, 0, 0, ActorMessage::MessageType::kTypeNetwork, "tcp_close", connection_id));
+	}
+
+	void ActorNet::CreateUdpServer(uint32_t src,uint16_t port)
+	{
+		network_actor_->Post(ActorMessage(src, 0, 0, ActorMessage::MessageType::kTypeNetwork, "udp", port));
+	}
+
+	void ActorNet::CloseUdpServer(uint32_t src)
+	{
+		network_actor_->Post(ActorMessage(src, 0, 0, ActorMessage::MessageType::kTypeNetwork, "close_udp_server"));
+	}
+
+	void ActorNet::UdpSend(uint32_t src, const asio::ip::udp::endpoint& udp_remote_endpoint, Buffer&& data)
+	{
+		network_actor_->Post(ActorMessage(src, 0, 0, ActorMessage::MessageType::kTypeNetwork, "udp_send", std::make_tuple(udp_remote_endpoint, std::move(data))));
 	}
 
 	void ActorNet::RegisterActorName(ActorId id, const std::string& name)
@@ -281,6 +325,7 @@ namespace actor_net
 		message.set_dest_id(dest_id);
 		message.set_type(type);
 		message.set_session(session);
+		message.set_name(name);
 		message.set_data(std::move(data));
 
 		SendActorMessage(std::move(message));
@@ -299,22 +344,9 @@ namespace actor_net
 		SendActorMessage(src_id, dest_actor_id, session, type,name,std::move(data));
 	}
 
-	uint32_t ActorNet::GenHandle() const
+	uint32_t ActorNet::GenHandle()
 	{
-		if (id_by_actor_map_.size() >= kMaxActorCount)
-		{
-			return kNull;
-		}
-
-		for (uint32_t handle_index = 0; handle_index <= kMaxActorCount; ++handle_index)
-		{
-			if (id_by_actor_map_.find(handle_index) == id_by_actor_map_.end())
-			{
-				return handle_index;
-			}
-		}
-
-		return kNull;
+		return alloc_id_++;
 	}
 }
 

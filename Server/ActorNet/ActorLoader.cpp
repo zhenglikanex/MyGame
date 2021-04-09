@@ -16,7 +16,7 @@ using namespace actor_net;
 
 #endif
 
-typedef IActor* (*Creator)();
+typedef Actor* (*Creator)(uint32_t);
 
 ActorLoader::ActorLoader()
 {
@@ -28,7 +28,7 @@ ActorLoader::~ActorLoader()
 	// TODO : Ð¶ÔØ¶¯Ì¬¿â
 }
 
-IActorPtr ActorLoader::CreateActor(const std::string& lib_path)
+ActorPtr ActorLoader::CreateActor(const std::string& lib_path,ActorId id)
 {
 	auto actor_instance = GetActorInstance(lib_path);
 	if (actor_instance)
@@ -37,10 +37,10 @@ IActorPtr ActorLoader::CreateActor(const std::string& lib_path)
 		Creator creator = (Creator)GetProc(actor_instance, "CreateActor");
 		if (creator)
 		{
-			auto p = creator();
+			auto p = creator(id);
 			if (p)
 			{
-				IActorPtr actor_ptr(p);
+				ActorPtr actor_ptr(p);
 				return actor_ptr;
 			}
 		}

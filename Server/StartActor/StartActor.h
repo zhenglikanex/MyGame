@@ -1,19 +1,19 @@
 #pragma once
-#include "IActor.h"
+#include "Actor.h"
 #include "ActorMessage.h"
 
 using namespace actor_net;
 
-class StartActor : public IActor
+class StartActor : public Actor
 {
 public:
-	StartActor();
+	StartActor(uint32_t id);
 	virtual ~StartActor();
 
 	bool Init(const std::shared_ptr<ActorNet>& actor_net_ptr) override;
 	void Stop() override;
 
-	void OnReceive(ActorMessage&& message) override;
+	void Receive(ActorMessage&& message) override;
 private:
 
 };

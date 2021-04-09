@@ -6,7 +6,7 @@
 #include <any>
 #include <string_view>
 
-#include "IActor.h"
+#include "Config.hpp"
 
 namespace actor_net
 {
@@ -17,15 +17,16 @@ namespace actor_net
 		enum class MessageType : uint8_t
 		{
 			kTypeSystem,		// 系统消息(即主线程发过来的消息)
-			kTypeSocket,		// socket消息
+			kTypeNetwork,		// socket消息
+			kTypeRequest,		// 
 			kTypeResponse,		// Response消息
 			kTypeActor,
 		};
 
-		typedef uint32_t SessionType;
+		typedef uint16_t SessionType;
 
 		ActorMessage()
-			:src_id_(0)
+			: src_id_(0)
 			, dest_id_(0)
 			, session_(0)
 			, type_(MessageType::kTypeActor)
@@ -33,11 +34,12 @@ namespace actor_net
 
 		}
 
-		ActorMessage(ActorId src_id, ActorId dest_id, SessionType session, MessageType type,std::any&& data)
+		ActorMessage(ActorId src_id, ActorId dest_id, SessionType session, MessageType type,std::string_view name,std::any&& data = std::any())
 			: src_id_(src_id)
 			, dest_id_(dest_id)
 			, session_(session)
 			, type_(type)
+			, name_(name)
 			, data_(std::move(data))
 		{
 
@@ -48,6 +50,7 @@ namespace actor_net
 			, dest_id_(rhs.dest_id_)
 			, type_(rhs.type_)
 			, session_(rhs.session_)
+			, name_(std::move(rhs.name_))
 			, data_(std::move(rhs.data_))
 		{
 
@@ -64,6 +67,8 @@ namespace actor_net
 			dest_id_ = rhs.dest_id_;
 			type_ = rhs.type_;
 			session_ = rhs.session_;
+			name_ = std::move(rhs.name_);
+			data_ = std::move(rhs.data_);
 		}
 
 		ActorMessage(const ActorMessage&) = delete;
@@ -74,7 +79,7 @@ namespace actor_net
 		SessionType session() const { return session_; }
 		MessageType type() const { return type_; }
 		const std::string& name() const { return name_; }
-		std::any& data() { return data_; }
+		const std::any& data() const { return data_; }
 
 		void set_src_id(ActorId src_id) { src_id_ = src_id; }
 		void set_dest_id(ActorId dest_id) { dest_id_ = dest_id; }

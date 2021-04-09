@@ -1,10 +1,10 @@
 #pragma once
-#include "IActor.h"
+#include "Actor.h"
 #include "ActorMessage.h"
 
 using namespace actor_net;
 
-class LogActorActor : public IActor
+class LogActorActor : public Actor
 {
 public:
 	LogActorActor();

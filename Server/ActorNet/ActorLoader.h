@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "Singleton.h"
-#include "IActor.h"
+#include "Actor.h"
 
 namespace actor_net
 {
@@ -16,7 +16,7 @@ namespace actor_net
 		~ActorLoader();
 
 		// 加载一个服务
-		IActorPtr CreateActor(const std::string& lib_path);
+		ActorPtr CreateActor(const std::string& lib_path,ActorId id);
 	private:
 		// 获取actor动态库的实例
 		void* GetActorInstance(const std::string& lib_path);

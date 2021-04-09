@@ -3,15 +3,15 @@ import os,sys
 
 path = os.getcwd() + "/"
 
-CMakeTemplate = "add_library({0}Actor {0}Actor.hpp {0}Actor.cpp) \n\
-SET_PROPERTY(TARGET MasterActor PROPERTY FOLDER \"Server\")"
+CMakeTemplate = "add_library({0}Actor SHARED {0}Actor.hpp {0}Actor.cpp) \n\
+SET_PROPERTY(TARGET {0}Actor PROPERTY FOLDER \"Server\")"
 HeadTemplte = "#pragma once\n\
-#include \"IActor.h\"\n\
+#include \"Actor.h\"\n\
 #include \"ActorMessage.h\"\n\
 \n\
 using namespace actor_net;\n\
 \n\
-class {0}Actor : public IActor\n\
+class {0}Actor : public Actor\n\
 {{\n\
 public:\n\
 	{0}Actor();\n\
@@ -20,11 +20,11 @@ public:\n\
 	bool Init(const std::shared_ptr<ActorNet>& actor_net) override;\n\
 	void Stop() override;\n\
 \n\
-	void OnReceive(const ActorMessagePtr& actor_msg) override;\n\
+	void Receive(ActorMessage&& actor_msg) override;\n\
 private:\n\
 \n\
 }};"
-SourceTemplate = "#include \"{0}Actor.h\"\n\
+SourceTemplate = "#include \"{0}Actor.hpp\"\n\
 \n\
 {0}Actor::{0}Actor()\n\
 {{\n\
@@ -38,7 +38,7 @@ SourceTemplate = "#include \"{0}Actor.h\"\n\
 \n\
 bool {0}Actor::Init(const std::shared_ptr<ActorNet>& actor_net)\n\
 {{\n\
-	if (!IActor::Init(actor_net))\n\
+	if (!Actor::Init(actor_net))\n\
 	{{\n\
 		return false;\n\
 	}}\n\
@@ -52,13 +52,8 @@ void {0}Actor::Stop()\n\
 \n\
 }}\n\
 \n\
-void {0}Actor::OnReceive(const ActorMessagePtr& actor_msg)\n\
+void {0}Actor::OnReceive(ActorMessage&& actor_msg)\n\
 {{\n\
-	char* p = new char[actor_msg->size() + 1];\n\
-	std::memcpy(p, actor_msg->data().data(), actor_msg->size());\n\
-	p[actor_msg->size()] = 0;\n\
-\n\
-	std::cout << p << std::endl;\n\
 }}\n\
 \n\
 ACTOR_IMPLEMENT({0}Actor)"

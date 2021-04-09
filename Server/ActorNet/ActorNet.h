@@ -1,5 +1,5 @@
-#ifndef ACTOR_NET_
-#define ACTOR_NET_
+#ifndef ACTOR_NET_H_
+#define ACTOR_NET_H_
 
 #include <mutex>
 #include <thread>
@@ -8,13 +8,16 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Network.h"
-#include "ISessionHandler.h"
+#include "Config.hpp"
 #include "ActorMessage.h"
 #include "MessageCore.h"
+#include "Actor.h"
+#include "NetworkActor.hpp"
 
 namespace actor_net
 {
+	class NetworkActor;
+
 	struct Config
 	{
 		uint32_t harbor;
@@ -25,11 +28,9 @@ namespace actor_net
 		uint32_t master_port;
 	};
 
-	class ActorNet : public std::enable_shared_from_this<ActorNet> , public network::ISessionHandlder
+	class ActorNet : public std::enable_shared_from_this<ActorNet>
 	{
 	public:
-		const static uint32_t kMaxActorCount = 255;
-
 		ActorNet(Config config);
 		~ActorNet();
 	private:
@@ -38,14 +39,12 @@ namespace actor_net
 	public:
 		bool Start();
 		void Stop();
-
+		
 	public:
 		const Config& config() const { return config_; }
 	public:
-		
-
 		// 启动actor
-		ActorId StartActor(const std::string& lib_path, const std::string& actor_name);
+		ActorId StartActor(const std::string& lib_path);
 		ActorId StartUniqeActor(const std::string& lib_path, const std::string& actor_name);
 
 		// 杀死actor
@@ -55,9 +54,17 @@ namespace actor_net
 		
 		ActorId QueryActorId(const std::string& name);
 
-		IActorPtr GetActorById(ActorId id);
-		IActorPtr GetActorByName(const std::string& name);
+		ActorPtr GetActorById(ActorId id);
+		ActorPtr GetActorByName(const std::string& name);
 	public:
+		void CreateTcpServer(uint32_t src, uint16_t port);
+		void CloseTcpServer(uint32_t src);
+		void TcpSend(uint16_t connection_id, Buffer&& data);
+		void TcpClose(uint16_t connection_id);
+
+		void CreateUdpServer(uint32_t src, uint16_t port);
+		void CloseUdpServer(uint32_t src);
+		void UdpSend(uint32_t src, const asio::ip::udp::endpoint& udp_remote_endpoint, Buffer&& data);
 	public:
 		void SendActorMessage(ActorMessage&& acotr_msg);
 		void SendActorMessage(ActorId src_id, ActorId dest_id, ActorMessage::SessionType session, ActorMessage::MessageType type, std::string_view name, std::any&& data);
@@ -65,18 +72,20 @@ namespace actor_net
 	private:
 		void RegisterActorName(ActorId id, const std::string& name);
 	private:
-		uint32_t GenHandle() const;
+		uint32_t GenHandle();
 	private:
 		Config config_;
-
 		std::unordered_map<std::string, ActorId> name_by_acotr_id_map_;
-		std::unordered_map<ActorId, IActorPtr> id_by_actor_map_;
-
+		std::unordered_map<ActorId, ActorPtr> id_by_actor_map_;
+		std::unique_ptr<NetworkActor> network_actor_;
 		MessageCore message_core_;
 
 		std::mutex mutex_;
 		std::condition_variable condition_;
 		std::vector<std::thread> work_threads_;		// 工作线程
+		
+		std::thread network_threads_;			
+		ActorId alloc_id_;
 	};
 }
 
