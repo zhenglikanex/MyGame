@@ -6,10 +6,13 @@
 
 #include "Framework/Game/System.hpp"
 
+void func(entt::entity e)
+{
+
+}
+
 struct UpdateViewSystem : public ObserverSystem
 {
-	
-
 	entt::observer* mover;
 	entt::observer* animator;
 

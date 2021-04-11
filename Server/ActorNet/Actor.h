@@ -36,10 +36,11 @@ namespace actor_net
 
 		}
 
-		void OnReceive(ActorMessage&& actor_msg);
 		void Request(ActorId dest_id, const std::string_view func_name, std::any&& data, const std::function<void(ActorMessage&&)>& callback);
+		void Request(const std::string& actor_name, const std::string_view func_name, std::any&& data, const std::function<void(ActorMessage&&)>& callback);
 		void Call(ActorId dest_id, const std::string_view func_name, std::any&& data);
-		
+		void NewActor(const std::string& name, const std::function<void(ActorId)>& callback);
+		void OnReceive(ActorMessage&& actor_msg);
 		virtual void Receive(ActorMessage&& actor_msg) = 0;
 
 		void set_name(std::string_view name) { name_ = name; }

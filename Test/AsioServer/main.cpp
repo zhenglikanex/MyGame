@@ -14,11 +14,14 @@ int main()
 
 	udp::endpoint endpoint(asio::ip::address::from_string("127.0.0.1"), 9523);
 
-	std::cout << "Enter message: ";
-	char request[max_length];
-	std::cin.getline(request, max_length);
-	size_t request_length = std::strlen(request);
-	s.send_to(asio::buffer(request, request_length), endpoint);
+	while (true)
+	{
+		std::cout << "Enter message: ";
+		char request[max_length];
+		std::cin.getline(request, max_length);
+		size_t request_length = std::strlen(request);
+		s.send_to(asio::buffer(request, request_length), endpoint);
+	}
 
 	char reply[max_length];
 	udp::endpoint sender_endpoint;
