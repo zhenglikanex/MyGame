@@ -52,6 +52,7 @@ private:
 	HandlerMap handlers_;
 	std::unordered_map<kcp_conv_t, std::shared_ptr<KcpConnection>> connections_;
 	std::unordered_map<kcp_conv_t, ActorId> agents_;
+	std::vector<kcp_conv_t> timeout_connections_;
 	kcp_conv_t alloc_conv_;
-	uint64_t time_;
+	uint32_t cur_clock_;
 };

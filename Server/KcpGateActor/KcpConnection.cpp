@@ -1,10 +1,11 @@
 #include "KcpConnection.hpp"
 #include <iostream>
 
-KcpConnection::KcpConnection(kcp_conv_t conv, const asio::ip::udp::endpoint& endpoint,uint32_t cur_time)
+KcpConnection::KcpConnection(kcp_conv_t conv, const asio::ip::udp::endpoint& endpoint,uint32_t cur_clock)
 	: conv_(conv)
 	, endpoint_(endpoint)
-	, last_recv_time_(cur_time)
+	, last_recv_clock_(cur_clock)
+	, data_({ 0 })
 {
 	kcp_ = ikcp_create(conv, (void*)this);
 	kcp_->output = &KcpConnection::UdpOutput;
@@ -24,9 +25,9 @@ KcpConnection::~KcpConnection()
 	kcp_ = nullptr;
 }
 
-void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_time)
+void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 {
-	last_recv_time_ = cur_time;
+	last_recv_clock_ = cur_clock;
 
 	char* data = (char*)buffer.data() + sizeof(kcp_conv_t);	// 跳过已经已经读取的conv字节
 	size_t size = buffer.size() - sizeof(kcp_conv_t);
@@ -58,9 +59,14 @@ void KcpConnection::Send(Buffer&& buffer)
 	}
 }
 
-bool KcpConnection::IsTimeout(uint32_t cur_time)
+void KcpConnection::Update(uint32_t cur_clock)
 {
-	return cur_time - last_recv_time_ > kTimeoutTime;
+	ikcp_update(kcp_, cur_clock);
+}
+
+bool KcpConnection::IsTimeout(uint32_t cur_clock)
+{
+	return cur_clock - last_recv_clock_ > kTimeoutTime;
 }
 
 int KcpConnection::UdpOutput(const char* buf, int len, ikcpcb* kcp, void* user)

@@ -40,7 +40,11 @@ namespace actor_net
 		void Request(ActorId dest_id, const std::string_view func_name, std::any&& data, const std::function<void(ActorMessage&&)>& callback);
 		void Request(const std::string& actor_name, const std::string_view func_name, std::any&& data, const std::function<void(ActorMessage&&)>& callback);
 		void Call(ActorId dest_id, const std::string_view func_name, std::any&& data);
-		void NewActor(const std::string& name, const std::function<void(ActorId)>& callback);
+
+		ActorId StartActor(const std::string& lib_path);
+		ActorId StartUniqueActor(const std::string& lib_path, const std::string& name);
+		void KillActor(ActorId id);
+		void KillActor(const std::string& name);
 
 		uint32_t AddTimer(uint32_t millisec, int32_t repeat, const std::function<void()>& callback);
 		void CancelTimer(uint32_t id);

@@ -46,7 +46,7 @@ namespace actor_net
 	public:
 		// ∆Ù∂Øactor
 		ActorId StartActor(const std::string& lib_path);
-		ActorId StartUniqeActor(const std::string& lib_path, const std::string& actor_name);
+		ActorId StartUniqueActor(const std::string& lib_path, const std::string& actor_name);
 
 		// …±À¿actor
 		void KillActor(ActorId id);

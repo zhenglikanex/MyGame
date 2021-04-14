@@ -144,7 +144,7 @@ namespace actor_net
 		return kNull;
 	}
 
-	ActorId ActorNet::StartUniqeActor(const std::string& lib_path, const std::string& actor_name)
+	ActorId ActorNet::StartUniqueActor(const std::string& lib_path, const std::string& actor_name)
 	{
 		std::unique_lock lock(mutex_);
 

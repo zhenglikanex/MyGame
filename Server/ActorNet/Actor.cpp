@@ -57,13 +57,24 @@ namespace actor_net
 		actor_net_->SendActorMessage(id_, dest_id, 0, ActorMessage::MessageType::kTypeActor, func_name, std::move(data));
 	}
 
-	void Actor::NewActor(const std::string& name, const std::function<void(ActorId)>& callback)
+	ActorId Actor::StartActor(const std::string& lib_path)
 	{
-		Request("Start", "", std::any(), [callback](ActorMessage&& actor_msg)
-			{
-				auto actor_id = std::any_cast<ActorId>(actor_msg.data());
-				callback(actor_id);
-			});
+		return actor_net_->StartActor(lib_path);
+	}
+
+	ActorId Actor::StartUniqueActor(const std::string& lib_path, const std::string& name)
+	{
+		return actor_net_->StartUniqueActor(lib_path, name);
+	}
+
+	void Actor::KillActor(ActorId id)
+	{
+		actor_net_->KillActor(id);
+	}
+
+	void Actor::KillActor(const std::string& name)
+	{
+		actor_net_->KillActor(name);
 	}
 
 	uint32_t Actor::AddTimer(uint32_t millisec, int32_t repeat, const std::function<void()>& callback)

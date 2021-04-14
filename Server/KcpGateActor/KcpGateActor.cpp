@@ -7,6 +7,7 @@
 KcpGateActor::KcpGateActor(ActorId id)
 	: Actor(id)
 	, alloc_conv_(1000)
+	, cur_clock_(duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count())
 {
 
 }
@@ -25,9 +26,27 @@ bool KcpGateActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	
 	network_component_ = std::make_shared<NetworkComponent>(shared_from_this());
 	network_component_->CreateUdpServer(9523);
-	AddTimer(5, -1, [this]
-	{
+
+	// update all kcp connection
+	AddTimer(5, -1, [this](){
 		
+		for (auto& entry : connections_)
+		{
+			entry.second->Update(cur_clock_);
+
+			if (entry.second->IsTimeout(cur_clock_))
+			{
+				timeout_connections_.emplace_back(entry.second->conv());
+			}
+		}
+
+		for (auto conv : timeout_connections_)
+		{
+			ForceDisconnection(alloc_conv_);
+		}
+		timeout_connections_.clear();
+
+		cur_clock_ = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 	});
 
 	return true;
@@ -85,7 +104,13 @@ void KcpGateActor::AddConnection(kcp_conv_t conv, const asio::ip::udp::endpoint&
 
 void KcpGateActor::ForceDisconnection(kcp_conv_t conv)
 {
-	
+	connections_.erase(conv);
+	auto iter = agents_.find(conv);
+	if (iter != agents_.end())
+	{
+		KillActor(iter->second);
+		agents_.erase(iter);
+	}
 }
 
 void KcpGateActor::UdpSend(const asio::ip::udp::endpoint& endpoint, Buffer&& buffer)
@@ -147,13 +172,13 @@ void KcpGateActor::ConnectHandler(const asio::ip::udp::endpoint& endpoint)
 
 void KcpGateActor::ConnectSuccessHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv, KcpMessage&& message)
 {
-	NewActor("Agent", [this, endpoint, conv](ActorId agent)
-		{
-			agents_.emplace(conv, agent);
-
-			auto config = std::make_tuple(this->id(), conv);
-			Call(agent, "start", config);
-		});
+	auto agent = StartActor("Agent");
+	if (agent != kNull)
+	{
+		agents_.emplace(conv, agent);
+		auto config = std::make_tuple(this->id(), conv);
+		Call(agent, "start", config);
+	}
 }
 
 void KcpGateActor::DisconnectHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv, KcpMessage&& message)

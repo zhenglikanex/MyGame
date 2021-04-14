@@ -6,6 +6,23 @@
 #include <iomanip>
 #include <chrono>
 
+#ifdef _WIN32
+
+#include <windows.h>
+#include <mmsystem.h>
+
+#pragma comment(lib, "winmm.lib")
+
+#define TIME_BEGIN_PERIOD(ms) ::timeBeginPeriod(ms)
+#define TIME_END_PERIOD(ms) ::timeEndPeriod(ms)
+
+#else
+
+#define TIME_BEGIN_PERIOD(ms) 
+#define TIME_END_PERIOD(ms)
+
+#endif // Windows
+
 using namespace std::chrono;
 
 namespace actor_net
@@ -67,7 +84,9 @@ namespace actor_net
 
 	void TimerActor::Run()
 	{
+		TIME_BEGIN_PERIOD(1);
 		io_context_.run();
+		TIME_END_PERIOD(1);
 	}
 
 	void TimerActor::Stop()
