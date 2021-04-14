@@ -7,6 +7,7 @@
 #include <functional>
 #include <any>
 #include <array>
+#include <chrono>
 
 #include "Config.hpp"
 #include "ActorMessage.h"
@@ -40,6 +41,10 @@ namespace actor_net
 		void Request(const std::string& actor_name, const std::string_view func_name, std::any&& data, const std::function<void(ActorMessage&&)>& callback);
 		void Call(ActorId dest_id, const std::string_view func_name, std::any&& data);
 		void NewActor(const std::string& name, const std::function<void(ActorId)>& callback);
+
+		uint32_t AddTimer(uint32_t millisec, int32_t repeat, const std::function<void()>& callback);
+		void CancelTimer(uint32_t id);
+
 		void OnReceive(ActorMessage&& actor_msg);
 		virtual void Receive(ActorMessage&& actor_msg) = 0;
 

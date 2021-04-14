@@ -1,6 +1,10 @@
 #include "Actor.h"
 
+#include <functional>
+
 #include "ActorNet.h"
+
+#include <iostream>
 
 namespace actor_net
 {
@@ -16,9 +20,19 @@ namespace actor_net
 			}
 			else 
 			{
-				// todo log;
+				// todo log
 				return;
 			}
+		}
+		else if(actor_msg.type() == ActorMessage::MessageType::kTypeTimer)
+		{			
+			auto& callback = std::any_cast<std::function<void()>>(actor_msg.data());
+			if (callback)
+			{
+				callback();
+			}
+
+			return;
 		}
 
 		Receive(std::move(actor_msg));
@@ -52,4 +66,13 @@ namespace actor_net
 			});
 	}
 
+	uint32_t Actor::AddTimer(uint32_t millisec, int32_t repeat, const std::function<void()>& callback)
+	{
+		return actor_net_->AddTimer(id_, millisec, repeat, callback);
+	}
+
+	void Actor::CancelTimer(uint32_t id)
+	{
+		actor_net_->CancelTimer(id);
+	}
 }

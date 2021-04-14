@@ -13,6 +13,7 @@
 #include "MessageCore.h"
 #include "Actor.h"
 #include "NetworkActor.hpp"
+#include "TimerActor.hpp"
 
 namespace actor_net
 {
@@ -66,6 +67,9 @@ namespace actor_net
 		void CloseUdpServer(uint32_t src);
 		void UdpSend(uint32_t src, const asio::ip::udp::endpoint& udp_remote_endpoint, Buffer&& data);
 	public:
+		uint32_t AddTimer(ActorId id, uint32_t millisec, int32_t repeat, const std::function<void()>& callback);
+		void CancelTimer(uint32_t id);
+	public:
 		void SendActorMessage(ActorMessage&& acotr_msg);
 		void SendActorMessage(ActorId src_id, ActorId dest_id, ActorMessage::SessionType session, ActorMessage::MessageType type, std::string_view name, std::any&& data);
 		void SendActorMessage(ActorId src_id, const std::string& dest_actor_name,ActorMessage::SessionType session,ActorMessage::MessageType type,std::string_view name,std::any&& data);
@@ -78,13 +82,15 @@ namespace actor_net
 		std::unordered_map<std::string, ActorId> name_by_acotr_id_map_;
 		std::unordered_map<ActorId, ActorPtr> id_by_actor_map_;
 		std::unique_ptr<NetworkActor> network_actor_;
+		std::unique_ptr<TimerActor> timer_actor_;
 		MessageCore message_core_;
+
 
 		std::mutex mutex_;
 		std::condition_variable condition_;
+		std::thread network_thread_;
+		std::thread timer_thread_;
 		std::vector<std::thread> work_threads_;		// 工作线程
-		
-		std::thread network_threads_;			
 		ActorId alloc_id_;
 	};
 }

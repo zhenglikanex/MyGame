@@ -7,6 +7,7 @@
 #include <mutex>
 #include <functional>
 #include <cassert>
+#include <atomic>
 
 #include "ActorMessage.h"
 
@@ -21,28 +22,31 @@ namespace actor_net
 		MessageQueue& operator=(const MessageQueue&) = delete;
 		MessageQueue& operator=(MessageQueue&&) = delete;
 
-		bool IsEmpty() const;
+		bool IsEmpty();
 		void Push(ActorMessage&& message);
 		ActorMessage Pop();
 
+		void set_mamaged(bool managed) { managed_ = managed; }
+
 		ActorId actor_id() const { return actor_id_; }
+		bool managed() const { return managed_; }
 	private:
-		std::mutex mutex_;
 		ActorId actor_id_;
 		std::queue<ActorMessage> messages_;
+		bool managed_;
+		std::mutex mutex_;
 	};
 
 	class MessageCore
 	{
 	public:
-		bool IsEmtpy() const;
 		void PushActorMessage(ActorId id,ActorMessage&& actor_message);
-		void PushMessgeQueue(const std::shared_ptr<MessageQueue>& queue);
-		std::shared_ptr<MessageQueue> PopMessageQueue();
+		std::shared_ptr<MessageQueue> GetMessageQueue(std::shared_ptr<MessageQueue> queue);
 		void RemoveMessageQueueById(ActorId id);
 	private:
 		std::shared_ptr<MessageQueue> GetMessageQueueById(ActorId id);
-
+		void PushMessgeQueue(const std::shared_ptr<MessageQueue>& queue);
+		std::shared_ptr<MessageQueue> PopMessageQueue();
 		std::mutex mutex_;
 
 		std::queue<std::shared_ptr<MessageQueue>> actor_msg_queues_;

@@ -1,9 +1,10 @@
 #include "KcpConnection.hpp"
 #include <iostream>
 
-KcpConnection::KcpConnection(kcp_conv_t conv, const asio::ip::udp::endpoint& endpoint)
+KcpConnection::KcpConnection(kcp_conv_t conv, const asio::ip::udp::endpoint& endpoint,uint32_t cur_time)
 	: conv_(conv)
 	, endpoint_(endpoint)
+	, last_recv_time_(cur_time)
 {
 	kcp_ = ikcp_create(conv, (void*)this);
 	kcp_->output = &KcpConnection::UdpOutput;
@@ -23,8 +24,10 @@ KcpConnection::~KcpConnection()
 	kcp_ = nullptr;
 }
 
-void KcpConnection::Receive(Buffer&& buffer)
+void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_time)
 {
+	last_recv_time_ = cur_time;
+
 	char* data = (char*)buffer.data() + sizeof(kcp_conv_t);	// 跳过已经已经读取的conv字节
 	size_t size = buffer.size() - sizeof(kcp_conv_t);
 
@@ -55,6 +58,11 @@ void KcpConnection::Send(Buffer&& buffer)
 	}
 }
 
+bool KcpConnection::IsTimeout(uint32_t cur_time)
+{
+	return cur_time - last_recv_time_ > kTimeoutTime;
+}
+
 int KcpConnection::UdpOutput(const char* buf, int len, ikcpcb* kcp, void* user)
 {
 	auto* connection = (KcpConnection*)user;
@@ -64,4 +72,6 @@ int KcpConnection::UdpOutput(const char* buf, int len, ikcpcb* kcp, void* user)
 		std::copy_n((const uint8_t*)buf, len, buffer.data());
 		connection->send_handler_(connection->shared_from_this(),std::move(buffer));
 	}
+
+	return 1;
 }

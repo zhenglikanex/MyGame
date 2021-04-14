@@ -17,6 +17,8 @@ add_library(ActorNet
     NetworkActor.cpp
     NetworkComponent.hpp
     NetworkComponent.cpp
+    TimerActor.hpp
+    TimerActor.cpp
     main.cpp
 )
 

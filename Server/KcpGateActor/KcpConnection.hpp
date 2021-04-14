@@ -19,11 +19,15 @@ using KcpSendHanlder = std::function<void(const std::shared_ptr<KcpConnection>&,
 class KcpConnection : std::enable_shared_from_this<KcpConnection>
 {
 public:
-	KcpConnection(kcp_conv_t conv,const asio::ip::udp::endpoint& endpoint);
+	static const uint32_t kTimeoutTime = 5000;	// 5sec
+public:
+	KcpConnection(kcp_conv_t conv,const asio::ip::udp::endpoint& endpoint,uint32_t cur_time);
 	~KcpConnection();
 	
-	void Receive(Buffer&& buffer);
+	void Receive(Buffer&& buffer,uint32_t cur_time);
 	void Send(Buffer&& buffer);
+
+	bool IsTimeout(uint32_t cur_time);
 
 	void set_receive_handler(const KcpReceiveHandler& handler) { receive_handler_ = handler; }
 	void set_send_handler(const KcpSendHanlder& handler) { send_handler_ = handler; }
@@ -37,7 +41,7 @@ private:
 	kcp_conv_t conv_;
 	asio::ip::udp::endpoint endpoint_;
 	ikcpcb* kcp_;
-
+	uint32_t last_recv_time_;
 	std::array<char, 2 ^ 16> data_;
 
 	KcpReceiveHandler receive_handler_;

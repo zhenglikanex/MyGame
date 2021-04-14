@@ -18,6 +18,7 @@ namespace actor_net
 		{
 			kTypeSystem,		// 系统消息(即主线程发过来的消息)
 			kTypeNetwork,		// socket消息
+			kTypeTimer,			// 
 			kTypeRequest,		// 
 			kTypeResponse,		// Response消息
 			kTypeActor,

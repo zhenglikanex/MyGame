@@ -1,5 +1,10 @@
 #pragma once
 
+#include <iostream>
+#include <ctime>
+#include <iomanip>
+#include <chrono>
+
 #include "Actor.h"
 #include "ActorMessage.h"
 #include "NetworkComponent.hpp"
@@ -8,6 +13,7 @@
 #include "Framework/Network/NetMessage.hpp"
 
 using namespace actor_net;
+using namespace std::chrono;
 
 class KcpGateActor : public Actor
 {
@@ -32,17 +38,20 @@ public:
 	void AddConnection(kcp_conv_t conv,const asio::ip::udp::endpoint& endpoint);
 	void ForceDisconnection(kcp_conv_t conv);
 
-	void KcpRecive(const std::shared_ptr<KcpConnection>& connection,Buffer&& buffer);
-	void KcpSend(const std::shared_ptr<KcpConnection>& connection, Buffer&& buffer);
+	void UdpSend(const asio::ip::udp::endpoint& endpoint, Buffer&& buffer);
+	void KcpSend(kcp_conv_t conv, Buffer&& buffer);
+
+	void KcpReciveHandler(const std::shared_ptr<KcpConnection>& connection,Buffer&& buffer);
+	void KcpSendHandler(const std::shared_ptr<KcpConnection>& connection, Buffer&& buffer);
 	
 	void ConnectHandler(const asio::ip::udp::endpoint& endpoint);
 	void ConnectSuccessHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv, KcpMessage&& message);
 	void DisconnectHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv, KcpMessage&& message);
-	void RecvHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv, KcpMessage&& message);
 private:
 	std::shared_ptr<NetworkComponent> network_component_;
 	HandlerMap handlers_;
 	std::unordered_map<kcp_conv_t, std::shared_ptr<KcpConnection>> connections_;
 	std::unordered_map<kcp_conv_t, ActorId> agents_;
 	kcp_conv_t alloc_conv_;
+	uint64_t time_;
 };

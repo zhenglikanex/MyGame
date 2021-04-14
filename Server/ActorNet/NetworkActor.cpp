@@ -25,9 +25,15 @@ namespace actor_net
 	void Connection::Send(Buffer&& buffer)
 	{
 		auto self = shared_from_this();
-		auto buffer_ptr = std::make_shared<Buffer>(std::move(buffer));
-		asio::async_write(socket_, asio::buffer(buffer_ptr->data(), buffer_ptr->size()),
-			[buffer_ptr, self](const asio::error_code& ec, std::size_t /*length*/) //保持buffer的生命周期到send结束
+
+		// 组装上tcp包头
+		auto send_buffer = std::make_shared<Buffer>(buffer.size() + sizeof(uint16_t));
+		uint16_t msg_size = buffer.size();
+		std::copy_n(&msg_size, sizeof(uint16_t), send_buffer->data());
+		std::copy_n(buffer.data(), msg_size, send_buffer->data());
+
+		asio::async_write(socket_, asio::buffer(send_buffer->data(), send_buffer->size()),
+			[send_buffer, self](const asio::error_code& ec, std::size_t /*length*/) //保持send_buffer的生命周期到send结束
 			{
 			});
 	}

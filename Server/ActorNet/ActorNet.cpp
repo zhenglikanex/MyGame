@@ -23,8 +23,14 @@ namespace actor_net
 
 	bool ActorNet::Init()
 	{
+		timer_actor_ = std::make_unique<TimerActor>(shared_from_this());
+		timer_thread_ = std::thread([this]
+		{
+			timer_actor_->Run();
+		});
+
 		network_actor_ = std::make_unique<NetworkActor>(shared_from_this());
-		network_threads_ = std::thread([this]{
+		network_thread_ = std::thread([this]{
 			network_actor_->Run();
 		});
 
@@ -40,8 +46,8 @@ namespace actor_net
 				{
 					while (!message_queue)
 					{
-						// 弹出消息队列,保证消息队列不会被多个线程获取
-						message_queue = message_core_.PopMessageQueue();
+						// 弹出需要处理消息队列,保证消息队列不会被多个线程获取
+						message_queue = message_core_.GetMessageQueue(message_queue);
 						if (message_queue)
 						{
 							break;
@@ -54,27 +60,11 @@ namespace actor_net
 					auto actor = GetActorById(message_queue->actor_id());
 					if (!actor)
 					{
-						message_queue = message_core_.PopMessageQueue();
-						continue;
-					}
-
-					if (message_queue->IsEmpty())
-					{
-						message_queue = message_core_.PopMessageQueue();
-						//不放回message_core中,等到有消息插入再放回,防止线程空转
 						continue;
 					}
 
 					actor->OnReceive(message_queue->Pop());
-
-					auto next_queue = message_core_.PopMessageQueue();
-					if (next_queue)
-					{
-						// 如果不为空重新放回消息中心,等待下一次调度
-						// 如果为空只有一个actor要处理,没必要继续放回
-						message_core_.PushMessgeQueue(message_queue);
-						message_queue = next_queue;
-					}
+					message_queue = message_core_.GetMessageQueue(message_queue);
 				}
 			}));
 		}
@@ -100,8 +90,27 @@ namespace actor_net
 
 	void ActorNet::Stop()
 	{
-		// 等待线程执行完毕
+		if (timer_actor_)
+		{
+			timer_actor_->Stop();
+		}
+		
+		if (network_actor_)
+		{
+			network_actor_->Stop();
+		}
 
+		if (timer_thread_.joinable())
+		{
+			timer_thread_.join();
+		}
+
+		if (network_thread_.joinable())
+		{
+			network_thread_.join();
+		}
+
+		// 等待线程执行完毕
 		for (auto& thread : work_threads_)
 		{
 			if (thread.joinable())
@@ -277,6 +286,16 @@ namespace actor_net
 	void ActorNet::UdpSend(uint32_t src, const asio::ip::udp::endpoint& udp_remote_endpoint, Buffer&& data)
 	{
 		network_actor_->Post(ActorMessage(src, 0, 0, ActorMessage::MessageType::kTypeNetwork, "udp_send", std::make_tuple(udp_remote_endpoint, std::move(data))));
+	}
+
+	uint32_t ActorNet::AddTimer(ActorId id, uint32_t millisec, int32_t repeat, const std::function<void()>& callback)
+	{
+		return timer_actor_->AddTimer(id, millisec, repeat, callback);
+	}
+
+	void ActorNet::CancelTimer(uint32_t id)
+	{
+		timer_actor_->CancelTimer(id);
 	}
 
 	void ActorNet::RegisterActorName(ActorId id, const std::string& name)
