@@ -10,7 +10,7 @@
 
 namespace actor_net
 {
-	static const uint16_t kMaxMsgSize = (1 << 16);
+	static const uint16_t kMaxMsgSize = (1 << 16) - 1;
 	static const uint8_t kHeadSize = 2;
 
 	class Connection;

@@ -15,6 +15,8 @@ add_library(MyGameClient SHARED
     UnityFileService.cpp
     ClientNetworkService.hpp
     ClientNetworkService.cpp
+    Kcp/ikcp.h
+    Kcp/ikcp.c
     ${PROTO_SRC}
 )
 

@@ -29,7 +29,8 @@ bool KcpGateActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 
 	// update all kcp connection
 	AddTimer(5, -1, [this](){
-		
+		cur_clock_ = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+
 		for (auto& entry : connections_)
 		{
 			entry.second->Update(cur_clock_);
@@ -45,8 +46,6 @@ bool KcpGateActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 			ForceDisconnection(alloc_conv_);
 		}
 		timeout_connections_.clear();
-
-		cur_clock_ = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 	});
 
 	return true;
