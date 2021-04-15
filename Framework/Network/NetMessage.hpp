@@ -68,6 +68,7 @@ private:
 
 const std::string kReqKcpConnect = "hello kcp world";
 const std::string kRspKcpConnect = "welcome come to kcp:";
+const std::string kKcpDisconnect = "out kcp";
 
 inline std::string MakeReqKcpConnectMsg()
 {
@@ -79,19 +80,29 @@ inline std::string MakeRspKcpConnectMsg(kcp_conv_t conv)
 	return kRspKcpConnect + std::to_string(conv);
 }
 
+inline std::string MakeKcpDisconnectMsg()
+{
+	return kKcpDisconnect;
+}
+
 inline bool IsReqKcpConnectMsg(const char* data,size_t size)
 {
 	return size == kReqKcpConnect.size() && memcmp(kReqKcpConnect.data(), data, size);
 }
 
-inline bool IsRspKcpConnectMsg(const std::string& msg)
+inline bool IsRspKcpConnectMsg(const char* data,size_t size)
 {
-	return msg.size() > kRspKcpConnect.size() && memcmp(msg.data(), kRspKcpConnect.data(), kRspKcpConnect.size());
+	return size > kRspKcpConnect.size() && memcmp(data, kRspKcpConnect.data(), kRspKcpConnect.size());
 }
 
-inline kcp_conv_t GetKcpConv(const std::string& msg)
+inline bool IsDisconnectMsg(const std::string& msg)
 {
-	return std::atol(msg.data() + kRspKcpConnect.size());
+	return msg == kKcpDisconnect;
+}
+
+inline kcp_conv_t GetKcpConv(const char* data)
+{
+	return std::atol(data + kRspKcpConnect.size());
 }
 
 class KcpMessage

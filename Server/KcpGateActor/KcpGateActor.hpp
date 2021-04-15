@@ -18,8 +18,6 @@ using namespace std::chrono;
 class KcpGateActor : public Actor
 {
 public:
-	using HandlerMap = std::unordered_map<std::string,std::function<void(asio::ip::udp::endpoint,NetMessage&&)>>;
-
 	KcpGateActor(ActorId id);
 	virtual ~KcpGateActor();
 
@@ -28,12 +26,6 @@ public:
 
 	void Receive(ActorMessage&& actor_msg) override;
 	void NetworkReceive(ActorMessage&& actor_msg);
-
-	template<class Func>
-	void Connect(const std::string& name, const Func& func)
-	{
-		handlers_.emplace(name, std::bind(func, this, std::placeholders::_1, std::placeholders::_2));
-	}
 
 	void AddConnection(kcp_conv_t conv,const asio::ip::udp::endpoint& endpoint);
 	void ForceDisconnection(kcp_conv_t conv);
@@ -49,7 +41,6 @@ public:
 	void DisconnectHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv, KcpMessage&& message);
 private:
 	std::shared_ptr<NetworkComponent> network_component_;
-	HandlerMap handlers_;
 	std::unordered_map<kcp_conv_t, std::shared_ptr<KcpConnection>> connections_;
 	std::unordered_map<kcp_conv_t, ActorId> agents_;
 	std::vector<kcp_conv_t> timeout_connections_;

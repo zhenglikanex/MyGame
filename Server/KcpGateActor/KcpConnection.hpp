@@ -21,10 +21,10 @@ class KcpConnection : std::enable_shared_from_this<KcpConnection>
 public:
 	static const uint32_t kTimeoutTime = 5000;	// 5sec
 public:
-	KcpConnection(kcp_conv_t conv,const asio::ip::udp::endpoint& endpoint,uint32_t cur_time);
+	KcpConnection(kcp_conv_t conv,const asio::ip::udp::endpoint& endpoint,uint32_t cur_clock);
 	~KcpConnection();
 	
-	void Receive(Buffer&& buffer,uint32_t cur_time);
+	void Receive(Buffer&& buffer,uint32_t cur_clock);
 	void Send(Buffer&& buffer);
 
 	void Update(uint32_t cur_clock);

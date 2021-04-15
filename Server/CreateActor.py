@@ -4,7 +4,11 @@ import os,sys
 path = os.getcwd() + "/"
 
 CMakeTemplate = "add_library({0}Actor SHARED {0}Actor.hpp {0}Actor.cpp) \n\
+target_link_libraries({0}Actor\n\
+    ActorNet\n\
+)\n\
 SET_PROPERTY(TARGET {0}Actor PROPERTY FOLDER \"Server\")"
+
 HeadTemplte = "#pragma once\n\
 #include \"Actor.h\"\n\
 #include \"ActorMessage.h\"\n\
@@ -52,7 +56,7 @@ void {0}Actor::Stop()\n\
 \n\
 }}\n\
 \n\
-void {0}Actor::OnReceive(ActorMessage&& actor_msg)\n\
+void {0}Actor::Receive(ActorMessage&& actor_msg)\n\
 {{\n\
 }}\n\
 \n\

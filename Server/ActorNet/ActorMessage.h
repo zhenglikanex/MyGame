@@ -16,7 +16,7 @@ namespace actor_net
 	public:
 		enum class MessageType : uint8_t
 		{
-			kTypeSystem,		// 系统消息(即主线程发过来的消息)
+			kTypeSystem,		//
 			kTypeNetwork,		// socket消息
 			kTypeTimer,			// 
 			kTypeRequest,		// 
