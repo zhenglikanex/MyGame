@@ -1,9 +1,28 @@
 #include "ClientNetworkService.hpp"
 
+#ifdef _WIN32
+
+#include <windows.h>
+#include <mmsystem.h>
+
+#pragma comment(lib, "winmm.lib")
+
+#define TIME_BEGIN_PERIOD(ms) ::timeBeginPeriod(ms)
+#define TIME_END_PERIOD(ms) ::timeEndPeriod(ms)
+
+#else
+
+#define TIME_BEGIN_PERIOD(ms) 
+#define TIME_END_PERIOD(ms)
+
+#endif // Windows
+
+
 using namespace std::chrono;
 
 ClientNetworkService::ClientNetworkService()
-	: socket_(io_context_,asio::ip::udp::endpoint(asio::ip::udp::v4(),0))
+	: running_(false)
+	, socket_(io_context_,asio::ip::udp::endpoint(asio::ip::udp::v4(),0))
 	, connect_timer_(io_context_)
 	, kcp_update_timer_(io_context_)
 	, type_(ConnectType::kTypeDisconnect)
@@ -18,22 +37,36 @@ ClientNetworkService::ClientNetworkService()
 
 ClientNetworkService::~ClientNetworkService()
 {
-	io_context_.stop();
-	if (thread_.joinable())
-	{
-		thread_.join();
-	}
+	Stop();
 }
 
 void ClientNetworkService::Run()
 {
-	UdpReceive();
-	io_context_.run();
+	if(!running_)
+	{
+		running_ = true;
+		thread_ = std::thread([this]
+		{
+			UdpReceive();
+			TIME_BEGIN_PERIOD(1);
+			io_context_.run();
+			TIME_END_PERIOD(1);
+		});
+	}
 }
 
 void ClientNetworkService::Stop()
 {
-	io_context_.stop();
+	if (running_)
+	{
+		running_;
+		io_context_.stop();
+
+		if (thread_.joinable())
+		{
+			thread_.join();
+		}
+	}
 }
 
 void ClientNetworkService::Connect(const std::string& ip, uint16_t port,uint32_t timeout)
@@ -83,9 +116,14 @@ bool ClientNetworkService::IsEmpty() const
 
 const NetMessage& ClientNetworkService::PopMessage()
 {
-	if (cur_write_ < cur_write_)
+	if (cur_read_ < cur_write_)
 	{
-		return messages_[cur_write_++];
+		auto& message = messages_[cur_read_++];
+		if (cur_read_ >= messages_.size())
+		{
+			cur_read_ = 0;
+		}
+		return message;
 	}
 }
 
@@ -93,11 +131,13 @@ int ClientNetworkService::UdpOutput(const char* buf, int len, ikcpcb* kcp, void*
 {
 	auto service = (ClientNetworkService*)user;
 	service->UdpSend((uint8_t*)buf, len);
+	return 0;
 }
 
 void ClientNetworkService::Connecting(uint32_t timeout)
 {
-	socket_.send_to(MakeReqKcpConnectMsg(), server_endpoint_);
+	auto& msg = MakeReqKcpConnectMsg();
+	socket_.send_to(asio::buffer(msg.data(),msg.size()) , server_endpoint_);
 	// 定时请求连接udp,直到建立起kcp连接
 	connect_timer_.expires_after(milliseconds(100));
 	connect_timer_.async_wait([this, timeout](std::error_code ec)
@@ -158,7 +198,7 @@ void ClientNetworkService::UdpSend(uint8_t* data, uint32_t len)
 void ClientNetworkService::UdpReceive()
 {
 	socket_.async_receive_from(
-		asio::buffer(data_, kMaxMsgSize), server_endpoint_,
+		asio::buffer(data_.data(), kMaxMsgSize), server_endpoint_,
 		[this](std::error_code ec, std::size_t bytes_recvd)
 	{
 		if (!ec && bytes_recvd > 0)
@@ -188,6 +228,16 @@ void ClientNetworkService::KcpReceive(uint8_t* data, uint32_t len)
 		{
 			messages_[cur_write_].Parse(data_.data(), len);
 			++cur_write_;
+			if (cur_write_ >= messages_.size())
+			{
+				cur_write_ = 0;
+			}
+
+			//todo: ringbuffer大小不够,客户端卡了,可以考虑直接断线
+			if (cur_write_ == cur_read_)
+			{
+				
+			}
 		}
 	}
 	else

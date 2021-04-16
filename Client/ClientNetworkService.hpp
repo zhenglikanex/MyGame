@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <functional>
 #include <chrono>
+#include <atomic>
 
 #include "Framework/Game/NetworkService.hpp"
 #include "Framework/Network/NetMessage.hpp"
@@ -61,6 +62,7 @@ private:
 	void KcpReceive(uint8_t* data,uint32_t len);
 	void KcpUpdate();
 
+	bool running_;
 	std::thread thread_;
 
 	asio::io_context io_context_;
@@ -79,5 +81,5 @@ private:
 
 	std::atomic<uint32_t> cur_read_;
 	std::atomic<uint32_t> cur_write_;
-	std::array<NetMessage, 20> messages_;
+	std::array<NetMessage, 150> messages_;
 };

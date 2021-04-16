@@ -13,7 +13,10 @@ int main()
 	// 注意这在另外一个线程
 	service.set_connect_handler([](ClientNetworkService::ConnectStatus status) 
 		{
-			std::cout << (int)status << std::endl;
+			if (status == ClientNetworkService::ConnectStatus::kTypeConnected)
+			{
+				std::cout << "网络连接成功！" << std::endl;
+			}
 		});
 
 	while (true)
