@@ -71,7 +71,7 @@ void ClientNetworkService::Stop()
 
 void ClientNetworkService::Connect(const std::string& ip, uint16_t port,uint32_t timeout)
 {
-	if (type_ != ConnectType::kTypeDisconnect)
+	if (type_ == ConnectType::kTypeDisconnect)
 	{
 		connect_time_ = duration_cast<seconds>(steady_clock::now().time_since_epoch()).count();
 
@@ -98,7 +98,7 @@ void ClientNetworkService::Disconnect()
 }
 
 void ClientNetworkService::Send(uint8_t* data, uint32_t len)
-{
+{	
 	if (type_ == ConnectType::kTypeConnected)
 	{
 		ikcp_send(kcp_, (char*)data, len);
@@ -147,10 +147,13 @@ void ClientNetworkService::Connecting(uint32_t timeout)
 			if (type_ == ConnectType::kTypeConnecting)
 			{
 				auto now = duration_cast<seconds>(steady_clock::now().time_since_epoch()).count();
-				if (now - connect_time_ > timeout)
+				if (now - connect_time_ >= timeout)
 				{
 					type_ = ConnectType::kTypeDisconnect;
-					connect_handler_(ConnectStatus::kTypeTimeout);
+					if (connect_handler_)
+					{
+						connect_handler_(ConnectStatus::kTypeTimeout);
+					}
 					return;
 				}
 
@@ -180,6 +183,8 @@ void ClientNetworkService::Connected(kcp_conv_t conv)
 	ikcp_nodelay(kcp_, 1, 5, 1, 1); // 设置成1次ACK跨越直接重传, 这样反应速度会更快. 内部时钟5毫秒.
 
 	KcpUpdate();
+
+	SendConnectedMsg();
 }
 
 void ClientNetworkService::Disconnected()
@@ -188,6 +193,16 @@ void ClientNetworkService::Disconnected()
 	ikcp_release(kcp_);
 	kcp_ = nullptr;
 	kcp_update_timer_.cancel();
+}
+
+void ClientNetworkService::SendConnectedMsg()
+{
+	// 发送连接上的消息
+	KcpMessage message;
+	message.set_type(KcpMessage::KcpMessageType::kTypeConnected);
+	std::vector<uint8_t> data(message.GetByteSize());
+	message.Serialize(data.data());
+	Send(data.data(), data.size());
 }
 
 void ClientNetworkService::UdpSend(uint8_t* data, uint32_t len)
@@ -222,8 +237,7 @@ void ClientNetworkService::KcpReceive(uint8_t* data, uint32_t len)
 	
 	if (conv == conv_)
 	{
-		// 减去读取的conv信息
-		auto ret =  ikcp_recv(kcp_,(char*)data, len - sizeof(kcp_conv_t));
+		auto ret =  ikcp_recv(kcp_,(char*)data, len);
 		if (ret)
 		{
 			messages_[cur_write_].Parse(data_.data(), len);

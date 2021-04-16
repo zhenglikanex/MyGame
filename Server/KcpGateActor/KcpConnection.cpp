@@ -29,8 +29,8 @@ void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 {
 	last_recv_clock_ = cur_clock;
 
-	char* data = (char*)buffer.data() + sizeof(kcp_conv_t);	// 跳过已经已经读取的conv字节
-	size_t size = buffer.size() - sizeof(kcp_conv_t);
+	char* data = (char*)buffer.data();
+	size_t size = buffer.size();
 
 	ikcp_input(kcp_, data, size);
 	
@@ -45,7 +45,7 @@ void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 		{
 			Buffer recv_buffer(kcp_recvd_bytes);
 			std::copy_n((uint8_t*)data_.data(), kcp_recvd_bytes, recv_buffer.data());
-			receive_handler_(shared_from_this(), std::move(recv_buffer));
+			receive_handler_(*this, std::move(recv_buffer));
 		}
 	}
 }
@@ -76,7 +76,7 @@ int KcpConnection::UdpOutput(const char* buf, int len, ikcpcb* kcp, void* user)
 	{
 		Buffer buffer(len);
 		std::copy_n((const uint8_t*)buf, len, buffer.data());
-		connection->send_handler_(connection->shared_from_this(),std::move(buffer));
+		connection->send_handler_(*connection,std::move(buffer));
 	}
 
 	return 1;

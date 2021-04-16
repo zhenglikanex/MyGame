@@ -13,10 +13,10 @@ class KcpConnection;
 
 using namespace actor_net;
 
-using KcpReceiveHandler = std::function<void(const std::shared_ptr<KcpConnection>&, Buffer&&)>;
-using KcpSendHanlder = std::function<void(const std::shared_ptr<KcpConnection>&, Buffer&&)>;
+using KcpReceiveHandler = std::function<void(const KcpConnection&, Buffer&&)>;
+using KcpSendHanlder = std::function<void(const KcpConnection&, Buffer&&)>;
 
-class KcpConnection : std::enable_shared_from_this<KcpConnection>
+class KcpConnection
 {
 public:
 	static const uint32_t kTimeoutTime = 5000;	// 5sec

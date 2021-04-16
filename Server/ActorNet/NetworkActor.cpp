@@ -202,12 +202,11 @@ namespace actor_net
 				}
 				else if (actor_msg.name() == "close_udp_server")
 				{
-					auto src = std::any_cast<uint32_t>(actor_msg.data());
 					CloseUdpServer(src);
 				}
 				else if (actor_msg.name() == "udp_send")
 				{
-					auto& [src,udp_remote_endpoint,send_data] = std::any_cast<std::tuple<uint32_t,asio::ip::udp::endpoint, Buffer>>(actor_msg.data());
+					auto& [udp_remote_endpoint,send_data] = std::any_cast<std::tuple<asio::ip::udp::endpoint, Buffer>>(actor_msg.data());
 					UdpSend(src,udp_remote_endpoint, std::move(send_data));
 				}
 			});

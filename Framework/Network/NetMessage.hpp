@@ -27,7 +27,10 @@ public:
 		name_ = std::string((char*)data, name_size);
 		data += name_size;
 
-		std::copy_n(data, size - sizeof(uint16_t) - sizeof(uint8_t) - name_size, data_.data());
+		size = size - sizeof(uint16_t) - sizeof(uint8_t) - name_size;
+		data_.resize(size);
+		
+		std::copy_n(data,size, data_.data());
 	}
 
 	void Serialize(uint8_t* out)
@@ -87,12 +90,12 @@ inline std::string MakeKcpDisconnectMsg()
 
 inline bool IsReqKcpConnectMsg(const char* data,size_t size)
 {
-	return size == kReqKcpConnect.size() && memcmp(kReqKcpConnect.data(), data, size);
+	return size == kReqKcpConnect.size() && memcmp(kReqKcpConnect.data(), data, size) == 0;
 }
 
 inline bool IsRspKcpConnectMsg(const char* data,size_t size)
 {
-	return size > kRspKcpConnect.size() && memcmp(data, kRspKcpConnect.data(), kRspKcpConnect.size());
+	return size > kRspKcpConnect.size() && memcmp(data, kRspKcpConnect.data(), kRspKcpConnect.size()) == 0;
 }
 
 inline bool IsDisconnectMsg(const std::string& msg)
@@ -110,9 +113,10 @@ class KcpMessage
 public:
 	enum class KcpMessageType : uint8_t
 	{
-		kTypeConnect,
+		kTypeConnected,
 		kTypeDisconnect,
-		kTypeRecv,
+		kTypeRpc,
+		kTypeRequest,
 		kTypeMax,
 	};
 
@@ -127,8 +131,13 @@ public:
 		uint8_t type = static_cast<uint8_t>(type_);
 		std::copy_n(data, sizeof(uint8_t),&type);
 		data += sizeof(uint8_t);
+		
+		if (size == 0)
+		{
+			return;
+		}
 
-		net_message_.Parse(data, size - sizeof(kcp_conv_t));
+		net_message_.Parse(data, size - sizeof(uint8_t));
 	}
 
 	void Serialize(uint8_t* out)
@@ -136,7 +145,7 @@ public:
 		uint8_t type = static_cast<uint8_t>(type_);
 		std::copy_n(&type, sizeof(uint8_t), out);
 		out += sizeof(uint8_t);
-
+		
 		net_message_.Serialize(out);
 	}
 

@@ -79,7 +79,7 @@ void KcpGateActor::NetworkReceive(ActorMessage&& actor_msg)
 			auto iter = connections_.find(conv);
 			if (iter != connections_.end())
 			{
-				iter->second->Receive(std::move(buffer),0);
+				iter->second->Receive(std::move(buffer),cur_clock_);
 			}
 			else 
 			{
@@ -126,22 +126,22 @@ void KcpGateActor::KcpSend(kcp_conv_t conv, Buffer&& buffer)
 	}
 }
 
-void KcpGateActor::KcpReciveHandler(const std::shared_ptr<KcpConnection>& connection, Buffer&& buffer)
+void KcpGateActor::KcpReciveHandler(const KcpConnection& connection, Buffer&& buffer)
 {
 	KcpMessage kcp_message;
 	kcp_message.Parse(buffer.data(), buffer.size());
 
-	if (kcp_message.type() == KcpMessage::KcpMessageType::kTypeConnect)
+	if (kcp_message.type() == KcpMessage::KcpMessageType::kTypeConnected)
 	{
-		ConnectSuccessHandler(connection->endpoint(), connection->conv(), std::move(kcp_message));
+		ConnectSuccessHandler(connection.endpoint(), connection.conv(), std::move(kcp_message));
 	}
 	else if (kcp_message.type() == KcpMessage::KcpMessageType::kTypeDisconnect)
 	{
-		DisconnectHandler(connection->endpoint(), connection->conv(), std::move(kcp_message));
+		DisconnectHandler(connection.endpoint(), connection.conv(), std::move(kcp_message));
 	}
 	else
 	{
-		auto iter = agents_.find(connection->conv());
+		auto iter = agents_.find(connection.conv());
 		if (iter != agents_.end())
 		{
 			Call(iter->second, "client", kcp_message.MoveNetMessage());
@@ -153,13 +153,15 @@ void KcpGateActor::KcpReciveHandler(const std::shared_ptr<KcpConnection>& connec
 	}
 }
 
-void KcpGateActor::KcpSendHandler(const std::shared_ptr<KcpConnection>& connection, Buffer&& buffer)
+void KcpGateActor::KcpSendHandler(const KcpConnection& connection, Buffer&& buffer)
 {
-	network_component_->UdpSend(connection->endpoint(), std::move(buffer));
+	network_component_->UdpSend(connection.endpoint(), std::move(buffer));
 }
 
 void KcpGateActor::ConnectHandler(const asio::ip::udp::endpoint& endpoint)
 {
+	std::cout << "connect" << endpoint.address().to_string() << std::endl;
+
 	kcp_conv_t conv = alloc_conv_++;
 	AddConnection(conv, endpoint);
 

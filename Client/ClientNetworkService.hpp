@@ -56,6 +56,8 @@ private:
 	void Connected(kcp_conv_t conv);
 	void Disconnected();
 
+	void SendConnectedMsg();
+
 	void UdpSend(uint8_t* data, uint32_t len);
 	void UdpReceive();
 

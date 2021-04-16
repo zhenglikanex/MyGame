@@ -33,8 +33,8 @@ public:
 	void UdpSend(const asio::ip::udp::endpoint& endpoint, Buffer&& buffer);
 	void KcpSend(kcp_conv_t conv, Buffer&& buffer);
 
-	void KcpReciveHandler(const std::shared_ptr<KcpConnection>& connection,Buffer&& buffer);
-	void KcpSendHandler(const std::shared_ptr<KcpConnection>& connection, Buffer&& buffer);
+	void KcpReciveHandler(const KcpConnection& connection,Buffer&& buffer);
+	void KcpSendHandler(const KcpConnection& connection, Buffer&& buffer);
 	
 	void ConnectHandler(const asio::ip::udp::endpoint& endpoint);
 	void ConnectSuccessHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv, KcpMessage&& message);

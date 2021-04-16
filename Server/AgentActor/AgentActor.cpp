@@ -20,8 +20,8 @@ bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 		return false;
 	}
 	
-	ActorConnect("start", &Start);
-	ActorConnect("client", &ClientReceive);
+	ActorConnect("start", &AgentActor::Start);
+	ActorConnect("client", &AgentActor::ClientReceive);
 
 	return true;
 }
@@ -52,6 +52,8 @@ void AgentActor::Start(const std::any& data)
 	auto&[gate, conv] = std::any_cast<std::tuple<ActorId, kcp_conv_t>>(data);
 	gate_ = gate;
 	conv_ = conv;
+
+	std::cout << "AgentStart" << gate << " " << conv << std::endl;
 }
 
 void AgentActor::ClientReceive(const std::any& data)
