@@ -19,9 +19,11 @@ bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	{
 		return false;
 	}
-	
-	ActorConnect("start", &AgentActor::Start);
-	ActorConnect("client", &AgentActor::ClientReceive);
+
+	ActorConnect("start", &AgentActor::Start,this);
+	ActorConnect("client", &AgentActor::ClientReceive,this);
+
+	ClientConnect("ping", &AgentActor::Ping);
 
 	return true;
 }
@@ -33,18 +35,7 @@ void AgentActor::Stop()
 
 void AgentActor::Receive(ActorMessage&& actor_msg)
 {
-	if (actor_msg.type() == ActorMessage::MessageType::kTypeActor)
-	{
-		auto iter = actor_handlers_.find(actor_msg.name());
-		if (iter != actor_handlers_.end())
-		{
-			iter->second(actor_msg.data());
-		}
-	}
-	else if(actor_msg.type() == ActorMessage::MessageType::kTypeRequest)
-	{
-		
-	}
+
 }
 
 void AgentActor::Start(const std::any& data)
@@ -70,4 +61,11 @@ void AgentActor::ClientReceive(const std::any& data)
 	}
 }
 
+void AgentActor::Ping(const NetMessage& request)
+{
+	std::any data = std::make_tuple(conv_, request);
+	Call(gate_, "send", std::move(data));
+}
+
 ACTOR_IMPLEMENT(AgentActor)
+

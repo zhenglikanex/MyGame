@@ -10,7 +10,7 @@
 
 namespace actor_net
 {
-	static const uint16_t kMaxMsgSize = (1 << 16) - 1;
+	static const uint16_t kMaxMsgSize = 0xFFFF;
 	static const uint8_t kHeadSize = 2;
 
 	class Connection;
@@ -103,7 +103,7 @@ namespace actor_net
 		void CloseUdpServer(uint32_t src);
 		void UdpSend(uint32_t src,asio::ip::udp::endpoint udp_remote_endpoint, Buffer&& data);		
 	private:
-		static const uint16_t kMaxConnectionNum = 2 ^ 16;
+		static const uint16_t kMaxConnectionNum = 0xFFFF;
 
 		std::shared_ptr<ActorNet> actor_net_;
 		asio::io_context io_context_;

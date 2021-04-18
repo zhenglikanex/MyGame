@@ -8,6 +8,7 @@ KcpGateActor::KcpGateActor(ActorId id)
 	: Actor(id)
 	, alloc_conv_(1000)
 	, cur_clock_(duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count())
+	, kcp_timer_(0)
 {
 
 }
@@ -28,8 +29,9 @@ bool KcpGateActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	network_component_->CreateUdpServer(9523);
 
 	// update all kcp connection
-	AddTimer(5, -1, [this](){
-		cur_clock_ = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	kcp_timer_ = AddTimer(1, -1, [this]() {
+		uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+		cur_clock_ = now;
 
 		for (auto& entry : connections_)
 		{
@@ -43,16 +45,19 @@ bool KcpGateActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 
 		for (auto conv : timeout_connections_)
 		{
-			ForceDisconnection(alloc_conv_);
+			ForceDisconnection(conv);
 		}
 		timeout_connections_.clear();
-	});
+		});
+
+	ActorConnect("send", &KcpGateActor::Send, this);
 
 	return true;
 }
 
 void KcpGateActor::Stop()
 {
+	CancelTimer(kcp_timer_);
 	network_component_ = nullptr;
 }
 
@@ -95,7 +100,7 @@ void KcpGateActor::NetworkReceive(ActorMessage&& actor_msg)
 
 void KcpGateActor::AddConnection(kcp_conv_t conv, const asio::ip::udp::endpoint& endpoint)
 {
-	auto connection = std::make_shared<KcpConnection>(conv, endpoint,0);
+	auto connection = std::make_shared<KcpConnection>(conv, endpoint,cur_clock_);
 	connection->set_receive_handler(std::bind(&KcpGateActor::KcpReciveHandler, this, std::placeholders::_1, std::placeholders::_2));
 	connection->set_send_handler(std::bind(&KcpGateActor::KcpSendHandler, this, std::placeholders::_1, std::placeholders::_2));
 	connections_.emplace(conv, std::move(connection));
@@ -128,23 +133,22 @@ void KcpGateActor::KcpSend(kcp_conv_t conv, Buffer&& buffer)
 
 void KcpGateActor::KcpReciveHandler(const KcpConnection& connection, Buffer&& buffer)
 {
-	KcpMessage kcp_message;
-	kcp_message.Parse(buffer.data(), buffer.size());
-
-	if (kcp_message.type() == KcpMessage::KcpMessageType::kTypeConnected)
+	if (IsKcpConnectedMsg((char*)buffer.data(),buffer.size()))
 	{
-		ConnectSuccessHandler(connection.endpoint(), connection.conv(), std::move(kcp_message));
+		ConnectSuccessHandler(connection.endpoint(), connection.conv());
 	}
-	else if (kcp_message.type() == KcpMessage::KcpMessageType::kTypeDisconnect)
+	else if (IsKcpDisconnectMsg((char*)buffer.data(),buffer.size()))
 	{
-		DisconnectHandler(connection.endpoint(), connection.conv(), std::move(kcp_message));
+		DisconnectHandler(connection.endpoint(), connection.conv());
 	}
 	else
 	{
 		auto iter = agents_.find(connection.conv());
 		if (iter != agents_.end())
 		{
-			Call(iter->second, "client", kcp_message.MoveNetMessage());
+			NetMessage message;
+			message.Parse(buffer.data(), buffer.size());
+			Call(iter->second, "client",std::move(message));
 		}
 		else
 		{
@@ -171,9 +175,9 @@ void KcpGateActor::ConnectHandler(const asio::ip::udp::endpoint& endpoint)
 	network_component_->UdpSend(endpoint, std::move(buffer));
 }
 
-void KcpGateActor::ConnectSuccessHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv, KcpMessage&& message)
+void KcpGateActor::ConnectSuccessHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv)
 {
-	auto agent = StartActor("Agent");
+	auto agent = StartActor("AgentActor.dll");
 	if (agent != kNull)
 	{
 		agents_.emplace(conv, agent);
@@ -182,9 +186,18 @@ void KcpGateActor::ConnectSuccessHandler(const asio::ip::udp::endpoint& endpoint
 	}
 }
 
-void KcpGateActor::DisconnectHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv, KcpMessage&& message)
+void KcpGateActor::DisconnectHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv)
 {
 	ForceDisconnection(conv);
 }
 
+void KcpGateActor::Send(const std::any& data)
+{
+	auto& [conv, message] = std::any_cast<std::tuple<uint32_t, NetMessage>>(data);
+	Buffer buffer(message.GetByteSize());
+	message.Serialize(buffer.data());
+	KcpSend(conv, std::move(buffer));
+}
+
 ACTOR_IMPLEMENT(KcpGateActor)
+

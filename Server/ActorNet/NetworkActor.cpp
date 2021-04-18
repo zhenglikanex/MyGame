@@ -6,8 +6,10 @@ namespace actor_net
 {
 
 	Connection::Connection(uint32_t owner_id, asio::ip::tcp::socket&& socket)
-		: owner_id_(owner_id)
+		: id_(0)
+		, owner_id_(owner_id)
 		, socket_(std::move(socket))
+		, data_(std::array<uint8_t, kMaxMsgSize>{0})
 	{
 
 	}
@@ -29,7 +31,7 @@ namespace actor_net
 		// 组装上tcp包头
 		auto send_buffer = std::make_shared<Buffer>(buffer.size() + sizeof(uint16_t));
 		uint16_t msg_size = buffer.size();
-		std::copy_n(&msg_size, sizeof(uint16_t), send_buffer->data());
+		std::copy_n((uint8_t*)&msg_size, sizeof(uint16_t), send_buffer->data());
 		std::copy_n(buffer.data(), msg_size, send_buffer->data());
 
 		asio::async_write(socket_, asio::buffer(send_buffer->data(), send_buffer->size()),
@@ -123,6 +125,7 @@ namespace actor_net
 	UdpServer::UdpServer(uint32_t owner_id, asio::io_context& io_context, uint16_t port)
 		: owner_id_(owner_id)
 		, socket_(io_context, asio::ip::udp::endpoint(asio::ip::udp::v4(), port))
+		, data_(std::array<uint8_t, kMaxMsgSize>{0})
 	{
 
 	}
@@ -256,7 +259,7 @@ namespace actor_net
 					});
 
 				actor_net_->SendActorMessage(0, connection->owner_id(), 0, ActorMessage::MessageType::kTypeNetwork, "tcp_connect", connection->id());
-				connections_[id] = std::move(connection);
+				connections_[id] = connection;
 				return;
 			}
 		}

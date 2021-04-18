@@ -22,7 +22,9 @@ namespace actor_net
 	class Actor : public std::enable_shared_from_this<Actor>
 	{
 	public:
-		Actor(uint32_t id) :id_(id) { }
+		using ActorHandlerMap = std::unordered_map<std::string, std::function<void(const std::any&)>>;
+
+		Actor(uint32_t id) :id_(id),session_id_(0) { }
 		virtual ~Actor() = 0 { }
 
 		virtual bool Init(const std::shared_ptr<ActorNet>& actor_net)
@@ -49,6 +51,12 @@ namespace actor_net
 		uint32_t AddTimer(uint32_t millisec, int32_t repeat, const std::function<void()>& callback);
 		void CancelTimer(uint32_t id);
 
+		template<class Func,class Instance>
+		void ActorConnect(const std::string& name, const Func& func, Instance* instance)
+		{
+			actor_handlers_.emplace(name, std::bind(func, instance, std::placeholders::_1));
+		}
+
 		void OnReceive(ActorMessage&& actor_msg);
 		virtual void Receive(ActorMessage&& actor_msg) = 0;
 
@@ -62,9 +70,10 @@ namespace actor_net
 		std::string name_;
 		ActorId id_;
 		
-		const static ActorMessage::SessionType kMaxSession = 2 ^ 16;
+		const static ActorMessage::SessionType kMaxSession = 0xFFFF;
 		ActorMessage::SessionType session_id_;
 		std::array<std::function<void(ActorMessage&&)>, kMaxSession> request_callbacks_;
+		ActorHandlerMap actor_handlers_;
 	};
 
 	typedef std::shared_ptr<Actor> ActorPtr;

@@ -15,9 +15,40 @@ typedef uint32_t kcp_conv_t;
 class NetMessage
 {
 public:
+	NetMessage()
+		: session_(0)
+	{
+
+	}
+
+	NetMessage(NetMessage&& rhs) noexcept
+		: session_(rhs.session_)
+		, name_(std::move(rhs.name_))
+		, data_(std::move(rhs.data_))
+	{
+
+	}
+
+	NetMessage& operator=(NetMessage&& rhs) noexcept
+	{
+		if (this == &rhs)
+		{
+			return *this;
+		}
+
+		session_ = rhs.session_;
+		name_ = std::move(rhs.name_);
+		data_ = std::move(rhs.data_);
+
+		return *this;
+	}
+
+	NetMessage(const NetMessage&) = default;
+	NetMessage& operator=(const NetMessage&) = default;
+
 	void Parse(const uint8_t* data, size_t size)
 	{
-		std::copy_n(data, sizeof(uint16_t), &session_);
+		std::copy_n(data, sizeof(uint16_t), (uint8_t*)&session_);
 		data += sizeof(uint16_t);
 
 		uint8_t name_size;
@@ -35,8 +66,11 @@ public:
 
 	void Serialize(uint8_t* out)
 	{
+		std::copy_n((uint8_t*)&session_, sizeof(uint16_t), out);
+		out += sizeof(uint16_t);
+		
 		uint8_t name_size = name_.size();
-		std::copy_n(&name_size, sizeof(uint8_t), out);
+		std::copy_n((uint8_t*)&name_size, sizeof(uint8_t), out);
 		out += sizeof(uint8_t);
 
 		std::copy_n(name_.data(),name_.size(),out);
@@ -69,9 +103,10 @@ private:
 	std::vector<uint8_t> data_;
 };
 
-const std::string kReqKcpConnect = "hello kcp world";
-const std::string kRspKcpConnect = "welcome come to kcp:";
-const std::string kKcpDisconnect = "out kcp";
+const std::string kReqKcpConnect = "Hello kcp world";
+const std::string kRspKcpConnect = "Welcome come to kcp:";
+const std::string kKcpConnected = "I have joined the world of kcp";
+const std::string kKcpDisconnected = "Out kcp";
 
 inline std::string MakeReqKcpConnectMsg()
 {
@@ -83,9 +118,14 @@ inline std::string MakeRspKcpConnectMsg(kcp_conv_t conv)
 	return kRspKcpConnect + std::to_string(conv);
 }
 
+inline std::string MakeKcpConnectedMsg()
+{
+	return kKcpConnected;
+}
+
 inline std::string MakeKcpDisconnectMsg()
 {
-	return kKcpDisconnect;
+	return kKcpDisconnected;
 }
 
 inline bool IsReqKcpConnectMsg(const char* data,size_t size)
@@ -98,69 +138,17 @@ inline bool IsRspKcpConnectMsg(const char* data,size_t size)
 	return size > kRspKcpConnect.size() && memcmp(data, kRspKcpConnect.data(), kRspKcpConnect.size()) == 0;
 }
 
-inline bool IsDisconnectMsg(const std::string& msg)
+inline bool IsKcpConnectedMsg(const char* data, size_t size)
 {
-	return msg == kKcpDisconnect;
+	return size == kKcpConnected.size() && memcmp(data, kKcpConnected.data(), kKcpConnected.size()) == 0;
+}
+
+inline bool IsKcpDisconnectMsg(const char* data,size_t size)
+{
+	return size == kKcpDisconnected.size() && memcmp(data, kKcpDisconnected.data(), kKcpDisconnected.size()) == 0;
 }
 
 inline kcp_conv_t GetKcpConv(const char* data)
 {
 	return std::atol(data + kRspKcpConnect.size());
 }
-
-class KcpMessage
-{
-public:
-	enum class KcpMessageType : uint8_t
-	{
-		kTypeConnected,
-		kTypeDisconnect,
-		kTypeRpc,
-		kTypeRequest,
-		kTypeMax,
-	};
-
-	KcpMessage()
-		: type_(KcpMessageType::kTypeMax)
-	{
-
-	}
-
-	void Parse(const uint8_t* data, size_t size)
-	{
-		uint8_t type = static_cast<uint8_t>(type_);
-		std::copy_n(data, sizeof(uint8_t),&type);
-		data += sizeof(uint8_t);
-		
-		if (size == 0)
-		{
-			return;
-		}
-
-		net_message_.Parse(data, size - sizeof(uint8_t));
-	}
-
-	void Serialize(uint8_t* out)
-	{
-		uint8_t type = static_cast<uint8_t>(type_);
-		std::copy_n(&type, sizeof(uint8_t), out);
-		out += sizeof(uint8_t);
-		
-		net_message_.Serialize(out);
-	}
-
-	size_t GetByteSize() const
-	{
-		return sizeof(uint8_t) + net_message_.GetByteSize();
-	}
-	
-	NetMessage MoveNetMessage() { return std::move(net_message_); }
-
-	void set_type(KcpMessageType type) { type_ = type; }
-	void set_net_message(NetMessage net_message) { net_message_ = std::move(net_message_); }
-
-	KcpMessageType type() const { return type_; }
-private:
-	KcpMessageType type_;
-	NetMessage net_message_;
-};

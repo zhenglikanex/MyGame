@@ -34,6 +34,16 @@ namespace actor_net
 
 			return;
 		}
+		else if (actor_msg.type() == ActorMessage::MessageType::kTypeActor)
+		{
+			auto iter = actor_handlers_.find(actor_msg.name());
+			if (iter != actor_handlers_.end())
+			{
+				iter->second(actor_msg.data());
+			}
+
+			return;
+		}
 
 		Receive(std::move(actor_msg));
 	}

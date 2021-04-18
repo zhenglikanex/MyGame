@@ -21,7 +21,6 @@ namespace actor_net
 		MessageQueue(MessageQueue&&) = delete;
 		MessageQueue& operator=(const MessageQueue&) = delete;
 		MessageQueue& operator=(MessageQueue&&) = delete;
-
 		bool IsEmpty();
 		void Push(ActorMessage&& message);
 		ActorMessage Pop();
@@ -49,7 +48,7 @@ namespace actor_net
 		std::shared_ptr<MessageQueue> PopMessageQueue();
 		std::mutex mutex_;
 
-		std::queue<std::shared_ptr<MessageQueue>> actor_msg_queues_;
+		std::deque<std::shared_ptr<MessageQueue>> actor_msg_queues_;
 		std::unordered_map<ActorId, std::shared_ptr<MessageQueue>> id_by_queue_map_;	// 用于快速查找服务队列
 	};
 }

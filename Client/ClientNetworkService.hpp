@@ -41,14 +41,14 @@ public:
 	void Send(uint8_t* data, uint32_t len) override;
 
 	bool IsEmpty() const;
-	const NetMessage& PopMessage();
+	std::unique_ptr<NetMessage> PopMessage();
 
 	void set_connect_handler(const std::function<void(ConnectStatus status)>& connect_handler) 
 	{ 
 		connect_handler_ = connect_handler;
 	}
 private:
-	static const uint16_t kMaxMsgSize = (1 << 16) - 1;
+	static const uint16_t kMaxMsgSize = 0xFFFF;
 
 	static int UdpOutput(const char* buf, int len, ikcpcb* kcp, void* user);
 
@@ -78,10 +78,11 @@ private:
 	uint32_t connect_time_;
 	kcp_conv_t conv_;
 	ikcpcb* kcp_;
+	uint32_t cur_clock_;
 	
 	std::function<void(ConnectStatus status)> connect_handler_;
 
 	std::atomic<uint32_t> cur_read_;
 	std::atomic<uint32_t> cur_write_;
-	std::array<NetMessage, 150> messages_;
+	std::array<NetMessage, 500> messages_;
 };

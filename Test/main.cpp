@@ -2,6 +2,7 @@
 
 #include <type_traits>
 #include <chrono>
+#include <any>
 #include "Kanex.hpp"
 #include "3rdparty/include/glm/gtc/quaternion.hpp"
 #include "Framework/Game/Math.hpp"
@@ -59,7 +60,6 @@ void func(std::unordered_map<std::string_view, int>& map)
 	map.emplace(std::string("1111111111111333333333333333333244444444444444"), 10);
 }
 
-
 class TTT
 {
 public:
@@ -71,8 +71,40 @@ private:
 	int i_;
 };
 
+class M
+{
+public:
+
+	M() = default;
+	M(const M& rhs)
+	{
+		std::cout << "copy" << std::endl;
+	}
+
+	M(M&& rhs)
+	{
+		std::cout << "move" << std::endl;
+	}
+
+	M& operator=(M&& rhs)
+	{
+		std::cout << "op move" << std::endl;
+	}
+
+	M& operator=(const M& rhs)
+	{
+		std::cout << "op move" << std::endl;
+	}
+
+private:
+	
+};
+
 int main()
 {
+	M m;
+	std::any d = std::move(m);
+
 	std::unordered_map<int, TTT> map;
 
 	std::cout << std::numeric_limits<uint16_t>::max() << std::endl;

@@ -1,5 +1,7 @@
 #include "MessageCore.h"
 
+#include <iostream>
+
 namespace actor_net
 {
 	MessageQueue::MessageQueue(ActorId id)
@@ -32,7 +34,6 @@ namespace actor_net
 	void MessageCore::PushActorMessage(ActorId id,ActorMessage&& actor_message)
 	{
 		std::unique_lock<std::mutex> lock(mutex_);
-
 		auto queue = GetMessageQueueById(id);
 		if (!queue->managed())
 		{
@@ -45,7 +46,7 @@ namespace actor_net
 	void MessageCore::PushMessgeQueue(const std::shared_ptr<MessageQueue>& queue)
 	{
 		queue->set_mamaged(true);
-		actor_msg_queues_.push(queue);
+		actor_msg_queues_.push_back(queue);
 	}
 
 	std::shared_ptr<actor_net::MessageQueue> MessageCore::PopMessageQueue()
@@ -56,7 +57,7 @@ namespace actor_net
 		}
 
 		auto queue = actor_msg_queues_.front();
-		actor_msg_queues_.pop();
+		actor_msg_queues_.pop_front();
 		return queue;
 	}
 
@@ -67,7 +68,14 @@ namespace actor_net
 		//如果还有其他队列,放回等待下一次调度,否则继续使用这个队列
 		if (queue && !actor_msg_queues_.empty())
 		{
+			if (!queue->managed())
+			{
+				int a = 10;
+				std::cout << a;
+			}
 			PushMessgeQueue(queue);
+
+			queue = nullptr;
 		}
 
 		while (true)

@@ -37,8 +37,11 @@ public:
 	void KcpSendHandler(const KcpConnection& connection, Buffer&& buffer);
 	
 	void ConnectHandler(const asio::ip::udp::endpoint& endpoint);
-	void ConnectSuccessHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv, KcpMessage&& message);
-	void DisconnectHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv, KcpMessage&& message);
+	void ConnectSuccessHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv);
+	void DisconnectHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv);
+public:
+	// actor handler
+	void Send(const std::any& data);
 private:
 	std::shared_ptr<NetworkComponent> network_component_;
 	std::unordered_map<kcp_conv_t, std::shared_ptr<KcpConnection>> connections_;
@@ -46,4 +49,5 @@ private:
 	std::vector<kcp_conv_t> timeout_connections_;
 	kcp_conv_t alloc_conv_;
 	uint32_t cur_clock_;
+	uint32_t kcp_timer_;
 };
