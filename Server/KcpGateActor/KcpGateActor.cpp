@@ -29,7 +29,7 @@ bool KcpGateActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	network_component_->CreateUdpServer(9523);
 
 	// update all kcp connection
-	kcp_timer_ = AddTimer(1, -1, [this]() {
+	kcp_timer_ = AddTimer(10, -1, [this]() {
 		uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 		cur_clock_ = now;
 
@@ -108,6 +108,7 @@ void KcpGateActor::AddConnection(kcp_conv_t conv, const asio::ip::udp::endpoint&
 
 void KcpGateActor::ForceDisconnection(kcp_conv_t conv)
 {
+	std::cout << "ForceDisconnection" << std::endl;
 	connections_.erase(conv);
 	auto iter = agents_.find(conv);
 	if (iter != agents_.end())
@@ -177,6 +178,7 @@ void KcpGateActor::ConnectHandler(const asio::ip::udp::endpoint& endpoint)
 
 void KcpGateActor::ConnectSuccessHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv)
 {
+	std::cout << "ConnectSuccessHandler" << endpoint.address().to_string() << conv << std::endl;
 	auto agent = StartActor("AgentActor.dll");
 	if (agent != kNull)
 	{

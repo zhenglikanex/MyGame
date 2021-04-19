@@ -41,6 +41,8 @@ namespace actor_net
 			work_threads_.emplace_back(std::thread(
 				[this]() 
 			{
+				std::mutex mutex;
+				std::unique_lock lock(mutex);
 				std::shared_ptr<MessageQueue> message_queue = nullptr;
 				while (true)
 				{
@@ -53,7 +55,6 @@ namespace actor_net
 							break;
 						}
 
-						std::unique_lock lock(mutex_);
 						condition_.wait(lock);
 					}
 

@@ -15,8 +15,7 @@ KcpConnection::KcpConnection(kcp_conv_t conv, const asio::ip::udp::endpoint& end
 	// 第四个参数 resend为快速重传指标，设置为2
 	// 第五个参数 为是否禁用常规流控，这里禁止
 	//ikcp_nodelay(kcp_, 1, 10, 2, 1);
-	ikcp_nodelay(kcp_, 1, 1, 1, 1); // 设置成1次ACK跨越直接重传, 这样反应速度会更快. 内部时钟5毫秒.
-	kcp_->interval = 1;
+	ikcp_nodelay(kcp_, 1, 10, 1, 1); // 设置成1次ACK跨越直接重传, 这样反应速度会更快. 内部时钟5毫秒.
 	kcp_->rx_minrto = 5;
 }
 

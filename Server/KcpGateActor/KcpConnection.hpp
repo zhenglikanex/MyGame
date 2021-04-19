@@ -19,7 +19,7 @@ using KcpSendHanlder = std::function<void(const KcpConnection&, Buffer&&)>;
 class KcpConnection
 {
 public:
-	static const uint32_t kTimeoutTime = 60 * 1000;	// 5min
+	static const uint32_t kTimeoutTime = 5 * 60 * 1000;	// 5min
 public:
 	KcpConnection(kcp_conv_t conv,const asio::ip::udp::endpoint& endpoint,uint32_t cur_clock);
 	~KcpConnection();

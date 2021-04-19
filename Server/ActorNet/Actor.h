@@ -70,7 +70,7 @@ namespace actor_net
 		std::string name_;
 		ActorId id_;
 		
-		const static ActorMessage::SessionType kMaxSession = 0xFFFF;
+		const static ActorMessage::SessionType kMaxSession = 0xFF;
 		ActorMessage::SessionType session_id_;
 		std::array<std::function<void(ActorMessage&&)>, kMaxSession> request_callbacks_;
 		ActorHandlerMap actor_handlers_;

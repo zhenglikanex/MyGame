@@ -44,7 +44,7 @@ void AgentActor::Start(const std::any& data)
 	gate_ = gate;
 	conv_ = conv;
 
-	std::cout << "AgentStart" << gate << " " << conv << std::endl;
+	//std::cout << "AgentStart" << gate << " " << conv << std::endl;
 }
 
 void AgentActor::ClientReceive(const std::any& data)

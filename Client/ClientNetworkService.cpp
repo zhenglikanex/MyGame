@@ -47,14 +47,17 @@ void ClientNetworkService::Run()
 {
 	if(!running_)
 	{
-		running_ = true;
+		/*running_ = true;
 		thread_ = std::thread([this]
 		{
-			UdpReceive();
-			TIME_BEGIN_PERIOD(1);
-			io_context_.run();
-			TIME_END_PERIOD(1);
-		});
+				UdpReceive();
+				TIME_BEGIN_PERIOD(1);
+				io_context_.run();
+				TIME_END_PERIOD(1);
+		});*/
+
+		UdpReceive();
+		TIME_BEGIN_PERIOD(1);
 	}
 }
 
@@ -62,7 +65,7 @@ void ClientNetworkService::Stop()
 {
 	if (running_)
 	{
-		running_;
+		running_ = false;
 		io_context_.stop();
 
 		if (thread_.joinable())
@@ -94,8 +97,18 @@ void ClientNetworkService::Disconnect()
 				Send((uint8_t*)msg.data(), msg.size());
 
 				Disconnected();
+
+				if (connect_handler_)
+				{
+					connect_handler_(ConnectStatus::kTypeDisconnect);
+				}
 			}
 		});
+}
+
+bool ClientNetworkService::IsConnected() const
+{
+	return type_ == ConnectType::kTypeConnected;
 }
 
 void ClientNetworkService::Send(uint8_t* data, uint32_t len)
@@ -104,7 +117,7 @@ void ClientNetworkService::Send(uint8_t* data, uint32_t len)
 	std::copy_n(data, len, buffer->data());
 	io_context_.post([this,buffer]()
 		{
-			if (type_ == ConnectType::kTypeConnected)
+			if (IsConnected())
 			{
 				auto ret = ikcp_send(kcp_, (char*)buffer->data(), buffer->size());
 			}
@@ -113,7 +126,6 @@ void ClientNetworkService::Send(uint8_t* data, uint32_t len)
 				//todo 输出日志;	
 			}
 		});
-	
 }
 
 bool ClientNetworkService::IsEmpty() const
@@ -123,16 +135,17 @@ bool ClientNetworkService::IsEmpty() const
 
 std::unique_ptr<NetMessage> ClientNetworkService::PopMessage()
 {
-	if (!IsEmpty())
+	if (IsConnected())
 	{
-		auto message = std::make_unique<NetMessage>(std::move(messages_[cur_read_++]));
-		if (cur_read_ >= messages_.size())
+		if (!IsEmpty())
 		{
-			cur_read_ = 0;
+			auto message = std::make_unique<NetMessage>(std::move(messages_[cur_read_]));
+			auto next = cur_read_ + 1;
+			cur_read_ = next % messages_.size();
+			return message;
 		}
-		return message;
 	}
-
+	
 	return nullptr;
 }
 
@@ -158,11 +171,7 @@ void ClientNetworkService::Connecting(uint32_t timeout)
 				auto now = duration_cast<seconds>(steady_clock::now().time_since_epoch()).count();
 				if (now - connect_time_ >= timeout)
 				{
-					type_ = ConnectType::kTypeDisconnect;
-					if (connect_handler_)
-					{
-						connect_handler_(ConnectStatus::kTypeTimeout);
-					}
+					Timeout();
 					return;
 				}
 
@@ -187,38 +196,63 @@ void ClientNetworkService::Connected(kcp_conv_t conv)
 	// 第四个参数 resend为快速重传指标，设置为2
 	// 第五个参数 为是否禁用常规流控，这里禁止
 	//ikcp_nodelay(kcp_, 1, 10, 2, 1);
-	ikcp_nodelay(kcp_, 1, 1, 1, 1); // 设置成1次ACK跨越直接重传, 这样反应速度会更快. 内部时钟5毫秒.
-	kcp_->interval = 1;
+	ikcp_nodelay(kcp_, 1, 10, 1, 1); // 设置成1次ACK跨越直接重传, 这样反应速度会更快. 内部时钟5毫秒.
+	//kcp_->interval = 1;
 	kcp_->rx_minrto = 5;
+
+	SendConnectedMsg();
 
 	type_ = ConnectType::kTypeConnected;
 	connect_handler_(ConnectStatus::kTypeConnected);
 
 	kcp_update_timer_.expires_at(steady_clock::now());
 	KcpUpdate();
-
-	SendConnectedMsg();
 }
 
 void ClientNetworkService::Disconnected()
 {
-	type_ == ConnectType::kTypeDisconnect;
-	ikcp_release(kcp_);
-	kcp_ = nullptr;
+	type_ = ConnectType::kTypeDisconnect;
+	conv_ = 0;
+	if (kcp_)
+	{
+		ikcp_release(kcp_);
+		kcp_ = nullptr;
+	}
+	
 	kcp_update_timer_.cancel();
+	cur_write_ = 0;
+	cur_read_ = 0;
+}
+
+void ClientNetworkService::Timeout()
+{
+	type_ == ConnectType::kTypeDisconnect;
+	connect_timer_.cancel();
+
+	if (connect_handler_)
+	{
+		connect_handler_(ConnectStatus::kTypeTimeout);
+	}
 }
 
 void ClientNetworkService::SendConnectedMsg()
 {
 	// 发送连接上的消息
 	auto msg = std::make_shared<std::string>(MakeKcpConnectedMsg());
-	Send((uint8_t*)msg->data(), msg->size());
+	ikcp_send(kcp_, (char*)msg->data(), msg->size());
 }
 
 void ClientNetworkService::UdpSend(uint8_t* data, uint32_t len)
 {
-	std::cout << "udp_send clock:" << (uint32_t)duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count() << std::endl;
-	socket_.send_to(asio::buffer(data, len), server_endpoint_);
+	//socket_.send_to(asio::buffer(data, len), server_endpoint_);
+	auto buffer_ptr = std::make_shared<std::string>((char*)data,len);
+		socket_.async_send_to(
+			asio::buffer(buffer_ptr->data(), buffer_ptr->size()), server_endpoint_,
+			[buffer_ptr](asio::error_code, std::size_t) // 保持buffer生命周期到发送结束
+			{
+
+			}
+			);
 }
 
 void ClientNetworkService::UdpReceive()
@@ -253,27 +287,21 @@ void ClientNetworkService::KcpReceive(uint8_t* data, uint32_t len)
 			auto recv_bytes = ikcp_recv(kcp_, (char*)data, len);
 			if (recv_bytes > 0)
 			{
-				std::cout << "rtt" << kcp_->rx_srtt << std::endl;
+				// 客户端卡了，直接掉线
+				auto next = cur_write_ + 1;
+				if (next % messages_.size() == cur_read_)
+				{
+					Disconnected();
+				}
+
 				messages_[cur_write_].Parse(data_.data(), recv_bytes);
-				++cur_write_;
-				if (cur_write_ >= messages_.size())
-				{
-					cur_write_ = 0;
-				}
-
-				//todo: ringbuffer大小不够,客户端卡了,可以考虑直接断线
-				if (cur_write_ == cur_read_)
-				{
-
-				}
+				cur_write_ = next % messages_.size();
 			}
 			else 
 			{
 				break;
 			}
 		}
-		
-		
 	}
 	else
 	{
@@ -283,13 +311,13 @@ void ClientNetworkService::KcpReceive(uint8_t* data, uint32_t len)
 
 void ClientNetworkService::KcpUpdate()
 {
-	if (kcp_ && type_ == ConnectType::kTypeConnected)
+	if (kcp_ && IsConnected())
 	{
 		cur_clock_ = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 
 		ikcp_update(kcp_, cur_clock_);
 
-		kcp_update_timer_.expires_at(kcp_update_timer_.expires_at() + milliseconds(1));
+		kcp_update_timer_.expires_at(kcp_update_timer_.expires_at() + milliseconds(10));
 		kcp_update_timer_.async_wait([this](std::error_code ec)
 			{
 				if (!ec)
@@ -299,3 +327,5 @@ void ClientNetworkService::KcpUpdate()
 			});
 	}
 }
+
+asio::io_context ClientNetworkService::io_context_;
