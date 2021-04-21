@@ -24,6 +24,7 @@ bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	ActorConnect("client", &AgentActor::ClientReceive,this);
 
 	ClientConnect("ping", &AgentActor::Ping);
+	ClientConnect("join_match",&AgentActor::)
 
 	return true;
 }

@@ -22,8 +22,6 @@ public:
 	void Start(const std::any& data);
 	void ClientReceive(const std::any& data);
 private:
-	
-
 	template<class Func>
 	void ClientConnect(const std::string& name, const Func& func)
 	{
@@ -34,5 +32,6 @@ private:
 
 	ActorId gate_;
 	kcp_conv_t conv_;
+	bool join_matching_;
 	ClientHandlerMap client_handlers_;
 };
