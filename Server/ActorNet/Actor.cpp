@@ -44,6 +44,20 @@ namespace actor_net
 
 			return;
 		}
+		else if (actor_msg.type() == ActorMessage::MessageType::kTypeRequest)
+		{
+			auto iter = request_handlers_.find(actor_msg.name());
+			if (iter != request_handlers_.end())
+			{
+				actor_net_->SendActorMessage(
+					actor_msg.dest_id(), 
+					actor_msg.src_id(),
+					actor_msg.session(),
+					ActorMessage::MessageType::kTypeResponse,
+					"",
+					iter->second(actor_msg.data()));
+			}
+		}
 
 		Receive(std::move(actor_msg));
 	}

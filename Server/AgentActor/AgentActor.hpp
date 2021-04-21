@@ -27,11 +27,23 @@ private:
 	{
 		client_handlers_.emplace(name, std::bind(func, this,std::placeholders::_1));
 	}
+
 private:
-	void Ping(const NetMessage& requet);
+	//actor call
+	void Matched(const std::any& data);
+private:
+	//actor request
+private:
+	// client request
+	void Ping(const NetMessage& request);
+	void JoinMatch(const NetMessage& request);
+	void LeaveMatch(const NetMessage& request);
+	void BattledLoaded(const NetMessage& request);
+private:
 
 	ActorId gate_;
 	kcp_conv_t conv_;
 	bool join_matching_;
+	ActorId battle_;
 	ClientHandlerMap client_handlers_;
 };

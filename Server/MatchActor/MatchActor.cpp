@@ -23,8 +23,8 @@ bool MatchActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 		Match();
 	});
 
-	ActorConnect("join_match", &MatchActor::JoinMatch, this);
-	ActorConnect("leave_match", &MatchActor::LeaveMatch, this);
+	RequestConnect("join_match", &MatchActor::JoinMatch, this);
+	RequestConnect("leave_match", &MatchActor::LeaveMatch, this);
 
 	return true;
 }
@@ -52,22 +52,27 @@ void MatchActor::Match()
 	}
 }
 
-void MatchActor::JoinMatch(const std::any& data)
+bool MatchActor::JoinMatch(const std::any& data)
 {
 	ActorId agent = std::any_cast<ActorId>(data);
 	if (agent != kNull)
 	{
 		matching_agent_.emplace(agent,agent);
+		return true;
 	}
+	return false;
 }
 
-void MatchActor::LeaveMatch(const std::any& data)
+bool MatchActor::LeaveMatch(const std::any& data)
 {
 	ActorId agent = std::any_cast<ActorId>(data);
 	if (agent != kNull)
 	{
 		matching_agent_.erase(agent);
+		return true;
 	}
+
+	return false;
 }
 
 ACTOR_IMPLEMENT(MatchActor);

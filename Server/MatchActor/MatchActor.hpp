@@ -17,8 +17,8 @@ public:
 
 	void Match();
 
-	void JoinMatch(const std::any& data);
-	void LeaveMatch(const std::any& data);
+	bool JoinMatch(const std::any& data);
+	bool LeaveMatch(const std::any& data);
 private:
 	std::unordered_map<ActorId,ActorId> matching_agent_;
 };

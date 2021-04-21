@@ -4,8 +4,12 @@
 
 AgentActor::AgentActor(ActorId id)
 	: Actor(id)
+	, gate_(kNull)
+	, conv_(0)
+	, join_matching_(false)
+	, battle_(kNull)
 {
-
+	
 }
 
 AgentActor::~AgentActor()
@@ -22,9 +26,11 @@ bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 
 	ActorConnect("start", &AgentActor::Start,this);
 	ActorConnect("client", &AgentActor::ClientReceive,this);
+	ActorConnect("join_battle", &AgentActor::Matched, this);
 
 	ClientConnect("ping", &AgentActor::Ping);
-	ClientConnect("join_match",&AgentActor::)
+	ClientConnect("join_match", &AgentActor::JoinMatch);
+	ClientConnect("battle_loaded", &AgentActor::BattledLoaded);
 
 	return true;
 }
@@ -62,10 +68,99 @@ void AgentActor::ClientReceive(const std::any& data)
 	}
 }
 
+void AgentActor::Matched(const std::any& data)
+{
+	battle_ = std::any_cast<ActorId>(data);
+	if (battle_ != kNull)
+	{
+		NetMessage push;
+		push.set_name("matched");
+		Call(gate_, "send", std::move(push));
+	}
+}
+
 void AgentActor::Ping(const NetMessage& request)
 {
 	std::any data = std::make_tuple(conv_, request);
 	Call(gate_, "send", std::move(data));
+}
+
+void AgentActor::JoinMatch(const NetMessage& request)
+{
+	if (join_matching_)
+	{
+		std::any data = id();
+		Request("MatchActor", "join_match", std::move(data), [this,request](ActorMessage&& message)
+			{
+				join_matching_ = true;
+
+				bool status = true;
+				std::vector<uint8_t> buffer;
+				std::copy_n(buffer.data(), 1, &status);
+
+				NetMessage response;
+				response.set_session(request.session());
+				response.set_data(std::move(buffer));
+				Call(gate_, "send", std::move(response));
+			});
+	}
+	else
+	{
+		// 偷懒不封装接口了,也不用protobuf了麻烦
+		bool status = false;
+		std::vector<uint8_t> buffer;
+		std::copy_n(buffer.data(), 1, &status);
+
+		NetMessage response;
+		response.set_session(request.session());
+		response.set_data(std::move(buffer));
+		Call(gate_, "send", std::move(response));
+	}
+}
+
+void AgentActor::LeaveMatch(const NetMessage& request)
+{
+	if (join_matching_)
+	{
+		std::any data = id();
+		Request("MatchActor", "leave_match", std::move(data), [this,request](ActorMessage&& message)
+			{
+				join_matching_ = false;
+
+				bool status = true;
+				std::vector<uint8_t> buffer;
+				std::copy_n(buffer.data(), 1, &status);
+
+				NetMessage response;
+				response.set_session(request.session());
+				response.set_data(std::move(buffer));
+				Call(gate_, "send", std::move(response));
+			});
+	}
+	else
+	{
+		// 偷懒不封装接口了,也不用protobuf了麻烦
+		bool status = false;
+		std::vector<uint8_t> buffer;
+		std::copy_n(buffer.data(), 1, &status);
+
+		NetMessage response;
+		response.set_session(request.session());
+		response.set_data(std::move(buffer));
+		Call(gate_, "send", std::move(response));
+	}
+}
+
+void AgentActor::BattledLoaded(const NetMessage& request)
+{
+	if (battle_ != kNull)
+	{
+		Call(battle_, "battle_loaded", std::any(id()));
+	}
+
+	NetMessage response;
+	response.set_session(request.session());
+	Call(gate_,"send", std::move(response));
 }
 
 ACTOR_IMPLEMENT(AgentActor)
