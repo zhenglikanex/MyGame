@@ -13,6 +13,8 @@ add_library(MyGameClient
     UnityDebugService.cpp
     UnityFileService.hpp
     UnityFileService.cpp
+    ClientNetwork.hpp
+    ClientNetwork.cpp
     ClientNetworkService.hpp
     ClientNetworkService.cpp
     Kcp/ikcp.h

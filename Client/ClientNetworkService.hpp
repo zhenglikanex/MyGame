@@ -1,93 +1,35 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 #include <functional>
-#include <chrono>
-#include <atomic>
+
+#include "ClientNetwork.hpp"
 
 #include "Framework/Game/NetworkService.hpp"
-#include "Framework/Network/NetMessage.hpp"
-
-#include "Client/Kcp/ikcp.h"
-
-#include "3rdparty/include/asio.hpp"
 
 class ClientNetworkService : public NetworkService
 {
 public:
-	enum ConnectType
-	{
-		kTypeDisconnect,
-		kTypeConnecting,
-		kTypeConnected,
-	};
-
-	enum class ConnectStatus
-	{
-		kTypeConnected,
-		kTypeDisconnect,
-		kTypeTimeout
-	};
-
 	ClientNetworkService();
-	~ClientNetworkService();
 
-	void Run();
-	void Stop();
+	void Request(std::string_view name,std::vector<uint8_t>&& data,
+		const std::function<void(std::vector<uint8_t>&& data)> & = nullptr) override;
 
-	void Connect(const std::string& ip, uint16_t port,uint32_t timeout);
-	void Disconnect();
+	void Send(std::string_view name, std::vector<uint8_t>&& data,
+		const std::function<void(std::vector<uint8_t>&& data)> & = nullptr) override;
 
-	bool IsConnected() const;
+	void Update();
 
-	void Send(uint8_t* data, uint32_t len) override;
-
-	bool IsEmpty() const;
-	std::unique_ptr<NetMessage> PopMessage();
-
-	void set_connect_handler(const std::function<void(ConnectStatus status)>& connect_handler) 
-	{ 
-		connect_handler_ = connect_handler;
+	void set_messge_handler(const std::function<void(const NetMessage&)>& handler)
+	{
+		message_handler_ = handler;
 	}
 private:
-	static const uint16_t kMaxMsgSize = 0xFFFF;
+	uint16_t GenSession();
 
-	static int UdpOutput(const char* buf, int len, ikcpcb* kcp, void* user);
-
-	void Connecting(uint32_t timeout);
-	void Connected(kcp_conv_t conv);
-	void Disconnected();
-	void Timeout();
-
-	void SendConnectedMsg();
-
-	void UdpSend(uint8_t* data, uint32_t len);
-	void UdpReceive();
-
-	void KcpReceive(uint8_t* data,uint32_t len);
-	void KcpUpdate();
-
-	bool running_;
-	std::thread thread_;
-public:
-	static asio::io_context io_context_;
-private:
-	asio::ip::udp::socket socket_;
-	asio::ip::udp::endpoint server_endpoint_;
-	asio::steady_timer connect_timer_;
-	asio::steady_timer kcp_update_timer_;
-	std::array<uint8_t, kMaxMsgSize> data_;
-
-	std::atomic<uint8_t> type_;
-	uint32_t connect_time_;
-	kcp_conv_t conv_;
-	ikcpcb* kcp_;
-	uint32_t cur_clock_;
-	
-	std::function<void(ConnectStatus status)> connect_handler_;
-	std::condition_variable cv;
-	
-	std::atomic<uint32_t> cur_read_;
-	std::atomic<uint32_t> cur_write_;
-	std::array<NetMessage, 500> messages_;
+	ClientNetwork network_;
+	std::atomic<uint16_t> alloc_session_;
+	std::unordered_map<uint16_t, std::function<void(const std::vector<uint8_t>&)>> rpc_handlers_;
+	std::function<void(const NetMessage&)> message_handler_;
 };

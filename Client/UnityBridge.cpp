@@ -8,6 +8,7 @@
 #include "Client/UnityDebugService.hpp"
 #include "Client/UnityInputService.hpp"
 #include "Client/UnityFileService.hpp"
+#include "Client/ClientNetworkService.hpp"
 
 #include "Framework/Game/Math.hpp"
 #include "Framework/Game/Game.hpp"
@@ -26,12 +27,20 @@ UnityDelegate UnityBridge::unity_delegate_ = nullptr;
 
 std::unique_ptr<Game> g_game = nullptr;
 std::unique_ptr<DebugService> g_debug_service = std::make_unique<UnityDebugService>();
+std::unique_ptr<ClientNetwork> g_network_service = std::make_unique<ClientNetwork>();
 
 extern "C"
 {
 	EXPORT_DLL void SetUnityDelegate(UnityDelegate delegate)
 	{
 		UnityBridge::Get().SetExecuteDelegate(delegate);
+	}
+
+	EXPORT_DLL void MatchGame()
+	{
+		// 偷懒了匹配本来想放在unity端做的,这里简单的请求下得了
+		NetMessage message;
+		g_network_service->Request()
 	}
 
 	EXPORT_DLL void InitGame(const char* data,int32_t size)
