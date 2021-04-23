@@ -15,17 +15,6 @@
 // param2:json格式参数
 using UnityDelegate = const char*(*)(const char*,const char*);
 
-template<class T> struct TypeSig {  };
-template<> struct TypeSig<void> : std::integral_constant<char, 'V'> {};
-template<> struct TypeSig<int32_t> : std::integral_constant<char, 'I'> {};
-template<> struct TypeSig<uint32_t> : std::integral_constant<uint32_t, 'U'> {};
-template<> struct TypeSig<int64_t> : std::integral_constant<char, 'L'> {};
-template<> struct TypeSig<float> : std::integral_constant<char, 'F'> {};
-template<> struct TypeSig<double> : std::integral_constant<char, 'D'> {};
-template<> struct TypeSig<std::string> : std::integral_constant<char, 'S'> {};
-template<> struct TypeSig<const char*> : std::integral_constant<char, 'S'> {};
-template<> struct TypeSig<char*> : std::integral_constant<char, 'S'> {};
-
 class UnityBridge
 {
 public:
@@ -46,9 +35,7 @@ public:
 
 	template<class R, class ... Args>
 	R CallUnity(std::string_view fun_name, Args&& ... args)
-	{
-		//char fun_sig[sizeof...(args) + 2] = { TypeSig<std::remove_cv_t<R>>::value,TypeSig<std::remove_cv_t<std::decay_t<Args>>>::value...,0 };
-		
+	{	
 		if constexpr (sizeof...(Args) > 0)
 		{
 			nlohmann::json json;
@@ -80,8 +67,6 @@ public:
 				unity_delegate_(fun_name.data(),"");
 			}
 		}
-
-		
 	}
 private:
 	static UnityDelegate unity_delegate_;

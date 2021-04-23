@@ -8,12 +8,28 @@ ClientNetworkService::ClientNetworkService()
 
 
 void ClientNetworkService::Request(std::string_view name, std::vector<uint8_t>&& data, 
-	const std::function<void(std::vector<uint8_t>&& data)>& /*= nullptr*/)
+	const std::function<void(std::vector<uint8_t>&& data)>& callback/*= nullptr*/)
 {
+	// RPC
 	++alloc_session_;
 	NetMessage message;
 	message.set_name(name);
 	message.set_session(alloc_session_);
+	message.set_data(std::move(data));
+	
+	rpc_handlers_.emplace(message.session(),callback);
+
+	std::vector<uint8_t> buffer(message.GetByteSize());
+	message.Serialize(buffer.data());
+
+	network_.Send(std::move(data));
+}
+
+void ClientNetworkService::Send(std::string_view name, std::vector<uint8_t>&& data)
+{
+	NetMessage message;
+	message.set_name(name);
+	message.set_session(0);
 	message.set_data(std::move(data));
 	
 	std::vector<uint8_t> buffer(message.GetByteSize());
@@ -24,7 +40,6 @@ void ClientNetworkService::Request(std::string_view name, std::vector<uint8_t>&&
 
 void ClientNetworkService::Update()
 {
-	
 	while (auto buffer = network_.PopBuffer())
 	{
 		NetMessage message;
@@ -41,12 +56,10 @@ void ClientNetworkService::Update()
 		else
 		{
 			// push
+			if (message_handler_)
+			{
+				message_handler_(message);
+			}
 		}
 	}
-}
-
-uint16_t ClientNetworkService::GenSession()
-{
-	++alloc_session_;
-
 }

@@ -14,10 +14,9 @@ public:
 	ClientNetworkService();
 
 	void Request(std::string_view name,std::vector<uint8_t>&& data,
-		const std::function<void(std::vector<uint8_t>&& data)> & = nullptr) override;
+		const std::function<void(std::vector<uint8_t>&& data)>& callback = nullptr) override;
 
-	void Send(std::string_view name, std::vector<uint8_t>&& data,
-		const std::function<void(std::vector<uint8_t>&& data)> & = nullptr) override;
+	void Send(std::string_view name, std::vector<uint8_t>&& data) override;
 
 	void Update();
 
@@ -26,10 +25,8 @@ public:
 		message_handler_ = handler;
 	}
 private:
-	uint16_t GenSession();
-
 	ClientNetwork network_;
-	std::atomic<uint16_t> alloc_session_;
+	uint16_t alloc_session_;
 	std::unordered_map<uint16_t, std::function<void(const std::vector<uint8_t>&)>> rpc_handlers_;
 	std::function<void(const NetMessage&)> message_handler_;
 };

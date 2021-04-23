@@ -13,5 +13,3 @@ public:
 	virtual void Send(std::string_view name, std::vector<uint8_t>&& data,
 		const std::function<void(std::vector<uint8_t>&& data)> & = nullptr) = 0;
 };
-
-extern std::unique_ptr<NetworkService> g_network_service;
