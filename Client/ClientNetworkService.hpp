@@ -13,8 +13,13 @@ class ClientNetworkService : public NetworkService
 public:
 	ClientNetworkService();
 
+	bool Connect(const std::string& ip, uint16_t port, uint32_t timeout);
+	void Disconnect();
+
+	bool IsConnected() const;
+
 	void Request(std::string_view name,std::vector<uint8_t>&& data,
-		const std::function<void(std::vector<uint8_t>&& data)>& callback = nullptr) override;
+		const std::function<void(const std::vector<uint8_t>& data)>& callback = nullptr) override;
 
 	void Send(std::string_view name, std::vector<uint8_t>&& data) override;
 

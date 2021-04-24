@@ -10,10 +10,3 @@
 
 #include "Framework/Proto/Battle.pb.h"
 
-class UnityNetworkService : public NetworkService
-{
-	void Send(uint8_t* data, uint32_t len) override
-	{
-
-	}
-};

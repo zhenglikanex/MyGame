@@ -61,6 +61,7 @@ extern "C"
 
 	EXPORT_DLL void DestoryGame()
 	{
+		g_network_service = nullptr;
 		g_game = nullptr;
 	}
 
@@ -68,7 +69,10 @@ extern "C"
 	{
 		if (g_network_service)
 		{
-			g_network_service->Update();
+			if (g_network_service->IsConnected())
+			{
+				g_network_service->Update();
+			}
 		}
 
 		if (g_game)
@@ -113,20 +117,24 @@ extern "C"
 		{
 			g_network_service = std::make_unique<ClientNetworkService>();
 		}
-
-		// 偷懒写这里了
-		g_network_service->set_messge_handler([](const NetMessage& message)
+		
+		if (g_network_service->Connect("127.0.0.1", 9523, 5))
 		{
-			if (message.name() == "join_battle")
-			{
-				InitGame((char*)message.data().data(), message.data().size());
-			}
-		});
+			// 偷懒写这里了
+			g_network_service->set_messge_handler([](const NetMessage& message)
+				{
+					if (message.name() == "join_battle")
+					{
+						InitGame((char*)message.data().data(), message.data().size());
+					}
+				});
 
-		g_network_service->Request("join_match", std::vector<uint8_t>{}, [](const std::vector<uint8_t>& buffer)
-		{
-			// 偷懒不处理了
-		});
+			g_network_service->Request("join_match", std::vector<uint8_t>{}, [](const std::vector<uint8_t>& buffer)
+				{
+					INFO("join_match!")
+					// 偷懒不处理了
+				});
+		}
 	}
 }
  

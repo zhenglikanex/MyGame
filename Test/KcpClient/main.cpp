@@ -5,26 +5,26 @@ using namespace std::chrono;
 
 int main()
 {
-	std::vector<ClientNetworkService> services(300);
+	std::vector<ClientNetwork> services(300);
 
 	auto thread1 = std::thread([&services]() {
 		for (auto& service : services)
 		{
 			// 注意这在另外一个线程
-			service.set_connect_handler([](ClientNetworkService::ConnectStatus status)
+			service.set_connect_handler([](ClientNetwork::ConnectStatus status)
 				{
-					if (status == ClientNetworkService::ConnectStatus::kTypeConnected)
+					if (status == ClientNetwork::ConnectStatus::kTypeConnected)
 					{
 						//std::cout << "网络连接成功！" << std::endl;
 					}
-					else if (status == ClientNetworkService::ConnectStatus::kTypeTimeout)
+					else if (status == ClientNetwork::ConnectStatus::kTypeTimeout)
 					{
 						//std::cout << "网络超时！" << std::endl;
 					}
 				});
 			service.Run();
 		}
-		ClientNetworkService::io_context_.run();
+		ClientNetwork::io_context_.run();
 		});
 
 	for (auto& service : services)

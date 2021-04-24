@@ -1,5 +1,5 @@
 
-add_library(MyGameClient
+add_library(MyGameClient SHARED
     main.cpp
     UnityBridge.hpp
     UnityBridge.cpp

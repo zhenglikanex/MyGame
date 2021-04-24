@@ -15,7 +15,7 @@
 class ClientNetwork
 {
 public:
-	enum ConnectType
+	enum ConnectType : uint8_t
 	{
 		kTypeDisconnect,
 		kTypeConnecting,
@@ -33,7 +33,6 @@ public:
 	~ClientNetwork();
 
 	void Run();
-	void Stop();
 
 	void Connect(const std::string& ip, uint16_t port, uint32_t timeout);
 	void Disconnect();
@@ -50,8 +49,12 @@ public:
 	{
 		connect_handler_ = connect_handler;
 	}
+
+	uint8_t type() const { return type_; }
 private:
 	static const uint16_t kMaxMsgSize = 0xFFFF;
+
+	void Stop();
 
 	static int UdpOutput(const char* buf, int len, ikcpcb* kcp, void* user);
 

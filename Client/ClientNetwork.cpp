@@ -63,7 +63,8 @@ void ClientNetwork::Stop()
 	if (running_)
 	{
 		running_ = false;
-		io_context_.stop();
+
+		socket_.close();
 
 		if (thread_.joinable())
 		{
@@ -86,21 +87,18 @@ void ClientNetwork::Connect(const std::string& ip, uint16_t port, uint32_t timeo
 
 void ClientNetwork::Disconnect()
 {
-	io_context_.post([this]()
+	if (type_ == ConnectType::kTypeConnected)
+	{
+		auto msg = MakeKcpDisconnectMsg();
+		Send((uint8_t*)msg.data(), msg.size());
+
+		Disconnected();
+
+		if (connect_handler_)
 		{
-			if (type_ == ConnectType::kTypeConnected)
-			{
-				auto msg = MakeKcpDisconnectMsg();
-				Send((uint8_t*)msg.data(), msg.size());
-
-				Disconnected();
-
-				if (connect_handler_)
-				{
-					connect_handler_(ConnectStatus::kTypeDisconnect);
-				}
-			}
-		});
+			connect_handler_(ConnectStatus::kTypeDisconnect);
+		}
+	}
 }
 
 bool ClientNetwork::IsConnected() const
@@ -274,18 +272,22 @@ void ClientNetwork::UdpReceive()
 		asio::buffer(data_.data(), kMaxMsgSize), server_endpoint_,
 		[this](std::error_code ec, std::size_t bytes_recvd)
 		{
-			if (!ec && bytes_recvd > 0)
+			if (!ec)
 			{
-				if (type_ == ConnectType::kTypeConnecting && IsRspKcpConnectMsg((char*)data_.data(), bytes_recvd))
+				if (bytes_recvd > 0)
 				{
-					Connected(GetKcpConv((char*)data_.data()));
+					if (type_ == ConnectType::kTypeConnecting && IsRspKcpConnectMsg((char*)data_.data(), bytes_recvd))
+					{
+						Connected(GetKcpConv((char*)data_.data()));
+					}
+					else if (type_ == ConnectType::kTypeConnected)
+					{
+						KcpReceive(data_.data(), bytes_recvd);
+					}
 				}
-				else if (type_ == ConnectType::kTypeConnected)
-				{
-					KcpReceive(data_.data(), bytes_recvd);
-				}
+
+				UdpReceive();
 			}
-			UdpReceive();
 		});
 }
 

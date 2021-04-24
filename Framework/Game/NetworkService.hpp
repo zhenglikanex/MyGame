@@ -8,8 +8,7 @@ class NetworkService : public Service
 {
 public:
 	virtual void Request(std::string_view name, std::vector<uint8_t>&& data,
-		const std::function<void(std::vector<uint8_t>&& data)> & = nullptr) = 0;
+		const std::function<void(const std::vector<uint8_t>& data)> & = nullptr) = 0;
 
-	virtual void Send(std::string_view name, std::vector<uint8_t>&& data,
-		const std::function<void(std::vector<uint8_t>&& data)> & = nullptr) = 0;
+	virtual void Send(std::string_view name, std::vector<uint8_t>&& data) = 0;
 };

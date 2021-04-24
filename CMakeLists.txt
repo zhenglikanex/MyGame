@@ -48,11 +48,11 @@ add_subdirectory(Test)
 add_subdirectory(ClientProxy)
 
 #安装MyGameClient到Unity Plugins目录�?
-#install(TARGETS MyGameClient
-#    RUNTIME DESTINATION Unity/ARPG
-#    LIBRARY DESTINATION Unity/ARPG
-#    )
-#install(FILES ${PROJECT_SOURCE_DIR}/bin/debug/MyGameClient.pdb DESTINATION Unity/ARPG)
+install(TARGETS MyGameClient
+    RUNTIME DESTINATION Unity/ARPG
+    LIBRARY DESTINATION Unity/ARPG
+    )
+install(FILES ${PROJECT_SOURCE_DIR}/bin/debug/MyGameClient.pdb DESTINATION Unity/ARPG)
 
 install(TARGETS ClientProxy
 RUNTIME DESTINATION Unity/ARPG/Assets/Plugins

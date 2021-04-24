@@ -17,6 +17,7 @@ extern "C"
 	{
 		if (instance)
 		{
+			DestoryGame();
 			FreeLibrary(instance);
 			instance = nullptr;
 		}
@@ -70,6 +71,15 @@ extern "C"
 	PROXY_DLL void GameRollback()
 	{
 		auto fpFun = (void(*)())GetProcAddress(instance, "GameRollback");
+		if (fpFun)
+		{
+			fpFun();
+		}
+	}
+
+	PROXY_DLL void JoinMatch()
+	{
+		auto fpFun = (void(*)())GetProcAddress(instance, "JoinMatch");
 		if (fpFun)
 		{
 			fpFun();

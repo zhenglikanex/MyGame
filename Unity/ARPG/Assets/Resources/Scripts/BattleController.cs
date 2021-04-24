@@ -58,20 +58,20 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
     {
         if(!IsBattleing)
         {
-            Proto.GamePlayerInfos player_infos = new Proto.GamePlayerInfos();
-            for (uint i =0;i<40;++i)
-            {
-                Proto.PlayerInfo player = new Proto.PlayerInfo();
-                player.Id = i;
-                player.ActorAsset = "hero.json";
-                player_infos.PlayerInfos.Add(player);
-            }
-            var data = player_infos.ToByteArray();
-            CPlusPlusBridge.InitGame(data, data.Length);
+            //Proto.GamePlayerInfos player_infos = new Proto.GamePlayerInfos();
+            //for (uint i =0;i<40;++i)
+            //{
+            //    Proto.PlayerInfo player = new Proto.PlayerInfo();
+            //    player.Id = i;
+            //    player.ActorAsset = "hero.json";
+            //    player_infos.PlayerInfos.Add(player);
+            //}
+            //var data = player_infos.ToByteArray();
+            //CPlusPlusBridge.InitGame(data, data.Length);
+
+            CPlusPlusBridge.JoinMatch();
 
             IsBattleing = true;
-
-            
         }
     }
 

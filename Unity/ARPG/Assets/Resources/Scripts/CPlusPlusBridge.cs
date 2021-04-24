@@ -86,6 +86,9 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
     [DllImport("ClientProxy")]
     public static extern void GameInput(byte[] data, int size);
+
+    [DllImport("ClientProxy")]
+    public static extern void JoinMatch();
 //#endif
 
     public static string UnityCallback(string func, string json_params)
