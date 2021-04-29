@@ -91,19 +91,23 @@ bool ClientNetwork::Connect(const std::string& ip, uint16_t port, uint32_t timeo
 
 void ClientNetwork::Disconnect()
 {
-	type_ = ConnectType::kTypeDisconnect;
-	connect_time_ = 0;
-	conv_ = 0;
-
-	if (kcp_)
+	std::unique_lock<std::mutex> lock(mutex_);
+	if (IsConnected())
 	{
-		ikcp_release(kcp_);
-		kcp_ = nullptr;
-	}
+		type_ = ConnectType::kTypeDisconnect;
+		connect_time_ = 0;
+		conv_ = 0;
 
-	cur_clock_ = 0;
-	cur_read_ = 0;
-	cur_write_ = 0;
+		if (kcp_)
+		{
+			ikcp_release(kcp_);
+			kcp_ = nullptr;
+		}
+
+		cur_clock_ = 0;
+		cur_read_ = 0;
+		cur_write_ = 0;
+	}
 }
 
 bool ClientNetwork::IsConnected() const

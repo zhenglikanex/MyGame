@@ -71,6 +71,7 @@ private:
 
 	std::atomic_bool running_;
 	std::thread thread_;
+	std::mutex mutex_;
 
 	asio::io_context io_context_;
 	asio::ip::udp::socket socket_;
