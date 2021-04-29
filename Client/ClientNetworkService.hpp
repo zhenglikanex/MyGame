@@ -29,8 +29,14 @@ public:
 	{
 		message_handler_ = handler;
 	}
+
+	ClientNetwork::ConnectErrorCode GetLastError() const
+	{
+		return error_code_;
+	}
 private:
 	ClientNetwork network_;
+	ClientNetwork::ConnectErrorCode error_code_;
 	uint16_t alloc_session_;
 	std::unordered_map<uint16_t, std::function<void(const std::vector<uint8_t>&)>> rpc_handlers_;
 	std::function<void(const NetMessage&)> message_handler_;

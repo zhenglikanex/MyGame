@@ -73,6 +73,10 @@ extern "C"
 			{
 				g_network_service->Update();
 			}
+			else
+			{
+				auto code = g_network_service->GetLastError();
+			}
 		}
 
 		if (g_game)

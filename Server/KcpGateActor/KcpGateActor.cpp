@@ -138,10 +138,6 @@ void KcpGateActor::KcpReciveHandler(const KcpConnection& connection, Buffer&& bu
 	{
 		ConnectSuccessHandler(connection.endpoint(), connection.conv());
 	}
-	else if (IsKcpDisconnectMsg((char*)buffer.data(),buffer.size()))
-	{
-		DisconnectHandler(connection.endpoint(), connection.conv());
-	}
 	else
 	{
 		auto iter = agents_.find(connection.conv());

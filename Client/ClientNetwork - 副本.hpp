@@ -22,22 +22,21 @@ public:
 		kTypeConnected,
 	};
 
-	enum class ConnectErrorCode : uint8_t
+	enum class ConnectStatus : uint8_t
 	{
-		kTypeNotError,
+		kTypeConnected,
 		kTypeServerDisconnect,
-		kTypeServerTimeout,
+		kTypeTimeout
 	};
 
 	ClientNetwork();
 	~ClientNetwork();
 
 	void Run();
-	void Stop();
-	bool IsRunning() const { return running_; }
 
-	bool Connect(const std::string& ip, uint16_t port, uint32_t timeout);
+	void Connect(const std::string& ip, uint16_t port, uint32_t timeout);
 	void Disconnect();
+
 	bool IsConnected() const;
 
 	void Send(std::vector<uint8_t>&& data);
@@ -46,7 +45,7 @@ public:
 	bool IsEmpty() const;
 	std::unique_ptr<std::vector<uint8_t>> PopBuffer();
 
-	void set_connect_handler(const std::function<void(ConnectErrorCode status)>& connect_handler)
+	void set_connect_handler(const std::function<void(ConnectStatus status)>& connect_handler)
 	{
 		connect_handler_ = connect_handler;
 	}
@@ -55,10 +54,13 @@ public:
 private:
 	static const uint16_t kMaxMsgSize = 0xFFFF;
 
+	void Stop();
+
 	static int UdpOutput(const char* buf, int len, ikcpcb* kcp, void* user);
 
 	void Connecting(uint32_t timeout);
 	void Connected(kcp_conv_t conv);
+	void Disconnected();
 	void Timeout();
 
 	void SendConnectedMsg();
@@ -69,7 +71,7 @@ private:
 	void KcpReceive(uint8_t* data, uint32_t len);
 	void KcpUpdate();
 
-	std::atomic_bool running_;
+	bool running_;
 	std::thread thread_;
 
 	asio::io_context io_context_;
@@ -85,7 +87,8 @@ private:
 	ikcpcb* kcp_;
 	uint32_t cur_clock_;
 
-	std::function<void(ConnectErrorCode status)> connect_handler_;
+	std::function<void(ConnectStatus status)> connect_handler_;
+	std::condition_variable cv;
 
 	std::atomic<uint32_t> cur_read_;
 	std::atomic<uint32_t> cur_write_;

@@ -5,11 +5,12 @@
 using namespace std::chrono;
 
 ClientNetworkService::ClientNetworkService()
-	: alloc_session_(0)
+	: error_code_(ClientNetwork::ConnectErrorCode::kTypeNotError)
+	, alloc_session_(0)
 {
-	network_.set_connect_handler([this](ClientNetwork::ConnectStatus code)
+	network_.set_connect_handler([this](ClientNetwork::ConnectErrorCode code)
 		{
-			
+			error_code_ = code;
 		});
 
 	network_.Run();
@@ -17,14 +18,8 @@ ClientNetworkService::ClientNetworkService()
 
 bool ClientNetworkService::Connect(const std::string& ip, uint16_t port, uint32_t timeout)
 {	
-	network_.Connect(ip, port, timeout);
-	// 等待异步连接完成
-	while (network_.type() == ClientNetwork::ConnectType::kTypeConnecting)
-	{
-		std::this_thread::sleep_for(milliseconds(10));
-	}
-
-	return network_.IsConnected();
+	error_code_ = ClientNetwork::ConnectErrorCode::kTypeNotError;
+	return network_.Connect(ip, port, timeout);
 }
 
 void ClientNetworkService::Disconnect()

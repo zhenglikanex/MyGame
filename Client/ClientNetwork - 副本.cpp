@@ -40,70 +40,66 @@ ClientNetwork::ClientNetwork()
 
 ClientNetwork::~ClientNetwork()
 {
-	if (IsRunning())
-	{
-		Stop();
-	}
+	Stop();
 }
 
 void ClientNetwork::Run()
 {
-	thread_ = std::thread([this]
+	if (!running_)
 	{
 		running_ = true;
-		UdpReceive();
-		TIME_BEGIN_PERIOD(1);
-		io_context_.run();
-		TIME_END_PERIOD(1);
-		running_ = false;
-	});
+		thread_ = std::thread([this]
+			{
+				UdpReceive();
+				TIME_BEGIN_PERIOD(1);
+				io_context_.run();
+				TIME_END_PERIOD(1);
+			});
+	}
 }
 
 void ClientNetwork::Stop()
 {
-	socket_.close();
-	connect_timer_.cancel();
-	kcp_update_timer_.cancel();
-
-	if (thread_.joinable())
+	if (running_)
 	{
-		thread_.join();
-	}
+		running_ = false;
 
-	Disconnect();
+		socket_.close();
+		socket_.open();
+
+		if (thread_.joinable())
+		{
+			thread_.join();
+		}
+	}
 }
 
-bool ClientNetwork::Connect(const std::string& ip, uint16_t port, uint32_t timeout)
+void ClientNetwork::Connect(const std::string& ip, uint16_t port, uint32_t timeout)
 {
-	connect_time_ = duration_cast<seconds>(steady_clock::now().time_since_epoch()).count();
-
-	server_endpoint_ = asio::ip::udp::endpoint(asio::ip::address::from_string(ip), port);
-	type_ = ConnectType::kTypeConnecting;
-	Connecting(timeout);
-
-	while (type_ == kTypeConnecting)
+	if (type_ == ConnectType::kTypeDisconnect)
 	{
-		std::this_thread::sleep_for(milliseconds(50));
-	}
+		connect_time_ = duration_cast<seconds>(steady_clock::now().time_since_epoch()).count();
 
-	return IsConnected();
+		server_endpoint_ = asio::ip::udp::endpoint(asio::ip::address::from_string(ip), port);
+		type_ = ConnectType::kTypeConnecting;
+		Connecting(timeout);
+	}
 }
 
 void ClientNetwork::Disconnect()
 {
-	type_ = ConnectType::kTypeDisconnect;
-	connect_time_ = 0;
-	conv_ = 0;
-
-	if (kcp_)
+	if (type_ == ConnectType::kTypeConnected)
 	{
-		ikcp_release(kcp_);
-		kcp_ = nullptr;
-	}
+		auto msg = MakeKcpDisconnectMsg();
+		Send((uint8_t*)msg.data(), msg.size());
 
-	cur_clock_ = 0;
-	cur_read_ = 0;
-	cur_write_ = 0;
+		Disconnected();
+
+		if (connect_handler_)
+		{
+			connect_handler_(ConnectStatus::kTypeServerDisconnect);
+		}
+	}
 }
 
 bool ClientNetwork::IsConnected() const
@@ -218,16 +214,37 @@ void ClientNetwork::Connected(kcp_conv_t conv)
 
 	SendConnectedMsg();
 
+	type_ = ConnectType::kTypeConnected;
+	connect_handler_(ConnectStatus::kTypeConnected);
+
 	kcp_update_timer_.expires_at(steady_clock::now());
 	KcpUpdate();
+}
 
-	type_ = ConnectType::kTypeConnected;
+void ClientNetwork::Disconnected()
+{
+	type_ = ConnectType::kTypeDisconnect;
+	conv_ = 0;
+	if (kcp_)
+	{
+		ikcp_release(kcp_);
+		kcp_ = nullptr;
+	}
+
+	kcp_update_timer_.cancel();
+	cur_write_ = 0;
+	cur_read_ = 0;
 }
 
 void ClientNetwork::Timeout()
 {
 	type_ == ConnectType::kTypeDisconnect;
 	connect_timer_.cancel();
+
+	if (connect_handler_)
+	{
+		connect_handler_(ConnectStatus::kTypeTimeout);
+	}
 }
 
 void ClientNetwork::SendConnectedMsg()
@@ -239,6 +256,7 @@ void ClientNetwork::SendConnectedMsg()
 
 void ClientNetwork::UdpSend(uint8_t* data, uint32_t len)
 {
+	//socket_.send_to(asio::buffer(data, len), server_endpoint_);
 	auto buffer_ptr = std::make_shared<std::string>((char*)data, len);
 	socket_.async_send_to(
 		asio::buffer(buffer_ptr->data(), buffer_ptr->size()), server_endpoint_,
@@ -265,15 +283,6 @@ void ClientNetwork::UdpReceive()
 					}
 					else if (type_ == ConnectType::kTypeConnected)
 					{
-						if (IsKcpDisconnectMsg((char*)data_.data(), bytes_recvd))
-						{
-							if (connect_handler_)
-							{
-								connect_handler_(ConnectErrorCode::kTypeServerDisconnect);
-							}
-							Disconnect();
-						}
-
 						KcpReceive(data_.data(), bytes_recvd);
 					}
 				}
@@ -298,12 +307,7 @@ void ClientNetwork::KcpReceive(uint8_t* data, uint32_t len)
 				auto next = cur_write_ + 1;
 				if (next % buffers_.size() == cur_read_)
 				{
-					Disconnect();
-
-					if (connect_handler_)
-					{
-						connect_handler_(ConnectErrorCode::kTypeServerTimeout);
-					}
+					Disconnected();
 				}
 
 				buffers_[cur_write_].resize(len);

@@ -102,6 +102,7 @@ private:
 
 int main()
 {
+	
 	M m;
 	std::any d = std::move(m);
 
