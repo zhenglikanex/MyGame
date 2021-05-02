@@ -184,6 +184,7 @@ void ClientNetwork::Connecting(uint32_t timeout)
 	connect_timer_.expires_after(milliseconds(100));
 	connect_timer_.async_wait([this, timeout](std::error_code ec)
 		{
+			auto str = ec.message();
 			if (!ec)
 			{
 				if (type_ == ConnectType::kTypeConnecting)
@@ -218,19 +219,19 @@ void ClientNetwork::Connected(kcp_conv_t conv)
 	//ikcp_nodelay(kcp_, 1, 10, 2, 1);
 	ikcp_nodelay(kcp_, 1, 10, 1, 1); // 设置成1次ACK跨越直接重传, 这样反应速度会更快. 内部时钟5毫秒.
 	//kcp_->interval = 1;
-	kcp_->rx_minrto = 5;
+	//kcp_->rx_minrto = 5;
+
+	type_ = ConnectType::kTypeConnected;
 
 	SendConnectedMsg();
 
 	kcp_update_timer_.expires_at(steady_clock::now());
 	KcpUpdate();
-
-	type_ = ConnectType::kTypeConnected;
 }
 
 void ClientNetwork::Timeout()
 {
-	type_ == ConnectType::kTypeDisconnect;
+	type_ = ConnectType::kTypeDisconnect;
 	connect_timer_.cancel();
 }
 
@@ -259,6 +260,7 @@ void ClientNetwork::UdpReceive()
 		asio::buffer(data_.data(), kMaxMsgSize), server_endpoint_,
 		[this](std::error_code ec, std::size_t bytes_recvd)
 		{
+			auto str = ec.message();
 			if (!ec)
 			{
 				if (bytes_recvd > 0)
@@ -276,12 +278,15 @@ void ClientNetwork::UdpReceive()
 								connect_handler_(ConnectErrorCode::kTypeServerDisconnect);
 							}
 							Disconnect();
+							return;
 						}
 
 						KcpReceive(data_.data(), bytes_recvd);
 					}
 				}
-
+			}
+			if (ec.value() != 995)
+			{
 				UdpReceive();
 			}
 		});
@@ -302,12 +307,13 @@ void ClientNetwork::KcpReceive(uint8_t* data, uint32_t len)
 				auto next = cur_write_ + 1;
 				if (next % buffers_.size() == cur_read_)
 				{
-					Disconnect();
-
 					if (connect_handler_)
 					{
 						connect_handler_(ConnectErrorCode::kTypeServerTimeout);
 					}
+
+					Disconnect();
+					return;
 				}
 
 				buffers_[cur_write_].resize(len);

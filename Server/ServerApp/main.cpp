@@ -38,6 +38,7 @@ int main()
 	}
 
 	actor_net->StartActor("KcpGateActor.dll");
+	actor_net->StartUniqueActor("MatchActor.dll", "MatchActor");
 
 	while (true)
 	{

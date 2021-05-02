@@ -87,34 +87,36 @@ void AgentActor::Ping(const NetMessage& request)
 
 void AgentActor::JoinMatch(const NetMessage& request)
 {
-	if (join_matching_)
+	if (!join_matching_)
 	{
 		std::any data = id();
 		Request("MatchActor", "join_match", std::move(data), [this,request](ActorMessage&& message)
 			{
 				join_matching_ = true;
 
-				bool status = true;
-				std::vector<uint8_t> buffer;
+				uint8_t status = 0;
+				std::vector<uint8_t> buffer(1);
 				std::copy_n(buffer.data(), 1, &status);
 
 				NetMessage response;
 				response.set_session(request.session());
 				response.set_data(std::move(buffer));
-				Call(gate_, "send", std::move(response));
+				std::any data = std::make_tuple(conv_, std::move(response));
+				Call(gate_, "send", std::move(data));
 			});
 	}
 	else
 	{
 		// 偷懒不封装接口了,也不用protobuf了麻烦
-		bool status = false;
-		std::vector<uint8_t> buffer;
+		uint8_t status = 0;
+		std::vector<uint8_t> buffer(1);
 		std::copy_n(buffer.data(), 1, &status);
 
 		NetMessage response;
 		response.set_session(request.session());
 		response.set_data(std::move(buffer));
-		Call(gate_, "send", std::move(response));
+		std::any data = std::make_tuple(conv_, std::move(response));
+		Call(gate_, "send", std::move(data));
 	}
 }
 
@@ -127,27 +129,29 @@ void AgentActor::LeaveMatch(const NetMessage& request)
 			{
 				join_matching_ = false;
 
-				bool status = true;
-				std::vector<uint8_t> buffer;
+				uint8_t status = 0;
+				std::vector<uint8_t> buffer(1);
 				std::copy_n(buffer.data(), 1, &status);
 
 				NetMessage response;
 				response.set_session(request.session());
 				response.set_data(std::move(buffer));
-				Call(gate_, "send", std::move(response));
+				std::any data = std::make_tuple(conv_, std::move(response));
+				Call(gate_, "send", std::move(data));
 			});
 	}
 	else
 	{
 		// 偷懒不封装接口了,也不用protobuf了麻烦
-		bool status = false;
-		std::vector<uint8_t> buffer;
+		uint8_t status = 0;
+		std::vector<uint8_t> buffer(1);
 		std::copy_n(buffer.data(), 1, &status);
 
 		NetMessage response;
 		response.set_session(request.session());
 		response.set_data(std::move(buffer));
-		Call(gate_, "send", std::move(response));
+		std::any data = std::make_tuple(conv_, std::move(response));
+		Call(gate_, "send", std::move(data));
 	}
 }
 

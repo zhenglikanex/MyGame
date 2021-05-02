@@ -49,7 +49,7 @@ void ClientNetworkService::Request(std::string_view name, std::vector<uint8_t>&&
 	std::vector<uint8_t> buffer(message.GetByteSize());
 	message.Serialize(buffer.data());
 
-	network_.Send(std::move(data));
+	network_.Send(std::move(buffer));
 }
 
 void ClientNetworkService::Send(std::string_view name, std::vector<uint8_t>&& data)
@@ -62,7 +62,7 @@ void ClientNetworkService::Send(std::string_view name, std::vector<uint8_t>&& da
 	std::vector<uint8_t> buffer(message.GetByteSize());
 	message.Serialize(buffer.data());
 
-	network_.Send(std::move(data));
+	network_.Send(std::move(buffer));
 }
 
 void ClientNetworkService::Update()

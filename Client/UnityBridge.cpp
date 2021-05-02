@@ -122,7 +122,7 @@ extern "C"
 			g_network_service = std::make_unique<ClientNetworkService>();
 		}
 		
-		if (g_network_service->Connect("127.0.0.1", 9523, 5))
+		if (g_network_service->Connect("127.0.0.1", 9523, 500))
 		{
 			// ÍµÀÁÐ´ÕâÀïÁË
 			g_network_service->set_messge_handler([](const NetMessage& message)
