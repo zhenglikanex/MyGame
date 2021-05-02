@@ -47,7 +47,13 @@ void MatchActor::Match()
 		auto id = StartActor("BattleActor.dll");
 		if (id != kNull)
 		{
-			Call(id, "start",std::move(matching_agent_));
+			Call(id, "start", std::make_any<decltype(matching_agent_)>(matching_agent_));
+
+			for (auto& entry : matching_agent_)
+			{
+				Call(entry.second, "join_battle", std::make_any<ActorId>(entry.second));
+			}
+			matching_agent_.clear();
 		}
 	}
 }

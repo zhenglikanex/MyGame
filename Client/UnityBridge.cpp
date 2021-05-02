@@ -129,7 +129,8 @@ extern "C"
 				{
 					if (message.name() == "join_battle")
 					{
-						InitGame((char*)message.data().data(), message.data().size());
+						INFO("join_battle");
+						//InitGame((char*)message.data().data(), message.data().size());
 					}
 				});
 

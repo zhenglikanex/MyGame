@@ -30,7 +30,7 @@ private:
 
 private:
 	//actor call
-	void Matched(const std::any& data);
+	void JoinBattle(const std::any& data);
 private:
 	//actor request
 private:
