@@ -13,6 +13,12 @@ message GamePlayerInfos
 	repeated PlayerInfo player_infos = 1;
 }
 
+message StartBattleInfo
+{
+	uint32 my_id = 1;
+	GamePlayerInfos player_infos = 2;
+}
+
 message GameCommond
 {
 	float x_axis = 1;		// 摇杆输入
@@ -21,9 +27,6 @@ message GameCommond
 	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
 	bool jump = 3;
 	int32 skill = 4;
-	//bool skill1 = 5;
-	//bool skill2 = 6;
-	//bool skill3 = 7;
 }
 
 message GameCommondGroup

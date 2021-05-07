@@ -27,6 +27,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* GamePlayerInfos_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GamePlayerInfos_reflection_ = NULL;
+const ::google::protobuf::Descriptor* StartBattleInfo_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  StartBattleInfo_reflection_ = NULL;
 const ::google::protobuf::Descriptor* GameCommond_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GameCommond_reflection_ = NULL;
@@ -76,7 +79,23 @@ void protobuf_AssignDesc_Battle_2eproto() {
       sizeof(GamePlayerInfos),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GamePlayerInfos, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GamePlayerInfos, _is_default_instance_));
-  GameCommond_descriptor_ = file->message_type(2);
+  StartBattleInfo_descriptor_ = file->message_type(2);
+  static const int StartBattleInfo_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartBattleInfo, my_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartBattleInfo, player_infos_),
+  };
+  StartBattleInfo_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      StartBattleInfo_descriptor_,
+      StartBattleInfo::default_instance_,
+      StartBattleInfo_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(StartBattleInfo),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartBattleInfo, _internal_metadata_),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartBattleInfo, _is_default_instance_));
+  GameCommond_descriptor_ = file->message_type(3);
   static const int GameCommond_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommond, x_axis_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommond, y_axis_),
@@ -94,7 +113,7 @@ void protobuf_AssignDesc_Battle_2eproto() {
       sizeof(GameCommond),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommond, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommond, _is_default_instance_));
-  GameCommondGroup_descriptor_ = file->message_type(3);
+  GameCommondGroup_descriptor_ = file->message_type(4);
   static const int GameCommondGroup_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommondGroup, commonds_),
   };
@@ -128,6 +147,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       GamePlayerInfos_descriptor_, &GamePlayerInfos::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      StartBattleInfo_descriptor_, &StartBattleInfo::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       GameCommond_descriptor_, &GameCommond::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       GameCommondGroup_descriptor_, &GameCommondGroup::default_instance());
@@ -149,6 +170,8 @@ void protobuf_ShutdownFile_Battle_2eproto() {
   delete PlayerInfo_reflection_;
   delete GamePlayerInfos::default_instance_;
   delete GamePlayerInfos_reflection_;
+  delete StartBattleInfo::default_instance_;
+  delete StartBattleInfo_reflection_;
   delete GameCommond::default_instance_;
   delete GameCommond_reflection_;
   delete GameCommondGroup::default_instance_;
@@ -166,20 +189,24 @@ void protobuf_AddDesc_Battle_2eproto() {
     "\n\014Battle.proto\022\005Proto\"-\n\nPlayerInfo\022\n\n\002i"
     "d\030\001 \001(\r\022\023\n\013actor_asset\030\002 \001(\t\":\n\017GamePlay"
     "erInfos\022\'\n\014player_infos\030\001 \003(\0132\021.Proto.Pl"
-    "ayerInfo\"J\n\013GameCommond\022\016\n\006x_axis\030\001 \001(\002\022"
+    "ayerInfo\"N\n\017StartBattleInfo\022\r\n\005my_id\030\001 \001"
+    "(\r\022,\n\014player_infos\030\002 \001(\0132\026.Proto.GamePla"
+    "yerInfos\"J\n\013GameCommond\022\016\n\006x_axis\030\001 \001(\002\022"
     "\016\n\006y_axis\030\002 \001(\002\022\014\n\004jump\030\003 \001(\010\022\r\n\005skill\030\004"
     " \001(\005\"\220\001\n\020GameCommondGroup\0227\n\010commonds\030\001 "
     "\003(\0132%.Proto.GameCommondGroup.CommondsEnt"
     "ry\032C\n\rCommondsEntry\022\013\n\003key\030\001 \001(\r\022!\n\005valu"
-    "e\030\002 \001(\0132\022.Proto.GameCommond:\0028\001b\006proto3", 359);
+    "e\030\002 \001(\0132\022.Proto.GameCommond:\0028\001b\006proto3", 439);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Battle.proto", &protobuf_RegisterTypes);
   PlayerInfo::default_instance_ = new PlayerInfo();
   GamePlayerInfos::default_instance_ = new GamePlayerInfos();
+  StartBattleInfo::default_instance_ = new StartBattleInfo();
   GameCommond::default_instance_ = new GameCommond();
   GameCommondGroup::default_instance_ = new GameCommondGroup();
   PlayerInfo::default_instance_->InitAsDefaultInstance();
   GamePlayerInfos::default_instance_->InitAsDefaultInstance();
+  StartBattleInfo::default_instance_->InitAsDefaultInstance();
   GameCommond::default_instance_->InitAsDefaultInstance();
   GameCommondGroup::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_Battle_2eproto);
@@ -782,6 +809,325 @@ const ::google::protobuf::RepeatedPtrField< ::Proto::PlayerInfo >&
 GamePlayerInfos::player_infos() const {
   // @@protoc_insertion_point(field_list:Proto.GamePlayerInfos.player_infos)
   return player_infos_;
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int StartBattleInfo::kMyIdFieldNumber;
+const int StartBattleInfo::kPlayerInfosFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+StartBattleInfo::StartBattleInfo()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:Proto.StartBattleInfo)
+}
+
+void StartBattleInfo::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+  player_infos_ = const_cast< ::Proto::GamePlayerInfos*>(&::Proto::GamePlayerInfos::default_instance());
+}
+
+StartBattleInfo::StartBattleInfo(const StartBattleInfo& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Proto.StartBattleInfo)
+}
+
+void StartBattleInfo::SharedCtor() {
+    _is_default_instance_ = false;
+  _cached_size_ = 0;
+  my_id_ = 0u;
+  player_infos_ = NULL;
+}
+
+StartBattleInfo::~StartBattleInfo() {
+  // @@protoc_insertion_point(destructor:Proto.StartBattleInfo)
+  SharedDtor();
+}
+
+void StartBattleInfo::SharedDtor() {
+  if (this != default_instance_) {
+    delete player_infos_;
+  }
+}
+
+void StartBattleInfo::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* StartBattleInfo::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return StartBattleInfo_descriptor_;
+}
+
+const StartBattleInfo& StartBattleInfo::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_Battle_2eproto();
+  return *default_instance_;
+}
+
+StartBattleInfo* StartBattleInfo::default_instance_ = NULL;
+
+StartBattleInfo* StartBattleInfo::New(::google::protobuf::Arena* arena) const {
+  StartBattleInfo* n = new StartBattleInfo;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void StartBattleInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:Proto.StartBattleInfo)
+  my_id_ = 0u;
+  if (GetArenaNoVirtual() == NULL && player_infos_ != NULL) delete player_infos_;
+  player_infos_ = NULL;
+}
+
+bool StartBattleInfo::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:Proto.StartBattleInfo)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 my_id = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &my_id_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_player_infos;
+        break;
+      }
+
+      // optional .Proto.GamePlayerInfos player_infos = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_player_infos:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_player_infos()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:Proto.StartBattleInfo)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Proto.StartBattleInfo)
+  return false;
+#undef DO_
+}
+
+void StartBattleInfo::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Proto.StartBattleInfo)
+  // optional uint32 my_id = 1;
+  if (this->my_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->my_id(), output);
+  }
+
+  // optional .Proto.GamePlayerInfos player_infos = 2;
+  if (this->has_player_infos()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, *this->player_infos_, output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:Proto.StartBattleInfo)
+}
+
+::google::protobuf::uint8* StartBattleInfo::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Proto.StartBattleInfo)
+  // optional uint32 my_id = 1;
+  if (this->my_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->my_id(), target);
+  }
+
+  // optional .Proto.GamePlayerInfos player_infos = 2;
+  if (this->has_player_infos()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        2, *this->player_infos_, false, target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:Proto.StartBattleInfo)
+  return target;
+}
+
+int StartBattleInfo::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:Proto.StartBattleInfo)
+  int total_size = 0;
+
+  // optional uint32 my_id = 1;
+  if (this->my_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->my_id());
+  }
+
+  // optional .Proto.GamePlayerInfos player_infos = 2;
+  if (this->has_player_infos()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->player_infos_);
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void StartBattleInfo::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Proto.StartBattleInfo)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) {
+    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
+  }
+  const StartBattleInfo* source = 
+      ::google::protobuf::internal::DynamicCastToGenerated<const StartBattleInfo>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Proto.StartBattleInfo)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Proto.StartBattleInfo)
+    MergeFrom(*source);
+  }
+}
+
+void StartBattleInfo::MergeFrom(const StartBattleInfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Proto.StartBattleInfo)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) {
+    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
+  }
+  if (from.my_id() != 0) {
+    set_my_id(from.my_id());
+  }
+  if (from.has_player_infos()) {
+    mutable_player_infos()->::Proto::GamePlayerInfos::MergeFrom(from.player_infos());
+  }
+}
+
+void StartBattleInfo::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Proto.StartBattleInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void StartBattleInfo::CopyFrom(const StartBattleInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Proto.StartBattleInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool StartBattleInfo::IsInitialized() const {
+
+  return true;
+}
+
+void StartBattleInfo::Swap(StartBattleInfo* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void StartBattleInfo::InternalSwap(StartBattleInfo* other) {
+  std::swap(my_id_, other->my_id_);
+  std::swap(player_infos_, other->player_infos_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata StartBattleInfo::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = StartBattleInfo_descriptor_;
+  metadata.reflection = StartBattleInfo_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// StartBattleInfo
+
+// optional uint32 my_id = 1;
+void StartBattleInfo::clear_my_id() {
+  my_id_ = 0u;
+}
+ ::google::protobuf::uint32 StartBattleInfo::my_id() const {
+  // @@protoc_insertion_point(field_get:Proto.StartBattleInfo.my_id)
+  return my_id_;
+}
+ void StartBattleInfo::set_my_id(::google::protobuf::uint32 value) {
+  
+  my_id_ = value;
+  // @@protoc_insertion_point(field_set:Proto.StartBattleInfo.my_id)
+}
+
+// optional .Proto.GamePlayerInfos player_infos = 2;
+bool StartBattleInfo::has_player_infos() const {
+  return !_is_default_instance_ && player_infos_ != NULL;
+}
+void StartBattleInfo::clear_player_infos() {
+  if (GetArenaNoVirtual() == NULL && player_infos_ != NULL) delete player_infos_;
+  player_infos_ = NULL;
+}
+const ::Proto::GamePlayerInfos& StartBattleInfo::player_infos() const {
+  // @@protoc_insertion_point(field_get:Proto.StartBattleInfo.player_infos)
+  return player_infos_ != NULL ? *player_infos_ : *default_instance_->player_infos_;
+}
+::Proto::GamePlayerInfos* StartBattleInfo::mutable_player_infos() {
+  
+  if (player_infos_ == NULL) {
+    player_infos_ = new ::Proto::GamePlayerInfos;
+  }
+  // @@protoc_insertion_point(field_mutable:Proto.StartBattleInfo.player_infos)
+  return player_infos_;
+}
+::Proto::GamePlayerInfos* StartBattleInfo::release_player_infos() {
+  // @@protoc_insertion_point(field_release:Proto.StartBattleInfo.player_infos)
+  
+  ::Proto::GamePlayerInfos* temp = player_infos_;
+  player_infos_ = NULL;
+  return temp;
+}
+void StartBattleInfo::set_allocated_player_infos(::Proto::GamePlayerInfos* player_infos) {
+  delete player_infos_;
+  player_infos_ = player_infos;
+  if (player_infos) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:Proto.StartBattleInfo.player_infos)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

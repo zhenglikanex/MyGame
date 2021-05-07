@@ -36,11 +36,10 @@ extern "C"
 		UnityBridge::Get().SetExecuteDelegate(delegate);
 	}
 
-	EXPORT_DLL void InitGame(const char* data,int32_t size)
+	EXPORT_DLL void InitGame(const Proto::GamePlayerInfos& infos)
 	{
 		std::vector<PlayerInfo> players;
 		Proto::GamePlayerInfos infos;
-		infos.ParseFromArray(data, size);
 		for (auto iter = infos.player_infos().cbegin(); iter < infos.player_infos().cend(); ++iter)
 		{
 			PlayerInfo player;
@@ -130,7 +129,11 @@ extern "C"
 					if (message.name() == "join_battle")
 					{
 						INFO("join_battle");
-						//InitGame((char*)message.data().data(), message.data().size());
+
+						Proto::StartBattleInfo info;
+						info.ParseFromArray(message.data().data(), message.data().size());
+						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
+						InitGame(info.player_infos());
 					}
 				});
 

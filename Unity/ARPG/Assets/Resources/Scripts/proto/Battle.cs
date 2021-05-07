@@ -24,17 +24,20 @@ namespace Proto {
           string.Concat(
             "CgxCYXR0bGUucHJvdG8SBVByb3RvIi0KClBsYXllckluZm8SCgoCaWQYASAB",
             "KA0SEwoLYWN0b3JfYXNzZXQYAiABKAkiOgoPR2FtZVBsYXllckluZm9zEicK",
-            "DHBsYXllcl9pbmZvcxgBIAMoCzIRLlByb3RvLlBsYXllckluZm8iSgoLR2Ft",
-            "ZUNvbW1vbmQSDgoGeF9heGlzGAEgASgCEg4KBnlfYXhpcxgCIAEoAhIMCgRq",
-            "dW1wGAMgASgIEg0KBXNraWxsGAQgASgFIpABChBHYW1lQ29tbW9uZEdyb3Vw",
-            "EjcKCGNvbW1vbmRzGAEgAygLMiUuUHJvdG8uR2FtZUNvbW1vbmRHcm91cC5D",
-            "b21tb25kc0VudHJ5GkMKDUNvbW1vbmRzRW50cnkSCwoDa2V5GAEgASgNEiEK",
-            "BXZhbHVlGAIgASgLMhIuUHJvdG8uR2FtZUNvbW1vbmQ6AjgBYgZwcm90bzM="));
+            "DHBsYXllcl9pbmZvcxgBIAMoCzIRLlByb3RvLlBsYXllckluZm8iTgoPU3Rh",
+            "cnRCYXR0bGVJbmZvEg0KBW15X2lkGAEgASgNEiwKDHBsYXllcl9pbmZvcxgC",
+            "IAEoCzIWLlByb3RvLkdhbWVQbGF5ZXJJbmZvcyJKCgtHYW1lQ29tbW9uZBIO",
+            "CgZ4X2F4aXMYASABKAISDgoGeV9heGlzGAIgASgCEgwKBGp1bXAYAyABKAgS",
+            "DQoFc2tpbGwYBCABKAUikAEKEEdhbWVDb21tb25kR3JvdXASNwoIY29tbW9u",
+            "ZHMYASADKAsyJS5Qcm90by5HYW1lQ29tbW9uZEdyb3VwLkNvbW1vbmRzRW50",
+            "cnkaQwoNQ29tbW9uZHNFbnRyeRILCgNrZXkYASABKA0SIQoFdmFsdWUYAiAB",
+            "KAsyEi5Qcm90by5HYW1lQ29tbW9uZDoCOAFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerInfo), global::Proto.PlayerInfo.Parser, new[]{ "Id", "ActorAsset" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GamePlayerInfos), global::Proto.GamePlayerInfos.Parser, new[]{ "PlayerInfos" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.StartBattleInfo), global::Proto.StartBattleInfo.Parser, new[]{ "MyId", "PlayerInfos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommond), global::Proto.GameCommond.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommondGroup), global::Proto.GameCommondGroup.Parser, new[]{ "Commonds" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
@@ -297,6 +300,157 @@ namespace Proto {
 
   }
 
+  public sealed partial class StartBattleInfo : pb::IMessage<StartBattleInfo> {
+    private static readonly pb::MessageParser<StartBattleInfo> _parser = new pb::MessageParser<StartBattleInfo>(() => new StartBattleInfo());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<StartBattleInfo> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto.BattleReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StartBattleInfo() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StartBattleInfo(StartBattleInfo other) : this() {
+      myId_ = other.myId_;
+      PlayerInfos = other.playerInfos_ != null ? other.PlayerInfos.Clone() : null;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StartBattleInfo Clone() {
+      return new StartBattleInfo(this);
+    }
+
+    /// <summary>Field number for the "my_id" field.</summary>
+    public const int MyIdFieldNumber = 1;
+    private uint myId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint MyId {
+      get { return myId_; }
+      set {
+        myId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "player_infos" field.</summary>
+    public const int PlayerInfosFieldNumber = 2;
+    private global::Proto.GamePlayerInfos playerInfos_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto.GamePlayerInfos PlayerInfos {
+      get { return playerInfos_; }
+      set {
+        playerInfos_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as StartBattleInfo);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(StartBattleInfo other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (MyId != other.MyId) return false;
+      if (!object.Equals(PlayerInfos, other.PlayerInfos)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (MyId != 0) hash ^= MyId.GetHashCode();
+      if (playerInfos_ != null) hash ^= PlayerInfos.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (MyId != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(MyId);
+      }
+      if (playerInfos_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(PlayerInfos);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (MyId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(MyId);
+      }
+      if (playerInfos_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerInfos);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(StartBattleInfo other) {
+      if (other == null) {
+        return;
+      }
+      if (other.MyId != 0) {
+        MyId = other.MyId;
+      }
+      if (other.playerInfos_ != null) {
+        if (playerInfos_ == null) {
+          playerInfos_ = new global::Proto.GamePlayerInfos();
+        }
+        PlayerInfos.MergeFrom(other.PlayerInfos);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            MyId = input.ReadUInt32();
+            break;
+          }
+          case 18: {
+            if (playerInfos_ == null) {
+              playerInfos_ = new global::Proto.GamePlayerInfos();
+            }
+            input.ReadMessage(playerInfos_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class GameCommond : pb::IMessage<GameCommond> {
     private static readonly pb::MessageParser<GameCommond> _parser = new pb::MessageParser<GameCommond>(() => new GameCommond());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -304,7 +458,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Proto.BattleReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -377,11 +531,6 @@ namespace Proto {
     /// <summary>Field number for the "skill" field.</summary>
     public const int SkillFieldNumber = 4;
     private int skill_;
-    /// <summary>
-    /// bool skill1 = 5;
-    /// bool skill2 = 6;
-    /// bool skill3 = 7;
-    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Skill {
       get { return skill_; }
@@ -519,7 +668,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Proto.BattleReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

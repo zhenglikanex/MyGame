@@ -42,6 +42,7 @@ class GameCommond;
 class GameCommondGroup;
 class GamePlayerInfos;
 class PlayerInfo;
+class StartBattleInfo;
 
 // ===================================================================
 
@@ -224,6 +225,98 @@ class GamePlayerInfos : public ::google::protobuf::Message /* @@protoc_insertion
 
   void InitAsDefaultInstance();
   static GamePlayerInfos* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class StartBattleInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.StartBattleInfo) */ {
+ public:
+  StartBattleInfo();
+  virtual ~StartBattleInfo();
+
+  StartBattleInfo(const StartBattleInfo& from);
+
+  inline StartBattleInfo& operator=(const StartBattleInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const StartBattleInfo& default_instance();
+
+  void Swap(StartBattleInfo* other);
+
+  // implements Message ----------------------------------------------
+
+  inline StartBattleInfo* New() const { return New(NULL); }
+
+  StartBattleInfo* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const StartBattleInfo& from);
+  void MergeFrom(const StartBattleInfo& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(StartBattleInfo* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 my_id = 1;
+  void clear_my_id();
+  static const int kMyIdFieldNumber = 1;
+  ::google::protobuf::uint32 my_id() const;
+  void set_my_id(::google::protobuf::uint32 value);
+
+  // optional .Proto.GamePlayerInfos player_infos = 2;
+  bool has_player_infos() const;
+  void clear_player_infos();
+  static const int kPlayerInfosFieldNumber = 2;
+  const ::Proto::GamePlayerInfos& player_infos() const;
+  ::Proto::GamePlayerInfos* mutable_player_infos();
+  ::Proto::GamePlayerInfos* release_player_infos();
+  void set_allocated_player_infos(::Proto::GamePlayerInfos* player_infos);
+
+  // @@protoc_insertion_point(class_scope:Proto.StartBattleInfo)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::Proto::GamePlayerInfos* player_infos_;
+  ::google::protobuf::uint32 my_id_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_Battle_2eproto();
+  friend void protobuf_AssignDesc_Battle_2eproto();
+  friend void protobuf_ShutdownFile_Battle_2eproto();
+
+  void InitAsDefaultInstance();
+  static StartBattleInfo* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -526,6 +619,62 @@ GamePlayerInfos::player_infos() const {
 
 // -------------------------------------------------------------------
 
+// StartBattleInfo
+
+// optional uint32 my_id = 1;
+inline void StartBattleInfo::clear_my_id() {
+  my_id_ = 0u;
+}
+inline ::google::protobuf::uint32 StartBattleInfo::my_id() const {
+  // @@protoc_insertion_point(field_get:Proto.StartBattleInfo.my_id)
+  return my_id_;
+}
+inline void StartBattleInfo::set_my_id(::google::protobuf::uint32 value) {
+  
+  my_id_ = value;
+  // @@protoc_insertion_point(field_set:Proto.StartBattleInfo.my_id)
+}
+
+// optional .Proto.GamePlayerInfos player_infos = 2;
+inline bool StartBattleInfo::has_player_infos() const {
+  return !_is_default_instance_ && player_infos_ != NULL;
+}
+inline void StartBattleInfo::clear_player_infos() {
+  if (GetArenaNoVirtual() == NULL && player_infos_ != NULL) delete player_infos_;
+  player_infos_ = NULL;
+}
+inline const ::Proto::GamePlayerInfos& StartBattleInfo::player_infos() const {
+  // @@protoc_insertion_point(field_get:Proto.StartBattleInfo.player_infos)
+  return player_infos_ != NULL ? *player_infos_ : *default_instance_->player_infos_;
+}
+inline ::Proto::GamePlayerInfos* StartBattleInfo::mutable_player_infos() {
+  
+  if (player_infos_ == NULL) {
+    player_infos_ = new ::Proto::GamePlayerInfos;
+  }
+  // @@protoc_insertion_point(field_mutable:Proto.StartBattleInfo.player_infos)
+  return player_infos_;
+}
+inline ::Proto::GamePlayerInfos* StartBattleInfo::release_player_infos() {
+  // @@protoc_insertion_point(field_release:Proto.StartBattleInfo.player_infos)
+  
+  ::Proto::GamePlayerInfos* temp = player_infos_;
+  player_infos_ = NULL;
+  return temp;
+}
+inline void StartBattleInfo::set_allocated_player_infos(::Proto::GamePlayerInfos* player_infos) {
+  delete player_infos_;
+  player_infos_ = player_infos;
+  if (player_infos) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:Proto.StartBattleInfo.player_infos)
+}
+
+// -------------------------------------------------------------------
+
 // GameCommond
 
 // optional float x_axis = 1;
@@ -607,6 +756,8 @@ GameCommondGroup::mutable_commonds() {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
