@@ -52,7 +52,6 @@ extern "C"
 		locator.Set<ViewService>(std::make_unique<UnityViewService>());
 		locator.Set<InputService>(std::make_unique<UnityInputService>());
 		locator.Set<FileService>(std::make_unique<UnityFileService>());
-		locator.Set<NetworkService>(std::move(g_network_service));
 
 		g_game = std::make_unique<Game>(std::move(locator), GameMode::kClinet,std::move(players));
 		g_game->Initialize();
@@ -113,9 +112,7 @@ extern "C"
 
 	EXPORT_DLL void JoinMatch()
 	{
-		// 偷懒了匹配本来想放在unity端做的,这里简单的请求下得了,
-		// 网络本来是按单局设计的,这里这么搞的话只能只能先创建网络用来匹配,
-		// 然后在move到game中
+		// 偷懒了匹配本来想放在unity端做的,这里简单的请求下得了
 		if (!g_network_service)
 		{
 			g_network_service = std::make_unique<ClientNetworkService>();
@@ -134,6 +131,10 @@ extern "C"
 						info.ParseFromArray(message.data().data(), message.data().size());
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
 						InitGame(info.player_infos());
+					}
+					else if (message.name() == "net_player_input")
+					{
+						
 					}
 				});
 

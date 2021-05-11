@@ -25,6 +25,7 @@ bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	}
 
 	ActorConnect("start", &AgentActor::Start,this);
+	ActorConnect("send", &AgentActor::Send, this);
 	ActorConnect("client", &AgentActor::ClientReceive,this);
 	ActorConnect("join_battle", &AgentActor::JoinBattle, this);
 
@@ -66,6 +67,17 @@ void AgentActor::ClientReceive(const std::any& data)
 	{
 		std::cout << "未处理的客户端消息:" << message.name() << std::endl;
 	}
+}
+
+void AgentActor::Send(const std::any& data)
+{
+	auto& [name,buffer] = std::any_cast<std::tuple<std::string,std::vector<uint8_t>>>(data);
+
+	NetMessage push;
+	push.set_name(name);
+	push.set_data(std::move(buffer));
+
+	Call(gate_, "send", std::make_tuple(conv_, push));
 }
 
 void AgentActor::JoinBattle(const std::any& data)

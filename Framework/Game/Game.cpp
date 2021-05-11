@@ -216,7 +216,7 @@ void Game::UpdateInput()
 				{
 					if (group.commands.find(last_command.first) == group.commands.end())
 					{
-						group.commands.emplace(last_command.first, group.commands[0]);
+						group.commands.emplace(last_command.first, last_command.second);
 					}
 				}
 			}
