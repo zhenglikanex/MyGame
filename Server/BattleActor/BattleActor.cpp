@@ -1,10 +1,14 @@
 #include "BattleActor.hpp"
 #include <iostream>
 
-#include "Framework/Proto/Battle.pb.h"
+using namespace std::chrono;
 
 BattleActor::BattleActor(ActorId id)
 	: Actor(id)
+	, start_(false)
+	, last_time_(0)
+	, time_(0)
+	, frame_(0)
 {
 
 }
@@ -21,7 +25,8 @@ bool BattleActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 		return false;
 	}
 
-	std::cout << "BattleActor start!!!" << std::endl;
+	RequestConnect("start_battle", &BattleActor::StartBattle, this);
+
 	return true;
 }
 
@@ -55,5 +60,40 @@ void BattleActor::Start(const std::any& data)
 	}
 }
 
+void BattleActor::StartBattle()
+{
+	if (start_)
+	{
+		return;
+	}
+
+	start_ = true;
+	AddTimer(1, -1, [this]()
+		{
+
+			last_time_ = system_clock::now().time_since_epoch().count();
+		});
+
+	std::cout << "BattleActor start!!!" << std::endl;
+}
+
+void BattleActor::Update(uint32_t dt)
+{
+
+}
+
+void BattleActor::InputPlayerCommand(ActorId id, const Proto::GameCommond& command)
+{
+
+}
+
+void BattleActor::PushPlayerCommand()
+{
+	for (auto player : players_)
+	{
+		Proto::GameCommondGroup group;
+		Call(player, "send", std::move(group));
+	}
+}
 
 ACTOR_IMPLEMENT(BattleActor)

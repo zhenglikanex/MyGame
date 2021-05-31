@@ -8,6 +8,12 @@ class Primitive
 
 };
 
+struct Circular
+{
+	glm::vec2 c;
+	float r;
+};
+
 struct Sphere {
 	vec3 c; // Sphere center
 	fixed16 r; // Sphere radius

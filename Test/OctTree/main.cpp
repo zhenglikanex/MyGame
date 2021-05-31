@@ -52,6 +52,47 @@ TEST_CASE_METHOD(Test, "Collision")
 	REQUIRE(TestCollision(box, box2));
 }
 
+TEST_CASE_METHOD(Test, "Sphere")
+{
+	std::vector<Circular> circulars;
+	for (auto i = 0; i < 500; ++i)
+	{
+		circulars.push_back(Circular{ vec2(1.3,1.5),4.5 });
+	}
+	
+	{
+		int cnt = 0;
+		auto a = Circular{ vec2(1.3,1.5),4.5 };
+		AutoTimer t("TestCollision");
+		for (int i = 0; i < 500; ++i)
+		{
+			for (int j = 0; j < 500; ++j)
+			{
+				if (TestCollision(a, a))
+				{
+					++cnt;
+				}
+			}
+		}
+	}
+	
+	{
+		int cnt = 0;
+		AutoTimer t("circulars");
+		for (auto& a : circulars)
+		{
+			for (auto& b : circulars)
+			{
+				if(TestCollision(a, b))
+				{
+					++cnt;
+				}
+			}
+		}
+		std::cout << cnt << std::endl;
+	}
+}
+
 TEST_CASE_METHOD(Test, "OctTree")
 {
 	std::default_random_engine e;

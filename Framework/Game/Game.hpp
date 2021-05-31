@@ -37,20 +37,6 @@ enum class GameMode
 	kServer
 };
 
-using CommandGroupO = std::unordered_map<uint32_t, Command>;
-
-struct CommandGroup
-{
-	uint32_t frame;
-	std::unordered_map<uint32_t, Command> commands;
-
-	CommandGroup()
-		: frame(std::numeric_limits<uint32_t>::max())
-	{
-
-	}
-};
-
 class Game
 {
 public:
@@ -69,6 +55,8 @@ public:
 	void InputCommand(uint32_t id, Command&& command);
 	void SetupCommands(uint32_t frame);
 
+	bool CheckPredict(const CommandGroup& command_group);
+	void FixFrame(const CommandGroup& command_group);
 	void SaveSnapshot();
 	void Rollback(uint32_t frame);
 	
@@ -97,6 +85,8 @@ private:
 			//assert(false && "load config failed!");
 		}
 	}
+
+	CommandGroup& GetCommandGroup(uint32_t frame);
 
 	GameMode game_mode_;
 	float run_time_;		// 注意,这个浮点数不会引起不同步的问题

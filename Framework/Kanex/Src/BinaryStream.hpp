@@ -11,6 +11,8 @@ namespace kanex
 	{
 	public:
 		Buffer(size_t capactiy) :write_cursor_(0), read_cursor_(0) { buffer_.reserve(capactiy); }
+		Buffer(const std::vector<char>& buffer) :buffer_(buffer), write_cursor_(buffer.size()), read_cursor_(0) { }
+		Buffer(std::vector<char>&& buffer) : buffer_(std::move(buffer)), write_cursor_(buffer.size()), read_cursor_(0) { }
 
 		void Write(const void* data, size_t size)
 		{

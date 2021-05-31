@@ -24,5 +24,18 @@ struct Command
 	}
 };
 
+struct CommandGroup
+{
+	uint32_t frame;
+	std::unordered_map<uint32_t, Command> commands;
+
+	CommandGroup()
+		: frame(std::numeric_limits<uint32_t>::max())
+	{
+
+	}
+};
+
 NON_MEMEBER_BAR(Command, obj.x_axis, obj.y_axis, obj.jump, obj.skill);
+NON_MEMEBER_BAR(CommandGroup, obj.frame, obj.commands);
 

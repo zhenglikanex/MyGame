@@ -132,9 +132,26 @@ extern "C"
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
 						InitGame(info.player_infos());
 					}
-					else if (message.name() == "net_player_input")
+					else if (message.name() == "all_player_input")
 					{
+						kanex::Buffer buffer(message.data().size());
+						buffer.Write(message.data().data(), message.data().size());
+
+						kanex::BinaryStream stream(buffer);
+						kanex::BinaryOutputArchive oar(stream);
 						
+						CommandGroup group;
+						oar(group);
+
+						if (!g_game->CheckPredict(group))
+						{
+							g_game->FixFrame(group);
+						}
+						
+					}
+					else if (message.name() == "player_input")
+					{
+
 					}
 				});
 

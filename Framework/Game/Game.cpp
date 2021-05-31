@@ -109,7 +109,7 @@ void Game::UpdateClinet()
 	auto& game_state = registry_.ctx<GameState>();
 	while (true)
 	{
-		auto& command_group = command_groups_[game_state.run_frame % command_groups_.size()];
+		auto& command_group = GetCommandGroup(game_state.run_frame);
 		if (command_group.frame != game_state.run_frame || run_frame_times >= GameConfig::kMaxOnceFrameRunNum)
 		{
 			return;
@@ -187,7 +187,7 @@ void Game::UpdateInput()
 {	
 	while (run_time_ > run_frame_ * input_frame_rate_ + input_frame_rate_)
 	{
-		auto& group = command_groups_[run_frame_ % command_groups_.size()];
+		auto& group = GetCommandGroup(run_frame_);
 		group.frame = run_frame_;
 		group.commands.clear();
 
@@ -211,7 +211,7 @@ void Game::UpdateInput()
 			else
 			{
 				// 简单的用上一帧命令填充(后续预测优化)
-				auto& last_group = command_groups_[(run_frame_ - 1) % command_groups_.size()];
+				auto& last_group = GetCommandGroup((run_frame_ - 1));
 				for (auto& last_command : last_group.commands)
 				{
 					if (group.commands.find(last_command.first) == group.commands.end())
@@ -235,8 +235,46 @@ void Game::UpdateInput()
 
 void Game::InputCommand(uint32_t id,Command&& command)
 {
-	auto& group = command_groups_[run_frame_ % command_groups_.size()];
+	auto& group = GetCommandGroup(run_frame_);
 	group.commands.emplace(id,std::move(command));
+}
+
+void Game::SetupCommands(uint32_t frame)
+{
+
+}
+
+bool Game::CheckPredict(const CommandGroup& command_group)
+{
+	assert( command_group.frame < run_frame_ &&
+			command_group.frame > real_frame_ &&
+			"!");
+
+	auto& predict_command_group = GetCommandGroup(command_group.frame);
+	assert(predict_command_group.frame == command_group.frame && "!");
+	
+	return command_group.commands == predict_command_group.commands;
+}
+
+void Game::FixFrame(const CommandGroup& server_command_group)
+{
+	//回滚到上一帧
+	Rollback(server_command_group.frame - 1);
+
+	auto& predict_command_group = GetCommandGroup(server_command_group.frame);
+	predict_command_group.commands = server_command_group.commands;
+
+	auto fix_command_group = server_command_group;
+	for (uint32_t frame = server_command_group.frame + 1; frame <= run_frame_; ++frame)
+	{
+		// 修正网络玩家的预测帧
+		auto& predict_command_group = GetCommandGroup(frame);
+
+		uint32_t local_id = 0;
+		fix_command_group.commands[local_id] = predict_command_group.commands[local_id];
+		
+		predict_command_group.commands = predict_command_group.commands;
+	}
 }
 
 void Game::SaveSnapshot()
@@ -255,7 +293,6 @@ void Game::SaveSnapshot()
 		.component<
 		ActorAsset,
 		ActorState,
-		ExitSkillState,
 		EnterActorState,
 		AnimationAsset,
 		AnimationClip,
@@ -310,7 +347,6 @@ void Game::Rollback(uint32_t frame)
 		.component <
 		ActorAsset,
 		ActorState,
-		ExitSkillState,
 		EnterActorState,
 		AnimationAsset,
 		AnimationClip,
@@ -360,4 +396,9 @@ void Game::CreatePlayer()
 void Game::LoadAllConfig()
 {
 	
+}
+
+CommandGroup& Game::GetCommandGroup(uint32_t frame)
+{
+	return command_groups_[frame % command_groups_.size()];
 }

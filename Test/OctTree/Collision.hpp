@@ -151,6 +151,16 @@ int TestCollision(const Sphere& a, const Sphere& b)
 	return dist2 <= radius_sum * radius_sum; 
 }
 
+int TestCollision(const Circular& a, const Circular& b)
+{
+	auto deltaX = a.c.x - b.c.x;
+	auto deltaY = a.c.y - b.c.y;
+	auto disSqrt = deltaX * deltaX + deltaY * deltaY;
+
+    auto radiusSum = a.r + b.r;
+    return disSqrt < (radiusSum* radiusSum);
+}
+
 int TestCollision(const AABB& a, const AABB& b)
 {
     if (fpm::abs(a.c[0] - b.c[0]) > (a.r[0] + b.r[0])) return 0;
