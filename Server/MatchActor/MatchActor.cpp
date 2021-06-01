@@ -49,11 +49,13 @@ void MatchActor::Match()
 		{
 			Call(id, "start", std::make_any<decltype(matching_agent_)>(matching_agent_));
 
-			for (auto& entry : matching_agent_)
+			for(auto& entry : matching_agent_)
 			{
 				Call(entry.second, "join_battle", std::make_any<ActorId>(entry.second));
 			}
 			matching_agent_.clear();
+
+			Call(id, "start_battle");
 		}
 	}
 }

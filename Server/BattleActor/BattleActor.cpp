@@ -7,8 +7,8 @@ BattleActor::BattleActor(ActorId id)
 	: Actor(id)
 	, start_(false)
 	, last_time_(0)
-	, time_(0)
-	, frame_(0)
+	, run_time_(0)
+	, run_frame_(0)
 {
 
 }
@@ -68,30 +68,59 @@ void BattleActor::StartBattle()
 	}
 
 	start_ = true;
+	last_time_ = system_clock::now().time_since_epoch().count();
 	AddTimer(1, -1, [this]()
-		{
-
-			last_time_ = system_clock::now().time_since_epoch().count();
-		});
+	{
+		uint32_t now = system_clock::now().time_since_epoch().count();
+		Update((now - last_time_) / 1000.f);
+		last_time_ = now;
+	});
 
 	std::cout << "BattleActor start!!!" << std::endl;
 }
 
-void BattleActor::Update(uint32_t dt)
+void BattleActor::Update(float dt)
 {
-
+	run_time_ += dt;
+	while (run_time_ > run_frame_ * kFrameTime + kFrameTime)
+	{
+		PushPlayerCommand();
+		++run_frame_;
+	}
 }
 
 void BattleActor::InputPlayerCommand(ActorId id, const Proto::GameCommond& command)
 {
+	auto it = player_commands_.find(id);
+	if (it == player_commands_.end())
+	{
+		player_commands_.emplace(id, std::vector<Proto::GameCommond>());
+	}
 
+	player_commands_[id].emplace_back(command);
 }
 
 void BattleActor::PushPlayerCommand()
 {
+	Proto::GameCommondGroup group;
+	auto commands = group.mutable_commonds();
 	for (auto player : players_)
 	{
-		Proto::GameCommondGroup group;
+		auto it = player_commands_.find(player);
+		if (it != player_commands_.end())
+		{
+			if (it->second.size() <= run_frame_)
+			{
+				it->second.push_back(Proto::GameCommond());
+			}
+			
+			
+		}
+	}
+
+	for (auto player : players_)
+	{
+		
 		Call(player, "send", std::move(group));
 	}
 }

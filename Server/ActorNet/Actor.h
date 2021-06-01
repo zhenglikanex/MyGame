@@ -64,7 +64,7 @@ namespace actor_net
 
 		void Request(ActorId dest_id, const std::string_view func_name, std::any&& data, const std::function<void(ActorMessage&&)>& callback);
 		void Request(const std::string& actor_name, const std::string_view func_name, std::any&& data, const std::function<void(ActorMessage&&)>& callback);
-		void Call(ActorId dest_id, const std::string_view func_name, std::any&& data);
+		void Call(ActorId dest_id, const std::string_view func_name, std::any&& data = nullptr);
 
 		// 可以把message的data的解析和包装分装起来,大概像下面这样实现,懒的改了,先不管他
 		//Request1(id_, "str", Response<int, int>([](int, int) {}), 10, 10);调用方式
