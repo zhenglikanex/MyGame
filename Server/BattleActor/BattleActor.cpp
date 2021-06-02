@@ -55,7 +55,7 @@ void BattleActor::Start(const std::any& data)
 			player->set_id(j);
 			player->set_actor_asset("hero.json");
 		}
-
+		info.ByteSize();
 		Call(players_[i], "send", std::move(info));
 	}
 }
@@ -113,15 +113,14 @@ void BattleActor::PushPlayerCommand()
 			{
 				it->second.push_back(Proto::GameCommond());
 			}
-			
-			
+			(*commands)[player] = it->second[run_frame_];
 		}
 	}
 
 	for (auto player : players_)
 	{
-		
-		Call(player, "send", std::move(group));
+		auto data = group;
+		Call(player, "send", std::move(data));
 	}
 }
 
