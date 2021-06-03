@@ -5,6 +5,7 @@
 #include <string>
 
 #include "3rdparty/include/kcp/ikcp.h"
+#include "3rdparty/include/google/protobuf/message.h"
 
 struct IKCPCB;
 typedef struct IKCPCB ikcpcb;
@@ -151,4 +152,14 @@ inline bool IsKcpDisconnectMsg(const char* data,size_t size)
 inline kcp_conv_t GetKcpConv(const char* data)
 {
 	return std::atol(data + kRspKcpConnect.size());
+}
+
+template<class T>
+std::enable_if_t<std::is_base_of_v<google::protobuf::Message, T>,std::vector<uint8_t>>
+Serialize(const T& data)
+{
+	std::vector<uint8_t> buffer(data.ByteSize());
+	data.SerializeToArray(buffer.data(), buffer.size());
+
+	return buffer;
 }

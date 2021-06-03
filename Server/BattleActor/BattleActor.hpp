@@ -19,13 +19,13 @@ public:
 	void Start(const std::any& data);
 	void StartBattle();
 	void Update(float dt);
-	void InputPlayerCommand(ActorId id, const Proto::GameCommond& command);
-	void PushPlayerCommand();
+	void InputCommand(ActorId id, const Proto::GameCommand& command);
+	void PushCommandGroup();
 private:
 	const float kFrameTime = 0.03333334f;
 
 	std::vector<ActorId> players_;
-	std::unordered_map<ActorId, std::vector<Proto::GameCommond>> player_commands_;
+	std::unordered_map<ActorId, std::vector<Proto::GameCommand>> player_commands_;
 	bool start_;
 	uint32_t last_time_;
 	float run_time_;

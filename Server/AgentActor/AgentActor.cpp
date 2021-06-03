@@ -2,6 +2,10 @@
 
 #include <iostream>
 
+#include "Framework/Network/NetMessage.hpp"
+
+#include "Framework/Proto/Battle.pb.h"
+
 AgentActor::AgentActor(ActorId id)
 	: Actor(id)
 	, gate_(kNull)
@@ -32,6 +36,7 @@ bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	ClientConnect("ping", &AgentActor::Ping);
 	ClientConnect("join_match", &AgentActor::JoinMatch);
 	ClientConnect("battle_loaded", &AgentActor::BattledLoaded);
+	ClientConnect("input_command", &AgentActor::BattledLoaded);
 
 	return true;
 }
@@ -177,6 +182,17 @@ void AgentActor::BattledLoaded(const NetMessage& request)
 	NetMessage response;
 	response.set_session(request.session());
 	Call(gate_,"send", std::move(response));
+}
+
+void AgentActor::InputCommand(const NetMessage& request)
+{
+	if (battle_ != kNull)
+	{
+		Proto::GameCommand command;
+		command.ParseFromArray(request.data().data(), request.data().size());
+		
+		Call(battle_, "input_command", std::make_tuple(id(),std::move(command)));
+	}
 }
 
 ACTOR_IMPLEMENT(AgentActor)

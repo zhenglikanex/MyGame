@@ -87,7 +87,7 @@ extern "C"
 	{
 		if (g_game)
 		{
-			Proto::GameCommondGroup group;
+			Proto::GameCommandGroup group;
 			group.ParseFromArray(data, size);
 
 			for (auto iter = group.commonds().cbegin(); iter != group.commonds().cend(); ++iter)
@@ -132,24 +132,31 @@ extern "C"
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
 						InitGame(info.player_infos());
 					}
-					else if (message.name() == "all_player_input")
+					else if (message.name() == "player_input")
 					{
-						kanex::Buffer buffer(message.data().size());
-						buffer.Write(message.data().data(), message.data().size());
+						Proto::GameCommandGroup game_command_group;
+						game_command_group.ParseFromArray(message.data().data(), message.data().size());
 
-						kanex::BinaryStream stream(buffer);
-						kanex::BinaryOutputArchive oar(stream);
-						
 						CommandGroup group;
-						oar(group);
+						group.frame = game_command_group.frame();
+						for (auto& entry : game_command_group.commands())
+						{
+							Command command;
+							command.x_axis = entry.second.x_axis();
+							command.y_axis = entry.second.y_axis();
+							command.skill = entry.second.skill();
+							command.jump = entry.second.jump();
+							
+							group.commands.emplace(entry.first, command);
+						}
 
 						if (!g_game->CheckPredict(group))
 						{
 							g_game->FixFrame(group);
 						}
-						
+
 					}
-					else if (message.name() == "player_input")
+					else if (message.name() == "")
 					{
 
 					}

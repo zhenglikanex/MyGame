@@ -26,20 +26,21 @@ namespace Proto {
             "KA0SEwoLYWN0b3JfYXNzZXQYAiABKAkiOgoPR2FtZVBsYXllckluZm9zEicK",
             "DHBsYXllcl9pbmZvcxgBIAMoCzIRLlByb3RvLlBsYXllckluZm8iTgoPU3Rh",
             "cnRCYXR0bGVJbmZvEg0KBW15X2lkGAEgASgNEiwKDHBsYXllcl9pbmZvcxgC",
-            "IAEoCzIWLlByb3RvLkdhbWVQbGF5ZXJJbmZvcyJKCgtHYW1lQ29tbW9uZBIO",
+            "IAEoCzIWLlByb3RvLkdhbWVQbGF5ZXJJbmZvcyJKCgtHYW1lQ29tbWFuZBIO",
             "CgZ4X2F4aXMYASABKAISDgoGeV9heGlzGAIgASgCEgwKBGp1bXAYAyABKAgS",
-            "DQoFc2tpbGwYBCABKAUikAEKEEdhbWVDb21tb25kR3JvdXASNwoIY29tbW9u",
-            "ZHMYASADKAsyJS5Qcm90by5HYW1lQ29tbW9uZEdyb3VwLkNvbW1vbmRzRW50",
-            "cnkaQwoNQ29tbW9uZHNFbnRyeRILCgNrZXkYASABKA0SIQoFdmFsdWUYAiAB",
-            "KAsyEi5Qcm90by5HYW1lQ29tbW9uZDoCOAFiBnByb3RvMw=="));
+            "DQoFc2tpbGwYBCABKAUinwEKEEdhbWVDb21tYW5kR3JvdXASDQoFZnJhbWUY",
+            "ASABKA0SNwoIY29tbWFuZHMYAiADKAsyJS5Qcm90by5HYW1lQ29tbWFuZEdy",
+            "b3VwLkNvbW1hbmRzRW50cnkaQwoNQ29tbWFuZHNFbnRyeRILCgNrZXkYASAB",
+            "KA0SIQoFdmFsdWUYAiABKAsyEi5Qcm90by5HYW1lQ29tbWFuZDoCOAFiBnBy",
+            "b3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerInfo), global::Proto.PlayerInfo.Parser, new[]{ "Id", "ActorAsset" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GamePlayerInfos), global::Proto.GamePlayerInfos.Parser, new[]{ "PlayerInfos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.StartBattleInfo), global::Proto.StartBattleInfo.Parser, new[]{ "MyId", "PlayerInfos" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommond), global::Proto.GameCommond.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommondGroup), global::Proto.GameCommondGroup.Parser, new[]{ "Commonds" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommand), global::Proto.GameCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommandGroup), global::Proto.GameCommandGroup.Parser, new[]{ "Frame", "Commands" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
     }
     #endregion
@@ -451,10 +452,10 @@ namespace Proto {
 
   }
 
-  public sealed partial class GameCommond : pb::IMessage<GameCommond> {
-    private static readonly pb::MessageParser<GameCommond> _parser = new pb::MessageParser<GameCommond>(() => new GameCommond());
+  public sealed partial class GameCommand : pb::IMessage<GameCommand> {
+    private static readonly pb::MessageParser<GameCommand> _parser = new pb::MessageParser<GameCommand>(() => new GameCommand());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GameCommond> Parser { get { return _parser; } }
+    public static pb::MessageParser<GameCommand> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -467,14 +468,14 @@ namespace Proto {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameCommond() {
+    public GameCommand() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameCommond(GameCommond other) : this() {
+    public GameCommand(GameCommand other) : this() {
       xAxis_ = other.xAxis_;
       yAxis_ = other.yAxis_;
       jump_ = other.jump_;
@@ -482,8 +483,8 @@ namespace Proto {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameCommond Clone() {
-      return new GameCommond(this);
+    public GameCommand Clone() {
+      return new GameCommand(this);
     }
 
     /// <summary>Field number for the "x_axis" field.</summary>
@@ -541,11 +542,11 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as GameCommond);
+      return Equals(other as GameCommand);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GameCommond other) {
+    public bool Equals(GameCommand other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -613,7 +614,7 @@ namespace Proto {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GameCommond other) {
+    public void MergeFrom(GameCommand other) {
       if (other == null) {
         return;
       }
@@ -661,10 +662,10 @@ namespace Proto {
 
   }
 
-  public sealed partial class GameCommondGroup : pb::IMessage<GameCommondGroup> {
-    private static readonly pb::MessageParser<GameCommondGroup> _parser = new pb::MessageParser<GameCommondGroup>(() => new GameCommondGroup());
+  public sealed partial class GameCommandGroup : pb::IMessage<GameCommandGroup> {
+    private static readonly pb::MessageParser<GameCommandGroup> _parser = new pb::MessageParser<GameCommandGroup>(() => new GameCommandGroup());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GameCommondGroup> Parser { get { return _parser; } }
+    public static pb::MessageParser<GameCommandGroup> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -677,53 +678,67 @@ namespace Proto {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameCommondGroup() {
+    public GameCommandGroup() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameCommondGroup(GameCommondGroup other) : this() {
-      commonds_ = other.commonds_.Clone();
+    public GameCommandGroup(GameCommandGroup other) : this() {
+      frame_ = other.frame_;
+      commands_ = other.commands_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameCommondGroup Clone() {
-      return new GameCommondGroup(this);
+    public GameCommandGroup Clone() {
+      return new GameCommandGroup(this);
     }
 
-    /// <summary>Field number for the "commonds" field.</summary>
-    public const int CommondsFieldNumber = 1;
-    private static readonly pbc::MapField<uint, global::Proto.GameCommond>.Codec _map_commonds_codec
-        = new pbc::MapField<uint, global::Proto.GameCommond>.Codec(pb::FieldCodec.ForUInt32(8), pb::FieldCodec.ForMessage(18, global::Proto.GameCommond.Parser), 10);
-    private readonly pbc::MapField<uint, global::Proto.GameCommond> commonds_ = new pbc::MapField<uint, global::Proto.GameCommond>();
+    /// <summary>Field number for the "frame" field.</summary>
+    public const int FrameFieldNumber = 1;
+    private uint frame_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<uint, global::Proto.GameCommond> Commonds {
-      get { return commonds_; }
+    public uint Frame {
+      get { return frame_; }
+      set {
+        frame_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "commands" field.</summary>
+    public const int CommandsFieldNumber = 2;
+    private static readonly pbc::MapField<uint, global::Proto.GameCommand>.Codec _map_commands_codec
+        = new pbc::MapField<uint, global::Proto.GameCommand>.Codec(pb::FieldCodec.ForUInt32(8), pb::FieldCodec.ForMessage(18, global::Proto.GameCommand.Parser), 18);
+    private readonly pbc::MapField<uint, global::Proto.GameCommand> commands_ = new pbc::MapField<uint, global::Proto.GameCommand>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::MapField<uint, global::Proto.GameCommand> Commands {
+      get { return commands_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as GameCommondGroup);
+      return Equals(other as GameCommandGroup);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GameCommondGroup other) {
+    public bool Equals(GameCommandGroup other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!Commonds.Equals(other.Commonds)) return false;
+      if (Frame != other.Frame) return false;
+      if (!Commands.Equals(other.Commands)) return false;
       return true;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      hash ^= Commonds.GetHashCode();
+      if (Frame != 0) hash ^= Frame.GetHashCode();
+      hash ^= Commands.GetHashCode();
       return hash;
     }
 
@@ -734,22 +749,32 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      commonds_.WriteTo(output, _map_commonds_codec);
+      if (Frame != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(Frame);
+      }
+      commands_.WriteTo(output, _map_commands_codec);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      size += commonds_.CalculateSize(_map_commonds_codec);
+      if (Frame != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Frame);
+      }
+      size += commands_.CalculateSize(_map_commands_codec);
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GameCommondGroup other) {
+    public void MergeFrom(GameCommandGroup other) {
       if (other == null) {
         return;
       }
-      commonds_.Add(other.commonds_);
+      if (other.Frame != 0) {
+        Frame = other.Frame;
+      }
+      commands_.Add(other.commands_);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -760,8 +785,12 @@ namespace Proto {
           default:
             input.SkipLastField();
             break;
-          case 10: {
-            commonds_.AddEntriesFrom(input, _map_commonds_codec);
+          case 8: {
+            Frame = input.ReadUInt32();
+            break;
+          }
+          case 18: {
+            commands_.AddEntriesFrom(input, _map_commands_codec);
             break;
           }
         }

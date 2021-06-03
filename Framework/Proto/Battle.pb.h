@@ -38,8 +38,8 @@ void protobuf_AddDesc_Battle_2eproto();
 void protobuf_AssignDesc_Battle_2eproto();
 void protobuf_ShutdownFile_Battle_2eproto();
 
-class GameCommond;
-class GameCommondGroup;
+class GameCommand;
+class GameCommandGroup;
 class GamePlayerInfos;
 class PlayerInfo;
 class StartBattleInfo;
@@ -320,32 +320,32 @@ class StartBattleInfo : public ::google::protobuf::Message /* @@protoc_insertion
 };
 // -------------------------------------------------------------------
 
-class GameCommond : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.GameCommond) */ {
+class GameCommand : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.GameCommand) */ {
  public:
-  GameCommond();
-  virtual ~GameCommond();
+  GameCommand();
+  virtual ~GameCommand();
 
-  GameCommond(const GameCommond& from);
+  GameCommand(const GameCommand& from);
 
-  inline GameCommond& operator=(const GameCommond& from) {
+  inline GameCommand& operator=(const GameCommand& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const GameCommond& default_instance();
+  static const GameCommand& default_instance();
 
-  void Swap(GameCommond* other);
+  void Swap(GameCommand* other);
 
   // implements Message ----------------------------------------------
 
-  inline GameCommond* New() const { return New(NULL); }
+  inline GameCommand* New() const { return New(NULL); }
 
-  GameCommond* New(::google::protobuf::Arena* arena) const;
+  GameCommand* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const GameCommond& from);
-  void MergeFrom(const GameCommond& from);
+  void CopyFrom(const GameCommand& from);
+  void MergeFrom(const GameCommand& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -364,7 +364,7 @@ class GameCommond : public ::google::protobuf::Message /* @@protoc_insertion_poi
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(GameCommond* other);
+  void InternalSwap(GameCommand* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -404,7 +404,7 @@ class GameCommond : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::int32 skill() const;
   void set_skill(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:Proto.GameCommond)
+  // @@protoc_insertion_point(class_scope:Proto.GameCommand)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -419,36 +419,36 @@ class GameCommond : public ::google::protobuf::Message /* @@protoc_insertion_poi
   friend void protobuf_ShutdownFile_Battle_2eproto();
 
   void InitAsDefaultInstance();
-  static GameCommond* default_instance_;
+  static GameCommand* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class GameCommondGroup : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.GameCommondGroup) */ {
+class GameCommandGroup : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.GameCommandGroup) */ {
  public:
-  GameCommondGroup();
-  virtual ~GameCommondGroup();
+  GameCommandGroup();
+  virtual ~GameCommandGroup();
 
-  GameCommondGroup(const GameCommondGroup& from);
+  GameCommandGroup(const GameCommandGroup& from);
 
-  inline GameCommondGroup& operator=(const GameCommondGroup& from) {
+  inline GameCommandGroup& operator=(const GameCommandGroup& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const GameCommondGroup& default_instance();
+  static const GameCommandGroup& default_instance();
 
-  void Swap(GameCommondGroup* other);
+  void Swap(GameCommandGroup* other);
 
   // implements Message ----------------------------------------------
 
-  inline GameCommondGroup* New() const { return New(NULL); }
+  inline GameCommandGroup* New() const { return New(NULL); }
 
-  GameCommondGroup* New(::google::protobuf::Arena* arena) const;
+  GameCommandGroup* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const GameCommondGroup& from);
-  void MergeFrom(const GameCommondGroup& from);
+  void CopyFrom(const GameCommandGroup& from);
+  void MergeFrom(const GameCommandGroup& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -467,7 +467,7 @@ class GameCommondGroup : public ::google::protobuf::Message /* @@protoc_insertio
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(GameCommondGroup* other);
+  void InternalSwap(GameCommandGroup* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -484,38 +484,45 @@ class GameCommondGroup : public ::google::protobuf::Message /* @@protoc_insertio
 
   // accessors -------------------------------------------------------
 
-  // map<uint32, .Proto.GameCommond> commonds = 1;
-  int commonds_size() const;
-  void clear_commonds();
-  static const int kCommondsFieldNumber = 1;
-  const ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >&
-      commonds() const;
-  ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >*
-      mutable_commonds();
+  // optional uint32 frame = 1;
+  void clear_frame();
+  static const int kFrameFieldNumber = 1;
+  ::google::protobuf::uint32 frame() const;
+  void set_frame(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:Proto.GameCommondGroup)
+  // map<uint32, .Proto.GameCommand> commands = 2;
+  int commands_size() const;
+  void clear_commands();
+  static const int kCommandsFieldNumber = 2;
+  const ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommand >&
+      commands() const;
+  ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommand >*
+      mutable_commands();
+
+  // @@protoc_insertion_point(class_scope:Proto.GameCommandGroup)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::google::protobuf::uint32, ::Proto::GameCommond,
+      ::google::protobuf::uint32, ::Proto::GameCommand,
       ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
-      GameCommondGroup_CommondsEntry;
+      GameCommandGroup_CommandsEntry;
   ::google::protobuf::internal::MapField<
-      ::google::protobuf::uint32, ::Proto::GameCommond,
+      ::google::protobuf::uint32, ::Proto::GameCommand,
       ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
-      0 > commonds_;
+      0 > commands_;
+  ::google::protobuf::uint32 frame_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
   friend void protobuf_AssignDesc_Battle_2eproto();
   friend void protobuf_ShutdownFile_Battle_2eproto();
 
   void InitAsDefaultInstance();
-  static GameCommondGroup* default_instance_;
+  static GameCommandGroup* default_instance_;
 };
 // ===================================================================
 
@@ -675,84 +682,98 @@ inline void StartBattleInfo::set_allocated_player_infos(::Proto::GamePlayerInfos
 
 // -------------------------------------------------------------------
 
-// GameCommond
+// GameCommand
 
 // optional float x_axis = 1;
-inline void GameCommond::clear_x_axis() {
+inline void GameCommand::clear_x_axis() {
   x_axis_ = 0;
 }
-inline float GameCommond::x_axis() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommond.x_axis)
+inline float GameCommand::x_axis() const {
+  // @@protoc_insertion_point(field_get:Proto.GameCommand.x_axis)
   return x_axis_;
 }
-inline void GameCommond::set_x_axis(float value) {
+inline void GameCommand::set_x_axis(float value) {
   
   x_axis_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommond.x_axis)
+  // @@protoc_insertion_point(field_set:Proto.GameCommand.x_axis)
 }
 
 // optional float y_axis = 2;
-inline void GameCommond::clear_y_axis() {
+inline void GameCommand::clear_y_axis() {
   y_axis_ = 0;
 }
-inline float GameCommond::y_axis() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommond.y_axis)
+inline float GameCommand::y_axis() const {
+  // @@protoc_insertion_point(field_get:Proto.GameCommand.y_axis)
   return y_axis_;
 }
-inline void GameCommond::set_y_axis(float value) {
+inline void GameCommand::set_y_axis(float value) {
   
   y_axis_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommond.y_axis)
+  // @@protoc_insertion_point(field_set:Proto.GameCommand.y_axis)
 }
 
 // optional bool jump = 3;
-inline void GameCommond::clear_jump() {
+inline void GameCommand::clear_jump() {
   jump_ = false;
 }
-inline bool GameCommond::jump() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommond.jump)
+inline bool GameCommand::jump() const {
+  // @@protoc_insertion_point(field_get:Proto.GameCommand.jump)
   return jump_;
 }
-inline void GameCommond::set_jump(bool value) {
+inline void GameCommand::set_jump(bool value) {
   
   jump_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommond.jump)
+  // @@protoc_insertion_point(field_set:Proto.GameCommand.jump)
 }
 
 // optional int32 skill = 4;
-inline void GameCommond::clear_skill() {
+inline void GameCommand::clear_skill() {
   skill_ = 0;
 }
-inline ::google::protobuf::int32 GameCommond::skill() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommond.skill)
+inline ::google::protobuf::int32 GameCommand::skill() const {
+  // @@protoc_insertion_point(field_get:Proto.GameCommand.skill)
   return skill_;
 }
-inline void GameCommond::set_skill(::google::protobuf::int32 value) {
+inline void GameCommand::set_skill(::google::protobuf::int32 value) {
   
   skill_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommond.skill)
+  // @@protoc_insertion_point(field_set:Proto.GameCommand.skill)
 }
 
 // -------------------------------------------------------------------
 
-// GameCommondGroup
+// GameCommandGroup
 
-// map<uint32, .Proto.GameCommond> commonds = 1;
-inline int GameCommondGroup::commonds_size() const {
-  return commonds_.size();
+// optional uint32 frame = 1;
+inline void GameCommandGroup::clear_frame() {
+  frame_ = 0u;
 }
-inline void GameCommondGroup::clear_commonds() {
-  commonds_.Clear();
+inline ::google::protobuf::uint32 GameCommandGroup::frame() const {
+  // @@protoc_insertion_point(field_get:Proto.GameCommandGroup.frame)
+  return frame_;
 }
-inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >&
-GameCommondGroup::commonds() const {
-  // @@protoc_insertion_point(field_map:Proto.GameCommondGroup.commonds)
-  return commonds_.GetMap();
+inline void GameCommandGroup::set_frame(::google::protobuf::uint32 value) {
+  
+  frame_ = value;
+  // @@protoc_insertion_point(field_set:Proto.GameCommandGroup.frame)
 }
-inline ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommond >*
-GameCommondGroup::mutable_commonds() {
-  // @@protoc_insertion_point(field_mutable_map:Proto.GameCommondGroup.commonds)
-  return commonds_.MutableMap();
+
+// map<uint32, .Proto.GameCommand> commands = 2;
+inline int GameCommandGroup::commands_size() const {
+  return commands_.size();
+}
+inline void GameCommandGroup::clear_commands() {
+  commands_.Clear();
+}
+inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommand >&
+GameCommandGroup::commands() const {
+  // @@protoc_insertion_point(field_map:Proto.GameCommandGroup.commands)
+  return commands_.GetMap();
+}
+inline ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommand >*
+GameCommandGroup::mutable_commands() {
+  // @@protoc_insertion_point(field_mutable_map:Proto.GameCommandGroup.commands)
+  return commands_.MutableMap();
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS

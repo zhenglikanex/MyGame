@@ -1,5 +1,8 @@
 #include "BattleActor.hpp"
+
 #include <iostream>
+
+#include "Framework/Network/NetMessage.hpp"
 
 using namespace std::chrono;
 
@@ -26,6 +29,7 @@ bool BattleActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	}
 
 	RequestConnect("start_battle", &BattleActor::StartBattle, this);
+	RequestConnect("input_command", &BattleActor::InputCommand, this);
 
 	return true;
 }
@@ -55,8 +59,8 @@ void BattleActor::Start(const std::any& data)
 			player->set_id(j);
 			player->set_actor_asset("hero.json");
 		}
-		info.ByteSize();
-		Call(players_[i], "send", std::move(info));
+		
+		Call(players_[i], "send",std::make_tuple(std::string("" Serialize(info));
 	}
 }
 
@@ -84,26 +88,28 @@ void BattleActor::Update(float dt)
 	run_time_ += dt;
 	while (run_time_ > run_frame_ * kFrameTime + kFrameTime)
 	{
-		PushPlayerCommand();
+		PushCommandGroup();
 		++run_frame_;
 	}
 }
 
-void BattleActor::InputPlayerCommand(ActorId id, const Proto::GameCommond& command)
+void BattleActor::InputCommand(ActorId id, const Proto::GameCommand& command)
 {
 	auto it = player_commands_.find(id);
 	if (it == player_commands_.end())
 	{
-		player_commands_.emplace(id, std::vector<Proto::GameCommond>());
+		player_commands_.emplace(id, std::vector<Proto::GameCommand>());
 	}
 
 	player_commands_[id].emplace_back(command);
 }
 
-void BattleActor::PushPlayerCommand()
+void BattleActor::PushCommandGroup()
 {
-	Proto::GameCommondGroup group;
-	auto commands = group.mutable_commonds();
+	Proto::GameCommandGroup group;
+	group.frame = run_frame_;
+
+	auto commands = group.mutable_commands();
 	for (auto player : players_)
 	{
 		auto it = player_commands_.find(player);
@@ -111,16 +117,18 @@ void BattleActor::PushPlayerCommand()
 		{
 			if (it->second.size() <= run_frame_)
 			{
-				it->second.push_back(Proto::GameCommond());
+				it->second.push_back(Proto::GameCommand());
 			}
 			(*commands)[player] = it->second[run_frame_];
 		}
 	}
 
+	auto buffer = Serialize(group);
+	
 	for (auto player : players_)
 	{
-		auto data = group;
-		Call(player, "send", std::move(data));
+		auto data = buffer;
+		Call(player, "send", std::make_tuple(std::string("push_command_group"),std::move(data)));
 	}
 }
 

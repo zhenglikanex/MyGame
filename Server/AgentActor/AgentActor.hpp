@@ -41,6 +41,7 @@ private:
 	void JoinMatch(const NetMessage& request);
 	void LeaveMatch(const NetMessage& request);
 	void BattledLoaded(const NetMessage& request);
+	void InputCommand(const NetMessage& request);
 private:
 
 	ActorId gate_;

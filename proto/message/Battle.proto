@@ -19,7 +19,7 @@ message StartBattleInfo
 	GamePlayerInfos player_infos = 2;
 }
 
-message GameCommond
+message GameCommand
 {
 	float x_axis = 1;		// 摇杆输入
 	float y_axis = 2;		// 摇杆输入
@@ -29,7 +29,8 @@ message GameCommond
 	int32 skill = 4;
 }
 
-message GameCommondGroup
+message GameCommandGroup
 {
-	map<uint32,GameCommond> commonds = 1;
+	uint32 frame = 1;
+	map<uint32,GameCommand> commands = 2;
 }
