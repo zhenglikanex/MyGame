@@ -31,7 +31,6 @@ bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	ActorConnect("start", &AgentActor::Start,this);
 	ActorConnect("send", &AgentActor::Send, this);
 	ActorConnect("client", &AgentActor::ClientReceive,this);
-	ActorConnect("join_battle", &AgentActor::JoinBattle, this);
 
 	ClientConnect("ping", &AgentActor::Ping);
 	ClientConnect("join_match", &AgentActor::JoinMatch);
@@ -83,17 +82,6 @@ void AgentActor::Send(const std::any& data)
 	push.set_data(std::move(buffer));
 
 	Call(gate_, "send", std::make_tuple(conv_, push));
-}
-
-void AgentActor::JoinBattle(const std::any& data)
-{
-	battle_ = std::any_cast<ActorId>(data);
-	if (battle_ != kNull)
-	{
-		NetMessage push;
-		push.set_name("join_battle");
-		Call(gate_, "send", std::make_tuple(conv_, std::move(push)));
-	}
 }
 
 void AgentActor::Ping(const NetMessage& request)

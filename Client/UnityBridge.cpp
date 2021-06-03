@@ -90,7 +90,7 @@ extern "C"
 			Proto::GameCommandGroup group;
 			group.ParseFromArray(data, size);
 
-			for (auto iter = group.commonds().cbegin(); iter != group.commonds().cend(); ++iter)
+			for (auto iter = group.commands().cbegin(); iter != group.commands().cend(); ++iter)
 			{
 				Command cmd;
 				cmd.x_axis = fixed16(std::abs(iter->second.x_axis()) < 0.1 ? 0 : iter->second.x_axis());
@@ -123,7 +123,7 @@ extern "C"
 			// ÍµÀÁÐ´ÕâÀïÁË
 			g_network_service->set_messge_handler([](const NetMessage& message)
 				{
-					if (message.name() == "join_battle")
+					if (message.name() == "start_battle")
 					{
 						INFO("join_battle");
 
@@ -132,7 +132,7 @@ extern "C"
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
 						InitGame(info.player_infos());
 					}
-					else if (message.name() == "player_input")
+					else if (message.name() == "input_command_group")
 					{
 						Proto::GameCommandGroup game_command_group;
 						game_command_group.ParseFromArray(message.data().data(), message.data().size());
@@ -156,7 +156,7 @@ extern "C"
 						}
 
 					}
-					else if (message.name() == "")
+					else if (message.name() == "input_command")
 					{
 
 					}

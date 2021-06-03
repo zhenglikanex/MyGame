@@ -60,7 +60,7 @@ void BattleActor::Start(const std::any& data)
 			player->set_actor_asset("hero.json");
 		}
 		
-		Call(players_[i], "send",std::make_tuple(std::string("" Serialize(info));
+		Call(players_[i], "send",std::make_tuple(std::string("start_battle"),Serialize(info)));
 	}
 }
 
@@ -107,7 +107,7 @@ void BattleActor::InputCommand(ActorId id, const Proto::GameCommand& command)
 void BattleActor::PushCommandGroup()
 {
 	Proto::GameCommandGroup group;
-	group.frame = run_frame_;
+	group.set_frame(run_frame_);
 
 	auto commands = group.mutable_commands();
 	for (auto player : players_)
@@ -128,7 +128,7 @@ void BattleActor::PushCommandGroup()
 	for (auto player : players_)
 	{
 		auto data = buffer;
-		Call(player, "send", std::make_tuple(std::string("push_command_group"),std::move(data)));
+		Call(player, "send", std::make_tuple(std::string("input_command_group"),std::move(data)));
 	}
 }
 
