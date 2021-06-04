@@ -52,11 +52,11 @@ public:
 	void UpdateServer();
 
 	// 外部调用
-	void InputCommand(uint32_t id, Command&& command);
+	void InputCommand(uint32_t id,const Command& command);
 	void SetupCommands(uint32_t frame);
 
 	bool CheckPredict(const CommandGroup& command_group);
-	void FixFrame(const CommandGroup& command_group);
+	void FixPredict(uint32_t local_id,const CommandGroup& command_group);
 	void SaveSnapshot();
 	void Rollback(uint32_t frame);
 	

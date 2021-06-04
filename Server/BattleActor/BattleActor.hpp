@@ -25,6 +25,7 @@ private:
 	const float kFrameTime = 0.03333334f;
 
 	std::vector<ActorId> players_;
+	std::unordered_map<ActorId, uint32_t> ids_;
 	std::unordered_map<ActorId, std::vector<Proto::GameCommand>> player_commands_;
 	bool start_;
 	uint32_t last_time_;

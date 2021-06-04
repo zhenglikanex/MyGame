@@ -233,10 +233,10 @@ void Game::UpdateInput()
 	}
 }
 
-void Game::InputCommand(uint32_t id,Command&& command)
+void Game::InputCommand(uint32_t id, const Command& command)
 {
 	auto& group = GetCommandGroup(run_frame_);
-	group.commands.emplace(id,std::move(command));
+	group.commands.emplace(id,command);
 }
 
 void Game::SetupCommands(uint32_t frame)
@@ -256,7 +256,7 @@ bool Game::CheckPredict(const CommandGroup& command_group)
 	return command_group.commands == predict_command_group.commands;
 }
 
-void Game::FixFrame(const CommandGroup& server_command_group)
+void Game::FixPredict(uint32_t local_id,const CommandGroup& server_command_group)
 {
 	//回滚到上一帧
 	Rollback(server_command_group.frame - 1);
@@ -267,13 +267,12 @@ void Game::FixFrame(const CommandGroup& server_command_group)
 	auto fix_command_group = server_command_group;
 	for (uint32_t frame = server_command_group.frame + 1; frame <= run_frame_; ++frame)
 	{
-		// 修正网络玩家的预测帧
 		auto& predict_command_group = GetCommandGroup(frame);
-
-		uint32_t local_id = 0;
+		// 保持自己预测帧
 		fix_command_group.commands[local_id] = predict_command_group.commands[local_id];
-		
-		predict_command_group.commands = predict_command_group.commands;
+
+		// 修正网络玩家的预测帧为上一次的结果
+		predict_command_group.commands = fix_command_group.commands;
 	}
 }
 

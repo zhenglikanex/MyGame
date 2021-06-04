@@ -26,21 +26,25 @@ namespace Proto {
             "KA0SEwoLYWN0b3JfYXNzZXQYAiABKAkiOgoPR2FtZVBsYXllckluZm9zEicK",
             "DHBsYXllcl9pbmZvcxgBIAMoCzIRLlByb3RvLlBsYXllckluZm8iTgoPU3Rh",
             "cnRCYXR0bGVJbmZvEg0KBW15X2lkGAEgASgNEiwKDHBsYXllcl9pbmZvcxgC",
-            "IAEoCzIWLlByb3RvLkdhbWVQbGF5ZXJJbmZvcyJKCgtHYW1lQ29tbWFuZBIO",
-            "CgZ4X2F4aXMYASABKAISDgoGeV9heGlzGAIgASgCEgwKBGp1bXAYAyABKAgS",
-            "DQoFc2tpbGwYBCABKAUinwEKEEdhbWVDb21tYW5kR3JvdXASDQoFZnJhbWUY",
-            "ASABKA0SNwoIY29tbWFuZHMYAiADKAsyJS5Qcm90by5HYW1lQ29tbWFuZEdy",
-            "b3VwLkNvbW1hbmRzRW50cnkaQwoNQ29tbWFuZHNFbnRyeRILCgNrZXkYASAB",
-            "KA0SIQoFdmFsdWUYAiABKAsyEi5Qcm90by5HYW1lQ29tbWFuZDoCOAFiBnBy",
-            "b3RvMw=="));
+            "IAEoCzIWLlByb3RvLkdhbWVQbGF5ZXJJbmZvcyJSChNDUzJDUGx1c1BsdXND",
+            "b21tYW5kEg4KBnhfYXhpcxgBIAEoAhIOCgZ5X2F4aXMYAiABKAISDAoEanVt",
+            "cBgDIAEoCBINCgVza2lsbBgEIAEoBSJKCgtHYW1lQ29tbWFuZBIOCgZ4X2F4",
+            "aXMYASABKAQSDgoGeV9heGlzGAIgASgEEgwKBGp1bXAYAyABKAgSDQoFc2tp",
+            "bGwYBCABKAUinwEKEEdhbWVDb21tYW5kR3JvdXASDQoFZnJhbWUYASABKA0S",
+            "NwoIY29tbWFuZHMYAiADKAsyJS5Qcm90by5HYW1lQ29tbWFuZEdyb3VwLkNv",
+            "bW1hbmRzRW50cnkaQwoNQ29tbWFuZHNFbnRyeRILCgNrZXkYASABKA0SIQoF",
+            "dmFsdWUYAiABKAsyEi5Qcm90by5HYW1lQ29tbWFuZDoCOAEiFAoEUGluZxIM",
+            "CgR0aW1lGAEgASgNYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerInfo), global::Proto.PlayerInfo.Parser, new[]{ "Id", "ActorAsset" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GamePlayerInfos), global::Proto.GamePlayerInfos.Parser, new[]{ "PlayerInfos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.StartBattleInfo), global::Proto.StartBattleInfo.Parser, new[]{ "MyId", "PlayerInfos" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.CS2CPlusPlusCommand), global::Proto.CS2CPlusPlusCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommand), global::Proto.GameCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommandGroup), global::Proto.GameCommandGroup.Parser, new[]{ "Frame", "Commands" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommandGroup), global::Proto.GameCommandGroup.Parser, new[]{ "Frame", "Commands" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Ping), global::Proto.Ping.Parser, new[]{ "Time" }, null, null, null)
           }));
     }
     #endregion
@@ -452,10 +456,13 @@ namespace Proto {
 
   }
 
-  public sealed partial class GameCommand : pb::IMessage<GameCommand> {
-    private static readonly pb::MessageParser<GameCommand> _parser = new pb::MessageParser<GameCommand>(() => new GameCommand());
+  /// <summary>
+  /// 偷个懒用这个来做csharp到c++的命令传输
+  /// </summary>
+  public sealed partial class CS2CPlusPlusCommand : pb::IMessage<CS2CPlusPlusCommand> {
+    private static readonly pb::MessageParser<CS2CPlusPlusCommand> _parser = new pb::MessageParser<CS2CPlusPlusCommand>(() => new CS2CPlusPlusCommand());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GameCommand> Parser { get { return _parser; } }
+    public static pb::MessageParser<CS2CPlusPlusCommand> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -468,14 +475,14 @@ namespace Proto {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameCommand() {
+    public CS2CPlusPlusCommand() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameCommand(GameCommand other) : this() {
+    public CS2CPlusPlusCommand(CS2CPlusPlusCommand other) : this() {
       xAxis_ = other.xAxis_;
       yAxis_ = other.yAxis_;
       jump_ = other.jump_;
@@ -483,8 +490,8 @@ namespace Proto {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GameCommand Clone() {
-      return new GameCommand(this);
+    public CS2CPlusPlusCommand Clone() {
+      return new CS2CPlusPlusCommand(this);
     }
 
     /// <summary>Field number for the "x_axis" field.</summary>
@@ -542,11 +549,11 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as GameCommand);
+      return Equals(other as CS2CPlusPlusCommand);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GameCommand other) {
+    public bool Equals(CS2CPlusPlusCommand other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -614,7 +621,7 @@ namespace Proto {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GameCommand other) {
+    public void MergeFrom(CS2CPlusPlusCommand other) {
       if (other == null) {
         return;
       }
@@ -662,6 +669,216 @@ namespace Proto {
 
   }
 
+  public sealed partial class GameCommand : pb::IMessage<GameCommand> {
+    private static readonly pb::MessageParser<GameCommand> _parser = new pb::MessageParser<GameCommand>(() => new GameCommand());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GameCommand> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto.BattleReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GameCommand() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GameCommand(GameCommand other) : this() {
+      xAxis_ = other.xAxis_;
+      yAxis_ = other.yAxis_;
+      jump_ = other.jump_;
+      skill_ = other.skill_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GameCommand Clone() {
+      return new GameCommand(this);
+    }
+
+    /// <summary>Field number for the "x_axis" field.</summary>
+    public const int XAxisFieldNumber = 1;
+    private ulong xAxis_;
+    /// <summary>
+    ///  摇杆输入
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong XAxis {
+      get { return xAxis_; }
+      set {
+        xAxis_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "y_axis" field.</summary>
+    public const int YAxisFieldNumber = 2;
+    private ulong yAxis_;
+    /// <summary>
+    ///  摇杆输入
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong YAxis {
+      get { return yAxis_; }
+      set {
+        yAxis_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "jump" field.</summary>
+    public const int JumpFieldNumber = 3;
+    private bool jump_;
+    /// <summary>
+    ///  其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Jump {
+      get { return jump_; }
+      set {
+        jump_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "skill" field.</summary>
+    public const int SkillFieldNumber = 4;
+    private int skill_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Skill {
+      get { return skill_; }
+      set {
+        skill_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GameCommand);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GameCommand other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (XAxis != other.XAxis) return false;
+      if (YAxis != other.YAxis) return false;
+      if (Jump != other.Jump) return false;
+      if (Skill != other.Skill) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (XAxis != 0UL) hash ^= XAxis.GetHashCode();
+      if (YAxis != 0UL) hash ^= YAxis.GetHashCode();
+      if (Jump != false) hash ^= Jump.GetHashCode();
+      if (Skill != 0) hash ^= Skill.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (XAxis != 0UL) {
+        output.WriteRawTag(8);
+        output.WriteUInt64(XAxis);
+      }
+      if (YAxis != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(YAxis);
+      }
+      if (Jump != false) {
+        output.WriteRawTag(24);
+        output.WriteBool(Jump);
+      }
+      if (Skill != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(Skill);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (XAxis != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(XAxis);
+      }
+      if (YAxis != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(YAxis);
+      }
+      if (Jump != false) {
+        size += 1 + 1;
+      }
+      if (Skill != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Skill);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GameCommand other) {
+      if (other == null) {
+        return;
+      }
+      if (other.XAxis != 0UL) {
+        XAxis = other.XAxis;
+      }
+      if (other.YAxis != 0UL) {
+        YAxis = other.YAxis;
+      }
+      if (other.Jump != false) {
+        Jump = other.Jump;
+      }
+      if (other.Skill != 0) {
+        Skill = other.Skill;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            XAxis = input.ReadUInt64();
+            break;
+          }
+          case 16: {
+            YAxis = input.ReadUInt64();
+            break;
+          }
+          case 24: {
+            Jump = input.ReadBool();
+            break;
+          }
+          case 32: {
+            Skill = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class GameCommandGroup : pb::IMessage<GameCommandGroup> {
     private static readonly pb::MessageParser<GameCommandGroup> _parser = new pb::MessageParser<GameCommandGroup>(() => new GameCommandGroup());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -669,7 +886,7 @@ namespace Proto {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto.BattleReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Proto.BattleReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -791,6 +1008,123 @@ namespace Proto {
           }
           case 18: {
             commands_.AddEntriesFrom(input, _map_commands_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class Ping : pb::IMessage<Ping> {
+    private static readonly pb::MessageParser<Ping> _parser = new pb::MessageParser<Ping>(() => new Ping());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<Ping> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto.BattleReflection.Descriptor.MessageTypes[6]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Ping() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Ping(Ping other) : this() {
+      time_ = other.time_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Ping Clone() {
+      return new Ping(this);
+    }
+
+    /// <summary>Field number for the "time" field.</summary>
+    public const int TimeFieldNumber = 1;
+    private uint time_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Time {
+      get { return time_; }
+      set {
+        time_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as Ping);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(Ping other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Time != other.Time) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Time != 0) hash ^= Time.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Time != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(Time);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Time != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Time);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(Ping other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Time != 0) {
+        Time = other.Time;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            Time = input.ReadUInt32();
             break;
           }
         }

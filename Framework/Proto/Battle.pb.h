@@ -38,9 +38,11 @@ void protobuf_AddDesc_Battle_2eproto();
 void protobuf_AssignDesc_Battle_2eproto();
 void protobuf_ShutdownFile_Battle_2eproto();
 
+class CS2CPlusPlusCommand;
 class GameCommand;
 class GameCommandGroup;
 class GamePlayerInfos;
+class Ping;
 class PlayerInfo;
 class StartBattleInfo;
 
@@ -320,6 +322,109 @@ class StartBattleInfo : public ::google::protobuf::Message /* @@protoc_insertion
 };
 // -------------------------------------------------------------------
 
+class CS2CPlusPlusCommand : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.CS2CPlusPlusCommand) */ {
+ public:
+  CS2CPlusPlusCommand();
+  virtual ~CS2CPlusPlusCommand();
+
+  CS2CPlusPlusCommand(const CS2CPlusPlusCommand& from);
+
+  inline CS2CPlusPlusCommand& operator=(const CS2CPlusPlusCommand& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CS2CPlusPlusCommand& default_instance();
+
+  void Swap(CS2CPlusPlusCommand* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CS2CPlusPlusCommand* New() const { return New(NULL); }
+
+  CS2CPlusPlusCommand* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CS2CPlusPlusCommand& from);
+  void MergeFrom(const CS2CPlusPlusCommand& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CS2CPlusPlusCommand* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional float x_axis = 1;
+  void clear_x_axis();
+  static const int kXAxisFieldNumber = 1;
+  float x_axis() const;
+  void set_x_axis(float value);
+
+  // optional float y_axis = 2;
+  void clear_y_axis();
+  static const int kYAxisFieldNumber = 2;
+  float y_axis() const;
+  void set_y_axis(float value);
+
+  // optional bool jump = 3;
+  void clear_jump();
+  static const int kJumpFieldNumber = 3;
+  bool jump() const;
+  void set_jump(bool value);
+
+  // optional int32 skill = 4;
+  void clear_skill();
+  static const int kSkillFieldNumber = 4;
+  ::google::protobuf::int32 skill() const;
+  void set_skill(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:Proto.CS2CPlusPlusCommand)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  float x_axis_;
+  float y_axis_;
+  bool jump_;
+  ::google::protobuf::int32 skill_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_Battle_2eproto();
+  friend void protobuf_AssignDesc_Battle_2eproto();
+  friend void protobuf_ShutdownFile_Battle_2eproto();
+
+  void InitAsDefaultInstance();
+  static CS2CPlusPlusCommand* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class GameCommand : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.GameCommand) */ {
  public:
   GameCommand();
@@ -380,17 +485,17 @@ class GameCommand : public ::google::protobuf::Message /* @@protoc_insertion_poi
 
   // accessors -------------------------------------------------------
 
-  // optional float x_axis = 1;
+  // optional uint64 x_axis = 1;
   void clear_x_axis();
   static const int kXAxisFieldNumber = 1;
-  float x_axis() const;
-  void set_x_axis(float value);
+  ::google::protobuf::uint64 x_axis() const;
+  void set_x_axis(::google::protobuf::uint64 value);
 
-  // optional float y_axis = 2;
+  // optional uint64 y_axis = 2;
   void clear_y_axis();
   static const int kYAxisFieldNumber = 2;
-  float y_axis() const;
-  void set_y_axis(float value);
+  ::google::protobuf::uint64 y_axis() const;
+  void set_y_axis(::google::protobuf::uint64 value);
 
   // optional bool jump = 3;
   void clear_jump();
@@ -409,8 +514,8 @@ class GameCommand : public ::google::protobuf::Message /* @@protoc_insertion_poi
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  float x_axis_;
-  float y_axis_;
+  ::google::protobuf::uint64 x_axis_;
+  ::google::protobuf::uint64 y_axis_;
   bool jump_;
   ::google::protobuf::int32 skill_;
   mutable int _cached_size_;
@@ -523,6 +628,88 @@ class GameCommandGroup : public ::google::protobuf::Message /* @@protoc_insertio
 
   void InitAsDefaultInstance();
   static GameCommandGroup* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Ping : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.Ping) */ {
+ public:
+  Ping();
+  virtual ~Ping();
+
+  Ping(const Ping& from);
+
+  inline Ping& operator=(const Ping& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Ping& default_instance();
+
+  void Swap(Ping* other);
+
+  // implements Message ----------------------------------------------
+
+  inline Ping* New() const { return New(NULL); }
+
+  Ping* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Ping& from);
+  void MergeFrom(const Ping& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(Ping* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 time = 1;
+  void clear_time();
+  static const int kTimeFieldNumber = 1;
+  ::google::protobuf::uint32 time() const;
+  void set_time(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:Proto.Ping)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::google::protobuf::uint32 time_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_Battle_2eproto();
+  friend void protobuf_AssignDesc_Battle_2eproto();
+  friend void protobuf_ShutdownFile_Battle_2eproto();
+
+  void InitAsDefaultInstance();
+  static Ping* default_instance_;
 };
 // ===================================================================
 
@@ -682,31 +869,91 @@ inline void StartBattleInfo::set_allocated_player_infos(::Proto::GamePlayerInfos
 
 // -------------------------------------------------------------------
 
-// GameCommand
+// CS2CPlusPlusCommand
 
 // optional float x_axis = 1;
-inline void GameCommand::clear_x_axis() {
+inline void CS2CPlusPlusCommand::clear_x_axis() {
   x_axis_ = 0;
 }
-inline float GameCommand::x_axis() const {
+inline float CS2CPlusPlusCommand::x_axis() const {
+  // @@protoc_insertion_point(field_get:Proto.CS2CPlusPlusCommand.x_axis)
+  return x_axis_;
+}
+inline void CS2CPlusPlusCommand::set_x_axis(float value) {
+  
+  x_axis_ = value;
+  // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.x_axis)
+}
+
+// optional float y_axis = 2;
+inline void CS2CPlusPlusCommand::clear_y_axis() {
+  y_axis_ = 0;
+}
+inline float CS2CPlusPlusCommand::y_axis() const {
+  // @@protoc_insertion_point(field_get:Proto.CS2CPlusPlusCommand.y_axis)
+  return y_axis_;
+}
+inline void CS2CPlusPlusCommand::set_y_axis(float value) {
+  
+  y_axis_ = value;
+  // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.y_axis)
+}
+
+// optional bool jump = 3;
+inline void CS2CPlusPlusCommand::clear_jump() {
+  jump_ = false;
+}
+inline bool CS2CPlusPlusCommand::jump() const {
+  // @@protoc_insertion_point(field_get:Proto.CS2CPlusPlusCommand.jump)
+  return jump_;
+}
+inline void CS2CPlusPlusCommand::set_jump(bool value) {
+  
+  jump_ = value;
+  // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.jump)
+}
+
+// optional int32 skill = 4;
+inline void CS2CPlusPlusCommand::clear_skill() {
+  skill_ = 0;
+}
+inline ::google::protobuf::int32 CS2CPlusPlusCommand::skill() const {
+  // @@protoc_insertion_point(field_get:Proto.CS2CPlusPlusCommand.skill)
+  return skill_;
+}
+inline void CS2CPlusPlusCommand::set_skill(::google::protobuf::int32 value) {
+  
+  skill_ = value;
+  // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.skill)
+}
+
+// -------------------------------------------------------------------
+
+// GameCommand
+
+// optional uint64 x_axis = 1;
+inline void GameCommand::clear_x_axis() {
+  x_axis_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 GameCommand::x_axis() const {
   // @@protoc_insertion_point(field_get:Proto.GameCommand.x_axis)
   return x_axis_;
 }
-inline void GameCommand::set_x_axis(float value) {
+inline void GameCommand::set_x_axis(::google::protobuf::uint64 value) {
   
   x_axis_ = value;
   // @@protoc_insertion_point(field_set:Proto.GameCommand.x_axis)
 }
 
-// optional float y_axis = 2;
+// optional uint64 y_axis = 2;
 inline void GameCommand::clear_y_axis() {
-  y_axis_ = 0;
+  y_axis_ = GOOGLE_ULONGLONG(0);
 }
-inline float GameCommand::y_axis() const {
+inline ::google::protobuf::uint64 GameCommand::y_axis() const {
   // @@protoc_insertion_point(field_get:Proto.GameCommand.y_axis)
   return y_axis_;
 }
-inline void GameCommand::set_y_axis(float value) {
+inline void GameCommand::set_y_axis(::google::protobuf::uint64 value) {
   
   y_axis_ = value;
   // @@protoc_insertion_point(field_set:Proto.GameCommand.y_axis)
@@ -776,7 +1023,29 @@ GameCommandGroup::mutable_commands() {
   return commands_.MutableMap();
 }
 
+// -------------------------------------------------------------------
+
+// Ping
+
+// optional uint32 time = 1;
+inline void Ping::clear_time() {
+  time_ = 0u;
+}
+inline ::google::protobuf::uint32 Ping::time() const {
+  // @@protoc_insertion_point(field_get:Proto.Ping.time)
+  return time_;
+}
+inline void Ping::set_time(::google::protobuf::uint32 value) {
+  
+  time_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Ping.time)
+}
+
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

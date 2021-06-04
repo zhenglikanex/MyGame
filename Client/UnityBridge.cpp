@@ -28,6 +28,8 @@ UnityDelegate UnityBridge::unity_delegate_ = nullptr;
 std::unique_ptr<Game> g_game = nullptr;
 std::unique_ptr<DebugService> g_debug_service = std::make_unique<UnityDebugService>();
 std::unique_ptr<ClientNetworkService> g_network_service = nullptr;
+uint32_t g_my_id = 0;
+uint32_t g_ping = 0;
 
 extern "C"
 {
@@ -74,8 +76,11 @@ extern "C"
 			else
 			{
 				auto code = g_network_service->GetLastError();
+				return;
 			}
 		}
+
+		CheckPing();
 
 		if (g_game)
 		{
@@ -87,16 +92,28 @@ extern "C"
 	{
 		if (g_game)
 		{
-			Proto::GameCommandGroup group;
-			group.ParseFromArray(data, size);
+			Proto::CS2CPlusPlusCommand csharp_command;
+			csharp_command.ParseFromArray(data, size);
 
-			for (auto iter = group.commands().cbegin(); iter != group.commands().cend(); ++iter)
+			Command command;
+			command.x_axis = fixed16(std::abs(csharp_command.x_axis()) < 0.1 ? 0 : csharp_command.x_axis());
+			command.y_axis = fixed16(std::abs(csharp_command.y_axis()) < 0.1 ? 0 : csharp_command.y_axis());
+			command.skill = csharp_command.skill();
+			command.jump = csharp_command.jump();
+
+			g_game->InputCommand(g_my_id, command);
+
+			
+			Proto::GameCommand game_command;
+			game_command.set_x_axis(command.x_axis.raw_value());
+			game_command.set_y_axis(command.y_axis.raw_value());
+			game_command.set_skill(command.skill);
+			game_command.set_jump(command.jump);
+			
+
+			if (g_network_service)
 			{
-				Command cmd;
-				cmd.x_axis = fixed16(std::abs(iter->second.x_axis()) < 0.1 ? 0 : iter->second.x_axis());
-				cmd.y_axis = fixed16(std::abs(iter->second.y_axis()) < 0.1 ? 0 : iter->second.y_axis());
-				cmd.skill = iter->second.skill();
-				g_game->InputCommand(iter->first,std::move(cmd));
+				g_network_service->Send("input_command", Serialize(game_command));
 			}
 		}
 	}
@@ -125,14 +142,14 @@ extern "C"
 				{
 					if (message.name() == "start_battle")
 					{
-						INFO("join_battle");
+						INFO("start_battle");
 
 						Proto::StartBattleInfo info;
 						info.ParseFromArray(message.data().data(), message.data().size());
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
 						InitGame(info.player_infos());
 					}
-					else if (message.name() == "input_command_group")
+					else if (message.name() == "push_command_group")
 					{
 						Proto::GameCommandGroup game_command_group;
 						game_command_group.ParseFromArray(message.data().data(), message.data().size());
@@ -152,13 +169,21 @@ extern "C"
 
 						if (!g_game->CheckPredict(group))
 						{
-							g_game->FixFrame(group);
+							g_game->FixPredict(g_my_id,group);
 						}
 
 					}
-					else if (message.name() == "input_command")
+					else if (message.name() == "push_command")
 					{
 
+					}
+					else if (message.name() == "ping")
+					{
+						Proto::Ping ping;
+						ping.ParseFromArray(message.data().data(), message.data().size());
+
+						uint32_t now = std::chrono::steady_clock::now().time_since_epoch().count();
+						g_ping = now - ping.time();
 					}
 				});
 
@@ -167,6 +192,19 @@ extern "C"
 					INFO("join_match!")
 					// 偷懒不处理了
 				});
+		}
+	}
+
+	EXPORT_DLL void CheckPing()
+	{
+		if (g_network_service)
+		{
+			uint32_t time = std::chrono::steady_clock::now().time_since_epoch().count();
+
+			Proto::Ping ping;
+			ping.set_time(time);
+
+			g_network_service->Send("ping",Serialize(ping));
 		}
 	}
 }

@@ -19,10 +19,21 @@ message StartBattleInfo
 	GamePlayerInfos player_infos = 2;
 }
 
-message GameCommand
+//偷个懒用这个来做csharp到c++的命令传输
+message CS2CPlusPlusCommand
 {
 	float x_axis = 1;		// 摇杆输入
 	float y_axis = 2;		// 摇杆输入
+
+	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
+	bool jump = 3;
+	int32 skill = 4;
+}
+
+message GameCommand
+{
+	uint64 x_axis = 1;		// 摇杆输入
+	uint64 y_axis = 2;		// 摇杆输入
 
 	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
 	bool jump = 3;
@@ -33,4 +44,9 @@ message GameCommandGroup
 {
 	uint32 frame = 1;
 	map<uint32,GameCommand> commands = 2;
+}
+
+message Ping
+{
+	uint32 time = 1;
 }

@@ -28,7 +28,6 @@ bool BattleActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 		return false;
 	}
 
-	RequestConnect("start_battle", &BattleActor::StartBattle, this);
 	RequestConnect("input_command", &BattleActor::InputCommand, this);
 
 	return true;
@@ -47,21 +46,31 @@ void BattleActor::Start(const std::any& data)
 {
 	players_ = std::any_cast<std::vector<ActorId>>(data);
 	std::cout << "Battle Start Success!" << std::endl;
-	//std::cout << "AgentStart" << gate << " " << conv << std::endl;
+	
+	// todo:不做上下线处理了
 	for (uint32_t i = 0; i < players_.size(); ++i)
 	{
-		Proto::StartBattleInfo info;
-		info.set_my_id(i);
-		auto player_infos = info.mutable_player_infos();
-		for (uint32_t j = 0; j < players_.size(); ++j)
-		{
-			auto player = player_infos->add_player_infos();
-			player->set_id(j);
-			player->set_actor_asset("hero.json");
-		}
-		
-		Call(players_[i], "send",std::make_tuple(std::string("start_battle"),Serialize(info)));
+		ids_.emplace(players_[i], i);
 	}
+
+	Proto::GamePlayerInfos player_infos;
+	for (auto player : players_)
+	{
+		auto player_info = player_infos.add_player_infos();
+		player_info->set_id(ids_[player]);
+		player_info->set_actor_asset("hero.json");
+	}
+
+	for (auto player : players_)
+	{
+		Proto::StartBattleInfo info;
+		info.set_my_id(ids_[player]);
+		info.set_allocated_player_infos(new Proto::GamePlayerInfos(player_infos));
+
+		Call(player, "send", std::make_tuple(std::string("start_battle"), Serialize(info)));
+	}
+
+	StartBattle();
 }
 
 void BattleActor::StartBattle()
@@ -128,7 +137,7 @@ void BattleActor::PushCommandGroup()
 	for (auto player : players_)
 	{
 		auto data = buffer;
-		Call(player, "send", std::make_tuple(std::string("input_command_group"),std::move(data)));
+		Call(player, "send", std::make_tuple(std::string("push_command_group"),std::move(data)));
 	}
 }
 
