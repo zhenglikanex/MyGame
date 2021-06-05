@@ -28,7 +28,7 @@ bool BattleActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 		return false;
 	}
 
-	RequestConnect("input_command", &BattleActor::InputCommand, this);
+	ActorConnect("input_command", &BattleActor::InputCommand, this);
 
 	return true;
 }
@@ -102,8 +102,17 @@ void BattleActor::Update(float dt)
 	}
 }
 
-void BattleActor::InputCommand(ActorId id, const Proto::GameCommand& command)
+void BattleActor::InputCommand(const std::any& data)
 {
+	auto& [player, command] = std::any_cast<std::tuple<ActorId, Proto::GameCommand>>(data);
+
+	auto iter = ids_.find(player);
+	if (iter == ids_.end())
+	{
+		return;
+	}
+
+	auto id = iter->first;
 	auto it = player_commands_.find(id);
 	if (it == player_commands_.end())
 	{

@@ -16,11 +16,12 @@ public:
 
 	void Receive(ActorMessage&& actor_msg) override;
 
-	void Start(const std::any& data);
 	void StartBattle();
-	void Update(float dt);
-	void InputCommand(ActorId id, const Proto::GameCommand& command);
+	void Update(float dt);	
 	void PushCommandGroup();
+private:
+	void Start(const std::any& data);
+	void InputCommand(const std::any& data);
 private:
 	const float kFrameTime = 0.03333334f;
 

@@ -17,17 +17,11 @@ add_library(MyGameClient SHARED
     ClientNetwork.cpp
     ClientNetworkService.hpp
     ClientNetworkService.cpp
-    Kcp/ikcp.h
-    Kcp/ikcp.c
-    ${PROTO_SRC}
 )
 
 target_link_libraries(MyGameClient
     Game
-    debug ${PROTOBUF_LIBRARY_DEBUG}
-    debug ${PROTOBUF_LITE_LIBRARY_DEBUG}
-    optimized ${PROTOBUF_LIBRARY}
-    optimized ${PROTOBUF_LITE_LIBRARY}
+    Proto
 )
 
 set (CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DEXPORT")

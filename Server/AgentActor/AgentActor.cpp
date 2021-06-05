@@ -35,7 +35,7 @@ bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	ClientConnect("ping", &AgentActor::Ping);
 	ClientConnect("join_match", &AgentActor::JoinMatch);
 	ClientConnect("battle_loaded", &AgentActor::BattledLoaded);
-	ClientConnect("input_command", &AgentActor::BattledLoaded);
+	ClientConnect("input_command", &AgentActor::InputCommand);
 
 	return true;
 }

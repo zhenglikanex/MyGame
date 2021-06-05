@@ -6,9 +6,8 @@
 #include <atomic>
 #include <cstdint>
 
-#include "Framework/Network/NetMessage.hpp"
-
-#include "Client/Kcp/ikcp.h"
+#include "Framework/Proto/Kcp/ikcp.h"
+#include "Framework/Proto/NetMessage.hpp"
 
 #include "3rdparty/include/asio.hpp"
 

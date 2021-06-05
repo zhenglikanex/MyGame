@@ -41,7 +41,6 @@ extern "C"
 	EXPORT_DLL void InitGame(const Proto::GamePlayerInfos& infos)
 	{
 		std::vector<PlayerInfo> players;
-		Proto::GamePlayerInfos infos;
 		for (auto iter = infos.player_infos().cbegin(); iter < infos.player_infos().cend(); ++iter)
 		{
 			PlayerInfo player;

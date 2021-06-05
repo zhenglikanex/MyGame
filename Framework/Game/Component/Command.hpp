@@ -22,6 +22,16 @@ struct Command
 	{
 		
 	}
+
+	bool operator==(const Command& rhs) const
+	{
+		return x_axis == rhs.x_axis && y_axis == rhs.y_axis && jump == rhs.jump && skill == rhs.skill;
+	}
+
+	bool operator!=(const Command& rhs) const
+	{
+		return !(*this == rhs);
+	}
 };
 
 struct CommandGroup
