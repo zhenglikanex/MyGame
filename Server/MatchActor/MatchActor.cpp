@@ -43,13 +43,25 @@ void MatchActor::Match()
 {
 	if (matching_agent_.size() >= 2)
 	{
+		std::cout << "match" << std::endl;
 		// todo 创建战斗服务
 		auto id = StartActor("BattleActor.dll");
 		if (id != kNull)
 		{
-			Call(id, "start", matching_agent_);
-			Call(id, "start_battle");
+			for (auto& entry : matching_agent_)
+			{
+				Call(entry.first, "join_battle", id);
+			}
+
+			std::vector<ActorId> players;
+			for (auto& entry : matching_agent_)
+			{
+				players.emplace_back(entry.first);
+			}
+			Call(id, "start_battle", players);
 		}
+
+		matching_agent_.clear();
 	}
 }
 

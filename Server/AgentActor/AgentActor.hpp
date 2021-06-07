@@ -32,6 +32,7 @@ private:
 	void Send(const std::any& data);
 
 	//actor call
+	void JoinBattle(const std::any& data);
 private:
 	//actor request
 private:

@@ -6,6 +6,8 @@
 
 #include "Framework/Proto/Battle.pb.h"
 
+using namespace std::chrono;
+
 AgentActor::AgentActor(ActorId id)
 	: Actor(id)
 	, gate_(kNull)
@@ -31,6 +33,7 @@ bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	ActorConnect("start", &AgentActor::Start,this);
 	ActorConnect("send", &AgentActor::Send, this);
 	ActorConnect("client", &AgentActor::ClientReceive,this);
+	ActorConnect("join_battle", &AgentActor::JoinBattle, this);
 
 	ClientConnect("ping", &AgentActor::Ping);
 	ClientConnect("join_match", &AgentActor::JoinMatch);
@@ -84,9 +87,18 @@ void AgentActor::Send(const std::any& data)
 	Call(gate_, "send", std::make_tuple(conv_, push));
 }
 
+void AgentActor::JoinBattle(const std::any& data)
+{
+	battle_ = std::any_cast<ActorId>(data);
+}
+
 void AgentActor::Ping(const NetMessage& request)
 {
 	std::any data = std::make_tuple(conv_, request);
+	
+	Proto::Ping ping;
+	ping.ParseFromArray(request.data().data(), request.data().size());
+
 	Call(gate_, "send", std::move(data));
 }
 
@@ -176,6 +188,7 @@ void AgentActor::InputCommand(const NetMessage& request)
 {
 	if (battle_ != kNull)
 	{
+		std::cout << "input command" << battle_ << std::endl;
 		Proto::GameCommand command;
 		command.ParseFromArray(request.data().data(), request.data().size());
 		

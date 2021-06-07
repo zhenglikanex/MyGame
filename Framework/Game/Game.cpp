@@ -246,9 +246,7 @@ void Game::SetupCommands(uint32_t frame)
 
 bool Game::CheckPredict(const CommandGroup& command_group)
 {
-	assert( command_group.frame < run_frame_ &&
-			command_group.frame > real_frame_ &&
-			"!");
+	assert(command_group.frame == real_frame_);
 
 	auto& predict_command_group = GetCommandGroup(command_group.frame);
 	assert(predict_command_group.frame == command_group.frame && "!");

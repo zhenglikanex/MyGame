@@ -16,18 +16,17 @@ public:
 
 	void Receive(ActorMessage&& actor_msg) override;
 
-	void StartBattle();
 	void Update(float dt);	
 	void PushCommandGroup();
 private:
-	void Start(const std::any& data);
+	void StartBattle(const std::any& data);
 	void InputCommand(const std::any& data);
 private:
 	const float kFrameTime = 0.03333334f;
 
 	std::vector<ActorId> players_;
 	std::unordered_map<ActorId, uint32_t> ids_;
-	std::unordered_map<ActorId, std::vector<Proto::GameCommand>> player_commands_;
+	std::unordered_map<uint32_t, std::vector<Proto::GameCommand>> player_commands_;
 	bool start_;
 	uint32_t last_time_;
 	float run_time_;

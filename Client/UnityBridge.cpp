@@ -22,6 +22,8 @@
 #define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS 1
 #endif
 
+using namespace std::chrono;
+
 std::unique_ptr<UnityBridge> UnityBridge::instance_;
 UnityDelegate UnityBridge::unity_delegate_ = nullptr;
 
@@ -150,8 +152,18 @@ extern "C"
 					}
 					else if (message.name() == "push_command_group")
 					{
+						if (!g_game)
+						{
+							return;
+						}
+
 						Proto::GameCommandGroup game_command_group;
 						game_command_group.ParseFromArray(message.data().data(), message.data().size());
+
+						if (game_command_group.commands().size() < 2)
+						{
+							INFO("!");
+						}
 
 						CommandGroup group;
 						group.frame = game_command_group.frame();
@@ -163,14 +175,34 @@ extern "C"
 							command.skill = entry.second.skill();
 							command.jump = entry.second.jump();
 							
+							if (entry.first != g_my_id)
+							{
+								INFO("x{} y{}", entry.second.x_axis(), entry.second.y_axis());
+							}
+
 							group.commands.emplace(entry.first, command);
 						}
 
-						if (!g_game->CheckPredict(group))
+						if (group.frame >= g_game->run_frame())
 						{
-							g_game->FixPredict(g_my_id,group);
+							INFO("server group frame{} real_frame{} run_frame{}", group.frame, g_game->real_frame(),g_game->run_frame());
+							for (auto& entry : group.commands)
+							{
+								g_game->InputCommand(entry.first, entry.second);
+							}
 						}
+						else
+						{
+							INFO("---------------group frame{} real_frame{} {}", group.frame, g_game->real_frame(),g_game->run_frame());
+							assert(group.frame == g_game->real_frame());
 
+							if (!g_game->CheckPredict(group))
+							{
+								g_game->FixPredict(g_my_id, group);
+							}
+
+							g_game->set_real_frame(group.frame);
+						}
 					}
 					else if (message.name() == "push_command")
 					{
@@ -178,11 +210,14 @@ extern "C"
 					}
 					else if (message.name() == "ping")
 					{
+						
 						Proto::Ping ping;
 						ping.ParseFromArray(message.data().data(), message.data().size());
 
-						uint32_t now = std::chrono::steady_clock::now().time_since_epoch().count();
+						uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 						g_ping = now - ping.time();
+
+						//INFO("ping:{}", g_ping);
 					}
 				});
 
@@ -198,7 +233,7 @@ extern "C"
 	{
 		if (g_network_service)
 		{
-			uint32_t time = std::chrono::steady_clock::now().time_since_epoch().count();
+			uint32_t time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 
 			Proto::Ping ping;
 			ping.set_time(time);

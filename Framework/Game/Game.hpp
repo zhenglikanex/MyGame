@@ -60,7 +60,15 @@ public:
 	void SaveSnapshot();
 	void Rollback(uint32_t frame);
 	
-	uint32_t run_frame() { return run_frame_; }
+	void set_real_frame(uint32_t real_frame) 
+	{
+		assert(real_frame >= real_frame_ && real_frame <= run_frame_ && "!");
+
+		real_frame_ = real_frame;
+	}
+
+	uint32_t run_frame() const { return run_frame_; }
+	uint32_t real_frame() const { return real_frame_; }
 	entt::registry& registry() { return registry_; }
 private:
 	void LoadAllConfig();

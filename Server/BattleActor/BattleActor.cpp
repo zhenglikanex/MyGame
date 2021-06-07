@@ -28,6 +28,7 @@ bool BattleActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 		return false;
 	}
 
+	ActorConnect("start_battle", &BattleActor::StartBattle, this);
 	ActorConnect("input_command", &BattleActor::InputCommand, this);
 
 	return true;
@@ -42,7 +43,7 @@ void BattleActor::Receive(ActorMessage&& actor_msg)
 {
 }
 
-void BattleActor::Start(const std::any& data)
+void BattleActor::StartBattle(const std::any& data)
 {
 	players_ = std::any_cast<std::vector<ActorId>>(data);
 	std::cout << "Battle Start Success!" << std::endl;
@@ -51,6 +52,7 @@ void BattleActor::Start(const std::any& data)
 	for (uint32_t i = 0; i < players_.size(); ++i)
 	{
 		ids_.emplace(players_[i], i);
+		player_commands_.emplace(i, std::vector<Proto::GameCommand>());
 	}
 
 	Proto::GamePlayerInfos player_infos;
@@ -70,24 +72,14 @@ void BattleActor::Start(const std::any& data)
 		Call(player, "send", std::make_tuple(std::string("start_battle"), Serialize(info)));
 	}
 
-	StartBattle();
-}
-
-void BattleActor::StartBattle()
-{
-	if (start_)
-	{
-		return;
-	}
-
 	start_ = true;
-	last_time_ = system_clock::now().time_since_epoch().count();
+	last_time_ = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 	AddTimer(1, -1, [this]()
-	{
-		uint32_t now = system_clock::now().time_since_epoch().count();
-		Update((now - last_time_) / 1000.f);
-		last_time_ = now;
-	});
+		{
+			uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+			Update((now - last_time_) / 1000.f);
+			last_time_ = now;
+		});
 
 	std::cout << "BattleActor start!!!" << std::endl;
 }
@@ -105,18 +97,20 @@ void BattleActor::Update(float dt)
 void BattleActor::InputCommand(const std::any& data)
 {
 	auto& [player, command] = std::any_cast<std::tuple<ActorId, Proto::GameCommand>>(data);
-
+	std::cout << "Input command" << player;
 	auto iter = ids_.find(player);
 	if (iter == ids_.end())
 	{
 		return;
 	}
 
+	std::cout << " ids command" << iter->first << std::endl;
+
 	auto id = iter->first;
 	auto it = player_commands_.find(id);
 	if (it == player_commands_.end())
 	{
-		player_commands_.emplace(id, std::vector<Proto::GameCommand>());
+		return;
 	}
 
 	player_commands_[id].emplace_back(command);
@@ -128,19 +122,24 @@ void BattleActor::PushCommandGroup()
 	group.set_frame(run_frame_);
 
 	auto commands = group.mutable_commands();
-	for (auto player : players_)
+	for (auto& entry : ids_)
 	{
-		auto it = player_commands_.find(player);
+		auto it = player_commands_.find(entry.second);
 		if (it != player_commands_.end())
 		{
 			if (it->second.size() <= run_frame_)
 			{
 				it->second.push_back(Proto::GameCommand());
 			}
-			(*commands)[player] = it->second[run_frame_];
+			(*commands)[entry.second] = it->second[run_frame_];
 		}
 	}
 
+	std::cout << "push_command_group" << group.frame() << "  " << group.commands().size() << std::endl;
+	if (group.commands().size() < 2)
+	{
+		std::cout << "!" << std::endl;
+	}
 	auto buffer = Serialize(group);
 	
 	for (auto player : players_)

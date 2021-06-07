@@ -89,16 +89,13 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
         if(IsBattleing)
         {
             DebugManager.Instance.Clear();
-            Proto.GameCommond cmd = new Proto.GameCommond();
-            cmd.XAxis = Input.GetAxis("Horizontal");
-            cmd.YAxis = Input.GetAxis("Vertical");
-            cmd.Skill = skill;
-            cmd.Jump = false;
+            Proto.CS2CPlusPlusCommand command = new Proto.CS2CPlusPlusCommand();
+            command.XAxis = Input.GetAxis("Horizontal");
+            command.YAxis = Input.GetAxis("Vertical");
+            command.Skill = skill;
+            command.Jump = false;
 
-            Proto.GameCommondGroup group = new Proto.GameCommondGroup();
-            group.Commonds.Add(MyId, cmd);
-
-            var data = group.ToByteArray();
+            var data = command.ToByteArray();
             CPlusPlusBridge.GameInput(data, data.Length);
 
             skill = 0;
