@@ -102,9 +102,8 @@ extern "C"
 			command.skill = csharp_command.skill();
 			command.jump = csharp_command.jump();
 
-			g_game->InputCommand(g_my_id, command);
+			g_game->InputCommand(g_game->run_frame(),g_my_id, command);
 
-			
 			Proto::GameCommand game_command;
 			game_command.set_x_axis(command.x_axis.raw_value());
 			game_command.set_y_axis(command.y_axis.raw_value());
@@ -188,7 +187,7 @@ extern "C"
 							INFO("server group frame{} real_frame{} run_frame{}", group.frame, g_game->real_frame(),g_game->run_frame());
 							for (auto& entry : group.commands)
 							{
-								g_game->InputCommand(entry.first, entry.second);
+								g_game->InputCommand(group.frame, entry.first, entry.second);
 							}
 						}
 						else
