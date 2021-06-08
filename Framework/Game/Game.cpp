@@ -188,8 +188,6 @@ void Game::UpdateInput()
 	while (run_time_ > run_frame_ * input_frame_rate_ + input_frame_rate_)
 	{
 		auto& group = GetCommandGroup(run_frame_);
-		group.frame = run_frame_;
-		group.commands.clear();
 
 		//会触发InputCommand,相当于getcommands
 		auto& input_service = registry_.ctx<Locator>().Ref<const InputService>();
@@ -233,15 +231,10 @@ void Game::UpdateInput()
 	}
 }
 
-void Game::InputCommand(uint32_t id, const Command& command)
+void Game::InputCommand(uint32_t frame,uint32_t id, const Command& command)
 {
-	auto& group = GetCommandGroup(run_frame_);
+	auto& group = GetCommandGroup(frame);
 	group.commands.emplace(id,command);
-}
-
-void Game::SetupCommands(uint32_t frame)
-{
-
 }
 
 bool Game::CheckPredict(const CommandGroup& command_group)
@@ -397,5 +390,12 @@ void Game::LoadAllConfig()
 
 CommandGroup& Game::GetCommandGroup(uint32_t frame)
 {
-	return command_groups_[frame % command_groups_.size()];
+	auto& command_group = command_groups_[frame % command_groups_.size()];
+	// 清理旧的命令
+	if (command_group.frame != frame)
+	{
+		command_group.commands.clear();
+		command_group.frame = frame;
+	}
+	return command_group;
 }

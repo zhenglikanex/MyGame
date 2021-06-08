@@ -89,6 +89,7 @@ void BattleActor::Update(float dt)
 	run_time_ += dt;
 	while (run_time_ > run_frame_ * kFrameTime + kFrameTime)
 	{
+		std::cout << "---------------run_time:" << run_time_ << " frame:" << run_frame_ << std::endl;
 		PushCommandGroup();
 		++run_frame_;
 	}

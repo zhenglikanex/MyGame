@@ -52,8 +52,7 @@ public:
 	void UpdateServer();
 
 	// 外部调用
-	void InputCommand(uint32_t id,const Command& command);
-	void SetupCommands(uint32_t frame);
+	void InputCommand(uint32_t frame,uint32_t id,const Command& command);
 
 	bool CheckPredict(const CommandGroup& command_group);
 	void FixPredict(uint32_t local_id,const CommandGroup& command_group);
