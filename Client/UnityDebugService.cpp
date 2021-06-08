@@ -1,19 +1,69 @@
 #include "UnityDebugService.hpp"
 
+#include <iostream>
+
 #include "Client/UnityBridge.hpp"
+
+UnityDebugService::UnityDebugService()
+#ifdef WIN32
+	:console_(NULL)
+{
+	AllocConsole();
+	console_ = GetConsoleWindow();
+	if (console_ != NULL)
+	{
+		ShowWindow(console_, SW_SHOW);
+		BringWindowToTop(console_);
+		FILE* file = NULL;
+		freopen_s(&file, "CONOUT$", "wt", stdout);
+		freopen_s(&file, "CONOUT$", "wt", stderr);
+
+		HMENU hmenu = GetSystemMenu(console_, FALSE);
+		if (hmenu != NULL)
+		{
+			DeleteMenu(hmenu, SC_CLOSE, MF_BYCOMMAND);
+		}
+	}
+}
+#else
+{}
+#endif
+
+UnityDebugService::~UnityDebugService()
+#ifdef WIN32
+{
+	if (console_ != NULL)
+	{
+		FreeConsole();
+		console_ = NULL;
+	}
+}
+#else
+{}
+#endif
+
 
 void UnityDebugService::Info(std::string_view view) const
 {
+#ifdef WIN32
+	std::cout << "[INFO]:" << view << std::endl;
+#endif
 	UnityBridge::Get().CallUnity<void>("LogInfo",view.data());
 }
 
 void UnityDebugService::Warning(std::string_view view) const
 {
+#ifdef WIN32
+	std::cout << "[WARNING]:" << view << std::endl;
+#endif
 	UnityBridge::Get().CallUnity<void>("LogWarning", view.data());
 }
 
 void UnityDebugService::Error(std::string_view view) const
 {
+#ifdef WIN32
+	std::cout << "[ERROR]:" << view << std::endl;
+#endif
 	UnityBridge::Get().CallUnity<void>("LogError", view.data());
 }
 
