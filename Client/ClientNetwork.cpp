@@ -316,8 +316,8 @@ void ClientNetwork::KcpReceive(uint8_t* data, uint32_t len)
 					return;
 				}
 
-				buffers_[cur_write_].resize(len);
-				std::copy_n(data, len, buffers_[cur_write_].data());
+				buffers_[cur_write_].resize(recv_bytes);
+				std::copy_n(data, recv_bytes, buffers_[cur_write_].data());
 				cur_write_ = next % buffers_.size();
 			}
 			else

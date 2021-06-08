@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "Framework/Network/NetMessage.hpp"
+#include "Framework/Proto/NetMessage.hpp"
 
 using namespace std::chrono;
 
@@ -121,6 +121,8 @@ void BattleActor::PushCommandGroup()
 {
 	Proto::GameCommandGroup group;
 	group.set_frame(run_frame_);
+	group.set_frame2(run_frame_);
+	group.set_time(duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
 
 	auto commands = group.mutable_commands();
 	for (auto& entry : ids_)
@@ -139,9 +141,10 @@ void BattleActor::PushCommandGroup()
 	std::cout << "push_command_group" << group.frame() << "  " << group.commands().size() << std::endl;
 	if (group.commands().size() < 2)
 	{
-		std::cout << "!" << std::endl;
+		assert(false && "!");
 	}
 	auto buffer = Serialize(group);
+	std::cout << "size:" << (buffer.size()) << "   " << group.ByteSize() << std::endl;
 	
 	for (auto player : players_)
 	{

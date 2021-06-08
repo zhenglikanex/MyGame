@@ -81,7 +81,7 @@ extern "C"
 			}
 		}
 
-		CheckPing();
+		//CheckPing();
 
 		if (g_game)
 		{
@@ -163,6 +163,8 @@ extern "C"
 						{
 							INFO("!");
 						}
+
+						INFO("frame {} time {} frame2 {} size {} byte_size {}", game_command_group.frame(), game_command_group.time(),game_command_group.frame2(),message.data().size(),game_command_group.ByteSize());
 
 						CommandGroup group;
 						group.frame = game_command_group.frame();

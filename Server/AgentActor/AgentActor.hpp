@@ -2,7 +2,7 @@
 #include "Actor.h"
 #include "ActorMessage.h"
 
-#include "Framework/Network/NetMessage.hpp"
+#include "Framework/Proto/NetMessage.hpp"
 
 using namespace actor_net;
 

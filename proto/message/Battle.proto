@@ -44,6 +44,8 @@ message GameCommandGroup
 {
 	uint32 frame = 1;
 	map<uint32,GameCommand> commands = 2;
+	uint32 time = 3;
+	uint32 frame2 = 4;
 }
 
 message Ping

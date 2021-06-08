@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "Framework/Network/NetMessage.hpp"
+#include "Framework/Proto/NetMessage.hpp"
 
 #include "Framework/Proto/Battle.pb.h"
 
@@ -83,7 +83,7 @@ void AgentActor::Send(const std::any& data)
 	NetMessage push;
 	push.set_name(name);
 	push.set_data(std::move(buffer));
-
+	
 	Call(gate_, "send", std::make_tuple(conv_, push));
 }
 

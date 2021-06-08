@@ -1,6 +1,7 @@
 #include "ClientNetworkService.hpp"
 
 #include <chrono>
+#include <iostream>
 
 using namespace std::chrono;
 

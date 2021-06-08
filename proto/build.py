@@ -16,10 +16,7 @@ def main():
 	csharp_path = "{}/../Unity/ARPG/Assets/Resources/Scripts/proto".format(cur_dir)
 	cpp_out = " --cpp_out={} ".format(cpp_path)
 	csharp_out = " --csharp_out={} ".format(csharp_path)
-	if os.path.exists(cpp_path):
-		shutil.rmtree(cpp_path)
-		os.makedirs(cpp_path)
-	else:
+	if not os.path.exists(cpp_path):
 		os.makedirs(cpp_path)
 	if os.path.exists(csharp_path):
 		shutil.rmtree(csharp_path)

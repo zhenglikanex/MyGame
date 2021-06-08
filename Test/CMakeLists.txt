@@ -2,6 +2,7 @@ add_executable(Test
     main.cpp
 )
 
+target_link_libraries(Test Proto)
 
 SET_PROPERTY(TARGET Test PROPERTY FOLDER "Test")
 

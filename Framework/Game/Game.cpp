@@ -109,6 +109,11 @@ void Game::UpdateClinet()
 	auto& game_state = registry_.ctx<GameState>();
 	while (true)
 	{
+		if (game_state.run_frame >= run_frame_)
+		{
+			return;
+		}
+
 		auto& command_group = GetCommandGroup(game_state.run_frame);
 		if (command_group.frame != game_state.run_frame || run_frame_times >= GameConfig::kMaxOnceFrameRunNum)
 		{
@@ -164,8 +169,6 @@ void Game::UpdateClinet()
 		++registry_.ctx<GameState>().run_frame;
 
 		++run_frame_times;
-
-		INFO("Client");
 	}
 }
 
@@ -392,7 +395,7 @@ CommandGroup& Game::GetCommandGroup(uint32_t frame)
 {
 	auto& command_group = command_groups_[frame % command_groups_.size()];
 	// 清理旧的命令
-	if (command_group.frame != frame)
+	if (frame > command_group.frame)
 	{
 		command_group.commands.clear();
 		command_group.frame = frame;

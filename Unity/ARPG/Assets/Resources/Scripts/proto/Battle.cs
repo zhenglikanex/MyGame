@@ -30,11 +30,12 @@ namespace Proto {
             "b21tYW5kEg4KBnhfYXhpcxgBIAEoAhIOCgZ5X2F4aXMYAiABKAISDAoEanVt",
             "cBgDIAEoCBINCgVza2lsbBgEIAEoBSJKCgtHYW1lQ29tbWFuZBIOCgZ4X2F4",
             "aXMYASABKAQSDgoGeV9heGlzGAIgASgEEgwKBGp1bXAYAyABKAgSDQoFc2tp",
-            "bGwYBCABKAUinwEKEEdhbWVDb21tYW5kR3JvdXASDQoFZnJhbWUYASABKA0S",
+            "bGwYBCABKAUivQEKEEdhbWVDb21tYW5kR3JvdXASDQoFZnJhbWUYASABKA0S",
             "NwoIY29tbWFuZHMYAiADKAsyJS5Qcm90by5HYW1lQ29tbWFuZEdyb3VwLkNv",
-            "bW1hbmRzRW50cnkaQwoNQ29tbWFuZHNFbnRyeRILCgNrZXkYASABKA0SIQoF",
-            "dmFsdWUYAiABKAsyEi5Qcm90by5HYW1lQ29tbWFuZDoCOAEiFAoEUGluZxIM",
-            "CgR0aW1lGAEgASgNYgZwcm90bzM="));
+            "bW1hbmRzRW50cnkSDAoEdGltZRgDIAEoDRIOCgZmcmFtZTIYBCABKA0aQwoN",
+            "Q29tbWFuZHNFbnRyeRILCgNrZXkYASABKA0SIQoFdmFsdWUYAiABKAsyEi5Q",
+            "cm90by5HYW1lQ29tbWFuZDoCOAEiFAoEUGluZxIMCgR0aW1lGAEgASgNYgZw",
+            "cm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -43,7 +44,7 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.StartBattleInfo), global::Proto.StartBattleInfo.Parser, new[]{ "MyId", "PlayerInfos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.CS2CPlusPlusCommand), global::Proto.CS2CPlusPlusCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommand), global::Proto.GameCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommandGroup), global::Proto.GameCommandGroup.Parser, new[]{ "Frame", "Commands" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommandGroup), global::Proto.GameCommandGroup.Parser, new[]{ "Frame", "Commands", "Time", "Frame2" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Ping), global::Proto.Ping.Parser, new[]{ "Time" }, null, null, null)
           }));
     }
@@ -905,6 +906,8 @@ namespace Proto {
     public GameCommandGroup(GameCommandGroup other) : this() {
       frame_ = other.frame_;
       commands_ = other.commands_.Clone();
+      time_ = other.time_;
+      frame2_ = other.frame2_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -933,6 +936,28 @@ namespace Proto {
       get { return commands_; }
     }
 
+    /// <summary>Field number for the "time" field.</summary>
+    public const int TimeFieldNumber = 3;
+    private uint time_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Time {
+      get { return time_; }
+      set {
+        time_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "frame2" field.</summary>
+    public const int Frame2FieldNumber = 4;
+    private uint frame2_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Frame2 {
+      get { return frame2_; }
+      set {
+        frame2_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as GameCommandGroup);
@@ -948,6 +973,8 @@ namespace Proto {
       }
       if (Frame != other.Frame) return false;
       if (!Commands.Equals(other.Commands)) return false;
+      if (Time != other.Time) return false;
+      if (Frame2 != other.Frame2) return false;
       return true;
     }
 
@@ -956,6 +983,8 @@ namespace Proto {
       int hash = 1;
       if (Frame != 0) hash ^= Frame.GetHashCode();
       hash ^= Commands.GetHashCode();
+      if (Time != 0) hash ^= Time.GetHashCode();
+      if (Frame2 != 0) hash ^= Frame2.GetHashCode();
       return hash;
     }
 
@@ -971,6 +1000,14 @@ namespace Proto {
         output.WriteUInt32(Frame);
       }
       commands_.WriteTo(output, _map_commands_codec);
+      if (Time != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Time);
+      }
+      if (Frame2 != 0) {
+        output.WriteRawTag(32);
+        output.WriteUInt32(Frame2);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -980,6 +1017,12 @@ namespace Proto {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Frame);
       }
       size += commands_.CalculateSize(_map_commands_codec);
+      if (Time != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Time);
+      }
+      if (Frame2 != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Frame2);
+      }
       return size;
     }
 
@@ -992,6 +1035,12 @@ namespace Proto {
         Frame = other.Frame;
       }
       commands_.Add(other.commands_);
+      if (other.Time != 0) {
+        Time = other.Time;
+      }
+      if (other.Frame2 != 0) {
+        Frame2 = other.Frame2;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1008,6 +1057,14 @@ namespace Proto {
           }
           case 18: {
             commands_.AddEntriesFrom(input, _map_commands_codec);
+            break;
+          }
+          case 24: {
+            Time = input.ReadUInt32();
+            break;
+          }
+          case 32: {
+            Frame2 = input.ReadUInt32();
             break;
           }
         }

@@ -40,7 +40,7 @@ struct CommandGroup
 	std::unordered_map<uint32_t, Command> commands;
 
 	CommandGroup()
-		: frame(std::numeric_limits<uint32_t>::max())
+		: frame(0)
 	{
 
 	}
