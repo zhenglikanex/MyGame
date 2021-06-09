@@ -17,6 +17,7 @@ message StartBattleInfo
 {
 	uint32 my_id = 1;
 	GamePlayerInfos player_infos = 2;
+	uint32 start_time = 3;
 }
 
 //偷个懒用这个来做csharp到c++的命令传输

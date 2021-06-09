@@ -86,9 +86,10 @@ void protobuf_AssignDesc_Battle_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GamePlayerInfos, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GamePlayerInfos, _is_default_instance_));
   StartBattleInfo_descriptor_ = file->message_type(2);
-  static const int StartBattleInfo_offsets_[2] = {
+  static const int StartBattleInfo_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartBattleInfo, my_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartBattleInfo, player_infos_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartBattleInfo, start_time_),
   };
   StartBattleInfo_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -239,18 +240,19 @@ void protobuf_AddDesc_Battle_2eproto() {
     "\n\014Battle.proto\022\005Proto\"-\n\nPlayerInfo\022\n\n\002i"
     "d\030\001 \001(\r\022\023\n\013actor_asset\030\002 \001(\t\":\n\017GamePlay"
     "erInfos\022\'\n\014player_infos\030\001 \003(\0132\021.Proto.Pl"
-    "ayerInfo\"N\n\017StartBattleInfo\022\r\n\005my_id\030\001 \001"
+    "ayerInfo\"b\n\017StartBattleInfo\022\r\n\005my_id\030\001 \001"
     "(\r\022,\n\014player_infos\030\002 \001(\0132\026.Proto.GamePla"
-    "yerInfos\"R\n\023CS2CPlusPlusCommand\022\016\n\006x_axi"
-    "s\030\001 \001(\002\022\016\n\006y_axis\030\002 \001(\002\022\014\n\004jump\030\003 \001(\010\022\r\n"
-    "\005skill\030\004 \001(\005\"J\n\013GameCommand\022\016\n\006x_axis\030\001 "
-    "\001(\004\022\016\n\006y_axis\030\002 \001(\004\022\014\n\004jump\030\003 \001(\010\022\r\n\005ski"
-    "ll\030\004 \001(\005\"\275\001\n\020GameCommandGroup\022\r\n\005frame\030\001"
-    " \001(\r\0227\n\010commands\030\002 \003(\0132%.Proto.GameComma"
-    "ndGroup.CommandsEntry\022\014\n\004time\030\003 \001(\r\022\016\n\006f"
-    "rame2\030\004 \001(\r\032C\n\rCommandsEntry\022\013\n\003key\030\001 \001("
-    "\r\022!\n\005value\030\002 \001(\0132\022.Proto.GameCommand:\0028\001"
-    "\"\024\n\004Ping\022\014\n\004time\030\001 \001(\rb\006proto3", 590);
+    "yerInfos\022\022\n\nstart_time\030\003 \001(\r\"R\n\023CS2CPlus"
+    "PlusCommand\022\016\n\006x_axis\030\001 \001(\002\022\016\n\006y_axis\030\002 "
+    "\001(\002\022\014\n\004jump\030\003 \001(\010\022\r\n\005skill\030\004 \001(\005\"J\n\013Game"
+    "Command\022\016\n\006x_axis\030\001 \001(\004\022\016\n\006y_axis\030\002 \001(\004\022"
+    "\014\n\004jump\030\003 \001(\010\022\r\n\005skill\030\004 \001(\005\"\275\001\n\020GameCom"
+    "mandGroup\022\r\n\005frame\030\001 \001(\r\0227\n\010commands\030\002 \003"
+    "(\0132%.Proto.GameCommandGroup.CommandsEntr"
+    "y\022\014\n\004time\030\003 \001(\r\022\016\n\006frame2\030\004 \001(\r\032C\n\rComma"
+    "ndsEntry\022\013\n\003key\030\001 \001(\r\022!\n\005value\030\002 \001(\0132\022.P"
+    "roto.GameCommand:\0028\001\"\024\n\004Ping\022\014\n\004time\030\001 \001"
+    "(\rb\006proto3", 610);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Battle.proto", &protobuf_RegisterTypes);
   PlayerInfo::default_instance_ = new PlayerInfo();
@@ -876,6 +878,7 @@ GamePlayerInfos::player_infos() const {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int StartBattleInfo::kMyIdFieldNumber;
 const int StartBattleInfo::kPlayerInfosFieldNumber;
+const int StartBattleInfo::kStartTimeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 StartBattleInfo::StartBattleInfo()
@@ -902,6 +905,7 @@ void StartBattleInfo::SharedCtor() {
   _cached_size_ = 0;
   my_id_ = 0u;
   player_infos_ = NULL;
+  start_time_ = 0u;
 }
 
 StartBattleInfo::~StartBattleInfo() {
@@ -942,9 +946,29 @@ StartBattleInfo* StartBattleInfo::New(::google::protobuf::Arena* arena) const {
 
 void StartBattleInfo::Clear() {
 // @@protoc_insertion_point(message_clear_start:Proto.StartBattleInfo)
-  my_id_ = 0u;
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(StartBattleInfo, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<StartBattleInfo*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(my_id_, start_time_);
   if (GetArenaNoVirtual() == NULL && player_infos_ != NULL) delete player_infos_;
   player_infos_ = NULL;
+
+#undef ZR_HELPER_
+#undef ZR_
+
 }
 
 bool StartBattleInfo::MergePartialFromCodedStream(
@@ -977,6 +1001,21 @@ bool StartBattleInfo::MergePartialFromCodedStream(
          parse_player_infos:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_player_infos()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_start_time;
+        break;
+      }
+
+      // optional uint32 start_time = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_start_time:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &start_time_)));
+
         } else {
           goto handle_unusual;
         }
@@ -1019,6 +1058,11 @@ void StartBattleInfo::SerializeWithCachedSizes(
       2, *this->player_infos_, output);
   }
 
+  // optional uint32 start_time = 3;
+  if (this->start_time() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->start_time(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:Proto.StartBattleInfo)
 }
 
@@ -1035,6 +1079,11 @@ void StartBattleInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
         2, *this->player_infos_, false, target);
+  }
+
+  // optional uint32 start_time = 3;
+  if (this->start_time() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->start_time(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:Proto.StartBattleInfo)
@@ -1057,6 +1106,13 @@ int StartBattleInfo::ByteSize() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->player_infos_);
+  }
+
+  // optional uint32 start_time = 3;
+  if (this->start_time() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->start_time());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -1093,6 +1149,9 @@ void StartBattleInfo::MergeFrom(const StartBattleInfo& from) {
   if (from.has_player_infos()) {
     mutable_player_infos()->::Proto::GamePlayerInfos::MergeFrom(from.player_infos());
   }
+  if (from.start_time() != 0) {
+    set_start_time(from.start_time());
+  }
 }
 
 void StartBattleInfo::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1121,6 +1180,7 @@ void StartBattleInfo::Swap(StartBattleInfo* other) {
 void StartBattleInfo::InternalSwap(StartBattleInfo* other) {
   std::swap(my_id_, other->my_id_);
   std::swap(player_infos_, other->player_infos_);
+  std::swap(start_time_, other->start_time_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1186,6 +1246,20 @@ void StartBattleInfo::set_allocated_player_infos(::Proto::GamePlayerInfos* playe
     
   }
   // @@protoc_insertion_point(field_set_allocated:Proto.StartBattleInfo.player_infos)
+}
+
+// optional uint32 start_time = 3;
+void StartBattleInfo::clear_start_time() {
+  start_time_ = 0u;
+}
+ ::google::protobuf::uint32 StartBattleInfo::start_time() const {
+  // @@protoc_insertion_point(field_get:Proto.StartBattleInfo.start_time)
+  return start_time_;
+}
+ void StartBattleInfo::set_start_time(::google::protobuf::uint32 value) {
+  
+  start_time_ = value;
+  // @@protoc_insertion_point(field_set:Proto.StartBattleInfo.start_time)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

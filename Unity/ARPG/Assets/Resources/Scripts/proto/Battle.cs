@@ -24,24 +24,24 @@ namespace Proto {
           string.Concat(
             "CgxCYXR0bGUucHJvdG8SBVByb3RvIi0KClBsYXllckluZm8SCgoCaWQYASAB",
             "KA0SEwoLYWN0b3JfYXNzZXQYAiABKAkiOgoPR2FtZVBsYXllckluZm9zEicK",
-            "DHBsYXllcl9pbmZvcxgBIAMoCzIRLlByb3RvLlBsYXllckluZm8iTgoPU3Rh",
+            "DHBsYXllcl9pbmZvcxgBIAMoCzIRLlByb3RvLlBsYXllckluZm8iYgoPU3Rh",
             "cnRCYXR0bGVJbmZvEg0KBW15X2lkGAEgASgNEiwKDHBsYXllcl9pbmZvcxgC",
-            "IAEoCzIWLlByb3RvLkdhbWVQbGF5ZXJJbmZvcyJSChNDUzJDUGx1c1BsdXND",
-            "b21tYW5kEg4KBnhfYXhpcxgBIAEoAhIOCgZ5X2F4aXMYAiABKAISDAoEanVt",
-            "cBgDIAEoCBINCgVza2lsbBgEIAEoBSJKCgtHYW1lQ29tbWFuZBIOCgZ4X2F4",
-            "aXMYASABKAQSDgoGeV9heGlzGAIgASgEEgwKBGp1bXAYAyABKAgSDQoFc2tp",
-            "bGwYBCABKAUivQEKEEdhbWVDb21tYW5kR3JvdXASDQoFZnJhbWUYASABKA0S",
-            "NwoIY29tbWFuZHMYAiADKAsyJS5Qcm90by5HYW1lQ29tbWFuZEdyb3VwLkNv",
-            "bW1hbmRzRW50cnkSDAoEdGltZRgDIAEoDRIOCgZmcmFtZTIYBCABKA0aQwoN",
-            "Q29tbWFuZHNFbnRyeRILCgNrZXkYASABKA0SIQoFdmFsdWUYAiABKAsyEi5Q",
-            "cm90by5HYW1lQ29tbWFuZDoCOAEiFAoEUGluZxIMCgR0aW1lGAEgASgNYgZw",
-            "cm90bzM="));
+            "IAEoCzIWLlByb3RvLkdhbWVQbGF5ZXJJbmZvcxISCgpzdGFydF90aW1lGAMg",
+            "ASgNIlIKE0NTMkNQbHVzUGx1c0NvbW1hbmQSDgoGeF9heGlzGAEgASgCEg4K",
+            "BnlfYXhpcxgCIAEoAhIMCgRqdW1wGAMgASgIEg0KBXNraWxsGAQgASgFIkoK",
+            "C0dhbWVDb21tYW5kEg4KBnhfYXhpcxgBIAEoBBIOCgZ5X2F4aXMYAiABKAQS",
+            "DAoEanVtcBgDIAEoCBINCgVza2lsbBgEIAEoBSK9AQoQR2FtZUNvbW1hbmRH",
+            "cm91cBINCgVmcmFtZRgBIAEoDRI3Cghjb21tYW5kcxgCIAMoCzIlLlByb3Rv",
+            "LkdhbWVDb21tYW5kR3JvdXAuQ29tbWFuZHNFbnRyeRIMCgR0aW1lGAMgASgN",
+            "Eg4KBmZyYW1lMhgEIAEoDRpDCg1Db21tYW5kc0VudHJ5EgsKA2tleRgBIAEo",
+            "DRIhCgV2YWx1ZRgCIAEoCzISLlByb3RvLkdhbWVDb21tYW5kOgI4ASIUCgRQ",
+            "aW5nEgwKBHRpbWUYASABKA1iBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerInfo), global::Proto.PlayerInfo.Parser, new[]{ "Id", "ActorAsset" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GamePlayerInfos), global::Proto.GamePlayerInfos.Parser, new[]{ "PlayerInfos" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.StartBattleInfo), global::Proto.StartBattleInfo.Parser, new[]{ "MyId", "PlayerInfos" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.StartBattleInfo), global::Proto.StartBattleInfo.Parser, new[]{ "MyId", "PlayerInfos", "StartTime" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.CS2CPlusPlusCommand), global::Proto.CS2CPlusPlusCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommand), global::Proto.GameCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommandGroup), global::Proto.GameCommandGroup.Parser, new[]{ "Frame", "Commands", "Time", "Frame2" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
@@ -332,6 +332,7 @@ namespace Proto {
     public StartBattleInfo(StartBattleInfo other) : this() {
       myId_ = other.myId_;
       PlayerInfos = other.playerInfos_ != null ? other.PlayerInfos.Clone() : null;
+      startTime_ = other.startTime_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -361,6 +362,17 @@ namespace Proto {
       }
     }
 
+    /// <summary>Field number for the "start_time" field.</summary>
+    public const int StartTimeFieldNumber = 3;
+    private uint startTime_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint StartTime {
+      get { return startTime_; }
+      set {
+        startTime_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as StartBattleInfo);
@@ -376,6 +388,7 @@ namespace Proto {
       }
       if (MyId != other.MyId) return false;
       if (!object.Equals(PlayerInfos, other.PlayerInfos)) return false;
+      if (StartTime != other.StartTime) return false;
       return true;
     }
 
@@ -384,6 +397,7 @@ namespace Proto {
       int hash = 1;
       if (MyId != 0) hash ^= MyId.GetHashCode();
       if (playerInfos_ != null) hash ^= PlayerInfos.GetHashCode();
+      if (StartTime != 0) hash ^= StartTime.GetHashCode();
       return hash;
     }
 
@@ -402,6 +416,10 @@ namespace Proto {
         output.WriteRawTag(18);
         output.WriteMessage(PlayerInfos);
       }
+      if (StartTime != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(StartTime);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -412,6 +430,9 @@ namespace Proto {
       }
       if (playerInfos_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerInfos);
+      }
+      if (StartTime != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(StartTime);
       }
       return size;
     }
@@ -429,6 +450,9 @@ namespace Proto {
           playerInfos_ = new global::Proto.GamePlayerInfos();
         }
         PlayerInfos.MergeFrom(other.PlayerInfos);
+      }
+      if (other.StartTime != 0) {
+        StartTime = other.StartTime;
       }
     }
 
@@ -449,6 +473,10 @@ namespace Proto {
               playerInfos_ = new global::Proto.GamePlayerInfos();
             }
             input.ReadMessage(playerInfos_);
+            break;
+          }
+          case 24: {
+            StartTime = input.ReadUInt32();
             break;
           }
         }

@@ -63,17 +63,19 @@ void BattleActor::StartBattle(const std::any& data)
 		player_info->set_actor_asset("hero.json");
 	}
 
+	auto start_time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 	for (auto player : players_)
 	{
 		Proto::StartBattleInfo info;
 		info.set_my_id(ids_[player]);
 		info.set_allocated_player_infos(new Proto::GamePlayerInfos(player_infos));
+		info.set_start_time(start_time);
 
 		Call(player, "send", std::make_tuple(std::string("start_battle"), Serialize(info)));
 	}
 
 	start_ = true;
-	last_time_ = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	last_time_ = start_time;
 	AddTimer(1, -1, [this]()
 		{
 			uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();

@@ -89,6 +89,7 @@ bool Game::Initialize()
 
 void Game::Update(float dt)
 {
+	INFO("dt : {}", dt);
 	run_time_ += dt;
 
 	UpdateInput();

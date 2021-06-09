@@ -66,6 +66,7 @@ public:
 		real_frame_ = real_frame;
 	}
 
+	float run_time() const { return run_time_; }
 	uint32_t run_frame() const { return run_frame_; }
 	uint32_t real_frame() const { return real_frame_; }
 	entt::registry& registry() { return registry_; }

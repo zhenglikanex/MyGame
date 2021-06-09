@@ -32,6 +32,8 @@ std::unique_ptr<DebugService> g_debug_service = std::make_unique<UnityDebugServi
 std::unique_ptr<ClientNetworkService> g_network_service = nullptr;
 uint32_t g_my_id = 0;
 uint32_t g_ping = 0;
+uint32_t g_last_time = 0;
+uint32_t g_start_time1 = 0;
 
 extern "C"
 {
@@ -85,7 +87,11 @@ extern "C"
 
 		if (g_game)
 		{
-			g_game->Update(dt);
+			uint32_t now = duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
+			g_game->Update((now - g_last_time) / 1000.0f);
+			g_last_time = now;
+			uint32_t now1 = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+			INFO("game time : {} client_run_time:{}", (now1 - g_start_time1) / 1000.0f, g_game->run_time());
 		}
 	}
 
@@ -143,11 +149,14 @@ extern "C"
 					if (message.name() == "start_battle")
 					{
 						INFO("start_battle");
+						g_last_time = duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
 
 						Proto::StartBattleInfo info;
 						info.ParseFromArray(message.data().data(), message.data().size());
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
 						InitGame(info.player_infos());
+						
+						g_start_time1 = info.start_time();
 					}
 					else if (message.name() == "push_command_group")
 					{
@@ -164,8 +173,6 @@ extern "C"
 							INFO("!");
 						}
 
-						INFO("frame {} time {} frame2 {} size {} byte_size {}", game_command_group.frame(), game_command_group.time(),game_command_group.frame2(),message.data().size(),game_command_group.ByteSize());
-
 						CommandGroup group;
 						group.frame = game_command_group.frame();
 						for (auto& entry : game_command_group.commands())
@@ -176,17 +183,12 @@ extern "C"
 							command.skill = entry.second.skill();
 							command.jump = entry.second.jump();
 							
-							if (entry.first != g_my_id)
-							{
-								INFO("x{} y{}", entry.second.x_axis(), entry.second.y_axis());
-							}
-
 							group.commands.emplace(entry.first, command);
 						}
 
 						if (group.frame >= g_game->run_frame())
 						{
-							INFO("server group frame{} real_frame{} run_frame{}", group.frame, g_game->real_frame(),g_game->run_frame());
+							INFO("group frame{} real_frame{} run_frame{}", group.frame, g_game->real_frame(),g_game->run_frame());
 							for (auto& entry : group.commands)
 							{
 								g_game->InputCommand(group.frame, entry.first, entry.second);

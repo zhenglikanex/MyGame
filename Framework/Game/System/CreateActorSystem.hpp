@@ -63,6 +63,8 @@ struct CreateActorSystem : public System
 			attribute_units.value.emplace_back(AttributeUnit{ e, attributes });	// todo wepon
 
 			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);	
+
+			INFO("create actor");
 		}
 	}
 
