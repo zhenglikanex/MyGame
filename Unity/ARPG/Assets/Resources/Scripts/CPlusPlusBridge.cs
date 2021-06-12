@@ -131,6 +131,12 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         var view = UnityViewServices.Instance.CreateView(asset);
         if(view)
         {
+            if(view.Id == BattleController.Instance.MyId)
+            {
+                // todo:暂时加载这里
+                var controller = Camera.main.gameObject.GetComponent<CameraController>();
+                controller.LockTarget(view.gameObject.transform, false);
+            }
             return view.Id;
         }
         return -1;
@@ -234,5 +240,10 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
             return obj.ToString();
         }
         return "";
+    }
+
+    public static void SetMyId(uint id)
+    {
+        BattleController.Instance.MyId = id;
     }
 }

@@ -58,7 +58,8 @@ public:
 	void FixPredict(uint32_t local_id,const CommandGroup& command_group);
 	void SaveSnapshot();
 	void Rollback(uint32_t frame);
-	
+	uint32_t GetCurRunFrame() const;
+
 	void set_real_frame(uint32_t real_frame) 
 	{
 		assert(real_frame >= real_frame_ && real_frame <= run_frame_ && "!");

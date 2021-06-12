@@ -91,7 +91,7 @@ extern "C"
 			g_game->Update((now - g_last_time) / 1000.0f);
 			g_last_time = now;
 			uint32_t now1 = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-			INFO("game time : {} client_run_time:{}", (now1 - g_start_time1) / 1000.0f, g_game->run_time());
+			//INFO("game time : {} client_run_time:{}", (now1 - g_start_time1) / 1000.0f, g_game->run_time());
 		}
 	}
 
@@ -104,7 +104,7 @@ extern "C"
 
 			Command command;
 			command.x_axis = fixed16(std::abs(csharp_command.x_axis()) < 0.1 ? 0 : csharp_command.x_axis());
-			command.y_axis = fixed16(std::abs(csharp_command.y_axis()) < 0.1 ? 0 : csharp_command.y_axis());
+			command.y_axis = fixed16(std::abs(1.0f));
 			command.skill = csharp_command.skill();
 			command.jump = csharp_command.jump();
 
@@ -178,11 +178,12 @@ extern "C"
 						for (auto& entry : game_command_group.commands())
 						{
 							Command command;
-							command.x_axis = entry.second.x_axis();
-							command.y_axis = entry.second.y_axis();
+							command.x_axis = fixed16::from_raw_value(entry.second.x_axis());
+							command.y_axis = fixed16::from_raw_value(entry.second.y_axis());
 							command.skill = entry.second.skill();
 							command.jump = entry.second.jump();
-							
+
+							INFO("y_axis : {} - {}", command.y_axis,entry.second.y_axis());
 							group.commands.emplace(entry.first, command);
 						}
 
@@ -204,7 +205,7 @@ extern "C"
 								g_game->FixPredict(g_my_id, group);
 							}
 
-							g_game->set_real_frame(group.frame);
+							g_game->set_real_frame(group.frame + 1);
 						}
 					}
 					else if (message.name() == "push_command")

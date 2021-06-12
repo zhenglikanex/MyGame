@@ -1,5 +1,4 @@
 build
-UnityApp
 3rdparty/build
 *.lib
 bin
@@ -9,7 +8,7 @@ CMakeFiles
 Makefile
 cmake_install.cmake
 CMakeLists.txt.user
-
+UnityApp
 Unity/ARPG/[Ll]ibrary/
 Unity/ARPG/[Tt]emp/
 Unity/ARPG/[Oo]bj/

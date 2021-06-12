@@ -6,8 +6,8 @@ using System;
 
 public class BattleController : SceneGameObjectSingleton<BattleController>
 {
+    public uint MyId { get; set; }
 
-    public uint MyId = 0;
     public bool IsBattleing
     {
         get;

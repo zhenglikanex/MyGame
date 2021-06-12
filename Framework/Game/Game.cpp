@@ -89,7 +89,7 @@ bool Game::Initialize()
 
 void Game::Update(float dt)
 {
-	INFO("dt : {}", dt);
+
 	run_time_ += dt;
 
 	UpdateInput();
@@ -110,6 +110,7 @@ void Game::UpdateClinet()
 	auto& game_state = registry_.ctx<GameState>();
 	while (true)
 	{
+		// 模拟帧数不能超过当前可以运行帧数，因为有可能提前收到服务器帧
 		if (game_state.run_frame >= run_frame_)
 		{
 			return;
@@ -122,7 +123,7 @@ void Game::UpdateClinet()
 		}
 
 		// 如果是预测执行,保存快照
-		if (game_state.run_frame > real_frame_)
+		if (game_state.run_frame >= real_frame_)
 		{
 			SaveSnapshot();
 		}
@@ -189,8 +190,9 @@ void Game::Finalize()
 
 void Game::UpdateInput()
 {	
-	while (run_time_ > run_frame_ * input_frame_rate_ + input_frame_rate_)
+	while (registry_.ctx<GameState>().run_frame == run_frame_ && (run_time_ > run_frame_ * input_frame_rate_ + input_frame_rate_))
 	{
+		INFO("registry_.ctx<GameState>().run_frame {}", registry_.ctx<GameState>().run_frame);
 		auto& group = GetCommandGroup(run_frame_);
 
 		//会触发InputCommand,相当于getcommands
@@ -200,6 +202,7 @@ void Game::UpdateInput()
 		//预测玩家操作
 		if (group.commands.size() < player_infos_.size())
 		{
+			INFO("precit {}", run_frame_);
 			if (run_frame_ == 0)
 			{
 				for (auto& player_info : player_infos_)
@@ -231,7 +234,7 @@ void Game::UpdateInput()
 			++run_frame_;
 		}
 
-		INFO("INPUT");
+		INFO("INPUT {} {}",real_frame_,run_frame_);
 	}
 }
 
@@ -254,13 +257,14 @@ bool Game::CheckPredict(const CommandGroup& command_group)
 void Game::FixPredict(uint32_t local_id,const CommandGroup& server_command_group)
 {
 	//回滚到上一帧
-	Rollback(server_command_group.frame - 1);
+	Rollback(server_command_group.frame);
 
 	auto& predict_command_group = GetCommandGroup(server_command_group.frame);
 	predict_command_group.commands = server_command_group.commands;
 
+	INFO("FixPredict RUN_FRAME {}", run_frame_);
 	auto fix_command_group = server_command_group;
-	for (uint32_t frame = server_command_group.frame + 1; frame <= run_frame_; ++frame)
+	for (uint32_t frame = server_command_group.frame; frame < run_frame_; ++frame)
 	{
 		auto& predict_command_group = GetCommandGroup(frame);
 		// 保持自己预测帧
@@ -269,6 +273,11 @@ void Game::FixPredict(uint32_t local_id,const CommandGroup& server_command_group
 		// 修正网络玩家的预测帧为上一次的结果
 		predict_command_group.commands = fix_command_group.commands;
 	}
+
+	// 直接模拟
+	//UpdateClinet();
+
+	INFO("FixPredict.run_frame {}", registry_.ctx<GameState>().run_frame);
 }
 
 void Game::SaveSnapshot()
@@ -377,6 +386,12 @@ void Game::Rollback(uint32_t frame)
 			observer_system->Connect();
 		}
 	}
+}
+
+uint32_t Game::GetCurRunFrame() const
+{
+	auto& game_state = registry_.ctx<GameState>();
+	return game_state.run_frame;
 }
 
 void Game::CreatePlayer()

@@ -100,16 +100,16 @@ void BattleActor::Update(float dt)
 void BattleActor::InputCommand(const std::any& data)
 {
 	auto& [player, command] = std::any_cast<std::tuple<ActorId, Proto::GameCommand>>(data);
-	std::cout << "Input command" << player;
+	
 	auto iter = ids_.find(player);
 	if (iter == ids_.end())
 	{
 		return;
 	}
-
+	std::cout << "Input command" << player;
 	std::cout << " ids command" << iter->first << std::endl;
 
-	auto id = iter->first;
+	auto id = iter->second;
 	auto it = player_commands_.find(id);
 	if (it == player_commands_.end())
 	{
