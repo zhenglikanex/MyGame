@@ -1,8 +1,8 @@
 #include "KcpGateActor.hpp"
 
-#include "Framework/Network/NetMessage.hpp"
+#include "Framework/Proto/NetMessage.hpp"
 
-#include "3rdparty/include/kcp/ikcp.h"
+#include "Server/KcpGateActor/Kcp/ikcp.h"
 
 KcpGateActor::KcpGateActor(ActorId id)
 	: Actor(id)
@@ -29,7 +29,7 @@ bool KcpGateActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	network_component_->CreateUdpServer(9523);
 
 	// update all kcp connection
-	kcp_timer_ = AddTimer(10, -1, [this]() {
+	kcp_timer_ = AddTimer(1, -1, [this]() {
 		uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 		cur_clock_ = now;
 

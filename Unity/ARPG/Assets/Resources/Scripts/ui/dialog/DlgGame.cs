@@ -6,12 +6,14 @@ public class DlgGame : NormalUI
 {
     private Button btn_start_;
     private Button btn_end_;
+    private Text text_ping_;
 
     // Start is called before the first frame update
     void Start()
     {
         btn_start_ = transform.Find("btn_start").GetComponent<Button>();
         btn_end_ = transform.Find("btn_end").GetComponent<Button>();
+        text_ping_ = transform.Find("text_ping").GetComponent<Text>();
 
         btn_start_.onClick.AddListener(() =>
         {
@@ -24,6 +26,12 @@ public class DlgGame : NormalUI
             BattleController.Instance.EndBattle();
             UpdateBtnState();
         });
+
+        AddListener("ping_update", (Message msg) =>
+         {
+             var ping = msg.PopData<int>();
+             text_ping_.text = string.Format("ping:{0}", ping);
+         });
 
         UpdateBtnState();
     }

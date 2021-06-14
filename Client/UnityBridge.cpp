@@ -42,7 +42,7 @@ extern "C"
 		UnityBridge::Get().SetExecuteDelegate(delegate);
 	}
 
-	EXPORT_DLL void InitGame(const Proto::GamePlayerInfos& infos)
+	EXPORT_DLL void InitGame(const Proto::GamePlayerInfos& infos,uint32_t start_time)
 	{
 		std::vector<PlayerInfo> players;
 		for (auto iter = infos.player_infos().cbegin(); iter < infos.player_infos().cend(); ++iter)
@@ -60,6 +60,7 @@ extern "C"
 
 		g_game = std::make_unique<Game>(std::move(locator), GameMode::kClinet,std::move(players));
 		g_game->Initialize();
+		g_game->set_start_time(start_time);
 	}
 
 	EXPORT_DLL void DestoryGame()
@@ -70,6 +71,9 @@ extern "C"
 
 	EXPORT_DLL void UpdateGame(float dt)
 	{
+		static float total_time = 0;
+		std::this_thread::sleep_for(milliseconds(1));
+		//INFO("UpdateGame");
 		if (g_network_service)
 		{
 			if (g_network_service->IsConnected())
@@ -83,15 +87,21 @@ extern "C"
 			}
 		}
 
-		//CheckPing();
+		CheckPing();
 
 		if (g_game)
 		{
-			uint32_t now = duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
-			g_game->Update((now - g_last_time) / 1000.0f);
+			uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+			float dt = (now - g_last_time) / 1000.0f;
+			g_game->Update(dt);
 			g_last_time = now;
+			total_time += dt;
 			uint32_t now1 = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-			//INFO("game time : {} client_run_time:{}", (now1 - g_start_time1) / 1000.0f, g_game->run_time());
+			if (g_game->run_time() > ((now1 - g_start_time1) / 1000.0f))
+			{
+				int a = 10;
+			}
+			INFO("game time : {} client_run_time:{} , run_frame {} dt{}", (now1 - g_start_time1) / 1000.0f, g_game->run_time(),g_game->run_frame(),total_time);
 		}
 	}
 
@@ -104,7 +114,7 @@ extern "C"
 
 			Command command;
 			command.x_axis = fixed16(std::abs(csharp_command.x_axis()) < 0.1 ? 0 : csharp_command.x_axis());
-			command.y_axis = fixed16(std::abs(1.0f));
+			command.y_axis = fixed16(std::abs(csharp_command.y_axis()) < 0.1 ? 0 : csharp_command.y_axis());
 			command.skill = csharp_command.skill();
 			command.jump = csharp_command.jump();
 
@@ -115,7 +125,8 @@ extern "C"
 			game_command.set_y_axis(command.y_axis.raw_value());
 			game_command.set_skill(command.skill);
 			game_command.set_jump(command.jump);
-			
+			game_command.set_frame(g_game->run_frame());
+			INFO("Myid {}", g_my_id);
 
 			if (g_network_service)
 			{
@@ -149,13 +160,13 @@ extern "C"
 					if (message.name() == "start_battle")
 					{
 						INFO("start_battle");
-						g_last_time = duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count();
+						g_last_time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 
 						Proto::StartBattleInfo info;
 						info.ParseFromArray(message.data().data(), message.data().size());
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
-						InitGame(info.player_infos());
-						
+						g_my_id = info.my_id();
+						InitGame(info.player_infos(),info.start_time() - (g_ping / 2 + 34));
 						g_start_time1 = info.start_time();
 					}
 					else if (message.name() == "push_command_group")
@@ -167,6 +178,9 @@ extern "C"
 
 						Proto::GameCommandGroup game_command_group;
 						game_command_group.ParseFromArray(message.data().data(), message.data().size());
+
+						uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+						INFO("!!!!!!! command ping : {}", now - game_command_group.time());
 
 						if (game_command_group.commands().size() < 2)
 						{
@@ -199,7 +213,7 @@ extern "C"
 						{
 							INFO("---------------group frame{} real_frame{} {}", group.frame, g_game->real_frame(),g_game->run_frame());
 							assert(group.frame == g_game->real_frame());
-
+							
 							if (!g_game->CheckPredict(group))
 							{
 								g_game->FixPredict(g_my_id, group);
@@ -221,7 +235,7 @@ extern "C"
 						uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 						g_ping = now - ping.time();
 
-						//INFO("ping:{}", g_ping);
+						UnityBridge::Get().CallUnity<void>("SetPing", g_ping);
 					}
 				});
 
@@ -235,10 +249,10 @@ extern "C"
 
 	EXPORT_DLL void CheckPing()
 	{
+		static uint32_t ping_times = 0;
 		if (g_network_service)
 		{
 			uint32_t time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-
 			Proto::Ping ping;
 			ping.set_time(time);
 

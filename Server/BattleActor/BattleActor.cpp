@@ -9,7 +9,7 @@ using namespace std::chrono;
 BattleActor::BattleActor(ActorId id)
 	: Actor(id)
 	, start_(false)
-	, last_time_(0)
+	, start_time_(0)
 	, run_time_(0)
 	, run_frame_(0)
 {
@@ -75,23 +75,22 @@ void BattleActor::StartBattle(const std::any& data)
 	}
 
 	start_ = true;
-	last_time_ = start_time;
+	start_time_ = start_time;
 	AddTimer(1, -1, [this]()
 		{
-			uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-			Update((now - last_time_) / 1000.f);
-			last_time_ = now;
+			Update();
 		});
 
 	std::cout << "BattleActor start!!!" << std::endl;
 }
 
-void BattleActor::Update(float dt)
+void BattleActor::Update()
 {
-	run_time_ += dt;
+	uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	run_time_ = (now - start_time_) / 1000.0f;
 	while (run_time_ > run_frame_ * kFrameTime + kFrameTime)
 	{
-		std::cout << "---------------run_time:" << run_time_ << " frame:" << run_frame_ << std::endl;
+		//std::cout << "---------------run_time:" << run_time_ << " frame:" << run_frame_ << std::endl;
 		PushCommandGroup();
 		++run_frame_;
 	}
@@ -106,8 +105,6 @@ void BattleActor::InputCommand(const std::any& data)
 	{
 		return;
 	}
-	std::cout << "Input command" << player;
-	std::cout << " ids command" << iter->first << std::endl;
 
 	auto id = iter->second;
 	auto it = player_commands_.find(id);
@@ -116,7 +113,13 @@ void BattleActor::InputCommand(const std::any& data)
 		return;
 	}
 
-	player_commands_[id].emplace_back(command);
+	std::cout << "input command " << id << "x " << command.x_axis() << " y " << command.y_axis() << std::endl;
+	std::cout << "command frame " << command.frame() << "cur frame " << player_commands_[id].size() << "    " << run_frame_ << std::endl;
+
+	if (player_commands_[id].size() <= command.frame())
+	{
+		player_commands_[id].emplace_back(command);
+	}
 }
 
 void BattleActor::PushCommandGroup()
@@ -132,9 +135,17 @@ void BattleActor::PushCommandGroup()
 		auto it = player_commands_.find(entry.second);
 		if (it != player_commands_.end())
 		{
-			if (it->second.size() <= run_frame_)
+			while (run_frame_ >= it->second.size())
 			{
-				it->second.push_back(Proto::GameCommand());
+				if (it->second.empty())
+				{
+					it->second.push_back(Proto::GameCommand());
+				}
+				else
+				{
+					it->second.push_back(it->second.back());
+				}
+				
 			}
 			(*commands)[entry.second] = it->second[run_frame_];
 		}

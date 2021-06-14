@@ -16,7 +16,7 @@ public:
 
 	void Receive(ActorMessage&& actor_msg) override;
 
-	void Update(float dt);	
+	void Update();	
 	void PushCommandGroup();
 private:
 	void StartBattle(const std::any& data);
@@ -28,7 +28,7 @@ private:
 	std::unordered_map<ActorId, uint32_t> ids_;
 	std::unordered_map<uint32_t, std::vector<Proto::GameCommand>> player_commands_;
 	bool start_;
-	uint32_t last_time_;
+	uint32_t start_time_;
 	float run_time_;
 	uint32_t run_frame_;
 };

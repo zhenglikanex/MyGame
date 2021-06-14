@@ -516,6 +516,12 @@ class GameCommand : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::int32 skill() const;
   void set_skill(::google::protobuf::int32 value);
 
+  // optional uint32 frame = 5;
+  void clear_frame();
+  static const int kFrameFieldNumber = 5;
+  ::google::protobuf::uint32 frame() const;
+  void set_frame(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Proto.GameCommand)
  private:
 
@@ -525,6 +531,7 @@ class GameCommand : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::uint64 y_axis_;
   bool jump_;
   ::google::protobuf::int32 skill_;
+  ::google::protobuf::uint32 frame_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
   friend void protobuf_AssignDesc_Battle_2eproto();
@@ -718,12 +725,19 @@ class Ping : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   ::google::protobuf::uint32 time() const;
   void set_time(::google::protobuf::uint32 value);
 
+  // optional uint32 times = 2;
+  void clear_times();
+  static const int kTimesFieldNumber = 2;
+  ::google::protobuf::uint32 times() const;
+  void set_times(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Proto.Ping)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::uint32 time_;
+  ::google::protobuf::uint32 times_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
   friend void protobuf_AssignDesc_Battle_2eproto();
@@ -1022,6 +1036,20 @@ inline void GameCommand::set_skill(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:Proto.GameCommand.skill)
 }
 
+// optional uint32 frame = 5;
+inline void GameCommand::clear_frame() {
+  frame_ = 0u;
+}
+inline ::google::protobuf::uint32 GameCommand::frame() const {
+  // @@protoc_insertion_point(field_get:Proto.GameCommand.frame)
+  return frame_;
+}
+inline void GameCommand::set_frame(::google::protobuf::uint32 value) {
+  
+  frame_ = value;
+  // @@protoc_insertion_point(field_set:Proto.GameCommand.frame)
+}
+
 // -------------------------------------------------------------------
 
 // GameCommandGroup
@@ -1102,6 +1130,20 @@ inline void Ping::set_time(::google::protobuf::uint32 value) {
   
   time_ = value;
   // @@protoc_insertion_point(field_set:Proto.Ping.time)
+}
+
+// optional uint32 times = 2;
+inline void Ping::clear_times() {
+  times_ = 0u;
+}
+inline ::google::protobuf::uint32 Ping::times() const {
+  // @@protoc_insertion_point(field_get:Proto.Ping.times)
+  return times_;
+}
+inline void Ping::set_times(::google::protobuf::uint32 value) {
+  
+  times_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Ping.times)
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS

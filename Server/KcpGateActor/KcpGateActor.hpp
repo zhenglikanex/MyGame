@@ -10,7 +10,6 @@
 #include "NetworkComponent.hpp"
 #include "KcpConnection.hpp"
 
-#include "Framework/Network/NetMessage.hpp"
 
 using namespace actor_net;
 using namespace std::chrono;

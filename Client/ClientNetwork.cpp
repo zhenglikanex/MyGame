@@ -140,6 +140,7 @@ void ClientNetwork::Send(uint8_t* data, uint32_t len)
 			if (IsConnected())
 			{
 				auto ret = ikcp_send(kcp_, (char*)buffer->data(), buffer->size());
+				ikcp_flush(kcp_);
 			}
 			else
 			{
@@ -218,8 +219,9 @@ void ClientNetwork::Connected(kcp_conv_t conv)
 	// 第五个参数 为是否禁用常规流控，这里禁止
 	//ikcp_nodelay(kcp_, 1, 10, 2, 1);
 	ikcp_nodelay(kcp_, 1, 10, 1, 1); // 设置成1次ACK跨越直接重传, 这样反应速度会更快. 内部时钟5毫秒.
-	//kcp_->interval = 1;
-	//kcp_->rx_minrto = 5;
+	ikcp_wndsize(kcp_, 1024, 1024);
+	kcp_->interval = 1;
+	kcp_->rx_minrto = 5;
 
 	type_ = ConnectType::kTypeConnected;
 
@@ -340,7 +342,7 @@ void ClientNetwork::KcpUpdate()
 
 		ikcp_update(kcp_, cur_clock_);
 
-		kcp_update_timer_.expires_at(kcp_update_timer_.expires_at() + milliseconds(10));
+		kcp_update_timer_.expires_at(kcp_update_timer_.expires_at() + milliseconds(1));
 		kcp_update_timer_.async_wait([this](std::error_code ec)
 			{
 				if (!ec)

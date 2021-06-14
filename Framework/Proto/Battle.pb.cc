@@ -121,11 +121,12 @@ void protobuf_AssignDesc_Battle_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CS2CPlusPlusCommand, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CS2CPlusPlusCommand, _is_default_instance_));
   GameCommand_descriptor_ = file->message_type(4);
-  static const int GameCommand_offsets_[4] = {
+  static const int GameCommand_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommand, x_axis_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommand, y_axis_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommand, jump_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommand, skill_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommand, frame_),
   };
   GameCommand_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -158,8 +159,9 @@ void protobuf_AssignDesc_Battle_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommandGroup, _is_default_instance_));
   GameCommandGroup_CommandsEntry_descriptor_ = GameCommandGroup_descriptor_->nested_type(0);
   Ping_descriptor_ = file->message_type(6);
-  static const int Ping_offsets_[1] = {
+  static const int Ping_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Ping, time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Ping, times_),
   };
   Ping_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -244,15 +246,15 @@ void protobuf_AddDesc_Battle_2eproto() {
     "(\r\022,\n\014player_infos\030\002 \001(\0132\026.Proto.GamePla"
     "yerInfos\022\022\n\nstart_time\030\003 \001(\r\"R\n\023CS2CPlus"
     "PlusCommand\022\016\n\006x_axis\030\001 \001(\002\022\016\n\006y_axis\030\002 "
-    "\001(\002\022\014\n\004jump\030\003 \001(\010\022\r\n\005skill\030\004 \001(\005\"J\n\013Game"
+    "\001(\002\022\014\n\004jump\030\003 \001(\010\022\r\n\005skill\030\004 \001(\005\"Y\n\013Game"
     "Command\022\016\n\006x_axis\030\001 \001(\004\022\016\n\006y_axis\030\002 \001(\004\022"
-    "\014\n\004jump\030\003 \001(\010\022\r\n\005skill\030\004 \001(\005\"\275\001\n\020GameCom"
-    "mandGroup\022\r\n\005frame\030\001 \001(\r\0227\n\010commands\030\002 \003"
-    "(\0132%.Proto.GameCommandGroup.CommandsEntr"
-    "y\022\014\n\004time\030\003 \001(\r\022\016\n\006frame2\030\004 \001(\r\032C\n\rComma"
-    "ndsEntry\022\013\n\003key\030\001 \001(\r\022!\n\005value\030\002 \001(\0132\022.P"
-    "roto.GameCommand:\0028\001\"\024\n\004Ping\022\014\n\004time\030\001 \001"
-    "(\rb\006proto3", 610);
+    "\014\n\004jump\030\003 \001(\010\022\r\n\005skill\030\004 \001(\005\022\r\n\005frame\030\005 "
+    "\001(\r\"\275\001\n\020GameCommandGroup\022\r\n\005frame\030\001 \001(\r\022"
+    "7\n\010commands\030\002 \003(\0132%.Proto.GameCommandGro"
+    "up.CommandsEntry\022\014\n\004time\030\003 \001(\r\022\016\n\006frame2"
+    "\030\004 \001(\r\032C\n\rCommandsEntry\022\013\n\003key\030\001 \001(\r\022!\n\005"
+    "value\030\002 \001(\0132\022.Proto.GameCommand:\0028\001\"#\n\004P"
+    "ing\022\014\n\004time\030\001 \001(\r\022\r\n\005times\030\002 \001(\rb\006proto3", 640);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Battle.proto", &protobuf_RegisterTypes);
   PlayerInfo::default_instance_ = new PlayerInfo();
@@ -1679,6 +1681,7 @@ const int GameCommand::kXAxisFieldNumber;
 const int GameCommand::kYAxisFieldNumber;
 const int GameCommand::kJumpFieldNumber;
 const int GameCommand::kSkillFieldNumber;
+const int GameCommand::kFrameFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 GameCommand::GameCommand()
@@ -1706,6 +1709,7 @@ void GameCommand::SharedCtor() {
   y_axis_ = GOOGLE_ULONGLONG(0);
   jump_ = false;
   skill_ = 0;
+  frame_ = 0u;
 }
 
 GameCommand::~GameCommand() {
@@ -1761,7 +1765,7 @@ void GameCommand::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(x_axis_, skill_);
+  ZR_(x_axis_, frame_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -1833,6 +1837,21 @@ bool GameCommand::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(40)) goto parse_frame;
+        break;
+      }
+
+      // optional uint32 frame = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_frame:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &frame_)));
+
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1881,6 +1900,11 @@ void GameCommand::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->skill(), output);
   }
 
+  // optional uint32 frame = 5;
+  if (this->frame() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->frame(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:Proto.GameCommand)
 }
 
@@ -1905,6 +1929,11 @@ void GameCommand::SerializeWithCachedSizes(
   // optional int32 skill = 4;
   if (this->skill() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->skill(), target);
+  }
+
+  // optional uint32 frame = 5;
+  if (this->frame() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->frame(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:Proto.GameCommand)
@@ -1939,6 +1968,13 @@ int GameCommand::ByteSize() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->skill());
+  }
+
+  // optional uint32 frame = 5;
+  if (this->frame() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->frame());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -1981,6 +2017,9 @@ void GameCommand::MergeFrom(const GameCommand& from) {
   if (from.skill() != 0) {
     set_skill(from.skill());
   }
+  if (from.frame() != 0) {
+    set_frame(from.frame());
+  }
 }
 
 void GameCommand::CopyFrom(const ::google::protobuf::Message& from) {
@@ -2011,6 +2050,7 @@ void GameCommand::InternalSwap(GameCommand* other) {
   std::swap(y_axis_, other->y_axis_);
   std::swap(jump_, other->jump_);
   std::swap(skill_, other->skill_);
+  std::swap(frame_, other->frame_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -2080,6 +2120,20 @@ void GameCommand::clear_skill() {
   
   skill_ = value;
   // @@protoc_insertion_point(field_set:Proto.GameCommand.skill)
+}
+
+// optional uint32 frame = 5;
+void GameCommand::clear_frame() {
+  frame_ = 0u;
+}
+ ::google::protobuf::uint32 GameCommand::frame() const {
+  // @@protoc_insertion_point(field_get:Proto.GameCommand.frame)
+  return frame_;
+}
+ void GameCommand::set_frame(::google::protobuf::uint32 value) {
+  
+  frame_ = value;
+  // @@protoc_insertion_point(field_set:Proto.GameCommand.frame)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -2594,6 +2648,7 @@ void GameCommandGroup::clear_frame2() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Ping::kTimeFieldNumber;
+const int Ping::kTimesFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 Ping::Ping()
@@ -2618,6 +2673,7 @@ void Ping::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   time_ = 0u;
+  times_ = 0u;
 }
 
 Ping::~Ping() {
@@ -2657,7 +2713,27 @@ Ping* Ping::New(::google::protobuf::Arena* arena) const {
 
 void Ping::Clear() {
 // @@protoc_insertion_point(message_clear_start:Proto.Ping)
-  time_ = 0u;
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(Ping, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<Ping*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(time_, times_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
 }
 
 bool Ping::MergePartialFromCodedStream(
@@ -2676,6 +2752,21 @@ bool Ping::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &time_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_times;
+        break;
+      }
+
+      // optional uint32 times = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_times:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &times_)));
 
         } else {
           goto handle_unusual;
@@ -2713,6 +2804,11 @@ void Ping::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->time(), output);
   }
 
+  // optional uint32 times = 2;
+  if (this->times() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->times(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:Proto.Ping)
 }
 
@@ -2722,6 +2818,11 @@ void Ping::SerializeWithCachedSizes(
   // optional uint32 time = 1;
   if (this->time() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->time(), target);
+  }
+
+  // optional uint32 times = 2;
+  if (this->times() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->times(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:Proto.Ping)
@@ -2737,6 +2838,13 @@ int Ping::ByteSize() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->time());
+  }
+
+  // optional uint32 times = 2;
+  if (this->times() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->times());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -2770,6 +2878,9 @@ void Ping::MergeFrom(const Ping& from) {
   if (from.time() != 0) {
     set_time(from.time());
   }
+  if (from.times() != 0) {
+    set_times(from.times());
+  }
 }
 
 void Ping::CopyFrom(const ::google::protobuf::Message& from) {
@@ -2797,6 +2908,7 @@ void Ping::Swap(Ping* other) {
 }
 void Ping::InternalSwap(Ping* other) {
   std::swap(time_, other->time_);
+  std::swap(times_, other->times_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -2824,6 +2936,20 @@ void Ping::clear_time() {
   
   time_ = value;
   // @@protoc_insertion_point(field_set:Proto.Ping.time)
+}
+
+// optional uint32 times = 2;
+void Ping::clear_times() {
+  times_ = 0u;
+}
+ ::google::protobuf::uint32 Ping::times() const {
+  // @@protoc_insertion_point(field_get:Proto.Ping.times)
+  return times_;
+}
+ void Ping::set_times(::google::protobuf::uint32 value) {
+  
+  times_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Ping.times)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

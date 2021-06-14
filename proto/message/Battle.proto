@@ -39,6 +39,7 @@ message GameCommand
 	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
 	bool jump = 3;
 	int32 skill = 4;
+	uint32 frame = 5;
 }
 
 message GameCommandGroup
@@ -52,4 +53,5 @@ message GameCommandGroup
 message Ping
 {
 	uint32 time = 1;
+	uint32 times = 2;
 }

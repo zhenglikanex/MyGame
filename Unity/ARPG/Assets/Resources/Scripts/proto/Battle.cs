@@ -28,14 +28,15 @@ namespace Proto {
             "cnRCYXR0bGVJbmZvEg0KBW15X2lkGAEgASgNEiwKDHBsYXllcl9pbmZvcxgC",
             "IAEoCzIWLlByb3RvLkdhbWVQbGF5ZXJJbmZvcxISCgpzdGFydF90aW1lGAMg",
             "ASgNIlIKE0NTMkNQbHVzUGx1c0NvbW1hbmQSDgoGeF9heGlzGAEgASgCEg4K",
-            "BnlfYXhpcxgCIAEoAhIMCgRqdW1wGAMgASgIEg0KBXNraWxsGAQgASgFIkoK",
+            "BnlfYXhpcxgCIAEoAhIMCgRqdW1wGAMgASgIEg0KBXNraWxsGAQgASgFIlkK",
             "C0dhbWVDb21tYW5kEg4KBnhfYXhpcxgBIAEoBBIOCgZ5X2F4aXMYAiABKAQS",
-            "DAoEanVtcBgDIAEoCBINCgVza2lsbBgEIAEoBSK9AQoQR2FtZUNvbW1hbmRH",
-            "cm91cBINCgVmcmFtZRgBIAEoDRI3Cghjb21tYW5kcxgCIAMoCzIlLlByb3Rv",
-            "LkdhbWVDb21tYW5kR3JvdXAuQ29tbWFuZHNFbnRyeRIMCgR0aW1lGAMgASgN",
-            "Eg4KBmZyYW1lMhgEIAEoDRpDCg1Db21tYW5kc0VudHJ5EgsKA2tleRgBIAEo",
-            "DRIhCgV2YWx1ZRgCIAEoCzISLlByb3RvLkdhbWVDb21tYW5kOgI4ASIUCgRQ",
-            "aW5nEgwKBHRpbWUYASABKA1iBnByb3RvMw=="));
+            "DAoEanVtcBgDIAEoCBINCgVza2lsbBgEIAEoBRINCgVmcmFtZRgFIAEoDSK9",
+            "AQoQR2FtZUNvbW1hbmRHcm91cBINCgVmcmFtZRgBIAEoDRI3Cghjb21tYW5k",
+            "cxgCIAMoCzIlLlByb3RvLkdhbWVDb21tYW5kR3JvdXAuQ29tbWFuZHNFbnRy",
+            "eRIMCgR0aW1lGAMgASgNEg4KBmZyYW1lMhgEIAEoDRpDCg1Db21tYW5kc0Vu",
+            "dHJ5EgsKA2tleRgBIAEoDRIhCgV2YWx1ZRgCIAEoCzISLlByb3RvLkdhbWVD",
+            "b21tYW5kOgI4ASIjCgRQaW5nEgwKBHRpbWUYASABKA0SDQoFdGltZXMYAiAB",
+            "KA1iBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -43,9 +44,9 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GamePlayerInfos), global::Proto.GamePlayerInfos.Parser, new[]{ "PlayerInfos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.StartBattleInfo), global::Proto.StartBattleInfo.Parser, new[]{ "MyId", "PlayerInfos", "StartTime" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.CS2CPlusPlusCommand), global::Proto.CS2CPlusPlusCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommand), global::Proto.GameCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommand), global::Proto.GameCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill", "Frame" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommandGroup), global::Proto.GameCommandGroup.Parser, new[]{ "Frame", "Commands", "Time", "Frame2" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Ping), global::Proto.Ping.Parser, new[]{ "Time" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Ping), global::Proto.Ping.Parser, new[]{ "Time", "Times" }, null, null, null)
           }));
     }
     #endregion
@@ -726,6 +727,7 @@ namespace Proto {
       yAxis_ = other.yAxis_;
       jump_ = other.jump_;
       skill_ = other.skill_;
+      frame_ = other.frame_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -786,6 +788,17 @@ namespace Proto {
       }
     }
 
+    /// <summary>Field number for the "frame" field.</summary>
+    public const int FrameFieldNumber = 5;
+    private uint frame_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Frame {
+      get { return frame_; }
+      set {
+        frame_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as GameCommand);
@@ -803,6 +816,7 @@ namespace Proto {
       if (YAxis != other.YAxis) return false;
       if (Jump != other.Jump) return false;
       if (Skill != other.Skill) return false;
+      if (Frame != other.Frame) return false;
       return true;
     }
 
@@ -813,6 +827,7 @@ namespace Proto {
       if (YAxis != 0UL) hash ^= YAxis.GetHashCode();
       if (Jump != false) hash ^= Jump.GetHashCode();
       if (Skill != 0) hash ^= Skill.GetHashCode();
+      if (Frame != 0) hash ^= Frame.GetHashCode();
       return hash;
     }
 
@@ -839,6 +854,10 @@ namespace Proto {
         output.WriteRawTag(32);
         output.WriteInt32(Skill);
       }
+      if (Frame != 0) {
+        output.WriteRawTag(40);
+        output.WriteUInt32(Frame);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -855,6 +874,9 @@ namespace Proto {
       }
       if (Skill != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Skill);
+      }
+      if (Frame != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Frame);
       }
       return size;
     }
@@ -875,6 +897,9 @@ namespace Proto {
       }
       if (other.Skill != 0) {
         Skill = other.Skill;
+      }
+      if (other.Frame != 0) {
+        Frame = other.Frame;
       }
     }
 
@@ -900,6 +925,10 @@ namespace Proto {
           }
           case 32: {
             Skill = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            Frame = input.ReadUInt32();
             break;
           }
         }
@@ -1126,6 +1155,7 @@ namespace Proto {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Ping(Ping other) : this() {
       time_ = other.time_;
+      times_ = other.times_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1144,6 +1174,17 @@ namespace Proto {
       }
     }
 
+    /// <summary>Field number for the "times" field.</summary>
+    public const int TimesFieldNumber = 2;
+    private uint times_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Times {
+      get { return times_; }
+      set {
+        times_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Ping);
@@ -1158,6 +1199,7 @@ namespace Proto {
         return true;
       }
       if (Time != other.Time) return false;
+      if (Times != other.Times) return false;
       return true;
     }
 
@@ -1165,6 +1207,7 @@ namespace Proto {
     public override int GetHashCode() {
       int hash = 1;
       if (Time != 0) hash ^= Time.GetHashCode();
+      if (Times != 0) hash ^= Times.GetHashCode();
       return hash;
     }
 
@@ -1179,6 +1222,10 @@ namespace Proto {
         output.WriteRawTag(8);
         output.WriteUInt32(Time);
       }
+      if (Times != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(Times);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1186,6 +1233,9 @@ namespace Proto {
       int size = 0;
       if (Time != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Time);
+      }
+      if (Times != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Times);
       }
       return size;
     }
@@ -1197,6 +1247,9 @@ namespace Proto {
       }
       if (other.Time != 0) {
         Time = other.Time;
+      }
+      if (other.Times != 0) {
+        Times = other.Times;
       }
     }
 
@@ -1210,6 +1263,10 @@ namespace Proto {
             break;
           case 8: {
             Time = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            Times = input.ReadUInt32();
             break;
           }
         }

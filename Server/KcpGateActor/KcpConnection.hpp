@@ -5,7 +5,7 @@
 
 #include "Config.hpp"
 
-#include "Framework/Network/NetMessage.hpp"
+#include "Framework/Proto/NetMessage.hpp"
 
 #include "3rdparty/include/asio.hpp"
 

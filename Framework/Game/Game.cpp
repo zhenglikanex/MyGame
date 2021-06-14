@@ -30,8 +30,11 @@
 
 #include "Framework/Game/Utility/ActorUtility.hpp"
 
+using namespace std::chrono;
+
 Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	: game_mode_(mode)
+	, start_time_(0)
 	, run_time_(0)
 	, run_frame_(0)
 	, real_frame_(0)
@@ -89,8 +92,10 @@ bool Game::Initialize()
 
 void Game::Update(float dt)
 {
-
-	run_time_ += dt;
+	//run_time_ += dt;
+	INFO("START_TIME {}", start_time_);
+	uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	run_time_ = (now - start_time_) / 1000.0f;
 
 	UpdateInput();
 
@@ -221,6 +226,10 @@ void Game::UpdateInput()
 				{
 					if (group.commands.find(last_command.first) == group.commands.end())
 					{
+						if (last_command.second.x_axis != fixed16(0) || last_command.second.y_axis != fixed16(0))
+						{
+							//assert(false);
+						}
 						group.commands.emplace(last_command.first, last_command.second);
 					}
 				}

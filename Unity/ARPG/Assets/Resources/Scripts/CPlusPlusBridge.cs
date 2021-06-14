@@ -242,8 +242,15 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         return "";
     }
 
-    public static void SetMyId(uint id)
+    public static void SetMyId(int id)
     {
-        BattleController.Instance.MyId = id;
+        BattleController.Instance.MyId = (uint)id;
+    }
+
+    public static void SetPing(int ping)
+    {
+        Message message = new Message("ping_update");
+        message.PushData<int>(ping);
+        message.Send();
     }
 }

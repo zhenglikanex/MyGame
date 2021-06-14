@@ -98,7 +98,17 @@ void AgentActor::Ping(const NetMessage& request)
 	
 	Proto::Ping ping;
 	ping.ParseFromArray(request.data().data(), request.data().size());
-
+	uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	uint32_t value = now - ping.time();
+	if (value > 1000)
+	{
+		std::cout << "-------------------------------------ping : " << value << std::endl;
+	}
+	else
+	{
+		std::cout << "ping : " << value << std::endl;
+	}
+	
 	Call(gate_, "send", std::move(data));
 }
 
