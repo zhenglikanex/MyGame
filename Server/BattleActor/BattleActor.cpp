@@ -86,11 +86,11 @@ void BattleActor::StartBattle(const std::any& data)
 
 void BattleActor::Update()
 {
+	// todo：计时方式后面修改
 	uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 	run_time_ = (now - start_time_) / 1000.0f;
 	while (run_time_ > run_frame_ * kFrameTime + kFrameTime)
 	{
-		//std::cout << "---------------run_time:" << run_time_ << " frame:" << run_frame_ << std::endl;
 		PushCommandGroup();
 		++run_frame_;
 	}
@@ -113,7 +113,6 @@ void BattleActor::InputCommand(const std::any& data)
 		return;
 	}
 
-	std::cout << "input command " << id << "x " << command.x_axis() << " y " << command.y_axis() << std::endl;
 	std::cout << "command frame " << command.frame() << "cur frame " << player_commands_[id].size() << "    " << run_frame_ << std::endl;
 
 	if (player_commands_[id].size() <= command.frame())
@@ -126,8 +125,6 @@ void BattleActor::PushCommandGroup()
 {
 	Proto::GameCommandGroup group;
 	group.set_frame(run_frame_);
-	group.set_frame2(run_frame_);
-	group.set_time(duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
 
 	auto commands = group.mutable_commands();
 	for (auto& entry : ids_)
@@ -151,14 +148,9 @@ void BattleActor::PushCommandGroup()
 		}
 	}
 
-	std::cout << "push_command_group" << group.frame() << "  " << group.commands().size() << std::endl;
-	if (group.commands().size() < 2)
-	{
-		assert(false && "!");
-	}
-	auto buffer = Serialize(group);
-	std::cout << "size:" << (buffer.size()) << "   " << group.ByteSize() << std::endl;
-	
+	assert(group.commands().size() >= players_.size());
+
+	auto buffer = Serialize(group);	
 	for (auto player : players_)
 	{
 		auto data = buffer;

@@ -19,8 +19,6 @@ TEST_CASE_METHOD(Serialize1, "NetMessage")
 	{
 		Proto::GameCommandGroup group;
 		group.set_frame(i);
-		group.set_frame2(i);
-		group.set_time(duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
 
 		auto commands = group.mutable_commands();
 		for (int j = 0; j < 2; ++j)

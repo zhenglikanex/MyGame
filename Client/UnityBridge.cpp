@@ -30,10 +30,44 @@ UnityDelegate UnityBridge::unity_delegate_ = nullptr;
 std::unique_ptr<Game> g_game = nullptr;
 std::unique_ptr<DebugService> g_debug_service = std::make_unique<UnityDebugService>();
 std::unique_ptr<ClientNetworkService> g_network_service = nullptr;
+
 uint32_t g_my_id = 0;
 uint32_t g_ping = 0;
 uint32_t g_last_time = 0;
-uint32_t g_start_time1 = 0;
+
+void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time)
+{
+	std::vector<PlayerInfo> players;
+	for (auto iter = infos.player_infos().cbegin(); iter < infos.player_infos().cend(); ++iter)
+	{
+		PlayerInfo player;
+		player.id = iter->id();
+		player.actor_asset = iter->actor_asset();
+		players.emplace_back(std::move(player));
+	}
+
+	Locator locator;
+	locator.Set<ViewService>(std::make_unique<UnityViewService>());
+	locator.Set<InputService>(std::make_unique<UnityInputService>());
+	locator.Set<FileService>(std::make_unique<UnityFileService>());
+
+	g_game = std::make_unique<Game>(std::move(locator), GameMode::kClinet, std::move(players));
+	g_game->Initialize();
+	g_game->set_start_time(start_time);
+}
+
+void CheckPing()
+{
+	if (g_network_service)
+	{
+		uint32_t time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+
+		Proto::Ping ping;
+		ping.set_time(time);
+
+		g_network_service->Send("ping", Serialize(ping));
+	}
+}
 
 extern "C"
 {
@@ -42,27 +76,7 @@ extern "C"
 		UnityBridge::Get().SetExecuteDelegate(delegate);
 	}
 
-	EXPORT_DLL void InitGame(const Proto::GamePlayerInfos& infos,uint32_t start_time)
-	{
-		std::vector<PlayerInfo> players;
-		for (auto iter = infos.player_infos().cbegin(); iter < infos.player_infos().cend(); ++iter)
-		{
-			PlayerInfo player;
-			player.id = iter->id();
-			player.actor_asset = iter->actor_asset();
-			players.emplace_back(std::move(player));
-		}
-
-		Locator locator;
-		locator.Set<ViewService>(std::make_unique<UnityViewService>());
-		locator.Set<InputService>(std::make_unique<UnityInputService>());
-		locator.Set<FileService>(std::make_unique<UnityFileService>());
-
-		g_game = std::make_unique<Game>(std::move(locator), GameMode::kClinet,std::move(players));
-		g_game->Initialize();
-		g_game->set_start_time(start_time);
-	}
-
+	
 	EXPORT_DLL void DestoryGame()
 	{
 		g_network_service = nullptr;
@@ -72,8 +86,7 @@ extern "C"
 	EXPORT_DLL void UpdateGame(float dt)
 	{
 		static float total_time = 0;
-		std::this_thread::sleep_for(milliseconds(1));
-		//INFO("UpdateGame");
+
 		if (g_network_service)
 		{
 			if (g_network_service->IsConnected())
@@ -91,17 +104,13 @@ extern "C"
 
 		if (g_game)
 		{
+			// todo:这个dt精度不够，先不用
 			uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 			float dt = (now - g_last_time) / 1000.0f;
 			g_game->Update(dt);
 			g_last_time = now;
-			total_time += dt;
-			uint32_t now1 = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-			if (g_game->run_time() > ((now1 - g_start_time1) / 1000.0f))
-			{
-				int a = 10;
-			}
-			INFO("game time : {} client_run_time:{} , run_frame {} dt{}", (now1 - g_start_time1) / 1000.0f, g_game->run_time(),g_game->run_frame(),total_time);
+
+			//INFO("game time : {} client_run_time:{} , run_frame {} dt{}", (now1 - g_start_time1) / 1000.0f, g_game->run_time(),g_game->run_frame(),total_time);
 		}
 	}
 
@@ -126,7 +135,6 @@ extern "C"
 			game_command.set_skill(command.skill);
 			game_command.set_jump(command.jump);
 			game_command.set_frame(g_game->run_frame());
-			INFO("Myid {}", g_my_id);
 
 			if (g_network_service)
 			{
@@ -160,14 +168,20 @@ extern "C"
 					if (message.name() == "start_battle")
 					{
 						INFO("start_battle");
+						
 						g_last_time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 
 						Proto::StartBattleInfo info;
 						info.ParseFromArray(message.data().data(), message.data().size());
+
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
 						g_my_id = info.my_id();
-						InitGame(info.player_infos(),info.start_time() - (g_ping / 2 + 34));
-						g_start_time1 = info.start_time();
+
+						//让客户端领先服务器1帧加半个rrt保证，使客户端的输入能在服务器执行当前帧时收到，后面可以再根据ping值来调整客户端领先的值
+						//todo:这个应该用dt 逝去的时间来做的，之前写的精度不够，导致客户端和是服务器的时间随着物理时间增长，逻辑时间对不上了，
+						//先用当前时间减去开始时间，后面再改
+						uint32_t start_time = info.start_time() - (g_ping / 2 + 34);
+						InitGame(info.player_infos(),start_time);
 					}
 					else if (message.name() == "push_command_group")
 					{
@@ -180,12 +194,6 @@ extern "C"
 						game_command_group.ParseFromArray(message.data().data(), message.data().size());
 
 						uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-						INFO("!!!!!!! command ping : {}", now - game_command_group.time());
-
-						if (game_command_group.commands().size() < 2)
-						{
-							INFO("!");
-						}
 
 						CommandGroup group;
 						group.frame = game_command_group.frame();
@@ -197,23 +205,18 @@ extern "C"
 							command.skill = entry.second.skill();
 							command.jump = entry.second.jump();
 
-							INFO("y_axis : {} - {}", command.y_axis,entry.second.y_axis());
 							group.commands.emplace(entry.first, command);
 						}
 
 						if (group.frame >= g_game->run_frame())
 						{
-							INFO("group frame{} real_frame{} run_frame{}", group.frame, g_game->real_frame(),g_game->run_frame());
 							for (auto& entry : group.commands)
 							{
 								g_game->InputCommand(group.frame, entry.first, entry.second);
 							}
 						}
 						else
-						{
-							INFO("---------------group frame{} real_frame{} {}", group.frame, g_game->real_frame(),g_game->run_frame());
-							assert(group.frame == g_game->real_frame());
-							
+						{							
 							if (!g_game->CheckPredict(group))
 							{
 								g_game->FixPredict(g_my_id, group);
@@ -224,11 +227,11 @@ extern "C"
 					}
 					else if (message.name() == "push_command")
 					{
+						//todo:可以考虑单个用户command先行，这样减少预测玩家的数量
 
 					}
 					else if (message.name() == "ping")
 					{
-						
 						Proto::Ping ping;
 						ping.ParseFromArray(message.data().data(), message.data().size());
 
@@ -244,19 +247,6 @@ extern "C"
 					INFO("join_match!")
 					// 偷懒不处理了
 				});
-		}
-	}
-
-	EXPORT_DLL void CheckPing()
-	{
-		static uint32_t ping_times = 0;
-		if (g_network_service)
-		{
-			uint32_t time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-			Proto::Ping ping;
-			ping.set_time(time);
-
-			g_network_service->Send("ping",Serialize(ping));
 		}
 	}
 }

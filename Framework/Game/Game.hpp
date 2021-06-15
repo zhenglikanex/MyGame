@@ -51,13 +51,14 @@ public:
 	void UpdateClinet();
 	void UpdateServer();
 
-	// 外部调用
 	void InputCommand(uint32_t frame,uint32_t id,const Command& command);
 
 	bool CheckPredict(const CommandGroup& command_group);
 	void FixPredict(uint32_t local_id,const CommandGroup& command_group);
+
 	void SaveSnapshot();
 	void Rollback(uint32_t frame);
+
 	uint32_t GetCurRunFrame() const;
 
 	void set_start_time(uint32_t start_time) { start_time_ = start_time; }

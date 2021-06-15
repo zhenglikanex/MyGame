@@ -618,18 +618,6 @@ class GameCommandGroup : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::GameCommand >*
       mutable_commands();
 
-  // optional uint32 time = 3;
-  void clear_time();
-  static const int kTimeFieldNumber = 3;
-  ::google::protobuf::uint32 time() const;
-  void set_time(::google::protobuf::uint32 value);
-
-  // optional uint32 frame2 = 4;
-  void clear_frame2();
-  static const int kFrame2FieldNumber = 4;
-  ::google::protobuf::uint32 frame2() const;
-  void set_frame2(::google::protobuf::uint32 value);
-
   // @@protoc_insertion_point(class_scope:Proto.GameCommandGroup)
  private:
 
@@ -647,8 +635,6 @@ class GameCommandGroup : public ::google::protobuf::Message /* @@protoc_insertio
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > commands_;
   ::google::protobuf::uint32 frame_;
-  ::google::protobuf::uint32 time_;
-  ::google::protobuf::uint32 frame2_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
   friend void protobuf_AssignDesc_Battle_2eproto();
@@ -725,19 +711,12 @@ class Ping : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   ::google::protobuf::uint32 time() const;
   void set_time(::google::protobuf::uint32 value);
 
-  // optional uint32 times = 2;
-  void clear_times();
-  static const int kTimesFieldNumber = 2;
-  ::google::protobuf::uint32 times() const;
-  void set_times(::google::protobuf::uint32 value);
-
   // @@protoc_insertion_point(class_scope:Proto.Ping)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::uint32 time_;
-  ::google::protobuf::uint32 times_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
   friend void protobuf_AssignDesc_Battle_2eproto();
@@ -1086,34 +1065,6 @@ GameCommandGroup::mutable_commands() {
   return commands_.MutableMap();
 }
 
-// optional uint32 time = 3;
-inline void GameCommandGroup::clear_time() {
-  time_ = 0u;
-}
-inline ::google::protobuf::uint32 GameCommandGroup::time() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommandGroup.time)
-  return time_;
-}
-inline void GameCommandGroup::set_time(::google::protobuf::uint32 value) {
-  
-  time_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommandGroup.time)
-}
-
-// optional uint32 frame2 = 4;
-inline void GameCommandGroup::clear_frame2() {
-  frame2_ = 0u;
-}
-inline ::google::protobuf::uint32 GameCommandGroup::frame2() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommandGroup.frame2)
-  return frame2_;
-}
-inline void GameCommandGroup::set_frame2(::google::protobuf::uint32 value) {
-  
-  frame2_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommandGroup.frame2)
-}
-
 // -------------------------------------------------------------------
 
 // Ping
@@ -1130,20 +1081,6 @@ inline void Ping::set_time(::google::protobuf::uint32 value) {
   
   time_ = value;
   // @@protoc_insertion_point(field_set:Proto.Ping.time)
-}
-
-// optional uint32 times = 2;
-inline void Ping::clear_times() {
-  times_ = 0u;
-}
-inline ::google::protobuf::uint32 Ping::times() const {
-  // @@protoc_insertion_point(field_get:Proto.Ping.times)
-  return times_;
-}
-inline void Ping::set_times(::google::protobuf::uint32 value) {
-  
-  times_ = value;
-  // @@protoc_insertion_point(field_set:Proto.Ping.times)
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
