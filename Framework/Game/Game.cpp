@@ -116,11 +116,11 @@ void Game::UpdateInput()
 		&& (run_time_ > run_frame_ * input_frame_rate_ + input_frame_rate_) 
 		&& (run_frame_ - real_frame_) < GameConfig::kMaxPredictFrame)
 	{
-		auto& group = GetCommandGroup(run_frame_);
-
 		//会触发InputCommand,相当于getcommands
 		auto& input_service = registry_.ctx<Locator>().Ref<const InputService>();
 		input_service.InputHandler();
+
+		auto& group = GetCommandGroup(run_frame_);
 
 		//预测玩家操作
 		if (group.commands.size() < player_infos_.size())
