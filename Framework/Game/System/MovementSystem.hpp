@@ -7,6 +7,7 @@
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Movement.hpp"
+#include "Framework/Game/Component/Local.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -36,7 +37,7 @@ struct MovementSystem : public System
 
 	void Update(fixed16 dt) override
 	{
-		auto view = registry.view<Movement, Transform>();
+		auto view = registry.view<Local, Movement, Transform>();
 		for (auto e : view)
 		{
 			const auto& movement = view.get<Movement>(e);

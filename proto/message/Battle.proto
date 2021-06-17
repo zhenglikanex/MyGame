@@ -48,6 +48,16 @@ message GameCommandGroup
 	map<uint32,GameCommand> commands = 2;
 }
 
+message GameTransform
+{
+
+}
+
+message GameActorInfos
+{
+
+}
+
 message Ping
 {
 	uint32 time = 1;

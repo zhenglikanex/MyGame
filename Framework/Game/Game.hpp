@@ -13,7 +13,6 @@
 #include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/PlayerInfo.hpp"
-#include "Framework/Game/RingArray.hpp"
 
 #include "Framework/Game/Component/Command.hpp"
 
@@ -29,12 +28,6 @@ struct Snapshot
 {
 	uint32_t frame;
 	kanex::Buffer buffer{1024};
-};
-
-enum class GameMode
-{
-	kClinet,
-	kServer
 };
 
 class Game
@@ -101,7 +94,6 @@ private:
 
 	CommandGroup& GetCommandGroup(uint32_t frame);
 
-	GameMode game_mode_;
 	uint32_t start_time_;
 	float run_time_;		// 注意,这个浮点数不会引起不同步的问题
 	uint32_t run_frame_;

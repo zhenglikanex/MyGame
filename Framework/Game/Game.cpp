@@ -33,8 +33,7 @@
 using namespace std::chrono;
 
 Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
-	: game_mode_(mode)
-	, start_time_(0)
+	: start_time_(0)
 	, run_time_(0)
 	, run_frame_(0)
 	, real_frame_(0)
@@ -42,6 +41,7 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	, player_infos_(players)
 	
 {
+	registry_.set<GameMode>(mode);
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
 

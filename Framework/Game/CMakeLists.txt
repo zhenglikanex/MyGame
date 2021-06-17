@@ -1,5 +1,6 @@
 set(file_list 
 GameConfig.hpp
+GameMode.hpp
 Game.hpp
 Game.cpp
 System.hpp
@@ -21,7 +22,7 @@ Hash.hpp
 Collision.hpp
 Collision.cpp
 Geometry.hpp
-RingArray.hpp
+GameHelper.hpp
 
 Utility/ActorStateUtility.hpp
 Utility/AnimationUtility.hpp
@@ -44,12 +45,17 @@ System/SkillSystem.hpp
 System/ModifyHealthSystem.hpp
 System/HealthSystem.hpp
 System/UpdateColliderTransformSystem.hpp
+System/NetworkReceiveSystem.hpp
+System/NetworkSendSystem.hpp
 
+Component/Remote.hpp
+Component/Local.hpp
 Component/GameState.hpp
 Component/Command.hpp
 Component/Player.hpp
 Component/View.hpp
 Component/Transform.hpp
+Component/TransformState.hpp
 Component/ViewAsset.hpp
 Component/AnimationAsset.hpp
 Component/Movement.hpp
