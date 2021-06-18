@@ -2,6 +2,7 @@
 
 #include <thread>
 #include <chrono>
+#include <queue>
 #include <asio.hpp>
 
 #include "Client/UnityViewService.hpp"
@@ -15,6 +16,8 @@
 #include "Framework/Game/NetworkService.hpp"
 #include "Framework/Game/ViewService.hpp"
 #include "Framework/Game/IViewImpl.hpp"
+
+#include "Framework/Game/Component/Transform.hpp"
 
 #include "Framework/Proto/Battle.pb.h"
 
@@ -34,6 +37,8 @@ std::unique_ptr<ClientNetworkService> g_network_service = nullptr;
 uint32_t g_my_id = 0;
 uint32_t g_ping = 0;
 uint32_t g_last_time = 0;
+
+std::queue<Proto::FrameData> g_frame_datas;
 
 void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time)
 {
@@ -81,6 +86,7 @@ extern "C"
 	{
 		g_network_service = nullptr;
 		g_game = nullptr;
+		g_frame_datas.swap(std::queue<Proto::FrameData>());
 	}
 
 	EXPORT_DLL void UpdateGame(float dt)
@@ -183,51 +189,40 @@ extern "C"
 						uint32_t start_time = info.start_time() - (g_ping / 2 + 34);
 						InitGame(info.player_infos(),start_time);
 					}
-					else if (message.name() == "push_command_group")
+					else if (message.name() == "push_frame_data")
 					{
-						if (!g_game)
+						Proto::FrameData frame_data;
+						frame_data.ParseFromArray(message.data().data(), message.data().size());
+
+						
+						// todo:写法有问题，应该要优化下，先不管
+						std::unordered_map<uint32_t, Transform> transforms;
+						transforms.reserve(frame_data.actors_size());
+						for (auto& entry : frame_data.actors())
 						{
-							return;
+							auto& actor_data = entry.second;
+
+							// transform
+							auto& sync_trans = actor_data.transform();
+							vec3 position(sync_trans.position.x(), sync_trans.position.x(), sync_trans.position.x());
+							quat rotation(sync_trans.rotation.x(), sync_trans.rotation.y(), sync_trans.rotation.z(), sync_trans.rotation.w());
+							Transform transfrom(position, rotation);
+
+							transforms.emplace(entry.first, std::move(transfrom));
 						}
 
-						Proto::GameCommandGroup game_command_group;
-						game_command_group.ParseFromArray(message.data().data(), message.data().size());
-
-						uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-
-						CommandGroup group;
-						group.frame = game_command_group.frame();
-						for (auto& entry : game_command_group.commands())
+						if (frame_data.frame() >= g_game->run_frame())
 						{
-							Command command;
-							command.x_axis = fixed16::from_raw_value(entry.second.x_axis());
-							command.y_axis = fixed16::from_raw_value(entry.second.y_axis());
-							command.skill = entry.second.skill();
-							command.jump = entry.second.jump();
-
-							group.commands.emplace(entry.first, command);
-						}
-
-						if (group.frame >= g_game->run_frame())
-						{
-							for (auto& entry : group.commands)
-							{
-								g_game->InputCommand(group.frame, entry.first, entry.second);
-							}
+							g_game->UpdateFrameData(transforms);
 						}
 						else
-						{							
-							if (!g_game->CheckPredict(group))
+						{
+							bool is_need_rollback = g_game->UpdateFrameData(transforms);
+							if (is_need_rollback)
 							{
-								g_game->FixPredict(g_my_id, group);
+								g_game->Rollback(frame_data.frame());
 							}
-
-							g_game->set_real_frame(group.frame + 1);
 						}
-					}
-					else if (message.name() == "push_command")
-					{
-						//todo:可以考虑单个用户command先行，这样减少预测玩家的数量
 
 					}
 					else if (message.name() == "ping")

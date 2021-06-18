@@ -15,6 +15,7 @@
 #include "Framework/Game/PlayerInfo.hpp"
 
 #include "Framework/Game/Component/Command.hpp"
+#include "Framework/Game/Component/Transform.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -41,16 +42,13 @@ public:
 	void Finalize();
 	
 	void UpdateInput();
-	void UpdateClinet();
-	void UpdateServer();
+	void UpdateLogic();
 
 	void InputCommand(uint32_t frame,uint32_t id,const Command& command);
 
-	bool CheckPredict(const CommandGroup& command_group);
-	void FixPredict(uint32_t local_id,const CommandGroup& command_group);
-
-	void SaveSnapshot();
 	void Rollback(uint32_t frame);
+
+	void UpdateFrameData(const uint32_t frame,const std::unordered_map<uint32_t, Transform>& frame_data);
 
 	uint32_t GetCurRunFrame() const;
 

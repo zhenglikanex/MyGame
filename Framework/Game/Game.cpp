@@ -99,15 +99,7 @@ void Game::Update(float dt)
 	run_time_ = (now - start_time_) / 1000.0f;
 
 	UpdateInput();
-
-	if (game_mode_ == GameMode::kClinet)
-	{
-		UpdateClinet();
-	}
-	else
-	{
-		UpdateServer();
-	}
+	UpdateLogic();
 }
 
 void Game::UpdateInput()
@@ -158,7 +150,7 @@ void Game::UpdateInput()
 	}
 }
 
-void Game::UpdateClinet()
+void Game::UpdateLogic()
 {
 	int run_frame_times = 0;
 	auto& game_state = registry_.ctx<GameState>();
@@ -228,11 +220,6 @@ void Game::UpdateClinet()
 	}
 }
 
-void Game::UpdateServer()
-{
-	
-}
-
 void Game::Finalize()
 {
 	for (auto iter = systems_.rbegin(); iter != systems_.rend(); ++iter)
@@ -247,37 +234,6 @@ void Game::InputCommand(uint32_t frame,uint32_t id, const Command& command)
 {
 	auto& group = GetCommandGroup(frame);
 	group.commands.emplace(id,command);
-}
-
-bool Game::CheckPredict(const CommandGroup& command_group)
-{
-	assert(command_group.frame == real_frame_);
-
-	auto& predict_command_group = GetCommandGroup(command_group.frame);
-
-	assert(predict_command_group.frame == command_group.frame && "!");
-	
-	return command_group.commands == predict_command_group.commands;
-}
-
-void Game::FixPredict(uint32_t local_id,const CommandGroup& server_command_group)
-{
-	//回滚到目标帧
-	Rollback(server_command_group.frame);
-
-	auto& predict_command_group = GetCommandGroup(server_command_group.frame);
-	predict_command_group.commands = server_command_group.commands;
-
-	auto fix_command_group = server_command_group;
-	for (uint32_t frame = server_command_group.frame; frame < run_frame_; ++frame)
-	{
-		auto& predict_command_group = GetCommandGroup(frame);
-		// 保持自己预测帧
-		fix_command_group.commands[local_id] = predict_command_group.commands[local_id];
-
-		// 修正网络玩家的预测帧为上一次的结果
-		predict_command_group.commands = fix_command_group.commands;
-	}
 }
 
 void Game::SaveSnapshot()
@@ -326,64 +282,34 @@ void Game::SaveSnapshot()
 
 void Game::Rollback(uint32_t frame)
 {
-	auto& game_state = registry_.ctx<GameState>();
 
-	auto& snapshot = snapshots_[frame % snapshots_.size()];
+}
 
-	assert(snapshot.frame == frame);
-
-	// 取消observer的监听防止错误触发
-	for (auto& system : systems_)
+void Game::UpdateFrameData(const uint32_t frame, const std::unordered_map<uint32_t, Transform>& frame_data)
+{
+	auto view = registry_.view<Player,Transform>();
+	for (auto e : view)
 	{
-		auto observer_system = dynamic_cast<ObserverSystem*>(system.get());
-		if (observer_system != nullptr)
+		const auto& player = registry_.get<Player>(e);
+		auto& transform = registry_.get<Transform>(e);
+		
+		auto iter = frame_data.find(player.id);
+		if (iter != frame_data.end()) // 没变动角色不会下发
 		{
-			observer_system->Disconnect();
-		}
-	}
-
-	registry_.clear();
-	kanex::BinaryStream stream(snapshot.buffer);
-	kanex::BinaryInputArchive ar(stream);
-	entt::snapshot_loader{ registry_ }
-		.entities(ar)
-		.component <
-		ActorAsset,
-		ActorState,
-		EnterActorState,
-		AnimationAsset,
-		AnimationClip,
-		AttributeUnitList,
-		Collider,
-		ColliderInfo,
-		Command,
-		ContactList,
-		Health,
-		ModifyHealthList,
-		Matrix4x4,
-		Movement,
-		Player,
-		Skill,
-		SkillAttacthBone,
-		SkillGraphAsset,
-		SkillState,
-		EnterSkillState,
-		ExitSkillState,
-		SkillParams,
-		Transform,
-		ViewAsset,
-		Weapon
-		> (ar);
-
-	ar(registry_.ctx<GameState>());
-
-	// 重新监听
-	for (auto& system : systems_)
-	{
-		auto observer_system = dynamic_cast<ObserverSystem*>(system.get());
-		if (observer_system != nullptr)
-		{
-			observer_system->Connect();
+			bool is_local = registry_.has<Local>(e);
+			if (is_local && frame < run_frame_)
+			{
+				// todo 可以允许有一定误差,因为只是预测，最终服务器都会会纠正
+				bool is_need_rollback = transform.position != iter->second.position || transform.rotation != iter->second.rotation;
+				if (is_need_rollback)
+				{
+					transform = iter->second;
+				}
+			}
+			else
+			{
+				registry_.replace<Transform>(e,iter->second);
+			}
 		}
 	}
 }

@@ -38,13 +38,18 @@ void protobuf_AddDesc_Battle_2eproto();
 void protobuf_AssignDesc_Battle_2eproto();
 void protobuf_ShutdownFile_Battle_2eproto();
 
+class ActorData;
 class CS2CPlusPlusCommand;
+class FrameData;
 class GameCommand;
 class GameCommandGroup;
 class GamePlayerInfos;
 class Ping;
 class PlayerInfo;
+class Quat;
 class StartBattleInfo;
+class Transform;
+class Vec3;
 
 // ===================================================================
 
@@ -645,6 +650,488 @@ class GameCommandGroup : public ::google::protobuf::Message /* @@protoc_insertio
 };
 // -------------------------------------------------------------------
 
+class Vec3 : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.Vec3) */ {
+ public:
+  Vec3();
+  virtual ~Vec3();
+
+  Vec3(const Vec3& from);
+
+  inline Vec3& operator=(const Vec3& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Vec3& default_instance();
+
+  void Swap(Vec3* other);
+
+  // implements Message ----------------------------------------------
+
+  inline Vec3* New() const { return New(NULL); }
+
+  Vec3* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Vec3& from);
+  void MergeFrom(const Vec3& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(Vec3* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional float x = 1;
+  void clear_x();
+  static const int kXFieldNumber = 1;
+  float x() const;
+  void set_x(float value);
+
+  // optional float y = 2;
+  void clear_y();
+  static const int kYFieldNumber = 2;
+  float y() const;
+  void set_y(float value);
+
+  // optional float z = 3;
+  void clear_z();
+  static const int kZFieldNumber = 3;
+  float z() const;
+  void set_z(float value);
+
+  // @@protoc_insertion_point(class_scope:Proto.Vec3)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  float x_;
+  float y_;
+  float z_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_Battle_2eproto();
+  friend void protobuf_AssignDesc_Battle_2eproto();
+  friend void protobuf_ShutdownFile_Battle_2eproto();
+
+  void InitAsDefaultInstance();
+  static Vec3* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Quat : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.Quat) */ {
+ public:
+  Quat();
+  virtual ~Quat();
+
+  Quat(const Quat& from);
+
+  inline Quat& operator=(const Quat& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Quat& default_instance();
+
+  void Swap(Quat* other);
+
+  // implements Message ----------------------------------------------
+
+  inline Quat* New() const { return New(NULL); }
+
+  Quat* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Quat& from);
+  void MergeFrom(const Quat& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(Quat* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional float x = 1;
+  void clear_x();
+  static const int kXFieldNumber = 1;
+  float x() const;
+  void set_x(float value);
+
+  // optional float y = 2;
+  void clear_y();
+  static const int kYFieldNumber = 2;
+  float y() const;
+  void set_y(float value);
+
+  // optional float z = 3;
+  void clear_z();
+  static const int kZFieldNumber = 3;
+  float z() const;
+  void set_z(float value);
+
+  // optional float w = 4;
+  void clear_w();
+  static const int kWFieldNumber = 4;
+  float w() const;
+  void set_w(float value);
+
+  // @@protoc_insertion_point(class_scope:Proto.Quat)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  float x_;
+  float y_;
+  float z_;
+  float w_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_Battle_2eproto();
+  friend void protobuf_AssignDesc_Battle_2eproto();
+  friend void protobuf_ShutdownFile_Battle_2eproto();
+
+  void InitAsDefaultInstance();
+  static Quat* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Transform : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.Transform) */ {
+ public:
+  Transform();
+  virtual ~Transform();
+
+  Transform(const Transform& from);
+
+  inline Transform& operator=(const Transform& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Transform& default_instance();
+
+  void Swap(Transform* other);
+
+  // implements Message ----------------------------------------------
+
+  inline Transform* New() const { return New(NULL); }
+
+  Transform* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Transform& from);
+  void MergeFrom(const Transform& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(Transform* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .Proto.Vec3 position = 1;
+  bool has_position() const;
+  void clear_position();
+  static const int kPositionFieldNumber = 1;
+  const ::Proto::Vec3& position() const;
+  ::Proto::Vec3* mutable_position();
+  ::Proto::Vec3* release_position();
+  void set_allocated_position(::Proto::Vec3* position);
+
+  // optional .Proto.Quat rotation = 2;
+  bool has_rotation() const;
+  void clear_rotation();
+  static const int kRotationFieldNumber = 2;
+  const ::Proto::Quat& rotation() const;
+  ::Proto::Quat* mutable_rotation();
+  ::Proto::Quat* release_rotation();
+  void set_allocated_rotation(::Proto::Quat* rotation);
+
+  // @@protoc_insertion_point(class_scope:Proto.Transform)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::Proto::Vec3* position_;
+  ::Proto::Quat* rotation_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_Battle_2eproto();
+  friend void protobuf_AssignDesc_Battle_2eproto();
+  friend void protobuf_ShutdownFile_Battle_2eproto();
+
+  void InitAsDefaultInstance();
+  static Transform* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ActorData : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.ActorData) */ {
+ public:
+  ActorData();
+  virtual ~ActorData();
+
+  ActorData(const ActorData& from);
+
+  inline ActorData& operator=(const ActorData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ActorData& default_instance();
+
+  void Swap(ActorData* other);
+
+  // implements Message ----------------------------------------------
+
+  inline ActorData* New() const { return New(NULL); }
+
+  ActorData* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ActorData& from);
+  void MergeFrom(const ActorData& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(ActorData* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .Proto.Transform transform = 1;
+  bool has_transform() const;
+  void clear_transform();
+  static const int kTransformFieldNumber = 1;
+  const ::Proto::Transform& transform() const;
+  ::Proto::Transform* mutable_transform();
+  ::Proto::Transform* release_transform();
+  void set_allocated_transform(::Proto::Transform* transform);
+
+  // @@protoc_insertion_point(class_scope:Proto.ActorData)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::Proto::Transform* transform_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_Battle_2eproto();
+  friend void protobuf_AssignDesc_Battle_2eproto();
+  friend void protobuf_ShutdownFile_Battle_2eproto();
+
+  void InitAsDefaultInstance();
+  static ActorData* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class FrameData : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.FrameData) */ {
+ public:
+  FrameData();
+  virtual ~FrameData();
+
+  FrameData(const FrameData& from);
+
+  inline FrameData& operator=(const FrameData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const FrameData& default_instance();
+
+  void Swap(FrameData* other);
+
+  // implements Message ----------------------------------------------
+
+  inline FrameData* New() const { return New(NULL); }
+
+  FrameData* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const FrameData& from);
+  void MergeFrom(const FrameData& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(FrameData* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 frame = 1;
+  void clear_frame();
+  static const int kFrameFieldNumber = 1;
+  ::google::protobuf::uint32 frame() const;
+  void set_frame(::google::protobuf::uint32 value);
+
+  // map<uint32, .Proto.ActorData> actors = 2;
+  int actors_size() const;
+  void clear_actors();
+  static const int kActorsFieldNumber = 2;
+  const ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::ActorData >&
+      actors() const;
+  ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::ActorData >*
+      mutable_actors();
+
+  // @@protoc_insertion_point(class_scope:Proto.FrameData)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  typedef ::google::protobuf::internal::MapEntryLite<
+      ::google::protobuf::uint32, ::Proto::ActorData,
+      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
+      ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
+      0 >
+      FrameData_ActorsEntry;
+  ::google::protobuf::internal::MapField<
+      ::google::protobuf::uint32, ::Proto::ActorData,
+      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
+      ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
+      0 > actors_;
+  ::google::protobuf::uint32 frame_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_Battle_2eproto();
+  friend void protobuf_AssignDesc_Battle_2eproto();
+  friend void protobuf_ShutdownFile_Battle_2eproto();
+
+  void InitAsDefaultInstance();
+  static FrameData* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class Ping : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:Proto.Ping) */ {
  public:
   Ping();
@@ -1067,6 +1554,270 @@ GameCommandGroup::mutable_commands() {
 
 // -------------------------------------------------------------------
 
+// Vec3
+
+// optional float x = 1;
+inline void Vec3::clear_x() {
+  x_ = 0;
+}
+inline float Vec3::x() const {
+  // @@protoc_insertion_point(field_get:Proto.Vec3.x)
+  return x_;
+}
+inline void Vec3::set_x(float value) {
+  
+  x_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Vec3.x)
+}
+
+// optional float y = 2;
+inline void Vec3::clear_y() {
+  y_ = 0;
+}
+inline float Vec3::y() const {
+  // @@protoc_insertion_point(field_get:Proto.Vec3.y)
+  return y_;
+}
+inline void Vec3::set_y(float value) {
+  
+  y_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Vec3.y)
+}
+
+// optional float z = 3;
+inline void Vec3::clear_z() {
+  z_ = 0;
+}
+inline float Vec3::z() const {
+  // @@protoc_insertion_point(field_get:Proto.Vec3.z)
+  return z_;
+}
+inline void Vec3::set_z(float value) {
+  
+  z_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Vec3.z)
+}
+
+// -------------------------------------------------------------------
+
+// Quat
+
+// optional float x = 1;
+inline void Quat::clear_x() {
+  x_ = 0;
+}
+inline float Quat::x() const {
+  // @@protoc_insertion_point(field_get:Proto.Quat.x)
+  return x_;
+}
+inline void Quat::set_x(float value) {
+  
+  x_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Quat.x)
+}
+
+// optional float y = 2;
+inline void Quat::clear_y() {
+  y_ = 0;
+}
+inline float Quat::y() const {
+  // @@protoc_insertion_point(field_get:Proto.Quat.y)
+  return y_;
+}
+inline void Quat::set_y(float value) {
+  
+  y_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Quat.y)
+}
+
+// optional float z = 3;
+inline void Quat::clear_z() {
+  z_ = 0;
+}
+inline float Quat::z() const {
+  // @@protoc_insertion_point(field_get:Proto.Quat.z)
+  return z_;
+}
+inline void Quat::set_z(float value) {
+  
+  z_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Quat.z)
+}
+
+// optional float w = 4;
+inline void Quat::clear_w() {
+  w_ = 0;
+}
+inline float Quat::w() const {
+  // @@protoc_insertion_point(field_get:Proto.Quat.w)
+  return w_;
+}
+inline void Quat::set_w(float value) {
+  
+  w_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Quat.w)
+}
+
+// -------------------------------------------------------------------
+
+// Transform
+
+// optional .Proto.Vec3 position = 1;
+inline bool Transform::has_position() const {
+  return !_is_default_instance_ && position_ != NULL;
+}
+inline void Transform::clear_position() {
+  if (GetArenaNoVirtual() == NULL && position_ != NULL) delete position_;
+  position_ = NULL;
+}
+inline const ::Proto::Vec3& Transform::position() const {
+  // @@protoc_insertion_point(field_get:Proto.Transform.position)
+  return position_ != NULL ? *position_ : *default_instance_->position_;
+}
+inline ::Proto::Vec3* Transform::mutable_position() {
+  
+  if (position_ == NULL) {
+    position_ = new ::Proto::Vec3;
+  }
+  // @@protoc_insertion_point(field_mutable:Proto.Transform.position)
+  return position_;
+}
+inline ::Proto::Vec3* Transform::release_position() {
+  // @@protoc_insertion_point(field_release:Proto.Transform.position)
+  
+  ::Proto::Vec3* temp = position_;
+  position_ = NULL;
+  return temp;
+}
+inline void Transform::set_allocated_position(::Proto::Vec3* position) {
+  delete position_;
+  position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:Proto.Transform.position)
+}
+
+// optional .Proto.Quat rotation = 2;
+inline bool Transform::has_rotation() const {
+  return !_is_default_instance_ && rotation_ != NULL;
+}
+inline void Transform::clear_rotation() {
+  if (GetArenaNoVirtual() == NULL && rotation_ != NULL) delete rotation_;
+  rotation_ = NULL;
+}
+inline const ::Proto::Quat& Transform::rotation() const {
+  // @@protoc_insertion_point(field_get:Proto.Transform.rotation)
+  return rotation_ != NULL ? *rotation_ : *default_instance_->rotation_;
+}
+inline ::Proto::Quat* Transform::mutable_rotation() {
+  
+  if (rotation_ == NULL) {
+    rotation_ = new ::Proto::Quat;
+  }
+  // @@protoc_insertion_point(field_mutable:Proto.Transform.rotation)
+  return rotation_;
+}
+inline ::Proto::Quat* Transform::release_rotation() {
+  // @@protoc_insertion_point(field_release:Proto.Transform.rotation)
+  
+  ::Proto::Quat* temp = rotation_;
+  rotation_ = NULL;
+  return temp;
+}
+inline void Transform::set_allocated_rotation(::Proto::Quat* rotation) {
+  delete rotation_;
+  rotation_ = rotation;
+  if (rotation) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:Proto.Transform.rotation)
+}
+
+// -------------------------------------------------------------------
+
+// ActorData
+
+// optional .Proto.Transform transform = 1;
+inline bool ActorData::has_transform() const {
+  return !_is_default_instance_ && transform_ != NULL;
+}
+inline void ActorData::clear_transform() {
+  if (GetArenaNoVirtual() == NULL && transform_ != NULL) delete transform_;
+  transform_ = NULL;
+}
+inline const ::Proto::Transform& ActorData::transform() const {
+  // @@protoc_insertion_point(field_get:Proto.ActorData.transform)
+  return transform_ != NULL ? *transform_ : *default_instance_->transform_;
+}
+inline ::Proto::Transform* ActorData::mutable_transform() {
+  
+  if (transform_ == NULL) {
+    transform_ = new ::Proto::Transform;
+  }
+  // @@protoc_insertion_point(field_mutable:Proto.ActorData.transform)
+  return transform_;
+}
+inline ::Proto::Transform* ActorData::release_transform() {
+  // @@protoc_insertion_point(field_release:Proto.ActorData.transform)
+  
+  ::Proto::Transform* temp = transform_;
+  transform_ = NULL;
+  return temp;
+}
+inline void ActorData::set_allocated_transform(::Proto::Transform* transform) {
+  delete transform_;
+  transform_ = transform;
+  if (transform) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:Proto.ActorData.transform)
+}
+
+// -------------------------------------------------------------------
+
+// FrameData
+
+// optional uint32 frame = 1;
+inline void FrameData::clear_frame() {
+  frame_ = 0u;
+}
+inline ::google::protobuf::uint32 FrameData::frame() const {
+  // @@protoc_insertion_point(field_get:Proto.FrameData.frame)
+  return frame_;
+}
+inline void FrameData::set_frame(::google::protobuf::uint32 value) {
+  
+  frame_ = value;
+  // @@protoc_insertion_point(field_set:Proto.FrameData.frame)
+}
+
+// map<uint32, .Proto.ActorData> actors = 2;
+inline int FrameData::actors_size() const {
+  return actors_.size();
+}
+inline void FrameData::clear_actors() {
+  actors_.Clear();
+}
+inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::ActorData >&
+FrameData::actors() const {
+  // @@protoc_insertion_point(field_map:Proto.FrameData.actors)
+  return actors_.GetMap();
+}
+inline ::google::protobuf::Map< ::google::protobuf::uint32, ::Proto::ActorData >*
+FrameData::mutable_actors() {
+  // @@protoc_insertion_point(field_mutable_map:Proto.FrameData.actors)
+  return actors_.MutableMap();
+}
+
+// -------------------------------------------------------------------
+
 // Ping
 
 // optional uint32 time = 1;
@@ -1084,6 +1835,16 @@ inline void Ping::set_time(::google::protobuf::uint32 value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

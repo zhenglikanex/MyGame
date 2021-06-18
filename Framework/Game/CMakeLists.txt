@@ -23,6 +23,7 @@ Collision.hpp
 Collision.cpp
 Geometry.hpp
 GameHelper.hpp
+Proto.hpp
 
 Utility/ActorStateUtility.hpp
 Utility/AnimationUtility.hpp

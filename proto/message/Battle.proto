@@ -48,14 +48,36 @@ message GameCommandGroup
 	map<uint32,GameCommand> commands = 2;
 }
 
-message GameTransform
+message Vec3
 {
-
+	float x = 1;
+	float y = 2;
+	float z = 3;
 }
 
-message GameActorInfos
+message Quat
 {
+	float x = 1;
+	float y = 2;
+	float z = 3;
+	float w = 4;
+}
 
+message Transform
+{
+	Vec3 position = 1;
+	Quat rotation = 2;
+}
+
+message ActorData
+{
+	Transform  transform = 1;
+}
+
+message FrameData
+{
+	uint32 frame = 1;
+	map<uint32,ActorData> actors = 2;
 }
 
 message Ping
