@@ -1,8 +1,13 @@
 #include "BattleActor.hpp"
 
-#include <iostream>
+#include <functional>
 
 #include "Framework/Proto/NetMessage.hpp"
+
+#include "Server/BattleActor/ServerFileService.hpp"
+#include "Server/BattleActor/ServerInputService.hpp"
+#include "Server/BattleActor/ServerViewService.hpp"
+#include "Server/BattleActor/ServerGameHelper.hpp"
 
 using namespace std::chrono;
 
@@ -10,8 +15,6 @@ BattleActor::BattleActor(ActorId id)
 	: Actor(id)
 	, start_(false)
 	, start_time_(0)
-	, run_time_(0)
-	, run_frame_(0)
 {
 
 }
@@ -36,7 +39,11 @@ bool BattleActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 
 void BattleActor::Stop()
 {
-
+	if (g_game)
+	{
+		g_game->Finalize();
+		g_game = nullptr;
+	}
 }
 
 void BattleActor::Receive(ActorMessage&& actor_msg)
@@ -76,24 +83,38 @@ void BattleActor::StartBattle(const std::any& data)
 
 	start_ = true;
 	start_time_ = start_time;
+	
+	std::vector<PlayerInfo> players;
+	for (auto iter = player_infos.player_infos().cbegin(); iter < player_infos.player_infos().cend(); ++iter)
+	{
+		PlayerInfo player;
+		player.id = iter->id();
+		player.actor_asset = iter->actor_asset();
+		players.emplace_back(std::move(player));
+	}
+
+	auto input_service = std::make_unique<ServerInputService>();
+	input_service->set_input_handler(std::bind(&BattleActor::GameInput,this));
+
+	Locator locator;
+	locator.Set<ViewService>(std::make_unique<ServerViewService>());
+	locator.Set<InputService>(std::move(input_service));
+	locator.Set<FileService>(std::make_unique<ServerFileService>());
+	locator.Set<ServerGameHelper>(std::make_unique<ServerGameHelper>());
+	
+	g_game = std::make_unique<Game>(std::move(locator), GameMode::kServer,std::move(players));
+	g_game->Initialize();
+	g_game->set_start_time(start_time);
+
 	AddTimer(1, -1, [this]()
 		{
 			Update();
 		});
-
-	std::cout << "BattleActor start!!!" << std::endl;
 }
 
 void BattleActor::Update()
 {
-	// todo：计时方式后面修改
-	uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-	run_time_ = (now - start_time_) / 1000.0f;
-	while (run_time_ > run_frame_ * kFrameTime + kFrameTime)
-	{
-		PushCommandGroup();
-		++run_frame_;
-	}
+	g_game->Update(0);
 }
 
 void BattleActor::InputCommand(const std::any& data)
@@ -113,8 +134,6 @@ void BattleActor::InputCommand(const std::any& data)
 		return;
 	}
 
-	std::cout << "command frame " << command.frame() << "cur frame " << player_commands_[id].size() << "    " << run_frame_ << std::endl;
-
 	if (player_commands_[id].size() <= command.frame())
 	{
 		player_commands_[id].emplace_back(command);
@@ -124,28 +143,12 @@ void BattleActor::InputCommand(const std::any& data)
 void BattleActor::PushCommandGroup()
 {
 	Proto::GameCommandGroup group;
-	group.set_frame(run_frame_);
+	group.set_frame(g_game->run_frame());
 
 	auto commands = group.mutable_commands();
 	for (auto& entry : ids_)
 	{
-		auto it = player_commands_.find(entry.second);
-		if (it != player_commands_.end())
-		{
-			while (run_frame_ >= it->second.size())
-			{
-				if (it->second.empty())
-				{
-					it->second.push_back(Proto::GameCommand());
-				}
-				else
-				{
-					it->second.push_back(it->second.back());
-				}
-				
-			}
-			(*commands)[entry.second] = it->second[run_frame_];
-		}
+		
 	}
 
 	assert(group.commands().size() >= players_.size());
@@ -156,6 +159,11 @@ void BattleActor::PushCommandGroup()
 		auto data = buffer;
 		Call(player, "send", std::make_tuple(std::string("push_command_group"),std::move(data)));
 	}
+}
+
+void BattleActor::GameInput() const
+{
+
 }
 
 ACTOR_IMPLEMENT(BattleActor)

@@ -38,8 +38,6 @@ uint32_t g_my_id = 0;
 uint32_t g_ping = 0;
 uint32_t g_last_time = 0;
 
-std::queue<Proto::FrameData> g_frame_datas;
-
 void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time)
 {
 	std::vector<PlayerInfo> players;
@@ -85,8 +83,10 @@ extern "C"
 	EXPORT_DLL void DestoryGame()
 	{
 		g_network_service = nullptr;
-		g_game = nullptr;
-		g_frame_datas.swap(std::queue<Proto::FrameData>());
+		if (g_game)
+		{
+			g_game = nullptr;
+		}
 	}
 
 	EXPORT_DLL void UpdateGame(float dt)

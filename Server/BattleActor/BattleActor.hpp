@@ -1,9 +1,18 @@
 #pragma once
+
+#include <memory>
+
 #include "Actor.h"
-#include "ActorMessage.h"
+
+#include "Framework/Game/Game.hpp"
+
 #include "Framework/Proto/Battle.pb.h"
 
+#include "Server/BattleActor/ServerDebugService.hpp"
+
 using namespace actor_net;
+
+std::unique_ptr<DebugService> g_debug_service = std::make_unique<ServerDebugService>();
 
 class BattleActor : public Actor
 {
@@ -22,13 +31,13 @@ private:
 	void StartBattle(const std::any& data);
 	void InputCommand(const std::any& data);
 private:
-	const float kFrameTime = 0.03333334f;
-
+	void GameInput() const;
+private:
 	std::vector<ActorId> players_;
 	std::unordered_map<ActorId, uint32_t> ids_;
 	std::unordered_map<uint32_t, std::vector<Proto::GameCommand>> player_commands_;
+
 	bool start_;
 	uint32_t start_time_;
-	float run_time_;
-	uint32_t run_frame_;
+	std::unique_ptr<Game> game_;
 };

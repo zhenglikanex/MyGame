@@ -10,6 +10,8 @@
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/ActorAsset.hpp"
+#include "Framework/Game/Component/Transform.hpp"
+#include "Framework/Game/Component/TransformState.hpp"
 
 #include "Framework/Game/System/CreateActorSystem.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
@@ -114,39 +116,9 @@ void Game::UpdateInput()
 
 		auto& group = GetCommandGroup(run_frame_);
 
-		//预测玩家操作
-		if (group.commands.size() < player_infos_.size())
-		{
-			if (run_frame_ == 0)
-			{
-				for (auto& player_info : player_infos_)
-				{
-					if (group.commands.find(player_info.id) == group.commands.end())
-					{
-						group.commands.emplace(player_info.id, Command());
-					}
-				}
-			}
-			else
-			{
-				// 简单的用上一帧命令填充(后续预测优化)
-				auto& last_group = GetCommandGroup((run_frame_ - 1));
-				for (auto& last_command : last_group.commands)
-				{
-					if (group.commands.find(last_command.first) == group.commands.end())
-					{
-						group.commands.emplace(last_command.first, last_command.second);
-					}
-				}
-			}
+		assert((group.commands.size() == registry_.view<Player, Local>().size()) && "not commands");
 
-			++run_frame_;
-		}
-		else
-		{
-			++real_frame_;
-			++run_frame_;
-		}
+		++run_frame_;
 	}
 }
 
@@ -168,13 +140,7 @@ void Game::UpdateLogic()
 			return;
 		}
 
-		// 如果是预测执行,保存快照
-		if (game_state.run_frame >= real_frame_)
-		{
-			SaveSnapshot();
-		}
-
-		for (auto e : registry_.view<Player>())
+		for (auto e : registry_.view<Player,Local>())
 		{
 			const auto& player = registry_.get<Player>(e);
 			auto iter = command_group.commands.find(player.id);
@@ -234,50 +200,6 @@ void Game::InputCommand(uint32_t frame,uint32_t id, const Command& command)
 {
 	auto& group = GetCommandGroup(frame);
 	group.commands.emplace(id,command);
-}
-
-void Game::SaveSnapshot()
-{
-	auto& game_state = registry_.ctx<GameState>();
-
-	auto& snapshot = snapshots_[game_state.run_frame % snapshots_.size()];
-	snapshot.frame = game_state.run_frame;
-	snapshot.buffer.Clear();
-
-	kanex::BinaryStream stream(snapshot.buffer);
-	kanex::BinaryOutputArchive ar(stream);
-
-	entt::snapshot{ registry_ }
-		.entities(ar)
-		.component<
-		ActorAsset,
-		ActorState,
-		EnterActorState,
-		AnimationAsset,
-		AnimationClip,
-		AttributeUnitList,
-		Collider,
-		ColliderInfo,
-		Command,
-		ContactList,
-		Health,
-		ModifyHealthList,
-		Matrix4x4,
-		Movement,
-		Player,
-		Skill,
-		SkillAttacthBone,
-		SkillGraphAsset,
-		SkillState,
-		EnterSkillState,
-		ExitSkillState,
-		SkillParams,
-		Transform,
-		ViewAsset,
-		Weapon
-		>(ar);
-
-	ar(registry_.ctx<GameState>());
 }
 
 void Game::Rollback(uint32_t frame)

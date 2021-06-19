@@ -2,11 +2,11 @@
 
 #include "Framework/Game/IViewImpl.hpp"
 
-class UnityViewImpl : public IViewImpl
+class ServerViewImpl : public IViewImpl
 {
 public:
-	UnityViewImpl(int handle) : IViewImpl(),handle_(handle) {}
-	~UnityViewImpl();
+	ServerViewImpl();
+	~ServerViewImpl();
 
 	void UpdatePosition(const vec3& pos) override;
 	void UpdateRotation(const quat& rotation) override;

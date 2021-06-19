@@ -6,7 +6,7 @@
 
 UnityDebugService::UnityDebugService()
 #ifdef WIN32
-	:console_(NULL)
+	: DebugService(),console_(NULL)
 {
 	AllocConsole();
 	console_ = GetConsoleWindow();
@@ -26,7 +26,7 @@ UnityDebugService::UnityDebugService()
 	}
 }
 #else
-{}
+:DebugService(){}
 #endif
 
 UnityDebugService::~UnityDebugService()
