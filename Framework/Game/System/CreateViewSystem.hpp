@@ -18,7 +18,7 @@ struct CreateViewSystem : public System
 		return true;
 	}
 
-	void Update(fixed16 dt) override
+	void FixedUpdate(fixed16 dt) override
 	{	
 		auto& locator = registry.ctx<Locator>();
 		auto view = registry.view<ViewAsset>(entt::exclude<View>);

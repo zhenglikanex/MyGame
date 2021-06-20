@@ -15,6 +15,7 @@ add_library(BattleActor SHARED
     ServerViewImpl.cpp
     ServerGameHelper.hpp
     ServerGameHelper.cpp
+    System/ServerSyncSystem.hpp
     ) 
 
 target_link_libraries(BattleActor

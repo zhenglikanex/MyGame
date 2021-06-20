@@ -12,7 +12,8 @@ struct System
 	virtual ~System() = 0 {}
 
 	virtual bool Initialize() = 0;
-	virtual void Update(fixed16 dt) = 0;
+	virtual void Update(fixed16 dt) {}
+	virtual void FixedUpdate(fixed16 dt) {}
 	virtual void LateUpdate(fixed16 dt) {}
 	virtual void Finalize() = 0;
 

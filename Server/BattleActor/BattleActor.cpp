@@ -102,7 +102,7 @@ void BattleActor::StartBattle(const std::any& data)
 	locator.Set<FileService>(std::make_unique<ServerFileService>());
 	locator.Set<ServerGameHelper>(std::make_unique<ServerGameHelper>());
 	
-	g_game = std::make_unique<Game>(std::move(locator), GameMode::kServer,std::move(players));
+	g_game = std::make_unique<Game>(std::move(locator),std::move(players));
 	g_game->Initialize();
 	g_game->set_start_time(start_time);
 
@@ -140,25 +140,28 @@ void BattleActor::InputCommand(const std::any& data)
 	}
 }
 
-void BattleActor::PushCommandGroup()
+std::vector<std::unique_ptr<System>> BattleActor::CreateSystems()
 {
-	Proto::GameCommandGroup group;
-	group.set_frame(g_game->run_frame());
-
-	auto commands = group.mutable_commands();
-	for (auto& entry : ids_)
-	{
-		
-	}
-
-	assert(group.commands().size() >= players_.size());
-
-	auto buffer = Serialize(group);	
-	for (auto player : players_)
-	{
-		auto data = buffer;
-		Call(player, "send", std::make_tuple(std::string("push_command_group"),std::move(data)));
-	}
+	std::vector<std::unique_ptr<System>> systems;
+	systems.emplace_back(std::make_unique<CreateActorSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<CreateViewSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<CreateAnimationSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<CreateSkillGraphSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<HealthSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<ModifyHealthSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<ActorStateSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<SkillStateSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<RootMotionSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<SkillSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
+	//	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
+	//
+	//#ifdef DEBUG
+	//	systems_.emplace_back(std::make_unique<DebugSystem>(registry_));
+	//#endif
 }
 
 void BattleActor::GameInput() const

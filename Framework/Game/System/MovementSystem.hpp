@@ -35,7 +35,7 @@ struct MovementSystem : public System
 		return true;
 	}
 
-	void Update(fixed16 dt) override
+	void FixedUpdate(fixed16 dt) override
 	{
 		auto view = registry.view<Local, Movement, Transform>();
 		for (auto e : view)

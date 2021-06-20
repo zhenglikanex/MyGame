@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <chrono>
 
+#include "Framework/Game/GameHelper.hpp"
 #include "Framework/Game/InputService.hpp"
 #include "Framework/Game/DebugService.hpp"
 
@@ -13,28 +14,14 @@
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/TransformState.hpp"
 
-#include "Framework/Game/System/CreateActorSystem.hpp"
+#include "Framework/Game/System.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
-#include "Framework/Game/System/CreateAnimationSystem.hpp"
-#include "Framework/Game/System/CreateSkillGraphSystem.hpp"
-#include "Framework/Game/System/ActorStateSystem.hpp"
-#include "Framework/Game/System/MovementSystem.hpp"
-#include "Framework/Game/System/UpdateViewSystem.hpp"
-#include "Framework/Game/System/AnimationSystem.hpp"
-#include "Framework/Game/System/CollisionSystem.hpp"
-#include "Framework/Game/System/RootMotionSystem.hpp"
-#include "Framework/Game/System/SkillStateSystem.hpp"
-#include "Framework/Game/System/DebugSystem.hpp"
-#include "Framework/Game/System/HealthSystem.hpp"
-#include "Framework/Game/System/ModifyHealthSystem.hpp"
-#include "Framework/Game/System/SkillSystem.hpp"
-#include "Framework/Game/System/UpdateColliderTransformSystem.hpp"
 
 #include "Framework/Game/Utility/ActorUtility.hpp"
 
 using namespace std::chrono;
 
-Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
+Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	: start_time_(0)
 	, run_time_(0)
 	, run_frame_(0)
@@ -43,29 +30,12 @@ Game::Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players)
 	, player_infos_(players)
 	
 {
-	registry_.set<GameMode>(mode);
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
 
-	systems_.emplace_back(std::make_unique<CreateActorSystem>(registry_));
-	systems_.emplace_back(std::make_unique<CreateViewSystem>(registry_));
-	systems_.emplace_back(std::make_unique<CreateAnimationSystem>(registry_));
-	systems_.emplace_back(std::make_unique<CreateSkillGraphSystem>(registry_));
-	systems_.emplace_back(std::make_unique<HealthSystem>(registry_));
-	systems_.emplace_back(std::make_unique<ModifyHealthSystem>(registry_));
-	systems_.emplace_back(std::make_unique<ActorStateSystem>(registry_));
-	systems_.emplace_back(std::make_unique<SkillStateSystem>(registry_));
-	systems_.emplace_back(std::make_unique<RootMotionSystem>(registry_));
-	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
-	systems_.emplace_back(std::make_unique<SkillSystem>(registry_));
-	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
-	systems_.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry_));
-	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
-	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
+	auto& game_helper = registry_.ctx<Locator>().Ref<const GameHelper&>();
+	systems_ = game_helper.CreateSystems(registry_);
 
-#ifdef DEBUG
-	systems_.emplace_back(std::make_unique<DebugSystem>(registry_));
-#endif
 }
 
 Game::~Game()
@@ -156,12 +126,12 @@ void Game::UpdateLogic()
 			{
 				if (game_state.run_frame + 1 >= run_frame_)
 				{
-					system->Update(GameConfig::kFrameTime);
+					system->FixedUpdate(GameConfig::kFrameTime);
 				}
 			}
 			else 
 			{
-				system->Update(GameConfig::kFrameTime);
+				system->FixedUpdate(GameConfig::kFrameTime);
 			}
 		}
 

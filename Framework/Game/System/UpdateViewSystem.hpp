@@ -34,7 +34,7 @@ struct UpdateViewSystem : public ObserverSystem
 		return true;
 	}
 
-	void Update(fixed16 dt) override
+	void FixedUpdate(fixed16 dt) override
 	{
 		UpdateTransform();
 		UpdateAnimation();

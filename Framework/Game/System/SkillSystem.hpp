@@ -21,7 +21,7 @@ struct SkillSystem : public System
 		return true;
 	}
 
-	void Update(fixed16 dt) override
+	void FixedUpdate(fixed16 dt) override
 	{
 		UpdateSkillTranform();
 		FindSkillTarget(dt);

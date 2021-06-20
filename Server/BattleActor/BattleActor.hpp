@@ -4,6 +4,7 @@
 
 #include "Actor.h"
 
+#include "Framework/Game/System.hpp"
 #include "Framework/Game/Game.hpp"
 
 #include "Framework/Proto/Battle.pb.h"
@@ -25,8 +26,7 @@ public:
 
 	void Receive(ActorMessage&& actor_msg) override;
 
-	void Update();	
-	void PushCommandGroup();
+	void Update();
 private:
 	void StartBattle(const std::any& data);
 	void InputCommand(const std::any& data);

@@ -34,7 +34,7 @@ struct Snapshot
 class Game
 {
 public:
-	Game(Locator&& locator,GameMode mode,std::vector<PlayerInfo>&& players);
+	Game(Locator&& locator,std::vector<PlayerInfo>&& players);
 	~Game();
 
 	bool Initialize();

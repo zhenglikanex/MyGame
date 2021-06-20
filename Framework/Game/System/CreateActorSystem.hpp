@@ -35,7 +35,7 @@ struct CreateActorSystem : public System
 		return true;
 	}
 
-	void Update(fixed16 dt) override
+	void FixedUpdate(fixed16 dt) override
 	{
 		auto view = registry.view<ActorAsset>(entt::exclude<ViewAsset>);
 		for (auto e : view)

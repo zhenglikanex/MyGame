@@ -25,7 +25,7 @@ struct CreateSkillGraphSystem : public System
 		return true;
 	}
 
-	void Update(fixed16 dt) override
+	void FixedUpdate(fixed16 dt) override
 	{
 		auto view = registry.view<SkillGraphAsset>(entt::exclude<SkillGraph>);
 		for (auto e : view)

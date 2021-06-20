@@ -28,7 +28,7 @@ struct UpdateColliderTransformSystem : public ObserverSystem
 		return true;
 	}
 
-	void Update(fixed16 dt) override
+	void FixedUpdate(fixed16 dt) override
 	{
 		auto view = registry.view<const Transform, const ColliderInfo>();
 		for (auto e : *mover)

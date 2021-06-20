@@ -54,7 +54,7 @@ struct SkillStateSystem : System
 		return true;
 	}
 
-	void Update(fixed16 dt)
+	void FixedUpdate(fixed16 dt)
 	{
 		OnTransition(dt);
 		OnExit();

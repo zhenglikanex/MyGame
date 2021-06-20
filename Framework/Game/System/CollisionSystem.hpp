@@ -28,7 +28,7 @@ struct CollisionSystem : public ObserverSystem
 		return true;
 	}
 
-	void Update(fixed16 dt) override
+	void FixedUpdate(fixed16 dt) override
 	{
 		CreateContactList();
 		ClearContactList();

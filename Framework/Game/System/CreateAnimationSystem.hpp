@@ -28,7 +28,7 @@ struct CreateAnimationSystem : System
 		return true;
 	}
 
-	void Update(fixed16 dt)
+	void FixedUpdate(fixed16 dt)
 	{
 		auto view = registry.view<AnimationAsset>(entt::exclude_t<Animation>{});
 		for (auto e : view)
