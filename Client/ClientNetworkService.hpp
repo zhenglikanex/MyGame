@@ -12,6 +12,7 @@ class ClientNetworkService : public NetworkService
 {
 public:
 	ClientNetworkService();
+	~ClientNetworkService();
 
 	bool Connect(const std::string& ip, uint16_t port, uint32_t timeout);
 	void Disconnect();

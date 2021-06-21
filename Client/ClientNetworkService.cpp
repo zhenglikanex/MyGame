@@ -17,6 +17,11 @@ ClientNetworkService::ClientNetworkService()
 	network_.Run();
 }
 
+ClientNetworkService::~ClientNetworkService()
+{
+
+}
+
 bool ClientNetworkService::Connect(const std::string& ip, uint16_t port, uint32_t timeout)
 {	
 	error_code_ = ClientNetwork::ConnectErrorCode::kTypeNotError;

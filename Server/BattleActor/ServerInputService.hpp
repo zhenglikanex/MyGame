@@ -7,12 +7,10 @@
 class ServerInputService : public InputService
 {
 public:
-	void InputHandler() const override;
+	ServerInputService(const std::function<void()>& handler);
+	~ServerInputService();
 
-	void set_input_handler(const std::function<void()>& hanlder)
-	{
-		input_handler_ = hanlder;
-	}
+	void InputHandler() const override;
 private:
 	std::function<void()> input_handler_;
 };

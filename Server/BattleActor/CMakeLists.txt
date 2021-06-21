@@ -11,6 +11,8 @@ add_library(BattleActor SHARED
     ServerInputService.cpp
     ServerViewService.hpp
     ServerViewService.cpp
+    ServerNetworkService.hpp
+    ServerNetworkService.cpp
     ServerViewImpl.hpp
     ServerViewImpl.cpp
     ServerGameHelper.hpp

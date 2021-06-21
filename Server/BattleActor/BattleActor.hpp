@@ -32,6 +32,7 @@ private:
 	void InputCommand(const std::any& data);
 private:
 	void GameInput() const;
+	void Send(std::string_view name, std::vector<uint8_t>&& data);
 private:
 	std::vector<ActorId> players_;
 	std::unordered_map<ActorId, uint32_t> ids_;

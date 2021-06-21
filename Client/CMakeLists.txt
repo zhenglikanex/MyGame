@@ -19,6 +19,7 @@ add_library(MyGameClient SHARED
     ClientNetworkService.cpp
     ClientGameHelper.hpp
     ClientGameHelper.cpp
+    System/ClientSyncSystem.hpp
 )
 
 target_link_libraries(MyGameClient

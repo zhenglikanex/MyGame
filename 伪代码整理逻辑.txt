@@ -1,0 +1,32 @@
+function tick()
+{
+    //net_recv()
+    input_local_command()
+    push_local_command()
+    update_common_logic()   //属性更新，动画播放等
+    update_local_logic()    //移动，攻击,逻辑动画更新等
+    update_remote_logic()   //位置插值等
+    if(server)
+    {
+        push_all_actor()    //
+    }
+}
+
+两种结构
+1.不同的模式提供不同的system
+2.同样的system里面做些不同的处理,比如用抽象类，不同模式提供不同的实现
+
+
+
+//network
+
+class FrameData
+{
+    uint32_t frame;
+    data info;
+}
+
+net_recv update()
+{
+    frame   
+}

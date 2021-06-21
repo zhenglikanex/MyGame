@@ -8,6 +8,7 @@
 #include "Server/BattleActor/ServerInputService.hpp"
 #include "Server/BattleActor/ServerViewService.hpp"
 #include "Server/BattleActor/ServerGameHelper.hpp"
+#include "Server/BattleActor/ServerNetworkService.hpp"
 
 using namespace std::chrono;
 
@@ -93,13 +94,11 @@ void BattleActor::StartBattle(const std::any& data)
 		players.emplace_back(std::move(player));
 	}
 
-	auto input_service = std::make_unique<ServerInputService>();
-	input_service->set_input_handler(std::bind(&BattleActor::GameInput,this));
-
 	Locator locator;
 	locator.Set<ViewService>(std::make_unique<ServerViewService>());
-	locator.Set<InputService>(std::move(input_service));
+	locator.Set<InputService>(std::make_unique<ServerInputService>(std::bind(&BattleActor::GameInput, this)));
 	locator.Set<FileService>(std::make_unique<ServerFileService>());
+	locator.Set<NetworkService>(std::make_unique<ServerNetworkService>(std::bind(&BattleActor::Send, this, std::placeholders::_1, std::placeholders::_2)));
 	locator.Set<ServerGameHelper>(std::make_unique<ServerGameHelper>());
 	
 	g_game = std::make_unique<Game>(std::move(locator),std::move(players));
@@ -140,33 +139,18 @@ void BattleActor::InputCommand(const std::any& data)
 	}
 }
 
-std::vector<std::unique_ptr<System>> BattleActor::CreateSystems()
-{
-	std::vector<std::unique_ptr<System>> systems;
-	systems.emplace_back(std::make_unique<CreateActorSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<CreateViewSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<CreateAnimationSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<CreateSkillGraphSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<HealthSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<ModifyHealthSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<ActorStateSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<SkillStateSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<RootMotionSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<MovementSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<SkillSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<AnimationSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<CollisionSystem>(registry_));
-	//	systems_.emplace_back(std::make_unique<UpdateViewSystem>(registry_));
-	//
-	//#ifdef DEBUG
-	//	systems_.emplace_back(std::make_unique<DebugSystem>(registry_));
-	//#endif
-}
-
 void BattleActor::GameInput() const
 {
 
 }
+
+void BattleActor::Send(std::string_view name, std::vector<uint8_t>&& data)
+{
+	for (auto player : players_)
+	{
+		Call(player, "send", std::make_tuple(std::string(name.data()),std::move(data)));
+	}
+}
+
 
 ACTOR_IMPLEMENT(BattleActor)

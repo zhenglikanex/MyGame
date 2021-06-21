@@ -183,7 +183,7 @@ extern "C"
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
 						g_my_id = info.my_id();
 
-						//让客户端领先服务器1帧加半个rrt保证，使客户端的输入能在服务器执行当前帧时收到，后面可以再根据ping值来调整客户端领先的值
+						//让客户端领先服务器1帧加半个rtt保证，使客户端的输入能在服务器执行当前帧时收到，后面可以再根据ping值来调整客户端领先的值
 						//todo:这个应该用dt 逝去的时间来做的，之前写的精度不够，导致客户端和是服务器的时间随着物理时间增长，逻辑时间对不上了，
 						//先用当前时间减去开始时间，后面再改
 						uint32_t start_time = info.start_time() - (g_ping / 2 + 34);
@@ -191,39 +191,7 @@ extern "C"
 					}
 					else if (message.name() == "push_frame_data")
 					{
-						Proto::FrameData frame_data;
-						frame_data.ParseFromArray(message.data().data(), message.data().size());
-
 						
-						// todo:写法有问题，应该要优化下，先不管
-						std::unordered_map<uint32_t, Transform> transforms;
-						transforms.reserve(frame_data.actors_size());
-						for (auto& entry : frame_data.actors())
-						{
-							auto& actor_data = entry.second;
-
-							// transform
-							auto& sync_trans = actor_data.transform();
-							vec3 position(sync_trans.position.x(), sync_trans.position.x(), sync_trans.position.x());
-							quat rotation(sync_trans.rotation.x(), sync_trans.rotation.y(), sync_trans.rotation.z(), sync_trans.rotation.w());
-							Transform transfrom(position, rotation);
-
-							transforms.emplace(entry.first, std::move(transfrom));
-						}
-
-						if (frame_data.frame() >= g_game->run_frame())
-						{
-							g_game->UpdateFrameData(transforms);
-						}
-						else
-						{
-							bool is_need_rollback = g_game->UpdateFrameData(transforms);
-							if (is_need_rollback)
-							{
-								g_game->Rollback(frame_data.frame());
-							}
-						}
-
 					}
 					else if (message.name() == "ping")
 					{
