@@ -71,7 +71,8 @@ void Game::Update(float dt)
 	run_time_ = (now - start_time_) / 1000.0f;
 
 	UpdateInput();
-	UpdateLogic();
+	UpdateLogic(dt);
+	UpdateFixedLogic();
 }
 
 void Game::UpdateInput()
@@ -92,7 +93,15 @@ void Game::UpdateInput()
 	}
 }
 
-void Game::UpdateLogic()
+void Game::UpdateLogic(float dt)
+{
+	for (auto& system : systems_)
+	{
+		system->Update(dt);
+	}
+}
+
+void Game::UpdateFixedLogic()
 {
 	int run_frame_times = 0;
 	auto& game_state = registry_.ctx<GameState>();
@@ -175,35 +184,6 @@ void Game::InputCommand(uint32_t frame,uint32_t id, const Command& command)
 void Game::Rollback(uint32_t frame)
 {
 
-}
-
-void Game::UpdateFrameData(const uint32_t frame, const std::unordered_map<uint32_t, Transform>& frame_data)
-{
-	auto view = registry_.view<Player,Transform>();
-	for (auto e : view)
-	{
-		const auto& player = registry_.get<Player>(e);
-		auto& transform = registry_.get<Transform>(e);
-		
-		auto iter = frame_data.find(player.id);
-		if (iter != frame_data.end()) // 没变动角色不会下发
-		{
-			bool is_local = registry_.has<Local>(e);
-			if (is_local && frame < run_frame_)
-			{
-				// todo 可以允许有一定误差,因为只是预测，最终服务器都会会纠正
-				bool is_need_rollback = transform.position != iter->second.position || transform.rotation != iter->second.rotation;
-				if (is_need_rollback)
-				{
-					transform = iter->second;
-				}
-			}
-			else
-			{
-				registry_.replace<Transform>(e,iter->second);
-			}
-		}
-	}
 }
 
 uint32_t Game::GetCurRunFrame() const

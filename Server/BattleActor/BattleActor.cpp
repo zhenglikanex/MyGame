@@ -98,8 +98,10 @@ void BattleActor::StartBattle(const std::any& data)
 	locator.Set<ViewService>(std::make_unique<ServerViewService>());
 	locator.Set<InputService>(std::make_unique<ServerInputService>(std::bind(&BattleActor::GameInput, this)));
 	locator.Set<FileService>(std::make_unique<ServerFileService>());
-	locator.Set<NetworkService>(std::make_unique<ServerNetworkService>(std::bind(&BattleActor::Send, this, std::placeholders::_1, std::placeholders::_2)));
 	locator.Set<ServerGameHelper>(std::make_unique<ServerGameHelper>());
+	locator.Set<NetworkService>(std::make_unique<ServerNetworkService>(
+		std::bind(&BattleActor::RecvGameMessage, this),
+		std::bind(&BattleActor::SendGameMessage, this, std::placeholders::_1, std::placeholders::_2)));
 	
 	g_game = std::make_unique<Game>(std::move(locator),std::move(players));
 	g_game->Initialize();
@@ -144,13 +146,18 @@ void BattleActor::GameInput() const
 
 }
 
-void BattleActor::Send(std::string_view name, std::vector<uint8_t>&& data)
+std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> BattleActor::RecvGameMessage()
+{
+	// todo:
+	return nullptr;
+}
+
+void BattleActor::SendGameMessage(std::string_view name, std::vector<uint8_t>&& data)
 {
 	for (auto player : players_)
 	{
-		Call(player, "send", std::make_tuple(std::string(name.data()),std::move(data)));
+		Call(player, "send", std::make_tuple(std::string(name.data()), std::move(data)));
 	}
 }
-
 
 ACTOR_IMPLEMENT(BattleActor)

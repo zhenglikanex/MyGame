@@ -17,6 +17,8 @@
 #include "Framework/Game/System/SkillSystem.hpp"
 #include "Framework/Game/System/UpdateColliderTransformSystem.hpp"
 
+#include "Client/System/ClientSyncSystem.hpp"
+
 ClientGameHelper::ClientGameHelper(uint32_t local_id)
 	: GameHelper()
 	, local_id_(local_id)
@@ -32,6 +34,8 @@ ClientGameHelper::~ClientGameHelper()
 std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::registry& registry) const
 {
 	std::vector<std::unique_ptr<System>> systems;
+
+	systems.emplace_back(std::make_unique<ClientSyncSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateActorSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateViewSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateAnimationSystem>(registry));

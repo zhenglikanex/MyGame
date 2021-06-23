@@ -1,44 +1,20 @@
 #pragma once
 
-#include <cstdint>
-#include <vector>
-#include <functional>
-
-#include "ClientNetwork.hpp"
-
 #include "Framework/Game/NetworkService.hpp"
+
+#include "Framework/Proto/NetMessage.hpp"
 
 class ClientNetworkService : public NetworkService
 {
 public:
-	ClientNetworkService();
+	ClientNetworkService(
+		const std::function<std::unique_ptr<NetMessage>()>& recv_handler,
+		const std::function<void(std::string_view, std::vector<uint8_t>)>& send_handler);
 	~ClientNetworkService();
 
-	bool Connect(const std::string& ip, uint16_t port, uint32_t timeout);
-	void Disconnect();
-
-	bool IsConnected() const;
-
-	void Request(std::string_view name,std::vector<uint8_t>&& data,
-		const std::function<void(const std::vector<uint8_t>& data)>& callback = nullptr) override;
-
-	void Send(std::string_view name, std::vector<uint8_t>&& data) override;
-
-	void Update();
-
-	void set_messge_handler(const std::function<void(const NetMessage&)>& handler)
-	{
-		message_handler_ = handler;
-	}
-
-	ClientNetwork::ConnectErrorCode GetLastError() const
-	{
-		return error_code_;
-	}
+	std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> Recv() const override;
+	void Send(std::string_view name, std::vector<uint8_t>&& data) const override;
 private:
-	ClientNetwork network_;
-	ClientNetwork::ConnectErrorCode error_code_;
-	uint16_t alloc_session_;
-	std::unordered_map<uint16_t, std::function<void(const std::vector<uint8_t>&)>> rpc_handlers_;
-	std::function<void(const NetMessage&)> message_handler_;
+	std::function<std::unique_ptr<NetMessage>()> recv_handler_;
+	std::function<void(std::string_view, std::vector<uint8_t>)> send_handler_;
 };

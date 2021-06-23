@@ -25,12 +25,6 @@
 
 #include "3rdparty/include/entt/entt.hpp"
 
-struct Snapshot
-{
-	uint32_t frame;
-	kanex::Buffer buffer{1024};
-};
-
 class Game
 {
 public:
@@ -42,24 +36,16 @@ public:
 	void Finalize();
 	
 	void UpdateInput();
-	void UpdateLogic();
+	void UpdateLogic(float dt);
+	void UpdateFixedLogic();
 
 	void InputCommand(uint32_t frame,uint32_t id,const Command& command);
 
 	void Rollback(uint32_t frame);
 
-	void UpdateFrameData(const uint32_t frame,const std::unordered_map<uint32_t, Transform>& frame_data);
-
 	uint32_t GetCurRunFrame() const;
 
 	void set_start_time(uint32_t start_time) { start_time_ = start_time; }
-
-	void set_real_frame(uint32_t real_frame) 
-	{
-		assert(real_frame >= real_frame_ && real_frame <= run_frame_ && "!");
-
-		real_frame_ = real_frame;
-	}
 
 	uint32_t start_time() const { return start_time_; }
 	float run_time() const { return run_time_; }
@@ -102,7 +88,6 @@ private:
 	std::vector<std::unique_ptr<System>> systems_;
 	std::vector<PlayerInfo> player_infos_;
 	std::array<CommandGroup, GameConfig::kMaxPredictFrame> command_groups_;
-	std::array<Snapshot,GameConfig::kMaxPredictFrame> snapshots_;
 };
 
 extern std::unique_ptr<Game> g_game;

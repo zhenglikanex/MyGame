@@ -64,7 +64,7 @@ struct CreateActorSystem : public System
 
 			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);	
 
-			INFO("create actor");
+			//INFO("create actor");
 		}
 	}
 

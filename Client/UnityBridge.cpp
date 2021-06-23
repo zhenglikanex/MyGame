@@ -5,19 +5,16 @@
 #include <queue>
 #include <asio.hpp>
 
+#include "Client/ClientNetwork.hpp"
+#include "Client/ClientNetworkService.hpp"
+#include "Client/ClientGameHelper.hpp"
 #include "Client/UnityViewService.hpp"
 #include "Client/UnityDebugService.hpp"
 #include "Client/UnityInputService.hpp"
 #include "Client/UnityFileService.hpp"
-#include "Client/ClientNetworkService.hpp"
 
 #include "Framework/Game/Math.hpp"
 #include "Framework/Game/Game.hpp"
-#include "Framework/Game/NetworkService.hpp"
-#include "Framework/Game/ViewService.hpp"
-#include "Framework/Game/IViewImpl.hpp"
-
-#include "Framework/Game/Component/Transform.hpp"
 
 #include "Framework/Proto/Battle.pb.h"
 
@@ -32,13 +29,35 @@ UnityDelegate UnityBridge::unity_delegate_ = nullptr;
 
 std::unique_ptr<Game> g_game = nullptr;
 std::unique_ptr<DebugService> g_debug_service = std::make_unique<UnityDebugService>();
-std::unique_ptr<ClientNetworkService> g_network_service = nullptr;
+std::unique_ptr<ClientNetwork> g_network_service = nullptr;
 
 uint32_t g_my_id = 0;
 uint32_t g_ping = 0;
 uint32_t g_last_time = 0;
 
-void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time)
+std::queue<std::unique_ptr<NetMessage>> g_game_messages;
+
+std::unique_ptr<NetMessage> RecvGameMessage()
+{
+	if (g_game_messages.empty())
+	{
+		return nullptr;
+	}
+
+	auto message = std::move(g_game_messages.front());
+	g_game_messages.pop();
+	return std::move(message);
+}
+
+void SendGameMessage(std::string_view name,std::vector<uint8_t>&& data)
+{
+	if (g_network_service)
+	{
+		g_network_service->Send(name, std::move(data));
+	}
+}
+
+void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time,uint32_t local_id)
 {
 	std::vector<PlayerInfo> players;
 	for (auto iter = infos.player_infos().cbegin(); iter < infos.player_infos().cend(); ++iter)
@@ -53,8 +72,10 @@ void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time)
 	locator.Set<ViewService>(std::make_unique<UnityViewService>());
 	locator.Set<InputService>(std::make_unique<UnityInputService>());
 	locator.Set<FileService>(std::make_unique<UnityFileService>());
+	locator.Set<NetworkService>(std::make_unique<ClientNetworkService>(&RecvGameMessage, &SendGameMessage));
+	locator.Set<GameHelper>(std::make_unique<ClientGameHelper>(local_id));
 
-	g_game = std::make_unique<Game>(std::move(locator), GameMode::kClinet, std::move(players));
+	g_game = std::make_unique<Game>(std::move(locator),std::move(players));
 	g_game->Initialize();
 	g_game->set_start_time(start_time);
 }
@@ -163,13 +184,13 @@ extern "C"
 		// 偷懒了匹配本来想放在unity端做的,这里简单的请求下得了
 		if (!g_network_service)
 		{
-			g_network_service = std::make_unique<ClientNetworkService>();
+			g_network_service = std::make_unique<ClientNetwork>();
 		}
 		
 		if (g_network_service->Connect("127.0.0.1", 9523, 500))
 		{
 			// 偷懒写这里了
-			g_network_service->set_messge_handler([](const NetMessage& message)
+			g_network_service->set_messge_handler([](NetMessage&& message)
 				{
 					if (message.name() == "start_battle")
 					{
@@ -181,17 +202,12 @@ extern "C"
 						info.ParseFromArray(message.data().data(), message.data().size());
 
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
-						g_my_id = info.my_id();
 
 						//让客户端领先服务器1帧加半个rtt保证，使客户端的输入能在服务器执行当前帧时收到，后面可以再根据ping值来调整客户端领先的值
 						//todo:这个应该用dt 逝去的时间来做的，之前写的精度不够，导致客户端和是服务器的时间随着物理时间增长，逻辑时间对不上了，
 						//先用当前时间减去开始时间，后面再改
 						uint32_t start_time = info.start_time() - (g_ping / 2 + 34);
-						InitGame(info.player_infos(),start_time);
-					}
-					else if (message.name() == "push_frame_data")
-					{
-						
+						InitGame(info.player_infos(),start_time, info.my_id());
 					}
 					else if (message.name() == "ping")
 					{
@@ -202,6 +218,10 @@ extern "C"
 						g_ping = now - ping.time();
 
 						UnityBridge::Get().CallUnity<void>("SetPing", g_ping);
+					}
+					else
+					{
+						g_game_messages.emplace(std::make_unique<NetMessage>(std::move(message)));
 					}
 				});
 
