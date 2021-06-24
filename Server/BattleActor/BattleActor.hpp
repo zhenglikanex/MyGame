@@ -6,6 +6,7 @@
 
 #include "Framework/Game/System.hpp"
 #include "Framework/Game/Game.hpp"
+#include "Framework/Game/Component/Command.hpp"
 
 #include "Framework/Proto/Battle.pb.h"
 
@@ -31,13 +32,13 @@ private:
 	void StartBattle(const std::any& data);
 	void InputCommand(const std::any& data);
 private:
-	void GameInput() const;
+	void GameInput();
 	std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> RecvGameMessage();
 	void SendGameMessage(std::string_view name, std::vector<uint8_t>&& data);
 private:
 	std::vector<ActorId> players_;
 	std::unordered_map<ActorId, uint32_t> ids_;
-	std::unordered_map<uint32_t, std::vector<Proto::GameCommand>> player_commands_;
+	std::unordered_map<uint32_t,std::vector<Command>> player_commands_;
 
 	bool start_;
 	uint32_t start_time_;

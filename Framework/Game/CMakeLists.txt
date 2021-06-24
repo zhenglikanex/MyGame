@@ -48,6 +48,7 @@ System/HealthSystem.hpp
 System/UpdateColliderTransformSystem.hpp
 System/NetworkReceiveSystem.hpp
 System/NetworkSendSystem.hpp
+System/TransformStateSystem.hpp
 
 Component/Remote.hpp
 Component/Local.hpp

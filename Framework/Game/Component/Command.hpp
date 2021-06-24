@@ -7,6 +7,8 @@
 
 struct Command
 {
+	uint32_t frame;
+
 	fixed16 x_axis;		// “°∏À ‰»Î
 	fixed16 y_axis;		// “°∏À ‰»Î
 
@@ -15,7 +17,8 @@ struct Command
 	uint32_t skill;
 
 	Command()
-		: x_axis(0)
+		: frame(0)
+		, x_axis(0)
 		, y_axis(0)
 		, jump(false)
 		, skill(0)
@@ -46,6 +49,6 @@ struct CommandGroup
 	}
 };
 
-NON_MEMEBER_BAR(Command, obj.x_axis, obj.y_axis, obj.jump, obj.skill);
+NON_MEMEBER_BAR(Command,obj.frame, obj.x_axis, obj.y_axis, obj.jump, obj.skill);
 NON_MEMEBER_BAR(CommandGroup, obj.frame, obj.commands);
 

@@ -7,7 +7,7 @@
 
 struct TransformState
 {
-	std::array<Transform, GameConfig::kMaxPredictFrame> transforms;
+	std::array<Transform, GameConfig::kMaxPredictFrame> value;
 
 	TransformState() = default;
 };

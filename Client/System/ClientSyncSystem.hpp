@@ -51,7 +51,7 @@ struct ClientSyncSystem : public System
 			for (auto e : view)
 			{
 				auto&[player, transform_state, transform] = view.get<Player, TransformState, Transform>(e);
-				auto& frame_transform = transform_state.transforms[frame_data.frame % transform_state.transforms.size()];
+				auto& frame_transform = transform_state.value[frame_data.frame % transform_state.value.size()];
 
 				auto iter = frame_data.actors.find(player.id);
 				if (iter != frame_data.actors.end())

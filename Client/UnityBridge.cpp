@@ -37,6 +37,8 @@ uint32_t g_last_time = 0;
 
 std::queue<std::unique_ptr<NetMessage>> g_game_messages;
 
+kanex::Buffer g_input_buffer(20);
+
 std::unique_ptr<NetMessage> RecvGameMessage()
 {
 	if (g_game_messages.empty())
@@ -154,18 +156,17 @@ extern "C"
 			command.skill = csharp_command.skill();
 			command.jump = csharp_command.jump();
 
-			g_game->InputCommand(g_game->run_frame(),g_my_id, command);
+			kanex::BinaryStream stream(g_input_buffer);
+			kanex::BinaryOutputArchive oar(stream);
 
-			Proto::GameCommand game_command;
-			game_command.set_x_axis(command.x_axis.raw_value());
-			game_command.set_y_axis(command.y_axis.raw_value());
-			game_command.set_skill(command.skill);
-			game_command.set_jump(command.jump);
-			game_command.set_frame(g_game->run_frame());
+			oar(command);
+
+			std::vector<uint8_t> data(g_input_buffer.Size());
+			g_input_buffer.Read(data.data(), data.size());
 
 			if (g_network_service)
 			{
-				g_network_service->Send("input_command", Serialize(game_command));
+				g_network_service->Send("input_command",std::move(data));
 			}
 		}
 	}

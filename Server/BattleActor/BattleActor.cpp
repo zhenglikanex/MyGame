@@ -10,6 +10,8 @@
 #include "Server/BattleActor/ServerGameHelper.hpp"
 #include "Server/BattleActor/ServerNetworkService.hpp"
 
+#include "Kanex.hpp"
+
 using namespace std::chrono;
 
 BattleActor::BattleActor(ActorId id)
@@ -40,10 +42,10 @@ bool BattleActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 
 void BattleActor::Stop()
 {
-	if (g_game)
+	if (game_)
 	{
-		g_game->Finalize();
-		g_game = nullptr;
+		game_->Finalize();
+		game_ = nullptr;
 	}
 }
 
@@ -103,9 +105,9 @@ void BattleActor::StartBattle(const std::any& data)
 		std::bind(&BattleActor::RecvGameMessage, this),
 		std::bind(&BattleActor::SendGameMessage, this, std::placeholders::_1, std::placeholders::_2)));
 	
-	g_game = std::make_unique<Game>(std::move(locator),std::move(players));
-	g_game->Initialize();
-	g_game->set_start_time(start_time);
+	game_ = std::make_unique<Game>(std::move(locator),std::move(players));
+	game_->Initialize();
+	game_->set_start_time(start_time);
 
 	AddTimer(1, -1, [this]()
 		{
@@ -115,13 +117,20 @@ void BattleActor::StartBattle(const std::any& data)
 
 void BattleActor::Update()
 {
-	g_game->Update(0);
+	game_->Update(0);
 }
 
 void BattleActor::InputCommand(const std::any& data)
 {
-	auto& [player, command] = std::any_cast<std::tuple<ActorId, Proto::GameCommand>>(data);
+	auto& [player,buffer] = std::any_cast<std::tuple<ActorId,std::vector<uint8_t>>>(data);
 	
+	kanex::Buffer buf(std::move(buffer));
+	kanex::BinaryStream stream(buf);
+	kanex::BinaryInputArchive ar(stream);
+
+	Command command;
+	ar(command);
+
 	auto iter = ids_.find(player);
 	if (iter == ids_.end())
 	{
@@ -135,15 +144,25 @@ void BattleActor::InputCommand(const std::any& data)
 		return;
 	}
 
-	if (player_commands_[id].size() <= command.frame())
+	if (player_commands_[id].size() <= command.frame)
 	{
 		player_commands_[id].emplace_back(command);
 	}
 }
 
-void BattleActor::GameInput() const
+void BattleActor::GameInput()
 {
+	auto frame = game_->run_frame();
+	for (auto entry : ids_)
+	{
+		auto& commands = player_commands_[entry.second];
+		while (commands.size() <= frame)
+		{
+			commands.emplace_back(Command());
+		}
 
+		game_->InputCommand(frame,entry.second, commands[frame]);
+	}
 }
 
 std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> BattleActor::RecvGameMessage()

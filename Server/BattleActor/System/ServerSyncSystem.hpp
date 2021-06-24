@@ -27,7 +27,7 @@ struct ServerSyncSystem : public System
 
 	bool Initialize() override
 	{
-
+		return true;
 	}
 
 	void FixedUpdate(fixed16 dt) override
