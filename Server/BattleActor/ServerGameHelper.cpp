@@ -1,9 +1,11 @@
 #include "ServerGameHelper.hpp"
 
+#include "Framework/Game/System/CreateActorSystem.hpp"
 #include "Framework/Game/System/CreateAnimationSystem.hpp"
 #include "Framework/Game/System/CreateSkillGraphSystem.hpp"
 #include "Framework/Game/System/ActorStateSystem.hpp"
 #include "Framework/Game/System/MovementSystem.hpp"
+#include "Framework/Game/System/TransformStateSystem.hpp"
 #include "Framework/Game/System/AnimationSystem.hpp"
 #include "Framework/Game/System/CollisionSystem.hpp"
 #include "Framework/Game/System/RootMotionSystem.hpp"
@@ -24,6 +26,7 @@ ServerGameHelper::~ServerGameHelper()
 std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(entt::registry& registry) const
 {
 	std::vector<std::unique_ptr<System>> systems;
+	systems.emplace_back(std::make_unique<CreateActorSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateAnimationSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateSkillGraphSystem>(registry));
 	systems.emplace_back(std::make_unique<HealthSystem>(registry));
@@ -32,6 +35,7 @@ std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<SkillStateSystem>(registry));
 	systems.emplace_back(std::make_unique<RootMotionSystem>(registry));
 	systems.emplace_back(std::make_unique<MovementSystem>(registry));
+	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
 	systems.emplace_back(std::make_unique<SkillSystem>(registry));
 	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
 	systems.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry));

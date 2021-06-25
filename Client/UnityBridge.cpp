@@ -84,6 +84,8 @@ void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time,uint32_t 
 
 void CheckPing()
 {
+	static int count = 0;
+
 	if (g_network_service)
 	{
 		uint32_t time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
@@ -114,6 +116,8 @@ extern "C"
 
 	EXPORT_DLL void UpdateGame(float dt)
 	{
+		std::this_thread::sleep_for(milliseconds(2));
+
 		static float total_time = 0;
 
 		if (g_network_service)
@@ -125,11 +129,12 @@ extern "C"
 			else
 			{
 				auto code = g_network_service->GetLastError();
+				INFO("network_error {} ", (int)code);
 				return;
 			}
 		}
 
-		CheckPing();
+		//CheckPing();
 
 		if (g_game)
 		{
@@ -151,10 +156,13 @@ extern "C"
 			csharp_command.ParseFromArray(data, size);
 
 			Command command;
+			command.frame = g_game->run_frame();
 			command.x_axis = fixed16(std::abs(csharp_command.x_axis()) < 0.1 ? 0 : csharp_command.x_axis());
 			command.y_axis = fixed16(std::abs(csharp_command.y_axis()) < 0.1 ? 0 : csharp_command.y_axis());
 			command.skill = csharp_command.skill();
 			command.jump = csharp_command.jump();
+
+			g_game->InputCommand(g_game->run_frame(), g_my_id, command);
 
 			kanex::BinaryStream stream(g_input_buffer);
 			kanex::BinaryOutputArchive oar(stream);
@@ -163,6 +171,8 @@ extern "C"
 
 			std::vector<uint8_t> data(g_input_buffer.Size());
 			g_input_buffer.Read(data.data(), data.size());
+
+			g_input_buffer.Clear();
 
 			if (g_network_service)
 			{
@@ -202,12 +212,13 @@ extern "C"
 						Proto::StartBattleInfo info;
 						info.ParseFromArray(message.data().data(), message.data().size());
 
+						g_my_id = info.my_id();
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
 
 						//让客户端领先服务器1帧加半个rtt保证，使客户端的输入能在服务器执行当前帧时收到，后面可以再根据ping值来调整客户端领先的值
 						//todo:这个应该用dt 逝去的时间来做的，之前写的精度不够，导致客户端和是服务器的时间随着物理时间增长，逻辑时间对不上了，
 						//先用当前时间减去开始时间，后面再改
-						uint32_t start_time = info.start_time() - (g_ping / 2 + 34);
+						uint32_t start_time = info.start_time() - (g_ping / 2 + 100);
 						InitGame(info.player_infos(),start_time, info.my_id());
 					}
 					else if (message.name() == "ping")

@@ -11,7 +11,7 @@ struct Transform
 
 	Transform()
 		: position(zero<vec3>())
-		, rotation(quat(zero<vec3>()))
+		, rotation(glm::identity<quat>())
 	{
 
 	}

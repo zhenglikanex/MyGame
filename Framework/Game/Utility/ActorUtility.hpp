@@ -10,6 +10,7 @@
 
 #include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/Transform.hpp"
+#include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/Remote.hpp"
@@ -24,9 +25,10 @@ struct ActorUtiltiy
 
 		reg.emplace<Player>(e,id);
 		reg.emplace<Transform>(e, position, rotation);
+		reg.emplace<TransformState>(e);
 		reg.emplace<ActorAsset>(e,actor_asset); // 通过createactoresystem创建具体actor信息
 
-		auto& helper = reg.ctx<Locator>().Ref<const GameHelper&>();
+		auto& helper = reg.ctx<Locator>().Ref<const GameHelper>();
 		if (helper.IsLocalPlayer(id))
 		{
 			reg.emplace<Local>(e);

@@ -31,7 +31,13 @@ namespace actor_net
 		return message;
 	}
 
-	void MessageCore::PushActorMessage(ActorId id,ActorMessage&& actor_message)
+	uint32_t MessageQueue::Size()
+	{
+		std::unique_lock<std::mutex> lock(mutex_);
+		return messages_.size();
+	}
+
+	void MessageCore::PushActorMessage(ActorId id, ActorMessage&& actor_message)
 	{
 		std::unique_lock<std::mutex> lock(mutex_);
 		auto queue = GetMessageQueueById(id);

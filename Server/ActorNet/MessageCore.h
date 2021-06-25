@@ -21,9 +21,11 @@ namespace actor_net
 		MessageQueue(MessageQueue&&) = delete;
 		MessageQueue& operator=(const MessageQueue&) = delete;
 		MessageQueue& operator=(MessageQueue&&) = delete;
+
 		bool IsEmpty();
 		void Push(ActorMessage&& message);
 		ActorMessage Pop();
+		uint32_t Size();
 
 		void set_mamaged(bool managed) { managed_ = managed; }
 

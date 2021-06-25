@@ -65,6 +65,7 @@ namespace actor_net
 					}
 
 					actor->OnReceive(message_queue->Pop());
+
 					message_queue = message_core_.GetMessageQueue(message_queue);
 				}
 			}));

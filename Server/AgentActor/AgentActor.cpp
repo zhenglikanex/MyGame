@@ -40,6 +40,8 @@ bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	ClientConnect("battle_loaded", &AgentActor::BattledLoaded);
 	ClientConnect("input_command", &AgentActor::InputCommand);
 
+	std::cout << "AgentInit:" << id() << std::endl;
+
 	return true;
 }
 
@@ -58,8 +60,6 @@ void AgentActor::Start(const std::any& data)
 	auto&[gate, conv] = std::any_cast<std::tuple<ActorId, kcp_conv_t>>(data);
 	gate_ = gate;
 	conv_ = conv;
-
-	//std::cout << "AgentStart" << gate << " " << conv << std::endl;
 }
 
 void AgentActor::ClientReceive(const std::any& data)
@@ -94,21 +94,14 @@ void AgentActor::JoinBattle(const std::any& data)
 
 void AgentActor::Ping(const NetMessage& request)
 {
+	static int count = 0;
 	std::any data = std::make_tuple(conv_, request);
 	
 	Proto::Ping ping;
 	ping.ParseFromArray(request.data().data(), request.data().size());
 	uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 	uint32_t value = now - ping.time();
-	if (value > 1000)
-	{
-		std::cout << "-------------------------------------ping : " << value << std::endl;
-	}
-	else
-	{
-		std::cout << "ping : " << value << std::endl;
-	}
-	
+
 	Call(gate_, "send", std::move(data));
 }
 
@@ -197,12 +190,10 @@ void AgentActor::BattledLoaded(const NetMessage& request)
 void AgentActor::InputCommand(const NetMessage& request)
 {
 	if (battle_ != kNull)
-	{
-		std::cout << "input command" << battle_ << std::endl;
-		Proto::GameCommand command;
-		command.ParseFromArray(request.data().data(), request.data().size());
-		
-		Call(battle_, "input_command", std::make_tuple(id(),std::move(command)));
+	{		
+		auto data = request.data();
+
+		Call(battle_, "input_command", std::make_tuple(id(),std::move(data)));
 	}
 }
 

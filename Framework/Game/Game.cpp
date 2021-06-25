@@ -25,7 +25,6 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	: start_time_(0)
 	, run_time_(0)
 	, run_frame_(0)
-	, real_frame_(0)
 	, input_frame_rate_(GameConfig::kDefaultInputFrame)
 	, player_infos_(players)
 	
@@ -33,7 +32,7 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
 
-	auto& game_helper = registry_.ctx<Locator>().Ref<const GameHelper&>();
+	auto& game_helper = registry_.ctx<Locator>().Ref<const GameHelper>();
 	systems_ = game_helper.CreateSystems(registry_);
 
 }
@@ -54,7 +53,7 @@ bool Game::Initialize()
 	}
 
 	auto& file_service = registry_.ctx<Locator>().Ref<FileService>();
-	file_service.set_cur_path(std::filesystem::current_path().string() + "/Assets/Resources/");
+	//file_service.set_cur_path(std::filesystem::current_path().string() + "/Assets/Resources/");
 
 	LoadAllConfig();
 	CreatePlayer();
@@ -78,8 +77,8 @@ void Game::Update(float dt)
 void Game::UpdateInput()
 {
 	while (registry_.ctx<GameState>().run_frame == run_frame_ 
-		&& (run_time_ > run_frame_ * input_frame_rate_ + input_frame_rate_) 
-		&& (run_frame_ - real_frame_) < GameConfig::kMaxPredictFrame)
+		&& (run_time_ > run_frame_ * input_frame_rate_ + input_frame_rate_))
+		//&& (run_frame_ - real_frame_) < GameConfig::kMaxPredictFrame)
 	{
 		//会触发InputCommand,相当于getcommands
 		auto& input_service = registry_.ctx<Locator>().Ref<const InputService>();
@@ -88,6 +87,10 @@ void Game::UpdateInput()
 		auto& group = GetCommandGroup(run_frame_);
 
 		assert((group.commands.size() == registry_.view<Player, Local>().size()) && "not commands");
+		for (auto entry : group.commands)
+		{
+			INFO("update input x {} y {}", entry.second.x_axis, entry.second.y_axis);
+		}
 
 		++run_frame_;
 	}
@@ -184,12 +187,6 @@ void Game::InputCommand(uint32_t frame,uint32_t id, const Command& command)
 void Game::Rollback(uint32_t frame)
 {
 
-}
-
-uint32_t Game::GetCurRunFrame() const
-{
-	auto& game_state = registry_.ctx<GameState>();
-	return game_state.run_frame;
 }
 
 void Game::CreatePlayer()

@@ -343,6 +343,8 @@ struct ActorStateSystem : public System
 
 			action_state.time += dt;
 
+			INFO("process command x {} y {}", command.x_axis, command.y_axis);
+
 			auto& executor = states[(size_t)action_state.cur_state];
 			executor->OnUpdate(e, command, animction_clip);
 		}

@@ -6,6 +6,7 @@
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/NetworkService.hpp"
 
+#include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Player.hpp"
 
@@ -33,14 +34,16 @@ struct ServerSyncSystem : public System
 	void FixedUpdate(fixed16 dt) override
 	{
 		FrameData frame_data;
+		frame_data.frame = registry.ctx<GameState>().run_frame;
+
 		auto view = registry.view<Player, Transform>();
 		for (auto e : view)
 		{
 			auto&[player, transform] = view.get<Player, Transform>(e);
-
+			
 			ActorData actor_data;
 			actor_data.transform = transform;
-
+			INFO("rotation {}", transform.rotation.w);
 			frame_data.actors.emplace(player.id, std::move(actor_data));
 		}
 

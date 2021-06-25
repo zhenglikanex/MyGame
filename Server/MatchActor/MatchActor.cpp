@@ -26,6 +26,8 @@ bool MatchActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	RequestConnect("join_match", &MatchActor::JoinMatch, this);
 	RequestConnect("leave_match", &MatchActor::LeaveMatch, this);
 
+	std::cout << "MatchInit:" << id() << std::endl;
+
 	return true;
 }
 

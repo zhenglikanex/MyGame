@@ -62,7 +62,7 @@ void BattleActor::StartBattle(const std::any& data)
 	for (uint32_t i = 0; i < players_.size(); ++i)
 	{
 		ids_.emplace(players_[i], i);
-		player_commands_.emplace(i, std::vector<Proto::GameCommand>());
+		player_commands_.emplace(i, std::vector<Command>());
 	}
 
 	Proto::GamePlayerInfos player_infos;
@@ -100,7 +100,7 @@ void BattleActor::StartBattle(const std::any& data)
 	locator.Set<ViewService>(std::make_unique<ServerViewService>());
 	locator.Set<InputService>(std::make_unique<ServerInputService>(std::bind(&BattleActor::GameInput, this)));
 	locator.Set<FileService>(std::make_unique<ServerFileService>());
-	locator.Set<ServerGameHelper>(std::make_unique<ServerGameHelper>());
+	locator.Set<GameHelper>(std::make_unique<ServerGameHelper>());
 	locator.Set<NetworkService>(std::make_unique<ServerNetworkService>(
 		std::bind(&BattleActor::RecvGameMessage, this),
 		std::bind(&BattleActor::SendGameMessage, this, std::placeholders::_1, std::placeholders::_2)));
@@ -147,6 +147,11 @@ void BattleActor::InputCommand(const std::any& data)
 	if (player_commands_[id].size() <= command.frame)
 	{
 		player_commands_[id].emplace_back(command);
+		INFO("input command {} x {} y{}", command.frame, command.x_axis, command.y_axis);
+	}
+	else
+	{
+		INFO("------------not input command {} x {} y{}",command.frame, command.x_axis, command.y_axis);
 	}
 }
 
@@ -160,7 +165,8 @@ void BattleActor::GameInput()
 		{
 			commands.emplace_back(Command());
 		}
-
+		
+		INFO("run command {} x {} y{}",commands[frame].frame, commands[frame].x_axis, commands[frame].y_axis);
 		game_->InputCommand(frame,entry.second, commands[frame]);
 	}
 }
@@ -175,7 +181,7 @@ void BattleActor::SendGameMessage(std::string_view name, std::vector<uint8_t>&& 
 {
 	for (auto player : players_)
 	{
-		Call(player, "send", std::make_tuple(std::string(name.data()), std::move(data)));
+		Call(player, "send", std::make_tuple(std::string(name.data()),data));
 	}
 }
 

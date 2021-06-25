@@ -43,14 +43,11 @@ public:
 
 	void Rollback(uint32_t frame);
 
-	uint32_t GetCurRunFrame() const;
-
 	void set_start_time(uint32_t start_time) { start_time_ = start_time; }
 
 	uint32_t start_time() const { return start_time_; }
 	float run_time() const { return run_time_; }
 	uint32_t run_frame() const { return run_frame_; }
-	uint32_t real_frame() const { return real_frame_; }
 	entt::registry& registry() { return registry_; }
 private:
 	void LoadAllConfig();
@@ -81,7 +78,6 @@ private:
 	uint32_t start_time_;
 	float run_time_;		// 注意,这个浮点数不会引起不同步的问题
 	uint32_t run_frame_;
-	uint32_t real_frame_;
 	float input_frame_rate_;	// 注意,这个浮点数不会引起不同步的问题
 	
 	entt::registry registry_;

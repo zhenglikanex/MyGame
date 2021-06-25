@@ -52,6 +52,8 @@ bool KcpGateActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 
 	ActorConnect("send", &KcpGateActor::Send, this);
 
+	std::cout << "KcpInit:" << id() << std::endl;
+
 	return true;
 }
 

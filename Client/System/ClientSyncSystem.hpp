@@ -34,7 +34,7 @@ struct ClientSyncSystem : public System
 
 	void Update(fixed16 dt) override
 	{
-		auto& network_service = registry.ctx<Locator>().Ref<const NetworkService&>();
+		auto& network_service = registry.ctx<Locator>().Ref<const NetworkService>();
 		while (auto message = network_service.Recv())
 		{
 			auto&[name, data] = *message;
@@ -50,7 +50,7 @@ struct ClientSyncSystem : public System
 			auto view = registry.view<Player, TransformState, Transform, Local>();
 			for (auto e : view)
 			{
-				auto&[player, transform_state, transform] = view.get<Player, TransformState, Transform>(e);
+				auto&[player, transform_state] = view.get<Player, TransformState>(e);
 				auto& frame_transform = transform_state.value[frame_data.frame % transform_state.value.size()];
 
 				auto iter = frame_data.actors.find(player.id);
@@ -58,28 +58,37 @@ struct ClientSyncSystem : public System
 				{
 					auto& sync_trans = iter->second.transform;
 					//可以允许误差，因为最终服务器都会修正
+
+					auto b1 = frame_transform.position != sync_trans.position;
+					auto b2 = frame_transform.rotation != sync_trans.rotation;
+					INFO("server {} client {}", sync_trans.rotation.w, frame_transform.rotation.w);
+
 					is_need_rollback = frame_transform.position != sync_trans.position || frame_transform.rotation != sync_trans.rotation;
 					if (is_need_rollback)
 					{
-						transform = sync_trans;
+						registry.replace<Transform>(e, sync_trans);
 					}
 				}
 			}
 
 			if (is_need_rollback)
 			{
+				INFO("-----------------------is_need_rollback");
 				// todo : rollback
+			}
+			else
+			{
+				INFO("not rollback");
 			}
 
 			auto view_remote = registry.view<Player, Transform, Remote>();
-			for (auto e : view)
+			for (auto e : view_remote)
 			{
-				auto&[player, transform] = view_remote.get<Player, Transform>(e);
-
+				auto& player = view_remote.get<Player>(e);
 				auto iter = frame_data.actors.find(player.id);
 				if (iter != frame_data.actors.end())
 				{
-					transform = iter->second.transform;
+					registry.replace<Transform>(e, iter->second.transform);
 				}
 			}
 		}

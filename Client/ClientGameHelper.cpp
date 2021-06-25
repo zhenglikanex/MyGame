@@ -6,6 +6,7 @@
 #include "Framework/Game/System/CreateSkillGraphSystem.hpp"
 #include "Framework/Game/System/ActorStateSystem.hpp"
 #include "Framework/Game/System/MovementSystem.hpp"
+#include "Framework/Game/System/TransformStateSystem.hpp"
 #include "Framework/Game/System/UpdateViewSystem.hpp"
 #include "Framework/Game/System/AnimationSystem.hpp"
 #include "Framework/Game/System/CollisionSystem.hpp"
@@ -46,6 +47,7 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<SkillStateSystem>(registry));
 	systems.emplace_back(std::make_unique<RootMotionSystem>(registry));
 	systems.emplace_back(std::make_unique<MovementSystem>(registry));
+	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
 	systems.emplace_back(std::make_unique<SkillSystem>(registry));
 	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
 	systems.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry));

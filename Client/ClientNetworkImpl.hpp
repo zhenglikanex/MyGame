@@ -89,5 +89,5 @@ private:
 
 	std::atomic<uint32_t> cur_read_;
 	std::atomic<uint32_t> cur_write_;
-	std::array<std::vector<uint8_t>, 300> buffers_;
+	std::array<std::vector<uint8_t>, 3000> buffers_;
 };
