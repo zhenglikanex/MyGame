@@ -8,6 +8,7 @@
 
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Transform.hpp"
+#include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Player.hpp"
 
 struct ServerSyncSystem : public System
@@ -36,14 +37,15 @@ struct ServerSyncSystem : public System
 		FrameData frame_data;
 		frame_data.frame = registry.ctx<GameState>().run_frame;
 
-		auto view = registry.view<Player, Transform>();
+		auto view = registry.view<Player, Transform, AnimationClip>();
 		for (auto e : view)
 		{
-			auto&[player, transform] = view.get<Player, Transform>(e);
+			auto&[player, transform,clip] = view.get<Player, Transform,AnimationClip>(e);
 			
 			ActorData actor_data;
 			actor_data.transform = transform;
-			INFO("rotation {}", transform.rotation.w);
+			actor_data.clip = clip;
+			INFO("CLIP {}", clip.name);
 			frame_data.actors.emplace(player.id, std::move(actor_data));
 		}
 

@@ -134,7 +134,7 @@ extern "C"
 			}
 		}
 
-		//CheckPing();
+		CheckPing();
 
 		if (g_game)
 		{
@@ -218,7 +218,7 @@ extern "C"
 						//让客户端领先服务器1帧加半个rtt保证，使客户端的输入能在服务器执行当前帧时收到，后面可以再根据ping值来调整客户端领先的值
 						//todo:这个应该用dt 逝去的时间来做的，之前写的精度不够，导致客户端和是服务器的时间随着物理时间增长，逻辑时间对不上了，
 						//先用当前时间减去开始时间，后面再改
-						uint32_t start_time = info.start_time() - (g_ping / 2 + 100);
+						uint32_t start_time = info.start_time() - (g_ping / 2 + 34);
 						InitGame(info.player_infos(),start_time, info.my_id());
 					}
 					else if (message.name() == "ping")

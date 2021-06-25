@@ -147,11 +147,11 @@ void BattleActor::InputCommand(const std::any& data)
 	if (player_commands_[id].size() <= command.frame)
 	{
 		player_commands_[id].emplace_back(command);
-		INFO("input command {} x {} y{}", command.frame, command.x_axis, command.y_axis);
+		//INFO("input command {} x {} y{}", command.frame, command.x_axis, command.y_axis);
 	}
 	else
 	{
-		INFO("------------not input command {} x {} y{}",command.frame, command.x_axis, command.y_axis);
+		//INFO("-----------------------not input command {} x {} y{}",command.frame, command.x_axis, command.y_axis);
 	}
 }
 
@@ -163,10 +163,11 @@ void BattleActor::GameInput()
 		auto& commands = player_commands_[entry.second];
 		while (commands.size() <= frame)
 		{
+			//INFO("****************************************{}", frame);
 			commands.emplace_back(Command());
 		}
 		
-		INFO("run command {} x {} y{}",commands[frame].frame, commands[frame].x_axis, commands[frame].y_axis);
+		//INFO("run command {} x {} y{}",commands[frame].frame, commands[frame].x_axis, commands[frame].y_axis);
 		game_->InputCommand(frame,entry.second, commands[frame]);
 	}
 }
