@@ -2,6 +2,7 @@ build
 3rdparty/build
 *.lib
 *.dll
+*/.vs
 bin
 # Cmake files
 CMakeCache.txt
