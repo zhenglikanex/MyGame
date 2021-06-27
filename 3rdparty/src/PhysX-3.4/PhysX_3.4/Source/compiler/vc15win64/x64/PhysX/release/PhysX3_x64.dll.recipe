@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>E:\PhysX-3.4\PxShared\bin\vc15win64\PxFoundation_x64.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>E:\PhysX-3.4\PxShared\bin\vc15win64\PxPvdSDK_x64.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>E:\PhysX-3.4\PhysX_3.4\bin\vc15win64\PhysX3Common_x64.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>E:\PhysX-3.4\PhysX_3.4\bin\vc15win64\PhysX3_x64.dll</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

@@ -1,0 +1,26 @@
+﻿  PsWindowsAtomic.cpp
+  PsWindowsCpu.cpp
+  PsWindowsFPU.cpp
+  PsWindowsMutex.cpp
+  PsWindowsPrintString.cpp
+  PsWindowsSList.cpp
+  PsWindowsSocket.cpp
+  PsWindowsSync.cpp
+  PsWindowsThread.cpp
+  PsWindowsTime.cpp
+  PsAllocator.cpp
+  PsAssert.cpp
+  PsFoundation.cpp
+  PsMathUtils.cpp
+E:\PhysX-3.4\PxShared\src\foundation\src\windows\PsWindowsMutex.cpp(116,1): warning C5220: “physx::shdfnd::ReadWriteLockImpl::readerCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用
+E:\PhysX-3.4\PxShared\src\foundation\src\windows\PsWindowsMutex.cpp(115): message : 参见“physx::shdfnd::ReadWriteLockImpl::readerCount”的声明
+  PsString.cpp
+E:\PhysX-3.4\PxShared\src\foundation\src\windows\PsWindowsTime.cpp(87,21): warning C5219: 从“int64_t”隐式转换到“double”，可能会丢失数据
+E:\PhysX-3.4\PxShared\src\foundation\src\windows\PsWindowsTime.cpp(92,25): warning C5219: 从“int64_t”隐式转换到“double”，可能会丢失数据
+E:\PhysX-3.4\PxShared\src\foundation\src\windows\PsWindowsTime.cpp(97,9): warning C5219: 从“const int64_t”隐式转换到“double”，可能会丢失数据
+  PsTempAllocator.cpp
+  PsUtilities.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\foundation\src\PsMathUtils.cpp)
+    正在创建库 ./../../../lib/vc15win64/PxFoundation_x64.lib 和对象 ./../../../lib/vc15win64/PxFoundation_x64.exp
+  PxFoundation.vcxproj -> E:\PhysX-3.4\PxShared\bin\vc15win64\PxFoundation_x64.dll

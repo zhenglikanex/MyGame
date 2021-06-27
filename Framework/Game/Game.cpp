@@ -18,6 +18,7 @@
 #include "Framework/Game/System/CreateViewSystem.hpp"
 
 #include "Framework/Game/Utility/ActorUtility.hpp"
+#include "Framework/Game/Utility/PhysicsUtility.hpp"
 
 using namespace std::chrono;
 
@@ -44,6 +45,8 @@ Game::~Game()
 
 bool Game::Initialize()
 {
+	registry_.set<PhysicsWorld>(PhysicsUtility::CreatePhysicsWorld());
+
 	for (auto& system : systems_)
 	{
 		if (!system->Initialize())
@@ -175,6 +178,8 @@ void Game::Finalize()
 		auto& system = *iter;
 		system->Finalize();
 	}
+
+	PhysicsUtility::DestoryPhysicsWorld(registry_.ctx<PhysicsWorld>());
 }
 
 

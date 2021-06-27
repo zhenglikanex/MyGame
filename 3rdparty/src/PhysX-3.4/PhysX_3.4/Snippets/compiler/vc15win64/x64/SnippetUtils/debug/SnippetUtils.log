@@ -1,0 +1,4 @@
+﻿  SnippetUtils.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetUtils\SnippetUtils.cpp(95,55): warning C5219: 从“uint64_t”隐式转换到“float”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetUtils\SnippetUtils.cpp(100,55): warning C5219: 从“uint64_t”隐式转换到“float”，可能会丢失数据
+  SnippetUtils.vcxproj -> E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\lib\vc15win64\SnippetUtilsDEBUG.lib

@@ -1,0 +1,486 @@
+﻿  OGLRenderer.cpp
+  OGLRendererDirectionalLight.cpp
+  OGLRendererIndexBuffer.cpp
+  OGLRendererInstanceBuffer.cpp
+  OGLRendererMaterial.cpp
+  OGLRendererMesh.cpp
+  OGLRendererSpotLight.cpp
+  OGLRendererTexture2D.cpp
+  OGLRendererVertexBuffer.cpp
+  D3D9Renderer.cpp
+  D3D9RendererDirectionalLight.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\ogl\OGLRendererDirectionalLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\ogl\OGLRendererDirectionalLight.cpp)
+  D3D9RendererIndexBuffer.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\ogl\OGLRenderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\ogl\OGLRenderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\ogl\OGLRendererInstanceBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\ogl\OGLRendererInstanceBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\ogl\OGLRendererMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\ogl\OGLRendererMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d9\D3D9Renderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d9\D3D9Renderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\ogl\OGLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\ogl\OGLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\ogl\OGLRendererIndexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\ogl\OGLRendererIndexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\ogl\OGLRendererSpotLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\ogl\OGLRendererSpotLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\ogl\OGLRendererTexture2D.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\ogl\OGLRendererTexture2D.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d9\D3D9RendererIndexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d9\D3D9RendererIndexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\ogl\OGLRendererMesh.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\ogl\OGLRendererMesh.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d9\D3D9RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d9\D3D9RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\ogl\OGLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\ogl\OGLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\ogl\OGLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\ogl\OGLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9Renderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9Renderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9Renderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9Renderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererDirectionalLight.cpp)
+  D3D9RendererInstanceBuffer.cpp
+  D3D9RendererMaterial.cpp
+  D3D9RendererMesh.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d9\D3D9RendererMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d9\D3D9RendererMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d9\D3D9RendererInstanceBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d9\D3D9RendererInstanceBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererIndexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererIndexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererIndexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererIndexBuffer.cpp)
+  D3D9RendererSpotLight.cpp
+  D3D9RendererTarget.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d9\D3D9RendererMesh.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d9\D3D9RendererMesh.cpp)
+  D3D9RendererTexture2D.cpp
+  D3D9RendererVertexBuffer.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d9\D3D9RendererSpotLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d9\D3D9RendererSpotLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d9\D3D9RendererTarget.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d9\D3D9RendererTarget.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d9\D3D9RendererTexture2D.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d9\D3D9RendererTexture2D.cpp)
+  D3D9WPFRenderer.cpp
+  D3D11Renderer.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d9\D3D9RendererVertexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d9\D3D9RendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d9\D3D9WPFRenderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d9\D3D9WPFRenderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11Renderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11Renderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererSpotLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererSpotLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererSpotLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererSpotLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererInstanceBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererInstanceBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererInstanceBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererInstanceBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererTexture2D.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererTexture2D.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererTexture2D.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererTexture2D.cpp)
+  D3D11RendererDirectionalLight.cpp
+  D3D11RendererIndexBuffer.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererTarget.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererTarget.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererTarget.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererTarget.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9RendererVertexBuffer.cpp)
+  D3D11RendererInstanceBuffer.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\d3d9\D3D9RendererMaterial.cpp(401,1): warning C5204: "D3D9ShaderIncluder": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererIndexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererIndexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9WPFRenderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9WPFRenderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9WPFRenderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\d3d9\D3D9WPFRenderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererInstanceBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererInstanceBuffer.cpp)
+  D3D11RendererMaterial.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererMaterial.cpp)
+  D3D11RendererMesh.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererMesh.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererMesh.cpp)
+  D3D11RendererSpotLight.cpp
+  D3D11RendererTarget.cpp
+  D3D11RendererTexture2D.cpp
+  D3D11RendererTexture3D.cpp
+  D3D11RendererUtils.cpp
+  D3D11RendererVariableManager.cpp
+  D3D11RendererVertexBuffer.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererTarget.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererTarget.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererSpotLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererSpotLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererTexture2D.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererTexture2D.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererUtils.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererUtils.cpp)
+  NULLRenderer.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererTexture3D.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererTexture3D.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererVariableManager.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererVariableManager.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\d3d11\D3D11RendererVertexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\d3d11\D3D11RendererVertexBuffer.cpp)
+  NULLRendererDirectionalLight.cpp
+  NULLRendererIndexBuffer.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\null\NULLRenderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\null\NULLRenderer.cpp)
+  NULLRendererInstanceBuffer.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\null\NULLRendererDirectionalLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\null\NULLRendererDirectionalLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\null\NULLRendererIndexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\null\NULLRendererIndexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\null\NULLRendererInstanceBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\null\NULLRendererInstanceBuffer.cpp)
+  NULLRendererMaterial.cpp
+  NULLRendererMesh.cpp
+  NULLRendererSpotLight.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\null\NULLRendererMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\null\NULLRendererMaterial.cpp)
+  NULLRendererTexture2D.cpp
+  NULLRendererVertexBuffer.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\null\NULLRendererMesh.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\null\NULLRendererMesh.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\null\NULLRendererSpotLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\null\NULLRendererSpotLight.cpp)
+  Renderer.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererDirectionalLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererDirectionalLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererDirectionalLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererDirectionalLight.cpp)
+  RendererBoxShape.cpp
+  RendererCapsuleShape.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\null\NULLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\null\NULLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\null\NULLRendererTexture2D.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\null\NULLRendererTexture2D.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\Renderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\Renderer.cpp)
+  RendererClothShape.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRenderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRenderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRenderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRenderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererBoxShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererBoxShape.cpp)
+  RendererColor.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererClothShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererClothShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererCapsuleShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererCapsuleShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererColor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererColor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererSpotLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererSpotLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererSpotLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererSpotLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererMesh.cpp)
+  RendererDesc.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\null\NULLRendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\Renderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\Renderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\Renderer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\Renderer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererDesc.cpp)
+  RendererDirectionalLight.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererBoxShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererBoxShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererBoxShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererBoxShape.cpp)
+  RendererDirectionalLightDesc.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererColor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererColor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererColor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererColor.cpp)
+  RendererGridShape.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererDirectionalLight.cpp)
+  RendererIndexBuffer.cpp
+  RendererIndexBufferDesc.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererDirectionalLightDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererDirectionalLightDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererCapsuleShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererCapsuleShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererCapsuleShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererCapsuleShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererIndexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererIndexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererGridShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererGridShape.cpp)
+  RendererInstanceBuffer.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererIndexBufferDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererIndexBufferDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererClothShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererClothShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererClothShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererClothShape.cpp)
+  RendererInstanceBufferDesc.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\RendererCapsuleShape.cpp(76,39): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\RendererCapsuleShape.cpp(127,39): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererInstanceBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererInstanceBuffer.cpp)
+  RendererLight.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDirectionalLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererInstanceBufferDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererInstanceBufferDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDirectionalLightDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDirectionalLightDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDirectionalLightDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererDirectionalLightDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\Renderer.cpp(1148,39): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\Renderer.cpp(1185,39): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+  RendererLightDesc.cpp
+  RendererMaterial.cpp
+  RendererMaterialDesc.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererGridShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererGridShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererGridShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererGridShape.cpp)
+  RendererMaterialInstance.cpp
+  RendererMesh.cpp
+  RendererMeshContext.cpp
+  RendererMeshDesc.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererLightDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererLightDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererMaterialDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererMaterialDesc.cpp)
+  RendererMeshShape.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererMaterialInstance.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererMaterialInstance.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererMesh.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererMesh.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererMeshDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererMeshDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererMeshContext.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererMeshContext.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererMeshShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererMeshShape.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\src\RendererGridShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\RendererGridShape.cpp(119,21): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\RendererGridShape.cpp(133,68): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\RendererGridShape.cpp(134,68): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\RendererGridShape.cpp(135,68): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\RendererGridShape.cpp(136,68): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\RendererGridShape.cpp(137,54): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\RendererGridShape.cpp(138,54): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\RendererGridShape.cpp(139,54): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\src\RendererGridShape.cpp(140,54): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+  RendererParticleSystemShape.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererLightDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererLightDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererLightDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererLightDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererParticleSystemShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererParticleSystemShape.cpp)
+  RendererProjection.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMesh.cpp)
+  RendererShape.cpp
+  RendererSimpleParticleSystemShape.cpp
+  RendererSpotLight.cpp
+  RendererSpotLightDesc.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererProjection.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererProjection.cpp)
+  RendererTarget.cpp
+  RendererTargetDesc.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMeshShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMeshShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMeshShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererMeshShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererShape.cpp)
+  RendererTerrainShape.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererSpotLightDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererSpotLightDesc.cpp)
+  RendererTexture.cpp
+  RendererTexture2D.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererSpotLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererSpotLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererTargetDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererTargetDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererSimpleParticleSystemShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererSimpleParticleSystemShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererTerrainShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererTerrainShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererTexture2D.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererTexture2D.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererTexture.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererTexture.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererParticleSystemShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererParticleSystemShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererParticleSystemShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererParticleSystemShape.cpp)
+  RendererTexture2DDesc.cpp
+  RendererTextureDesc.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererTexture2DDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererTexture2DDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSpotLightDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSpotLightDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSpotLightDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSpotLightDesc.cpp)
+  RendererVertexBuffer.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSpotLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSpotLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSpotLight.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSpotLight.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererTextureDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererTextureDesc.cpp)
+  RendererVertexBufferDesc.cpp
+  RendererWindow.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererVertexBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererVertexBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererTerrainShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererTerrainShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererTerrainShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererTerrainShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererVertexBufferDesc.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererVertexBufferDesc.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSimpleParticleSystemShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSimpleParticleSystemShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSimpleParticleSystemShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererSimpleParticleSystemShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\RendererWindow.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\RendererWindow.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererWindow.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererWindow.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererWindow.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\RendererWindow.cpp)
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  SampleRenderer-MT.vcxproj -> E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\lib\vc15win64\SampleRenderer-MT.lib

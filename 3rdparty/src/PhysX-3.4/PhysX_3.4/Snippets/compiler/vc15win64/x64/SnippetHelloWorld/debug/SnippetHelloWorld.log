@@ -1,0 +1,14 @@
+﻿  ClassicMain.cpp
+  SnippetHelloWorld.cpp
+  SnippetHelloWorldRender.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SnippetHelloWorld\SnippetHelloWorld.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SnippetHelloWorld\SnippetHelloWorld.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SnippetHelloWorld\SnippetHelloWorldRender.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SnippetHelloWorld\SnippetHelloWorldRender.cpp)
+  SnippetHelloWorld.vcxproj -> E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\bin\vc15win64\SnippetHelloWorldDEBUG.exe
+  ../../../../PxShared/bin\vc15win64\PxFoundationDEBUG_x64.dll
+  复制了 1 个文件
+  ../../../../PxShared/bin\vc15win64\PxPvdSDKDEBUG_x64.dll
+  复制了 1 个文件

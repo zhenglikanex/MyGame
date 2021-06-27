@@ -1,0 +1,49 @@
+﻿  WindowsCookingDelayLoadHook.cpp
+  GrbTriangleMeshCooking.cpp
+  HeightFieldCooking.cpp
+  RTreeCooking.cpp
+  TriangleMeshBuilder.cpp
+  BigConvexDataBuilder.cpp
+  ConvexHullBuilder.cpp
+  ConvexHullLib.cpp
+  ConvexHullUtils.cpp
+  ConvexMeshBuilder.cpp
+  ConvexPolygonsBuilder.cpp
+  InflationConvexHullLib.cpp
+  QuickHullConvexHullLib.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXCooking\src\mesh\HeightFieldCooking.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysXCooking\src\mesh\HeightFieldCooking.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXCooking\src\convex\ConvexMeshBuilder.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysXCooking\src\convex\ConvexMeshBuilder.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXCooking\src\convex\BigConvexDataBuilder.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXCooking\src\convex\InflationConvexHullLib.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXCooking\src\mesh\HeightFieldCooking.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXCooking\src\convex\ConvexHullUtils.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXCooking\src\convex\ConvexHullBuilder.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysXCooking\src\convex\ConvexHullBuilder.cpp)
+  VolumeIntegration.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXCooking\src\convex\QuickHullConvexHullLib.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXCooking\src\convex\ConvexMeshBuilder.cpp)
+  Adjacencies.cpp
+  Cooking.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXCooking\src\mesh\RTreeCooking.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXCooking\src\mesh\RTreeCooking.cpp(575,57): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXCooking\src\convex\BigConvexDataBuilder.cpp(275,33): warning C5219: 从“physx::PxU32”隐式转换到“const float”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXCooking\src\convex\BigConvexDataBuilder.cpp(276,33): warning C5219: 从“physx::PxU32”隐式转换到“const float”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXCooking\src\mesh\TriangleMeshBuilder.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXCooking\src\convex\ConvexHullUtils.cpp(835,29): warning C5219: 从“const physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXCooking\src\convex\ConvexHullUtils.cpp(889,17): warning C5219: 从“physx::PxU32”隐式转换到“const float”，可能会丢失数据
+  CookingUtils.cpp
+  EdgeList.cpp
+  MeshCleaner.cpp
+  Quantizer.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXCooking\src\EdgeList.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXCooking\src\Cooking.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysXCooking\src\Cooking.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXCooking\src\Cooking.cpp)
+    正在创建库 ./../../../Lib/vc15win64/PhysX3CookingDEBUG_x64.lib 和对象 ./../../../Lib/vc15win64/PhysX3CookingDEBUG_x64.exp
+  PhysXCooking.vcxproj -> E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\bin\vc15win64\PhysX3CookingDEBUG_x64.dll

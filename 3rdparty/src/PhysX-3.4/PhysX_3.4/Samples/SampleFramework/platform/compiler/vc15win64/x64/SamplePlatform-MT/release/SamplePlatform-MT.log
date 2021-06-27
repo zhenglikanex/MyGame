@@ -1,0 +1,104 @@
+﻿  WindowsSamplePlatform.cpp
+  WindowsSampleUserInput.cpp
+  SamplePlatform.cpp
+  SampleUserInput.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\SamplePlatform.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\SamplePlatform.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\src\SampleUserInput.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\src\SampleUserInput.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\SampleUserInput.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\SampleUserInput.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\SampleUserInput.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\SampleUserInput.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\SamplePlatform.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\SamplePlatform.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\SamplePlatform.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\src\SamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlcomcli.h(133,1): warning C5204: "ATL::_NoAddRefReleaseOnCComPtr<T>": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构
+          with
+          [
+              T=IPersistStream
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlcomcli.h(3262): message : 查看对正在编译的 类 模板 实例化“ATL::_NoAddRefReleaseOnCComPtr<T>”的引用
+          with
+          [
+              T=IPersistStream
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlcomcli.h(133,1): warning C5204: "ATL::_NoAddRefReleaseOnCComPtr<T>": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构
+          with
+          [
+              T=IUnknown
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlcomcli.h(3461): message : 查看对正在编译的 类 模板 实例化“ATL::_NoAddRefReleaseOnCComPtr<T>”的引用
+          with
+          [
+              T=IUnknown
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlcomcli.h(133,1): warning C5204: "ATL::_NoAddRefReleaseOnCComPtr<T>": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构
+          with
+          [
+              T=ICatRegister
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlbase.h(7240): message : 查看对正在编译的 类 模板 实例化“ATL::_NoAddRefReleaseOnCComPtr<T>”的引用
+          with
+          [
+              T=ICatRegister
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlcomcli.h(133,1): warning C5204: "ATL::_NoAddRefReleaseOnCComPtr<T>": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构
+          with
+          [
+              T=ITypeLib
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlbase.h(7360): message : 查看对正在编译的 类 模板 实例化“ATL::_NoAddRefReleaseOnCComPtr<T>”的引用
+          with
+          [
+              T=ITypeLib
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlcomcli.h(133,1): warning C5204: "ATL::_NoAddRefReleaseOnCComPtr<T>": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构
+          with
+          [
+              T=IConnectionPointContainer
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlbase.h(8005): message : 查看对正在编译的 类 模板 实例化“ATL::_NoAddRefReleaseOnCComPtr<T>”的引用
+          with
+          [
+              T=IConnectionPointContainer
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlcomcli.h(133,1): warning C5204: "ATL::_NoAddRefReleaseOnCComPtr<T>": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构
+          with
+          [
+              T=IConnectionPoint
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlbase.h(8007): message : 查看对正在编译的 类 模板 实例化“ATL::_NoAddRefReleaseOnCComPtr<T>”的引用
+          with
+          [
+              T=IConnectionPoint
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlmem.h(75,1): warning C5204: "ATL::CCRTHeap": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlmem.h(219,1): warning C5204: "ATL::CLocalHeap": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlmem.h(252,1): warning C5204: "ATL::CGlobalHeap": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\ATLComMem.h(69,1): warning C5204: "ATL::CComHeap": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\atlcomcli.h(133,1): warning C5204: "ATL::_NoAddRefReleaseOnCComPtr<T>": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构
+          with
+          [
+              T=IMalloc
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\ATLComMem.h(67): message : 查看对正在编译的 类 模板 实例化“ATL::_NoAddRefReleaseOnCComPtr<T>”的引用
+          with
+          [
+              T=IMalloc
+          ] (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+I:\VS2019\VC\Tools\MSVC\14.28.29910\atlmfc\include\cstringt.h(2851,1): warning C5204: "ATL::IFixedStringLog": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\src\windows\WindowsSamplePlatform.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\platform\src\windows\WindowsSamplePlatform.cpp(551,55): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\platform\src\windows\WindowsSamplePlatform.cpp(560,56): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  SamplePlatform-MT.vcxproj -> E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\platform\lib\vc15win64\SamplePlatform-MT.lib

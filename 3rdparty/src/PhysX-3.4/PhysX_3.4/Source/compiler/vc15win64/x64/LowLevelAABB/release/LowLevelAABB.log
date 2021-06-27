@@ -1,0 +1,51 @@
+﻿  BpBroadPhase.cpp
+  BpBroadPhaseMBP.cpp
+  BpBroadPhaseSap.cpp
+  BpBroadPhaseSapAux.cpp
+  BpMBPTasks.cpp
+  BpSAPTasks.cpp
+  BpSimpleAABBManager.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpSAPTasks.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpSAPTasks.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseSap.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseSap.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhase.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhase.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhase.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhase.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhase.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseSapAux.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseSap.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseSap.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseSap.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseSapAux.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseSapAux.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseSapAux.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseSapAux.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseMBP.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpSAPTasks.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpSAPTasks.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseMBP.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseMBP.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseMBP.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpBroadPhaseMBP.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelAABB\src\BpSimpleAABBManager.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelAABB\src\BpSAPTasks.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpSimpleAABBManager.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpSimpleAABBManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelAABB\src\BpSimpleAABBManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelAABB\src\BpSimpleAABBManager.cpp)
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  LowLevelAABB.vcxproj -> E:\PhysX-3.4\PhysX_3.4\Lib\vc15win64\LowLevelAABB.lib

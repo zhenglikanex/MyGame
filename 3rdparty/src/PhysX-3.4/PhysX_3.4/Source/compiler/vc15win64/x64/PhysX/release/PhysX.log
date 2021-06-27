@@ -1,0 +1,858 @@
+﻿  NpWindowsDelayLoadHook.cpp
+  NpPhysicsGpu.cpp
+  PxGpu.cpp
+  PxParticleDeviceExclusive.cpp
+  PxParticleGpu.cpp
+  PxPhysXGpuModuleLoader.cpp
+  PxPhysXIndicatorDeviceExclusive.cpp
+  PhysXIndicatorWindows.cpp
+  NpParticleFluid.cpp
+  NpParticleSystem.cpp
+  ScbActor.cpp
+  ScbAggregate.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\PxParticleGpu.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\PxParticleGpu.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbActor.cpp)
+  ScbBase.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbAggregate.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbAggregate.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbBase.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbBase.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\PxPhysXIndicatorDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\PxPhysXIndicatorDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbAggregate.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\gpu\PxPhysXIndicatorDeviceExclusive.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\buffering\ScbAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbActor.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\buffering\ScbActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\PxParticleGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\PxParticleGpu.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\gpu\PxParticleGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbBase.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbBase.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\buffering\ScbBase.cpp)
+  ScbCloth.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\PxPhysXIndicatorDeviceExclusive.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\PxPhysXIndicatorDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxSceneGpu.h(100,1): warning C5204: "physx::PxSceneGpu": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxPhysXGpu.h(221,1): warning C5204: "physx::PxPhysXGpu": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\PxParticleDeviceExclusive.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+  ScbMetaData.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbCloth.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\particles\NpParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\gpu\NpPhysicsGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\particles\NpParticleFluid.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbCloth.cpp)
+  ScbParticleSystem.cpp
+  ScbScene.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\buffering\ScbCloth.cpp)
+  ScbScenePvdClient.cpp
+  ScbShape.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbMetaData.cpp)
+  NpCloth.cpp
+  NpClothFabric.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\buffering\ScbMetaData.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\buffering\ScbParticleSystem.cpp)
+  NpClothParticleData.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpClothFabric.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpClothFabric.cpp)
+  NpImmediateMode.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbParticleSystem.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbShape.cpp)
+  NpActor.cpp
+  NpAggregate.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbMetaData.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbMetaData.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbParticleSystem.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\buffering\ScbShape.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\cloth\NpClothFabric.cpp)
+  NpArticulation.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbMetaData.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\ImmediateMode\src\NpImmediateMode.cpp)
+  NpArticulationJoint.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpClothFabric.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpClothFabric.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbParticleSystem.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\ImmediateMode\src\NpImmediateMode.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\ImmediateMode\src\NpImmediateMode.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpCloth.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\ImmediateMode\src\NpImmediateMode.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\ImmediateMode\src\NpImmediateMode.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+  NpArticulationLink.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\ImmediateMode\src\NpImmediateMode.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\ImmediateMode\src\NpImmediateMode.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\buffering\ScbScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\cloth\NpClothParticleData.cpp)
+  NpBatchQuery.cpp
+  NpConstraint.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+  NpFactory.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\NpAggregate.cpp)
+  NpMaterial.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpBatchQuery.h(162,1): warning C5220: “physx::NpBatchQuery::mBatchQueryIsRunning”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpBatchQuery.h(155): message : 参见“physx::NpBatchQuery::mBatchQueryIsRunning”的声明 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+  NpMetaData.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\NpActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\NpArticulationJoint.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+  NpPhysics.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+  NpPvdSceneQueryCollector.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+  NpReadCheck.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpArticulationLink.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpBatchQuery.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpConstraint.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpMaterial.cpp)
+  NpRigidDynamic.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+  NpRigidStatic.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+  NpScene.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+  NpSceneQueries.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+  NpSerializerAdapter.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\NpFactory.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+  NpShape.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpPvdSceneQueryCollector.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\NpMetaData.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpReadCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+  NpShapeManager.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpPhysics.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidDynamic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+  NpSpatialIndex.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+  NpVolumeCache.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpRigidStatic.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+  NpWriteCheck.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpSceneQueries.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpSpatialIndex.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpBatchQuery.h(162,1): warning C5220: “physx::NpBatchQuery::mBatchQueryIsRunning”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpBatchQuery.h(155): message : 参见“physx::NpBatchQuery::mBatchQueryIsRunning”的声明 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\NpScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpSerializerAdapter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+  PvdMetaDataPvdBinding.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpShapeManager.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+  PvdPhysicsClient.cpp
+  PxAutoGeneratedMetaDataObjects.cpp
+  PxMetaDataObjects.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\NpShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXMetaData\core\src\PxAutoGeneratedMetaDataObjects.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXMetaData\core\src\PxAutoGeneratedMetaDataObjects.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\PhysX\src\NpWriteCheck.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXMetaData\core\src\PxMetaDataObjects.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXMetaData\core\src\PxMetaDataObjects.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxParticleDeviceExclusive.h(248,1): warning C5204: "physx::PxParticleDeviceExclusiveAccess": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\PhysX\src\NpVolumeCache.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXMetaData\core\src\PxMetaDataObjects.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\PhysXMetaData\core\src\PxMetaDataObjects.cpp)
+    正在创建库 ./../../../Lib/vc15win64/PhysX3_x64.lib 和对象 ./../../../Lib/vc15win64/PhysX3_x64.exp
+LINK : warning LNK4199: 已忽略 /DELAYLOAD:nvcuda.dll；未找到来自 nvcuda.dll 的导入
+LINK : warning LNK4199: 已忽略 /DELAYLOAD:PxPvdSDK_x64.dll；未找到来自 PxPvdSDK_x64.dll 的导入
+  PhysX.vcxproj -> E:\PhysX-3.4\PhysX_3.4\bin\vc15win64\PhysX3_x64.dll

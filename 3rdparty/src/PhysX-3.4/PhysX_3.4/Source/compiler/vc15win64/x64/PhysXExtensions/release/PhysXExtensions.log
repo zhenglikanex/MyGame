@@ -1,0 +1,108 @@
+﻿  ExtBroadPhase.cpp
+  ExtClothFabricCooker.cpp
+  ExtClothGeodesicTetherCooker.cpp
+  ExtClothMeshQuadifier.cpp
+  ExtClothSimpleTetherCooker.cpp
+  ExtCollection.cpp
+  ExtConvexMeshExt.cpp
+  ExtCpuWorkerThread.cpp
+  ExtD6Joint.cpp
+  ExtD6JointSolverPrep.cpp
+  ExtDefaultCpuDispatcher.cpp
+  ExtDefaultErrorCallback.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtCpuWorkerThread.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtCpuWorkerThread.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtClothMeshQuadifier.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtDefaultCpuDispatcher.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtDefaultCpuDispatcher.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtCollection.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtCollection.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtClothGeodesicTetherCooker.cpp)
+  ExtDefaultSimulationFilterShader.cpp
+  ExtDefaultStreams.cpp
+  ExtDistanceJoint.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtD6Joint.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtD6JointSolverPrep.cpp)
+  ExtDistanceJointSolverPrep.cpp
+  ExtExtensions.cpp
+  ExtFixedJoint.cpp
+  ExtFixedJointSolverPrep.cpp
+  ExtJoint.cpp
+  ExtMetaData.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtExtensions.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtExtensions.cpp)
+  ExtParticleExt.cpp
+  ExtPrismaticJoint.cpp
+  ExtPrismaticJointSolverPrep.cpp
+  ExtPvd.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtExtensions.cpp)
+  ExtPxStringTable.cpp
+  ExtRaycastCCD.cpp
+  ExtRevoluteJoint.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtParticleExt.cpp)
+  ExtRevoluteJointSolverPrep.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtMetaData.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtRaycastCCD.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtRaycastCCD.cpp)
+  ExtRigidBodyExt.cpp
+  ExtSceneQueryExt.cpp
+  ExtSimpleFactory.cpp
+  ExtSmoothNormals.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtRevoluteJoint.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtSceneQueryExt.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtSceneQueryExt.cpp)
+  ExtSphericalJoint.cpp
+  ExtSphericalJointSolverPrep.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtRigidBodyExt.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtRevoluteJointSolverPrep.cpp)
+  ExtTriangleMeshExt.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtSmoothNormals.cpp)
+  SnBinaryDeserialization.cpp
+  SnBinarySerialization.cpp
+  SnConvX.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtRigidBodyExt.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtRigidBodyExt.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtSimpleFactory.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtSimpleFactory.cpp)
+  SnConvX_Align.cpp
+  SnConvX_Convert.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtSphericalJoint.cpp)
+  SnConvX_Error.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtSphericalJointSolverPrep.cpp)
+  SnConvX_MetaData.cpp
+  SnConvX_Output.cpp
+  SnConvX_Union.cpp
+  SnSerializationContext.cpp
+  SnJointRepXSerializer.cpp
+  SnRepXCoreSerializer.cpp
+  SnRepXUpgrader.cpp
+  SnXmlSerialization.cpp
+  SnSerialization.cpp
+  SnSerializationRegistry.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnJointRepXSerializer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnJointRepXSerializer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnRepXCoreSerializer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnRepXCoreSerializer.cpp)
+  SnSerialUtils.cpp
+  PxExtensionAutoGeneratedMetaDataObjects.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\serialization\SnSerialization.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\SnSerialization.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXMetaData\extensions\src\PxExtensionAutoGeneratedMetaDataObjects.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXMetaData\extensions\src\PxExtensionAutoGeneratedMetaDataObjects.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnXmlSerialization.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnXmlSerialization.cpp)
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  PhysXExtensions.vcxproj -> E:\PhysX-3.4\PhysX_3.4\Lib\vc15win64\PhysX3Extensions.lib

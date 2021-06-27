@@ -1,0 +1,59 @@
+﻿  PxWindowsPvdDelayLoadHook.cpp
+  PxProfileEventImpl.cpp
+  PxPvd.cpp
+  PxPvdDataStream.cpp
+  PxPvdDefaultFileTransport.cpp
+  PxPvdDefaultSocketTransport.cpp
+  PxPvdImpl.cpp
+  PxPvdMemClient.cpp
+  PxPvdObjectModelMetaData.cpp
+  PxPvdObjectRegistrar.cpp
+  PxPvdProfileZoneClient.cpp
+  PxPvdUserRenderer.cpp
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileDataBuffer.h(162,1): warning C5220: “physx::profile::DataBuffer<TMutex,TScopedLock>::mHasClients”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用
+          with
+          [
+              TMutex=physx::profile::TZoneMutexType,
+              TScopedLock=physx::profile::TZoneLockType
+          ] (编译源文件 ..\..\pvd\src\PxProfileEventImpl.cpp)
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileDataBuffer.h(60): message : 参见“physx::profile::DataBuffer<TMutex,TScopedLock>::mHasClients”的声明
+          with
+          [
+              TMutex=physx::profile::TZoneMutexType,
+              TScopedLock=physx::profile::TZoneLockType
+          ] (编译源文件 ..\..\pvd\src\PxProfileEventImpl.cpp)
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileEventBuffer.h(114): message : 查看对正在编译的 类 模板 实例化“physx::profile::DataBuffer<TMutex,TScopedLock>”的引用
+          with
+          [
+              TMutex=physx::profile::TZoneMutexType,
+              TScopedLock=physx::profile::TZoneLockType
+          ] (编译源文件 ..\..\pvd\src\PxProfileEventImpl.cpp)
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileZoneImpl.h(59): message : 查看对正在编译的 类 模板 实例化“physx::profile::EventBuffer<physx::profile::PxDefaultContextProvider,physx::profile::TZoneMutexType,physx::profile::TZoneLockType,physx::profile::PxProfileNullEventFilter>”的引用 (编译源文件 ..\..\pvd\src\PxProfileEventImpl.cpp)
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileZoneImpl.h(313): message : 查看对正在编译的 类 模板 实例化“physx::profile::ZoneImpl<TNameProvider>”的引用 (编译源文件 ..\..\pvd\src\PxProfileEventImpl.cpp)
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileDataBuffer.h(162,1): warning C5220: “physx::profile::DataBuffer<TMutex,TScopedLock>::mHasClients”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用
+          with
+          [
+              TMutex=physx::profile::PxProfileEventMutex,
+              TScopedLock=physx::profile::NullLock
+          ] (编译源文件 ..\..\pvd\src\PxProfileEventImpl.cpp)
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileDataBuffer.h(60): message : 参见“physx::profile::DataBuffer<TMutex,TScopedLock>::mHasClients”的声明
+          with
+          [
+              TMutex=physx::profile::PxProfileEventMutex,
+              TScopedLock=physx::profile::NullLock
+          ] (编译源文件 ..\..\pvd\src\PxProfileEventImpl.cpp)
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileMemoryEventBuffer.h(49): message : 查看对正在编译的 类 模板 实例化“physx::profile::DataBuffer<TMutex,TScopedLock>”的引用
+          with
+          [
+              TMutex=physx::profile::PxProfileEventMutex,
+              TScopedLock=physx::profile::NullLock
+          ] (编译源文件 ..\..\pvd\src\PxProfileEventImpl.cpp)
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileMemoryEventBuffer.h(129): message : 查看对正在编译的 类 模板 实例化“physx::profile::MemoryEventBuffer<physx::profile::PxProfileEventMutex,physx::profile::NullLock>”的引用 (编译源文件 ..\..\pvd\src\PxProfileEventImpl.cpp)
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileZoneImpl.h(313,1): warning C5220: “physx::profile::ZoneImpl<physx::profile::PxProfileNameProviderForward>::mEventsActive”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\pvd\src\PxProfileEventImpl.cpp)
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileZoneImpl.h(82): message : 参见“physx::profile::ZoneImpl<physx::profile::PxProfileNameProviderForward>::mEventsActive”的声明 (编译源文件 ..\..\pvd\src\PxProfileEventImpl.cpp)
+E:\PhysX-3.4\PxShared\src\pvd\src\PxProfileEventImpl.cpp(151): message : 查看对正在编译的 类 模板 实例化“physx::profile::ZoneImpl<physx::profile::PxProfileNameProviderForward>”的引用
+    正在创建库 ./../../../lib/vc15win64/PxPvdSDK_x64.lib 和对象 ./../../../lib/vc15win64/PxPvdSDK_x64.exp
+  PxPvdSDK.vcxproj -> E:\PhysX-3.4\PxShared\bin\vc15win64\PxPvdSDK_x64.dll

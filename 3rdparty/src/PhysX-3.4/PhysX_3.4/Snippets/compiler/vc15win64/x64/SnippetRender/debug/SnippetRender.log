@@ -1,0 +1,8 @@
+﻿  SnippetCamera.cpp
+  SnippetRender.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetRender\SnippetCamera.cpp(88,19): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetRender\SnippetCamera.cpp(90,19): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SnippetRender\SnippetRender.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SnippetRender\SnippetRender.cpp)
+  SnippetRender.vcxproj -> E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\lib\vc15win64\SnippetRenderDEBUG.lib

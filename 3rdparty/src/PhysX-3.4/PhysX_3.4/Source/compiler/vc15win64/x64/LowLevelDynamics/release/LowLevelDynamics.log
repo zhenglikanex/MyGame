@@ -1,0 +1,89 @@
+﻿  DyArticulation.cpp
+  DyArticulationContactPrep.cpp
+  DyArticulationContactPrepPF.cpp
+  DyArticulationHelper.cpp
+  DyArticulationScalar.cpp
+  DyArticulationSIMD.cpp
+  DyConstraintPartition.cpp
+  DyConstraintSetup.cpp
+  DyConstraintSetupBlock.cpp
+  DyContactPrep.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulation.cpp)
+  DyContactPrep4.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulationContactPrep.cpp)
+  DyContactPrep4PF.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulationContactPrep.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulationContactPrep.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulation.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulation.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulation.cpp)
+  DyContactPrepPF.cpp
+  DyDynamics.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulationHelper.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyConstraintPartition.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyConstraintPartition.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyConstraintPartition.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyConstraintPartition.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyConstraintPartition.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulationSIMD.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulationContactPrepPF.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep4.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep4.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrepPF.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulationScalar.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulationContactPrepPF.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyArticulationContactPrepPF.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyConstraintSetup.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrepPF.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrepPF.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep4.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyDynamics.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep4PF.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyDynamics.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyDynamics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyConstraintSetupBlock.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyDynamics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyDynamics.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep4PF.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep4PF.cpp)
+  DyFrictionCorrelation.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep4.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelDynamics\src\DyContactPrep4.cpp)
+  DyRigidBodyToSolverBody.cpp
+  DySolverConstraints.cpp
+  DySolverConstraintsBlock.cpp
+  DySolverControl.cpp
+  DySolverControlPF.cpp
+  DySolverPFConstraints.cpp
+  DySolverPFConstraintsBlock.cpp
+  DyThreadContext.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DySolverConstraints.cpp)
+  DyThresholdTable.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DySolverPFConstraints.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DySolverControlPF.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DySolverPFConstraintsBlock.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DySolverConstraintsBlock.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DyThreadContext.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelDynamics\src\DySolverControl.cpp)
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  LowLevelDynamics.vcxproj -> E:\PhysX-3.4\PhysX_3.4\Lib\vc15win64\LowLevelDynamics.lib

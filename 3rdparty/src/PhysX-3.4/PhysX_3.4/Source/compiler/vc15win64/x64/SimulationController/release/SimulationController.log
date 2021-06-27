@@ -1,0 +1,378 @@
+﻿  ScParticleBodyInteraction.cpp
+  ScParticlePacketShape.cpp
+  ScParticleSystemCore.cpp
+  ScParticleSystemSim.cpp
+  ScClothCore.cpp
+  ScClothFabricCore.cpp
+  ScClothShape.cpp
+  ScClothSim.cpp
+  ScActorCore.cpp
+  ScActorSim.cpp
+  ScArticulationCore.cpp
+  ScArticulationJointCore.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticleBodyInteraction.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticleBodyInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticleBodyInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticleBodyInteraction.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\particles\ScParticleBodyInteraction.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\cloth\ScClothShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\cloth\ScClothShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticlePacketShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticlePacketShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\cloth\ScClothFabricCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\cloth\ScClothFabricCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemSim.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\cloth\ScClothCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\cloth\ScClothCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\cloth\ScClothSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\cloth\ScClothSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticlePacketShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticlePacketShape.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\particles\ScParticlePacketShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScActorCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScActorCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemSim.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\cloth\ScClothShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\cloth\ScClothShape.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\cloth\ScClothShape.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScActorSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScActorSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\particles\ScParticleSystemCore.cpp(503,9): warning C5219: 从“const physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScActorCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScActorCore.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScActorCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScArticulationJointCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScArticulationJointCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScArticulationCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScArticulationCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScArticulationJointCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScArticulationJointCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticlePacketShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticlePacketShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(83,2): warning C5220: “physx::Sc::SimStats::numTriggerPairs”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticlePacketShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(82): message : 参见“physx::Sc::SimStats::numTriggerPairs”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticlePacketShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\cloth\ScClothSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\cloth\ScClothSim.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\cloth\ScClothSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticleSystemSim.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScArticulationJointCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\cloth\ScClothCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\cloth\ScClothCore.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\cloth\ScClothCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScActorSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScActorSim.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScActorSim.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScArticulationCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScArticulationCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScArticulationCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\particles\ScParticleBodyInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\particles\ScParticleBodyInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\cloth\ScClothCore.cpp(1038,34): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\cloth\ScClothShape.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\cloth\ScClothShape.cpp)
+  ScArticulationJointSim.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScArticulationJointSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScArticulationJointSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\cloth\ScClothSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\cloth\ScClothSim.cpp)
+  ScArticulationSim.cpp
+  ScBodyCore.cpp
+  ScBodyCoreKinematic.cpp
+  ScBodySim.cpp
+  ScConstraintCore.cpp
+  ScConstraintGroupNode.cpp
+  ScConstraintInteraction.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScArticulationJointSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScArticulationJointSim.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScArticulationJointSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScConstraintInteraction.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScConstraintInteraction.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScConstraintCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScConstraintCore.cpp)
+  ScConstraintProjectionManager.cpp
+  ScConstraintProjectionTree.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScArticulationSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScArticulationSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScArticulationSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScArticulationSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScArticulationSim.cpp)
+  ScConstraintSim.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScBodySim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScBodySim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScBodySim.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScBodyCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScBodySim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScBodySim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScBodyCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScBodyCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScConstraintProjectionTree.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScConstraintProjectionTree.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScBodyCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScBodyCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScConstraintSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScConstraintSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScConstraintInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScConstraintInteraction.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScConstraintInteraction.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScConstraintGroupNode.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScConstraintGroupNode.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScConstraintGroupNode.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScConstraintSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScConstraintSim.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScConstraintSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScConstraintGroupNode.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScConstraintGroupNode.cpp)
+  ScElementInteractionMarker.cpp
+  ScElementSim.cpp
+  ScInteraction.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScConstraintProjectionManager.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScConstraintProjectionManager.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScConstraintProjectionManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScConstraintProjectionManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScConstraintProjectionManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScConstraintProjectionTree.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScConstraintProjectionTree.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScConstraintProjectionTree.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScElementInteractionMarker.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScElementInteractionMarker.cpp)
+  ScIterators.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScElementInteractionMarker.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScElementInteractionMarker.cpp)
+  ScMaterialCore.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScElementInteractionMarker.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScInteraction.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScInteraction.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScElementSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScElementSim.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScElementSim.cpp)
+  ScMetaData.cpp
+  ScNPhaseCore.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScElementInteractionMarker.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\ScElementInteractionMarker.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScInteraction.cpp)
+  ScPhysics.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScInteraction.cpp)
+  ScRigidCore.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScIterators.cpp)
+  ScRigidSim.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScIterators.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScIterators.cpp)
+  ScScene.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScIterators.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScIterators.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScElementSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScElementSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScPhysics.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScPhysics.cpp)
+  ScShapeCore.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\ScInteraction.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScRigidSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScRigidSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(83,2): warning C5220: “physx::Sc::SimStats::numTriggerPairs”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScElementSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(82): message : 参见“physx::Sc::SimStats::numTriggerPairs”的声明 (编译源文件 ..\..\SimulationController\src\ScElementSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScScene.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScScene.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScNPhaseCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScNPhaseCore.cpp)
+  ScShapeInteraction.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScMetaData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScNPhaseCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScNPhaseCore.cpp)
+  ScShapeSim.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScNPhaseCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScPhysics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScPhysics.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScPhysics.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScIterators.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\ScIterators.cpp)
+  ScSimStats.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeInteraction.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeInteraction.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScRigidCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScRigidSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScRigidSim.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScRigidSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScRigidCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScRigidCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScRigidCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScRigidCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeCore.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScShapeCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScScene.cpp)
+  ScSimulationController.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScNPhaseCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\ScNPhaseCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(83,2): warning C5220: “physx::Sc::SimStats::numTriggerPairs”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScSimStats.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(82): message : 参见“physx::Sc::SimStats::numTriggerPairs”的声明 (编译源文件 ..\..\SimulationController\src\ScSimStats.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(83,2): warning C5220: “physx::Sc::SimStats::numTriggerPairs”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScNPhaseCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(82): message : 参见“physx::Sc::SimStats::numTriggerPairs”的声明 (编译源文件 ..\..\SimulationController\src\ScNPhaseCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeInteraction.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScShapeInteraction.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScSimulationController.cpp)
+  ScSqBoundsManager.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeCore.cpp)
+  ScStaticCore.cpp
+  ScStaticSim.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(83,2): warning C5220: “physx::Sc::SimStats::numTriggerPairs”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(82): message : 参见“physx::Sc::SimStats::numTriggerPairs”的声明 (编译源文件 ..\..\SimulationController\src\ScScene.cpp)
+  ScTriggerInteraction.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxSceneGpu.h(100,1): warning C5204: "physx::PxSceneGpu": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\SimulationController\src\ScScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxPhysXGpu.h(221,1): warning C5204: "physx::PxPhysXGpu": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\SimulationController\src\ScScene.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScSqBoundsManager.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScTriggerInteraction.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScTriggerInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\ScScene.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeInteraction.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScStaticCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScStaticCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScStaticCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScStaticCore.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScStaticCore.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScSqBoundsManager.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScSqBoundsManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScSqBoundsManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScSqBoundsManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScScene.cpp(5541,34): warning C5219: 从“const physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScShapeInteraction.cpp(232,58): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScStaticSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScStaticSim.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScStaticSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScStaticSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScStaticSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScTriggerInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScTriggerInteraction.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SimulationController\src\ScTriggerInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(83,2): warning C5220: “physx::Sc::SimStats::numTriggerPairs”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScSimStats.h(82): message : 参见“physx::Sc::SimStats::numTriggerPairs”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxSceneGpu.h(100,1): warning C5204: "physx::PxSceneGpu": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\SimulationController\src\ScShapeSim.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(363,2): warning C5220: “physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SimulationController\src\ScTriggerInteraction.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SimulationController\src\ScNPhaseCore.h(355): message : 参见“physx::Sc::NPhaseCore::mTriggerPairsToDeactivateCount”的声明 (编译源文件 ..\..\SimulationController\src\ScTriggerInteraction.cpp)
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  SimulationController.vcxproj -> E:\PhysX-3.4\PhysX_3.4\Lib\vc15win64\SimulationController.lib

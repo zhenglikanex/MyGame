@@ -1,0 +1,91 @@
+﻿  PtRigidBodyAccessGpu.cpp
+  PtBatcher.cpp
+  PtBodyTransformVault.cpp
+  PtCollision.cpp
+  PtCollisionBox.cpp
+  PtCollisionCapsule.cpp
+  PtCollisionConvex.cpp
+  PtCollisionMesh.cpp
+  PtCollisionPlane.cpp
+  PtCollisionSphere.cpp
+  PtContextCpu.cpp
+  PtDynamics.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtBatcher.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtBatcher.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtBatcher.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtBatcher.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxSceneGpu.h(100,1): warning C5204: "physx::PxSceneGpu": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\LowLevelParticles\src\PtBatcher.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxPhysXGpu.h(221,1): warning C5204: "physx::PxPhysXGpu": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\LowLevelParticles\src\PtBatcher.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtBatcher.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtCollisionCapsule.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtDynamics.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\gpu\PtRigidBodyAccessGpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxRigidBodyAccessGpu.h(64,1): warning C5204: "physx::PxRigidBodyAccessGpu": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\LowLevelParticles\src\gpu\PtRigidBodyAccessGpu.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtDynamics.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtDynamics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtDynamics.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtDynamics.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtCollisionBox.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtCollision.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtCollisionConvex.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtCollision.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtCollision.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtCollisionSphere.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtCollisionMesh.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtCollisionPlane.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtContextCpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtCollisionMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtCollisionMesh.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtContextCpu.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtContextCpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxSceneGpu.h(100,1): warning C5204: "physx::PxSceneGpu": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\LowLevelParticles\src\PtContextCpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxPhysXGpu.h(221,1): warning C5204: "physx::PxPhysXGpu": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\LowLevelParticles\src\PtContextCpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelParticles\src\PtHeightFieldAabbTest.h(80,61): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtCollisionMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelParticles\src\PtHeightFieldAabbTest.h(82,64): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtCollisionMesh.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysXGpu\include\PxRigidBodyAccessGpu.h(64,1): warning C5204: "physx::PxRigidBodyAccessGpu": 类包含虚函数，但其常用的析构函数不是虚函数；从该类派生的实例可能无法进行正确析构 (编译源文件 ..\..\LowLevelParticles\src\PtContextCpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtContextCpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtContextCpu.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtBodyTransformVault.cpp)
+  PtParticleData.cpp
+  PtParticleShapeCpu.cpp
+  PtParticleSystemSimCpu.cpp
+  PtSpatialHash.cpp
+  PtSpatialLocalHash.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtParticleData.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtParticleSystemSimCpu.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtParticleSystemSimCpu.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtParticleSystemSimCpu.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtSpatialHash.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtParticleShapeCpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtParticleSystemSimCpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtParticleSystemSimCpu.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtSpatialHash.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtSpatialHash.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtSpatialHash.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtSpatialHash.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtParticleShapeCpu.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtParticleShapeCpu.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelParticles\src\PtSpatialLocalHash.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelParticles\src\PtSpatialHash.cpp(92,45): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelParticles\src\PtParticleShapeCpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelParticles\src\PtParticleShapeCpu.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelParticles\src\PtParticleSystemSimCpu.cpp(765,60): warning C5219: 从“int”隐式转换到“physx::PxReal”，可能会丢失数据
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  LowLevelParticles.vcxproj -> E:\PhysX-3.4\PhysX_3.4\Lib\vc15win64\LowLevelParticles.lib

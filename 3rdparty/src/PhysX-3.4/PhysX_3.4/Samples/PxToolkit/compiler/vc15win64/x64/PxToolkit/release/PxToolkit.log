@@ -1,0 +1,11 @@
+﻿  PxTkBmpLoader.cpp
+  PxTkFPS.cpp
+  PxTkMatrixUtils.cpp
+  PxTkRandom.cpp
+  PxTkStream.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\src\PxTkRandom.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\src\PxTkRandom.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\src\PxTkRandom.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\src\PxTkRandom.cpp)
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  PxToolkit.vcxproj -> E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\lib\vc15win64\PxToolkit.lib

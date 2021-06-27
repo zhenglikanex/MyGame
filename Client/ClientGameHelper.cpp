@@ -17,6 +17,7 @@
 #include "Framework/Game/System/ModifyHealthSystem.hpp"
 #include "Framework/Game/System/SkillSystem.hpp"
 #include "Framework/Game/System/UpdateColliderTransformSystem.hpp"
+#include "Framework/Game/System/PhysicsSystem.hpp"
 
 #include "Client/System/ClientSyncSystem.hpp"
 
@@ -52,6 +53,7 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
 	systems.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry));
 	systems.emplace_back(std::make_unique<CollisionSystem>(registry));
+	systems.emplace_back(std::make_unique<PhysicsSystem>(registry));
 	systems.emplace_back(std::make_unique<UpdateViewSystem>(registry));
 
 #if DEBUG

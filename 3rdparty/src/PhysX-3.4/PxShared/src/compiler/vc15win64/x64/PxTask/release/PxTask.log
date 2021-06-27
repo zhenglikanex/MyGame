@@ -1,0 +1,12 @@
+﻿  TaskManager.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明
+E:\PhysX-3.4\PxShared\src\task\src\TaskManager.cpp(114,2): warning C5220: “physx::PxTaskTableRow::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用
+E:\PhysX-3.4\PxShared\src\task\src\TaskManager.cpp(110): message : 参见“physx::PxTaskTableRow::mRefCount”的声明
+E:\PhysX-3.4\PxShared\src\task\src\TaskManager.cpp(189,2): warning C5220: “physx::PxTaskMgr::mPendingTasks”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用
+E:\PhysX-3.4\PxShared\src\task\src\TaskManager.cpp(175): message : 参见“physx::PxTaskMgr::mPendingTasks”的声明
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  PxTask.vcxproj -> E:\PhysX-3.4\PxShared\lib\vc15win64\PxTask_x64.lib

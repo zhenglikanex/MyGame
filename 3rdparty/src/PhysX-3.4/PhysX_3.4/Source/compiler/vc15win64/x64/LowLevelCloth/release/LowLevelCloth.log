@@ -1,0 +1,128 @@
+﻿  Allocator.cpp
+  Factory.cpp
+  PhaseConfig.cpp
+  SwCloth.cpp
+  SwClothData.cpp
+  SwCollision.cpp
+  SwFabric.cpp
+  SwFactory.cpp
+  SwInterCollision.cpp
+  SwSelfCollision.cpp
+  SwSolver.cpp
+  SwSolverKernel.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(100,13): warning C5219: 从“const uint32_t”隐式转换到“const float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,20): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,35): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwCloth.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(100,13): warning C5219: 从“const uint32_t”隐式转换到“const float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,20): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,35): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwFactory.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwCloth.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelCloth\src\SwFactory.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelCloth\src\SwFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelCloth\src\SwFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelCloth\src\SwFactory.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwFactory.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\PhaseConfig.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(100,13): warning C5219: 从“const uint32_t”隐式转换到“const float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwClothData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,20): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwClothData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,35): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwClothData.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwClothData.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(100,13): warning C5219: 从“const uint32_t”隐式转换到“const float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,20): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,35): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(100,13): warning C5219: 从“const uint32_t”隐式转换到“const float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSelfCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,20): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSelfCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,35): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSelfCollision.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwCollision.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolverKernel.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelCloth\src\SwSolver.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelCloth\src\SwSolver.cpp)
+  TripletScheduler.cpp
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(100,13): warning C5219: 从“const uint32_t”隐式转换到“const float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolverKernel.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,20): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolverKernel.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,35): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolverKernel.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\LowLevelCloth\src\SwSolver.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\LowLevelCloth\src\SwSolver.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(100,13): warning C5219: 从“const uint32_t”隐式转换到“const float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolver.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,20): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolver.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\MovingAverage.h(119,35): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolver.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolver.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwSolverKernel.cpp(505,45): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwSolverKernel.cpp(486): message : 在编译 类 模板 成员函数“void physx::cloth::SwSolverKernel<Simd4f>::constrainTether(void)”时
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwSolverKernel.h(87): message : 查看对正在编译的 类 模板 实例化“physx::cloth::SwSolverKernel<Simd4f>”的引用 (编译源文件 ..\..\LowLevelCloth\src\SwSolverKernel.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwSolverKernel.cpp(505,100): warning C5219: 从“uint32_t”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\IterationState.h(271,38): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolverKernel.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwSolverKernel.cpp(418): message : 查看对正在编译的函数 模板 实例化“physx::cloth::IterationState<Simd4f> physx::cloth::IterationStateFactory::create<Simd4f,physx::cloth::SwCloth>(const MyCloth &) const”的引用
+          with
+          [
+              Simd4f=Simd4f,
+              MyCloth=physx::cloth::SwCloth
+          ]
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwSolverKernel.cpp(413): message : 在编译 类 模板 成员函数“physx::cloth::SwSolverKernel<Simd4f>::SwSolverKernel(const physx::cloth::SwCloth &,physx::cloth::SwClothData &,physx::cloth::SwKernelAllocator &,physx::cloth::IterationStateFactory &)”时
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\IterationState.h(332,48): warning C5219: 从“int”隐式转换到“const float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolverKernel.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\IterationState.h(167,16): warning C5219: 从“const uint32_t”隐式转换到“const float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\IterationState.h(166): message : 在编译 类 模板 成员函数“float physx::cloth::IterationState<Simd4f>::getPreviousAlpha(void) const”时
+          with
+          [
+              Simd4f=Simd4f
+          ] (编译源文件 ..\..\LowLevelCloth\src\SwCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\IterationState.h(161): message : 查看对正在编译的函数 模板 实例化“float physx::cloth::IterationState<Simd4f>::getPreviousAlpha(void) const”的引用
+          with
+          [
+              Simd4f=Simd4f
+          ] (编译源文件 ..\..\LowLevelCloth\src\SwCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\IterationState.h(160): message : 在编译 类 模板 成员函数“float physx::cloth::IterationState<Simd4f>::getCurrentAlpha(void) const”时
+          with
+          [
+              Simd4f=Simd4f
+          ] (编译源文件 ..\..\LowLevelCloth\src\SwCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwCollision.cpp(293): message : 查看对正在编译的函数 模板 实例化“float physx::cloth::IterationState<Simd4f>::getCurrentAlpha(void) const”的引用
+          with
+          [
+              Simd4f=Simd4f
+          ]
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwCollision.cpp(285): message : 查看对正在编译的 类 模板 实例化“physx::cloth::IterationState<Simd4f>”的引用
+          with
+          [
+              Simd4f=Simd4f
+          ]
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwCollision.cpp(274): message : 在编译 类 模板 成员函数“void physx::cloth::SwCollision<Simd4f>::operator ()(const physx::cloth::IterationState<Simd4f> &)”时
+          with
+          [
+              Simd4f=Simd4f
+          ]
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwCollision.h(141): message : 查看对正在编译的 类 模板 实例化“physx::cloth::SwCollision<Simd4f>”的引用 (编译源文件 ..\..\LowLevelCloth\src\SwCollision.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\IterationState.h(174,29): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolver.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwSolver.cpp(248): message : 查看对正在编译的函数 模板 实例化“physx::cloth::IterationStateFactory::IterationStateFactory<physx::cloth::SwCloth>(MyCloth &,float)”的引用
+          with
+          [
+              MyCloth=physx::cloth::SwCloth
+          ]
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\IterationState.h(167,16): warning C5219: 从“const uint32_t”隐式转换到“const float”，可能会丢失数据 (编译源文件 ..\..\LowLevelCloth\src\SwSolverKernel.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\IterationState.h(166): message : 在编译 类 模板 成员函数“float physx::cloth::IterationState<Simd4f>::getPreviousAlpha(void) const”时
+          with
+          [
+              Simd4f=Simd4f
+          ] (编译源文件 ..\..\LowLevelCloth\src\SwSolverKernel.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\IterationState.h(161): message : 查看对正在编译的函数 模板 实例化“float physx::cloth::IterationState<Simd4f>::getPreviousAlpha(void) const”的引用
+          with
+          [
+              Simd4f=Simd4f
+          ] (编译源文件 ..\..\LowLevelCloth\src\SwSolverKernel.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\IterationState.h(383): message : 在编译 类 模板 成员函数“void physx::cloth::IterationState<Simd4f>::update(void)”时
+          with
+          [
+              Simd4f=Simd4f
+          ] (编译源文件 ..\..\LowLevelCloth\src\SwSolverKernel.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwSolverKernel.cpp(771): message : 查看对正在编译的函数 模板 实例化“void physx::cloth::IterationState<Simd4f>::update(void)”的引用
+          with
+          [
+              Simd4f=Simd4f
+          ]
+E:\PhysX-3.4\PhysX_3.4\Source\LowLevelCloth\src\SwSolverKernel.cpp(625): message : 在编译 类 模板 成员函数“void physx::cloth::SwSolverKernel<Simd4f>::constrainMotion(void)”时
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  LowLevelCloth.vcxproj -> E:\PhysX-3.4\PhysX_3.4\Lib\vc15win64\LowLevelCloth.lib

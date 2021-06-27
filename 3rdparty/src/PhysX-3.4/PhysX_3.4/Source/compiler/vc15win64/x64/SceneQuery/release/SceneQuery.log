@@ -1,0 +1,86 @@
+﻿  SqAABBPruner.cpp
+  SqAABBTree.cpp
+  SqAABBTreeBuild.cpp
+  SqAABBTreeUpdateMap.cpp
+  SqBounds.cpp
+  SqBucketPruner.cpp
+  SqExtendedBucketPruner.cpp
+  SqIncrementalAABBPrunerCore.cpp
+  SqIncrementalAABBTree.cpp
+  SqMetaData.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SceneQuery\src\SqAABBPruner.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SceneQuery\src\SqAABBTreeBuild.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SceneQuery\src\SqAABBTree.cpp)
+  SqPruningPool.cpp
+  SqPruningStructure.cpp
+  SqSceneQueryManager.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SceneQuery\src\SqBounds.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqBounds.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqBounds.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqBounds.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqBounds.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqBounds.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqBounds.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SceneQuery\src\SqBucketPruner.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SceneQuery\src\SqExtendedBucketPruner.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SceneQuery\src\SqIncrementalAABBPrunerCore.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SceneQuery\src\SqIncrementalAABBTree.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(238,2): warning C5220: “physx::Cm::FanoutTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmTask.h(232): message : 参见“physx::Cm::FanoutTask::mRefCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SceneQuery\src\SqPruningPool.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(179,2): warning C5220: “physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\SceneQuery\include\SqSceneQueryManager.h(175): message : 参见“physx::Sq::SceneQueryManager::mPrunerNeedsUpdating”的声明 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpBatchQuery.h(162,1): warning C5220: “physx::NpBatchQuery::mBatchQueryIsRunning”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpBatchQuery.h(155): message : 参见“physx::NpBatchQuery::mBatchQueryIsRunning”的声明 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(486): message : 参见“physx::NpScene::mConcurrentWriteCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(487): message : 参见“physx::NpScene::mConcurrentReadCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(499,1): warning C5220: “physx::NpScene::mConcurrentErrorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpScene.h(488): message : 参见“physx::NpScene::mConcurrentErrorCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqPruningStructure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(209,1): warning C5220: “physx::NpShape::mExclusiveAndActorCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+E:\PhysX-3.4\PhysX_3.4\Source\PhysX\src\NpShape.h(208): message : 参见“physx::NpShape::mExclusiveAndActorCount”的声明 (编译源文件 ..\..\SceneQuery\src\SqSceneQueryManager.cpp)
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  SceneQuery.vcxproj -> E:\PhysX-3.4\PhysX_3.4\Lib\vc15win64\SceneQuery.lib

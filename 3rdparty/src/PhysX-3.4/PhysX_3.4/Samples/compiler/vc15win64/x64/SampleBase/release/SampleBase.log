@@ -1,0 +1,434 @@
+﻿  ParticleEmitter.cpp
+  ParticleEmitterPressure.cpp
+  ParticleEmitterRate.cpp
+  ParticleFactory.cpp
+  ParticleSystem.cpp
+  RenderBaseActor.cpp
+  RenderBaseObject.cpp
+  RenderBoxActor.cpp
+  RenderCapsuleActor.cpp
+  RenderGridActor.cpp
+  RenderMaterial.cpp
+  RenderMeshActor.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderBoxActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RenderBoxActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderMeshActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RenderMeshActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderBaseActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RenderBaseActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderGridActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RenderGridActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderCapsuleActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RenderCapsuleActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderMaterial.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RenderMaterial.cpp)
+  RenderParticleSystemActor.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderMeshActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderMeshActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderMeshActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderMeshActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderMaterial.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderMaterial.cpp)
+  RenderSphereActor.cpp
+  RenderTexture.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderBaseActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderBaseActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderBaseActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderBaseActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderSphereActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RenderSphereActor.cpp)
+  RenderClothActor.cpp
+  RaycastCCD.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderTexture.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RenderTexture.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RaycastCCD.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RaycastCCD.cpp)
+  SampleCamera.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleSystem.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.h(160,15): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleSystem.cpp(412,47): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.h(161,15): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitter.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.h(160,15): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.h(161,15): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterRate.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitterRate.cpp(76,42): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitterRate.cpp(128,41): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitterRate.cpp(128,75): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.cpp(90,40): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.cpp(95,22): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.cpp(96,26): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.cpp(97,22): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.cpp(98,43): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.cpp(147,15): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.cpp(148,15): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+  SampleCameraController.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderTexture.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderTexture.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderTexture.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderTexture.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleFactory.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleCamera.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\SampleCamera.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleFactory.cpp(52,23): warning C5219: 从“unsigned int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleFactory.cpp(52,34): warning C5219: 从“unsigned int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleFactory.cpp(52,45): warning C5219: 从“unsigned int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleFactory.cpp(65,14): warning C5219: 从“unsigned int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleFactory.cpp(66,24): warning C5219: 从“unsigned int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleFactory.cpp(75,23): warning C5219: 从“unsigned int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleFactory.cpp(75,34): warning C5219: 从“unsigned int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleFactory.cpp(75,45): warning C5219: 从“unsigned int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.h(160,15): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitter.h(161,15): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\ParticleEmitterPressure.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitterPressure.cpp(97,57): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\ParticleEmitterPressure.cpp(97,80): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+  SampleConsole.cpp
+  SampleMain.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleCameraController.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\SampleCameraController.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleConsole.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\SampleConsole.cpp)
+  SampleStepper.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\RenderParticleSystemActor.cpp)
+  TestGroup.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCamera.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCamera.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCamera.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCamera.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCamera.cpp)
+  PhysXSample.cpp
+  PhysXSampleApplication.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+  InputEventBuffer.cpp
+  SampleInputMappingAsset.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\RenderClothActor.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCameraController.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCameraController.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCameraController.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCameraController.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleConsole.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleConsole.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleConsole.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleConsole.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+  Picking.cpp
+  RawLoader.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\SampleCameraController.cpp(137,21): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\SampleCameraController.cpp(138,21): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\Picking.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\Picking.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\SampleMain.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+  SampleAllocator.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(106,1): warning C5220: “RingBuffer<InputEventBuffer::EventsUnion,64>::mReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(104): message : 参见“RingBuffer<InputEventBuffer::EventsUnion,64>::mReadCount”的声明 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(217): message : 查看对正在编译的 类 模板 实例化“RingBuffer<InputEventBuffer::EventsUnion,64>”的引用 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(106,1): warning C5220: “RingBuffer<InputEventBuffer::EventsUnion,64>::mWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(105): message : 参见“RingBuffer<InputEventBuffer::EventsUnion,64>::mWriteCount”的声明 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(226,1): warning C5220: “InputEventBuffer::mResetInputCacheReq”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(218): message : 参见“InputEventBuffer::mResetInputCacheReq”的声明 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(226,1): warning C5220: “InputEventBuffer::mResetInputCacheAck”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(219): message : 参见“InputEventBuffer::mResetInputCacheAck”的声明 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RawLoader.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RawLoader.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\TestGroup.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+  SampleMouseFilter.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RawLoader.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RawLoader.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RawLoader.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RawLoader.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\SampleInputMappingAsset.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\PhysXSample.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+  SampleRandomPrecomputed.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\InputEventBuffer.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\Picking.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\Picking.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\Picking.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\Picking.cpp)
+  RenderPhysX3Debug.cpp
+  wavefront.cpp
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+  SampleCharacterHelpers.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+  AcclaimLoader.cpp
+  TestMotionGenerator.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\RenderPhysX3Debug.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\RenderPhysX3Debug.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\SampleStepper.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\SampleStepper.cpp(201,35): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\Picking.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\Picking.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\Picking.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\Picking.cpp)
+  TestGeometryHelpers.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\TestMotionGenerator.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\TestMotionGenerator.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\Picking.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\Picking.cpp)
+  TestClothHelpers.cpp
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCharacterHelpers.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(106,1): warning C5220: “RingBuffer<InputEventBuffer::EventsUnion,64>::mReadCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(104): message : 参见“RingBuffer<InputEventBuffer::EventsUnion,64>::mReadCount”的声明 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(217): message : 查看对正在编译的 类 模板 实例化“RingBuffer<InputEventBuffer::EventsUnion,64>”的引用 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(106,1): warning C5220: “RingBuffer<InputEventBuffer::EventsUnion,64>::mWriteCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(105): message : 参见“RingBuffer<InputEventBuffer::EventsUnion,64>::mWriteCount”的声明 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(226,1): warning C5220: “InputEventBuffer::mResetInputCacheReq”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(218): message : 参见“InputEventBuffer::mResetInputCacheReq”的声明 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(226,1): warning C5220: “InputEventBuffer::mResetInputCacheAck”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\InputEventBuffer.h(219): message : 参见“InputEventBuffer::mResetInputCacheAck”的声明 (编译源文件 ..\..\SampleBase\PhysXSampleApplication.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleCharacterHelpers.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\SampleCharacterHelpers.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSample.cpp(2418,38): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\AcclaimLoader.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\AcclaimLoader.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SampleBase\AcclaimLoader.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\Picking.cpp(282,11): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\Picking.cpp(283,11): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderPhysX3Debug.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderPhysX3Debug.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderPhysX3Debug.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\RenderPhysX3Debug.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\TestMotionGenerator.cpp(51,30): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\TestMotionGenerator.cpp(66,30): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestClothHelpers.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestClothHelpers.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestClothHelpers.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\TestClothHelpers.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCharacterHelpers.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCharacterHelpers.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCharacterHelpers.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleCharacterHelpers.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\TestClothHelpers.cpp(184,17): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\TestClothHelpers.cpp(188,18): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(59,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\AcclaimLoader.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(60,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\AcclaimLoader.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(61,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\AcclaimLoader.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleFramework\renderer\include\RendererColor.h(62,27): warning C5219: 从“int”隐式转换到“float”，可能会丢失数据 (编译源文件 ..\..\SampleBase\AcclaimLoader.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(66,33): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(77,22): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(81,24): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\PxToolkit\include\PxTkRandom.h(84,63): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(328,2): warning C5220: “PhysXSampleApplication::mHideMouseCursor”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+E:\PhysX-3.4\PhysX_3.4\Samples\SampleBase\PhysXSampleApplication.h(290): message : 参见“PhysXSampleApplication::mHideMouseCursor”的声明 (编译源文件 ..\..\SampleBase\SampleRandomPrecomputed.cpp)
+LINK : warning LNK4044: 无法识别的选项“/INCREMENTAL:NO”；已忽略
+  SampleBase.vcxproj -> E:\PhysX-3.4\PhysX_3.4\Samples\lib\vc15win64\SampleBase.lib

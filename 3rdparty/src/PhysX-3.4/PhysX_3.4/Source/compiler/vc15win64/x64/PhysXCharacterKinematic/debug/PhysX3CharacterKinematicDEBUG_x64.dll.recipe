@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\bin\vc15win64\PxFoundationDEBUG_x64.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\bin\vc15win64\PhysX3CommonDEBUG_x64.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\bin\vc15win64\PhysX3CharacterKinematicDEBUG_x64.dll</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

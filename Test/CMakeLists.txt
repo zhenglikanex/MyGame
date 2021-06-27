@@ -11,6 +11,7 @@ add_subdirectory(Serialize)
 add_subdirectory(AsioClient)
 add_subdirectory(AsioServer)
 #add_subdirectory(KcpClient)
+add_subdirectory(PhysXTest)
 
 #设置VS工作目录
 set_target_properties(Test PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/Asset)

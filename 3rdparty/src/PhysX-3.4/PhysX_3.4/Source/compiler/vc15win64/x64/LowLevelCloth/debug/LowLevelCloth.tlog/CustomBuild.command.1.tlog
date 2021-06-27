@@ -1,0 +1,2 @@
+^E:\MYPROJECT\MYGAME\3RDPARTY\SRC\PHYSX-3.4\PHYSX_3.4\SOURCE\LOWLEVELCLOTH\SRC\AVX\SWSOLVECONSTRAINTS.CPP
+cl.exe /c /Zi /Ox /MT /arch:AVX /Fd"E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Lib\vc15win64\\LowLevelClothDEBUG.pdb" /Fo./x64/LowLevelCloth/debug/avx/SwSolveConstraints.obj ..\..\LowLevelCloth\src\avx\SwSolveConstraints.cpp

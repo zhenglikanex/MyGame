@@ -1,0 +1,9 @@
+﻿  ClassicMain.cpp
+  SnippetMultiThreading.cpp
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SnippetMultiThreading\SnippetMultiThreading.cpp)
+E:\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SnippetMultiThreading\SnippetMultiThreading.cpp)
+E:\PhysX-3.4\PhysX_3.4\Snippets\SnippetMultiThreading\SnippetMultiThreading.cpp(164,38): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+  SnippetMultiThreading.vcxproj -> E:\PhysX-3.4\PhysX_3.4\bin\vc15win64\SnippetMultiThreadingDEBUG.exe
+  复制了 0 个文件
+  复制了 0 个文件
