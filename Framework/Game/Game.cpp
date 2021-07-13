@@ -45,7 +45,7 @@ Game::~Game()
 
 bool Game::Initialize()
 {
-	registry_.set<PhysicsWorld>(PhysicsUtility::CreatePhysicsWorld());
+	
 
 	for (auto& system : systems_)
 	{
@@ -79,8 +79,7 @@ void Game::Update(float dt)
 
 void Game::UpdateInput()
 {
-	while (registry_.ctx<GameState>().run_frame == run_frame_ 
-		&& (run_time_ > run_frame_ * input_frame_rate_ + input_frame_rate_))
+	while (run_time_ > run_frame_ * input_frame_rate_ + input_frame_rate_)
 		//&& (run_frame_ - real_frame_) < GameConfig::kMaxPredictFrame)
 	{
 		//会触发InputCommand,相当于getcommands
@@ -90,10 +89,6 @@ void Game::UpdateInput()
 		auto& group = GetCommandGroup(run_frame_);
 
 		assert((group.commands.size() == registry_.view<Player, Local>().size()) && "not commands");
-		for (auto entry : group.commands)
-		{
-			INFO("update input x {} y {}", entry.second.x_axis, entry.second.y_axis);
-		}
 
 		++run_frame_;
 	}
@@ -178,20 +173,12 @@ void Game::Finalize()
 		auto& system = *iter;
 		system->Finalize();
 	}
-
-	PhysicsUtility::DestoryPhysicsWorld(registry_.ctx<PhysicsWorld>());
 }
-
 
 void Game::InputCommand(uint32_t frame,uint32_t id, const Command& command)
 {
 	auto& group = GetCommandGroup(frame);
 	group.commands.emplace(id,command);
-}
-
-void Game::Rollback(uint32_t frame)
-{
-
 }
 
 void Game::CreatePlayer()

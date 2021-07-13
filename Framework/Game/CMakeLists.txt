@@ -51,6 +51,7 @@ System/NetworkReceiveSystem.hpp
 System/NetworkSendSystem.hpp
 System/TransformStateSystem.hpp
 System/PhysicsSystem.hpp
+System/CreatePhysicsActorSystem.hpp
 
 Component/Remote.hpp
 Component/Local.hpp
@@ -79,6 +80,7 @@ Component/ColliderInfo.hpp
 Component/Matrix4x4.hpp
 Component/PhysicsWorld.hpp
 Component/PhysicsWorld.cpp
+Component/PhysicsActor.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp

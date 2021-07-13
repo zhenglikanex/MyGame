@@ -10,6 +10,16 @@
 struct Contact
 {
 	entt::entity entity;
+	Contact()
+		: entity(entt::null)
+	{
+
+	}
+	Contact(entt::entity _entity)
+		: entity(_entity)
+	{
+
+	}
 	// todo一些碰撞信息,比如碰撞点之类
 };
 

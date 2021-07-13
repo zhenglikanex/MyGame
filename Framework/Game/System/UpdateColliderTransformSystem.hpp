@@ -30,7 +30,7 @@ struct UpdateColliderTransformSystem : public ObserverSystem
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		auto view = registry.view<const Transform, const ColliderInfo>();
+		/*auto view = registry.view<const Transform, const ColliderInfo>();
 		for (auto e : *mover)
 		{
 			auto [transform, collider_info] = view.get<const Transform, const ColliderInfo>(e);
@@ -41,7 +41,7 @@ struct UpdateColliderTransformSystem : public ObserverSystem
 				mat[3] = vec4(transform.position, 1);
 				registry.emplace_or_replace<Matrix4x4>(collider_info.collider, mat * collider_info.transform);
 			}
-		}
+		}*/
 
 		mover->clear();
 	}

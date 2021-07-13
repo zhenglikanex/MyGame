@@ -35,13 +35,13 @@
 // ****************************************************************************
 
 #include <ctype.h>
+#include <iostream>
 
 #include "PxPhysicsAPI.h"
 
 #include "../SnippetCommon/SnippetPrint.h"
 #include "../SnippetCommon/SnippetPVD.h"
 #include "../SnippetUtils/SnippetUtils.h"
-
 
 using namespace physx;
 
@@ -60,11 +60,79 @@ PxPvd*                  gPvd        = NULL;
 
 PxReal stackZ = 10.0f;
 
+
+PxFilterFlags SampleSubmarineFilterShader(
+	PxFilterObjectAttributes attributes0, PxFilterData filterData0,
+	PxFilterObjectAttributes attributes1, PxFilterData filterData1,
+	PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
+{
+	// let triggers through
+	if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
+	{
+		pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
+		return PxFilterFlag::eDEFAULT;
+	}
+	// generate contacts for all that were not filtered above
+	//pairFlags = PxPairFlag::eCONTACT_DEFAULT;
+
+	// trigger the contact callback for pairs (A,B) where 
+	// the filtermask of A contains the ID of B and vice versa.
+	//pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+	//if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+		
+
+	return PxFilterFlag::eDEFAULT;
+}
+
+
+class EventHandler : public PxSimulationEventCallback
+{
+public:
+	// 连接碰撞，其中必须有一个actor是刚体
+	void onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 nbPairs) override
+	{
+		std::cout << "onContact" << std::endl;
+	}
+
+	void onTrigger(PxTriggerPair* pairs, PxU32 count) override
+	{
+		std::cout << "onTrigger" << std::endl;
+	}
+
+	void onConstraintBreak(PxConstraintInfo*, PxU32) override
+	{
+		std::cout << "onConstraintBreak" << std::endl;
+	}
+
+	void onWake(PxActor**, PxU32) override
+	{
+		std::cout << "onWake" << std::endl;
+	}
+
+	void onSleep(PxActor**, PxU32) override
+	{
+		std::cout << "onSleep" << std::endl;
+	}
+
+	void onAdvance(const PxRigidBody* const*, const PxTransform*, const PxU32) override
+	{
+		std::cout << "onAdvance" << std::endl;
+	}
+};
+
+EventHandler handler;
+
 PxRigidDynamic* createDynamic(const PxTransform& t, const PxGeometry& geometry, const PxVec3& velocity=PxVec3(0))
 {
 	PxRigidDynamic* dynamic = PxCreateDynamic(*gPhysics, t, geometry, *gMaterial, 10.0f);
 	dynamic->setAngularDamping(0.5f);
 	dynamic->setLinearVelocity(velocity);
+	
+	PxShape* shape;
+	dynamic->getShapes(&shape, 1);
+	//shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE,false);
+	//shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+
 	gScene->addActor(*dynamic);
 	return dynamic;
 }
@@ -72,6 +140,8 @@ PxRigidDynamic* createDynamic(const PxTransform& t, const PxGeometry& geometry, 
 void createStack(const PxTransform& t, PxU32 size, PxReal halfExtent)
 {
 	PxShape* shape = gPhysics->createShape(PxBoxGeometry(halfExtent, halfExtent, halfExtent), *gMaterial);
+	shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
+	shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
 	for(PxU32 i=0; i<size;i++)
 	{
 		for(PxU32 j=0;j<size-i;j++)
@@ -100,7 +170,8 @@ void initPhysics(bool interactive)
 	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
 	gDispatcher = PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher	= gDispatcher;
-	sceneDesc.filterShader	= PxDefaultSimulationFilterShader;
+	sceneDesc.filterShader	= SampleSubmarineFilterShader;
+	sceneDesc.simulationEventCallback = &handler;
 	gScene = gPhysics->createScene(sceneDesc);
 
 	PxPvdSceneClient* pvdClient = gScene->getScenePvdClient();
@@ -112,8 +183,8 @@ void initPhysics(bool interactive)
 	}
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
-	PxRigidStatic* groundPlane = PxCreatePlane(*gPhysics, PxPlane(0,1,0,0), *gMaterial);
-	gScene->addActor(*groundPlane);
+	/*PxRigidStatic* groundPlane = PxCreatePlane(*gPhysics, PxPlane(0,1,0,0), *gMaterial);
+	gScene->addActor(*groundPlane);*/
 
 	for(PxU32 i=0;i<5;i++)
 		createStack(PxTransform(PxVec3(0,0,stackZ-=10.0f)), 10, 2.0f);

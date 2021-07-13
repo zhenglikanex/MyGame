@@ -6,8 +6,11 @@
 #include "Framework/Game/Component/Skill.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Transform.hpp"
+#include "Framework/Game/Component/AnimationClip.hpp"
 
 #include "Framework/Game/System.hpp"
+
+#include "Framework/Game/Utility/PhysicsUtility.hpp"
 
 struct SkillStateSystem : System
 {
@@ -33,12 +36,10 @@ struct SkillStateSystem : System
 					auto skill = this->registry.create();
 					this->registry.emplace<Skill>(skill, e, fixed16(0.5));
 					this->registry.emplace<SkillAttacthBone>(skill, skill_state.name, "RightWeapon");
-					this->registry.emplace<Transform>(skill,this->registry.get<Transform>(e));
-					auto& info = this->registry.emplace<ColliderInfo>(skill,weapon->collider_info);
-
-					auto collider = this->registry.create();
-					this->registry.emplace<Collider>(collider,info.geometry,info.trigger,skill);
-					info.collider = collider;
+					auto t = this->registry.emplace<Transform>(skill,this->registry.get<Transform>(e));
+					INFO("SKILL T isUnit{} {} ", PhysicsUtility::Quat(t.rotation).isUnit(),skill);
+					INFO("create q x{} y{} z{} w{}", t.rotation.x, t.rotation.y, t.rotation.z, t.rotation.w);
+					this->registry.emplace<ColliderInfo>(skill,weapon->collider_info);
 				}
 			}
 		});

@@ -1,14 +1,16 @@
-﻿  ClassicMain.cpp
-  SnippetHelloWorld.cpp
-  SnippetHelloWorldRender.cpp
+﻿  SnippetHelloWorld.cpp
 E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
-          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SnippetHelloWorld\SnippetHelloWorld.cpp)
-E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SnippetHelloWorld\SnippetHelloWorld.cpp)
-E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
-          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\SnippetHelloWorld\SnippetHelloWorldRender.cpp)
-E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\SnippetHelloWorld\SnippetHelloWorldRender.cpp)
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetHelloWorld\SnippetHelloWorld.cpp(67,59): warning C4100: “constantBlockSize”: 未引用的形参
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetHelloWorld\SnippetHelloWorld.cpp(67,38): warning C4100: “constantBlock”: 未引用的形参
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetHelloWorld\SnippetHelloWorld.cpp(66,53): warning C4100: “filterData1”: 未引用的形参
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetHelloWorld\SnippetHelloWorld.cpp(65,53): warning C4100: “filterData0”: 未引用的形参
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetHelloWorld\SnippetHelloWorld.cpp(92,90): warning C4100: “nbPairs”: 未引用的形参
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetHelloWorld\SnippetHelloWorld.cpp(92,77): warning C4100: “pairs”: 未引用的形参
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetHelloWorld\SnippetHelloWorld.cpp(92,44): warning C4100: “pairHeader”: 未引用的形参
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetHelloWorld\SnippetHelloWorld.cpp(97,45): warning C4100: “count”: 未引用的形参
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Snippets\SnippetHelloWorld\SnippetHelloWorld.cpp(97,32): warning C4100: “pairs”: 未引用的形参
   SnippetHelloWorld.vcxproj -> E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\bin\vc15win64\SnippetHelloWorldDEBUG.exe
-  ../../../../PxShared/bin\vc15win64\PxFoundationDEBUG_x64.dll
-  复制了 1 个文件
-  ../../../../PxShared/bin\vc15win64\PxPvdSDKDEBUG_x64.dll
-  复制了 1 个文件
+  复制了 0 个文件
+  复制了 0 个文件

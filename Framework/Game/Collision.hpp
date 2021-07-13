@@ -2,6 +2,7 @@
 
 #include "Framework/Game/Geometry.hpp"
 
+/*
 // Given point p, return point q on (or in) OBB b, closest to p
 inline void ClosestPtPointOBB(const vec3& p, const OBB& b,const mat4& b_transform,vec3& q)
 {
@@ -423,3 +424,4 @@ inline int TestCapsuleCapsule(const Geometry& geometry1, const Geometry& geometr
 using TestGeometryFunc = int(*)(const Geometry& geometry1, const Geometry& geometry2, const mat4& transform1, const mat4& transform2);
 
 extern TestGeometryFunc g_TestGeometryFuncTable[][(uint8_t)GeometryType::kMax];
+*/

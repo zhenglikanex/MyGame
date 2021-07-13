@@ -41,8 +41,6 @@ public:
 
 	void InputCommand(uint32_t frame,uint32_t id,const Command& command);
 
-	void Rollback(uint32_t frame);
-
 	void set_start_time(uint32_t start_time) { start_time_ = start_time; }
 
 	uint32_t start_time() const { return start_time_; }
@@ -76,9 +74,9 @@ private:
 	CommandGroup& GetCommandGroup(uint32_t frame);
 
 	uint32_t start_time_;
-	float run_time_;		// 注意,这个浮点数不会引起不同步的问题
+	float run_time_;
 	uint32_t run_frame_;
-	float input_frame_rate_;	// 注意,这个浮点数不会引起不同步的问题
+	float input_frame_rate_;
 	
 	entt::registry registry_;
 	std::vector<std::unique_ptr<System>> systems_;

@@ -9,15 +9,16 @@
 #endif
 
 #include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 #include "glm/gtc/quaternion.hpp"
 #include "glm/gtx/compatibility.hpp"
 
-using vec2 = glm::vec<2, fixed16, glm::defaultp>;
-using vec3 = glm::vec<3, fixed16, glm::defaultp>;
-using vec4 = glm::vec<4, fixed16, glm::defaultp>;
-using mat3 = glm::mat<3, 3, fixed16, glm::defaultp>;
-using mat4 = glm::mat<4, 4, fixed16, glm::defaultp>;
-using quat = glm::qua<fixed16, glm::defaultp>;
+using vec2 = glm::vec2;
+using vec3 = glm::vec3;
+using vec4 = glm::vec4;
+using mat3 = glm::mat3;
+using mat4 = glm::mat4;
+using quat = glm::quat;
 
 namespace glm
 {
@@ -28,7 +29,7 @@ namespace glm
 template<class T>
 T zero()
 {
-	return T(fixed16(0));
+	return T(0.0f);
 }
 
 namespace glm

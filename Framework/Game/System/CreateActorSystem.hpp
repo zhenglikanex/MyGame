@@ -53,8 +53,7 @@ struct CreateActorSystem : public System
 				registry.emplace<SkillGraphAsset>(e, actor_info.skill_graph_asset());
 			}
 
-			auto& info = registry.emplace<ColliderInfo>(e, actor_info.body());
-			info.collider = CreateBodyCollider(e, info);
+			registry.emplace<ColliderInfo>(e, actor_info.body());
 
 			//todo 插入actor自身属性和武器属性
 			AttributeArray attributes{ Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
@@ -66,13 +65,6 @@ struct CreateActorSystem : public System
 
 			//INFO("create actor");
 		}
-	}
-
-	entt::entity CreateBodyCollider(entt::entity e,ColliderInfo& info)
-	{
-		auto collider = registry.create();
-		registry.emplace<Collider>(collider, info.geometry, info.trigger,e);
-		return collider;
 	}
 
 	void Finalize() override

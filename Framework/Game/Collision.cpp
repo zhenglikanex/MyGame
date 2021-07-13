@@ -1,5 +1,7 @@
 #include "Framework/Game/Collision.hpp"
 
+/*
+
 TestGeometryFunc g_TestGeometryFuncTable[][(uint8_t)GeometryType::kMax] =
 {
 	// sphere
@@ -23,3 +25,5 @@ TestGeometryFunc g_TestGeometryFuncTable[][(uint8_t)GeometryType::kMax] =
 		TestCapsuleCapsule
 	}
 };
+
+*/
