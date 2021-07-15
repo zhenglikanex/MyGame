@@ -14,6 +14,7 @@
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/SkillState.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -25,11 +26,8 @@ inline vec2 SquareToCircle(const vec2& input)
 {
 	vec2 output = zero<vec2>();
 	
-	output.x = input.x * sqrt(fixed16(1) - (input.y * input.y) / fixed16(2.0f));
-	output.y = input.y * sqrt(fixed16(1) - (input.x * input.x) / fixed16(2.0f));
-
-	auto x = static_cast<float>(output.x);
-	auto y = static_cast<float>(output.y);
+	output.x = input.x * sqrt(float(1) - (input.y * input.y) / float(2.0f));
+	output.y = input.y * sqrt(float(1) - (input.x * input.x) / float(2.0f));
 
 	return output;
 }
@@ -242,6 +240,7 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
+			INFO("HurtState{}  {}", e, registry.has<Remote>(e));
 			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kHurt);
 		}
 
@@ -323,6 +322,7 @@ struct ActorStateSystem : public System
 		auto view = registry.view<EnterActorState>();
 		for (auto e : view)
 		{
+			INFO("EnterActorState {}",registry.has<Remote>(e));
 			auto& enter_state = view.get<EnterActorState>(e);
 			
 			auto& executor = states[(size_t)enter_state.value];

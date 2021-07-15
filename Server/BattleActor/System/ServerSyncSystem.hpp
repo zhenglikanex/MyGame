@@ -36,7 +36,7 @@ struct ServerSyncSystem : public System
 	{
 		FrameData frame_data;
 		frame_data.frame = registry.ctx<GameState>().run_frame;
-
+		INFO("!!!!!!!!!!!!!!!!!!!!!!!!!!!!game_state.run_frame {} ", frame_data.frame);
 		auto view = registry.view<Player, Transform, AnimationClip>();
 		for (auto e : view)
 		{
@@ -45,7 +45,7 @@ struct ServerSyncSystem : public System
 			ActorData actor_data;
 			actor_data.transform = transform;
 			actor_data.clip = clip;
-			INFO("CLIP {}", clip.name);
+			//INFO("CLIP {}", clip.name);
 			frame_data.actors.emplace(player.id, std::move(actor_data));
 		}
 

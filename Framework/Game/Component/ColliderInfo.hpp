@@ -9,7 +9,6 @@ struct ColliderInfo
 	Geometry geometry;
 	mat4 transform;
 	bool trigger;
-	entt::entity collider;
 
 	ColliderInfo() = default;
 
@@ -17,7 +16,6 @@ struct ColliderInfo
 		: geometry(_geometry)
 		, transform(_transform)
 		, trigger(_trigger)
-		, collider(_collider)
 	{
 
 	}
@@ -31,7 +29,7 @@ inline void from_json(const nlohmann::json& j, ColliderInfo& info)
 
 	if (type == "sphere")
 	{
-		fixed16 r;
+		float r;
 		j.at("r").get_to(r);
 
 		info.geometry = Geometry(Sphere(r));
@@ -45,10 +43,10 @@ inline void from_json(const nlohmann::json& j, ColliderInfo& info)
 	}
 	else
 	{
-		fixed16 h;
+		float h;
 		j.at("h").get_to(h);
 
-		fixed16 r;
+		float r;
 		j.at("r").get_to(r);
 
 		info.geometry = Geometry(Capsule(h, r));
@@ -58,4 +56,4 @@ inline void from_json(const nlohmann::json& j, ColliderInfo& info)
 	j.at("trigger").get_to(info.trigger);
 }
 
-NON_MEMEBER_BAR(ColliderInfo, obj.geometry, obj.transform, obj.trigger, obj.collider);
+NON_MEMEBER_BAR(ColliderInfo, obj.geometry, obj.transform, obj.trigger);

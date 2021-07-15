@@ -135,14 +135,7 @@ struct SkillSystem : public System
 			skill.time += dt;
 			if (skill.time >= skill.life)
 			{
-				auto collider_info = registry.try_get<ColliderInfo>(e);
-				if (collider_info)
-				{
-					if (registry.valid(e))
-					{
-						registry.destroy(collider_info->collider);
-					}
-				}
+				INFO("skill destory {}", e);
 				registry.destroy(e);
 			}
 		}

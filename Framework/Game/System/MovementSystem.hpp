@@ -11,17 +11,19 @@
 
 #include "Framework/Game/System.hpp"
 
+#include "PxPhysicsAPI.h"
+
 inline quat ForwardRotation(const vec3& forward)
 {
-	if (forward.x >= fixed16(0))
+	if (forward.x >= 0.0)
 	{
-		auto cos = glm::clamp(glm::dot(forward, vec3(0.0, 0.0, 1.0)), fixed16(-1), fixed16(1));
-		return quat(vec3(0, fpm::acos(cos), 0));
+		auto cos = glm::clamp(glm::dot(forward, vec3(0.0, 0.0, 1.0)), -1.f, 1.f);
+		return quat(vec3(0, std::acos(cos), 0));
 	}
 	else
 	{
-		auto cos = glm::clamp(glm::dot(forward, vec3(0.0, 0.0, 1.0)), fixed16(-1), fixed16(1));
-		return quat(vec3(0, -fpm::acos(cos), 0));
+		auto cos = glm::clamp(glm::dot(forward, vec3(0.0, 0.0, 1.0)), -1.f, 1.f);
+		return quat(vec3(0, -std::acos(cos), 0));
 	}
 }
 
@@ -44,7 +46,7 @@ struct MovementSystem : public System
 			auto& transform = view.get<Transform>(e);
 
 			// todo:
-			auto position = transform.position + movement.forward * movement.velocity.z * dt;
+			auto position = transform.position + movement.forward * movement.velocity.z * static_cast<float>(dt);
 			auto rotation = ForwardRotation(movement.forward);
 
 			if (position != transform.position || rotation != transform.rotation)

@@ -9,12 +9,7 @@ struct Transform
 	vec3 position;
 	quat rotation;
 
-	Transform()
-		: position(zero<vec3>())
-		, rotation(glm::identity<quat>())
-	{
-
-	}
+	Transform() = default;
 
 	Transform(const vec3& _pos, const quat& _rotation)
 		: position(_pos)
@@ -24,7 +19,7 @@ struct Transform
 
 	Transform(const mat4& m)
 		: position(m[3])
-		, rotation(glm::quat_cast(m))
+		, rotation(glm::normalize(glm::quat_cast(m)))
 	{
 
 	}
@@ -33,7 +28,7 @@ struct Transform
 inline mat4 GetMatrix4x4(const Transform& transform) 
 {
 	mat4 m = glm::mat4_cast(transform.rotation);
-	m[3] = vec4(transform.position, fixed16(1));
+	m[3] = vec4(transform.position,1.0f);
 	return m;
 }
 

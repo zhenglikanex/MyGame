@@ -8,6 +8,8 @@
 #include "glm/glm.hpp"
 #include "Framework/Game/Math.hpp"
 
+/*
+
 struct Contact
 {
 	void* body[2];
@@ -373,3 +375,5 @@ int TestSegmentAABB(const vec3& p0, const vec3& p1, const AABB& b)
     // No separating axis found; segment must be overlapping AABB
     return 1;
 }
+
+*/

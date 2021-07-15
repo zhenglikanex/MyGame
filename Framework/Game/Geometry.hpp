@@ -16,11 +16,11 @@ struct AABB
 
 struct Sphere 
 {
-	fixed16 r; // Sphere radius
+	float r; // Sphere radius
 
 	Sphere() = default;
 
-	Sphere(fixed16 _r)
+	Sphere(float _r)
 		: r(_r)
 	{
 	}
@@ -50,12 +50,12 @@ struct OBB
 
 struct Capsule
 {
-	fixed16 h;
-	fixed16 r;      // Radius
+	float h;
+	float r;      // Radius
 
 	Capsule() = default;
 
-	Capsule(fixed16 _h, fixed16 _r)
+	Capsule(float _h, float _r)
 		:h(_h), r(_r)
 	{
 	}
