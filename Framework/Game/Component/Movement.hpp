@@ -21,4 +21,10 @@ struct Movement
 	}
 };
 
+struct CharacterMovement
+{
+	vec3 base_velocity;
+	vec3 attached_rigidbody_velocity;
+};
+
 NON_MEMEBER_BAR(Movement, obj.forward, obj.velocity, obj.angular_velocity);

@@ -638,50 +638,34 @@ TEST_CASE_METHOD(Serialize, "SnapshotPerformance")
 	output1.hit_target.emplace(entt::entity(33221));
 	output1.hit_target.emplace(entt::entity(33221));
 
-	for (int i = 0; i < 10; ++i)
+	
+	for (int i = 0; i < 1000; ++i)
 	{
 		auto e = entt::handle(registry, registry.create());
-		e.emplace<AnimationClip>("11222233");
-		e.emplace<Movement>(vec3(100, 200, 3), vec3(10, 20, 30.3), vec3(30, 20, 20));
 		e.emplace<Transform>(vec3(0.222, 0.333, 0.1), quat(10, 20, 30, 40));
-		e.emplace<ColliderInfo>(Geometry(Sphere(10)), glm::identity<mat4>(), true, entt::entity(300));
-		e.emplace<SkillState>("eeeee");
 		e.emplace<Collider>(Geometry(Sphere(10)), true, entt::entity(10));
 		e.emplace<ActorState>(ActorStateType::kAttack);
-		e.emplace<AttributeUnitList>(output);
-		e.emplace<Health>(health);
-		e.emplace<Skill>(output1);
 	}
 	{
 		AutoTimer t("snapshot");
 		entt::snapshot{ registry }.entities(oar)
 			.component<
-				AnimationClip,
-				Movement,
-				Transform,
-				ColliderInfo,
-				SkillState,
-				Collider,
-				ActorState,
-				AttributeUnitList,
-				Health,
-				Skill>(oar);
+				Transform>(oar);
 	}
 	buffer.Clear();
 	{
 		AutoTimer t("snapshot");
 		entt::snapshot{ registry }.entities(oar)
 			.component<
-			AnimationClip,
-			Movement,
-			Transform,
-			ColliderInfo,
-			SkillState,
-			Collider,
-			ActorState,
-			AttributeUnitList,
-			Health,
-			Skill
+			Transform
 			>(oar);
 	}
+
+	buffer.Clear();
+	std::vector<Transform> transforms(7000);
+	{
+		AutoTimer t("snapshot");
+		oar(transforms);
+	}
+
 }
