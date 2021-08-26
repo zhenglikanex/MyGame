@@ -17,6 +17,7 @@ Unity/ARPG/[Oo]bj/
 Unity/ARPG/[Bb]uild/
 Unity/ARPG/[Bb]uilds/
 Unity/ARPG/Assets/AssetStoreTools*
+*/.vs/*
 
 # Visual Studio 2015 cache directory
 Unity/ARPG/.vs/
