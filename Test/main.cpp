@@ -6,6 +6,7 @@
 #include "Framework/Proto/Battle.pb.h"
 #include "Framework/Game/Component/TransformState.hpp"
 #include <any>
+#include <iostream>
 
 using namespace std::chrono;
 
@@ -17,9 +18,12 @@ struct Serialize1
 
 TEST_CASE_METHOD(Serialize1, "NetMessage")
 {
-	float v = (float)10.22166;
-	std::cout << v << std::endl;
-	TransformState state;
+	int a = 10;
+	int* p1 = &a;
+	int* p2 = &a;
+	int* p3 = p1;
+
+	std::cout << (&p1 == &p2) << (p1 == p3) << (p2 == p3) << std::endl;
 	/*std::vector<int> iv;
 	std::unique_ptr<NetMessage> m = std::make_unique<NetMessage>();
 	std::any a = std::make_any<std::unique_ptr<NetMessage>>(std::move(m));*/

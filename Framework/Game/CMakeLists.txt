@@ -51,11 +51,8 @@ System/NetworkReceiveSystem.hpp
 System/NetworkSendSystem.hpp
 System/TransformStateSystem.hpp
 System/PhysicsSystem.hpp
-<<<<<<< HEAD
 System/KinematicCharacterMovementSystem.hpp
-=======
 System/CreatePhysicsActorSystem.hpp
->>>>>>> ee02c5adf7910b0e85a36ed87b897a0b58038d42
 
 Component/Remote.hpp
 Component/Local.hpp
@@ -84,11 +81,8 @@ Component/ColliderInfo.hpp
 Component/Matrix4x4.hpp
 Component/PhysicsWorld.hpp
 Component/PhysicsWorld.cpp
-<<<<<<< HEAD
 Component/Character.hpp
-=======
 Component/PhysicsActor.hpp
->>>>>>> ee02c5adf7910b0e85a36ed87b897a0b58038d42
 
 ConfigManager.hpp
 ConfigManager.cpp

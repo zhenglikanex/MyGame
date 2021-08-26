@@ -22,12 +22,6 @@ enum class MovementSweepState
 
 using LayerMask = uint32_t;
 
-// 接地状态的所有信息
-struct CharacterGroundingReport
-{
-	
-};
-
 struct Character
 {
     /**************************************
@@ -55,12 +49,15 @@ struct Character
     float max_step_height = 0.5f;
 
     // 即使上面站不住角色也要走吗
-    bool allow_stepping_without_stable_grounding = true;
+    bool allow_stepping_without_stable_grounding = false;
 
 
     /**************************************
     ***************刚体交互设置************
     ***************************************/
+
+	//正确处理被物理移动器或者动态刚体推动和站立的情况，还处理推动动态刚体
+	bool interactive_rigid_body_handling = true;
 
     // 角色如何与dynamic rigidbody交互
     RigidbodyInteractionType rigidbody_interaction_type = RigidbodyInteractionType::kKinematic;

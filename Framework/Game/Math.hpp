@@ -32,6 +32,53 @@ T zero()
 	return T(0.0f);
 }
 
+vec3 ProjectOnPlane(vec3 vec, vec3 plane_normal)
+{
+	float sqr_mag = glm::dot(plane_normal, plane_normal);
+	if (sqr_mag < std::numeric_limits<float>::epsilon())
+	{
+		return vec;
+	}
+	else
+	{
+		auto dot = glm::dot(vec, plane_normal);
+		return vec - plane_normal * dot / sqr_mag;
+	}
+}
+
+vec3 Project(vec3 vector, vec3 on_normal)
+{
+	float sqr_mag = glm::dot(on_normal, on_normal);
+	if (sqr_mag < std::numeric_limits<float>::epsilon())
+	{
+		return vector;
+	}
+	else
+	{
+		auto dot = glm::dot(vector, on_normal);
+		return on_normal * dot / sqr_mag;
+	}
+}
+
+quat LookRotation(vec3 view, vec3 up)
+{
+	vec3 const s(normalize(cross(up, view)));
+	vec3 const u(cross(view, s));
+
+	mat3 result(1);
+	result[0][0] = s.x;
+	result[1][0] = s.y;
+	result[2][0] = s.z;
+	result[0][1] = u.x;
+	result[1][1] = u.y;
+	result[2][1] = u.z;
+	result[0][2] = view.x;
+	result[1][2] = view.y;
+	result[2][2] = view.z;
+
+	return glm::quat_cast(result);
+}
+
 namespace glm
 {
 	template<glm::length_t N, class T, glm::qualifier Q>

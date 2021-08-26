@@ -13,6 +13,7 @@
 #include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/TransformState.hpp"
+#include "Framework/Game/Component/Movement.hpp"
 
 #include "Framework/Game/System.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
@@ -46,7 +47,6 @@ Game::~Game()
 bool Game::Initialize()
 {
 	
-
 	for (auto& system : systems_)
 	{
 		if (!system->Initialize())

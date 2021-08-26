@@ -25,6 +25,7 @@ struct CreatePhysicsActorSystem : public System
 		{
 			INFO("removeActor!!!!!!!!!!!!!!!!!!!")
 			physics_world.scene->removeActor(*physics_actor.actor,false);
+
 		}
 	}
 	

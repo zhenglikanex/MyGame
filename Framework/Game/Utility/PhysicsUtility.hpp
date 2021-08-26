@@ -149,7 +149,6 @@ struct PhysicsUtility
 		}
 
 		SetupFiltering(shape, (PxU32)group, GetFilterMask(group));
-
 		world.scene->addActor(*dynamic);
 		return dynamic;
 	}
@@ -216,6 +215,31 @@ struct PhysicsUtility
 		shape->setSimulationFilterData(filter_data);
 	}
 
+	static PxVec2 Vec2(const vec2& v)
+	{
+		return PxVec2(v.x, v.y);
+	}
+
+	static PxVec3 Vec3(const vec3& v)
+	{
+		return PxVec3(v.x, v.y, v.z);
+	}
+
+	static vec3 Vec3(const PxVec3& v)
+	{
+		return vec3(v.x, v.y, v.z);
+	}
+
+	static PxVec4 Vec4(const vec4& v)
+	{
+		return PxVec4(v.x, v.y, v.z, v.z);
+	}
+
+	static PxQuat Quat(const quat& q)
+	{
+		return PxQuat(q.x, q.y, q.z, q.w);
+	}
+
 	static PxTransform Transform(const Transform& transform)
 	{
 		PxVec3 pos(Vec3(transform.position));
@@ -228,23 +252,8 @@ struct PhysicsUtility
 		return PxTransform(PxMat44(glm::value_ptr(mat)));
 	}
 
-	static PxVec2 Vec2(const vec2& v)
+	static PxTransform Transform(const vec3& v, const quat& q)
 	{
-		return PxVec2(v.x, v.y);
-	}
-
-	static PxVec3 Vec3(const vec3& v)
-	{
-		return PxVec3(v.x, v.y, v.z);
-	}
-
-	static PxVec4 Vec4(const vec4& v)
-	{
-		return PxVec4(v.x, v.y, v.z, v.z);
-	}
-
-	static PxQuat Quat(const quat& q)
-	{
-		return PxQuat(q.x, q.y, q.z, q.w);
+		return PxTransform(Vec3(v), Quat(q));
 	}
 };
