@@ -15,6 +15,8 @@
 #include "Framework/Game/Component/Attributes.hpp"
 #include "Framework/Game/Component/Health.hpp"
 #include "Framework/Game/Component/Collider.hpp"
+#include "Framework/Game/Component/Character.hpp"
+#include "Framework/Game/Component/Movement.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -61,7 +63,11 @@ struct CreateActorSystem : public System
 			attribute_units.value.emplace_back(AttributeUnit{ e, attributes });	// todo actor
 			attribute_units.value.emplace_back(AttributeUnit{ e, attributes });	// todo wepon
 
-			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);	
+			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
+
+			// character controllerœ‡πÿ
+			registry.emplace<Character>(e);
+			registry.emplace<CharacterMovement>(e);
 
 			//INFO("create actor");
 		}

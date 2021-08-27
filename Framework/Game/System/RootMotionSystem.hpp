@@ -18,7 +18,7 @@ struct RootMotionSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		auto view = registry.view<Animation,AnimationClip>();
+		auto view = registry.view<Animation,AnimationClip>(entt::exclude<CharacterMovement>);
 		for (auto e : view)
 		{
 			auto& animtion = view.get<Animation>(e);
@@ -36,22 +36,31 @@ struct RootMotionSystem : public System
 
 					if (it != iter->second.root_motions.crend())
 					{
-						auto movement = registry.try_get<Movement>(e);
-						if (movement)
+						if (!registry.has<CharacterMovement>(e))
 						{
-							movement->velocity = it->velocity;
-							movement->angular_velocity = it->angular_velocity;
+							auto movement = registry.try_get<Movement>(e);
+							if (movement)
+							{
+								movement->velocity = it->velocity;
+								movement->angular_velocity = it->angular_velocity;
+							}
+							else
+							{
+								registry.emplace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
+							}
 						}
 						else
 						{
-							registry.emplace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
+							auto& character_movement = registry.get<CharacterMovement>(e);
+							character_movement.base_velocity = it->velocity;
 						}
-						//registry.emplace_or_replace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
-						//registry.emplace_or_replace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
 					}
 					else
 					{
-						registry.remove_if_exists<Movement>(e);
+						if (!registry.has<CharacterMovement>(e))
+						{
+							registry.remove_if_exists<Movement>(e);
+						}
 					}
 				}
 			}
