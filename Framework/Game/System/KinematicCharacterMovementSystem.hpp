@@ -42,12 +42,12 @@ public:
 //包含碰撞稳定性(是否可以站立)评估的所有信息
 struct HitStabilityReport
 {
-	bool is_stable;
-	vec3 inner_normal;
-	vec3 outer_noraml;
+	bool is_stable = false;
+	vec3 inner_normal = vec3(0);
+	vec3 outer_noraml = vec3(0);
 	
-	bool vaild_step_detected;
-	PxRigidActor* stepped_collider;
+	bool vaild_step_detected = false;
+	PxRigidActor* stepped_collider = nullptr;
 };
 
 struct OverlapResult
@@ -108,6 +108,7 @@ struct KinematicCharacterMovementSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
+		INFO("kcc update")
 		UpdatePhase1(static_cast<float>(dt));
 		//
 		UpdatePhase2(static_cast<float>(dt));
@@ -118,6 +119,7 @@ struct KinematicCharacterMovementSystem : public System
 		auto view = registry.view<Local,Transform,CharacterMovement,Character,ColliderInfo,PhysicsActor>();
 		for (auto e : view)
 		{
+			INFO("UpdatePhase1");
 			overlaps_count_ = 0;
 
 			auto&[transform, movement, character,collider, physics_actor] = 
@@ -126,13 +128,15 @@ struct KinematicCharacterMovementSystem : public System
 			character_ = &character;
 			character_movement_ = &movement;
 
+			INFO("base_velocity x{} y{} z{}", character_movement_->base_velocity.x, character_movement_->base_velocity.y, character_movement_->base_velocity.z);
+
 			// 获取physx相关的数据
 			PxShape* shape;
 			physics_actor.actor->getShapes(&shape, 1);
 
 			assert(shape->getGeometryType() == PxGeometryType::eCAPSULE && "not capsule!");
-
-			shape->getCapsuleGeometry(*px_caspule_);
+			shape_transform_ = shape->getLocalPose();
+			shape->getCapsuleGeometry(px_caspule_);
 
 			px_transform_ = physics_actor.actor->getGlobalPose();
 			rigid_ = physics_actor.actor;
@@ -213,10 +217,10 @@ struct KinematicCharacterMovementSystem : public System
 								if (PxGeometryQuery::computePenetration(
 									resolution_direction,
 									resolution_distance,
-									*px_caspule_,
-									my_tmp_transform,
+									px_caspule_,
+									my_tmp_transform * shape_transform_,
 									overlap_shape->getGeometry().any(),
-									overlap_transform))
+									overlap_transform * overlap_shape->getLocalPose()))
 								{
 									vec3 resolution_dir = PhysicsUtility::Vec3(resolution_direction);
 									resolution_dir = GetObstructionNormal(resolution_dir, IsStableOnNormal(resolution_dir));
@@ -261,11 +265,11 @@ struct KinematicCharacterMovementSystem : public System
 					{
 						if (character_->support_step)
 						{
-							selected_ground_probing_distance = std::max(character_->max_step_height, px_caspule_->radius);
+							selected_ground_probing_distance = std::max(character_->max_step_height, px_caspule_.radius);
 						}
 						else
 						{
-							selected_ground_probing_distance = px_caspule_->radius;
+							selected_ground_probing_distance = px_caspule_.radius;
 						}
 
 						// 加上配置的额外检测距离,加速响应
@@ -344,7 +348,7 @@ struct KinematicCharacterMovementSystem : public System
 					character_movement_->attached_rigidbody_velocity = tmp_velocity_from_current_attached_rigidbody;
 					
 					// 从附加的刚体旋转
-					vec3 new_forward = glm::normalize(ProjectOnPlane(
+					vec3 new_forward = Normalize(ProjectOnPlane(
 						quat(glm::degrees(PhysicsUtility::Vec3(rigidbody->getAngularVelocity() * dt))) * (transient_rotation_ * vec3(0, 0, 1)),
 						character_up_));
 
@@ -377,8 +381,10 @@ struct KinematicCharacterMovementSystem : public System
 
 					is_moving_from_attached_rigidbody = false;
 				}
-				
 			}
+
+			registry.replace<Transform>(e, transient_position_, transient_rotation_);
+			INFO("update 1 transient_position_ x{} y{} z{}", transient_position_.x, transient_position_.y, transient_position_.z);
 		}
 
 		registry.clear<MovePositionTarget>();
@@ -386,13 +392,13 @@ struct KinematicCharacterMovementSystem : public System
 
 	void UpdatePhase2(float dt)
 	{
-		auto view = registry.view<Local, Transform, CharacterMovement, Character, ColliderInfo, PhysicsActor>();
+		auto view = registry.view<Local, Transform, CharacterMovement,MovementForward,Character, ColliderInfo, PhysicsActor>();
 		for (auto e : view)
 		{
 			overlaps_count_ = 0;
 
-			auto&[transform, movement, character, collider, physics_actor] =
-				view.get<Transform, CharacterMovement, Character, ColliderInfo, PhysicsActor>(e);
+			auto& [transform, movement, forward, character, collider, physics_actor] =
+				view.get<Transform, CharacterMovement, MovementForward, Character, ColliderInfo, PhysicsActor>(e);
 
 			character_ = &character;
 			character_movement_ = &movement;
@@ -400,10 +406,10 @@ struct KinematicCharacterMovementSystem : public System
 			// 获取physx相关的数据
 			PxShape* shape;
 			physics_actor.actor->getShapes(&shape, 1);
-
+			
 			assert(shape->getGeometryType() == PxGeometryType::eCAPSULE && "not capsule!");
-
-			shape->getCapsuleGeometry(*px_caspule_);
+			shape_transform_ = shape->getLocalPose();
+			shape->getCapsuleGeometry(px_caspule_);
 
 			px_transform_ = physics_actor.actor->getGlobalPose();
 			rigid_ = physics_actor.actor;
@@ -416,7 +422,17 @@ struct KinematicCharacterMovementSystem : public System
 			CharacterController.UpdateRotation(ref _transientRotation, deltaTime);
 			TransientRotation = _transientRotation;
 			*/
-			SetTransientRotation(transform.rotation);
+
+			transient_position_ = transform.position;
+			if (forward.value != vec3(0))
+			{
+				SetTransientRotation(LookRotation(forward.value, vec3(0, 1, 0)));
+			}
+			else
+			{
+				SetTransientRotation(transform.rotation);
+			}
+			
 
 			if (registry.has<MovePositionTarget>(e))
 			{
@@ -428,7 +444,7 @@ struct KinematicCharacterMovementSystem : public System
 				// 求解可能的刚体重叠(UpdatePhase1移动后可能有重叠)
 				if (character_movement_->attached_rigidbody_)
 				{
-					float upwards_offset = px_caspule_->radius;
+					float upwards_offset = px_caspule_.radius;
 					
 					PxSweepHit closest_hit;
 					if (CharacterGroundSweep(
@@ -469,10 +485,10 @@ struct KinematicCharacterMovementSystem : public System
 							if (PxGeometryQuery::computePenetration(
 								resolution_direction,
 								resolution_distance,
-								*px_caspule_,
-								my_tmp_transform,
+								px_caspule_,
+								my_tmp_transform * shape_transform_,
 								collision_shape->getGeometry().any(),
-								rigid->getGlobalPose()))
+								rigid->getGlobalPose() * collision_shape->getLocalPose()))
 							{
 								vec3 resolution_dir = PhysicsUtility::Vec3(resolution_direction);
 								resolution_dir = GetObstructionNormal(resolution_dir, IsStableOnNormal(resolution_dir));
@@ -480,6 +496,10 @@ struct KinematicCharacterMovementSystem : public System
 								//解决重叠
 								vec3 resolution_movement = resolution_dir * (resolution_dir + kCollisionOffset);
 								transient_position_ += resolution_movement;
+								if (transient_position_.y > 1.f)
+								{
+									int v = 10;
+								}
 
 								//如果是交互式敢提，则注册为刚体命中速度
 								if (character_->interactive_rigid_body_handling)
@@ -520,15 +540,15 @@ struct KinematicCharacterMovementSystem : public System
 					iterations_made++;
 				}
 			}
-
 			// Handle velocity
 			//CharacterController.UpdateVelocity(ref BaseVelocity, deltaTime);
+			UpdateVelocity(character_movement_->base_velocity, dt);
 
 			if (glm::length(character_movement_->base_velocity) < kMinVelocityMagnitude)
 			{
 				character_movement_->base_velocity = vec3(0);
 			}
-
+			
 			// 从基本速度计算角色移动
 			if (glm::dot(character_movement_->base_velocity, character_movement_->base_velocity) > 0.f)
 			{
@@ -555,6 +575,7 @@ struct KinematicCharacterMovementSystem : public System
 				_transientPosition = _initialSimulationPosition + Vector3.ProjectOnPlane(_transientPosition - _initialSimulationPosition, PlanarConstraintAxis.normalized);
 			}
 			*/
+			registry.replace<Transform>(e, transient_position_, transient_rotation_);
 		}
 
 		registry.clear<MovePositionTarget>();
@@ -568,6 +589,33 @@ struct KinematicCharacterMovementSystem : public System
 	void Finalize() override
 	{
 
+	}
+
+	void UpdateVelocity(vec3& current_velocity,float dt)
+	{
+		if (character_movement_->grounding_status.is_stable_on_ground)
+		{
+			// Reorient source velocity on current ground slope (this is because we don't want our smoothing to cause any velocity losses in slope changes)
+			current_velocity = GetDirectionTangentToSurface(current_velocity, character_movement_->grounding_status.ground_normal) * glm::length(current_velocity);
+
+		}
+		else
+		{
+			if (current_velocity != vec3(0))
+			{
+				// If we want to move, add an acceleration to the velocity
+				/*Vector3 targetMovementVelocity = Motor.CharacterForward * _forwardAxis * MaxAirMoveSpeed;
+				Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity, Gravity);
+				currentVelocity += velocityDiff * AirAccelerationSpeed * deltaTime;*/
+			}
+			
+			// Gravity
+			current_velocity.y += -30.f * dt;
+
+			// Drag
+			//currentVelocity *= (1f / (1f + (Drag * deltaTime)));
+			current_velocity *= (1.f / (1.f + 0.1 * dt));
+		}
 	}
 
 	void SetTransientRotation(quat rotation)
@@ -763,7 +811,7 @@ struct KinematicCharacterMovementSystem : public System
 					ground_probe_distance_remaining = std::min(kGroundProbeReboundDistance, std::max(ground_probe_distance_remaining - glm::length(sweep_movement), 0.f));
 					
 					// 调整探测的方向，沿着碰撞的斜坡探测
-					ground_sweep_direction = glm::normalize(ProjectOnPlane(ground_sweep_direction, PhysicsUtility::Vec3(ground_sweep_hit.normal)));
+					ground_sweep_direction = Normalize(ProjectOnPlane(ground_sweep_direction, PhysicsUtility::Vec3(ground_sweep_hit.normal)));
 					
 				}
 			}
@@ -836,7 +884,7 @@ struct KinematicCharacterMovementSystem : public System
 		}
 
 		bool was_completed = true;
-		vec3 remaining_movement_direction = glm::normalize(transient_velocity);
+		vec3 remaining_movement_direction = Normalize(transient_velocity);
 		float remaining_movement_magnitude = glm::length(transient_velocity) * dt;
 		vec3 original_velocity_direction = remaining_movement_direction;
 		int sweeps_made = 0;
@@ -876,7 +924,6 @@ struct KinematicCharacterMovementSystem : public System
 				previous_obstruction_normal = obstruction_normal;
 			}
 		}
-
 			// 扫描所需的运动以检测碰撞
 		while (remaining_movement_magnitude > 0.f &&
 			(sweeps_made <= character_->max_movement_iterations) &&
@@ -910,18 +957,20 @@ struct KinematicCharacterMovementSystem : public System
 						if (PxGeometryQuery::computePenetration(
 							resolution_direction,
 							resolution_distance,
-							*px_caspule_,
-							my_tmp_transform,
+							px_caspule_,
+							my_tmp_transform * shape_transform_,
 							collision_shape->getGeometry().any(),
-							rigid->getGlobalPose()))
+							rigid->getGlobalPose() * collision_shape->getLocalPose()))
 						{
 							float dot_product = PhysicsUtility::Vec3(remaining_movement_direction).dot(resolution_direction);
 							//寻找最近碰撞点，相当于就是更移动方向夹角最大的一个碰撞
 							if (dot_product < 0.f && dot_product < most_obstructing_overlap_normal_dot_product)
 							{
 								most_obstructing_overlap_normal_dot_product = dot_product;
+
+								closeset_sweep_hit_normal = PhysicsUtility::Vec3(resolution_direction);
 								closest_sweep_hit_rigid = rigid;
-								closest_sweep_hit_point = tmp_moved_position + (transient_rotation_ * vec3(0, px_caspule_->halfHeight, 0)) + PhysicsUtility::Vec3(resolution_direction * resolution_distance);
+								closest_sweep_hit_point = tmp_moved_position + (transient_rotation_ * vec3(0, px_caspule_.halfHeight, 0)) + PhysicsUtility::Vec3(resolution_direction * resolution_distance);
 
 								found_closest_hit = true;
 
@@ -941,15 +990,21 @@ struct KinematicCharacterMovementSystem : public System
 					remaining_movement_direction,
 					remaining_movement_magnitude + kCollisionOffset,
 					closest_hit);
+				INFO("CharacterCollisionsSweep {}", hits.size());
+				if (hits.size() > 1)
+				{
+					int a = 10;
+				}
 				if (hits.size() > 0)
 				{
 					closeset_sweep_hit_normal = PhysicsUtility::Vec3(closest_hit.normal);
 					closest_sweep_hit_distance = closest_hit.distance;
 					closest_sweep_hit_point = PhysicsUtility::Vec3(closest_hit.position);
 					closest_sweep_hit_rigid = closest_hit.actor;
+
+					found_closest_hit = true;
 				}
 			}
-
 			if (found_closest_hit)
 			{
 				// 移动到碰撞点
@@ -971,12 +1026,14 @@ struct KinematicCharacterMovementSystem : public System
 				if (solve_grounding && character_->support_step && move_hit_stability_report.vaild_step_detected)
 				{
 					float obstruction_correlation = std::abs(glm::dot(closeset_sweep_hit_normal, character_up_));
+					INFO("closeset_sweep_hit_normal {} {} {}", closeset_sweep_hit_normal.x, closeset_sweep_hit_normal.y, closeset_sweep_hit_normal.z);
+					INFO("obstruction_correlation{}", obstruction_correlation);
 					if (obstruction_correlation <= kCorrelationForVerticalObstruction)
 					{
-						vec3 step_forward_direction = glm::normalize(ProjectOnPlane(closeset_sweep_hit_normal, character_up_));
+						vec3 step_forward_direction = Normalize(ProjectOnPlane(-closeset_sweep_hit_normal, character_up_));
 						vec3 step_cast_start_point = (tmp_moved_position + (step_forward_direction * kSteppingForwardDistance)) +
 							(character_up_ * character_->max_step_height);
-
+						INFO("step_cast_start_point {} {} {}", step_cast_start_point.x, step_cast_start_point.y, step_cast_start_point.z);
 
 						//从踏步陶都的顶部向下投射
 						PxSweepHit closest_step_hit;
@@ -995,11 +1052,15 @@ struct KinematicCharacterMovementSystem : public System
 							if (hit.actor == move_hit_stability_report.stepped_collider)
 							{
 								vec3 end_step_position = step_cast_start_point + (-character_up_ * hit.distance - kCollisionOffset);
+								if (end_step_position.y > 0.6f)
+								{
+									int a = 10;
+								}
 								tmp_moved_position = end_step_position;
 								found_valid_step_hit = true;
 
 								transient_velocity = ProjectOnPlane(transient_velocity, character_up_);
-								remaining_movement_direction = glm::normalize(transient_velocity);
+								remaining_movement_direction = Normalize(transient_velocity);
 
 								break;
 							}
@@ -1028,7 +1089,6 @@ struct KinematicCharacterMovementSystem : public System
 
 					bool stable_on_hit = move_hit_stability_report.is_stable && !MustUnground();
 					vec3 velocity_before_proj = transient_velocity;
-
 					//下次迭代速度
 					InternalHandleVelocityProjection(
 						stable_on_hit,
@@ -1042,6 +1102,11 @@ struct KinematicCharacterMovementSystem : public System
 						transient_velocity,
 						remaining_movement_magnitude,
 						remaining_movement_direction);
+
+					if (remaining_movement_direction.y > std::numeric_limits<float>::epsilon())
+					{
+						int at = 10;
+					}
 
 					previous_hit_is_srtable = stable_on_hit;
 					previous_veloctiy = velocity_before_proj;
@@ -1072,7 +1137,15 @@ struct KinematicCharacterMovementSystem : public System
 		}
 
 		//移动剩余移动的位置
+		if (tmp_moved_position.y > 0.6f)
+		{
+			int at = 10;
+		}
 		tmp_moved_position += (remaining_movement_direction * remaining_movement_magnitude);
+		if (tmp_moved_position.y > 0.6f)
+		{
+			int at = 10;
+		}
 		transient_position_ = tmp_moved_position;
 
 		return was_completed;
@@ -1146,7 +1219,7 @@ struct KinematicCharacterMovementSystem : public System
 
 		float new_velocity_factor = glm::length(transient_velocity) / glm::length(veloctiy_before_projection);
 		remaining_movement_magnitude *= new_velocity_factor;
-		remaining_movement_direction = glm::normalize(transient_velocity);
+		remaining_movement_direction = Normalize(transient_velocity);
 	}
 
 	// 评估折痕
@@ -1166,18 +1239,18 @@ struct KinematicCharacterMovementSystem : public System
 
 		if (!character_is_stable || !current_hit_is_stable || !previous_hit_is_stable)
 		{
-			vec3 tmp_blocking_crease_direction = glm::normalize(glm::cross(current_hit_nomral, previous_hit_normal));
+			vec3 tmp_blocking_crease_direction = Normalize(glm::cross(current_hit_nomral, previous_hit_normal));
 			float dot_planes = glm::dot(current_hit_nomral, previous_hit_normal);
 			bool is_velocity_constrained_by_crease = false;
 
 			// 如果两个平面相同,请避免计算
 			if (dot_planes < 0.999f)
 			{
-				vec3 normal_a_on_crease_plane = glm::normalize(ProjectOnPlane(current_hit_nomral, tmp_blocking_crease_direction));
-				vec3 normal_b_on_crease_plane = glm::normalize(ProjectOnPlane(previous_hit_normal, tmp_blocking_crease_direction));
+				vec3 normal_a_on_crease_plane = Normalize(ProjectOnPlane(current_hit_nomral, tmp_blocking_crease_direction));
+				vec3 normal_b_on_crease_plane = Normalize(ProjectOnPlane(previous_hit_normal, tmp_blocking_crease_direction));
 				float dot_planes_on_crease_plane = glm::dot(normal_a_on_crease_plane, normal_b_on_crease_plane);
 
-				vec3 entering_velocity_direction_on_crease_plane = glm::normalize(ProjectOnPlane(previous_character_velocity, tmp_blocking_crease_direction));
+				vec3 entering_velocity_direction_on_crease_plane = Normalize(ProjectOnPlane(previous_character_velocity, tmp_blocking_crease_direction));
 				
 				if (dot_planes_on_crease_plane <= (glm::dot(-entering_velocity_direction_on_crease_plane, normal_a_on_crease_plane) + 0.001f) &&
 					dot_planes_on_crease_plane <= (glm::dot(-entering_velocity_direction_on_crease_plane, normal_b_on_crease_plane) + 0.001f))
@@ -1214,8 +1287,8 @@ struct KinematicCharacterMovementSystem : public System
 			else
 			{
 				// 沿接地平面在障碍物上投影移动
-				vec3 obstruction_right_along_ground = glm::normalize(glm::cross(obstruction_normal, character_movement_->grounding_status.ground_normal));
-				vec3 obstruction_up_along_ground = glm::normalize(glm::cross(obstruction_right_along_ground, obstruction_normal));
+				vec3 obstruction_right_along_ground = Normalize(glm::cross(obstruction_normal, character_movement_->grounding_status.ground_normal));
+				vec3 obstruction_up_along_ground = Normalize(glm::cross(obstruction_right_along_ground, obstruction_normal));
 				
 				velocity = GetDirectionTangentToSurface(velocity, obstruction_up_along_ground) * glm::length(velocity);
 				velocity = ProjectOnPlane(velocity, obstruction_normal);
@@ -1239,7 +1312,7 @@ struct KinematicCharacterMovementSystem : public System
 	vec3 GetDirectionTangentToSurface(vec3 direction, vec3 surface_normal)
 	{
 		vec3 right = glm::cross(direction, character_up_);
-		return glm::normalize(glm::cross(character_up_, right));
+		return Normalize(glm::cross(surface_normal, right));
 	}
 
 	// 根据当前接地状态获取运动障碍的有效法线
@@ -1251,8 +1324,8 @@ struct KinematicCharacterMovementSystem : public System
 		// 则调整移动方向为地面发现和碰撞修正方向的叉乘，水平移出碰撞体，防止角色插入地面
 		if (character_movement_->grounding_status.is_stable_on_ground && !MustUnground() && !stable_on_hit)
 		{
-			vec3 obstruction_left_along_ground = glm::normalize(glm::cross(character_movement_->grounding_status.ground_normal, obstruction_normal));
-			obstruction_normal = glm::normalize(glm::cross(obstruction_left_along_ground, character_up_));
+			vec3 obstruction_left_along_ground = Normalize(glm::cross(character_movement_->grounding_status.ground_normal, obstruction_normal));
+			obstruction_normal = Normalize(glm::cross(obstruction_left_along_ground, character_up_));
 		}
 		
 		// 验证有效性
@@ -1267,7 +1340,9 @@ struct KinematicCharacterMovementSystem : public System
 	// 确定给定方向是否可以稳定
 	bool IsStableOnNormal(vec3 normal)
 	{
-		return glm::degrees(glm::dot(normal, character_up_)) > character_->max_stable_slope_angle;
+		float v1 = glm::degrees(glm::acos(glm::dot(normal, character_up_)));
+		int v2 = v1;
+		return v1 <= character_->max_stable_slope_angle;
 	}
 
 	vec3 GetVelocityFromMovement(vec3 movement, float dt)
@@ -1297,7 +1372,7 @@ struct KinematicCharacterMovementSystem : public System
 		}
 
 		vec3 at_character_up = at_character_rotation * cached_world_up;
-		vec3 inner_hit_direction = glm::normalize(ProjectOnPlane(hit_normal, at_character_up));
+		vec3 inner_hit_direction = Normalize(ProjectOnPlane(hit_normal, at_character_up));
 
 		stability_report.is_stable = IsStableOnNormal(hit_normal);
 		stability_report.inner_normal = hit_normal;
@@ -1326,7 +1401,7 @@ struct KinematicCharacterMovementSystem : public System
 		PxSweepHit outer_step_hit;
 		vec3 character_up = character_rotation * cached_world_up;
 		vec3 vertical_char_to_hit = Project((hit_point - character_position), character_up);
-		vec3 horizontal_char_to_hit_direction = glm::normalize(ProjectOnPlane((hit_point - character_position), character_up));
+		vec3 horizontal_char_to_hit_direction = Normalize(ProjectOnPlane((hit_point - character_position), character_up));
 		vec3 step_check_start_pos = (hit_point - vertical_char_to_hit) + (character_up * character_->max_step_height) + (horizontal_char_to_hit_direction * kCollisionOffset * 3.f);
 
 		//
@@ -1455,6 +1530,7 @@ struct KinematicCharacterMovementSystem : public System
 			}
 		}
 		
+		return false;
 	}
 
 	// Casts the character volume in the character's downward direction to detect ground
@@ -1462,12 +1538,12 @@ struct KinematicCharacterMovementSystem : public System
 	bool CharacterGroundSweep(vec3 position, quat rotation, vec3 direction, float distance,PxSweepHit& closest_hit)
 	{
 		// Capsule cast
-		PxSweepHit hit;
-		PxSweepBuffer hit_callback(&hit, kMaxHitsBudget);
+		PxSweepHit hit[kMaxHitsBudget];
+		PxSweepBuffer hit_callback(hit, kMaxHitsBudget);
 		PxQueryFilterData filter_data(PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC | PxQueryFlag::ePREFILTER);
 		IgnoreTiggerQueryCallback filter_callback;
 		auto& physics_world = registry.ctx<PhysicsWorld>();
-		physics_world.scene->sweep(*px_caspule_, PhysicsUtility::Transform(position, rotation), PhysicsUtility::Vec3(direction), distance, hit_callback, PxHitFlag::eDEFAULT, filter_data, &filter_callback);
+		physics_world.scene->sweep(px_caspule_, PhysicsUtility::Transform(position, rotation) * shape_transform_, PhysicsUtility::Vec3(direction), distance, hit_callback, PxHitFlag::eDEFAULT, filter_data, &filter_callback);
 
 
 		// Hits filter
@@ -1482,7 +1558,6 @@ struct KinematicCharacterMovementSystem : public System
 				if (hit.distance < closest_distance)
 				{
 					closest_hit = hit;
-					closest_hit.distance -= kGroundProbeReboundDistance;
 					closest_distance = hit.distance;
 					found_valid_hit = true;
 				}
@@ -1501,22 +1576,32 @@ struct KinematicCharacterMovementSystem : public System
 			query_layers = character_->stable_ground_layers & query_layers;
 		}
 
-		PxRaycastHit hit;
-		PxRaycastBuffer hit_callback(&hit, kMaxCollisionBudget);
+		PxRaycastHit hit[kMaxCollisionBudget];
+		PxRaycastBuffer hit_callback(hit, kMaxCollisionBudget);
 		PxQueryFilterData filter_data(PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC | PxQueryFlag::ePREFILTER);
 		IgnoreTiggerQueryCallback filter_callback;
 		auto& physics_world = registry.ctx<PhysicsWorld>();
 		physics_world.scene->raycast(PhysicsUtility::Vec3(position), PhysicsUtility::Vec3(direction), distance, hit_callback, PxHitFlag::eDEFAULT, filter_data, &filter_callback);
+		
+		float closest_distance = std::numeric_limits<float>::infinity();
 
 		std::vector<PxRaycastHit> hits;
 		hits.reserve(hit_callback.getNbTouches());
 
 		for (int i = 0; i < hit_callback.getNbTouches(); ++i)
 		{
-			if (CheckIfColliderValidForCollisions(hit_callback.getTouch(i).actor))
+			auto& hit = hit_callback.getTouch(i);
+			float hit_distance = hit.distance;
+			if (hit_distance > 0 && CheckIfColliderValidForCollisions(hit.actor))
 			{
-				hits.push_back(hit_callback.getTouch(i));
-			}
+				hits.push_back(hit);
+
+				if (hit_distance < closest_distance)
+				{
+					closest_hit = hit;
+					closest_distance = hit_distance;
+				}
+			} 
 		}
 
 		return hits;
@@ -1530,12 +1615,12 @@ struct KinematicCharacterMovementSystem : public System
 			query_layers = character_->stable_ground_layers & query_layers;
 		}
 
-		PxSweepHit hit;
-		PxSweepBuffer hit_callback(&hit, kMaxHitsBudget);
+		PxSweepHit hit[kMaxHitsBudget];
+		PxSweepBuffer hit_callback(hit, kMaxHitsBudget);
 		PxQueryFilterData filter_data(PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC | PxQueryFlag::ePREFILTER);
 		IgnoreTiggerQueryCallback filter_callback;
 		auto& physics_world = registry.ctx<PhysicsWorld>();
-		physics_world.scene->sweep(*px_caspule_, PhysicsUtility::Transform(position, rotation), PhysicsUtility::Vec3(direction), distance, hit_callback, PxHitFlag::eDEFAULT, filter_data, &filter_callback);
+		physics_world.scene->sweep(px_caspule_, PhysicsUtility::Transform(position, rotation) * shape_transform_, PhysicsUtility::Vec3(direction), distance, hit_callback, PxHitFlag::eDEFAULT, filter_data, &filter_callback);
 
 		// Hits filter
 		float closest_distance = std::numeric_limits<float>::infinity();
@@ -1569,12 +1654,12 @@ struct KinematicCharacterMovementSystem : public System
 			query_layers = character_->stable_ground_layers & query_layers;
 		}
 
-		PxOverlapHit hit;
-		PxOverlapBuffer hit_callback(&hit, kMaxCollisionBudget);
+		PxOverlapHit hit[kMaxCollisionBudget];
+		PxOverlapBuffer hit_callback(hit, kMaxCollisionBudget);
 		PxQueryFilterData filter_data(PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC | PxQueryFlag::ePREFILTER);
 		IgnoreTiggerQueryCallback filter_callback;
 		auto& physics_world = registry.ctx<PhysicsWorld>();
-		physics_world.scene->overlap(*px_caspule_, PhysicsUtility::Transform(position, rotation), hit_callback, filter_data, &filter_callback);
+		physics_world.scene->overlap(px_caspule_, PhysicsUtility::Transform(position, rotation) * shape_transform_, hit_callback, filter_data, &filter_callback);
 
 		std::vector<PxRigidActor*> collisions;
 		collisions.reserve(hit_callback.getNbTouches());
@@ -1654,7 +1739,8 @@ private:
 	// 缓存当前控制的角色信息
 	Character* character_;
 	CharacterMovement* character_movement_;
-	PxCapsuleGeometry* px_caspule_;
+	PxCapsuleGeometry px_caspule_;
+	PxTransform shape_transform_;
 	PxTransform px_transform_;
 	PxRigidActor* rigid_;
 };

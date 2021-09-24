@@ -115,6 +115,7 @@ struct ClientSyncSystem : public System
 				{
 					is_need_rollback = true;
 					registry.replace<Transform>(e, sync_trans);
+					INFO("is_need_rollback");
 				}
 			}
 		}

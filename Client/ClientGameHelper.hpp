@@ -7,6 +7,9 @@ class ClientGameHelper : public GameHelper
 public:
 	ClientGameHelper(uint32_t local_id);
 	~ClientGameHelper();
+	
+	bool IsClient() const override;
+	bool IsServer() const override;
 
 	std::vector<std::unique_ptr<System>> CreateSystems(entt::registry& registry) const override;
 

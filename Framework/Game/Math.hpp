@@ -32,7 +32,7 @@ T zero()
 	return T(0.0f);
 }
 
-vec3 ProjectOnPlane(vec3 vec, vec3 plane_normal)
+inline vec3 ProjectOnPlane(vec3 vec, vec3 plane_normal)
 {
 	float sqr_mag = glm::dot(plane_normal, plane_normal);
 	if (sqr_mag < std::numeric_limits<float>::epsilon())
@@ -42,11 +42,14 @@ vec3 ProjectOnPlane(vec3 vec, vec3 plane_normal)
 	else
 	{
 		auto dot = glm::dot(vec, plane_normal);
-		return vec - plane_normal * dot / sqr_mag;
+		return vec3(vec.x - plane_normal.x * dot / sqr_mag,
+			vec.y - plane_normal.y * dot / sqr_mag,
+			vec.z - plane_normal.z * dot / sqr_mag);
+		//return vec - plane_normal * dot / sqr_mag;
 	}
 }
 
-vec3 Project(vec3 vector, vec3 on_normal)
+inline vec3 Project(vec3 vector, vec3 on_normal)
 {
 	float sqr_mag = glm::dot(on_normal, on_normal);
 	if (sqr_mag < std::numeric_limits<float>::epsilon())
@@ -60,23 +63,21 @@ vec3 Project(vec3 vector, vec3 on_normal)
 	}
 }
 
-quat LookRotation(vec3 view, vec3 up)
+inline quat LookRotation(vec3 view, vec3 up)
 {
-	vec3 const s(normalize(cross(up, view)));
-	vec3 const u(cross(view, s));
+	return glm::quatLookAtLH(view, up);
+}
 
-	mat3 result(1);
-	result[0][0] = s.x;
-	result[1][0] = s.y;
-	result[2][0] = s.z;
-	result[0][1] = u.x;
-	result[1][1] = u.y;
-	result[2][1] = u.z;
-	result[0][2] = view.x;
-	result[1][2] = view.y;
-	result[2][2] = view.z;
+inline vec3 Normalize(const vec3& v)
+{
+	auto length = glm::length(v);
+	if (length < std::numeric_limits<float>::epsilon())
+	{
+		return vec3(0);
+	}
 
-	return glm::quat_cast(result);
+	auto inversesqrt = 1 / length;
+	return v * inversesqrt;
 }
 
 namespace glm

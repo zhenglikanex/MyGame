@@ -35,7 +35,7 @@ struct Character
     float max_stable_slope_angle = 60.f;
 
     // 角色可以站稳的碰撞层
-    LayerMask stable_ground_layers = ~0;
+    LayerMask stable_ground_layers = static_cast<LayerMask>(~0);
 
 
     /**************************************

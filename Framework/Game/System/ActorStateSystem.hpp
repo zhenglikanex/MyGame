@@ -118,15 +118,7 @@ struct ActorStateSystem : public System
 
 			//Ðý×ª
 			auto forward = glm::normalize(vec3(input.x, fixed16(0), input.y));
-			auto movement = registry.try_get<Movement>(e);
-			if (movement)
-			{
-				movement->forward = forward;
-			}
-			else
-			{
-				registry.emplace<Movement>(e, forward, zero<vec3>(), zero<vec3>());
-			}
+			registry.emplace_or_replace<MovementForward>(e, forward);
 
 			INFO("input {}", glm::length(input));
 

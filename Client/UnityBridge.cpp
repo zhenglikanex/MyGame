@@ -110,6 +110,7 @@ extern "C"
 		g_network_service = nullptr;
 		if (g_game)
 		{
+			g_game->Finalize();
 			g_game = nullptr;
 		}
 	}

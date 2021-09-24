@@ -37,7 +37,8 @@ struct DebugSystem : public System
 			}
 			else if(collider_info.geometry.type() == GeometryType::kCapsule)
 			{
-				
+				quat q = glm::quat_cast(m);
+				g_debug_service->DrawCapsule(m[3], q, collider_info.geometry.capsule().h, collider_info.geometry.capsule().r);
 			}
 			else if (collider_info.geometry.type() == GeometryType::kSphere)
 			{

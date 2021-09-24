@@ -10,6 +10,8 @@
 class GameHelper : public Service
 {
 public:
+	virtual bool IsClient() const = 0;
+	virtual bool IsServer() const = 0;
 	virtual std::vector<std::unique_ptr<System>> CreateSystems(entt::registry& registry) const = 0;
 
 	virtual bool IsLocalPlayer(uint32_t id) const = 0;

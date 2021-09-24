@@ -27,7 +27,7 @@ void ServerDebugService::DrawSphere(const vec3& position, fixed16 radius) const
 
 }
 
-void ServerDebugService::DrawCapsule(const vec3& position, const vec3& a, const vec3& b, fixed16 radius) const
+void ServerDebugService::DrawCapsule(const vec3& position, const quat& rotation, fixed16 half_height, fixed16 radius) const
 {
 
 }

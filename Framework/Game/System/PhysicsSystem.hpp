@@ -12,11 +12,11 @@
 
 struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 {
-	entt::observer* static_updater;
+	entt::observer* kinematic_updater;
 
 	PhysicsSystem(entt::registry& _registry) 
 		: ObserverSystem(_registry)
-		, static_updater(nullptr)
+		, kinematic_updater(nullptr)
 	{ 
 
 	}
@@ -25,9 +25,9 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 
 	bool Initialize() override
 	{
-		registry.set<PhysicsWorld>(PhysicsUtility::CreatePhysicsWorld(this));
+		registry.set<PhysicsWorld>(PhysicsUtility::CreatePhysicsWorld(this,registry));
 
-		static_updater = CreateObserver(entt::collector.group<Transform, PhysicsStaticTag, PhysicsActor>().update<Transform>().where<PhysicsActor, PhysicsStaticTag>());
+		kinematic_updater = CreateObserver(entt::collector.group<Transform, PhysicsKinematicTag, PhysicsActor>().update<Transform>().where<PhysicsActor, PhysicsKinematicTag>());
 		return true;
 	}
 
@@ -59,8 +59,8 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 
 	void UpdateStaticActor()
 	{
-		auto view = registry.view<Transform, PhysicsStaticTag, PhysicsActor>();
-		for (auto e : *static_updater)
+		auto view = registry.view<Transform, PhysicsKinematicTag, PhysicsActor>();
+		for (auto e : *kinematic_updater)
 		{
 			auto& [transform, physics_actor] = view.get<Transform, PhysicsActor>(e);
 

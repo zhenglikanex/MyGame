@@ -94,6 +94,7 @@ Data/ActorConfig.hpp
 Data/ColliderConfig.hpp
 Data/SkillGraph.hpp
 Data/SkillGraph.cpp
+Data/SceneConfig.hpp
 )
 
 foreach(_file ${file_list})
@@ -105,17 +106,17 @@ add_library(Game
 )
 
 target_link_libraries(Game
-    #debug ${PHYSX_LIBRARY_DEBU0G}
-    #debug ${PHYSX_COMMON_LIBRARY_DEBU0G}
-    #debug ${PX_FOUNDATION_LIBARY_DEBUG}
-    #debug ${PHYSX_COOKING_LIBRARY_DEBUG}
-    #debug ${PX_PVD_LIBARY_DEBUG}
-    #debug ${PHYSX_EXTENSIONS_LIBRARY_DEBU0G}
+    debug ${PHYSX_LIBRARY_DEBU0G}
+    debug ${PHYSX_COMMON_LIBRARY_DEBU0G}
+    debug ${PX_FOUNDATION_LIBARY_DEBUG}
+    debug ${PHYSX_COOKING_LIBRARY_DEBUG}
+    debug ${PX_PVD_LIBARY_DEBUG}
+    debug ${PHYSX_EXTENSIONS_LIBRARY_DEBU0G}
 
-    #optimized ${PHYSX_LIBRARY}
-    #optimized ${PHYSX_COMMON_LIBRARY}
-    #optimized ${PX_FOUNDATION_LIBARY}
-    #optimized ${PHYSX_COOKING_LIBRARY}
-    #optimized ${PX_PVD_LIBARY}
-    #optimized ${PHYSX_EXTENSIONS_LIBRARY}
+    optimized ${PHYSX_LIBRARY}
+    optimized ${PHYSX_COMMON_LIBRARY}
+    optimized ${PX_FOUNDATION_LIBARY}
+    optimized ${PHYSX_COOKING_LIBRARY}
+    optimized ${PX_PVD_LIBARY}
+    optimized ${PHYSX_EXTENSIONS_LIBRARY}
 )

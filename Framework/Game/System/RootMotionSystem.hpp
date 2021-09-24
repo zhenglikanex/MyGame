@@ -18,7 +18,7 @@ struct RootMotionSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		auto view = registry.view<Animation,AnimationClip>(entt::exclude<CharacterMovement>);
+		auto view = registry.view<Animation,AnimationClip>();
 		for (auto e : view)
 		{
 			auto& animtion = view.get<Animation>(e);
@@ -46,13 +46,14 @@ struct RootMotionSystem : public System
 							}
 							else
 							{
-								registry.emplace<Movement>(e, zero<vec3>(), it->velocity, it->angular_velocity);
+								registry.emplace<Movement>(e,it->velocity, it->angular_velocity);
 							}
 						}
 						else
 						{
+							auto& forward = registry.get<MovementForward>(e);
 							auto& character_movement = registry.get<CharacterMovement>(e);
-							character_movement.base_velocity = it->velocity;
+							character_movement.base_velocity = forward.value * it->velocity.z;
 						}
 					}
 					else
@@ -60,6 +61,11 @@ struct RootMotionSystem : public System
 						if (!registry.has<CharacterMovement>(e))
 						{
 							registry.remove_if_exists<Movement>(e);
+						}
+						else
+						{
+							auto& character_movement = registry.get<CharacterMovement>(e);
+							character_movement.base_velocity = vec3(0);
 						}
 					}
 				}

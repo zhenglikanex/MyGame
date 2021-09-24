@@ -49,6 +49,7 @@ public:
 	entt::registry& registry() { return registry_; }
 private:
 	void LoadAllConfig();
+	void LoadScene(const std::string& name);
 	void CreatePlayer();
 
 	template<class T>

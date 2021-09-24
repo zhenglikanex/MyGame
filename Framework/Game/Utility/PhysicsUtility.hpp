@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Framework/Game/Math.hpp"
+#include "Framework/Game/GameHelper.hpp"
 
 #include "Framework/Game/Component/PhysicsWorld.hpp"
 #include "Framework/Game/Component/Transform.hpp"
@@ -61,15 +62,20 @@ struct PhysicsUtility
 		return filter_mask;
 	}
 
-	static PhysicsWorld CreatePhysicsWorld(PxSimulationEventCallback* callback)
+	static PhysicsWorld CreatePhysicsWorld(PxSimulationEventCallback* callback,entt::registry& reg)
 	{
 		PhysicsWorld world;
 		world.foundation = PxCreateFoundation(PX_FOUNDATION_VERSION,PhysicsWorld::s_allocator,PhysicsWorld::s_error_callback);
 		
 #if USE_PVD
-		world.pvd = PxCreatePvd(*world.foundation);
-		PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
-		world.pvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
+		auto& helper = reg.ctx<Locator>().Ref<const GameHelper>();
+		if (helper.IsServer())
+		{
+			world.pvd = PxCreatePvd(*world.foundation);
+			PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
+			world.pvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
+		}
+		
 		world.physics = PxCreatePhysics(PX_PHYSICS_VERSION, *world.foundation, PxTolerancesScale(), true, world.pvd);
 #else
 		world.physics = PxCreatePhysics(PX_PHYSICS_VERSION, *world.foundation, PxTolerancesScale(), true);
@@ -113,11 +119,13 @@ struct PhysicsUtility
 		world.physics = nullptr;
 
 #if USE_PVD
-		PxPvdTransport* transport = world.pvd->getTransport();
-		world.pvd->release();
-		world.pvd = nullptr;
-
-		transport->release();
+		if (world.pvd)
+		{
+			PxPvdTransport* transport = world.pvd->getTransport();
+			world.pvd->release();
+			world.pvd = nullptr;
+			transport->release();
+		}
 #endif
 		world.foundation->release();
 		world.foundation = nullptr;

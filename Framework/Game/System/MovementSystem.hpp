@@ -39,15 +39,16 @@ struct MovementSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		auto view = registry.view<Local, Movement, Transform>();
+		auto view = registry.view<Local, MovementForward, Movement, Transform>();
 		for (auto e : view)
 		{
+			const auto& forward = view.get<MovementForward>(e);
 			const auto& movement = view.get<Movement>(e);
 			auto& transform = view.get<Transform>(e);
 
 			// todo:
-			auto position = transform.position + movement.forward * movement.velocity.z * static_cast<float>(dt);
-			auto rotation = ForwardRotation(movement.forward);
+			auto position = transform.position + forward.value * movement.velocity.z * static_cast<float>(dt);
+			auto rotation = ForwardRotation(forward.value);
 
 			if (position != transform.position || rotation != transform.rotation)
 			{	

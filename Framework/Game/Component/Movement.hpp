@@ -6,24 +6,29 @@
 
 #include "PxPhysicsAPI.h"
 
+using namespace physx;
+
+struct MovementForward
+{
+	vec3 value;
+};
+
 struct Movement
 {
-	vec3 forward;
 	vec3 velocity;
 	vec3 angular_velocity;
 
 	Movement() = default;
 
-	Movement(const vec3& _forward, const vec3& _velocity, const vec3& _angular_velocity)
-		: forward(_forward)
-		, velocity(_velocity)
+	Movement(const vec3& _velocity, const vec3& _angular_velocity)
+		: velocity(_velocity)
 		, angular_velocity(_angular_velocity)
 	{
 
 	}
 };
 
-NON_MEMEBER_BAR(Movement, obj.forward, obj.velocity, obj.angular_velocity);
+NON_MEMEBER_BAR(Movement,obj.velocity, obj.angular_velocity);
 
 class CharacterTransientGroundingReport;
 class CharacterGroundingReport;
@@ -59,7 +64,7 @@ public:
 	CharacterTransientGroundingReport(CharacterGroundingReport* grounding_report);
 };
 
-CharacterGroundingReport::CharacterGroundingReport(CharacterTransientGroundingReport* transient_grounding_report)
+inline CharacterGroundingReport::CharacterGroundingReport(CharacterTransientGroundingReport* transient_grounding_report)
 	: found_any_ground(transient_grounding_report->found_any_ground)
 	, is_stable_on_ground(transient_grounding_report->is_stable_on_ground)
 	, snpping_prevented(transient_grounding_report->snpping_prevented)
@@ -72,7 +77,7 @@ CharacterGroundingReport::CharacterGroundingReport(CharacterTransientGroundingRe
 
 }
 
-CharacterTransientGroundingReport::CharacterTransientGroundingReport(CharacterGroundingReport* grounding_report)
+inline CharacterTransientGroundingReport::CharacterTransientGroundingReport(CharacterGroundingReport* grounding_report)
 	: found_any_ground(grounding_report->found_any_ground)
 	, is_stable_on_ground(grounding_report->is_stable_on_ground)
 	, snpping_prevented(grounding_report->snpping_prevented)

@@ -51,6 +51,18 @@ public class GameController : MonoBehaviour
 
     public void InitGameFSM()
     {
+        var v = Quaternion.LookRotation(Vector3.right, Vector3.up);
+        Debug.Log(v);
+
+        var v2 = Quaternion.LookRotation(Vector3.left, Vector3.up);
+        Debug.Log(v2);
+
+        var v3 = Vector3.ProjectOnPlane(Vector3.up, Vector3.up);
+        Debug.Log(v3);
+        var v4 = v3.normalized;
+
+        Debug.Log(v4);
+
         FSMSystem_ = new FSMSystem();
 
         FSMSystem_.RegisterStateFactory(StateID.kGameStartState, () => 

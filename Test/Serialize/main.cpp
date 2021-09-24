@@ -233,7 +233,7 @@ TEST_CASE_METHOD(Serialize, "ActoreState")
 
 TEST_CASE_METHOD(Serialize, "Movement")
 {
-	Movement src(vec3(100, 200, 3), vec3(10, 20, 30.3), vec3(30, 20, 20));
+	Movement src(vec3(10, 20, 30.3), vec3(30, 20, 20));
 
 	oar(src);
 	
@@ -241,7 +241,6 @@ TEST_CASE_METHOD(Serialize, "Movement")
 
 	iar(out);
 
-	REQUIRE(src.forward == out.forward);
 	REQUIRE(src.velocity == out.velocity);
 	REQUIRE(src.angular_velocity == out.angular_velocity);
 	REQUIRE(buffer.IsFinish());
@@ -270,7 +269,7 @@ TEST_CASE_METHOD(Serialize, "Transform")
 
 TEST_CASE_METHOD(Serialize, "Weapon")
 {
-	ColliderInfo info(Geometry(Sphere(10)), glm::identity<mat4>(), true, entt::entity(300));
+	ColliderInfo info(Geometry(Sphere(10)), glm::identity<mat4>(), true,RigidType::kDynamic);
 	Weapon output(info);
 	output.attributes.emplace_back(Attribute{ CalculateType::kNumerical,fixed16(100) });
 	oar(output);
@@ -536,7 +535,7 @@ TEST_CASE_METHOD(Serialize, "SkillState")
 
 TEST_CASE_METHOD(Serialize, "ColliderInfo")
 {
-	ColliderInfo output1(Geometry(Sphere(10)), glm::identity<mat4>(), true, entt::entity(300));
+	ColliderInfo output1(Geometry(Sphere(10)), glm::identity<mat4>(), true, RigidType::kDynamic);
 	
 	oar(output1);
 
@@ -599,7 +598,7 @@ TEST_CASE_METHOD(Serialize, "entt")
 	auto e1 = registry.create();
 	registry.emplace<AnimationClip>(e1, "123");
 	auto e2 = registry.create();
-	registry.emplace<ColliderInfo>(e2,Geometry(Sphere(10)), glm::identity<mat4>(), true,e1);
+	registry.emplace<ColliderInfo>(e2, Geometry(Sphere(10)), glm::identity<mat4>(), true, RigidType::kDynamic);
 	auto e3 = registry.create();
 	auto e4 = registry.create();
 
@@ -636,87 +635,5 @@ TEST_CASE_METHOD(Serialize, "SnapshotPerformance")
 	output1.hit_target.emplace(entt::entity(3322));
 	output1.hit_target.emplace(entt::entity(33221));
 	output1.hit_target.emplace(entt::entity(33221));
-
-<<<<<<< HEAD
-	
-	for (int i = 0; i < 1000; ++i)
-	{
-		auto e = entt::handle(registry, registry.create());
-		e.emplace<Transform>(vec3(0.222, 0.333, 0.1), quat(10, 20, 30, 40));
-=======
-	for (int i = 0; i < 7000; ++i)
-	{
-		auto e = entt::handle(registry, registry.create());
-		e.emplace<AnimationClip>("11222233");
-		e.emplace<Movement>(vec3(100, 200, 3), vec3(10, 20, 30.3), vec3(30, 20, 20));
-		e.emplace<Transform>();
-		e.emplace<ColliderInfo>(Geometry(Sphere(10)), glm::identity<mat4>(), true, entt::entity(300));
-		e.emplace<SkillState>("eeeee");
->>>>>>> ee02c5adf7910b0e85a36ed87b897a0b58038d42
-		e.emplace<Collider>(Geometry(Sphere(10)), true, entt::entity(10));
-		e.emplace<ActorState>(ActorStateType::kAttack);
-	}
-	{
-		AutoTimer t("snapshot");
-		entt::snapshot{ registry }.entities(oar)
-			.component<
-<<<<<<< HEAD
-				Transform>(oar);
-=======
-				AnimationClip,
-				Movement,
-				Transform,
-				ColliderInfo,
-				SkillState,
-				Collider,
-				ActorState>(oar);
->>>>>>> ee02c5adf7910b0e85a36ed87b897a0b58038d42
-	}
-	buffer.Clear();
-	{
-		AutoTimer t("snapshot");
-		entt::snapshot{ registry }.entities(oar)
-			.component<
-<<<<<<< HEAD
-			Transform
-=======
-			//Movement,
-			vec3
-			>(oar);
-	}
-	buffer.Clear();
-	auto b = std::is_pod_v<Transform>;
-	std::cout << b << std::endl;
-	std::vector<Transform> vec(70000);
-	{
-		AutoTimer t("snapshot");
-		oar(vec);
-	}
-
-	buffer.Clear();
-	{
-		AutoTimer t("snapshot");
-		entt::snapshot{ registry }.entities(oar)
-			.component<
-			AnimationClip,
-			Movement,
-			Transform,
-			ColliderInfo,
-			SkillState,
-			Collider,
-			ActorState,
-			AttributeUnitList,
-			Health,
-			Skill
->>>>>>> ee02c5adf7910b0e85a36ed87b897a0b58038d42
-			>(oar);
-	}
-
-	buffer.Clear();
-	std::vector<Transform> transforms(7000);
-	{
-		AutoTimer t("snapshot");
-		oar(transforms);
-	}
 
 }

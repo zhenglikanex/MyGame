@@ -7,6 +7,7 @@
 #include "Framework/Game/Component/TransformState.hpp"
 #include <any>
 #include <iostream>
+#include "Framework/Game/Math.hpp"
 
 using namespace std::chrono;
 
@@ -18,10 +19,17 @@ struct Serialize1
 
 TEST_CASE_METHOD(Serialize1, "NetMessage")
 {
+	//std::numeric_limits<float>::epsilon()
+	auto v2 = ProjectOnPlane(vec3(0,1.0,0), vec3(0, 1.0, 0));
+	auto v1 = glm::normalize(vec3(0,0,0));
+	auto v = LookRotation(vec3(1, 0, 0), vec3(0, 1, 0));
+
 	int a = 10;
 	int* p1 = &a;
 	int* p2 = &a;
 	int* p3 = p1;
+
+	auto va = glm::cos(glm::radians(90.f));
 
 	std::cout << (&p1 == &p2) << (p1 == p3) << (p2 == p3) << std::endl;
 	/*std::vector<int> iv;

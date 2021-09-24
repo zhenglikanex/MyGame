@@ -35,6 +35,16 @@ ClientGameHelper::~ClientGameHelper()
 
 }
 
+bool ClientGameHelper::IsClient() const
+{
+	return true;
+}
+
+bool ClientGameHelper::IsServer() const
+{
+	return false;
+}
+
 std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::registry& registry) const
 {
 	std::vector<std::unique_ptr<System>> systems;

@@ -17,12 +17,23 @@
 #include "Framework/Game/System/SkillSystem.hpp"
 #include "Framework/Game/System/UpdateColliderTransformSystem.hpp"
 #include "Framework/Game/System/PhysicsSystem.hpp"
+#include "Framework/Game/System/KinematicCharacterMovementSystem.hpp"
 
 #include "Server/BattleActor/System/ServerSyncSystem.hpp"
 
 ServerGameHelper::~ServerGameHelper()
 {
 
+}
+
+bool ServerGameHelper::IsClient() const
+{
+	return false;
+}
+
+bool ServerGameHelper::IsServer() const
+{
+	return true;
 }
 
 std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(entt::registry& registry) const
@@ -38,6 +49,7 @@ std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<SkillStateSystem>(registry));
 	systems.emplace_back(std::make_unique<RootMotionSystem>(registry));
 	systems.emplace_back(std::make_unique<MovementSystem>(registry));
+	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(registry));
 	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
 	systems.emplace_back(std::make_unique<SkillSystem>(registry));
 	systems.emplace_back(std::make_unique<AnimationSystem>(registry));

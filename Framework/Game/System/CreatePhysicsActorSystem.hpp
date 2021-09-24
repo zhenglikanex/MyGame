@@ -49,20 +49,64 @@ struct CreatePhysicsActorSystem : public System
 			auto& geom = collider_info.geometry;
 			if (geom.type() == GeometryType::kBox)
 			{
-				actor = PhysicsUtility::CreateKinematic(registry, px_transform, PxBoxGeometry(geom.box().e.x, geom.box().e.y, geom.box().e.z), collider_info.trigger, offset);
+				if (collider_info.rigid_type == RigidType::kDynamic)
+				{
+					actor = PhysicsUtility::CreateDynamic(registry, px_transform, PxBoxGeometry(geom.box().e.x, geom.box().e.y, geom.box().e.z), collider_info.trigger, offset);
+				}
+				else if(collider_info.rigid_type == RigidType::kStatic)
+				{
+					actor = PhysicsUtility::CreateStatic(registry, px_transform, PxBoxGeometry(geom.box().e.x, geom.box().e.y, geom.box().e.z), collider_info.trigger, offset);
+				}
+				else if (collider_info.rigid_type == RigidType::kKinematic)
+				{
+					actor = PhysicsUtility::CreateKinematic(registry, px_transform, PxBoxGeometry(geom.box().e.x, geom.box().e.y, geom.box().e.z), collider_info.trigger, offset);
+				}
 			}
 			else if (geom.type() == GeometryType::kCapsule)
 			{
-				actor = PhysicsUtility::CreateKinematic(registry, px_transform, PxCapsuleGeometry(geom.capsule().r, geom.capsule().h), collider_info.trigger, offset);
+				if (collider_info.rigid_type == RigidType::kDynamic)
+				{
+					actor = PhysicsUtility::CreateDynamic(registry, px_transform, PxCapsuleGeometry(geom.capsule().r, geom.capsule().h), collider_info.trigger, offset);
+				}
+				else if (collider_info.rigid_type == RigidType::kStatic)
+				{
+					actor = PhysicsUtility::CreateStatic(registry, px_transform, PxCapsuleGeometry(geom.capsule().r, geom.capsule().h), collider_info.trigger, offset);
+				}
+				else if (collider_info.rigid_type == RigidType::kKinematic)
+				{
+					actor = PhysicsUtility::CreateKinematic(registry, px_transform, PxCapsuleGeometry(geom.capsule().r, geom.capsule().h), collider_info.trigger, offset);
+				}
 			}
 			else if (geom.type() == GeometryType::kSphere)
 			{
-				actor = PhysicsUtility::CreateKinematic(registry, px_transform, PxSphereGeometry(geom.sphere().r), collider_info.trigger, offset);
+				if (collider_info.rigid_type == RigidType::kDynamic)
+				{
+					actor = PhysicsUtility::CreateDynamic(registry, px_transform, PxSphereGeometry(geom.sphere().r), collider_info.trigger, offset);
+				}
+				else if (collider_info.rigid_type == RigidType::kStatic)
+				{
+					actor = PhysicsUtility::CreateStatic(registry, px_transform, PxSphereGeometry(geom.sphere().r), collider_info.trigger, offset);
+				}
+				else if (collider_info.rigid_type == RigidType::kKinematic)
+				{
+					actor = PhysicsUtility::CreateKinematic(registry, px_transform, PxSphereGeometry(geom.sphere().r), collider_info.trigger, offset);
+				}
 			}
 			
 			if (actor)
 			{
-				registry.emplace<PhysicsStaticTag>(e);
+				if (collider_info.rigid_type == RigidType::kDynamic)
+				{
+					registry.emplace<PhysicsDynamicTag>(e);
+				}
+				else if (collider_info.rigid_type == RigidType::kStatic)
+				{
+					registry.emplace<PhysicsStaticTag>(e);
+				}
+				else if (collider_info.rigid_type == RigidType::kKinematic)
+				{
+					registry.emplace<PhysicsKinematicTag>(e);
+				}
 				registry.emplace<PhysicsActor>(e, e, actor);
 				actor->userData = (void*)e;
 

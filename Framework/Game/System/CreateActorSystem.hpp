@@ -66,6 +66,7 @@ struct CreateActorSystem : public System
 			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
 
 			// character controllerœ‡πÿ
+			registry.emplace<MovementForward>(e);
 			registry.emplace<Character>(e);
 			registry.emplace<CharacterMovement>(e);
 

@@ -21,6 +21,8 @@
 #include "Framework/Game/Utility/ActorUtility.hpp"
 #include "Framework/Game/Utility/PhysicsUtility.hpp"
 
+#include "Framework/Game/Data/SceneConfig.hpp"
+
 using namespace std::chrono;
 
 Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
@@ -59,6 +61,7 @@ bool Game::Initialize()
 	//file_service.set_cur_path(std::filesystem::current_path().string() + "/Assets/Resources/");
 
 	LoadAllConfig();
+	LoadScene("Battle.json");
 	CreatePlayer();
 
 	return true;
@@ -181,17 +184,37 @@ void Game::InputCommand(uint32_t frame,uint32_t id, const Command& command)
 	group.commands.emplace(id,command);
 }
 
-void Game::CreatePlayer()
-{
-	for (auto& player_info : player_infos_)
-	{ 
-		ActorUtiltiy::CreatePlayer(registry_, player_info.id, player_info.actor_asset);
-	}
-}
-
 void Game::LoadAllConfig()
 {
 	
+}
+
+void Game::LoadScene(const std::string& name)
+{
+	const std::string path = "Config/Scene/";
+
+	auto& locator = registry_.ctx<Locator>();
+	auto content = locator.Ref<FileService>().OpenFile(path + name);
+
+	assert(content != "" && "not scene info");
+
+	nlohmann::json j = nlohmann::json::parse(content);
+	auto scene = j.get<SceneInfo>();
+
+	for (auto& obstacle : scene.obstacles())
+	{
+		auto e = registry_.create();
+		registry_.emplace<ColliderInfo>(e, obstacle.collider);
+		registry_.emplace<Transform>(e, obstacle.transform);
+	}
+}
+
+void Game::CreatePlayer()
+{
+	for (auto& player_info : player_infos_)
+	{
+		ActorUtiltiy::CreatePlayer(registry_, player_info.id, player_info.actor_asset, vec3(player_info.id * 0.3f, 0, 0));
+	}
 }
 
 CommandGroup& Game::GetCommandGroup(uint32_t frame)

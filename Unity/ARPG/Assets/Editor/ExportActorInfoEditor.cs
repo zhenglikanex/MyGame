@@ -9,6 +9,13 @@ using LitJson;
 
 public class ExportActorInfoEditor : EditorWindow
 {
+    public enum RigidType
+    {
+        kStatic,
+	    kDynamic,
+	    kKinematic
+    };
+
     public class Collision
     {
         
@@ -20,15 +27,17 @@ public class ExportActorInfoEditor : EditorWindow
         public Matrix4x4  transform; // Transform
         public Vector3 e;   //Positive halfwidth extents of OBB along each axis
         public bool trigger;
+        public RigidType rigid_type;
     }
 
     public class CapsuleCollision : Collision
     {
         public string type = "capsule";
-        public Vector3 a;      // Medial line segment start point
-        public Vector3 b;      // Medial line segment end point
+        public Matrix4x4 transform; // Transform
         public float r;      // Radius
-        public bool tigger;
+        public float half_h;    
+        public bool trigger;
+        public RigidType rigid_type;
     }
 
     public class ActorInfo
@@ -129,30 +138,29 @@ public class ExportActorInfoEditor : EditorWindow
             collision.transform = Matrix4x4.Translate(boxCollider.center);
             collision.e = boxCollider.size / 2.0f;
             collision.trigger = boxCollider.isTrigger;
+            collision.rigid_type = RigidType.kKinematic;
             return collision;
         }
         else if (collider.GetType() == typeof(CapsuleCollider))
         {
             var capsuleCollider = (CapsuleCollider)collider;
             CapsuleCollision collision = new CapsuleCollision();
-            
-            if(capsuleCollider.direction == 0)      //x
+            collision.r = capsuleCollider.radius;
+            collision.half_h = capsuleCollider.height * 0.5f - capsuleCollider.radius;
+            collision.trigger = capsuleCollider.isTrigger;
+            collision.rigid_type = RigidType.kKinematic;
+
+            if (capsuleCollider.direction == 0)//x
             {
-                collision.a = capsuleCollider.center - collider.transform.localRotation * Vector3.right * (capsuleCollider.height * 0.5f);
-                collision.b = capsuleCollider.center + collider.transform.localRotation * Vector3.right * (capsuleCollider.height * 0.5f);
-                collision.r = capsuleCollider.radius;
+                collision.transform = Matrix4x4.TRS(capsuleCollider.center, Quaternion.identity, new Vector3(1, 1, 1));
             }
-            else if(capsuleCollider.direction == 1) //y
+            else if (capsuleCollider.direction == 1) //y
             {
-                collision.a = capsuleCollider.center - collider.transform.localRotation * Vector3.up * (capsuleCollider.height * 0.5f);
-                collision.b = capsuleCollider.center + collider.transform.localRotation * Vector3.up * (capsuleCollider.height * 0.5f);
-                collision.r = capsuleCollider.radius;
+                collision.transform = Matrix4x4.TRS(capsuleCollider.center, Quaternion.Euler(0, 0, 90), new Vector3(1, 1, 1));
             }
-            else if(capsuleCollider.direction == 2) //z
+            else if (capsuleCollider.direction == 2) //z
             {
-                collision.a = capsuleCollider.center - collider.transform.localRotation * Vector3.forward * (capsuleCollider.height * 0.5f);
-                collision.b = capsuleCollider.center + collider.transform.localRotation * Vector3.forward * (capsuleCollider.height * 0.5f);
-                collision.r = capsuleCollider.radius;
+                collision.transform = Matrix4x4.TRS(capsuleCollider.center, Quaternion.Euler(0, 90, 0), new Vector3(1, 1, 1));
             }
 
             return collision;

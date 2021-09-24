@@ -11,6 +11,6 @@ public:
 
 	void DrawCube(const vec3& position, const quat& rotation, const vec3& size) const override;
 	void DrawSphere(const vec3& position, fixed16 radius) const override;
-	void DrawCapsule(const vec3& position, const vec3& a, const vec3& b, fixed16 radius) const override;
+	void DrawCapsule(const vec3& position, const quat& rotation, fixed16 half_height, fixed16 radius) const override;
 private:
 };
