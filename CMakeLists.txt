@@ -5,7 +5,7 @@ project(MyGame)
 #添加camke模块
 include(cmake/common.cmake)
 
-#设置文件夹归�?
+#设置文件夹归�??
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 
 if(WIN32)
@@ -23,6 +23,7 @@ include_directories("${PROJECT_SOURCE_DIR}/3rdparty/include")
 include_directories("${PROJECT_SOURCE_DIR}/3rdparty/include/physx")
 include_directories("${PROJECT_SOURCE_DIR}/3rdparty/include/pxshared")
 include_directories("${PROJECT_SOURCE_DIR}/Framework/Kanex/Src")
+include_directories("${PROJECT_SOURCE_DIR}/3rdparty/src/lua-5.3.6/src")
 
 #define debug
 set (CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG -D_DEBUG")
@@ -30,6 +31,8 @@ set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -D_DEBUG")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/bin/debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin/release)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR}/bin/debug)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR}/bin/release)
 
 set(PROTOBUF_LIB_PATH ${PROJECT_SOURCE_DIR}/3rdparty/lib/)
 set(PHYSX_LIB_PATH ${PROJECT_SOURCE_DIR}/3rdparty/lib/physx)
@@ -61,8 +64,9 @@ add_subdirectory(Client)
 add_subdirectory(Server)
 add_subdirectory(Test)
 add_subdirectory(ClientProxy)
+add_subdirectory(3rdparty/src/lua-5.3.6)
 
-#安装MyGameClient到Unity Plugins目录�?
+#安装MyGameClient到Unity Plugins目录�??
 install(TARGETS MyGameClient
     RUNTIME DESTINATION Unity/ARPG
     LIBRARY DESTINATION Unity/ARPG

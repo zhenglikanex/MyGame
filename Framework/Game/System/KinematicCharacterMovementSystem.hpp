@@ -301,7 +301,7 @@ struct KinematicCharacterMovementSystem : public System
 
 			if (character_->interactive_rigid_body_handling)
 			{
-				character_movement_->last_attached_rigidbody_ = character_movement_->attached_rigidbody_;
+				character_movement_->last_attached_rigidbody = character_movement_->attached_rigidbody;
 				// 指定要连接的刚体
 				if (nullptr)
 				{
@@ -316,26 +316,26 @@ struct KinematicCharacterMovementSystem : public System
 						PxRigidDynamic* interactive_rigidbody = GetInteractiveRigidbody(character_movement_->grounding_status.ground_collider);
 						if (interactive_rigidbody)
 						{
-							character_movement_->attached_rigidbody_ = interactive_rigidbody;
+							character_movement_->attached_rigidbody = interactive_rigidbody;
 						}
 					}
 					else
 					{
-						character_movement_->attached_rigidbody_ = nullptr;
+						character_movement_->attached_rigidbody = nullptr;
 					}
 				}
 
 				vec3 tmp_velocity_from_current_attached_rigidbody = vec3(0);
-				if (character_movement_->attached_rigidbody_)
+				if (character_movement_->attached_rigidbody)
 				{
 					tmp_velocity_from_current_attached_rigidbody = 
-						GetVelocityFromRigidbodyMovement(character_movement_->attached_rigidbody_,transient_position_, dt);
+						GetVelocityFromRigidbodyMovement(character_movement_->attached_rigidbody,transient_position_, dt);
 				}
 
 				//离开运动的刚体时保持惯性速度
 				if (character_->preserve_attached_rigidbody_momentum &&
-					character_movement_->last_attached_rigidbody_ != nullptr &&
-					character_movement_->last_attached_rigidbody_ != character_movement_->attached_rigidbody_)
+					character_movement_->last_attached_rigidbody != nullptr &&
+					character_movement_->last_attached_rigidbody != character_movement_->attached_rigidbody)
 				{
 					character_movement_->base_velocity += character_movement_->attached_rigidbody_velocity;
 					character_movement_->base_velocity -= tmp_velocity_from_current_attached_rigidbody;
@@ -343,7 +343,7 @@ struct KinematicCharacterMovementSystem : public System
 
 				// 处理附加刚体的附加速度
 				character_movement_->attached_rigidbody_velocity = vec3(0);
-				if (auto rigidbody = character_movement_->attached_rigidbody_)
+				if (auto rigidbody = character_movement_->attached_rigidbody)
 				{
 					character_movement_->attached_rigidbody_velocity = tmp_velocity_from_current_attached_rigidbody;
 					
@@ -357,9 +357,9 @@ struct KinematicCharacterMovementSystem : public System
 
 				// 在附着的刚提上着陆时抵消水平速度
 				if (character_movement_->grounding_status.ground_collider &&
-					character_movement_->grounding_status.ground_collider == character_movement_->attached_rigidbody_ &&
-					character_movement_->attached_rigidbody_ != nullptr &&
-					character_movement_->last_attached_rigidbody_ == nullptr
+					character_movement_->grounding_status.ground_collider == character_movement_->attached_rigidbody &&
+					character_movement_->attached_rigidbody != nullptr &&
+					character_movement_->last_attached_rigidbody == nullptr
 					)
 				{
 					character_movement_->base_velocity -= ProjectOnPlane(character_movement_->attached_rigidbody_velocity, character_up_);
@@ -384,7 +384,7 @@ struct KinematicCharacterMovementSystem : public System
 			}
 
 			registry.replace<Transform>(e, transient_position_, transient_rotation_);
-			INFO("update 1 transient_position_ x{} y{} z{}", transient_position_.x, transient_position_.y, transient_position_.z);
+			INFO("update 1 transient_position_ x{c} y{} z{}", transient_position_.x, transient_position_.y, transient_position_.z);
 		}
 
 		registry.clear<MovePositionTarget>();
@@ -442,7 +442,7 @@ struct KinematicCharacterMovementSystem : public System
 			if (solve_movement_collisions && character_->interactive_rigid_body_handling)
 			{
 				// 求解可能的刚体重叠(UpdatePhase1移动后可能有重叠)
-				if (character_movement_->attached_rigidbody_)
+				if (character_movement_->attached_rigidbody)
 				{
 					float upwards_offset = px_caspule_.radius;
 					
@@ -454,7 +454,7 @@ struct KinematicCharacterMovementSystem : public System
 						upwards_offset,
 						closest_hit))
 					{
-						if (closest_hit.actor == character_movement_->attached_rigidbody_ && IsStableOnNormal(PhysicsUtility::Vec3(closest_hit.normal)))
+						if (closest_hit.actor == character_movement_->attached_rigidbody && IsStableOnNormal(PhysicsUtility::Vec3(closest_hit.normal)))
 						{
 							float distance_moveed_up = (upwards_offset - closest_hit.distance);
 							transient_position_ = transient_position_ + (character_up_ * distance_moveed_up) + (character_up_ * kCollisionOffset);
@@ -512,7 +512,7 @@ struct KinematicCharacterMovementSystem : public System
 										{
 											character_movement_->last_movement_iteration_found_any_ground = is_stable;
 										}
-										if (probed_rigid_body != character_movement_->attached_rigidbody_)
+										if (probed_rigid_body != character_movement_->attached_rigidbody)
 										{
 											vec3 estimated_collision_point = transient_position_;
 											vec3 velocity = character_movement_->base_velocity + character_movement_->attached_rigidbody_velocity;
@@ -634,7 +634,7 @@ struct KinematicCharacterMovementSystem : public System
 			if (body_hit.rigidbody &&
 				std::find(rigidbodies_pushed_this_move.begin(), rigidbodies_pushed_this_move.end(), body_hit.rigidbody) == rigidbodies_pushed_this_move.end())
 			{
-				if (body_hit.rigidbody != character_movement_->attached_rigidbody_)
+				if (body_hit.rigidbody != character_movement_->attached_rigidbody)
 				{
 					if (PxRigidDynamic* rigidbody = body_hit.rigidbody)
 					{
@@ -990,11 +990,6 @@ struct KinematicCharacterMovementSystem : public System
 					remaining_movement_direction,
 					remaining_movement_magnitude + kCollisionOffset,
 					closest_hit);
-				INFO("CharacterCollisionsSweep {}", hits.size());
-				if (hits.size() > 1)
-				{
-					int a = 10;
-				}
 				if (hits.size() > 0)
 				{
 					closeset_sweep_hit_normal = PhysicsUtility::Vec3(closest_hit.normal);
@@ -1026,14 +1021,11 @@ struct KinematicCharacterMovementSystem : public System
 				if (solve_grounding && character_->support_step && move_hit_stability_report.vaild_step_detected)
 				{
 					float obstruction_correlation = std::abs(glm::dot(closeset_sweep_hit_normal, character_up_));
-					INFO("closeset_sweep_hit_normal {} {} {}", closeset_sweep_hit_normal.x, closeset_sweep_hit_normal.y, closeset_sweep_hit_normal.z);
-					INFO("obstruction_correlation{}", obstruction_correlation);
 					if (obstruction_correlation <= kCorrelationForVerticalObstruction)
 					{
 						vec3 step_forward_direction = Normalize(ProjectOnPlane(-closeset_sweep_hit_normal, character_up_));
 						vec3 step_cast_start_point = (tmp_moved_position + (step_forward_direction * kSteppingForwardDistance)) +
 							(character_up_ * character_->max_step_height);
-						INFO("step_cast_start_point {} {} {}", step_cast_start_point.x, step_cast_start_point.y, step_cast_start_point.z);
 
 						//从踏步陶都的顶部向下投射
 						PxSweepHit closest_step_hit;
@@ -1051,11 +1043,7 @@ struct KinematicCharacterMovementSystem : public System
 						{
 							if (hit.actor == move_hit_stability_report.stepped_collider)
 							{
-								vec3 end_step_position = step_cast_start_point + (-character_up_ * hit.distance - kCollisionOffset);
-								if (end_step_position.y > 0.6f)
-								{
-									int a = 10;
-								}
+								vec3 end_step_position = step_cast_start_point + (-character_up_ * (hit.distance - kCollisionOffset));
 								tmp_moved_position = end_step_position;
 								found_valid_step_hit = true;
 
@@ -1102,12 +1090,6 @@ struct KinematicCharacterMovementSystem : public System
 						transient_velocity,
 						remaining_movement_magnitude,
 						remaining_movement_direction);
-
-					if (remaining_movement_direction.y > std::numeric_limits<float>::epsilon())
-					{
-						int at = 10;
-					}
-
 					previous_hit_is_srtable = stable_on_hit;
 					previous_veloctiy = velocity_before_proj;
 					previous_obstruction_normal = obstruction_noraml;
@@ -1137,15 +1119,7 @@ struct KinematicCharacterMovementSystem : public System
 		}
 
 		//移动剩余移动的位置
-		if (tmp_moved_position.y > 0.6f)
-		{
-			int at = 10;
-		}
 		tmp_moved_position += (remaining_movement_direction * remaining_movement_magnitude);
-		if (tmp_moved_position.y > 0.6f)
-		{
-			int at = 10;
-		}
 		transient_position_ = tmp_moved_position;
 
 		return was_completed;
@@ -1702,7 +1676,7 @@ struct KinematicCharacterMovementSystem : public System
 				bool is_rigidbody_kinematic = rigid_dynamic->getRigidBodyFlags() & PxRigidBodyFlag::eKINEMATIC;
 
 				// 如果移动来自接AttachedRigidbody则忽略他
-				if (is_moving_from_attached_rigidbody && (!is_rigidbody_kinematic || rigid_dynamic == character_movement_->attached_rigidbody_))
+				if (is_moving_from_attached_rigidbody && (!is_rigidbody_kinematic || rigid_dynamic == character_movement_->attached_rigidbody))
 				{
 					return false;
 				}

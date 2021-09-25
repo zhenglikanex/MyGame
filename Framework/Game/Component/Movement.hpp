@@ -111,8 +111,8 @@ struct CharacterMovement
 	CharacterGroundingReport last_grounding_status;
 
 	//Á¬½ÓµÄrigidbody
-	PxRigidDynamic* attached_rigidbody_;
-	PxRigidDynamic* last_attached_rigidbody_;
+	PxRigidDynamic* attached_rigidbody;
+	PxRigidDynamic* last_attached_rigidbody;
 
 	std::array<RigidbodyProjectionHit, 16> internal_rigidbody_projection_hits;
 	int rigidbody_projection_hit_count;

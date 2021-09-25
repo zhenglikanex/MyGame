@@ -10,6 +10,7 @@ add_subdirectory(OctTree)
 add_subdirectory(Serialize)
 add_subdirectory(AsioClient)
 add_subdirectory(AsioServer)
+add_subdirectory(Sol)
 #add_subdirectory(KcpClient)
 #add_subdirectory(PhysXTest)
 
