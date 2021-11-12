@@ -1,0 +1,2 @@
+Attribute其可以表示从角色生命值到角色等级再到一瓶药水的剂量的任何事物, 如果某项数值是属于某个Actor且游戏相关的, 你就应该考虑使用Attribute. Attribute一般应该只能由GameplayEffect修改
+

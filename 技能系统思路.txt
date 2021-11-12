@@ -1,0 +1,18 @@
+抄UE4的GAS技能,主要使用lua来实现
+主要的类
+1.属性相关
+	1.Attribute
+	2.AttributeSet存放属性的合集
+2.具体影响相关
+	1.GameplayEffect 通过来改变拥有者的Attribute和Tags
+	2.GameplayEffectSpec GE的实例,保持对GE的引用
+3.技能相关
+	1.GameplayAbility
+	2.GameplayAbilitySpec
+4.表现相关
+	1.GameplayCue
+5.tag
+	GameplayTag
+
+6.AbilitySystemComponent
+	
