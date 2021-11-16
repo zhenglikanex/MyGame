@@ -1,8 +1,9 @@
 print("hello sol!")
 
-
-local s = a + 10
-print(s)
-print(10)
+function f(obj)
+    for k,v in pairs(obj.value) do
+        print(k,v)
+    end
+end
 
 return 10

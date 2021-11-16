@@ -53,6 +53,7 @@ System/TransformStateSystem.hpp
 System/PhysicsSystem.hpp
 System/KinematicCharacterMovementSystem.hpp
 System/CreatePhysicsActorSystem.hpp
+System/GASSystem.hpp
 
 Component/Remote.hpp
 Component/Local.hpp
@@ -83,6 +84,9 @@ Component/PhysicsWorld.hpp
 Component/PhysicsWorld.cpp
 Component/Character.hpp
 Component/PhysicsActor.hpp
+Component/GAS/ApplyGameplayEffectList.hpp
+Component/GAS/GameplayEffectList.hpp
+Component/GAS/GameplayTags.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp
@@ -106,17 +110,5 @@ add_library(Game
 )
 
 target_link_libraries(Game
-    debug ${PHYSX_LIBRARY_DEBU0G}
-    debug ${PHYSX_COMMON_LIBRARY_DEBU0G}
-    debug ${PX_FOUNDATION_LIBARY_DEBUG}
-    debug ${PHYSX_COOKING_LIBRARY_DEBUG}
-    debug ${PX_PVD_LIBARY_DEBUG}
-    debug ${PHYSX_EXTENSIONS_LIBRARY_DEBU0G}
 
-    optimized ${PHYSX_LIBRARY}
-    optimized ${PHYSX_COMMON_LIBRARY}
-    optimized ${PX_FOUNDATION_LIBARY}
-    optimized ${PHYSX_COOKING_LIBRARY}
-    optimized ${PX_PVD_LIBARY}
-    optimized ${PHYSX_EXTENSIONS_LIBRARY}
 )

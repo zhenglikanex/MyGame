@@ -51,6 +51,26 @@ function GetAbilitySystemComponentView()
 end
 
 function GetGameplayEffectList()
+    return 
+    {
+        {
+            spec = instance,
+            stack_count = 1,
+            duration = 0,   -- GE已经持续的时间
+            period = 0, --  GE周期时间,每个周期归零
+        },
+        {
+            spec = instance,
+            stack_count = 1,
+            duration = 0,   -- GE已经持续的时间
+            period = 0, --  GE周期时间,每个周期归零
+        },
+    }
+     
+end
+
+function GetGameplayEffectApplyList()
+    return { "name1","name2","name3" }
 end
 
 function GetGameplayAbilitySpec()
@@ -66,11 +86,11 @@ function GetImmunityInfo(e)
     local immunity = { require_tags = {} ,ignore_tags = {} }
     local ge_list = GetGameplayEffectList(e)
     for _,ge in pairs(ge_list) do
-        for _, tag in pairs(ge.immunity.granted_application_immunity_tags.require_tags) do
+        for _, tag in pairs(ge.spec.immunity.granted_application_immunity_tags.require_tags) do
             table.insert(immunity.require_tags,tag)
         end
 
-        for _,tag in pairs(ge.immunity.granted_application_immunity_tags.ignore_tags) do
+        for _,tag in pairs(ge.spec.immunity.granted_application_immunity_tags.ignore_tags) do
            table.insert(immunity.ignore_tags,tag)
         end
     end
@@ -164,28 +184,74 @@ function ApplyGameplayEffect(e,ge)
 end
 
 function DoApplyGameplayEffect(e,spec)
+    local applied = true
+
     local modifiers = GetModifiers(e)
     for _,modifier in pairs(spec.gameplay_effect.modifiers) do
         table.insert(modifiers,modifier)
     end
 
-    local ge_list = GetGameplayEffectList()
-    if spec.gameplay_effect.duration_poilcy == GameplayEffectDefine.DurationPolicy.Instant then
-        -- 不用做什么处理
+    local ge_list = GetGameplayEffectList(e)
+    local tags = GetTagsComponent(e)
+    if spec.gameplay_effect.duration_poilcy == GameplayEffectDefine.DurationPolicy.Duration or
+        spec.gameplay_effect.duration_poilcy == GameplayEffectDefine.DurationPolicy.Infinite then
 
-    elseif spec.gameplay_effect.duration_poilcy == GameplayEffectDefine.DurationPolicy.Duration then
-        
-        
+        if spec.stacking.stacking_type == GameplayEffectDefine.StackingType.None then
+            table.insert( ge_list, { spec = spec,duration = 0,period = 0,stack_count = 1 } )
+        else
+            local found = false
+            for _,ge in pairs(ge_list) do
+                if ge.spec.name == spec.name then
+                    if ge.stack_count < spec.stacking.stacking_limit_count then
+                        ge.stack_count = ge.stack_count + 1
+                    else
+                        applied = false
 
-    elseif spec.gameplay_effect.duration_poilcy == GameplayEffectDefine.DurationPolicy.Infinite then
+                        --处理overflow相关
+                        for _,overflow_effect in pairs(spec.overflow.overflow_effects) do
+                            -- todo 注意这里正在遍历ge_apply_list,往里面插数据会有问题,要另外处理
+                            local ge_apply_list = GetGameplayEffectApplyList(e)
+                            table.insert(ge_apply_list,overflow_effect)
+                        end
+                    end
 
+                    local reset_duration = spec.stacking.stack_duration_refresh_policy and (spec.overflow.deny_overflow_application ~= true or ge.stack_count <= spec.stacking.stacking_limit_count)
+                    local reset_period = spec.stacking.statck_period_reset_policy and (spec.overflow.deny_overflow_application ~= true or ge.stack_count <= spec.stacking.stacking_limit_count)
+                    
+                    if reset_duration then
+                        ge.duration = 0
+                    end
+
+                    if reset_period then
+                        ge.period = 0
+                    end
+
+                    found = true
+                end
+            end
+
+            if not found then
+                table.insert( ge_list, { spec = spec,duration = 0,period = 0,stack_count = 1 } )
+            end
+        end
+
+        if applied then
+            if not tags.ge[spec.name] then
+                tags.ge[spec.name] = Clone(spec.tag.granted_tags)
+            end
+
+            --todo 添加技能到带添加列表,等待后面的update添加
+            --
+
+            
+        end
     end
 end
 
 function UpdateApplyGE()
     local view = GetAbilitySystemComponentView()
     for _,e in pairs(e) do
-        local ge_list = GetGameplayEffectList(e)
+        local ge_list = GetGameplayEffectApplyList(e)
         for _,ge in pairs(ge_list) do
             ApplyGameplayEffect(e,ge)
         end
