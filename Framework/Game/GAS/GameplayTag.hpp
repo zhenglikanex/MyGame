@@ -37,31 +37,35 @@ public:
 		tag_ = rhs.tag_;
 		hierarchy_.clear();
 		split();
+
+		return *this;
 	}
 
 	const GameplayTag& operator=(GameplayTag&& rhs)
 	{
 		if (this == &rhs)
 		{
-			return *this;
+		return *this;
 		}
 
 		tag_ = std::move(rhs.tag_);
 		hierarchy_.clear();
 		split();
+
+		return *this;
 	}
 
-	bool operator==(const GameplayTag& tag)
+	bool operator==(const GameplayTag& tag) const
 	{
 		return tag_ == tag.tag_;
 	}
 
-	bool operator!=(const GameplayTag& tag)
+	bool operator!=(const GameplayTag& tag) const
 	{
 		return !(*this == tag);
 	}
 
-	bool Contain(const GameplayTag& tag)
+	bool Contain(const GameplayTag& tag) const
 	{
 		if (hierarchy_.size() > tag.hierarchy_.size())
 		{
@@ -107,9 +111,95 @@ private:
 	std::vector<std::string_view> hierarchy_;
 };
 
+class GameplayTagArray
+{
+public:
+	void Push(const GameplayTag& tag)
+	{
+		tags_.push_back(tag);
+	}
+
+	void Clear()
+	{
+		tags_.clear();
+	}
+
+	bool Find(GameplayTag& tag)
+	{
+		
+	}
+
+	bool HasAny(const GameplayTagArray& array) const
+	{
+		if (array.tags_.size() == 0 || tags_.size() == 0)
+		{
+			return true;
+		}
+
+		for (int i = 0; i < tags_.size(); ++i)
+		{
+			for (int j = 0; j < array.tags_.size(); ++j)
+			{
+				if (tags_[i].Contain(array.tags_[j]))
+				{
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	bool HasAll(const GameplayTagArray& array) const
+	{
+		if (array.tags_.size() == 0)
+		{
+			return true;
+		}
+
+		if (tags_.size() != array.tags_.size())
+		{
+			return false;
+		}
+
+		// todo:后面改成查表的方式来做
+		for (int i = 0; i < tags_.size(); ++i)
+		{
+			bool found = false;
+
+			for (int j = 0; j < array.tags_.size(); ++j)
+			{
+				if (tags_[i].Contain(array.tags_[j]))
+				{
+					found = true;
+					break;
+				}
+			}
+
+			if (!found)
+			{
+				return true;
+			}
+		}
+
+		return true;
+	}
+
+private:
+	std::vector<GameplayTag> tags_;
+};
+
 void RegisterGameplayTag(sol::state& lua)
 {
 	auto type = lua.new_usertype<GameplayTag>("GameplayTag", sol::constructors<GameplayTag(const std::string&), GameplayTag(const GameplayTag&)>());
 	type["tag"] = &GameplayTag::tag;
 	type["Contain"] = &GameplayTag::Contain;
+
+	auto type2 = lua.new_usertype<GameplayTagArray>("GameplayTagArray");
+	type["Push"] = &GameplayTagArray::Push;
+	type["Clear"] = &GameplayTagArray::Clear;
+	type["Find"] = &GameplayTagArray::Find;
+	type["HasAll"] = &GameplayTagArray::HasAll;
+	type["HasAny"] = &GameplayTagArray::HasAny;
+
 }

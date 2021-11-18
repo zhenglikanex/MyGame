@@ -5,9 +5,16 @@
 
 #include "3rdparty/include/sol/sol.hpp"
 
+struct GameplayEffectInfo
+{
+	std::string name;
+	uint32_t level;
+	entt::entity target;
+};
+
 struct ApplyGameplayEffectList
 {
-	std::vector<std::string> value;
+	std::vector<GameplayEffectInfo> value;
 };
 
 void RegisterApplyGameplayEffectList(sol::state& lua)

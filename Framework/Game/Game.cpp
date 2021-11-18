@@ -15,6 +15,8 @@
 #include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 
+#include "Framework/Game/GAS/GameplayEffectManager.hpp"
+
 #include "Framework/Game/System.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
 
@@ -35,6 +37,7 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 {
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
+	registry_.set<GameplayEffectManager>(registry_);
 
 	auto& game_helper = registry_.ctx<Locator>().Ref<const GameHelper>();
 	systems_ = game_helper.CreateSystems(registry_);

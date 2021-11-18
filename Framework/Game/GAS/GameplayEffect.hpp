@@ -4,10 +4,10 @@
 
 struct GameplayEffect
 {	
-	struct RequireAndIgnoreTags
+	struct RequirementsTags
 	{
-		std::vector<GameplayTag> require_tags;
-		std::vector<GameplayTag> ignore_tags;
+		GameplayTagArray require_tags;
+		GameplayTagArray ignore_tags;
 	};
 
 	enum class PeriodicInhibitionPolicy : uint8_t
@@ -26,18 +26,19 @@ struct GameplayEffect
 
 	Period period;
 
-	struct Appliction
+	struct Application
 	{
 		float chance_to_apply_to_target = 0;	 //--(0 - 1)范围0~1，0不会影响，1一定影响
+		//std::function<void(GameplayTag& tag)> application_requirements;
 		//ApplicationRequirements：可自定义较复杂的概率计算，类似于Executions与Modifiers
 		//std::function<void(target,source)>
 	};
 
-	Appliction appliction;
+	Application application;
 
 	struct Immunity
 	{
-		RequireAndIgnoreTags granted_application_immunity_tags;
+		RequirementsTags granted_application_immunity_tags;
 	};
 	
 	Immunity immunity;
@@ -77,7 +78,7 @@ struct GameplayEffect
 	struct Stacking
 	{
 		StackingType stacking_type = StackingType::None;
-		uint8_t statck_limit_count = 0;
+		uint8_t stack_limit_count = 0;
 		bool stack_duration_refresh_policy = true;
 		bool statck_period_reset_policy = true;
 		StatckExpirationPolicy statck_expiration_policy = StatckExpirationPolicy::ClearEntireStack;
@@ -120,8 +121,8 @@ struct GameplayEffect
 		std::string attribute;
 		ModifierOp modifier_op = ModifierOp::Add;
 		
-		RequireAndIgnoreTags source_tags;
-		RequireAndIgnoreTags target_tags;
+		RequirementsTags source_tags;
+		RequirementsTags target_tags;
 	};
 
 	struct Execution
@@ -152,6 +153,8 @@ struct GameplayEffect
 		AbilityRemovalPolicy removal_policy = AbilityRemovalPolicy::DoNothing;
 	};
 
+	GrantedAbility granted_ability;
+
 	struct Display
 	{
 		std::vector<std::string> cues;
@@ -161,8 +164,99 @@ struct GameplayEffect
 
 	struct Tag
 	{
-		std::vector<GameplayTag> gameplay_effect_asset_tags;
+		GameplayTagArray gameplay_effect_asset_tags;
+		GameplayTagArray granted_tags;
+		RequirementsTags ongoing_tag_requirements;
+		RequirementsTags application_tag_requirements;
+		RequirementsTags removal_tag_requirements;
+		GameplayTagArray remove_gameplay_effects_with_tags;
 	};
 
 	Tag tag;
 };
+
+struct GameplayEffectSpec
+{
+	GameplayEffect& gameplay_effect;
+	uint8_t level = 1;
+	
+	GameplayEffectSpec(GameplayEffect& _gameplay_effect,uint8_t _level)
+		:gameplay_effect(gameplay_effect),level(_level)
+	{
+		
+	}
+};
+
+void RegisterGameplayEffect(sol::state& lua)
+{
+	auto type1 = lua.new_usertype<GameplayEffect::RequirementsTags>("GERequirementsTags");
+	type1["require_tags"] = &GameplayEffect::RequirementsTags::require_tags;
+	type1["ignore_tags"] = &GameplayEffect::RequirementsTags::ignore_tags;
+
+	auto type2 = lua.new_usertype<GameplayEffect::Period>("GEPeriod");
+	type2["period"] = &GameplayEffect::Period::period;
+	type2["duration"] = &GameplayEffect::Period::duration;
+	type2["periodic_inhibition_policy"] = &GameplayEffect::Period::periodic_inhibition_policy;
+
+	auto type3 = lua.new_usertype<GameplayEffect::Application>("GEApplication");
+	type3["chance_to_apply_to_target"] = &GameplayEffect::Application::chance_to_apply_to_target;
+
+	auto type4 = lua.new_usertype<GameplayEffect::Immunity>("GEImmunity");
+	type4["granted_application_immunity_tags"] = &GameplayEffect::Immunity::granted_application_immunity_tags;
+
+	auto type5 = lua.new_usertype<GameplayEffect::Overflow>("GEOverflow");
+	type5["overflow_effects"] = &GameplayEffect::Overflow::overflow_effects;
+	type5["deny_overflow_application"] = &GameplayEffect::Overflow::deny_overflow_application;
+	type5["clear_stack_on_overflow"] = &GameplayEffect::Overflow::clear_stack_on_overflow;
+
+	auto type6 = lua.new_usertype<GameplayEffect::Stacking>("GEStacking");
+	type6["stacking_type"] = &GameplayEffect::Stacking::stacking_type;
+	type6["stack_limit_count"] = &GameplayEffect::Stacking::stack_limit_count;
+	type6["stack_duration_refresh_policy"] = &GameplayEffect::Stacking::stack_duration_refresh_policy;
+	type6["statck_period_reset_policy"] = &GameplayEffect::Stacking::statck_period_reset_policy;
+	type6["statck_expiration_policy"] = &GameplayEffect::Stacking::statck_expiration_policy;
+
+	auto type7 = lua.new_usertype<GameplayEffect::ModifierMagnitude>("GEModifierMagnitude");
+	type7["calculation_type"] = &GameplayEffect::ModifierMagnitude::calculation_type;
+	type7["value"] = &GameplayEffect::ModifierMagnitude::value;
+
+	auto type8 = lua.new_usertype<GameplayEffect::Modifier>("GEModifier");
+	type8["attribute"] = &GameplayEffect::Modifier::attribute;
+	type8["modifier_op"] = &GameplayEffect::Modifier::modifier_op;
+	type8["source_tags"] = &GameplayEffect::Modifier::source_tags;
+	type8["target_tags"] = &GameplayEffect::Modifier::target_tags;
+
+	auto type9 = lua.new_usertype<GameplayEffect::Execution>("GEExecution");
+
+	auto type10 = lua.new_usertype<GameplayEffect::GameplayEffectModifier>("GEGameplayEffectModifier");
+	type10["duration_policy"] = &GameplayEffect::GameplayEffectModifier::duration_policy;
+	type10["modifiers"] = &GameplayEffect::GameplayEffectModifier::modifiers;
+	type10["executions"] = &GameplayEffect::GameplayEffectModifier::executions;
+
+	auto type11 = lua.new_usertype<GameplayEffect::GrantedAbility>("GEGrantedAbility");
+	type11["ability"] = &GameplayEffect::GrantedAbility::ability;
+	type11["level"] = &GameplayEffect::GrantedAbility::level;
+	type11["removal_policy"] = &GameplayEffect::GrantedAbility::removal_policy;
+
+	auto type12 = lua.new_usertype<GameplayEffect::Display>("GEDisplay");
+	type12["cues"] = &GameplayEffect::Display::cues;
+
+	auto type13 = lua.new_usertype<GameplayEffect::Tag>("GETag");
+	type13["gameplay_effect_asset_tags"] = &GameplayEffect::Tag::gameplay_effect_asset_tags;
+	type13["granted_tags"] = &GameplayEffect::Tag::granted_tags;
+	type13["ongoing_tag_requirements"] = &GameplayEffect::Tag::ongoing_tag_requirements;
+	type13["application_tag_requirements"] = &GameplayEffect::Tag::application_tag_requirements;
+	type13["removal_tag_requirements"] = &GameplayEffect::Tag::removal_tag_requirements;
+	type13["remove_gameplay_effects_with_tags"] = &GameplayEffect::Tag::remove_gameplay_effects_with_tags;
+
+	auto type14 = lua.new_usertype<GameplayEffect>("GameplayEffect");
+	type14["period"] = &GameplayEffect::period;
+	type14["application"] = &GameplayEffect::application;
+	type14["immunity"] = &GameplayEffect::immunity;
+	type14["overflow"] = &GameplayEffect::overflow;
+	type14["stacking"] = &GameplayEffect::stacking;
+	type14["gameplay_effect"] = &GameplayEffect::gameplay_effect;
+	type14["granted_ability"] = &GameplayEffect::granted_ability;
+	type14["display"] = &GameplayEffect::display;
+	type14["tag"] = &GameplayEffect::tag;
+}
