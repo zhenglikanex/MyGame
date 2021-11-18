@@ -30,7 +30,17 @@ struct GASSystem : public System
 
 	bool CheckApplicationTagRequirements(GameplayEffect& ge,GameplayTags& source_tags,GameplayTags& target_tags)
 	{
-		ge.tag.application_tag_requirements.require_tags
+		if (!source_tags.HasAll(ge.tag.application_tag_requirements.require_tags))
+		{
+			return false;
+		}
+
+		if (target_tags.HasAny(ge.tag.application_tag_requirements.ignore_tags))
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	void ApplyGameplayEffect()

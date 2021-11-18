@@ -10,19 +10,39 @@
 
 struct GameplayTags
 {
-	std::vector<GameplayTag> self;
-	std::unordered_map<std::string, std::vector<GameplayTag>> ge_tags;
+	std::unordered_map<GameplayEffect*, GameplayTagArray> value;
 
-	void ApplyGETags(const std::string& ge)
+	bool HasAny(const GameplayTagArray& array) const
 	{
-		ge_tags.emplace(ge, std::vector<GameplayTag>());
+		
+
+		for (auto& item : value)
+		{
+			if (item.second.HasAny(array))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	bool HasAll(const GameplayTagArray& array) const
+	{
+		for (auto& item : value)
+		{
+			if (!item.second.HasAll(array))
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 };
 
 void RegisterGameplayTags(sol::state& lua)
 {
 	auto type = lua.new_usertype<GameplayTags>("GameplayTags");
-	type["self"] = &GameplayTags::self;
-	type["ge_tags"] = &GameplayTags::ge_tags;
-	type["ApplyGETags"] = &GameplayTags::ApplyGETags;
+	type["value"] = &GameplayTags::value;
 }
