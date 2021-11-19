@@ -10,7 +10,7 @@
 
 struct GameplayTags
 {
-	std::unordered_map<GameplayEffect*, GameplayTagArray> value;
+	std::unordered_map<GameplayEffect*, GameplayTagArray&> value;
 
 	bool HasAny(const GameplayTagArray& array) const
 	{

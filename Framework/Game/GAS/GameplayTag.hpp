@@ -124,9 +124,9 @@ public:
 		tags_.clear();
 	}
 
-	bool Find(GameplayTag& tag)
+	bool Find(const GameplayTag& tag) const
 	{
-		
+		return std::find(tags_.begin(), tags_.end(), tag) != tags_.end();
 	}
 
 	bool HasAny(const GameplayTagArray& array) const

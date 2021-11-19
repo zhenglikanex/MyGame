@@ -24,6 +24,7 @@ Collision.cpp
 Geometry.hpp
 GameHelper.hpp
 Proto.hpp
+RandomEngine.hpp
 
 GAS/GameplayEffect.hpp
 GAS/GameplayTag.hpp
@@ -58,6 +59,8 @@ System/PhysicsSystem.hpp
 System/KinematicCharacterMovementSystem.hpp
 System/CreatePhysicsActorSystem.hpp
 System/GASSystem.hpp
+System/GAS/ApplyGameplayEffectSystem.hpp
+System/GAS/ExecuteGameplayEffectSystem.hpp
 
 Component/Remote.hpp
 Component/Local.hpp

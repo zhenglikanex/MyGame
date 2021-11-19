@@ -28,7 +28,7 @@ struct GameplayEffect
 
 	struct Application
 	{
-		float chance_to_apply_to_target = 0;	 //--(0 - 1)范围0~1，0不会影响，1一定影响
+		uint32_t chance_to_apply_to_target = 0;	 //--(0 - 100)范围0~100，0不会影响，1一定影响
 		//std::function<void(GameplayTag& tag)> application_requirements;
 		//ApplicationRequirements：可自定义较复杂的概率计算，类似于Executions与Modifiers
 		//std::function<void(target,source)>
@@ -178,10 +178,17 @@ struct GameplayEffect
 struct GameplayEffectSpec
 {
 	GameplayEffect& gameplay_effect;
-	uint8_t level = 1;
-	
+	uint8_t level;
+	float period;
+	float duration;
+	uint32_t stack_count;
+
 	GameplayEffectSpec(GameplayEffect& _gameplay_effect,uint8_t _level)
-		:gameplay_effect(gameplay_effect),level(_level)
+		: gameplay_effect(gameplay_effect)
+		, level(_level)
+		, period(0)
+		, duration(0)
+		, stack_count(1)
 	{
 		
 	}

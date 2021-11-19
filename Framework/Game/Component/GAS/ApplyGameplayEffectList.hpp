@@ -9,7 +9,7 @@ struct GameplayEffectInfo
 {
 	std::string name;
 	uint32_t level;
-	entt::entity target;
+	entt::entity source;
 };
 
 struct ApplyGameplayEffectList
