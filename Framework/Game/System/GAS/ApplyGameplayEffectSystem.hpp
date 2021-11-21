@@ -211,7 +211,20 @@ struct ApplyGameplayEffectSystem : public System
 		// todo ¸³Óè¼¼ÄÜ
 		// todo Ìí¼Ócues
 	}
-	
+
+	void RemoveGameplayEffectsWithTags(const GameplayEffectSpec& spec,GameplayEffectList& ge_list)
+	{
+		for (auto& activity_ge : ge_list.value)
+		{
+			if (spec.gameplay_effect.tag.remove_gameplay_effects_with_tags.HasAny(activity_ge.gameplay_effect.tag.gameplay_effect_asset_tags) ||
+				spec.gameplay_effect.tag.remove_gameplay_effects_with_tags.HasAny(activity_ge.gameplay_effect.tag.granted_tags))
+			{
+				//todo
+			}
+		}
+
+	}
+
 	void Finalize() override
 	{
 		

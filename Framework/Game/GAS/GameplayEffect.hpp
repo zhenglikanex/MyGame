@@ -117,8 +117,7 @@ struct GameplayEffect
 
 	struct Modifier
 	{
-		//todo
-		std::string attribute;
+		uint32_t attribute;
 		ModifierOp modifier_op = ModifierOp::Add;
 		
 		RequirementsTags source_tags;

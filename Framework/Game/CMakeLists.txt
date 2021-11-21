@@ -29,12 +29,14 @@ RandomEngine.hpp
 GAS/GameplayEffect.hpp
 GAS/GameplayTag.hpp
 GAS/GameplayEffectManager.hpp
+GAS/GameplayAttributeData.hpp
 
 Utility/ActorStateUtility.hpp
 Utility/AnimationUtility.hpp
 Utility/CollisionUtility.hpp
 Utility/ActorUtility.hpp
 Utility/PhysicsUtility.hpp
+Utility/GameplayAttributeUtility.hpp
 
 System/AnimationSystem.hpp
 System/CollisionSystem.hpp
@@ -61,6 +63,7 @@ System/CreatePhysicsActorSystem.hpp
 System/GASSystem.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/ExecuteGameplayEffectSystem.hpp
+System/GAS/ModifyGameplayAttributeSystem.hpp
 
 Component/Remote.hpp
 Component/Local.hpp
@@ -94,6 +97,8 @@ Component/PhysicsActor.hpp
 Component/GAS/ApplyGameplayEffectList.hpp
 Component/GAS/GameplayEffectList.hpp
 Component/GAS/GameplayTags.hpp
+Component/GAS/GameplayAttributeSet.hpp
+Component/GAS/ModifyGameplayAttributeList.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp
