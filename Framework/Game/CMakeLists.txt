@@ -37,6 +37,7 @@ Utility/CollisionUtility.hpp
 Utility/ActorUtility.hpp
 Utility/PhysicsUtility.hpp
 Utility/GameplayAttributeUtility.hpp
+Utility/GameplayEffectUtility.hpp
 
 System/AnimationSystem.hpp
 System/CollisionSystem.hpp
@@ -63,7 +64,7 @@ System/CreatePhysicsActorSystem.hpp
 System/GASSystem.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/ExecuteGameplayEffectSystem.hpp
-System/GAS/ModifyGameplayAttributeSystem.hpp
+System/GAS/GameplayAttributeSystem.hpp
 
 Component/Remote.hpp
 Component/Local.hpp

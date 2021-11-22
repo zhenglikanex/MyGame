@@ -119,6 +119,7 @@ struct GameplayEffect
 	{
 		uint32_t attribute;
 		ModifierOp modifier_op = ModifierOp::Add;
+		ModifierMagnitude modifier_magnitude;
 		
 		RequirementsTags source_tags;
 		RequirementsTags target_tags;

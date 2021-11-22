@@ -8,6 +8,8 @@
 #include "Framework/Game/Component/GAS/GameplayEffectList.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
 
+#include "Framework/Game/Utility/GameplayEffectUtility.hpp"
+
 #include "Framework/Game/System.hpp"
 
 struct ExecuteGameplayEffectSystem : public System
@@ -47,8 +49,8 @@ struct ExecuteGameplayEffectSystem : public System
 				if (spec.period >= spec.gameplay_effect.period.period)
 				{
 					//todo modifiers
+					
 				}
-				
 				
 			}
 		}
@@ -67,7 +69,7 @@ struct ExecuteGameplayEffectSystem : public System
 
 	void Modify()
 	{
-
+		
 	}
 
 	void Finalize() override
