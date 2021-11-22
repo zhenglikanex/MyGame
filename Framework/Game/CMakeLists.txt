@@ -98,7 +98,7 @@ Component/GAS/ApplyGameplayEffectList.hpp
 Component/GAS/GameplayEffectList.hpp
 Component/GAS/GameplayTags.hpp
 Component/GAS/GameplayAttributeSet.hpp
-Component/GAS/ModifyGameplayAttributeList.hpp
+Component/GAS/ModifierAttribute.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp

@@ -6,23 +6,15 @@
 
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 
-struct BaseModifierAttribute
-{
-	GameplayAttributeType attribute;
-	GameplayEffect::ModifierOp modifier_op;
-	float value;
-};
-
-struct BaseModifierAttributeList
-{
-	std::vector<BaseModifierAttribute> value;
-};
-
 struct ModifierAttribute
 {
-	GameplayAttributeType attribute;
 	GameplayEffect::ModifierOp modifier_op;
 	float value;
+};
+
+struct ModifierBaseAttributeSet
+{
+	std::array<std::vector<ModifierAttribute>, (size_t)GameplayAttributeType::MaxCount> value;
 };
 
 struct ModifierAttributeSet
