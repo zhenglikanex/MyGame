@@ -48,10 +48,8 @@ struct ExecuteGameplayEffectSystem : public System
 
 				if (spec.period >= spec.gameplay_effect.period.period)
 				{
-					//todo modifiers
-					
+					GameplayEffectUtility::ApplyModifiers(registry, spec,e);
 				}
-				
 			}
 		}
 	}

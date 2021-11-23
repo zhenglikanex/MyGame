@@ -9,10 +9,8 @@
 class GameplayEffectUtility
 {
 public:
-	void ApplyModifiers(entt::registry& registry,const GameplayEffectSpec& spec)
+	static void ApplyModifiers(entt::registry& registry,const GameplayEffectSpec& spec,entt::entity target)
 	{
-		entt::entity target = entt::null;
-
 		//is modify base
 		if (spec.gameplay_effect.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
 			spec.gameplay_effect.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && spec.gameplay_effect.period.period > 0)
@@ -21,30 +19,40 @@ public:
 			
 			for (auto& mod : spec.gameplay_effect.gameplay_effect.modifiers)
 			{
-				float value = 0;
-				if (mod.modifier_magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::ScalableFloat)
-				{
-					// todo :
-					value = mod.modifier_magnitude.value;
-				}
-				else if(mod.modifier_magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::AttributeBased)
-				{
-					// todo :
-					value = mod.modifier_magnitude.value;
-				}
-				else if(mod.modifier_magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::CustomCalculationClass)
-				{
-					// todo :
-					value = mod.modifier_magnitude.value;
-				}
-
+				float value = GetModifyValue(mod.modifier_magnitude);
 				mod_base_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
 			}
 		}
 		else
 		{
-			
+			auto& mod_attr_set = registry.get<ModifierAttributeSet>(target);
+			for (auto& mod : spec.gameplay_effect.gameplay_effect.modifiers)
+			{
+				float value = GetModifyValue(mod.modifier_magnitude);
+				mod_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
+			}
+		}		
+	}
+private:
+	static float GetModifyValue(GameplayEffect::ModifierMagnitude& magnitude)
+	{
+		float value = 0;
+		if (magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::ScalableFloat)
+		{
+			// todo :
+			value = magnitude.value;
 		}
-		
+		else if (magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::AttributeBased)
+		{
+			// todo :
+			value = magnitude.value;
+		}
+		else if (magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::CustomCalculationClass)
+		{
+			// todo :
+			value = magnitude.value;
+		}
+
+		return value;
 	}
 };

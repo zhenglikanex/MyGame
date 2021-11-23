@@ -64,6 +64,7 @@ System/CreatePhysicsActorSystem.hpp
 System/GASSystem.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/ExecuteGameplayEffectSystem.hpp
+System/GAS/RemoveGameplayEffectSystem.hpp
 System/GAS/GameplayAttributeSystem.hpp
 
 Component/Remote.hpp
@@ -96,6 +97,7 @@ Component/PhysicsWorld.cpp
 Component/Character.hpp
 Component/PhysicsActor.hpp
 Component/GAS/ApplyGameplayEffectList.hpp
+Component/GAS/RemoveGameplayEffectList.hpp
 Component/GAS/GameplayEffectList.hpp
 Component/GAS/GameplayTags.hpp
 Component/GAS/GameplayAttributeSet.hpp

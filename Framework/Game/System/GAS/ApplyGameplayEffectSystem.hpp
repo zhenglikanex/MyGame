@@ -8,6 +8,8 @@
 #include "Framework/Game/Component/GAS/GameplayEffectList.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
 
+#include "Framework/Game/Utility/GameplayEffectUtility.hpp"
+
 #include "Framework/Game/System.hpp"
 
 struct ApplyGameplayEffectSystem : public System
@@ -133,7 +135,7 @@ struct ApplyGameplayEffectSystem : public System
 
 	void ApplyModifiers(const GameplayEffectSpec& spec,entt::entity target)
 	{
-
+		GameplayEffectUtility::ApplyModifiers(registry, spec, target);
 	}
 
 	void ApplyGameEffectToTarget(const GameplayEffectSpec& spec,GameplayEffectList& ge_list,GameplayTags& tags)
