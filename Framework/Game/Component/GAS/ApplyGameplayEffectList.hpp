@@ -4,6 +4,7 @@
 #include <string>
 
 #include "3rdparty/include/sol/sol.hpp"
+#include "3rdparty/include/entt/entt.hpp"
 
 struct GameplayEffectInfo
 {
