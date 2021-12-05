@@ -4,8 +4,8 @@
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
-#include "Framework/Game/Component/GAS/ApplyGameplayEffectList.hpp"
-#include "Framework/Game/Component/GAS/GameplayEffectList.hpp"
+#include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
+#include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
@@ -26,38 +26,38 @@ struct ExecuteGameplayEffectSystem : public System
 	void FixedUpdate(fixed16 dt) override
 	{
 		float time = static_cast<float>(dt);
-		auto view = registry.view<GameplayEffectList, GameplayTags>();
+		auto view = registry.view<GameplayEffectSpec>();
 		for (auto e : view)
 		{
-			auto& [ge_list, tags] = view.get<GameplayEffectList, GameplayTags>(e);
-			for (auto& spec : ge_list.value)
+			auto& spec = view.get<GameplayEffectSpec>(e);
+
+			spec.duration += time;
+			spec.period += time;
+
+			// ÒÆ³ý
+			if (spec.duration >= spec.ge.period.duration)
 			{
-				spec.duration += time;
-				spec.period += time;
+				//todo:
+			}
 
-				// ÒÆ³ý
-				if (spec.duration >= spec.gameplay_effect.period.duration)
-				{
-					//todo:
-				}
+			if (!CheckOngoingTagRequirements(spec))
+			{
+				return;
+			}
 
-				if (!CheckOngoingTagRequirements(spec, tags))
-				{
-					return;
-				}
-
-				if (spec.period >= spec.gameplay_effect.period.period)
-				{
-					GameplayEffectUtility::ApplyModifiers(registry, spec,e);
-				}
+			if (spec.period >= spec.ge.period.period)
+			{
+				GameplayEffectUtility::ApplyModifiers(registry, spec);
 			}
 		}
 	}
 
-	bool CheckOngoingTagRequirements(const GameplayEffectSpec& spec,const GameplayTags& tags)
+	bool CheckOngoingTagRequirements(const GameplayEffectSpec& spec)
 	{
-		if (!tags.HasAll(spec.gameplay_effect.tag.ongoing_tag_requirements.require_tags) ||
-			tags.HasAny(spec.gameplay_effect.tag.ongoing_tag_requirements.ignore_tags))
+		auto owner_tags = registry.get<GameplayTags>(spec.owner);
+
+		if (!owner_tags.HasAll(spec.ge.tag.ongoing_tag_requirements.require_tags) ||
+			owner_tags.HasAny(spec.ge.tag.ongoing_tag_requirements.ignore_tags))
 		{
 			return false;
 		}

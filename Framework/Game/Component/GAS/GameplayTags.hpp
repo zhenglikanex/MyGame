@@ -10,39 +10,23 @@
 
 struct GameplayTags
 {
-	std::unordered_map<GameplayEffect*, GameplayTagArray&> value;
+	GameplayTagArray tags;
+	std::unordered_map<entt::entity, GameplayTagArray&> attacth_tags;
 
 	bool HasAny(const GameplayTagArray& array) const
 	{
-		
-
-		for (auto& item : value)
-		{
-			if (item.second.HasAny(array))
-			{
-				return true;
-			}
-		}
-
-		return false;
+		return tags.HasAny(array);
 	}
 
 	bool HasAll(const GameplayTagArray& array) const
 	{
-		for (auto& item : value)
-		{
-			if (!item.second.HasAll(array))
-			{
-				return false;
-			}
-		}
-
-		return true;
+		return tags.HasAll(array);
 	}
 };
 
 void RegisterGameplayTags(sol::state& lua)
 {
 	auto type = lua.new_usertype<GameplayTags>("GameplayTags");
-	type["value"] = &GameplayTags::value;
+	type["tags"] = &GameplayTags::tags;
+	type["attacth_tags"] = &GameplayTags::attacth_tags;
 }

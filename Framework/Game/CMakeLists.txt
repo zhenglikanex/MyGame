@@ -30,6 +30,8 @@ GAS/GameplayEffect.hpp
 GAS/GameplayTag.hpp
 GAS/GameplayEffectManager.hpp
 GAS/GameplayAttributeData.hpp
+GAS/GameplayAbility.hpp
+GAS/GameplayAbilityManager.hpp
 
 Utility/ActorStateUtility.hpp
 Utility/AnimationUtility.hpp
@@ -38,7 +40,7 @@ Utility/ActorUtility.hpp
 Utility/PhysicsUtility.hpp
 Utility/GameplayAttributeUtility.hpp
 Utility/GameplayEffectUtility.hpp
-
+Utility/GameplayAbilityUtility.hpp
 
 System/AnimationSystem.hpp
 System/CollisionSystem.hpp
@@ -62,12 +64,14 @@ System/TransformStateSystem.hpp
 System/PhysicsSystem.hpp
 System/KinematicCharacterMovementSystem.hpp
 System/CreatePhysicsActorSystem.hpp
+System/DelayTaskSystem.hpp
 System/GASSystem.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/ExecuteGameplayEffectSystem.hpp
 System/GAS/RemoveGameplayEffectSystem.hpp
 System/GAS/GameplayAttributeSystem.hpp
 System/GAS/GameplayAbilitySystem.hpp
+System/GAS/TryGameplayAbilitySystem.hpp
 
 Component/Remote.hpp
 Component/Local.hpp
@@ -98,13 +102,15 @@ Component/PhysicsWorld.hpp
 Component/PhysicsWorld.cpp
 Component/Character.hpp
 Component/PhysicsActor.hpp
-Component/GAS/ApplyGameplayEffectList.hpp
+Component/DelayTask.hpp
+Component/GAS/ApplyGameplayEffect.hpp
 Component/GAS/RemoveGameplayEffectList.hpp
-Component/GAS/GameplayEffectList.hpp
+Component/GAS/GameplayEffectSpec.hpp
 Component/GAS/GameplayTags.hpp
 Component/GAS/GameplayAttributeSet.hpp
 Component/GAS/ModifierAttribute.hpp
-Component/GAS/GameplayAbility.hpp
+Component/GAS/GameplayAbilitySpec.hpp
+Component/GAS/TryGameplayAbility.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp

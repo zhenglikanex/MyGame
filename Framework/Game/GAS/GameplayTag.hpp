@@ -124,6 +124,11 @@ public:
 		tags_.clear();
 	}
 
+	bool Empty() const
+	{
+		return tags_.empty();
+	}
+
 	bool Find(const GameplayTag& tag) const
 	{
 		return std::find(tags_.begin(), tags_.end(), tag) != tags_.end();

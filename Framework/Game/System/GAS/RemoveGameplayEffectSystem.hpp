@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Framework/Game/Component/GAS/GameplayEffectList.hpp"
+#include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/RemoveGameplayEffectList.hpp"
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
@@ -26,7 +26,7 @@ struct RemoveGameplayEffectSystem : public System
 		auto& ge_manager = registry.ctx<GameplayEffectManager>();
 		if (remove_list.size() > 0)
 		{
-			for()
+			//for()
 		}
 	}
 

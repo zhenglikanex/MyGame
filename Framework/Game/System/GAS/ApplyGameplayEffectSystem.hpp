@@ -4,8 +4,8 @@
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
-#include "Framework/Game/Component/GAS/ApplyGameplayEffectList.hpp"
-#include "Framework/Game/Component/GAS/GameplayEffectList.hpp"
+#include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
+#include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
@@ -15,9 +15,6 @@
 struct ApplyGameplayEffectSystem : public System
 {
 	std::vector<std::string> overflow_effects;
-
-	entt::observer apply_ge_list{ registry,entt::collector.group<GameplayEffectList,GameplayTags,ApplyGameplayEffectList>()
-		.update<ApplyGameplayEffectList>().where<GameplayEffectList>() };
 
 	ApplyGameplayEffectSystem(entt::registry& _registry) : System(_registry) { }
 	~ApplyGameplayEffectSystem() {}
@@ -31,26 +28,40 @@ struct ApplyGameplayEffectSystem : public System
 
 	// 是否有激活的ge免疫当前的ge
 	// todo: source_tags来自技能或者拥有者,还没想好怎么实现
-	bool HasApplicationImmunity(const GameplayEffectList& target_activity_ges, const GameplayTags& source_tags)
+	bool HasApplicationImmunity(const std::vector<entt::entity>& entities, const GameplayTags* source_tags)
 	{
-		for (auto& activity_ge : target_activity_ges.value)
+		if (!source_tags)
 		{
-			return source_tags.HasAll(activity_ge.gameplay_effect.immunity.granted_application_immunity_tags.require_tags) ||
-				source_tags.HasAny(activity_ge.gameplay_effect.immunity.granted_application_immunity_tags.ignore_tags);
+			return false;
+		}
+
+		for (auto e : entities)
+		{
+			if (auto ge_spec = registry.try_get<GameplayEffectSpec>(e))
+			{
+				return source_tags->HasAll(ge_spec->ge.immunity.granted_application_immunity_tags.require_tags) ||
+					source_tags->HasAny(ge_spec->ge.immunity.granted_application_immunity_tags.ignore_tags);
+			}
 		}
 
 		return false;
 	}
 
 	// 检查是否可以应用GE
-	bool CheckApplicationTagRequirements(const GameplayEffect& ge, const GameplayTags& source_tags, const GameplayTags& target_tags)
+	bool CheckApplicationTagRequirements(const GameplayEffect& ge, const GameplayTags* source_tags, const GameplayTags* target_tags)
 	{
-		if (!source_tags.HasAll(ge.tag.application_tag_requirements.require_tags))
+		if ((!source_tags && !ge.tag.application_tag_requirements.require_tags.Empty()) || 
+			!source_tags->HasAll(ge.tag.application_tag_requirements.require_tags))
 		{
 			return false;
 		}
 
-		if (target_tags.HasAny(ge.tag.application_tag_requirements.ignore_tags))
+		if (!target_tags)
+		{
+			return true;
+		}
+
+		if (target_tags->HasAny(ge.tag.application_tag_requirements.ignore_tags))
 		{
 			return false;
 		}
@@ -82,149 +93,160 @@ struct ApplyGameplayEffectSystem : public System
 	{
 		sol::state& lua = registry.ctx<sol::state>();
 		GameplayEffectManager& ge_manager = registry.ctx<GameplayEffectManager>();
-
-		auto view = registry.view<ApplyGameplayEffectList, GameplayEffectList, GameplayTags>();
-		if (apply_ge_list.size() > 0)
+		
+		if (auto apply_ge = registry.try_ctx<ApplyGameplayEffect>())
 		{
-			for (auto e : apply_ge_list)
+			for (auto ge_list : apply_ge->value)
 			{
 				overflow_effects.clear();
 
-				auto&[apply_ge_list, ge_list, tags] = view.get<ApplyGameplayEffectList, GameplayEffectList, GameplayTags>(e);
-				for (auto& ge_info : apply_ge_list.value)
+				for (auto info : ge_list.second)
 				{
-					auto& source_tags = registry.get<GameplayTags>(ge_info.source);
-					GameplayEffectSpec spec(ge_manager.LoadGameplayEffect(ge_info.name), ge_info.level);
+					auto& ge = ge_manager.LoadGameplayEffect(info.name);
 
-					if (HasApplicationImmunity(ge_list, source_tags))
+					auto target_tags = registry.try_get<GameplayTags>(info.target);
+					auto source_tags = registry.try_get<GameplayTags>(info.source);
+
+					auto& target_spec_entities =  GameplayEffectUtility::GetGameplayEffectSpecEntitiesByOwner(registry, info.target);
+
+					if (HasApplicationImmunity(target_spec_entities, source_tags))
 					{
-						break;
+						continue;
 					}
 
-					if (!CheckApplicationTagRequirements(spec.gameplay_effect, source_tags, tags))
+					if (!CheckApplicationTagRequirements(ge, source_tags, target_tags));
 					{
-						break;
+						continue;
 					}
 
-					if (!CheckApplicationChance(spec.gameplay_effect))
+					if (!CheckApplicationChance(ge))
 					{
-						break;
+						continue;
 					}
 
-					ApplyModifiers(spec,e);
-					
-					if (spec.gameplay_effect.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
-						spec.gameplay_effect.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
+					GameplayEffectSpec spec(ge, info.source, info.target, info.level);
+
+					ApplyModifiers(spec);
+
+					if (spec.ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
+						spec.ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
 					{
-						ApplyGameEffectToTarget(spec, ge_list,tags);
+						ApplyGameEffectToTarget(spec, target_spec_entities, info.target);
+					}
+
+					// todo:
+					if (overflow_effects.size() > 0)
+					{
+
 					}
 				}
-
-				// todo:
-				if (overflow_effects.size() > 0)
-				{
-					
-				}
+				
 			}
 
-			apply_ge_list.clear();
+			apply_ge->value.clear();
+		}		
+	}
 
-			// todo:处理overflow_effects
+	void ApplyModifiers(const GameplayEffectSpec& spec)
+	{
+		GameplayEffectUtility::ApplyModifiers(registry, spec);
+	}
+
+	void ApplyGameEffectToTarget(const GameplayEffectSpec& spec,const std::vector<entt::entity>& target_spec_entities,entt::entity target)
+	{		
+		bool stacking = false;
+
+		if (spec.ge.stacking.stacking_type != GameplayEffect::StackingType::None)
+		{
+			for (auto e : target_spec_entities)
+			{
+				stacking = true;
+
+				auto& act_spec = registry.get<GameplayEffectSpec>(e);
+				if (&spec.ge == &act_spec.ge)
+				{
+					// 处理叠加相关
+					bool reset_duration = false;
+					bool reset_period = false;
+					if (act_spec.stack_count >= spec.ge.stacking.stack_limit_count)
+					{
+						for (auto& ge_name : spec.ge.overflow.overflow_effects)
+						{
+							overflow_effects.push_back(ge_name);
+						}
+
+						if (spec.ge.overflow.deny_overflow_application && spec.ge.overflow.clear_stack_on_overflow)
+						{
+							act_spec.stack_count = 0;
+						}
+
+						if (spec.ge.stacking.stack_duration_refresh_policy &&
+							!spec.ge.overflow.deny_overflow_application)
+						{
+							reset_duration = true;
+						}
+
+						if (spec.ge.stacking.statck_period_reset_policy &&
+							!spec.ge.overflow.deny_overflow_application)
+						{
+							reset_period = true;
+						}
+					}
+					else
+					{
+						++act_spec.stack_count;
+						reset_duration = true;
+						reset_period = true;
+					}
+
+					if (reset_duration)
+					{
+						act_spec.duration = 0;
+					}
+
+					if (reset_period)
+					{
+						act_spec.period = 0;
+					}
+				}
+				break;
+			}
 		}
-	}
 
-	void ApplyModifiers(const GameplayEffectSpec& spec,entt::entity target)
-	{
-		GameplayEffectUtility::ApplyModifiers(registry, spec, target);
-	}
+		if (!stacking)
+		{
+			auto e = registry.create();
+			registry.emplace<GameplayEffectSpec>(e, spec);
 
-	void ApplyGameEffectToTarget(const GameplayEffectSpec& spec,GameplayEffectList& ge_list,GameplayTags& tags)
-	{
-		bool can_granted_tags = false;
+			if (!registry.has<GameplayTags>(target))
+			{
+				registry.emplace<GameplayTags>(target);
+			}
+
+			auto& tags = registry.get<GameplayTags>(target);
+			tags.attacth_tags.emplace(e, spec.ge.tag.granted_tags);
+		}
 		
-		if (spec.gameplay_effect.stacking.stacking_type == GameplayEffect::StackingType::None)
-		{
-			ge_list.value.push_back(spec);
-			can_granted_tags = true;
-		}
-		else
-		{
-			auto it = std::find_if(ge_list.value.begin(), ge_list.value.end(), [&spec](const GameplayEffectSpec& value)
-			{
-				return &value.gameplay_effect == &spec.gameplay_effect;
-			});
-
-			if (it == ge_list.value.end())
-			{
-				ge_list.value.push_back(spec);
-				can_granted_tags = true;
-			}
-
-			// 处理叠加相关
-			bool reset_duration = false;
-			bool reset_period = false;
-			if (it->stack_count >= spec.gameplay_effect.stacking.stack_limit_count)
-			{
-				for (auto& ge_name : spec.gameplay_effect.overflow.overflow_effects)
-				{
-					overflow_effects.push_back(ge_name);
-				}
-
-				if (spec.gameplay_effect.overflow.deny_overflow_application && spec.gameplay_effect.overflow.clear_stack_on_overflow)
-				{
-					it->stack_count = 0;
-				}
-
-				if (spec.gameplay_effect.stacking.stack_duration_refresh_policy && 
-					!spec.gameplay_effect.overflow.deny_overflow_application)
-				{
-					reset_duration = true;
-				}
-
-				if (spec.gameplay_effect.stacking.statck_period_reset_policy &&
-					!spec.gameplay_effect.overflow.deny_overflow_application)
-				{
-					reset_period = true;
-				}
-			}
-			else
-			{
-				++it->stack_count;
-				reset_duration = true;
-				reset_period = true;
-			}
-
-			if (reset_duration)
-			{
-				it->duration = 0;
-			}
-
-			if (reset_period)
-			{
-				it->period = 0;
-			}
-		}
-
-		if (can_granted_tags)
-		{
-			tags.value.emplace(&spec.gameplay_effect, spec.gameplay_effect.tag.granted_tags);
-		}
-
 		// todo 赋予技能
 		// todo 添加cues
 	}
 
-	void RemoveGameplayEffectsWithTags(const GameplayEffectSpec& spec,GameplayEffectList& ge_list)
+	void RemoveGameplayEffectsWithTags(const GameplayEffectSpec& spec,const std::vector<entt::entity>& entities)
 	{
-		for (auto& activity_ge : ge_list.value)
+		for (auto e : entities)
 		{
-			if (spec.gameplay_effect.tag.remove_gameplay_effects_with_tags.HasAny(activity_ge.gameplay_effect.tag.gameplay_effect_asset_tags) ||
-				spec.gameplay_effect.tag.remove_gameplay_effects_with_tags.HasAny(activity_ge.gameplay_effect.tag.granted_tags))
+			auto& act_sepc = registry.get<GameplayEffectSpec>(e);
+			if (act_sepc.ge.tag.remove_gameplay_effects_with_tags.HasAny(spec.ge.tag.gameplay_effect_asset_tags))
 			{
-				//todo
+				auto tags = registry.try_get<GameplayTags>(act_sepc.owner);
+				if (tags)
+				{
+					tags->attacth_tags.erase(e);
+				}
+
+				registry.destroy(e);
 			}
 		}
-
 	}
 
 	void Finalize() override

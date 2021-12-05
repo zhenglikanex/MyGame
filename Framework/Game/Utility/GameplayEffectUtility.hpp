@@ -9,15 +9,32 @@
 class GameplayEffectUtility
 {
 public:
-	static void ApplyModifiers(entt::registry& registry,const GameplayEffectSpec& spec,entt::entity target)
+	static std::vector<entt::entity> GetGameplayEffectSpecEntitiesByOwner(entt::registry& registry,entt::entity owner)
+	{
+		std::vector<entt::entity> entities;
+		
+		auto view = registry.view<GameplayEffectSpec>();
+		for (auto e : view)
+		{
+			const auto& spec = view.get<GameplayEffectSpec>(e);
+			if (spec.owner == owner)
+			{
+				entities.push_back(e);
+			}
+		}
+
+		return entities;
+	}
+
+	static void ApplyModifiers(entt::registry& registry,const GameplayEffectSpec& spec)
 	{
 		//is modify base
-		if (spec.gameplay_effect.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
-			spec.gameplay_effect.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && spec.gameplay_effect.period.period > 0)
+		if (spec.ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
+			spec.ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && spec.ge.period.period > 0)
 		{
-			auto& mod_base_attr_set = registry.get_or_emplace<ModifierBaseAttributeSet>(target);
+			auto& mod_base_attr_set = registry.get_or_emplace<ModifierBaseAttributeSet>(spec.owner);
 			
-			for (auto& mod : spec.gameplay_effect.gameplay_effect.modifiers)
+			for (auto& mod : spec.ge.gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
 				mod_base_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
@@ -25,8 +42,8 @@ public:
 		}
 		else
 		{
-			auto& mod_attr_set = registry.get<ModifierAttributeSet>(target);
-			for (auto& mod : spec.gameplay_effect.gameplay_effect.modifiers)
+			auto& mod_attr_set = registry.get<ModifierAttributeSet>(spec.owner);
+			for (auto& mod : spec.ge.gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
 				mod_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });

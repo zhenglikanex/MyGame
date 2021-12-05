@@ -175,25 +175,6 @@ struct GameplayEffect
 	Tag tag;
 };
 
-struct GameplayEffectSpec
-{
-	GameplayEffect& gameplay_effect;
-	uint8_t level;
-	float period;
-	float duration;
-	uint32_t stack_count;
-
-	GameplayEffectSpec(GameplayEffect& _gameplay_effect,uint8_t _level)
-		: gameplay_effect(gameplay_effect)
-		, level(_level)
-		, period(0)
-		, duration(0)
-		, stack_count(1)
-	{
-		
-	}
-};
-
 void RegisterGameplayEffect(sol::state& lua)
 {
 	auto type1 = lua.new_usertype<GameplayEffect::RequirementsTags>("GERequirementsTags");
