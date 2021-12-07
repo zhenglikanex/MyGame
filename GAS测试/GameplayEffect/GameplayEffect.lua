@@ -116,11 +116,3 @@ GameplayEffect.Setting = {
         },
     }
 }
-
-function GameplayEffect.New()
-    local spec = Clone(GameplayEffect.Setting)
-    return spec
-end
-
-
-return GameplayEffect

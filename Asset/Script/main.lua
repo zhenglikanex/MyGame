@@ -1,5 +1,6 @@
 package.path=package.path .. ";Script/?.lua"
 require("Base/Base")
+require("GAS/GAS")
 
 __G__TRACKBACK__ = function(msg)
     local msg = debug.traceback(msg, 3)

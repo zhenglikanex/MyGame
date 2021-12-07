@@ -108,3 +108,13 @@ function dump(value, desciption, nesting)
         print(line)
     end
 end
+
+function CopyTable(source,dest)
+    for key,value in pairs(source) do
+        if(type(value) == "table") then
+            CopyTable(value,dest[key])
+        else
+            dest[key] = value
+        end
+    end
+end
