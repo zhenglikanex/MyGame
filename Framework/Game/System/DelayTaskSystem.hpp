@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "Framework/Game/Component/DelayTask.hpp"
 
 #include "Framework/Game/System.hpp"
@@ -9,9 +11,15 @@
 struct DelayTaskSystem : System
 {
 public:
-	std::unordered_map<>
+	std::unordered_map<std::string, std::function<void(void*)>> events;
 
-	DelayTaskSystem(entt::registry& _registry) : System(_registry) {}
+	DelayTaskSystem(entt::registry& _registry) : System(_registry) 
+	{
+		events.emplace("test", [&](void* data)
+			{
+				
+			});
+	}
 	~DelayTaskSystem() {}
 
 	bool Initialize() override
