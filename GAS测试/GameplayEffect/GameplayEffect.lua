@@ -105,10 +105,20 @@ GameplayEffect.Setting = {
             "Parent.Child",
         },
         ongoing_tag_requirements = { --在GameplayEffect应用期间，持续监测是否满足这些tag,(),提供关闭和重新开启的功能。 该标签只作用于持续(Duration)和无限(Infinite)GameplayEffect.
-            "Parent.Child"    
+            require_tags = {
+
+            },
+            ignore_tags = {
+
+            } 
         },
         application_tag_requirements = { --某个GameplayEffect是否可以应用到该目标的标签, 如果不满足这些需求, 那么GameplayEffect就不可应用.
-            "Parent.Tag"
+            require_tags = {
+
+            },
+            ignore_tags = {
+                
+            } 
         },
         remove_gameplay_effects_with_tags = --若施加成功，移除满足条件的所有GE
         {
@@ -116,3 +126,11 @@ GameplayEffect.Setting = {
         },
     }
 }
+
+function GameplayEffect.New()
+    local spec = Clone(GameplayEffect.Setting)
+    return spec
+end
+
+
+return GameplayEffect

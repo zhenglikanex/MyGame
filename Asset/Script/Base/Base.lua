@@ -110,6 +110,10 @@ function dump(value, desciption, nesting)
 end
 
 function CopyTable(source,dest)
+    if not source then
+        return 
+    end
+
     for key,value in pairs(source) do
         if(type(value) == "table") then
             CopyTable(value,dest[key])

@@ -1,3 +1,9 @@
 {
-    "files.encoding": "gbk"
+    "files.encoding": "gbk",
+    "Lua.diagnostics.globals": [
+        "GameplayTag",
+        "GEModifier",
+        "GEModifierMagnitude",
+        "GEGrantedAbility"
+    ]
 }

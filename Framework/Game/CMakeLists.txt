@@ -25,6 +25,7 @@ Geometry.hpp
 GameHelper.hpp
 Proto.hpp
 RandomEngine.hpp
+LuaBridge.hpp
 
 GAS/GameplayEffect.hpp
 GAS/GameplayTag.hpp

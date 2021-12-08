@@ -193,18 +193,3 @@ public:
 private:
 	std::vector<GameplayTag> tags_;
 };
-
-void RegisterGameplayTag(sol::state& lua)
-{
-	auto type = lua.new_usertype<GameplayTag>("GameplayTag", sol::constructors<GameplayTag(const std::string&), GameplayTag(const GameplayTag&)>());
-	type["tag"] = &GameplayTag::tag;
-	type["Contain"] = &GameplayTag::Contain;
-
-	auto type2 = lua.new_usertype<GameplayTagArray>("GameplayTagArray");
-	type["Push"] = &GameplayTagArray::Push;
-	type["Clear"] = &GameplayTagArray::Clear;
-	type["Find"] = &GameplayTagArray::Find;
-	type["HasAll"] = &GameplayTagArray::HasAll;
-	type["HasAny"] = &GameplayTagArray::HasAny;
-
-}
