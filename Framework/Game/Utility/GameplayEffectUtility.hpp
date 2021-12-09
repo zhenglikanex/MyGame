@@ -29,12 +29,12 @@ public:
 	static void ApplyModifiers(entt::registry& registry,const GameplayEffectSpec& spec)
 	{
 		//is modify base
-		if (spec.ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
-			spec.ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && spec.ge.period.period > 0)
+		if (spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
+			spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && spec.ge->period.period > 0)
 		{
 			auto& mod_base_attr_set = registry.get_or_emplace<ModifierBaseAttributeSet>(spec.owner);
 			
-			for (auto& mod : spec.ge.gameplay_effect.modifiers)
+			for (auto& mod : spec.ge->gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
 				mod_base_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
@@ -43,7 +43,7 @@ public:
 		else
 		{
 			auto& mod_attr_set = registry.get<ModifierAttributeSet>(spec.owner);
-			for (auto& mod : spec.ge.gameplay_effect.modifiers)
+			for (auto& mod : spec.ge->gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
 				mod_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
@@ -51,7 +51,7 @@ public:
 		}		
 	}
 private:
-	static float GetModifyValue(GameplayEffect::ModifierMagnitude& magnitude)
+	static float GetModifyValue(const GameplayEffect::ModifierMagnitude& magnitude)
 	{
 		float value = 0;
 		if (magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::ScalableFloat)

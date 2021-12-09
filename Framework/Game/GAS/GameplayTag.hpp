@@ -4,8 +4,6 @@
 #include <string_view>
 #include <vector>
 
-#include "3rdparty/include/sol/sol.hpp"
-
 class GameplayTag
 {
 public:

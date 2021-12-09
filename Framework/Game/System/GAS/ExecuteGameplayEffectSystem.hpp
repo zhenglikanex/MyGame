@@ -35,7 +35,7 @@ struct ExecuteGameplayEffectSystem : public System
 			spec.period += time;
 
 			// ÒÆ³ý
-			if (spec.duration >= spec.ge.period.duration)
+			if (spec.duration >= spec.ge->period.duration)
 			{
 				//todo:
 			}
@@ -45,7 +45,7 @@ struct ExecuteGameplayEffectSystem : public System
 				return;
 			}
 
-			if (spec.period >= spec.ge.period.period)
+			if (spec.period >= spec.ge->period.period)
 			{
 				GameplayEffectUtility::ApplyModifiers(registry, spec);
 			}
@@ -56,8 +56,8 @@ struct ExecuteGameplayEffectSystem : public System
 	{
 		auto owner_tags = registry.get<GameplayTags>(spec.owner);
 
-		if (!owner_tags.HasAll(spec.ge.tag.ongoing_tag_requirements.require_tags) ||
-			owner_tags.HasAny(spec.ge.tag.ongoing_tag_requirements.ignore_tags))
+		if (!owner_tags.HasAll(spec.ge->tag.ongoing_tag_requirements.require_tags) ||
+			owner_tags.HasAny(spec.ge->tag.ongoing_tag_requirements.ignore_tags))
 		{
 			return false;
 		}

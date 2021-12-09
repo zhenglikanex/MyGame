@@ -40,18 +40,18 @@ struct TryGameplayAbilitySystem : public System
 			{
 				for (auto info : ga_list.second)
 				{
-					GameplayAbility& ga = ga_manager.LoadGameplayAbility(info.name);
+					const GameplayAbility* ga = ga_manager.LoadGameplayAbility(info.name);
 					
 					auto source_tags = registry.try_get<GameplayTags>(info.source);
 					auto target_tags = registry.try_get<GameplayTags>(info.target);
 
 
-					if (!CheckCoolDown(ga))
+					if (!CheckCoolDown(*ga))
 					{
 						continue;
 					}
 
-					if (!CheckCost(ga))
+					if (!CheckCost(*ga))
 					{
 						continue;
 					}
@@ -60,10 +60,10 @@ struct TryGameplayAbilitySystem : public System
 
 					GameplayAbilitySpec spec(ga, info.level, info.source, info.target);
 					auto e = registry.create();
-					registry.emplace<GameplayAbility>(e, spec);
+					registry.emplace<GameplayAbilitySpec>(e, spec);
 
 					//todo:µ÷ÓÃgaµÄluaÂß¼­
-					ga.script["active"](ga.script);
+					ga->script["ActiveAbility"](ga->script);
 				}
 			}
 		}

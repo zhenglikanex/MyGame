@@ -2,22 +2,27 @@
 
 #include "Framework/Game/GAS/GameplayTag.hpp"
 #include "Framework/Game/GAS/GameplayEffect.hpp"
+#include "Framework/Game/GAS/GameplayAbility.hpp"
 
-void RegisterGameplayTag(sol::state& lua)
+#include "Framework/Game/Component/DelayTask.hpp"
+
+#include "3rdparty/include/entt/entt.hpp"
+
+inline void RegisterGameplayTag(sol::state& lua)
 {
 	auto type = lua.new_usertype<GameplayTag>("GameplayTag", sol::constructors<GameplayTag(const std::string&), GameplayTag(const GameplayTag&)>());
 	type["tag"] = &GameplayTag::tag;
 	type["Contain"] = &GameplayTag::Contain;
 
 	auto type2 = lua.new_usertype<GameplayTagArray>("GameplayTagArray");
-	type["Push"] = &GameplayTagArray::Push;
-	type["Clear"] = &GameplayTagArray::Clear;
-	type["Find"] = &GameplayTagArray::Find;
-	type["HasAll"] = &GameplayTagArray::HasAll;
-	type["HasAny"] = &GameplayTagArray::HasAny;
+	type2["Push"] = &GameplayTagArray::Push;
+	type2["Clear"] = &GameplayTagArray::Clear;
+	type2["Find"] = &GameplayTagArray::Find;
+	type2["HasAll"] = &GameplayTagArray::HasAll;
+	type2["HasAny"] = &GameplayTagArray::HasAny;
 }
 
-void RegisterGameplayEffect(sol::state& lua)
+inline void RegisterGameplayEffect(sol::state& lua)
 {
 	auto type1 = lua.new_usertype<GameplayEffect::RequirementsTags>("GERequirementsTags");
 	type1["require_tags"] = &GameplayEffect::RequirementsTags::require_tags;
@@ -91,7 +96,7 @@ void RegisterGameplayEffect(sol::state& lua)
 	type14["tag"] = &GameplayEffect::tag;
 }
 
-void RegisterGameplayAbility(sol::state& lua)
+inline void RegisterGameplayAbility(sol::state& lua)
 {
 	auto type = lua.new_usertype<GameplayAbility>("GameplayAbility");
 	type["cooldown_gameplay_effect"] = &GameplayAbility::cooldown_gameplay_effect;
@@ -109,9 +114,14 @@ void RegisterGameplayAbility(sol::state& lua)
 	type["script"] = &GameplayAbility::script;
 }
 
-void RegisterLua(sol::state& lua)
+inline void RegisterLua(entt::registry& registry,sol::state& lua)
 {
 	RegisterGameplayTag(lua);
 	RegisterGameplayEffect(lua);
 	RegisterGameplayAbility(lua);
+
+	lua["DelayTask"] = [&registry](float time,const std::string& func_name,void* data) {
+		auto& delay_task = registry.ctx_or_set<DelayTask>();
+		delay_task.events.emplace_back(true,time, func_name,data);
+	};
 }

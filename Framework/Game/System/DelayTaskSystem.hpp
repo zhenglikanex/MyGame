@@ -43,7 +43,7 @@ public:
 					if (event.is_from_lua)
 					{
 						auto& lua_state = registry.ctx<sol::state>();
-						lua_state[event.fun_name](event.data);
+						lua_state[event.func_name](event.data);
 					}
 					else
 					{

@@ -17,12 +17,12 @@ public:
 
 	}
 
-	GameplayAbility& LoadGameplayAbility(const std::string& name)
+	GameplayAbility* LoadGameplayAbility(const std::string& name)
 	{
 		auto it = gameplay_abilities_.find(name);
 		if (it != gameplay_abilities_.end())
 		{
-			return it->second;
+			return &it->second;
 		}
 
 		gameplay_abilities_.emplace(name, GameplayAbility());
@@ -31,7 +31,7 @@ public:
 		auto& lua = registry_.ctx<sol::state>();
 		lua["LoadGameplayAbility"](name, gameplay_ability);
 
-		return gameplay_ability;
+		return &gameplay_ability;
 	}
 
 private:

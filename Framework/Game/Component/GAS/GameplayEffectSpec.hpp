@@ -7,7 +7,7 @@
 
 struct GameplayEffectSpec
 {
-	GameplayEffect& ge;
+	const GameplayEffect* ge;
 	entt::entity source;
 	entt::entity owner;
 	uint8_t level;
@@ -15,7 +15,7 @@ struct GameplayEffectSpec
 	float duration;
 	uint32_t stack_count;
 
-	GameplayEffectSpec(GameplayEffect& _ge,entt::entity _source,entt::entity _owner,uint8_t _level)
+	GameplayEffectSpec(const GameplayEffect* _ge,entt::entity _source,entt::entity _owner,uint8_t _level)
 		: ge(_ge)
 		, source(_source)
 		, owner(_owner)

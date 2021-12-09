@@ -2,7 +2,6 @@
 
 #include "Framework/Game/GAS/GameplayTag.hpp"
 
-#include "3rdparty/include/entt/entt.hpp"
 #include "3rdparty/include/sol/sol.hpp"
 
 struct GameplayAbility

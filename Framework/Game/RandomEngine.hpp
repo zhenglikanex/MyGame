@@ -5,7 +5,7 @@
 class RandomEngine
 {
 public:
-	RandomEngine(uint64_t seed)
+	RandomEngine(uint32_t seed)
 		: seed_(seed)
 		, engine_(seed)
 	{
@@ -18,14 +18,14 @@ public:
 		
 	}
 
-	uint32_t Random(uint32_t begin, uint32_t end) const
+	uint32_t Random(uint32_t begin, uint32_t end)
 	{
 		std::uniform_int_distribution<uint32_t> dis(begin, end);
 		return dis(engine_);
 	}
 
-	uint64_t seed() const { return seed_; }
+	uint32_t seed() const { return seed_; }
 private:
-	uint64_t seed_;
+	uint32_t seed_;
 	std::default_random_engine engine_;
 };

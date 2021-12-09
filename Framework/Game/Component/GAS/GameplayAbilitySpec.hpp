@@ -6,12 +6,12 @@
 
 struct GameplayAbilitySpec
 {
-	GameplayAbility& ga;
+	const GameplayAbility* ga;
 	uint32_t level;
 	entt::entity source;
 	entt::entity target;
 
-	GameplayAbilitySpec(GameplayAbility& _ga, uint32_t _level, entt::entity _source, entt::entity _target)
+	GameplayAbilitySpec(const GameplayAbility* _ga, uint32_t _level, entt::entity _source, entt::entity _target)
 		: ga(_ga)
 		, level(_level)
 		, source(_source)

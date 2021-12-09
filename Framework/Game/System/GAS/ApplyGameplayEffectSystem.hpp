@@ -39,8 +39,8 @@ struct ApplyGameplayEffectSystem : public System
 		{
 			if (auto ge_spec = registry.try_get<GameplayEffectSpec>(e))
 			{
-				return source_tags->HasAll(ge_spec->ge.immunity.granted_application_immunity_tags.require_tags) ||
-					source_tags->HasAny(ge_spec->ge.immunity.granted_application_immunity_tags.ignore_tags);
+				return source_tags->HasAll(ge_spec->ge->immunity.granted_application_immunity_tags.require_tags) ||
+					source_tags->HasAny(ge_spec->ge->immunity.granted_application_immunity_tags.ignore_tags);
 			}
 		}
 
@@ -102,7 +102,7 @@ struct ApplyGameplayEffectSystem : public System
 
 				for (auto info : ge_list.second)
 				{
-					auto& ge = ge_manager.LoadGameplayEffect(info.name);
+					auto ge = ge_manager.LoadGameplayEffect(info.name);
 
 					auto target_tags = registry.try_get<GameplayTags>(info.target);
 					auto source_tags = registry.try_get<GameplayTags>(info.source);
@@ -114,22 +114,22 @@ struct ApplyGameplayEffectSystem : public System
 						continue;
 					}
 
-					if (!CheckApplicationTagRequirements(ge, source_tags, target_tags));
+					if (!CheckApplicationTagRequirements(*ge, source_tags, target_tags))
 					{
 						continue;
 					}
 
-					if (!CheckApplicationChance(ge))
+					if (!CheckApplicationChance(*ge))
 					{
 						continue;
 					}
 
-					GameplayEffectSpec spec(ge, info.source, info.target, info.level);
+					GameplayEffectSpec spec(ge,info.source, info.target, info.level);
 
 					ApplyModifiers(spec);
 
-					if (spec.ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
-						spec.ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
+					if (spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
+						spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
 					{
 						ApplyGameEffectToTarget(spec, target_spec_entities, info.target);
 					}
@@ -156,7 +156,7 @@ struct ApplyGameplayEffectSystem : public System
 	{		
 		bool stacking = false;
 
-		if (spec.ge.stacking.stacking_type != GameplayEffect::StackingType::None)
+		if (spec.ge->stacking.stacking_type != GameplayEffect::StackingType::None)
 		{
 			for (auto e : target_spec_entities)
 			{
@@ -168,26 +168,26 @@ struct ApplyGameplayEffectSystem : public System
 					// 处理叠加相关
 					bool reset_duration = false;
 					bool reset_period = false;
-					if (act_spec.stack_count >= spec.ge.stacking.stack_limit_count)
+					if (act_spec.stack_count >= spec.ge->stacking.stack_limit_count)
 					{
-						for (auto& ge_name : spec.ge.overflow.overflow_effects)
+						for (auto& ge_name : spec.ge->overflow.overflow_effects)
 						{
 							overflow_effects.push_back(ge_name);
 						}
 
-						if (spec.ge.overflow.deny_overflow_application && spec.ge.overflow.clear_stack_on_overflow)
+						if (spec.ge->overflow.deny_overflow_application && spec.ge->overflow.clear_stack_on_overflow)
 						{
 							act_spec.stack_count = 0;
 						}
 
-						if (spec.ge.stacking.stack_duration_refresh_policy &&
-							!spec.ge.overflow.deny_overflow_application)
+						if (spec.ge->stacking.stack_duration_refresh_policy &&
+							!spec.ge->overflow.deny_overflow_application)
 						{
 							reset_duration = true;
 						}
 
-						if (spec.ge.stacking.statck_period_reset_policy &&
-							!spec.ge.overflow.deny_overflow_application)
+						if (spec.ge->stacking.statck_period_reset_policy &&
+							!spec.ge->overflow.deny_overflow_application)
 						{
 							reset_period = true;
 						}
@@ -224,7 +224,7 @@ struct ApplyGameplayEffectSystem : public System
 			}
 
 			auto& tags = registry.get<GameplayTags>(target);
-			tags.attacth_tags.emplace(e, spec.ge.tag.granted_tags);
+			tags.attacth_tags.emplace(e, spec.ge->tag.granted_tags);
 		}
 		
 		// todo 赋予技能
@@ -236,7 +236,7 @@ struct ApplyGameplayEffectSystem : public System
 		for (auto e : entities)
 		{
 			auto& act_sepc = registry.get<GameplayEffectSpec>(e);
-			if (act_sepc.ge.tag.remove_gameplay_effects_with_tags.HasAny(spec.ge.tag.gameplay_effect_asset_tags))
+			if (act_sepc.ge->tag.remove_gameplay_effects_with_tags.HasAny(spec.ge->tag.gameplay_effect_asset_tags))
 			{
 				auto tags = registry.try_get<GameplayTags>(act_sepc.owner);
 				if (tags)
