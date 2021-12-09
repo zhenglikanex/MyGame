@@ -1,25 +1,24 @@
 local AttackGE = 
 {
     application = {
-        chance_to_apply_to_target = 1
+        chance_to_apply_to_target = 100
     },
     --设置的是GE应用状态时的免疫效果
     immunity = {
         granted_application_immunity_tags = {
             -- 免疫带有下列标签的GE
             require_tags = {
-                GameplayTag.new("Tag1"),
+                "require"
             },
             -- 免疫没有下列标签的GE
             ignore_tags = {
-                GameplayTag.new("Tag2"),
+                "ignore"
             }
         }
     },
     --当所Apply的Effect的Stack超过了StackLimitCount，便会调用这个模块
     overflow = {    
         overflow_effects = {    --超过StackLimitCount数量的Effect被Apply时将会调用该OverflowEffects
-            "effectname",
         },
         deny_overflow_application = true, --对应于StackDurationRefreshPolicy，如果为True则多余的Apply不会刷新Duration
         clear_stack_on_overflow = true, --当DenyOverflowApplication为True是才有效，当Overflow时是否直接删除所有层数
@@ -37,11 +36,11 @@ local AttackGE =
         statck_period_reset_policy = true,--每次ApplyEffect时是否刷新周期时间（Period），即使层数不增加也会刷新Period
         statck_expiration_policy =  GEDefine.StatckExpirationPolicy.ClearEntireStack, --当Effect的Duration结束时,层数的结束方式
     },
-    gamepaly_effect = {
+    gameplay_effect = {
         duration_policy = GEDefine.DurationPolicy.Instant,
         modifiers = {   --进行一些简单的数值修改
             {
-                attribute = "ActorAttributeSet.HealthAttribute",    -- 指定属性,
+                attribute = 1,    -- 指定属性,
                 modifier_op = GEDefine.ModifierOp.Add,
                 modifier_magnitude = 
                 {
@@ -75,7 +74,7 @@ local AttackGE =
     --当该Effect被Apply时，授予目标技能
     granted_abilities = {
         {
-            ability = "abilityname",
+            ability = "Ability",
             level = 1,
             removal_policy = GEDefine.AbilityRemovalPolicy.CancelAbilityImmediately,
         }
@@ -96,10 +95,20 @@ local AttackGE =
             "Parent.Child",
         },
         ongoing_tag_requirements = { --在GameplayEffect应用期间，持续监测是否满足这些tag,(),提供关闭和重新开启的功能。 该标签只作用于持续(Duration)和无限(Infinite)GameplayEffect.
-            "Parent.Child"    
+            require_tags = {
+
+            },
+            ignore_tags = {
+
+            }
         },
         application_tag_requirements = { --某个GameplayEffect是否可以应用到该目标的标签, 如果不满足这些需求, 那么GameplayEffect就不可应用.
-            "Parent.Tag"
+            require_tags = {
+
+            },
+            ignore_tags = {
+
+            }
         },
         remove_gameplay_effects_with_tags = --若施加成功，移除满足条件的所有GE
         {

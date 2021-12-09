@@ -7,8 +7,7 @@
 
 struct GameplayAbilityInfo
 {
-	std::string name;
-	uint32_t level;
+	std::string ability;
 	entt::entity source;
 	entt::entity target;
 };

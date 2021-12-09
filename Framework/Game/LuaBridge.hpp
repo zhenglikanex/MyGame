@@ -58,6 +58,7 @@ inline void RegisterGameplayEffect(sol::state& lua)
 	auto type8 = lua.new_usertype<GameplayEffect::Modifier>("GEModifier");
 	type8["attribute"] = &GameplayEffect::Modifier::attribute;
 	type8["modifier_op"] = &GameplayEffect::Modifier::modifier_op;
+	type8["modifier_magnitude"] = &GameplayEffect::Modifier::modifier_magnitude;
 	type8["source_tags"] = &GameplayEffect::Modifier::source_tags;
 	type8["target_tags"] = &GameplayEffect::Modifier::target_tags;
 
@@ -124,4 +125,6 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		auto& delay_task = registry.ctx_or_set<DelayTask>();
 		delay_task.events.emplace_back(true,time, func_name,data);
 	};
+
+	lua["ApplyGameplayEffectToTarget"] = [&registry](std::string_view effect,uint32_t level,)
 }

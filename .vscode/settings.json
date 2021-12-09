@@ -4,6 +4,8 @@
         "GameplayTag",
         "GEModifier",
         "GEModifierMagnitude",
-        "GEGrantedAbility"
+        "GEGrantedAbility",
+        "EndAbility",
+        "GEDefine"
     ]
 }

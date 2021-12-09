@@ -21,6 +21,7 @@ function LoadGameplayEffect(name,ge)
     ge.gameplay_effect.duration_policy = template.gameplay_effect.duration_policy
     for _,modifier in pairs(template.gameplay_effect.modifiers) do
         local mod = GEModifier.new()
+        print(mod.modifier_magnitude)
         mod.attribute = modifier.attribute
         mod.modifier_op = modifier.modifier_op
         CopyTable(modifier.modifier_magnitude,mod.modifier_magnitude)
@@ -46,25 +47,25 @@ function LoadGameplayEffect(name,ge)
     end
 
     for _,tag in pairs(template.tag.gameplay_effect_asset_tags) do
-        ge.tag.gameplay_effect_asset_tags:add(GameplayTag.new(tag))
+        ge.tag.gameplay_effect_asset_tags:Push(GameplayTag.new(tag))
     end
     for _,tag in pairs(template.tag.granted_tags) do
-        ge.tag.granted_tags:add(GameplayTag.new(tag))
+        ge.tag.granted_tags:Push(GameplayTag.new(tag))
     end
     for _,tag in pairs(template.tag.ongoing_tag_requirements.require_tags) do
-        ge.tag.ongoing_tag_requirements.require_tags:add(GameplayTag.new(tag))
+        ge.tag.ongoing_tag_requirements.require_tags:Push(GameplayTag.new(tag))
     end
     for _,tag in pairs(template.tag.ongoing_tag_requirements.ignore_tags) do
-        ge.tag.ongoing_tag_requirements.ignore_tags:add(GameplayTag.new(tag))
+        ge.tag.ongoing_tag_requirements.ignore_tags:Push(GameplayTag.new(tag))
     end
     for _,tag in pairs(template.tag.application_tag_requirements.require_tags) do
-        ge.tag.application_tag_requirements.require_tags:add(GameplayTag.new(tag))
+        ge.tag.application_tag_requirements.require_tags:Push(GameplayTag.new(tag))
     end
     for _,tag in pairs(template.tag.application_tag_requirements.ignore_tags) do
-        ge.tag.application_tag_requirements.ignore_tags:add(GameplayTag.new(tag))
+        ge.tag.application_tag_requirements.ignore_tags:Push(GameplayTag.new(tag))
     end
     for _,tag in pairs(template.tag.remove_gameplay_effects_with_tags) do
-        ge.tag.remove_gameplay_effects_with_tags:add(GameplayTag.new(tag))
+        ge.tag.remove_gameplay_effects_with_tags:Push(GameplayTag.new(tag))
     end
 end
 
@@ -74,43 +75,43 @@ function LoadGameplayAbility(name,ga)
     ga.cost_gameplay_effect = template.cost_gameplay_effect
     
     for _,tag in pairs(template.ability_tags) do
-        ga.ability_tags:add(GameplayTag.new(tag))
+        ga.ability_tags:Push(GameplayTag.new(tag))
     end
 
     for _,tag in pairs(template.cancel_ability) do
-        ga.cancel_ability:add(GameplayTag.new(tag))
+        ga.cancel_ability:Push(GameplayTag.new(tag))
     end
 
     for _,tag in pairs(template.block_abilites_with_tag) do
-        ga.block_abilites_with_tag:add(GameplayTag.new(tag))
+        ga.block_abilites_with_tag:Push(GameplayTag.new(tag))
     end
 
     for _,tag in pairs(template.activation_owned_tags) do
-        ga.activation_owned_tags:add(GameplayTag.new(tag))
+        ga.activation_owned_tags:Push(GameplayTag.new(tag))
     end
 
     for _,tag in pairs(template.activation_required_tags) do
-        ga.activation_required_tags:add(GameplayTag.new(tag))
+        ga.activation_required_tags:Push(GameplayTag.new(tag))
     end
 
     for _,tag in pairs(template.activation_blocked_tags) do
-        ga.activation_blocked_tags:add(GameplayTag.new(tag))
+        ga.activation_blocked_tags:Push(GameplayTag.new(tag))
     end
 
     for _,tag in pairs(template.source_required_tags) do
-        ga.source_required_tags:add(GameplayTag.new(tag))
+        ga.source_required_tags:Push(GameplayTag.new(tag))
     end
 
     for _,tag in pairs(template.source_blocked_tags) do
-        ga.source_blocked_tags:add(GameplayTag.new(tag))
+        ga.source_blocked_tags:Push(GameplayTag.new(tag))
     end
 
     for _,tag in pairs(template.target_required_tags) do
-        ga.target_required_tags:add(GameplayTag.new(tag))
+        ga.target_required_tags:Push(GameplayTag.new(tag))
     end
 
     for _,tag in pairs(template.target_blocked_tags) do
-        ga.target_blocked_tags:add(GameplayTag.new(tag))
+        ga.target_blocked_tags:Push(GameplayTag.new(tag))
     end
 
     ga.script = require("GameplayAbility/" .. name.."Script").new()

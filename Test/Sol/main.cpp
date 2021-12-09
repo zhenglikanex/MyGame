@@ -8,9 +8,6 @@ int main() {
 	sol::state lua;
 	lua.open_libraries(sol::lib::base, sol::lib::package,sol::lib::string,sol::lib::math,sol::lib::table,sol::lib::debug,sol::lib::os);
 
-	RegisterGameplayTag(lua);
-	RegisterGameplayEffect(lua);
-
 	lua.script_file("Script/main.lua", sol::script_default_on_error);
 	
 	std::function<void(uint32_t)> f = lua["f3"];

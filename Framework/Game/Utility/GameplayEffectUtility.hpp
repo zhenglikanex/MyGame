@@ -2,6 +2,7 @@
 
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 
+#include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
@@ -50,6 +51,18 @@ public:
 			}
 		}		
 	}
+
+	static void ApplyGameEffectToTarget(entt::registry& registry, entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
+	{
+		auto& apply_ge = registry.ctx_or_set<ApplyGameplayEffect>();
+		auto it = apply_ge.value.find(source);
+		if (it == apply_ge.value.end())
+		{
+			apply_ge.value.emplace(source, std::vector<GameplayEffectInfo>());
+		}
+		apply_ge.value[source].emplace_back(effect_name, level, source, target);
+	}
+
 private:
 	static float GetModifyValue(const GameplayEffect::ModifierMagnitude& magnitude)
 	{

@@ -5,6 +5,8 @@
 #include <thread>
 #include <chrono>
 
+#include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
+
 #include "Framework/Game/System/GAS/ApplyGameplayEffectSystem.hpp"
 #include "Framework/Game/System/GAS/ExecuteGameplayEffectSystem.hpp"
 #include "Framework/Game/System/GAS/TryGameplayAbilitySystem.hpp"
@@ -13,7 +15,10 @@
 
 #include "Framework/Game/System/DelayTaskSystem.hpp"
 
+#include "Framework/Game/Utility/GameplayEffectUtility.hpp"
+
 #include "Framework/Game/LuaBridge.hpp"
+#include "Framework/Game/RandomEngine.hpp"
 
 
 int main() {
@@ -22,6 +27,7 @@ int main() {
 	registry.set<sol::state>();
 	registry.set<GameplayEffectManager>(registry);
 	registry.set<GameplayAbilityManager>(registry);
+	registry.set<RandomEngine>((uint32_t)1000);
 
 	auto& lua = registry.ctx<sol::state>();
 	lua.open_libraries(sol::lib::base, sol::lib::package,sol::lib::string,sol::lib::math,sol::lib::table,sol::lib::debug,sol::lib::os);
@@ -35,6 +41,11 @@ int main() {
 	GameplayAttributeSystem system4(registry);
 	DelayTaskSystem system5(registry);
 	
+	auto source = registry.create();
+	auto target = registry.create();
+
+	
+	//GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, "AttackGE", 1, target);
 	
 	while (true)
 	{
