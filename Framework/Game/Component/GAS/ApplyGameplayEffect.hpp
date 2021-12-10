@@ -8,13 +8,13 @@
 
 struct GameplayEffectInfo
 {
-	std::string name;
+	std::string effect;
 	uint32_t level;
 	entt::entity source;
 	entt::entity target;
 
-	GameplayEffectInfo(std::string_view _name, uint32_t _level, entt::entity _source, entt::entity _target)
-		: name(_name)
+	GameplayEffectInfo(std::string_view _effect, uint32_t _level, entt::entity _source, entt::entity _target)
+		: effect(_effect)
 		, level(_level)
 		, source(_source)
 		, target(_target)

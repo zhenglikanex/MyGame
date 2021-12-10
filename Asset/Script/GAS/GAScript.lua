@@ -1,9 +1,12 @@
 local GAScript = class("GAScript")
 
-function GAScript:ctor(entity,ga)
-    self.entity = entity
-    self.ga = ga
+function GAScript:ctor()
 end
+
+function GAScript:Init(entity,spec)
+    self.entity = entity
+    self.spec = spec
+end 
 
 function GAScript:ActiveAbility()
 
@@ -23,5 +26,10 @@ function GAScript:CommitAbility()
 end
 
 function GAScript:EndAbility()
-    EndAbility(self.entity)
+    local entity = self.entity
+    self.entity = nil
+    self.spec = nil
+    EndAbility(entity)
 end
+
+return GAScript

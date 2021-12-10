@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Framework/Game/GAS/GameplayAbility.hpp"
-#include "Framework/Game/Component/GAS/TryGameplayAbility.hpp""
+#include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 

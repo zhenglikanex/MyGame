@@ -55,6 +55,11 @@ public:
 
 	bool operator==(const GameplayTag& tag) const
 	{
+		if (this == &tag)
+		{
+			return true;
+		}
+
 		return tag_ == tag.tag_;
 	}
 
@@ -134,7 +139,12 @@ public:
 
 	bool HasAny(const GameplayTagArray& array) const
 	{
-		if (array.tags_.size() == 0 || tags_.size() == 0)
+		if (this == &array)
+		{
+			return true;
+		}
+
+		if (array.tags_.size() == 0)
 		{
 			return true;
 		}
@@ -155,24 +165,23 @@ public:
 
 	bool HasAll(const GameplayTagArray& array) const
 	{
+		if (this == &array)
+		{
+			return true;
+		}
+
 		if (array.tags_.size() == 0)
 		{
 			return true;
 		}
 
-		if (tags_.size() != array.tags_.size())
-		{
-			return false;
-		}
-
 		// todo:后面改成查表的方式来做
-		for (int i = 0; i < tags_.size(); ++i)
+		for (int i = 0; i < array.tags_.size(); ++i)
 		{
 			bool found = false;
-
-			for (int j = 0; j < array.tags_.size(); ++j)
+			for (int j = 0; j < tags_.size(); ++j)
 			{
-				if (tags_[i].Contain(array.tags_[j]))
+				if (tags_[j].Contain(array.tags_[i]))
 				{
 					found = true;
 					break;
@@ -181,7 +190,7 @@ public:
 
 			if (!found)
 			{
-				return true;
+				return false;
 			}
 		}
 

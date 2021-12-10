@@ -29,12 +29,7 @@ public:
 		auto& gameplay_effect = gameplay_effects_[name];
 
 		auto& lua = registry_.ctx<sol::state>();
-		auto result = lua["LoadGameplayEffect"](name,gameplay_effect);
-		if (!result.valid())
-		{
-			sol::error err = result;
-			std::cout << err.what() << std::endl;
-		}
+		lua["LoadGameplayEffect"](name,gameplay_effect);
 
 		return &gameplay_effect;
 	}

@@ -67,7 +67,7 @@ function dump(value, desciption, nesting)
         if type(keylen) == "number" then
             spc = string.rep(" ", keylen - string.len(dump_value_(desciption)))
         end
-        if type(value) ~= "table" and not value["pairs"] then
+        if type(value) ~= "table" then
             result[#result +1 ] = string.format("%s%s%s = %s", indent, dump_value_(desciption), spc, dump_value_(value))
         elseif lookupTable[tostring(value)] then
             result[#result +1 ] = string.format("%s%s%s = *REF*", indent, dump_value_(desciption), spc)

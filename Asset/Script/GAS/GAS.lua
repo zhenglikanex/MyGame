@@ -114,5 +114,5 @@ function LoadGameplayAbility(name,ga)
         ga.target_blocked_tags:Push(GameplayTag.new(tag))
     end
 
-    ga.script = require("GameplayAbility/" .. name.."Script").new()
+    ga.script = require("GameplayAbility/" .. name.."Script")
 end

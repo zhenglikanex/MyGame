@@ -1,3 +1,4 @@
+
 #include "3rdparty/include/sol/sol.hpp"
 #include <fstream>
 #include <cassert>
@@ -20,8 +21,63 @@
 #include "Framework/Game/LuaBridge.hpp"
 #include "Framework/Game/RandomEngine.hpp"
 
+#include "3rdparty/include/catch2/catch.hpp"
 
-int main() {
+//struct Test 
+//{
+//
+//};
+//
+//TEST_CASE_METHOD(Test, "TAG")
+//{
+//	GameplayTag tag1("Test.Tag1");
+//	GameplayTag tag2("Test.Tag2");
+//	GameplayTag tag3("Test.Tag3");
+//	GameplayTag tag4("Test.Tag1");
+//	GameplayTag tag5("Test");
+//
+//	REQUIRE(tag1 == tag4);
+//	REQUIRE(tag1.Contain(tag4));
+//	REQUIRE(!tag1.Contain(tag2));
+//	REQUIRE(tag5.Contain(tag1));
+//	REQUIRE(tag5.Contain(tag2));
+//	REQUIRE(tag5.Contain(tag3));
+//	REQUIRE(tag5.Contain(tag4));
+//
+//	GameplayTagArray array1;
+//	REQUIRE(array1.Empty());
+//	
+//	array1.Push(tag1);
+//	REQUIRE(array1.Find(tag1));
+//	REQUIRE(!array1.Find(tag2));
+//	REQUIRE(array1.Find(tag4));
+//
+//	array1.Clear();
+//	REQUIRE(array1.Empty());
+//	array1.Push(tag5);
+//	array1.Push(tag2);
+//	REQUIRE(!array1.Find(tag1));
+//
+//
+//	GameplayTagArray array2;
+//	array2.Push(tag1);
+//
+//	REQUIRE(!array1.HasAny(array2));
+//	REQUIRE(array2.HasAny(array1));
+//
+//	REQUIRE(!array2.HasAll(array1));
+//	REQUIRE(array1.HasAll(array2));
+//	array2.Push(GameplayTag("Test2"));
+//	REQUIRE(!array1.HasAll(array2));
+//}
+//
+//TEST_CASE_METHOD(Test, "GAS")
+//{
+//	
+//}
+
+int main()
+{
 	entt::registry registry;
 
 	registry.set<sol::state>();
@@ -30,8 +86,10 @@ int main() {
 	registry.set<RandomEngine>((uint32_t)1000);
 
 	auto& lua = registry.ctx<sol::state>();
-	lua.open_libraries(sol::lib::base, sol::lib::package,sol::lib::string,sol::lib::math,sol::lib::table,sol::lib::debug,sol::lib::os);
+	lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table, sol::lib::debug, sol::lib::os);
 	lua.script_file("Script/main.lua", sol::script_default_on_error);
+
+	sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
 
 	RegisterLua(registry, lua);
 
@@ -40,13 +98,13 @@ int main() {
 	TryGameplayAbilitySystem system3(registry);
 	GameplayAttributeSystem system4(registry);
 	DelayTaskSystem system5(registry);
-	
+
 	auto source = registry.create();
 	auto target = registry.create();
 
-	
 	//GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, "AttackGE", 1, target);
-	
+	GameplayAbilityUtility::TryGameplayAbility(registry, source, "AttackGA", target);
+
 	while (true)
 	{
 		system1.FixedUpdate(fixed16(1));
@@ -56,6 +114,5 @@ int main() {
 		system5.FixedUpdate(fixed16(1));
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
-
 	return 0;
 }

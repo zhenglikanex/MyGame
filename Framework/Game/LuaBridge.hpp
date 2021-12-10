@@ -5,6 +5,10 @@
 #include "Framework/Game/GAS/GameplayAbility.hpp"
 
 #include "Framework/Game/Component/DelayTask.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
+
+#include "Framework/Game/Utility/GameplayEffectUtility.hpp"
+#include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -115,16 +119,36 @@ inline void RegisterGameplayAbility(sol::state& lua)
 	type["script"] = &GameplayAbility::script;
 }
 
+inline void RegisterGameplayAbilitySpec(sol::state& lua)
+{
+	auto type = lua.new_usertype<GameplayAbilitySpec>("GameplayAbilitySpec");
+	type["ga"] = &GameplayAbilitySpec::ga;
+	type["script"] = &GameplayAbilitySpec::script;
+	type["level"] = &GameplayAbilitySpec::level;
+	type["source"] = &GameplayAbilitySpec::source;
+	type["target"] = &GameplayAbilitySpec::target;
+}
+
 inline void RegisterLua(entt::registry& registry,sol::state& lua)
 {
 	RegisterGameplayTag(lua);
 	RegisterGameplayEffect(lua);
 	RegisterGameplayAbility(lua);
+	RegisterGameplayAbilitySpec(lua);
 
-	lua["DelayTask"] = [&registry](float time,const std::string& func_name,void* data) {
+	lua["DelayTask"] = [&registry](float time,const sol::function& func) 
+	{	
 		auto& delay_task = registry.ctx_or_set<DelayTask>();
-		delay_task.events.emplace_back(true,time, func_name,data);
+		delay_task.events.emplace_back(time,func);
 	};
 
-	lua["ApplyGameplayEffectToTarget"] = [&registry](std::string_view effect,uint32_t level,)
+	lua["ApplyGameplayEffectToTarget"] = [&registry](entt::entity source, std::string_view effect, uint32_t level, entt::entity target)
+	{
+		GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, effect, level, target);
+	};
+
+	lua["TryGameplayAbility"] = [&registry](entt::entity source, std::string_view ability, entt::entity target)
+	{
+		GameplayAbilityUtility::TryGameplayAbility(registry, source, ability, target);
+	};
 }

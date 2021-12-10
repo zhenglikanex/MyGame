@@ -96,13 +96,13 @@ struct ApplyGameplayEffectSystem : public System
 		
 		if (auto apply_ge = registry.try_ctx<ApplyGameplayEffect>())
 		{
-			for (auto ge_list : apply_ge->value)
+			for (auto& ge_list : apply_ge->value)
 			{
 				overflow_effects.clear();
 
-				for (auto info : ge_list.second)
+				for (auto& info : ge_list.second)
 				{
-					auto ge = ge_manager.LoadGameplayEffect(info.name);
+					auto ge = ge_manager.LoadGameplayEffect(info.effect);
 
 					auto target_tags = registry.try_get<GameplayTags>(info.target);
 					auto source_tags = registry.try_get<GameplayTags>(info.source);

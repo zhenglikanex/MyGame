@@ -2,19 +2,16 @@
 
 #include <vector>
 #include <string>
+#include <functional>
 
 struct DelayTaskEvent
 {
-	bool is_from_lua;
 	float time;
-	std::string func_name;
-	void* data;
+	std::function<void()> callback;
 
-	DelayTaskEvent(bool _is_from_lua, float _time, std::string_view _func_name, void* _data)
-		: is_from_lua(_is_from_lua)
-		, time(_time)
-		, func_name(_func_name)
-		, data(_data)
+	DelayTaskEvent(float _time,const std::function<void()>& _callback)
+		: time(_time)
+		, callback(_callback)
 	{
 
 	}

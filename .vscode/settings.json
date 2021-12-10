@@ -6,6 +6,7 @@
         "GEModifierMagnitude",
         "GEGrantedAbility",
         "EndAbility",
-        "GEDefine"
+        "GEDefine",
+        "DelayTask"
     ]
 }

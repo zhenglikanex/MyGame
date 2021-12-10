@@ -38,16 +38,12 @@ public:
 			{
 				auto& event = *it;
 				event.time = event.time - time;
+
 				if (event.time <= 0)
 				{
-					if (event.is_from_lua)
+					if (event.callback)
 					{
-						auto& lua_state = registry.ctx<sol::state>();
-						lua_state[event.func_name](event.data);
-					}
-					else
-					{
-						
+						event.callback();
 					}
 
 					it = delay_task->events.erase(it);
