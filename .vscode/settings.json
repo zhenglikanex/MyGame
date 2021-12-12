@@ -7,6 +7,8 @@
         "GEGrantedAbility",
         "EndAbility",
         "GEDefine",
-        "DelayTask"
+        "DelayTask",
+        "DestoryEntity",
+        "ApplyGameplayEffect"
     ]
 }

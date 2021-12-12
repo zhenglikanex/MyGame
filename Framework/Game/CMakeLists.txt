@@ -42,6 +42,7 @@ Utility/PhysicsUtility.hpp
 Utility/GameplayAttributeUtility.hpp
 Utility/GameplayEffectUtility.hpp
 Utility/GameplayAbilityUtility.hpp
+Utility/GameplayEventUtility.hpp
 
 System/AnimationSystem.hpp
 System/CollisionSystem.hpp
@@ -73,6 +74,7 @@ System/GAS/RemoveGameplayEffectSystem.hpp
 System/GAS/GameplayAttributeSystem.hpp
 System/GAS/GameplayAbilitySystem.hpp
 System/GAS/TryGameplayAbilitySystem.hpp
+System/GAS/GameplayEventSystem.hpp
 
 Component/Remote.hpp
 Component/Local.hpp
@@ -112,6 +114,7 @@ Component/GAS/GameplayAttributeSet.hpp
 Component/GAS/ModifierAttribute.hpp
 Component/GAS/GameplayAbilitySpec.hpp
 Component/GAS/TryGameplayAbility.hpp
+Component/GAS/GameplayEvent.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp

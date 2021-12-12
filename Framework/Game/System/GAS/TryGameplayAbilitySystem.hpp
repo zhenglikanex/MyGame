@@ -57,15 +57,13 @@ struct TryGameplayAbilitySystem : public System
 					}
 
 					// todo:其他检查
-					sol::table script = ga->script["new"]();
-
 					auto e = registry.create();
-					auto& spec = registry.emplace<GameplayAbilitySpec>(e, ga, script, 1, info.source, info.target);
+					auto& spec = registry.emplace<GameplayAbilitySpec>(e, ga, ga->script["new"](), 1, info.source, info.target);
 					
-					script["Init"](script, e, spec);
+					spec.script["Init"](spec.script, e, spec);
 
 					//todo:调用ga的lua逻辑
-					ga->script["ActiveAbility"](ga->script);
+					spec.script["ActiveAbility"](spec.script);
 				}
 
 				ga_list.second.clear();

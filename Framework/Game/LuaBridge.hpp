@@ -136,11 +136,15 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	RegisterGameplayAbility(lua);
 	RegisterGameplayAbilitySpec(lua);
 
-	lua["DelayTask"] = [&registry](float time,const sol::function& func) 
-	{	
+	auto delay_task1 = [&registry](entt::entity entity, float time, const sol::function& func) {
 		auto& delay_task = registry.ctx_or_set<DelayTask>();
-		delay_task.events.emplace_back(time,func);
+		delay_task.entity_by_events[entity].emplace_back(time, func);
 	};
+
+	auto delay_task2 = [&registry](float time, const sol::function& func) {
+		auto& delay_task = registry.ctx_or_set<DelayTask>();
+	};
+	lua["DelayTask"] = sol::overload(delay_task1,delay_task2);
 
 	lua["ApplyGameplayEffectToTarget"] = [&registry](entt::entity source, std::string_view effect, uint32_t level, entt::entity target)
 	{
@@ -150,5 +154,10 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	lua["TryGameplayAbility"] = [&registry](entt::entity source, std::string_view ability, entt::entity target)
 	{
 		GameplayAbilityUtility::TryGameplayAbility(registry, source, ability, target);
+	};
+
+	lua["DestoryEntity"] = [&registry](entt::entity e)
+	{
+		registry.destroy(e);
 	};
 }

@@ -29,7 +29,8 @@ function GAScript:EndAbility()
     local entity = self.entity
     self.entity = nil
     self.spec = nil
-    EndAbility(entity)
+
+    DestoryEntity(entity)
 end
 
 return GAScript

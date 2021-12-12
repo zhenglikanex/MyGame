@@ -114,6 +114,18 @@ private:
 	std::vector<std::string_view> hierarchy_;
 };
 
+namespace std
+{
+	template<>
+	struct hash<GameplayTag>
+	{
+		_NODISCARD size_t operator()(const GameplayTag& value) const noexcept {
+			return std::hash<std::string>()(value.tag());
+		}
+	};
+	
+}
+
 class GameplayTagArray
 {
 public:

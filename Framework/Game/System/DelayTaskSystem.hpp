@@ -33,24 +33,36 @@ public:
 
 		if (auto delay_task = registry.try_ctx<DelayTask>())
 		{
-			auto it = delay_task->events.begin();
-			while (it != delay_task->events.end())
+			auto it = delay_task->entity_by_events.begin();
+			while (it != delay_task->entity_by_events.end())
 			{
-				auto& event = *it;
-				event.time = event.time - time;
-
-				if (event.time <= 0)
+				if (registry.valid(it->first))
 				{
-					if (event.callback)
+					auto event_it = it->second.begin();
+					while (event_it != it->second.end())
 					{
-						event.callback();
+						auto& event = *event_it;
+						event.time -= time;
+						if (event.time <= 0)
+						{
+							if (event.callback)
+							{
+								event.callback();
+							}
+
+							event_it = it->second.erase(event_it);
+						}
+						else
+						{
+							++event_it;
+						}
 					}
 
-					it = delay_task->events.erase(it);
+					++it;
 				}
 				else
 				{
-					++it;
+					it = delay_task->entity_by_events.erase(it);
 				}
 			}
 		}

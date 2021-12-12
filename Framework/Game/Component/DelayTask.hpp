@@ -9,7 +9,7 @@ struct DelayTaskEvent
 	float time;
 	std::function<void()> callback;
 
-	DelayTaskEvent(float _time,const std::function<void()>& _callback)
+	DelayTaskEvent(float _time, const std::function<void()>& _callback)
 		: time(_time)
 		, callback(_callback)
 	{
@@ -19,5 +19,5 @@ struct DelayTaskEvent
 
 struct DelayTask
 {
-	std::vector<DelayTaskEvent> events;
+	std::unordered_map<entt::entity, std::vector<DelayTaskEvent>> entity_by_events;
 };
