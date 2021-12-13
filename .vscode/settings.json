@@ -9,6 +9,8 @@
         "GEDefine",
         "DelayTask",
         "DestoryEntity",
-        "ApplyGameplayEffect"
+        "ApplyGameplayEffect",
+        "ReceiveGameplayEvent",
+        "ApplyGameplayEffectToTarget"
     ]
 }

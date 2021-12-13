@@ -7,7 +7,7 @@
 class GameplayTag
 {
 public:
-	explicit GameplayTag(const std::string& tag)
+	explicit GameplayTag(std::string_view tag)
 		:tag_(tag)
 	{
 		split();

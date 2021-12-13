@@ -9,6 +9,7 @@
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 #include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
+#include "Framework/Game/Utility/GameplayEventUtility.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -159,5 +160,20 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	lua["DestoryEntity"] = [&registry](entt::entity e)
 	{
 		registry.destroy(e);
+	};
+
+	lua["ReceiveGameplayEvent"] = [&registry](entt::entity e, std::string_view tag, const sol::function& func)
+	{
+		GameplayEventUtility::ReceiveGameplayEvent(registry, e,GameplayTag(tag), func);
+	};
+
+	lua["SendGameplayEvent"] = [&registry](std::string_view tag, void* data)
+	{
+		GameplayEventUtility::SendGameplayEvent(registry, GameplayTag(tag), data);
+	};
+
+	lua["RemoveReceiveGameplayEvent"] = [&registry](entt::entity e,std::string_view tag)
+	{
+		GameplayEventUtility::RemoveReceiveGameplayEvent(registry, e, GameplayTag(tag));
 	};
 }

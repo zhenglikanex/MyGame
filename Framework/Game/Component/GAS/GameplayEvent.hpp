@@ -7,19 +7,6 @@
 
 #include "3rdparty/include/entt/entt.hpp"
 
-struct GameplayEventSender
-{
-	GameplayTag tag;
-	void* data;
-
-	GameplayEventSender(const GameplayTag& _tag, void* _data)
-		: tag(_tag)
-		, data(_data)
-	{
-
-	}
-};
-
 struct GameplayEventReceiver
 {
 	std::function<void(void*)> callback;
@@ -31,10 +18,25 @@ struct GameplayEventReceiver
 	}
 };
 
-using GameplayEventReceiverGroup = std::unordered_map<GameplayTag, std::vector<GameplayEventReceiver>>;
+struct GameplayEventReceiverMap
+{
+	std::unordered_map<GameplayTag,GameplayEventReceiver> value;
+};
 
 struct GameplayEvent
 {
-	std::vector<GameplayEventSender> senders;
-	std::unordered_map<entt::entity, GameplayEventReceiverGroup> receivers;
+	GameplayTag tag;
+	void* data;
+
+	GameplayEvent(const GameplayTag& _tag, void* _data)
+		: tag(_tag)
+		, data(_data)
+	{
+
+	}
+};
+
+struct GameplayEventSender
+{
+	std::vector<GameplayEvent> events;
 };

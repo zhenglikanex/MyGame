@@ -13,6 +13,7 @@
 #include "Framework/Game/System/GAS/TryGameplayAbilitySystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAttributeSystem.hpp"
+#include "Framework/Game/System/GAS/GameplayEventSystem.hpp"
 
 #include "Framework/Game/System/DelayTaskSystem.hpp"
 
@@ -98,12 +99,19 @@ int main()
 	TryGameplayAbilitySystem system3(registry);
 	GameplayAttributeSystem system4(registry);
 	DelayTaskSystem system5(registry);
+	GameplayEventSystem system6(registry);
 
 	auto source = registry.create();
 	auto target = registry.create();
 
 	//GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, "AttackGE", 1, target);
 	GameplayAbilityUtility::TryGameplayAbility(registry, source, "AttackGA", target);
+
+	auto& delay_task = registry.ctx_or_set<DelayTask>();
+	delay_task.entity_by_events[source].emplace_back(1, [&registry,target]()
+	{
+		GameplayEventUtility::SendGameplayEvent(registry, GameplayTag("GA.AttackGA"),(void*)target);
+	});
 
 	while (true)
 	{
@@ -112,6 +120,7 @@ int main()
 		system3.FixedUpdate(fixed16(1));
 		system4.FixedUpdate(fixed16(1));
 		system5.FixedUpdate(fixed16(1));
+		system6.FixedUpdate(fixed16(1));
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	return 0;

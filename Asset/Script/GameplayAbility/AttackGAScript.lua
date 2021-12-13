@@ -3,13 +3,10 @@ local AttackGAScript = class("AttackGAScript",GAScript)
 
 function AttackGAScript:ActiveAbility()
     self:CommitAbility()
-    DelayTask(self.entity,0.5,function()
-        print("this is attack ga")
+    ReceiveGameplayEvent(self.entity,"GA.AttackGA",function(target)
+        print("this is ",target)
+        ApplyGameplayEffectToTarget(target)
         self:EndAbility()
-    end)
-
-    GameplayEvent("tag",function()
-        
     end)
 end
 
