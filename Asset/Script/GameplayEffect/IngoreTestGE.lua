@@ -36,34 +36,9 @@ local BaseGE =
         statck_expiration_policy =  GEDefine.StatckExpirationPolicy.ClearEntireStack, --当Effect的Duration结束时,层数的结束方式
     },
     gameplay_effect = {
-        duration_policy = GEDefine.DurationPolicy.Instant,
+        duration_policy = GEDefine.DurationPolicy.Infinite,
         modifiers = {   --进行一些简单的数值修改
-            {
-                attribute = 1,    -- 指定属性,
-                modifier_op = GEDefine.ModifierOp.Add,
-                modifier_magnitude = 
-                {
-                    calculation_type = GEDefine.ModifierMagnitudeCalculationType.ScalableFloat,
-                    value = 100.0,
-                    --table = 可以通过指定表去查询value
-                },
-                source_tags = {
-                    require_tags = {  -- 只有拥有该Tag的Source/Target Effect才对其造成影响
-
-                    },
-                    ignore_tags = { --Effect作用时无视这些拥有该标签的Source/Target，不对其造成影响
-
-                    }
-                },
-                target_tags = {
-                    require_tags = {
-
-                    },
-                    ignore_tags = {
-
-                    }
-                }
-            },
+            
         },
         executions = {  -- 可以进行复杂的修改,可以捕获source和target的属性
 
@@ -72,26 +47,27 @@ local BaseGE =
     
     --当该Effect被Apply时，授予目标技能
     granted_abilities = {
+        --[[
         {
             ability = "Ability",
             level = 1,
             removal_policy = GEDefine.AbilityRemovalPolicy.CancelAbilityImmediately,
         }
+        --]]
     },
     --在应用Effect时的表现形式，如加血时身上冒出绿色的回复数字
     display = {
         cues = {
-            "cuenamexxx"
+            
         }
     },
     tag = {
         gameplay_effect_asset_tags = --GameplayEffect拥有的标签, 它们自身没有任何功能且只用于描述GameplayEffect
         {
-            "Parent.Child",
-            "Parent.Child.Child",
+            "Test"
         },
         granted_tags = { --存于GameplayEffect中且又用于GameplayEffect所应用ASC的标签. 当GameplayEffect移除时它们也会从ASC中移除. 该标签只作用于持续(Duration)和无限(Infinite)GameplayEffect(待考虑是否只作用这两个类型).
-            "Parent.Child",
+            "Test.Ignore",
         },
         ongoing_tag_requirements = { --在GameplayEffect应用期间，持续监测是否满足这些tag,(),提供关闭和重新开启的功能。 该标签只作用于持续(Duration)和无限(Infinite)GameplayEffect.
             require_tags = {
@@ -111,7 +87,7 @@ local BaseGE =
         },
         remove_gameplay_effects_with_tags = --若施加成功，移除满足条件的所有GE
         {
-            "Parent.Tag"
+            
         },
     }
 }

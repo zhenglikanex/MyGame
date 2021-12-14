@@ -30,39 +30,52 @@ struct ExecuteGameplayEffectSystem : public System
 		for (auto e : view)
 		{
 			auto& spec = view.get<GameplayEffectSpec>(e);
+			if (!registry.valid(spec.owner))
+			{
+				registry.emplace<Destory>(e);
+				continue;
+			}
 
 			spec.duration += time;
 			spec.period += time;
 
-			// ÒÆ³ý
-			if (spec.duration >= spec.ge->period.duration)
+			if (spec.ge->period.period > 0)
 			{
-				//todo:
-			}
+				// ÒÆ³ý
+				if (spec.duration >= spec.ge->period.duration)
+				{
+					//todo:
+				}
 
-			if (!CheckOngoingTagRequirements(spec))
-			{
-				return;
-			}
+				if (!CheckOngoingTagRequirements(spec))
+				{
+					return;
+				}
 
-			if (spec.period >= spec.ge->period.period)
-			{
-				GameplayEffectUtility::ApplyModifiers(registry, spec);
+				if (spec.period >= spec.ge->period.period)
+				{
+					GameplayEffectUtility::ApplyModifiers(registry, spec);
+					spec.period -= spec.ge->period.period;
+				}
 			}
 		}
 	}
 
 	bool CheckOngoingTagRequirements(const GameplayEffectSpec& spec)
 	{
-		auto owner_tags = registry.get<GameplayTags>(spec.owner);
+		auto owner_tags = registry.try_get<GameplayTags>(spec.owner);
 
-		if (!owner_tags.tags.HasAll(spec.ge->tag.ongoing_tag_requirements.require_tags) ||
-			owner_tags.tags.HasAny(spec.ge->tag.ongoing_tag_requirements.ignore_tags))
+		if(!owner_tags && !spec.ge->tag.application_tag_requirements.require_tags.Empty())
 		{
 			return false;
 		}
 
-		return true;
+		if (!owner_tags)
+		{
+			return true;
+		}
+
+		return owner_tags->tags.HasAll(spec.ge->tag.application_tag_requirements.require_tags) && !owner_tags->tags.HasAny(spec.ge->tag.application_tag_requirements.ignore_tags);
 	}
 
 	void Modify()
@@ -72,6 +85,6 @@ struct ExecuteGameplayEffectSystem : public System
 
 	void Finalize() override
 	{
-
+		
 	}
 };

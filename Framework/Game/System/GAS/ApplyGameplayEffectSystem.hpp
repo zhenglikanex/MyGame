@@ -4,9 +4,12 @@
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
+
+#include "Framework/Game/Component/Destory.hpp"
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
+
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 
@@ -126,8 +129,10 @@ struct ApplyGameplayEffectSystem : public System
 						continue;
 					}
 
+
 					GameplayEffectSpec spec(ge,info.source, info.target, info.level);
 
+					RemoveGameplayEffectsWithTags(spec, target_spec_entities);
 					ApplyModifiers(spec);
 
 					if (spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
@@ -252,15 +257,34 @@ struct ApplyGameplayEffectSystem : public System
 		for (auto e : entities)
 		{
 			auto& act_sepc = registry.get<GameplayEffectSpec>(e);
-			if (act_sepc.ge->tag.remove_gameplay_effects_with_tags.HasAny(spec.ge->tag.gameplay_effect_asset_tags))
+			if (registry.valid(act_sepc.owner))
 			{
-				auto tags = registry.try_get<GameplayTags>(act_sepc.owner);
-				if (tags)
+				if (act_sepc.ge->tag.gameplay_effect_asset_tags.HasAny(spec.ge->tag.remove_gameplay_effects_with_tags))
 				{
-					tags->attacth_tags.erase(e);
-				}
+					auto tags = registry.try_get<GameplayTags>(act_sepc.owner);
+					if (tags)
+					{
+						tags->attacth_tags.erase(e);
 
-				registry.destroy(e);
+						tags->tags.Clear();
+
+						std::unordered_map<GameplayTag, bool> flag;
+						for (auto& item : tags->attacth_tags)
+						{
+							for (auto it = item.second.Begin(); it != item.second.End(); ++it)
+							{
+								auto& tag = *it;
+								if (flag.find(tag) == flag.end())
+								{
+									flag[tag] = true;
+									tags->tags.Push(tag);
+								}
+							}
+						}
+					}
+
+					registry.emplace<Destory>(e);
+				}
 			}
 		}
 	}

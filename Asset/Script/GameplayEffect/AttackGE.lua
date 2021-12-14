@@ -103,7 +103,6 @@ local AttackGE =
         },
         application_tag_requirements = { --某个GameplayEffect是否可以应用到该目标的标签, 如果不满足这些需求, 那么GameplayEffect就不可应用.
             require_tags = {
-                "Test.Require"
             },
             ignore_tags = {
                 --"Test.Ignore"
@@ -111,7 +110,7 @@ local AttackGE =
         },
         remove_gameplay_effects_with_tags = --若施加成功，移除满足条件的所有GE
         {
-            "Parent.Tag"
+            "Test"
         },
     }
 }

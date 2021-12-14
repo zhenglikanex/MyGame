@@ -115,8 +115,7 @@ int main()
 		GameplayEventUtility::SendGameplayEvent(registry, GameplayTag("GA.AttackGA"),target);
 	});
 
-	auto& tags = registry.get_or_emplace<GameplayTags>(target);
-	tags.tags.Push(GameplayTag("Test.1"));
+	GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, "IngoreTestGE", 1, target);
 
 	while (true)
 	{

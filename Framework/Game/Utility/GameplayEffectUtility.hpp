@@ -43,7 +43,7 @@ public:
 		}
 		else
 		{
-			auto& mod_attr_set = registry.get<ModifierAttributeSet>(spec.owner);
+			auto& mod_attr_set = registry.get_or_emplace<ModifierAttributeSet>(spec.owner);
 			for (auto& mod : spec.ge->gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
