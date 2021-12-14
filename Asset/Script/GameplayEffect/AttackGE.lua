@@ -88,8 +88,7 @@ local AttackGE =
     tag = {
         gameplay_effect_asset_tags = --GameplayEffect拥有的标签, 它们自身没有任何功能且只用于描述GameplayEffect
         {
-            "Parent.Child",
-            "Parent.Child.Child",
+            "Effect.AttackGE",
         },
         granted_tags = { --存于GameplayEffect中且又用于GameplayEffect所应用ASC的标签. 当GameplayEffect移除时它们也会从ASC中移除. 该标签只作用于持续(Duration)和无限(Infinite)GameplayEffect(待考虑是否只作用这两个类型).
             "Parent.Child",
@@ -104,10 +103,10 @@ local AttackGE =
         },
         application_tag_requirements = { --某个GameplayEffect是否可以应用到该目标的标签, 如果不满足这些需求, 那么GameplayEffect就不可应用.
             require_tags = {
-
+                "Test.Require"
             },
             ignore_tags = {
-
+                --"Test.Ignore"
             }
         },
         remove_gameplay_effects_with_tags = --若施加成功，移除满足条件的所有GE

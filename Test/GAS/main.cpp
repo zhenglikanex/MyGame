@@ -14,6 +14,7 @@
 #include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAttributeSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayEventSystem.hpp"
+#include "Framework/Game/System/DestorySystem.hpp"
 
 #include "Framework/Game/System/DelayTaskSystem.hpp"
 
@@ -100,6 +101,7 @@ int main()
 	GameplayAttributeSystem system4(registry);
 	DelayTaskSystem system5(registry);
 	GameplayEventSystem system6(registry);
+	DestorySystem system7(registry);
 
 	auto source = registry.create();
 	auto target = registry.create();
@@ -110,17 +112,22 @@ int main()
 	auto& delay_task = registry.ctx_or_set<DelayTask>();
 	delay_task.entity_by_events[source].emplace_back(1, [&registry,target]()
 	{
-		GameplayEventUtility::SendGameplayEvent(registry, GameplayTag("GA.AttackGA"),(void*)target);
+		GameplayEventUtility::SendGameplayEvent(registry, GameplayTag("GA.AttackGA"),target);
 	});
+
+	auto& tags = registry.get_or_emplace<GameplayTags>(target);
+	tags.tags.Push(GameplayTag("Test.1"));
 
 	while (true)
 	{
-		system1.FixedUpdate(fixed16(1));
-		system2.FixedUpdate(fixed16(1));
+		
 		system3.FixedUpdate(fixed16(1));
+		system2.FixedUpdate(fixed16(1));
 		system4.FixedUpdate(fixed16(1));
 		system5.FixedUpdate(fixed16(1));
 		system6.FixedUpdate(fixed16(1));
+		system1.FixedUpdate(fixed16(1));
+		system7.FixedUpdate(fixed16(1));
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	return 0;

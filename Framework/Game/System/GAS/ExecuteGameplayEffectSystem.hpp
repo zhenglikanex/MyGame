@@ -56,8 +56,8 @@ struct ExecuteGameplayEffectSystem : public System
 	{
 		auto owner_tags = registry.get<GameplayTags>(spec.owner);
 
-		if (!owner_tags.HasAll(spec.ge->tag.ongoing_tag_requirements.require_tags) ||
-			owner_tags.HasAny(spec.ge->tag.ongoing_tag_requirements.ignore_tags))
+		if (!owner_tags.tags.HasAll(spec.ge->tag.ongoing_tag_requirements.require_tags) ||
+			owner_tags.tags.HasAny(spec.ge->tag.ongoing_tag_requirements.ignore_tags))
 		{
 			return false;
 		}

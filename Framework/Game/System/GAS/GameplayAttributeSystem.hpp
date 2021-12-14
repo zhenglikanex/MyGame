@@ -1,6 +1,7 @@
 #pragma once
 
-#pragma once
+#include <numeric>
+#include <algorithm>
 
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"

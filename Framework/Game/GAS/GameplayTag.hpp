@@ -158,7 +158,7 @@ public:
 
 		if (array.tags_.size() == 0)
 		{
-			return true;
+			return false;
 		}
 
 		for (int i = 0; i < tags_.size(); ++i)
@@ -167,12 +167,12 @@ public:
 			{
 				if (tags_[i].Contain(array.tags_[j]))
 				{
-					return false;
+					return true;
 				}
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	bool HasAll(const GameplayTagArray& array) const
@@ -209,6 +209,25 @@ public:
 		return true;
 	}
 
+	std::vector<GameplayTag>::iterator Begin()
+	{
+		return tags_.begin();
+	}
+
+	std::vector<GameplayTag>::iterator End()
+	{
+		return tags_.end();
+	}
+
+	std::vector<GameplayTag>::const_iterator Begin() const
+	{
+		return tags_.begin();
+	}
+
+	std::vector<GameplayTag>::const_iterator End() const
+	{
+		return tags_.end();
+	}
 private:
 	std::vector<GameplayTag> tags_;
 };

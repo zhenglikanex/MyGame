@@ -11,15 +11,7 @@
 struct GameplayTags
 {
 	GameplayTagArray tags;
+	GameplayTagArray immunity_tags;
 	std::unordered_map<entt::entity, GameplayTagArray> attacth_tags;
-
-	bool HasAny(const GameplayTagArray& array) const
-	{
-		return tags.HasAny(array);
-	}
-
-	bool HasAll(const GameplayTagArray& array) const
-	{
-		return tags.HasAll(array);
-	}
+	std::unordered_map<entt::entity, GameplayTagArray> immunity_tags_attacth_tags;
 };

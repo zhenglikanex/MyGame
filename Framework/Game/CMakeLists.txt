@@ -67,6 +67,7 @@ System/PhysicsSystem.hpp
 System/KinematicCharacterMovementSystem.hpp
 System/CreatePhysicsActorSystem.hpp
 System/DelayTaskSystem.hpp
+System/DestorySystem.hpp
 System/GASSystem.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/ExecuteGameplayEffectSystem.hpp
@@ -106,6 +107,7 @@ Component/PhysicsWorld.cpp
 Component/Character.hpp
 Component/PhysicsActor.hpp
 Component/DelayTask.hpp
+Component/Destory.hpp
 Component/GAS/ApplyGameplayEffect.hpp
 Component/GAS/RemoveGameplayEffectList.hpp
 Component/GAS/GameplayEffectSpec.hpp

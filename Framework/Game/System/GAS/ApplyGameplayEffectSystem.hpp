@@ -12,6 +12,7 @@
 
 #include "Framework/Game/System.hpp"
 
+
 struct ApplyGameplayEffectSystem : public System
 {
 	std::vector<std::string> overflow_effects;
@@ -26,11 +27,12 @@ struct ApplyGameplayEffectSystem : public System
 		return true;
 	}
 
-	// 是否有激活的ge免疫当前的ge
+	// 检查目标是否会免疫该ge
 	// todo: source_tags来自技能或者拥有者,还没想好怎么实现
 	bool HasApplicationImmunity(const std::vector<entt::entity>& entities, const GameplayTags* source_tags)
 	{
-		if (!source_tags)
+		return false;
+		/*if (!source_tags)
 		{
 			return false;
 		}
@@ -39,19 +41,22 @@ struct ApplyGameplayEffectSystem : public System
 		{
 			if (auto ge_spec = registry.try_get<GameplayEffectSpec>(e))
 			{
-				return source_tags->HasAll(ge_spec->ge->immunity.granted_application_immunity_tags.require_tags) ||
-					source_tags->HasAny(ge_spec->ge->immunity.granted_application_immunity_tags.ignore_tags);
+				if (source_tags->HasAll(ge_spec->ge->immunity.granted_application_immunity_tags.require_tags) ||
+					source_tags->HasAny(ge_spec->ge->immunity.granted_application_immunity_tags.ignore_tags))
+				{
+
+					return true;
+				}
 			}
 		}
 
-		return false;
+		return false;*/
 	}
 
-	// 检查是否可以应用GE
-	bool CheckApplicationTagRequirements(const GameplayEffect& ge, const GameplayTags* source_tags, const GameplayTags* target_tags)
+	// 检查目标是否可以应用GE
+	bool CheckApplicationTagRequirements(const GameplayEffect& ge,const GameplayTags* target_tags)
 	{
-		if ((!source_tags && !ge.tag.application_tag_requirements.require_tags.Empty()) || 
-			!source_tags->HasAll(ge.tag.application_tag_requirements.require_tags))
+		if (!target_tags && !ge.tag.application_tag_requirements.require_tags.Empty())
 		{
 			return false;
 		}
@@ -61,12 +66,8 @@ struct ApplyGameplayEffectSystem : public System
 			return true;
 		}
 
-		if (target_tags->HasAny(ge.tag.application_tag_requirements.ignore_tags))
-		{
-			return false;
-		}
+		return target_tags->tags.HasAll(ge.tag.application_tag_requirements.require_tags) && !target_tags->tags.HasAny(ge.tag.application_tag_requirements.ignore_tags);
 
-		return true;
 	}
 
 	// 检查概率
@@ -114,8 +115,9 @@ struct ApplyGameplayEffectSystem : public System
 						continue;
 					}
 
-					if (!CheckApplicationTagRequirements(*ge, source_tags, target_tags))
+					if (!CheckApplicationTagRequirements(*ge,target_tags))
 					{
+						std::cout << "CheckApplicationTagRequirements Failed! " << std::endl;
 						continue;
 					}
 
@@ -218,13 +220,27 @@ struct ApplyGameplayEffectSystem : public System
 			auto e = registry.create();
 			registry.emplace<GameplayEffectSpec>(e, spec);
 
-			if (!registry.has<GameplayTags>(target))
+			if (!spec.ge->tag.granted_tags.Empty())
 			{
-				registry.emplace<GameplayTags>(target);
-			}
+				auto& tags = registry.get_or_emplace<GameplayTags>(target);
+				tags.attacth_tags.emplace(e, spec.ge->tag.granted_tags);
 
-			auto& tags = registry.get<GameplayTags>(target);
-			tags.attacth_tags.emplace(e, spec.ge->tag.granted_tags);
+				tags.tags.Clear();
+
+				std::unordered_map<GameplayTag, bool> flag;				
+				for (auto& item : tags.attacth_tags)
+				{
+					for (auto it = item.second.Begin();it != item.second.End(); ++it)
+					{
+						auto& tag = *it;
+						if (flag.find(tag) == flag.end())
+						{
+							flag[tag] = true;
+							tags.tags.Push(tag);
+						}
+					}
+				}
+			}
 		}
 		
 		// todo 赋予技能

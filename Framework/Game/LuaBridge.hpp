@@ -5,6 +5,7 @@
 #include "Framework/Game/GAS/GameplayAbility.hpp"
 
 #include "Framework/Game/Component/DelayTask.hpp"
+#include "Framework/Game/Component/Destory.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
@@ -159,7 +160,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 
 	lua["DestoryEntity"] = [&registry](entt::entity e)
 	{
-		registry.destroy(e);
+		registry.emplace<Destory>(e);
 	};
 
 	lua["ReceiveGameplayEvent"] = [&registry](entt::entity e, std::string_view tag, const sol::function& func)
@@ -167,7 +168,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		GameplayEventUtility::ReceiveGameplayEvent(registry, e,GameplayTag(tag), func);
 	};
 
-	lua["SendGameplayEvent"] = [&registry](std::string_view tag, void* data)
+	lua["SendGameplayEvent"] = [&registry](std::string_view tag,const GameplayEventData& data)
 	{
 		GameplayEventUtility::SendGameplayEvent(registry, GameplayTag(tag), data);
 	};
