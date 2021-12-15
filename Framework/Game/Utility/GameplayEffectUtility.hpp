@@ -2,6 +2,8 @@
 
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 
+#include "Framework/Game/Component/Destory.hpp"
+
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 
@@ -14,7 +16,7 @@ public:
 	{
 		std::vector<entt::entity> entities;
 		
-		auto view = registry.view<GameplayEffectSpec>();
+		auto view = registry.view<GameplayEffectSpec>(entt::exclude<Destory>);
 		for (auto e : view)
 		{
 			const auto& spec = view.get<GameplayEffectSpec>(e);
@@ -34,7 +36,6 @@ public:
 			spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && spec.ge->period.period > 0)
 		{
 			auto& mod_base_attr_set = registry.get_or_emplace<ModifierBaseAttributeSet>(spec.owner);
-			
 			for (auto& mod : spec.ge->gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);

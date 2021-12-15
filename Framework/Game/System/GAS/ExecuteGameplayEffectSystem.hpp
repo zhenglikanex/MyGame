@@ -26,10 +26,11 @@ struct ExecuteGameplayEffectSystem : public System
 	void FixedUpdate(fixed16 dt) override
 	{
 		float time = static_cast<float>(dt);
-		auto view = registry.view<GameplayEffectSpec>();
+		auto view = registry.view<GameplayEffectSpec>(entt::exclude<Destory>);
 		for (auto e : view)
 		{
 			auto& spec = view.get<GameplayEffectSpec>(e);
+
 			if (!registry.valid(spec.owner))
 			{
 				registry.emplace<Destory>(e);
@@ -37,25 +38,33 @@ struct ExecuteGameplayEffectSystem : public System
 			}
 
 			spec.duration += time;
-			spec.period += time;
 
 			if (spec.ge->period.period > 0)
 			{
-				// ÒÆ³ý
-				if (spec.duration >= spec.ge->period.duration)
-				{
-					//todo:
-				}
-
-				if (!CheckOngoingTagRequirements(spec))
-				{
-					return;
-				}
+				spec.period += time;
 
 				if (spec.period >= spec.ge->period.period)
 				{
-					GameplayEffectUtility::ApplyModifiers(registry, spec);
+					if (!CheckOngoingTagRequirements(spec))
+					{
+						GameplayEffectUtility::ApplyModifiers(registry, spec);
+					}
+
 					spec.period -= spec.ge->period.period;
+				}
+			}
+
+			// ÒÆ³ý
+			if (spec.duration >= spec.ge->period.duration && spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration)
+			{
+				if (spec.stack_count > 1 && spec.ge->stacking.statck_expiration_policy == GameplayEffect::StatckExpirationPolicy::RemoveSingleStackAndRefreshDuration)
+				{
+					--spec.stack_count;
+					spec.duration = 0;
+				}
+				else
+				{
+					registry.emplace<Destory>(e);
 				}
 			}
 		}
@@ -76,11 +85,6 @@ struct ExecuteGameplayEffectSystem : public System
 		}
 
 		return owner_tags->tags.HasAll(spec.ge->tag.application_tag_requirements.require_tags) && !owner_tags->tags.HasAny(spec.ge->tag.application_tag_requirements.ignore_tags);
-	}
-
-	void Modify()
-	{
-		
 	}
 
 	void Finalize() override

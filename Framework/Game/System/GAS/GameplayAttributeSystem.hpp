@@ -67,10 +67,12 @@ struct GameplayAttributeSystem : public System
 					auto& modifiers = mod_base_attr_list.value[i];
 
 					float additive = Sum(modifiers, GameplayEffect::ModifierOp::Add);
-					float multiply = Sum(modifiers, GameplayEffect::ModifierOp::Multiply);
-					float divide = Sum(modifiers, GameplayEffect::ModifierOp::Divide);
+					float multiply = 1 + Sum(modifiers, GameplayEffect::ModifierOp::Multiply);
+					float divide = 1 + Sum(modifiers, GameplayEffect::ModifierOp::Divide);
 
 					attribute_set.value[i].base_value = (attribute_set.value[i].base_value + additive) * multiply * divide;
+
+					modifiers.clear();
 				}
 
 				// º∆À„current_value
@@ -79,8 +81,8 @@ struct GameplayAttributeSystem : public System
 					auto& modifiers = mod_attr_list.value[i];
 
 					float additive = Sum(modifiers, GameplayEffect::ModifierOp::Add);
-					float multiply = Sum(modifiers, GameplayEffect::ModifierOp::Multiply);
-					float divide = Sum(modifiers, GameplayEffect::ModifierOp::Divide);
+					float multiply = 1 + Sum(modifiers, GameplayEffect::ModifierOp::Multiply);
+					float divide = 1 + Sum(modifiers, GameplayEffect::ModifierOp::Divide);
 
 					attribute_set.value[i].current_value = (attribute_set.value[i].base_value + additive) * multiply * divide;
 				}
@@ -106,10 +108,11 @@ struct GameplayAttributeSystem : public System
 						attribute_set.value[i].current_value = value;
 					}
 				}
+
+				
 			}
 		}
 
-		registry.clear<ModifierBaseAttributeSet>();
 		modify_list.clear();
 	}
 

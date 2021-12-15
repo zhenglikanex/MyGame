@@ -21,8 +21,3 @@ struct ModifierAttributeSet
 {
 	std::array<std::vector<ModifierAttribute>, (size_t)GameplayAttributeType::MaxCount> value;
 };
-
-void RegisterModifier(sol::state& lua)
-{
-	
-}

@@ -5,8 +5,9 @@ function AttackGAScript:ActiveAbility()
     self:CommitAbility()
     ReceiveGameplayEvent(self.entity,"GA.AttackGA",function(target)
         print("this is ",target)
-        ApplyGameplayEffectToTarget(self.entity,"AttackGE",1,target)
-        self:EndAbility()
+        --ApplyGameplayEffectToTarget(self.entity,"AttackGE",1,target)
+        --ApplyGameplayEffectToTarget(self.entity,"AttackGE",1,target)
+        --self:EndAbility()
     end)
 end
 

@@ -167,11 +167,11 @@ struct ApplyGameplayEffectSystem : public System
 		{
 			for (auto e : target_spec_entities)
 			{
-				stacking = true;
-
 				auto& act_spec = registry.get<GameplayEffectSpec>(e);
-				if (&spec.ge == &act_spec.ge)
+				if (spec.ge == act_spec.ge)
 				{
+					stacking = true;
+
 					// 处理叠加相关
 					bool reset_duration = false;
 					bool reset_period = false;
@@ -215,8 +215,9 @@ struct ApplyGameplayEffectSystem : public System
 					{
 						act_spec.period = 0;
 					}
+
+					break;
 				}
-				break;
 			}
 		}
 

@@ -10,18 +10,16 @@ enum class GameplayAttributeType : uint8_t
 	MaxHp,
 	Mp,
 	MaxMp,
-
+	
 	MaxCount
 };
 
 struct GameplayAttributeSet
 {
 	std::array<GameplayAttributeData, (size_t)GameplayAttributeType::MaxCount> value;
-};
 
-void RegisterGameplayAttributeSet(sol::state& lua)
-{
-	auto type = lua.new_usertype<GameplayAttributeSet>("GameplayAttributeSet");
-	type["value"] = &GameplayAttributeSet::value;
-	
-}
+	GameplayAttributeSet()
+	{
+
+	}
+};

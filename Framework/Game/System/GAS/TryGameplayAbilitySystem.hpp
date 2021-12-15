@@ -30,6 +30,16 @@ struct TryGameplayAbilitySystem : public System
 		return true;
 	}
 
+	// 检查是否会被其他技能阻塞
+	bool CheckOtherBlock(const GameplayAbility& ga,const std::vector<entt::entity>& entities)
+	{
+		for (auto e : entities)
+		{
+			auto& spec = registry.get<GameplayAbilitySpec>(e);
+			
+		}
+	}
+
 	void FixedUpdate(fixed16 dt) override
 	{
 		GameplayAbilityManager& ga_manager = registry.ctx<GameplayAbilityManager>();
@@ -44,7 +54,6 @@ struct TryGameplayAbilitySystem : public System
 					
 					auto source_tags = registry.try_get<GameplayTags>(info.source);
 					auto target_tags = registry.try_get<GameplayTags>(info.target);
-
 
 					if (!CheckCoolDown(*ga))
 					{
@@ -70,6 +79,7 @@ struct TryGameplayAbilitySystem : public System
 			}
 		}
 	}
+	
 
 	void Finalize() override
 	{

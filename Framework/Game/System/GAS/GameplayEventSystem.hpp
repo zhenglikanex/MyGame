@@ -45,6 +45,8 @@ public:
 					}
 				}
 			}
+
+			sender->events.clear();
 		}
 	}
 

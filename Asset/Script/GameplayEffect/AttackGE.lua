@@ -1,5 +1,11 @@
 local AttackGE = 
 {
+    period = {
+        period = 3,
+        duration = 12,
+        periodic_inhibition_policy = GEDefine.PeriodicInhibitionPolicy.NeverReset
+    },
+
     application = {
         chance_to_apply_to_target = 100
     },
@@ -30,22 +36,22 @@ local AttackGE =
         --RoutineExpirationEffectClasses：Duration正常结束时，调用该RoutineExpirationEffectClasses
     },
     stacking = { -- 处理叠加相关
-        stacking_type = GEDefine.StackingType.None,
-        stack_limit_count = 3,
+        stacking_type = GEDefine.StackingType.AggregateByTarget,
+        stack_limit_count = 2,
         stack_duration_refresh_policy = true, --每次ApplyEffect时是否刷新Effect的持续时间，即使层数不增加也会刷新Duration
         statck_period_reset_policy = true,--每次ApplyEffect时是否刷新周期时间（Period），即使层数不增加也会刷新Period
-        statck_expiration_policy =  GEDefine.StatckExpirationPolicy.ClearEntireStack, --当Effect的Duration结束时,层数的结束方式
+        statck_expiration_policy =  GEDefine.StatckExpirationPolicy.RemoveSingleStackAndRefreshDuration, --当Effect的Duration结束时,层数的结束方式
     },
     gameplay_effect = {
-        duration_policy = GEDefine.DurationPolicy.Instant,
+        duration_policy = GEDefine.DurationPolicy.Duration,
         modifiers = {   --进行一些简单的数值修改
             {
-                attribute = 1,    -- 指定属性,
+                attribute = GameplayAttribute.Hp,    -- 指定属性,
                 modifier_op = GEDefine.ModifierOp.Add,
                 modifier_magnitude = 
                 {
                     calculation_type = GEDefine.ModifierMagnitudeCalculationType.ScalableFloat,
-                    value = 100.0,
+                    value = -100,
                     --table = 可以通过指定表去查询value
                 },
                 source_tags = {
@@ -103,6 +109,7 @@ local AttackGE =
         },
         application_tag_requirements = { --某个GameplayEffect是否可以应用到该目标的标签, 如果不满足这些需求, 那么GameplayEffect就不可应用.
             require_tags = {
+
             },
             ignore_tags = {
                 --"Test.Ignore"

@@ -20,8 +20,8 @@ function LoadGameplayEffect(name,ge)
     
     ge.gameplay_effect.duration_policy = template.gameplay_effect.duration_policy
     for _,modifier in pairs(template.gameplay_effect.modifiers) do
+        dump(modifier)
         local mod = GEModifier.new()
-        print(mod.modifier_magnitude)
         mod.attribute = modifier.attribute
         mod.modifier_op = modifier.modifier_op
         CopyTable(modifier.modifier_magnitude,mod.modifier_magnitude)
@@ -37,6 +37,7 @@ function LoadGameplayEffect(name,ge)
         for _,tag in pairs(modifier.target_tags.ignore_tags) do
             mod.target_tags.ignore_tags:add(GameplayTag.new(tag))
         end
+        print("ge.gameplay_effect.modifiers",ge.gameplay_effect.modifiers)
         ge.gameplay_effect.modifiers:add( mod )
     end
 

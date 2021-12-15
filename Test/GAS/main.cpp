@@ -102,6 +102,7 @@ int main()
 	DelayTaskSystem system5(registry);
 	GameplayEventSystem system6(registry);
 	DestorySystem system7(registry);
+	GameplayAttributeSystem system8(registry);
 
 	auto source = registry.create();
 	auto target = registry.create();
@@ -115,18 +116,34 @@ int main()
 		GameplayEventUtility::SendGameplayEvent(registry, GameplayTag("GA.AttackGA"),target);
 	});
 
-	GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, "IngoreTestGE", 1, target);
+	registry.emplace<GameplayAttributeSet>(source);
+	registry.emplace<ModifierAttributeSet>(source);
+	registry.emplace<ModifierBaseAttributeSet>(source);
+	registry.emplace<GameplayAttributeSet>(target);
+	registry.emplace<ModifierAttributeSet>(target);
+	registry.emplace<ModifierBaseAttributeSet>(target);
 
+	GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, "IngoreTestGE", 1, target);
+	GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, "HeroBaseGE", 1, source);
+	GameplayEffectUtility::ApplyGameEffectToTarget(registry, target, "HeroBaseGE", 1, target);
+	
 	while (true)
 	{
-		
 		system3.FixedUpdate(fixed16(1));
-		system2.FixedUpdate(fixed16(1));
 		system4.FixedUpdate(fixed16(1));
 		system5.FixedUpdate(fixed16(1));
 		system6.FixedUpdate(fixed16(1));
 		system1.FixedUpdate(fixed16(1));
+		system2.FixedUpdate(fixed16(1));
+		system8.FixedUpdate(fixed16(1));
 		system7.FixedUpdate(fixed16(1));
+
+		auto view = registry.view<GameplayAttributeSet>();
+		for (auto e : view)
+		{
+			auto& attribute_set = view.get<GameplayAttributeSet>(e);
+		}
+
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	return 0;
