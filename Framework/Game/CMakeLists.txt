@@ -57,8 +57,6 @@ System/CreateActorSystem.hpp
 System/CreateSkillGraphSystem.hpp
 System/DebugSystem.hpp
 System/SkillSystem.hpp
-System/ModifyHealthSystem.hpp
-System/HealthSystem.hpp
 System/UpdateColliderTransformSystem.hpp
 System/NetworkReceiveSystem.hpp
 System/NetworkSendSystem.hpp
@@ -98,8 +96,6 @@ Component/Weapon.hpp
 Component/SkillGraphAsset.hpp
 Component/Skill.hpp
 Component/Contact.hpp
-Component/Health.hpp
-Component/Attributes.hpp
 Component/ColliderInfo.hpp
 Component/Matrix4x4.hpp
 Component/PhysicsWorld.hpp

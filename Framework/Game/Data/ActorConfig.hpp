@@ -21,12 +21,13 @@ public:
 
 	const std::string& model_asset() const { return model_asset_; }
 	const std::string& anim_asset() const { return anim_asset_; }
-	const std::string& skill_graph_asset() const { return anim_asset_; }
+	const std::string& ge() const { return ge_; }
 	const ColliderInfo& body() const { return body_; }
 	const ColliderInfo& weapon() const { return weapon_; }
 private:
 	std::string model_asset_;
 	std::string anim_asset_;
+	std::string ge_;
 	ColliderInfo body_;
 	ColliderInfo weapon_;
 };
@@ -37,4 +38,5 @@ inline void from_json(const nlohmann::json& json, ActorInfo& info)
 	json.at("animAsset").get_to(info.anim_asset_);
 	json.at("bodyCollision").get_to(info.body_);
 	json.at("weaponCollision").get_to(info.weapon_);
+	json.at("gameplayEffect").get_to(info.ge_);
 }

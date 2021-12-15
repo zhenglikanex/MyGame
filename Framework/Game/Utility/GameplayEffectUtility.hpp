@@ -39,7 +39,11 @@ public:
 			for (auto& mod : spec.ge->gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
-				mod_base_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
+				registry.patch<ModifierBaseAttributeSet>(spec.owner, [&mod,value](ModifierBaseAttributeSet& mod_base_attr_set)
+					{
+						mod_base_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
+					});
+				
 			}
 		}
 		else
@@ -48,7 +52,10 @@ public:
 			for (auto& mod : spec.ge->gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
-				mod_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
+				registry.patch<ModifierAttributeSet>(spec.owner, [&mod, value](ModifierAttributeSet& mod_attr_set)
+					{
+						mod_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
+					});
 			}
 		}		
 	}

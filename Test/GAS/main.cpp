@@ -102,7 +102,6 @@ int main()
 	DelayTaskSystem system5(registry);
 	GameplayEventSystem system6(registry);
 	DestorySystem system7(registry);
-	GameplayAttributeSystem system8(registry);
 
 	auto source = registry.create();
 	auto target = registry.create();
@@ -130,12 +129,11 @@ int main()
 	while (true)
 	{
 		system3.FixedUpdate(fixed16(1));
-		system4.FixedUpdate(fixed16(1));
 		system5.FixedUpdate(fixed16(1));
 		system6.FixedUpdate(fixed16(1));
 		system1.FixedUpdate(fixed16(1));
 		system2.FixedUpdate(fixed16(1));
-		system8.FixedUpdate(fixed16(1));
+		system4.FixedUpdate(fixed16(1));
 		system7.FixedUpdate(fixed16(1));
 
 		auto view = registry.view<GameplayAttributeSet>();
