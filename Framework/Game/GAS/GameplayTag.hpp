@@ -4,25 +4,27 @@
 #include <string_view>
 #include <vector>
 
+#include "Kanex.hpp"
+
 class GameplayTag
 {
 public:
 	explicit GameplayTag(std::string_view tag)
 		:tag_(tag)
 	{
-		split();
+		Split();
 	}
 
 	GameplayTag(const GameplayTag& rhs)
 		: tag_(rhs.tag_)
 	{
-		split();
+		Split();
 	}
 
 	GameplayTag(GameplayTag&& rhs)
 		:tag_(std::move(rhs.tag_))
 	{
-		split();
+		Split();
 	}
 
 	const GameplayTag& operator=(const GameplayTag& rhs)
@@ -34,7 +36,7 @@ public:
 
 		tag_ = rhs.tag_;
 		hierarchy_.clear();
-		split();
+		Split();
 
 		return *this;
 	}
@@ -43,12 +45,12 @@ public:
 	{
 		if (this == &rhs)
 		{
-		return *this;
+			return *this;
 		}
 
 		tag_ = std::move(rhs.tag_);
 		hierarchy_.clear();
-		split();
+		Split();
 
 		return *this;
 	}
@@ -87,8 +89,18 @@ public:
 	}
 
 	const std::string& tag() const { return tag_; }
+
+	void Serialize(kanex::BinaryOutputArchive& ar)
+	{
+		ar(tag_);
+	}
+	void Serialize(kanex::BinaryInputArchive& ar)
+	{
+		ar(tag_);
+		Split();
+	}
 private:
-	void split()
+	void Split()
 	{
 		std::string_view strv = tag_;
 		std::string_view delims = ".";
@@ -123,7 +135,7 @@ namespace std
 			return std::hash<std::string>()(value.tag());
 		}
 	};
-	
+
 }
 
 class GameplayTagArray
@@ -228,6 +240,8 @@ public:
 	{
 		return tags_.end();
 	}
+
+	BAR(tags_);
 private:
 	std::vector<GameplayTag> tags_;
 };

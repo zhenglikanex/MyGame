@@ -11,7 +11,6 @@
 
 struct TryGameplayAbilitySystem : public System
 {
-
 	TryGameplayAbilitySystem(entt::registry& _registry) : System(_registry) { }
 	~TryGameplayAbilitySystem() {}
 

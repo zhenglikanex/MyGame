@@ -4,7 +4,7 @@
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
-
+#include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/Destory.hpp"
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
@@ -106,12 +106,17 @@ struct ApplyGameplayEffectSystem : public System
 
 				for (auto& info : ge_list.second)
 				{
+					if (!registry.has<Local>(info.target) && !registry.has<Local>(info.source))
+					{
+						continue;
+					}
+
 					auto ge = ge_manager.LoadGameplayEffect(info.effect);
 
 					auto target_tags = registry.try_get<GameplayTags>(info.target);
 					auto source_tags = registry.try_get<GameplayTags>(info.source);
 
-					auto& target_spec_entities =  GameplayEffectUtility::GetGameplayEffectSpecEntitiesByOwner(registry, info.target);
+					auto& target_spec_entities = GameplayEffectUtility::GetGameplayEffectSpecEntitiesByOwner(registry, info.target);
 
 					if (HasApplicationImmunity(target_spec_entities, source_tags))
 					{
@@ -128,7 +133,6 @@ struct ApplyGameplayEffectSystem : public System
 					{
 						continue;
 					}
-
 
 					GameplayEffectSpec spec(ge,info.source, info.target, info.level);
 

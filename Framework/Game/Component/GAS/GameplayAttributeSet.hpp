@@ -4,6 +4,8 @@
 
 #include "Framework/Game/GAS/GameplayAttributeData.hpp"
 
+#include "Kanex.hpp"
+
 enum class GameplayAttributeType : uint8_t
 {
 	Hp,
@@ -23,3 +25,5 @@ struct GameplayAttributeSet
 
 	}
 };
+
+NON_MEMEBER_BAR(GameplayAttributeSet, obj.value);

@@ -13,6 +13,7 @@
 #include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/Remote.hpp"
 #include "Framework/Game/Component/GameState.hpp"
+#include "Framework/Game/Component/GAS/GameplayState.hpp"
 
 #include "Kanex.hpp"
 
@@ -139,6 +140,26 @@ struct ClientSyncSystem : public System
 			{
 				registry.replace<Transform>(e, iter->second.transform);
 				registry.replace<AnimationClip>(e, iter->second.clip);
+			}
+		}
+	}
+
+	void VerifyGameplayPrediction(FrameData& frame_data)
+	{
+		//检查属性是否一致
+		//检查tag是否一致
+		//ga,ge这两个可以通过上面两个判断出来了
+		auto view = registry.view<Player,GameplayState,Local>();
+		for (auto e : view)
+		{
+			auto& [player,gameplay_state] = view.get<Player,GameplayState>(e);
+			auto iter = frame_data.actors.find(player.id);
+			if (iter != frame_data.actors.end())
+			{
+				auto& frame_attribute_set = gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()];
+				auto& frame_tags = gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()];
+							
+				
 			}
 		}
 	}

@@ -66,14 +66,13 @@ System/KinematicCharacterMovementSystem.hpp
 System/CreatePhysicsActorSystem.hpp
 System/DelayTaskSystem.hpp
 System/DestorySystem.hpp
-System/GASSystem.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
-System/GAS/ExecuteGameplayEffectSystem.hpp
-System/GAS/RemoveGameplayEffectSystem.hpp
+System/GAS/GameplayEffectSystem.hpp
 System/GAS/GameplayAttributeSystem.hpp
 System/GAS/GameplayAbilitySystem.hpp
 System/GAS/TryGameplayAbilitySystem.hpp
 System/GAS/GameplayEventSystem.hpp
+System/GAS/GameplayStateSystem.hpp
 
 Component/Remote.hpp
 Component/Local.hpp
@@ -105,7 +104,6 @@ Component/PhysicsActor.hpp
 Component/DelayTask.hpp
 Component/Destory.hpp
 Component/GAS/ApplyGameplayEffect.hpp
-Component/GAS/RemoveGameplayEffectList.hpp
 Component/GAS/GameplayEffectSpec.hpp
 Component/GAS/GameplayTags.hpp
 Component/GAS/GameplayAttributeSet.hpp
@@ -113,6 +111,7 @@ Component/GAS/ModifierAttribute.hpp
 Component/GAS/GameplayAbilitySpec.hpp
 Component/GAS/TryGameplayAbility.hpp
 Component/GAS/GameplayEvent.hpp
+Component/GAS/GameplayState.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp

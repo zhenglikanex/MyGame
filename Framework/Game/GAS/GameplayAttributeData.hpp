@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Kanex.hpp"
+
 struct GameplayAttributeData
 {
 	GameplayAttributeData()
@@ -12,3 +14,5 @@ struct GameplayAttributeData
 	float base_value;
 	float current_value;
 };
+
+NON_MEMEBER_BAR(GameplayAttributeData, obj.base_value,obj.current_value);

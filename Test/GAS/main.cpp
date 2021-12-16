@@ -9,7 +9,7 @@
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 
 #include "Framework/Game/System/GAS/ApplyGameplayEffectSystem.hpp"
-#include "Framework/Game/System/GAS/ExecuteGameplayEffectSystem.hpp"
+#include "Framework/Game/System/GAS/GameplayEffectSystem.hpp"
 #include "Framework/Game/System/GAS/TryGameplayAbilitySystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAttributeSystem.hpp"
