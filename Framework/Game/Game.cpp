@@ -14,6 +14,8 @@
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/Movement.hpp"
+#include "Framework/Game/Component/LocalId.hpp"
+#include "Framework/Game/Component/EntityByLocalIdMap.hpp"
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
@@ -27,6 +29,20 @@
 
 using namespace std::chrono;
 
+void ConnectLocalIdToEntity(entt::registry& registry, entt::entity e)
+{
+	auto& local_id = registry.get<LocalId>(e);
+	auto& map = registry.ctx<LocalIdByPlayerMap>();
+	map.value.emplace(local_id.value,e);
+}
+
+void DisconnectLocalIdToEntity(entt::registry& registry, entt::entity e)
+{
+	auto& local_id = registry.get<LocalId>(e);
+	auto& map = registry.ctx<LocalIdByPlayerMap>();
+	map.value.erase(local_id.value);
+}
+
 Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	: start_time_(0)
 	, run_time_(0)
@@ -38,10 +54,14 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
 	registry_.set<GameplayEffectManager>(registry_);
+	registry_.set<LocalIdByPlayerMap>();
+	registry_.set<EntityByLocalIdMap>();
+
+	registry_.on_construct<LocalId>().connect<&ConnectLocalIdToEntity>();
+	registry_.on_destroy<LocalId>().connect<&DisconnectLocalIdToEntity>();
 
 	auto& game_helper = registry_.ctx<Locator>().Ref<const GameHelper>();
 	systems_ = game_helper.CreateSystems(registry_);
-
 }
 
 Game::~Game()
@@ -51,7 +71,6 @@ Game::~Game()
 
 bool Game::Initialize()
 {
-	
 	for (auto& system : systems_)
 	{
 		if (!system->Initialize())
