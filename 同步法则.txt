@@ -1,0 +1,8 @@
+1.有MovmentState的entity才可以被预测位置
+2.服务端所有可移动对象都包含MovementState
+3.客户端所有预测的对象都包含MovementState,预测对象包括由控制的玩家创建的对象、和特别指定的对象
+4.所有本地创建的对象由服务器确认销毁后才进行销毁
+5.对所有含有MovementState的entity都进行预测验证
+6.对所有由玩家创建entity都赋予LocalId,本地和服务器都要维护这个id,确保对应上
+7.对于GAS相关的预测需要由GameplayState组件
+8.对于预测创建entity如果owner的id在本地和客户端无法统一则不能进行预测创建

@@ -158,8 +158,6 @@ struct ClientSyncSystem : public System
 			{
 				auto& frame_attribute_set = gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()];
 				auto& frame_tags = gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()];
-							
-				
 			}
 		}
 	}
