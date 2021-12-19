@@ -17,12 +17,12 @@ public:
 
 	}
 
-	GameplayEffect* LoadGameplayEffect(const std::string& name)
+	const GameplayEffect& LoadGameplayEffect(const std::string& name)
 	{
 		auto it = gameplay_effects_.find(name);
 		if (it != gameplay_effects_.end())
 		{
-			return &(it->second);
+			return (it->second);
 		}
 
 		gameplay_effects_.emplace(name, GameplayEffect());
@@ -31,7 +31,7 @@ public:
 		auto& lua = registry_.ctx<sol::state>();
 		lua["LoadGameplayEffect"](name,gameplay_effect);
 
-		return &gameplay_effect;
+		return gameplay_effect;
 	}
 
 private:

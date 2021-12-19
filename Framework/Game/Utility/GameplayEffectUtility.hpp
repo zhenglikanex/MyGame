@@ -6,13 +6,14 @@
 
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
+#include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
 class GameplayEffectUtility
 {
 public:
-	static std::vector<entt::entity> GetGameplayEffectSpecEntitiesByOwner(entt::registry& registry,entt::entity owner)
+	static std::vector<entt::entity> GetGameplayEffectSpecEntitiesByOwner(entt::registry& registry,UniqueId owner)
 	{
 		std::vector<entt::entity> entities;
 		
@@ -29,17 +30,17 @@ public:
 		return entities;
 	}
 
-	static void ApplyModifiers(entt::registry& registry,const GameplayEffectSpec& spec)
+	static void ApplyModifiers(entt::registry& registry,const GameplayEffect& ge,entt::entity target,uint32_t level)
 	{
 		//is modify base
-		if (spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
-			spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && spec.ge->period.period > 0)
+		if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
+			ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && ge.period.period > 0)
 		{
-			auto& mod_base_attr_set = registry.get_or_emplace<ModifierBaseAttributeSet>(spec.owner);
-			for (auto& mod : spec.ge->gameplay_effect.modifiers)
+			auto& mod_base_attr_set = registry.get_or_emplace<ModifierBaseAttributeSet>(target);
+			for (auto& mod : ge.gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
-				registry.patch<ModifierBaseAttributeSet>(spec.owner, [&mod,value](ModifierBaseAttributeSet& mod_base_attr_set)
+				registry.patch<ModifierBaseAttributeSet>(target, [&mod,value](ModifierBaseAttributeSet& mod_base_attr_set)
 					{
 						mod_base_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
 					});
@@ -48,11 +49,11 @@ public:
 		}
 		else
 		{
-			auto& mod_attr_set = registry.get_or_emplace<ModifierAttributeSet>(spec.owner);
-			for (auto& mod : spec.ge->gameplay_effect.modifiers)
+			auto& mod_attr_set = registry.get_or_emplace<ModifierAttributeSet>(target);
+			for (auto& mod : ge.gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
-				registry.patch<ModifierAttributeSet>(spec.owner, [&mod, value](ModifierAttributeSet& mod_attr_set)
+				registry.patch<ModifierAttributeSet>(target, [&mod, value](ModifierAttributeSet& mod_attr_set)
 					{
 						mod_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
 					});

@@ -1,9 +1,17 @@
 #pragma once
 
+#include <string>
+
 #include "Framework/Game/GAS/GameplayTag.hpp"
 
 struct GameplayEffect
 {	
+	GameplayEffect() = default;
+	GameplayEffect(const GameplayEffect&) = delete;
+	const GameplayEffect& operator=(const GameplayEffect&) = delete;
+
+	std::string name;
+
 	struct RequirementsTags
 	{
 		GameplayTagArray require_tags;

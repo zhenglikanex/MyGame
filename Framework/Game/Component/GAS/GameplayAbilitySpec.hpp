@@ -1,25 +1,29 @@
 #pragma once
 
+#include <string>
+#include <string_view>
+
 #include "Framework/Game/GAS/GameplayAbility.hpp"
 
-#include "3rdparty/include/entt/entt.hpp"
+#include "Framework/Game/Component/UniqueId.hpp"
+
+#include "3rdparty/include/sol/sol.hpp"
 
 struct GameplayAbilitySpec
 {
-	const GameplayAbility* ga;
+	std::string ability;
 	sol::table script;
 	uint32_t level;
-	entt::entity source;
-	entt::entity target;
+	UniqueId source;
+	UniqueId target;
 
-	GameplayAbilitySpec(const GameplayAbility* _ga,const sol::table& _script,uint32_t _level, entt::entity _source, entt::entity _target)
-		: ga(_ga)
+	GameplayAbilitySpec(std::string_view _ability,const sol::table& _script,uint32_t _level, UniqueId _source, UniqueId _target)
+		: ability(_ability)
 		, script(_script)
 		, level(_level)
 		, source(_source)
 		, target(_target)
 	{
-
 	}
 };
 

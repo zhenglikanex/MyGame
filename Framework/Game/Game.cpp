@@ -15,7 +15,8 @@
 #include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/LocalId.hpp"
-#include "Framework/Game/Component/EntityByLocalIdMap.hpp"
+#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
@@ -29,18 +30,20 @@
 
 using namespace std::chrono;
 
-void ConnectLocalIdToEntity(entt::registry& registry, entt::entity e)
+void ConnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
 {
-	auto& local_id = registry.get<LocalId>(e);
-	auto& map = registry.ctx<LocalIdByPlayerMap>();
-	map.value.emplace(local_id.value,e);
+	auto& unique_id = registry.get<UniqueId>(e);
+
+	auto& map = registry.ctx<EntityByUniqueIdMap>();
+	map.value.emplace(unique_id.value, e);
 }
 
-void DisconnectLocalIdToEntity(entt::registry& registry, entt::entity e)
+void DisconnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
 {
-	auto& local_id = registry.get<LocalId>(e);
-	auto& map = registry.ctx<LocalIdByPlayerMap>();
-	map.value.erase(local_id.value);
+	auto& unique_id = registry.get<UniqueId>(e);
+
+	auto& map = registry.ctx<EntityByUniqueIdMap>();
+	map.value.erase(unique_id.value);
 }
 
 Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
@@ -55,10 +58,10 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	registry_.set<GameState>();
 	registry_.set<GameplayEffectManager>(registry_);
 	registry_.set<LocalIdByPlayerMap>();
-	registry_.set<EntityByLocalIdMap>();
+	registry_.set<EntityByUniqueIdMap>();
 
-	registry_.on_construct<LocalId>().connect<&ConnectLocalIdToEntity>();
-	registry_.on_destroy<LocalId>().connect<&DisconnectLocalIdToEntity>();
+	registry_.on_construct<UniqueId>().connect<&ConnectUniqueIdToEntity>();
+	registry_.on_destroy<UniqueId>().connect<&DisconnectUniqueIdToEntity>();
 
 	auto& game_helper = registry_.ctx<Locator>().Ref<const GameHelper>();
 	systems_ = game_helper.CreateSystems(registry_);

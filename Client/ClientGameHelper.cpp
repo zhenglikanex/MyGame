@@ -1,5 +1,7 @@
 #include "ClientGameHelper.hpp"
 
+#include "Framework/Game/Component/Player.hpp"
+
 #include "Framework/Game/System/CreateActorSystem.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
 #include "Framework/Game/System/CreateAnimationSystem.hpp"
@@ -81,4 +83,15 @@ bool ClientGameHelper::IsLocalPlayer(uint32_t id) const
 bool ClientGameHelper::IsRemotePlayer(uint32_t id) const
 {
 	return id != local_id_;
+}
+
+bool ClientGameHelper::IsControllable(entt::registry& registry, entt::entity e) const
+{
+	if (registry.has<Player>(e))
+	{
+		auto& player = registry.get<Player>(e);
+		return player.id == local_id_;
+	}
+	
+	return false;
 }

@@ -66,3 +66,8 @@ bool ServerGameHelper::IsRemotePlayer(uint32_t id) const
 {
 	return false;
 }
+
+bool ServerGameHelper::IsControllable(entt::registry& registry, entt::entity e) const
+{
+	return true;
+}

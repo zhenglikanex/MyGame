@@ -103,8 +103,9 @@ Component/Character.hpp
 Component/PhysicsActor.hpp
 Component/DelayTask.hpp
 Component/Destory.hpp
+Component/UniqueId.hpp
+Component/EntityByUniqueIdMap.hpp
 Component/LocalId.hpp
-Component/EntityByLocalIdMap.hpp
 Component/GAS/ApplyGameplayEffect.hpp
 Component/GAS/GameplayEffectSpec.hpp
 Component/GAS/GameplayTags.hpp

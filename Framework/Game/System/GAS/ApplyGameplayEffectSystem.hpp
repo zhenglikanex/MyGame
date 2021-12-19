@@ -1,15 +1,16 @@
 #pragma once
 
 #include "Framework/Game/RandomEngine.hpp"
+#include "Framework/Game/GameHelper.hpp"
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
-#include "Framework/Game/Component/Local.hpp"
+#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/Destory.hpp"
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
-
+#include "Framework/Game/Component/GAS/GameplayState.hpp"
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 
@@ -97,6 +98,7 @@ struct ApplyGameplayEffectSystem : public System
 	{
 		sol::state& lua = registry.ctx<sol::state>();
 		GameplayEffectManager& ge_manager = registry.ctx<GameplayEffectManager>();
+		GameHelper& game_helper = registry.ctx<GameHelper>();
 		
 		if (auto apply_ge = registry.try_ctx<ApplyGameplayEffect>())
 		{
@@ -106,41 +108,40 @@ struct ApplyGameplayEffectSystem : public System
 
 				for (auto& info : ge_list.second)
 				{
-					if (!registry.has<Local>(info.target) && !registry.has<Local>(info.source))
+					if (!(registry.has<UniqueId>(info.target) && registry.has<UniqueId>(info.source) &&
+						registry.has<GameplayState>(info.target) && registry.has<GameplayState>(info.source)))
 					{
 						continue;
 					}
 
-					auto ge = ge_manager.LoadGameplayEffect(info.effect);
+					auto& ge = ge_manager.LoadGameplayEffect(info.effect);
 
 					auto target_tags = registry.try_get<GameplayTags>(info.target);
 					auto source_tags = registry.try_get<GameplayTags>(info.source);
 
-					auto& target_spec_entities = GameplayEffectUtility::GetGameplayEffectSpecEntitiesByOwner(registry, info.target);
+					auto& target_spec_entities = GameplayEffectUtility::GetGameplayEffectSpecEntitiesByOwner(registry,registry.get<UniqueId>(info.target));
 
 					if (HasApplicationImmunity(target_spec_entities, source_tags))
 					{
 						continue;
 					}
 
-					if (!CheckApplicationTagRequirements(*ge,target_tags))
+					if (!CheckApplicationTagRequirements(ge,target_tags))
 					{
 						std::cout << "CheckApplicationTagRequirements Failed! " << std::endl;
 						continue;
 					}
 
-					if (!CheckApplicationChance(*ge))
+					if (!CheckApplicationChance(ge))
 					{
 						continue;
 					}
 
-					GameplayEffectSpec spec(ge,info.source, info.target, info.level);
+					RemoveGameplayEffectsWithTags(ge,target_tags,target_spec_entities);
+					ApplyModifiers(ge);
 
-					RemoveGameplayEffectsWithTags(spec, target_spec_entities);
-					ApplyModifiers(spec);
-
-					if (spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
-						spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
+					if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
+						ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
 					{
 						ApplyGameEffectToTarget(spec, target_spec_entities, info.target);
 					}
@@ -158,35 +159,37 @@ struct ApplyGameplayEffectSystem : public System
 		}		
 	}
 
-	void ApplyModifiers(const GameplayEffectSpec& spec)
+	void ApplyModifiers(const GameplayEffect& ge,entt::entity target,uint32_t level)
 	{
-		GameplayEffectUtility::ApplyModifiers(registry, spec);
+		GameplayEffectUtility::ApplyModifiers(registry, ge,target,level);
 	}
 
-	void ApplyGameEffectToTarget(const GameplayEffectSpec& spec,const std::vector<entt::entity>& target_spec_entities,entt::entity target)
+	void ApplyGameEffectToTarget(const GameplayEffect& ge,const std::vector<entt::entity>& target_spec_entities,entt::entity target)
 	{		
+		GameplayEffectManager& ge_manager = registry.ctx<GameplayEffectManager>();
 		bool stacking = false;
 
-		if (spec.ge->stacking.stacking_type != GameplayEffect::StackingType::None)
+		if (ge.stacking.stacking_type != GameplayEffect::StackingType::None)
 		{
 			for (auto e : target_spec_entities)
 			{
 				auto& act_spec = registry.get<GameplayEffectSpec>(e);
-				if (spec.ge == act_spec.ge)
+				if (ge.name == act_spec.effect)
 				{
+					
 					stacking = true;
 
 					// 处理叠加相关
 					bool reset_duration = false;
 					bool reset_period = false;
-					if (act_spec.stack_count >= spec.ge->stacking.stack_limit_count)
+					if (act_spec.stack_count >= act_spec.stacking.stack_limit_count)
 					{
-						for (auto& ge_name : spec.ge->overflow.overflow_effects)
+						for (auto& ge_name : ge.overflow.overflow_effects)
 						{
 							overflow_effects.push_back(ge_name);
 						}
 
-						if (spec.ge->overflow.deny_overflow_application && spec.ge->overflow.clear_stack_on_overflow)
+						if (spec.ge->overflow.deny_overflow_application && ge.overflow.clear_stack_on_overflow)
 						{
 							act_spec.stack_count = 0;
 						}
@@ -257,39 +260,36 @@ struct ApplyGameplayEffectSystem : public System
 		// todo 添加cues
 	}
 
-	void RemoveGameplayEffectsWithTags(const GameplayEffectSpec& spec,const std::vector<entt::entity>& entities)
+	void RemoveGameplayEffectsWithTags(const GameplayEffect& ge,GameplayTags* target_tags,const std::vector<entt::entity>& entities)
 	{
+		GameplayEffectManager& ge_manager = registry.ctx<GameplayEffectManager>();
 		for (auto e : entities)
 		{
 			auto& act_sepc = registry.get<GameplayEffectSpec>(e);
-			if (registry.valid(act_sepc.owner))
+			auto& act_ge = ge_manager.LoadGameplayEffect(act_sepc.effect);
+			if (act_ge.tag.gameplay_effect_asset_tags.HasAny(ge.tag.remove_gameplay_effects_with_tags))
 			{
-				if (act_sepc.ge->tag.gameplay_effect_asset_tags.HasAny(spec.ge->tag.remove_gameplay_effects_with_tags))
+				if (target_tags)
 				{
-					auto tags = registry.try_get<GameplayTags>(act_sepc.owner);
-					if (tags)
+					target_tags->attacth_tags.erase(e);
+					target_tags->tags.Clear();
+
+					std::unordered_map<GameplayTag, bool> flag;
+					for (auto& item : target_tags->attacth_tags)
 					{
-						tags->attacth_tags.erase(e);
-
-						tags->tags.Clear();
-
-						std::unordered_map<GameplayTag, bool> flag;
-						for (auto& item : tags->attacth_tags)
+						for (auto it = item.second.Begin(); it != item.second.End(); ++it)
 						{
-							for (auto it = item.second.Begin(); it != item.second.End(); ++it)
+							auto& tag = *it;
+							if (flag.find(tag) == flag.end())
 							{
-								auto& tag = *it;
-								if (flag.find(tag) == flag.end())
-								{
-									flag[tag] = true;
-									tags->tags.Push(tag);
-								}
+								flag[tag] = true;
+								target_tags->tags.Push(tag);
 							}
 						}
 					}
-
-					registry.emplace<Destory>(e);
 				}
+
+				registry.emplace<Destory>(e);
 			}
 		}
 	}

@@ -16,5 +16,6 @@ public:
 
 	virtual bool IsLocalPlayer(uint32_t id) const = 0;
 	virtual bool IsRemotePlayer(uint32_t id) const = 0;
+	virtual bool IsControllable(entt::registry& registry, entt::entity e) const = 0;
 private:
 };

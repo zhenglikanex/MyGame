@@ -2,21 +2,24 @@
 
 #include <vector>
 #include <cstdint>
+#include <string>
 
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 
+#include "Framework/Game/Component/UniqueId.hpp"
+
 struct GameplayEffectSpec
 {
-	const GameplayEffect* ge;
-	entt::entity source;
-	entt::entity owner;
+	std::string effect;
+	UniqueId source;
+	UniqueId owner;
 	uint8_t level;
 	float period;
 	float duration;
 	uint32_t stack_count;
 
-	GameplayEffectSpec(const GameplayEffect* _ge,entt::entity _source,entt::entity _owner,uint8_t _level)
-		: ge(_ge)
+	GameplayEffectSpec(std::string_view _effect,UniqueId _source,UniqueId _owner,uint8_t _level)
+		: effect(_effect)
 		, source(_source)
 		, owner(_owner)
 		, level(_level)

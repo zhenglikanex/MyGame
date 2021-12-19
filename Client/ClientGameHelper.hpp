@@ -15,6 +15,7 @@ public:
 
 	bool IsLocalPlayer(uint32_t id) const override;
 	bool IsRemotePlayer(uint32_t id) const override;
+	bool IsControllable(entt::registry& registry, entt::entity e) const override;
 private:
 	uint32_t local_id_;
 };
