@@ -136,16 +136,21 @@ struct ApplyGameplayEffectSystem : public System
 					{
 						continue;
 					}
+					
+					ApplyModifiers(ge,info.target,info.level);
 
-					RemoveGameplayEffectsWithTags(ge,target_tags,target_spec_entities);
-					ApplyModifiers(ge);
-
+					bool need_update_gameplay_tags = false;
 					if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
 						ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
 					{
-						ApplyGameEffectToTarget(spec, target_spec_entities, info.target);
+						need_update_gameplay_tags = ApplyGameEffectToTarget(info, ge, target_spec_entities);
 					}
-
+					need_update_gameplay_tags = need_update_gameplay_tags && RemoveGameplayEffectsWithTags(ge, target_spec_entities);
+					if (need_update_gameplay_tags)
+					{
+						UpdateTargetGameplayTag(info.target,target_spec_entities);
+					}
+					
 					// todo:
 					if (overflow_effects.size() > 0)
 					{
@@ -164,9 +169,9 @@ struct ApplyGameplayEffectSystem : public System
 		GameplayEffectUtility::ApplyModifiers(registry, ge,target,level);
 	}
 
-	void ApplyGameEffectToTarget(const GameplayEffect& ge,const std::vector<entt::entity>& target_spec_entities,entt::entity target)
+	bool ApplyGameEffectToTarget(const GameplayEffectInfo& info,const GameplayEffect& ge,std::vector<entt::entity>& target_spec_entities)
 	{		
-		GameplayEffectManager& ge_manager = registry.ctx<GameplayEffectManager>();
+		bool need_update_gameply_tag = false;
 		bool stacking = false;
 
 		if (ge.stacking.stacking_type != GameplayEffect::StackingType::None)
@@ -176,32 +181,31 @@ struct ApplyGameplayEffectSystem : public System
 				auto& act_spec = registry.get<GameplayEffectSpec>(e);
 				if (ge.name == act_spec.effect)
 				{
-					
 					stacking = true;
 
 					// 处理叠加相关
 					bool reset_duration = false;
 					bool reset_period = false;
-					if (act_spec.stack_count >= act_spec.stacking.stack_limit_count)
+					if (act_spec.stack_count >= ge.stacking.stack_limit_count)
 					{
-						for (auto& ge_name : ge.overflow.overflow_effects)
+						for (auto& effect : ge.overflow.overflow_effects)
 						{
-							overflow_effects.push_back(ge_name);
+							overflow_effects.push_back(effect);
 						}
 
-						if (spec.ge->overflow.deny_overflow_application && ge.overflow.clear_stack_on_overflow)
+						if (ge.overflow.deny_overflow_application && ge.overflow.clear_stack_on_overflow)
 						{
 							act_spec.stack_count = 0;
 						}
 
-						if (spec.ge->stacking.stack_duration_refresh_policy &&
-							!spec.ge->overflow.deny_overflow_application)
+						if (ge.stacking.stack_duration_refresh_policy &&
+							!ge.overflow.deny_overflow_application)
 						{
 							reset_duration = true;
 						}
 
-						if (spec.ge->stacking.statck_period_reset_policy &&
-							!spec.ge->overflow.deny_overflow_application)
+						if (ge.stacking.statck_period_reset_policy &&
+							!ge.overflow.deny_overflow_application)
 						{
 							reset_period = true;
 						}
@@ -231,65 +235,61 @@ struct ApplyGameplayEffectSystem : public System
 		if (!stacking)
 		{
 			auto e = registry.create();
-			registry.emplace<GameplayEffectSpec>(e, spec);
+			registry.emplace<GameplayEffectSpec>(e, info.effect, registry.get<UniqueId>(info.source), registry.get<UniqueId>(info.target), info.level);
+			target_spec_entities.push_back(e);
+			
+			need_update_gameply_tag = !ge.tag.granted_tags.Empty();
 
-			if (!spec.ge->tag.granted_tags.Empty())
-			{
-				auto& tags = registry.get_or_emplace<GameplayTags>(target);
-				tags.attacth_tags.emplace(e, spec.ge->tag.granted_tags);
-
-				tags.tags.Clear();
-
-				std::unordered_map<GameplayTag, bool> flag;				
-				for (auto& item : tags.attacth_tags)
-				{
-					for (auto it = item.second.Begin();it != item.second.End(); ++it)
-					{
-						auto& tag = *it;
-						if (flag.find(tag) == flag.end())
-						{
-							flag[tag] = true;
-							tags.tags.Push(tag);
-						}
-					}
-				}
-			}
+			// todo 赋予技能
 		}
-		
-		// todo 赋予技能
-		// todo 添加cues
+
+		//添加cue
+
+		return need_update_gameply_tag;
 	}
 
-	void RemoveGameplayEffectsWithTags(const GameplayEffect& ge,GameplayTags* target_tags,const std::vector<entt::entity>& entities)
+	bool RemoveGameplayEffectsWithTags(const GameplayEffect& ge,const std::vector<entt::entity>& target_spec_entities)
 	{
-		GameplayEffectManager& ge_manager = registry.ctx<GameplayEffectManager>();
-		for (auto e : entities)
+		bool need_update_gameply_tag = false;
+		auto& ge_manager = registry.ctx<GameplayEffectManager>();
+
+		for (auto e : target_spec_entities)
 		{
 			auto& act_sepc = registry.get<GameplayEffectSpec>(e);
 			auto& act_ge = ge_manager.LoadGameplayEffect(act_sepc.effect);
 			if (act_ge.tag.gameplay_effect_asset_tags.HasAny(ge.tag.remove_gameplay_effects_with_tags))
 			{
-				if (target_tags)
-				{
-					target_tags->attacth_tags.erase(e);
-					target_tags->tags.Clear();
+				need_update_gameply_tag = true;
+				registry.emplace<Destory>(e);
+			}
+		}
 
-					std::unordered_map<GameplayTag, bool> flag;
-					for (auto& item : target_tags->attacth_tags)
+		return need_update_gameply_tag;
+	}
+
+	void UpdateTargetGameplayTag(entt::entity target,const std::vector<entt::entity>& target_spec_entities)
+	{
+		auto& ge_manager = registry.ctx<GameplayEffectManager>();
+
+		auto& tags = registry.get_or_emplace<GameplayTags>(target);
+		tags.tags.Clear();
+
+		std::unordered_map<GameplayTag, bool> flag;
+		for (auto e : target_spec_entities)
+		{
+			if (!registry.has<Destory>(e))
+			{
+				auto& spec = registry.get<GameplayEffectSpec>(e);
+				auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
+				for (auto it = ge.tag.granted_tags.Begin(); it != ge.tag.granted_tags.End(); ++it)
+				{
+					auto& tag = *it;
+					if (flag.find(tag) == flag.end())
 					{
-						for (auto it = item.second.Begin(); it != item.second.End(); ++it)
-						{
-							auto& tag = *it;
-							if (flag.find(tag) == flag.end())
-							{
-								flag[tag] = true;
-								target_tags->tags.Push(tag);
-							}
-						}
+						flag[tag] = true;
+						tags.tags.Push(tag);
 					}
 				}
-
-				registry.emplace<Destory>(e);
 			}
 		}
 	}
