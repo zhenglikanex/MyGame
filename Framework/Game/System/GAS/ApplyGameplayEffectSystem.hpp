@@ -108,8 +108,8 @@ struct ApplyGameplayEffectSystem : public System
 
 				for (auto& info : ge_list.second)
 				{
-					if (!(registry.has<UniqueId>(info.target) && registry.has<UniqueId>(info.source) &&
-						registry.has<GameplayState>(info.target) && registry.has<GameplayState>(info.source)))
+					if (!(registry.has<UniqueId>(info.target) && registry.has<UniqueId>(info.source)) ||
+						!(registry.has<GameplayState>(info.target) && registry.has<GameplayState>(info.source)))
 					{
 						continue;
 					}

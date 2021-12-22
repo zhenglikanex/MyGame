@@ -3,6 +3,7 @@
 #include "Framework/Game/RandomEngine.hpp"
 
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
+#include "Framework/Game/Component/GAS/GameplayState.hpp"
 #include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
@@ -49,24 +50,29 @@ struct TryGameplayAbilitySystem : public System
 			{
 				for (auto& info : ga_list.second)
 				{
-					const GameplayAbility* ga = ga_manager.LoadGameplayAbility(info.ability);
-					
-					auto source_tags = registry.try_get<GameplayTags>(info.source);
-					auto target_tags = registry.try_get<GameplayTags>(info.target);
-
-					if (!CheckCoolDown(*ga))
+					if (!(registry.has<UniqueId>(info.source)) || !(registry.has<GameplayState>(info.source)))
 					{
 						continue;
 					}
 
-					if (!CheckCost(*ga))
+					auto& ga = ga_manager.LoadGameplayAbility(info.ability);
+					
+					auto source_tags = registry.try_get<GameplayTags>(info.source);
+					auto target_tags = registry.try_get<GameplayTags>(info.target);
+
+					if (!CheckCoolDown(ga))
+					{
+						continue;
+					}
+
+					if (!CheckCost(ga))
 					{
 						continue;
 					}
 
 					// todo:ÆäËû¼ì²é
 					auto e = registry.create();
-					auto& spec = registry.emplace<GameplayAbilitySpec>(e, ga, ga->script["new"](), 1, info.source, info.target);
+					auto& spec = registry.emplace<GameplayAbilitySpec>(e, ga, ga.script["new"](), 1, registry.get<UniqueId>(info.source), registry.get<UniqueId>(info.target));
 					
 					spec.script["Init"](spec.script, e, spec);
 

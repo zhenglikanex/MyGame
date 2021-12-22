@@ -8,8 +8,12 @@
 
 #include "3rdparty/include/entt/entt.hpp"
 
+#include "Kanex.hpp"
+
 struct GameplayTags
 {
 	GameplayTagArray tags;
 	GameplayTagArray immunity_tags;
 };
+
+NON_MEMEBER_BAR(GameplayTags, obj.tags, obj.immunity_tags);

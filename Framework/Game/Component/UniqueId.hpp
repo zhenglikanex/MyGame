@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+#include "Kanex.hpp"
+
 //全局唯一的id
 struct UniqueId
 {
@@ -23,6 +25,8 @@ struct UniqueId
 		return value != other.value;
 	}
 };
+
+NON_MEMEBER_BAR(UniqueId, obj.value);
 
 namespace std
 {

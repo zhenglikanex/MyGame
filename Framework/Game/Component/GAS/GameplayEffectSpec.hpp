@@ -8,6 +8,8 @@
 
 #include "Framework/Game/Component/UniqueId.hpp"
 
+#include "Kanex.hpp"
+
 struct GameplayEffectSpec
 {
 	std::string effect;
@@ -30,3 +32,5 @@ struct GameplayEffectSpec
 
 	}
 };
+
+NON_MEMEBER_BAR(GameplayEffectSpec, obj.effect, obj.source, obj.owner, obj.level, obj.period, obj.duration, obj.stack_count);

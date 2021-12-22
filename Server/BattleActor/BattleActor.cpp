@@ -78,7 +78,11 @@ void BattleActor::StartBattle(const std::any& data)
 	{
 		Proto::StartBattleInfo info;
 		info.set_my_id(ids_[player]);
-		info.set_allocated_player_infos(new Proto::GamePlayerInfos(player_infos));
+
+		auto player_infos = info.mutable_player_infos();
+		auto player_info = player_infos->add_player_infos();
+		player_info->set_id(ids_[player]);
+
 		info.set_start_time(start_time);
 
 		Call(player, "send", std::make_tuple(std::string("start_battle"), Serialize(info)));

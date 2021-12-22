@@ -6,11 +6,6 @@
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/NetworkService.hpp"
 
-#include "Framework/Game/Component/GameState.hpp"
-#include "Framework/Game/Component/Transform.hpp"
-#include "Framework/Game/Component/AnimationClip.hpp"
-#include "Framework/Game/Component/Player.hpp"
-
 struct ServerSyncSystem : public System
 {
 	kanex::Buffer buffer;
@@ -36,17 +31,40 @@ struct ServerSyncSystem : public System
 	{
 		FrameData frame_data;
 		frame_data.frame = registry.ctx<GameState>().run_frame;
-		INFO("!!!!!!!!!!!!!!!!!!!!!!!!!!!!game_state.run_frame {} ", frame_data.frame);
-		auto view = registry.view<Player, Transform, AnimationClip>();
-		for (auto e : view)
+		
+		auto view1 = registry.view<Transform>();
+		for (auto e : view1)
 		{
-			auto&[player, transform,clip] = view.get<Player, Transform,AnimationClip>(e);
-			
-			ActorData actor_data;
-			actor_data.transform = transform;
-			actor_data.clip = clip;
-			//INFO("CLIP {}", clip.name);
-			frame_data.actors.emplace(player.id, std::move(actor_data));
+			auto& transform = view1.get<Transform>(e);
+			frame_data.transforms.emplace(view1.get<UniqueId>(e), transform);
+		}
+
+		auto view2 = registry.view<AnimationClip>();
+		for (auto e : view1)
+		{
+			auto& transform = view1.get<Transform>(e);
+			frame_data.transforms.emplace(view1.get<UniqueId>(e), transform);
+		}
+
+		auto view3 = registry.view<>();
+		for (auto e : view1)
+		{
+			auto& transform = view1.get<Transform>(e);
+			frame_data.transforms.emplace(view1.get<UniqueId>(e), transform);
+		}
+
+		auto view1 = registry.view<Transform>();
+		for (auto e : view1)
+		{
+			auto& transform = view1.get<Transform>(e);
+			frame_data.transforms.emplace(view1.get<UniqueId>(e), transform);
+		}
+
+		auto view1 = registry.view<Transform>();
+		for (auto e : view1)
+		{
+			auto& transform = view1.get<Transform>(e);
+			frame_data.transforms.emplace(view1.get<UniqueId>(e), transform);
 		}
 
 		kanex::BinaryStream stream(buffer);

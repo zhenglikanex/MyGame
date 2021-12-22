@@ -3,11 +3,11 @@
 #include <string>
 #include <string_view>
 
+#include "Kanex.hpp"
+
 #include "Framework/Game/GAS/GameplayAbility.hpp"
 
 #include "Framework/Game/Component/UniqueId.hpp"
-
-#include "3rdparty/include/sol/sol.hpp"
 
 struct GameplayAbilitySpec
 {
@@ -27,3 +27,4 @@ struct GameplayAbilitySpec
 	}
 };
 
+NON_MEMEBER_BAR(GameplayAbilitySpec, obj.ability, obj.level, obj.source, obj.target);
