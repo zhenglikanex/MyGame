@@ -95,11 +95,21 @@ struct ClientSyncSystem : public System
 
 	bool IsNeedRollback(FrameData& frame_data)
 	{
-		auto view1 = registry.view<TransformState>();
+		auto view1 = registry.view<UniqueId,TransformState>();
 		for (auto e : view1)
 		{
+			auto& unique_id = view1.get<UniqueId>(e);
 			auto& transform_state = view1.get<TransformState>(e);
-			if (true)
+
+			auto it = frame_data.transforms.find(unique_id);
+			if (it != frame_data.transforms.end())
+			{
+				if (!(it->second == transform_state.value[frame_data.frame % transform_state.value.size()]))
+				{
+					return true;
+				}
+			}
+			else
 			{
 				return true;
 			}
