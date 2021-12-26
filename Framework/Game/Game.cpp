@@ -7,6 +7,7 @@
 #include "Framework/Game/InputService.hpp"
 #include "Framework/Game/DebugService.hpp"
 
+#include "Framework/Game/Component/PlayerManager.hpp"
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/Player.hpp"
@@ -17,8 +18,10 @@
 #include "Framework/Game/Component/LocalId.hpp"
 #include "Framework/Game/Component/UniqueId.hpp"
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
+#include "Framework/Game/Component/EntityByLocalIdMap.hpp"
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
+#include "Framework/Game/GAS/GameplayAbilityManager.hpp"
 
 #include "Framework/Game/System.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
@@ -35,7 +38,7 @@ void ConnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
 	auto& unique_id = registry.get<UniqueId>(e);
 
 	auto& map = registry.ctx<EntityByUniqueIdMap>();
-	map.value.emplace(unique_id.value, e);
+	map.value.emplace(unique_id, e);
 }
 
 void DisconnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
@@ -43,7 +46,23 @@ void DisconnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
 	auto& unique_id = registry.get<UniqueId>(e);
 
 	auto& map = registry.ctx<EntityByUniqueIdMap>();
-	map.value.erase(unique_id.value);
+	map.value.erase(unique_id);
+}
+
+void ConnectLocalIdToEntity(entt::registry& registry, entt::entity e)
+{
+	auto& local_id = registry.get<LocalId>(e);
+
+	auto& map = registry.ctx<EntityByLocalIdMap>();
+	map.value.emplace(local_id, e);
+}
+
+void DisconnectLocalIdToEntity(entt::registry& registry, entt::entity e)
+{
+	auto& local_id = registry.get<LocalId>(e);
+
+	auto& map = registry.ctx<EntityByLocalIdMap>();
+	map.value.erase(local_id);
 }
 
 Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
@@ -54,16 +73,29 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	, player_infos_(players)
 	
 {
+	auto& player_manager = registry_.set<PlayerManager>();
+	for (auto& info : player_infos_)
+	{
+		player_manager.players.emplace(info.id, PlayerData(info.id,LocalId(0)));
+	}
+
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
 	registry_.set<GameplayEffectManager>(registry_);
-	registry_.set<LocalIdByPlayerMap>();
-	registry_.set<EntityByUniqueIdMap>();
+	registry_.set<GameplayAbilityManager>(registry_);
 
+	registry_.set<EntityByUniqueIdMap>();
 	registry_.on_construct<UniqueId>().connect<&ConnectUniqueIdToEntity>();
 	registry_.on_destroy<UniqueId>().connect<&DisconnectUniqueIdToEntity>();
-
+	
 	auto& game_helper = registry_.ctx<Locator>().Ref<const GameHelper>();
+	if (!game_helper.IsAuthority())
+	{
+		registry_.set<EntityByLocalIdMap>();
+		registry_.on_construct<LocalId>().connect<&ConnectLocalIdToEntity>();
+		registry_.on_destroy<LocalId>().connect<&DisconnectLocalIdToEntity>();
+	}
+
 	systems_ = game_helper.CreateSystems(registry_);
 }
 
@@ -116,7 +148,7 @@ void Game::UpdateInput()
 
 		auto& group = GetCommandGroup(run_frame_);
 
-		assert((group.commands.size() == registry_.view<Player, Local>().size()) && "not commands");
+		assert((group.commands.size() == player_infos_.size()) && "not commands");
 
 		++run_frame_;
 	}
@@ -148,7 +180,7 @@ void Game::UpdateFixedLogic()
 			return;
 		}
 
-		for (auto e : registry_.view<Player,Local>())
+		for (auto e : registry_.view<ActorAsset,Player,LocalId>())
 		{
 			const auto& player = registry_.get<Player>(e);
 			auto iter = command_group.commands.find(player.id);

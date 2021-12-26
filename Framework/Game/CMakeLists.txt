@@ -74,8 +74,6 @@ System/GAS/TryGameplayAbilitySystem.hpp
 System/GAS/GameplayEventSystem.hpp
 System/GAS/GameplayStateSystem.hpp
 
-Component/Remote.hpp
-Component/Local.hpp
 Component/GameState.hpp
 Component/Command.hpp
 Component/Player.hpp
@@ -106,6 +104,8 @@ Component/Destory.hpp
 Component/UniqueId.hpp
 Component/EntityByUniqueIdMap.hpp
 Component/LocalId.hpp
+Component/LocalIdState.hpp
+Component/PlayerManager.hpp
 Component/GAS/ApplyGameplayEffect.hpp
 Component/GAS/GameplayEffectSpec.hpp
 Component/GAS/GameplayTags.hpp
@@ -138,17 +138,18 @@ add_library(Game
 )
 
 target_link_libraries(Game
-    #debug ${PHYSX_LIBRARY_DEBU0G}
-    #debug ${PHYSX_COMMON_LIBRARY_DEBU0G}
-    #debug ${PX_FOUNDATION_LIBARY_DEBUG}
-    #debug ${PHYSX_COOKING_LIBRARY_DEBUG}
-    #debug ${PX_PVD_LIBARY_DEBUG}
-    #debug ${PHYSX_EXTENSIONS_LIBRARY_DEBU0G}
+    lua
+    debug ${PHYSX_LIBRARY_DEBU0G}
+    debug ${PHYSX_COMMON_LIBRARY_DEBU0G}
+    debug ${PX_FOUNDATION_LIBARY_DEBUG}
+    debug ${PHYSX_COOKING_LIBRARY_DEBUG}
+    debug ${PX_PVD_LIBARY_DEBUG}
+    debug ${PHYSX_EXTENSIONS_LIBRARY_DEBU0G}
 
-    #optimized ${PHYSX_LIBRARY}
-    #optimized ${PHYSX_COMMON_LIBRARY}
-    #optimized ${PX_FOUNDATION_LIBARY}
-    #optimized ${PHYSX_COOKING_LIBRARY}
-    #optimized ${PX_PVD_LIBARY}
-    #optimized ${PHYSX_EXTENSIONS_LIBRARY}
+    optimized ${PHYSX_LIBRARY}
+    optimized ${PHYSX_COMMON_LIBRARY}
+    optimized ${PX_FOUNDATION_LIBARY}
+    optimized ${PHYSX_COOKING_LIBRARY}
+    optimized ${PX_PVD_LIBARY}
+    optimized ${PHYSX_EXTENSIONS_LIBRARY}
 )

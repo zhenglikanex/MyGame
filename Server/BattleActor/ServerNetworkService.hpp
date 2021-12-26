@@ -8,12 +8,13 @@ class ServerNetworkService : public NetworkService
 {
 public:
 	ServerNetworkService(const std::function<std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>>()>& recv_handler,
-		const std::function<void(std::string_view, std::vector<uint8_t>)>& send_handler);
+		const std::function<void(uint32_t id, std::string_view, std::vector<uint8_t>)>& send_handler);
 	~ServerNetworkService();
 
 	std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> Recv() const override;
 	void Send(std::string_view name, std::vector<uint8_t>&& data) const override;
+	void Send(uint32_t id, std::string_view name, std::vector<uint8_t>&& data) const;
 private:
 	std::function<std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>>()> recv_handler_;
-	std::function<void(std::string_view, std::vector<uint8_t>)> send_handler_;
+	std::function<void(uint32_t id, std::string_view, std::vector<uint8_t>)> send_handler_;
 };

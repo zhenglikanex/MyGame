@@ -7,7 +7,9 @@
 #include "Framework/Game/NetworkService.hpp"
 
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
-#include "Framework/Game/Component/"
+#include "Framework/Game/Component/EntityByLocalIdMap.hpp"
+#include "Framework/Game/Component/LocalIdState.hpp"
+#include "Framework/Game/Component/PlayerManager.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/TransformState.hpp"
@@ -50,40 +52,40 @@ struct ClientSyncSystem : public System
 			FrameData frame_data;
 			ar(frame_data);
 
-			
-			//
 			if (frame_data.frame >= game_state.run_frame)
 			{
-				ApplyServerData(frame_data);
+				MappingLocalEntity(frame_data, true);
+				ReplicationServerData(frame_data,true);
+
 				++game_state.run_frame;
 				++game_state.verified_frame;
 
-				INFO("game_state.run_frame {} ", game_state.run_frame);
-				INFO("game_state.verified_frame {} ", game_state.verified_frame);
+				auto& player_manager = registry.ctx<PlayerManager>();
+				for (auto& item : player_manager.players)
+				{
+					item.second.local_id_generator = frame_data.local_id;
+				}
 			}
 			else
 			{
-				//1.先验证是否需要回滚
+				bool is_need_rollback = CheckLocalEnity(frame_data);
+				MappingLocalEntity(frame_data, is_need_rollback);
 
-				//验证失败需要回滚
-				//1.根据localid给本地entity添加上uniqueid
-				//2.删除没有uniqueid的本地entity
-				//3.覆盖预测的数据
-				//验证成功不需要回滚
-				//1.根据localid给本地entity添加上uniqueid
+				is_need_rollback == is_need_rollback ? is_need_rollback : CheckEntityState(frame_data);
+				ReplicationServerData(frame_data, is_need_rollback);
 
-				if (IsNeedRollback(frame_data))
-				{
-					
-				}
-				else
-				{
-
-				}
-
-				VerifyClientPrediction(frame_data);
 				++game_state.verified_frame;
-				INFO("!!!!!!!!!!!!!!!!!!!!!!!!!!!!game_state.run_frame {} ", game_state.run_frame);
+
+				if (is_need_rollback)
+				{
+					game_state.run_frame = frame_data.frame;
+
+					auto& player_manager = registry.ctx<PlayerManager>();
+					for (auto& item : player_manager.players)
+					{
+						item.second.local_id_generator = frame_data.local_id;
+					}
+				}
 			}
 		}
 	}
@@ -93,9 +95,15 @@ struct ClientSyncSystem : public System
 
 	}
 
-	bool IsNeedRollback(FrameData& frame_data)
+	bool CheckLocalEnity(FrameData& frame_data)
 	{
-		auto view1 = registry.view<UniqueId,TransformState>();
+		auto& local_id_state = registry.ctx<LocalIdState>();
+		return frame_data.local_id == local_id_state.value[frame_data.frame % local_id_state.value.size()];
+	}
+
+	bool CheckEntityState(FrameData& frame_data)
+	{
+		auto view1 = registry.view<UniqueId, TransformState>();
 		for (auto e : view1)
 		{
 			auto& unique_id = view1.get<UniqueId>(e);
@@ -106,47 +114,66 @@ struct ClientSyncSystem : public System
 			{
 				if (!(it->second == transform_state.value[frame_data.frame % transform_state.value.size()]))
 				{
-					return true;
+					return false;
 				}
 			}
 			else
 			{
-				return true;
+				return false;
 			}
 		}
 
-		auto view2 = registry.view<GameplayState>();
+		auto view2 = registry.view<UniqueId, GameplayState>();
 		for (auto e : view2)
 		{
+			auto& unique_id = view2.get<UniqueId>(e);
 			auto& gameplay_state = view2.get<GameplayState>(e);
-			if (true)
+
+			auto it = frame_data.tags.find(unique_id);
+			if (it != frame_data.tags.end())
 			{
-				return true;
+				if (!(it->second.tags == gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()].tags))
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 
-	void ApplyServerData(FrameData& frame_data)
+	void MappingLocalEntity(FrameData& frame_data,bool is_need_rollback)
 	{
-		auto& e_by_unique_id_map = registry.ctx<EntityByUniqueIdMap>();
-
-		auto view = registry.view<LocalId>(entt::exclude<UniqueId>);
-		for (auto& e : view)
+		auto& e_by_local_id_map = registry.ctx<EntityByLocalIdMap>();
+		for (auto& item : frame_data.unique_ids)
 		{
-			auto& local_id = view.get<LocalId>(e);
-			auto it = frame_data.unique_ids.find(local_id);
-			if (it != frame_data.unique_ids.end())
+			auto it = e_by_local_id_map.value.find(item.first);
+			if (it != e_by_local_id_map.value.end())
 			{
-				registry.emplace<UniqueId>(e, it->second);
+				if (!registry.has<UniqueId>(it->second))
+				{
+					registry.emplace<UniqueId>(it->second, item.second);
+				}
 			}
-			else 
+			else
 			{
-				// todo:应该删除这个
+				// 只有验证
+				assert(is_need_rollback && "只有验证失败才可以进来!");
+
+				auto e = registry.create();
+				registry.emplace<LocalId>(e, item.first);
+				registry.emplace<UniqueId>(e, item.second);
 			}
 		}
-
+	}
+	
+	void ReplicationServerData(FrameData& frame_data,bool is_need_rollback)
+	{
+		auto& e_by_unique_id_map = registry.ctx<EntityByUniqueIdMap>();
 
 		for (auto& item : frame_data.transforms)
 		{
@@ -155,8 +182,27 @@ struct ClientSyncSystem : public System
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
+
 			auto e = e_by_unique_id_map.value[item.first];
-			registry.emplace_or_replace<Transform>(e, item.second);
+			if (is_need_rollback || !registry.has<TransformState>(e))
+			{
+				registry.emplace_or_replace<Transform>(e, item.second);
+			}
+		}
+
+		for (auto& item : frame_data.actor_assets)
+		{
+			if (e_by_unique_id_map.value.find(item.first) != e_by_unique_id_map.value.end())
+			{
+				auto e = registry.create();
+				registry.emplace<UniqueId>(e, item.first);
+			}
+
+			auto e = e_by_unique_id_map.value[item.first];
+			if (!registry.has<LocalId>(e))
+			{
+				registry.emplace_or_replace<ActorAsset>(e, item.second);
+			}
 		}
 
 		for (auto& item : frame_data.animation_clips)
@@ -166,8 +212,12 @@ struct ClientSyncSystem : public System
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
+
 			auto e = e_by_unique_id_map.value[item.first];
-			registry.emplace_or_replace<AnimationClip>(e, item.second);
+			if (is_need_rollback || !registry.has<TransformState>(e))
+			{
+				registry.emplace_or_replace<AnimationClip>(e, item.second);
+			}
 		}
 
 		for (auto& item : frame_data.attribute_sets)
@@ -177,6 +227,8 @@ struct ClientSyncSystem : public System
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
+
+			// 这个不预测
 			auto e = e_by_unique_id_map.value[item.first];
 			registry.emplace_or_replace<GameplayAttributeSet>(e, item.second);
 		}
@@ -188,8 +240,12 @@ struct ClientSyncSystem : public System
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
+
 			auto e = e_by_unique_id_map.value[item.first];
-			registry.emplace_or_replace<GameplayTags>(e, item.second);
+			if (is_need_rollback || !registry.has<GameplayState>(e))
+			{
+				registry.emplace_or_replace<GameplayTags>(e, item.second);
+			}
 		}
 
 		for (auto& item : frame_data.ability_specs)
@@ -199,8 +255,13 @@ struct ClientSyncSystem : public System
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
+
 			auto e = e_by_unique_id_map.value[item.first];
-			registry.emplace_or_replace<GameplayAbilitySpec>(e, item.second);
+			auto owner = e_by_unique_id_map.value[item.second.source];
+			if (is_need_rollback || !registry.has<GameplayState>(owner))
+			{
+				registry.emplace_or_replace<GameplayAbilitySpec>(e, item.second);
+			}
 		}
 
 		for (auto& item : frame_data.effect_specs)
@@ -210,80 +271,13 @@ struct ClientSyncSystem : public System
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
+
 			auto e = e_by_unique_id_map.value[item.first];
-			registry.emplace_or_replace<GameplayEffectSpec>(e, item.second);
-		}
-	}
-
-	void VerifyClientPrediction(FrameData& frame_data)
-	{
-		auto view = registry.view<TransformState>();
-		for (auto e : view)
-		{
-			
-		}
-
-		//bool is_need_rollback = false;
-		//auto view = registry.view<Player, TransformState, Transform, Local>();
-		//for (auto e : view)
-		//{
-		//	auto& [player, transform_state] = view.get<Player, TransformState>(e);
-		//	auto& frame_transform = transform_state.value[frame_data.frame % transform_state.value.size()];
-
-		//	auto iter = frame_data.actors.find(player.id);
-		//	if (iter != frame_data.actors.end())
-		//	{
-		//		auto& sync_trans = iter->second.transform;
-
-		//		//可以允许误差，因为最终服务器都会修正
-		//		//INFO("server {} {} {} {}  client {} {} {} {}", sync_trans.position.x, sync_trans.position.y, sync_trans.position.z, sync_trans.position.w, sync_trans.position.x, sync_trans.position.y, sync_trans.position.z, transform.position.w);
-		//		if (frame_transform.position != sync_trans.position || frame_transform.rotation != sync_trans.rotation)
-		//		{
-		//			is_need_rollback = true;
-		//			registry.replace<Transform>(e, sync_trans);
-		//			INFO("is_need_rollback");
-		//		}
-		//	}
-		//}
-
-		//if (is_need_rollback)
-		//{
-		//	registry.ctx<GameState>().run_frame = frame_data.frame + 1;
-		//	// todo : rollback
-		//}
-		//else
-		//{
-		//	//INFO("not rollback");
-		//}
-
-		//auto view_remote = registry.view<Player, Transform, AnimationClip, Remote>();
-		//for (auto e : view_remote)
-		//{
-		//	auto& player = view_remote.get<Player>(e);
-		//	auto iter = frame_data.actors.find(player.id);
-		//	if (iter != frame_data.actors.end())
-		//	{
-		//		registry.replace<Transform>(e, iter->second.transform);
-		//		registry.replace<AnimationClip>(e, iter->second.clip);
-		//	}
-		//}
-	}
-
-	void VerifyGameplayPrediction(FrameData& frame_data)
-	{
-		//检查属性是否一致
-		//检查tag是否一致
-		//ga,ge这两个可以通过上面两个判断出来了
-		/*auto view = registry.view<Player,GameplayState,Local>();
-		for (auto e : view)
-		{
-			auto& [player,gameplay_state] = view.get<Player,GameplayState>(e);
-			auto iter = frame_data.actors.find(player.id);
-			if (iter != frame_data.actors.end())
+			auto owner = e_by_unique_id_map.value[item.second.owner];
+			if (is_need_rollback || !registry.has<GameplayState>(owner))
 			{
-				auto& frame_attribute_set = gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()];
-				auto& frame_tags = gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()];
+				registry.emplace_or_replace<GameplayEffectSpec>(e, item.second);
 			}
-		}*/
+		}
 	}
 };

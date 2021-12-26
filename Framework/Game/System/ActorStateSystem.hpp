@@ -14,7 +14,6 @@
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/SkillState.hpp"
-#include "Framework/Game/Component/Remote.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -232,7 +231,6 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			INFO("HurtState{}  {}", e, registry.has<Remote>(e));
 			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kHurt);
 		}
 
@@ -314,7 +312,6 @@ struct ActorStateSystem : public System
 		auto view = registry.view<EnterActorState>();
 		for (auto e : view)
 		{
-			INFO("EnterActorState {}",registry.has<Remote>(e));
 			auto& enter_state = view.get<EnterActorState>(e);
 			
 			auto& executor = states[(size_t)enter_state.value];

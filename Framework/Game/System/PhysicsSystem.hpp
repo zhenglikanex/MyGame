@@ -5,7 +5,6 @@
 #include "Framework/Game/Component/PhysicsWorld.hpp"
 #include "Framework/Game/Component/PhysicsActor.hpp"
 #include "Framework/Game/Component/Contact.hpp"
-#include "Framework/Game/Component/Remote.hpp"
 #include "Framework/Game/Component/Skill.hpp"
 
 #include "Framework/Game/Utility/PhysicsUtility.hpp"
@@ -117,7 +116,6 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 				auto& other_contacts = registry.get<ContactList>(other);
 				other_contacts.value.emplace_back(trigger);
 
-				INFO("REMOTE {}  {}", registry.has<Remote>(trigger), registry.has<Remote>(other));
 				INFO("sKILL {}  {}", registry.has<Skill>(trigger), registry.has<Skill>(other));
 
 				INFO("tigger e1 {}   e2 {}", trigger, other);
@@ -132,7 +130,6 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 				auto& contact_list = registry.get<ContactList>(tigger_actor->self);
 				contact_list.value.emplace_back(other_actor->self);
 			}*/
-			
 		}
 	}
 

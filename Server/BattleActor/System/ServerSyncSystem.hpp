@@ -6,6 +6,11 @@
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/NetworkService.hpp"
 
+#include "Framework/Game/Component/Player.hpp"
+#include "Framework/Game/Component/PlayerManager.hpp"
+
+#include "Server/BattleActor/ServerNetworkService.hpp"
+
 struct ServerSyncSystem : public System
 {
 	kanex::Buffer buffer;
@@ -29,62 +34,86 @@ struct ServerSyncSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		FrameData frame_data;
-		frame_data.frame = registry.ctx<GameState>().run_frame;
-		
-		auto view1 = registry.view<Transform>();
-		for (auto e : view1)
+		auto& player_manager = registry.ctx<PlayerManager>();
+
+		for (auto item : player_manager.players)
 		{
-			auto& transform = view1.get<Transform>(e);
-			frame_data.transforms.emplace(view1.get<UniqueId>(e), transform);
+			auto& player_data = item.second;
+
+			FrameData frame_data;
+			frame_data.frame = registry.ctx<GameState>().run_frame;
+			frame_data.local_id = player_data.local_id_generator;
+
+			auto view = registry.view<UniqueId, LocalId, Player>();
+			for (auto e : view)
+			{
+				auto& [unique_id, local_id, player] = view.get<UniqueId, LocalId, Player>(e);
+				if (player.id == player_data.id)
+				{
+					frame_data.unique_ids.emplace(local_id, unique_id);
+				}
+			}
+
+			auto actor_asset_view = registry.view<UniqueId, ActorAsset>();
+			for (auto e : actor_asset_view)
+			{
+				auto& [unique_id,asset] = actor_asset_view.get<UniqueId, ActorAsset>(e);
+			}
+
+			auto view1 = registry.view<UniqueId,Transform>();
+			for (auto e : view1)
+			{
+				auto& [unique_id,transform] = view1.get<UniqueId,Transform>(e);
+				frame_data.transforms.emplace(unique_id, transform);
+			}
+
+			auto view2 = registry.view<UniqueId,AnimationClip>();
+			for (auto e : view2)
+			{
+				auto& [unique_id,animation_clip] = view2.get<UniqueId,AnimationClip>(e);
+				frame_data.animation_clips.emplace(unique_id, animation_clip);
+			}
+
+			auto view3 = registry.view<UniqueId,GameplayAttributeSet>();
+			for (auto e : view3)
+			{
+				auto& [unique_id,attribute_set] = view3.get<UniqueId,GameplayAttributeSet>(e);
+				frame_data.attribute_sets.emplace(unique_id, attribute_set);
+			}
+
+			auto view4 = registry.view<UniqueId,GameplayTags>();
+			for (auto e : view4)
+			{
+				auto& [unique_id,tags] = view4.get<UniqueId,GameplayTags>(e);
+				frame_data.tags.emplace(unique_id, tags);
+			}
+
+			auto view5 = registry.view<UniqueId,GameplayEffectSpec>();
+			for (auto e : view5)
+			{
+				auto& [unique_id,spec] = view5.get<UniqueId,GameplayEffectSpec>(e);
+				frame_data.effect_specs.emplace(unique_id, spec);
+			}
+
+			auto view6 = registry.view<UniqueId,GameplayAbilitySpec>();
+			for (auto e : view6)
+			{
+				auto& [unique_id,spec] = view6.get<UniqueId,GameplayAbilitySpec>(e);
+				frame_data.ability_specs.emplace(unique_id, spec);
+			}
+
+			kanex::BinaryStream stream(buffer);
+			kanex::BinaryOutputArchive oar(stream);
+			oar(frame_data);
+
+			std::vector<uint8_t> data(buffer.Size());
+			buffer.Read(data.data(), data.size());
+
+			buffer.Clear();
+
+			auto& network_service = dynamic_cast<ServerNetworkService&>(registry.ctx<Locator>().Ref<NetworkService>());
+			network_service.Send(player_data.id, "sync_frame_data", std::move(data));
 		}
-
-		auto view2 = registry.view<AnimationClip>();
-		for (auto e : view2)
-		{
-			auto& animation_clips = view2.get<AnimationClip>(e);
-			frame_data.animation_clips.emplace(view2.get<UniqueId>(e),animation_clips);
-		}
-
-		auto view3 = registry.view<GameplayAttributeSet>();
-		for (auto e : view3)
-		{
-			auto& attribute_sets = view3.get<GameplayAttributeSet>(e);
-			frame_data.attribute_sets.emplace(view3.get<UniqueId>(e), attribute_sets);
-		}
-
-		auto view4 = registry.view<GameplayTags>();
-		for (auto e : view4)
-		{
-			auto& tags = view4.get<GameplayTags>(e);
-			frame_data.tags.emplace(view4.get<UniqueId>(e), tags);
-		}
-
-		auto view5 = registry.view<GameplayEffectSpec>();
-		for (auto e : view5)
-		{
-			auto& spec = view5.get<GameplayEffectSpec>(e);
-			frame_data.effect_specs.emplace(view5.get<UniqueId>(e), spec);
-		}
-
-		auto view6 = registry.view<GameplayAbilitySpec>();
-		for (auto e : view6)
-		{
-			auto& spec = view6.get<GameplayAbilitySpec>(e);
-			frame_data.ability_specs.emplace(view6.get<UniqueId>(e), spec);
-		}
-
-		kanex::BinaryStream stream(buffer);
-		kanex::BinaryOutputArchive oar(stream);
-		oar(frame_data);
-
-		std::vector<uint8_t> data(buffer.Size());
-		buffer.Read(data.data(), data.size());
-
-		buffer.Clear();
-
-		auto& network_service = registry.ctx<Locator>().Ref<NetworkService>();
-		network_service.Send("sync_frame_data", std::move(data));
 	}
 
 	void Finalize() override

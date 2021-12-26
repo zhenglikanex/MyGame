@@ -9,6 +9,24 @@
 struct LocalId
 {
 	uint32_t value;
+
+	LocalId() = default;
+
+	LocalId(uint32_t _value)
+		: value(_value)
+	{
+
+	}
+
+	bool operator==(const LocalId& other) const
+	{
+		return value == other.value;
+	}
+
+	bool operator!=(const LocalId& other) const
+	{
+		return *this == other;
+	}
 };
 
 NON_MEMEBER_BAR(LocalId, obj.value);
@@ -23,9 +41,3 @@ namespace std
 		}
 	};
 }
-
-//记录玩家分配出去的id
-struct LocalIdByPlayerMap
-{
-	std::unordered_map<uint32_t, uint32_t> value;
-};

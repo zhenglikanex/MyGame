@@ -4,7 +4,6 @@
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
-#include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
@@ -31,11 +30,6 @@ struct GameplayEffectSystem : public System
 		for (auto e : view)
 		{
 			auto& spec = view.get<GameplayEffectSpec>(e);
-
-			if (registry.has<Local>(spec.owner))
-			{
-				continue;
-			}
 
 			if (!registry.valid(spec.owner))
 			{

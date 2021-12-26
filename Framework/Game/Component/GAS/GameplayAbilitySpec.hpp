@@ -17,6 +17,8 @@ struct GameplayAbilitySpec
 	UniqueId source;
 	UniqueId target;
 
+	GameplayAbilitySpec() = default;
+
 	GameplayAbilitySpec(std::string_view _ability,const sol::table& _script,uint32_t _level, UniqueId _source, UniqueId _target)
 		: ability(_ability)
 		, script(_script)

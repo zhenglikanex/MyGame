@@ -7,8 +7,10 @@
 struct GameplayEffect
 {	
 	GameplayEffect() = default;
+	GameplayEffect(GameplayEffect&&) = default;
+	GameplayEffect& operator=(GameplayEffect&&) = default;
 	GameplayEffect(const GameplayEffect&) = delete;
-	const GameplayEffect& operator=(const GameplayEffect&) = delete;
+	GameplayEffect& operator=(const GameplayEffect&) = delete;
 
 	std::string name;
 

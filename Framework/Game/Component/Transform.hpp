@@ -28,6 +28,11 @@ struct Transform
 	{
 		return position == other.position && rotation == other.rotation;
 	}
+
+	bool operator!=(const Transform& other) const
+	{
+		return !(*this == other);
+	}
 };
 
 inline mat4 GetMatrix4x4(const Transform& transform) 

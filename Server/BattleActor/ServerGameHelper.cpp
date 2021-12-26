@@ -24,12 +24,7 @@ ServerGameHelper::~ServerGameHelper()
 
 }
 
-bool ServerGameHelper::IsClient() const
-{
-	return false;
-}
-
-bool ServerGameHelper::IsServer() const
+bool ServerGameHelper::IsAuthority() const
 {
 	return true;
 }

@@ -69,7 +69,7 @@ struct PhysicsUtility
 		
 #if USE_PVD
 		auto& helper = reg.ctx<Locator>().Ref<const GameHelper>();
-		if (helper.IsServer())
+		if (helper.IsAuthority())
 		{
 			world.pvd = PxCreatePvd(*world.foundation);
 			PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);

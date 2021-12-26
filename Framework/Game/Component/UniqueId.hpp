@@ -4,13 +4,23 @@
 
 #include "Kanex.hpp"
 
+#include "3rdparty/include/entt/entt.hpp"
+
 //全局唯一的id
 struct UniqueId
 {
 	uint32_t value;
 
+	UniqueId() = default;
+
 	UniqueId(uint32_t _value)
 		: value(_value)
+	{
+
+	}
+
+	UniqueId(entt::entity e)
+		: value(static_cast<uint32_t>(e))
 	{
 
 	}

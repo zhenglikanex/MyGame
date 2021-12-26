@@ -1,14 +1,12 @@
 #pragma once
 
 #include "Framework/Game/Component/ColliderInfo.hpp"
-#include "Framework/Game/Component/Attributes.hpp"
 
 #include "Kanex.hpp"
 
 struct Weapon
 {
 	ColliderInfo collider_info;
-	std::vector<Attribute> attributes;
 
 	Weapon() = default;
 
@@ -19,4 +17,4 @@ struct Weapon
 	}
 };
 
-NON_MEMEBER_BAR(Weapon, obj.collider_info, obj.attributes);
+NON_MEMEBER_BAR(Weapon, obj.collider_info);

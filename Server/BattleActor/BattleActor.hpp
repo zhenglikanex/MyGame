@@ -34,7 +34,7 @@ private:
 private:
 	void GameInput();
 	std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> RecvGameMessage();
-	void SendGameMessage(std::string_view name, std::vector<uint8_t>&& data);
+	void SendGameMessage(uint32_t id, std::string_view name, std::vector<uint8_t>&& data);
 private:
 	std::vector<ActorId> players_;
 	std::unordered_map<ActorId, uint32_t> ids_;

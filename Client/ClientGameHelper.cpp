@@ -35,12 +35,7 @@ ClientGameHelper::~ClientGameHelper()
 
 }
 
-bool ClientGameHelper::IsClient() const
-{
-	return true;
-}
-
-bool ClientGameHelper::IsServer() const
+bool ClientGameHelper::IsAuthority() const
 {
 	return false;
 }

@@ -8,8 +8,7 @@ class ServerGameHelper : public GameHelper
 public:
 	~ServerGameHelper();
 
-	bool IsClient() const override;
-	bool IsServer() const override;
+	bool IsAuthority() const override;
 
 	std::vector<std::unique_ptr<System>> CreateSystems(entt::registry& registry) const override;
 

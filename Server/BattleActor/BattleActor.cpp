@@ -107,7 +107,7 @@ void BattleActor::StartBattle(const std::any& data)
 	locator.Set<GameHelper>(std::make_unique<ServerGameHelper>());
 	locator.Set<NetworkService>(std::make_unique<ServerNetworkService>(
 		std::bind(&BattleActor::RecvGameMessage, this),
-		std::bind(&BattleActor::SendGameMessage, this, std::placeholders::_1, std::placeholders::_2)));
+		std::bind(&BattleActor::SendGameMessage, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
 	
 	game_ = std::make_unique<Game>(std::move(locator),std::move(players));
 	game_->Initialize();
@@ -182,7 +182,7 @@ std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> BattleActor::Recv
 	return nullptr;
 }
 
-void BattleActor::SendGameMessage(std::string_view name, std::vector<uint8_t>&& data)
+void BattleActor::SendGameMessage(uint32_t id,std::string_view name, std::vector<uint8_t>&& data)
 {
 	for (auto player : players_)
 	{

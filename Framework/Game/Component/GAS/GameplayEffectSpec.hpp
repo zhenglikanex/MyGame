@@ -20,6 +20,8 @@ struct GameplayEffectSpec
 	float duration;
 	uint32_t stack_count;
 
+	GameplayEffectSpec() = default;
+
 	GameplayEffectSpec(std::string_view _effect,UniqueId _source,UniqueId _owner,uint8_t _level)
 		: effect(_effect)
 		, source(_source)

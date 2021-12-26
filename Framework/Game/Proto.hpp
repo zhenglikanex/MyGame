@@ -16,7 +16,9 @@
 struct FrameData
 {
 	uint32_t frame;
+	LocalId local_id;
 	std::unordered_map<LocalId, UniqueId> unique_ids;
+	std::unordered_map<UniqueId, ActorAsset> actor_assets;
 	std::unordered_map<UniqueId, Transform> transforms;
 	std::unordered_map<UniqueId, AnimationClip> animation_clips;
 	std::unordered_map<UniqueId, GameplayAttributeSet> attribute_sets;
@@ -25,4 +27,12 @@ struct FrameData
 	std::unordered_map<UniqueId, GameplayEffectSpec> effect_specs;
 };
 
-NON_MEMEBER_BAR(FrameData,obj.frame,obj.transforms,obj.animation_clips,obj.attribute_sets,obj.tags,obj.ability_specs,obj.effect_specs);
+NON_MEMEBER_BAR(FrameData,
+	obj.frame,
+	obj.actor_assets,
+	obj.transforms,
+	obj.animation_clips,
+	obj.attribute_sets,
+	obj.tags,
+	obj.ability_specs,
+	obj.effect_specs);

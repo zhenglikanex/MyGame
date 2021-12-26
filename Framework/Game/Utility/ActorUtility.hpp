@@ -12,8 +12,7 @@
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/Player.hpp"
-#include "Framework/Game/Component/Local.hpp"
-#include "Framework/Game/Component/Remote.hpp"
+#include "Framework/Game/Component/PlayerManager.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -22,20 +21,16 @@ struct ActorUtiltiy
 	static entt::entity CreatePlayer(entt::registry& reg,uint32_t id, std::string_view actor_asset,const vec3& position = vec3(0,0,0),const quat& rotation = glm::identity<quat>())
 	{
 		auto e = reg.create();
-
 		reg.emplace<Player>(e,id);
 		reg.emplace<Transform>(e, position, rotation);
 		reg.emplace<TransformState>(e);
 		reg.emplace<ActorAsset>(e,actor_asset); // 通过createactoresystem创建具体actor信息
+		reg.emplace<LocalId>(e, reg.ctx<PlayerManager>().players[id].local_id_generator.value++);
 
 		auto& helper = reg.ctx<Locator>().Ref<const GameHelper>();
-		if (helper.IsLocalPlayer(id))
+		if (helper.IsAuthority())
 		{
-			reg.emplace<Local>(e);
-		}
-		else
-		{
-			reg.emplace<Remote>(e);
+			reg.emplace<UniqueId>(e,e);
 		}
 
 		return e;

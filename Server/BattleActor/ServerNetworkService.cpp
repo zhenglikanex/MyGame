@@ -4,7 +4,7 @@
 
 ServerNetworkService::ServerNetworkService(
 	const std::function<std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>>()>& recv_handler,
-	const std::function<void(std::string_view, std::vector<uint8_t>)>& send_handler)
+	const std::function<void(uint32_t id, std::string_view, std::vector<uint8_t>)>& send_handler)
 	: recv_handler_(recv_handler)
 	, send_handler_(send_handler)
 {
@@ -28,8 +28,13 @@ std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> ServerNetworkServ
 
 void ServerNetworkService::Send(std::string_view name, std::vector<uint8_t>&& data) const
 {
+
+}
+
+void ServerNetworkService::Send(uint32_t id, std::string_view name, std::vector<uint8_t>&& data) const
+{
 	if (send_handler_)
 	{
-		send_handler_(name, std::move(data));
+		send_handler_(id, name, std::move(data));
 	}
 }

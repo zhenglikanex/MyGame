@@ -9,6 +9,8 @@
 class GameplayTag
 {
 public:
+	GameplayTag() = default;
+
 	explicit GameplayTag(std::string_view tag)
 		:tag_(tag)
 	{
@@ -141,6 +143,16 @@ namespace std
 class GameplayTagArray
 {
 public:
+	bool operator==(const GameplayTagArray& other) const
+	{
+		return tags_ == other.tags_;
+	}
+
+	bool operator!=(const GameplayTagArray& other) const
+	{
+		return !(*this == other);
+	}
+
 	void Push(const GameplayTag& tag)
 	{
 		tags_.push_back(tag);
