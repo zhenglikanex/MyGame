@@ -190,6 +190,21 @@ struct ClientSyncSystem : public System
 			}
 		}
 
+		for (auto& item : frame_data.players)
+		{
+			if (e_by_unique_id_map.value.find(item.first) != e_by_unique_id_map.value.end())
+			{
+				auto e = registry.create();
+				registry.emplace<UniqueId>(e, item.first);
+			}
+
+			auto e = e_by_unique_id_map.value[item.first];
+			if (!registry.has<LocalId>(e))
+			{
+				registry.emplace_or_replace<Player>(e, item.second);
+			}
+		}
+
 		for (auto& item : frame_data.actor_assets)
 		{
 			if (e_by_unique_id_map.value.find(item.first) != e_by_unique_id_map.value.end())

@@ -82,6 +82,7 @@ void BattleActor::StartBattle(const std::any& data)
 		auto player_infos = info.mutable_player_infos();
 		auto player_info = player_infos->add_player_infos();
 		player_info->set_id(ids_[player]);
+		player_info->set_actor_asset("hero.json");
 
 		info.set_start_time(start_time);
 

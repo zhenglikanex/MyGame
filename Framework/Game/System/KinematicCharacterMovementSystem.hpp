@@ -384,7 +384,7 @@ struct KinematicCharacterMovementSystem : public System
 			}
 
 			registry.replace<Transform>(e, transient_position_, transient_rotation_);
-			INFO("update 1 transient_position_ x{c} y{} z{}", transient_position_.x, transient_position_.y, transient_position_.z);
+			INFO("update 1 transient_position_ x{} y{} z{}", transient_position_.x, transient_position_.y, transient_position_.z);
 		}
 
 		registry.clear<MovePositionTarget>();

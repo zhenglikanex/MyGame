@@ -19,6 +19,7 @@
 #include "Framework/Game/Component/UniqueId.hpp"
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/EntityByLocalIdMap.hpp"
+#include "Framework/Game/Component/LocalIdState.hpp"
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
@@ -94,6 +95,7 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 		registry_.set<EntityByLocalIdMap>();
 		registry_.on_construct<LocalId>().connect<&ConnectLocalIdToEntity>();
 		registry_.on_destroy<LocalId>().connect<&DisconnectLocalIdToEntity>();
+		registry_.set<LocalIdState>();
 	}
 
 	systems_ = game_helper.CreateSystems(registry_);

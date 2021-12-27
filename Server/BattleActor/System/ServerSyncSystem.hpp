@@ -58,6 +58,7 @@ struct ServerSyncSystem : public System
 			for (auto e : actor_asset_view)
 			{
 				auto& [unique_id,asset] = actor_asset_view.get<UniqueId, ActorAsset>(e);
+				frame_data.actor_assets.emplace(unique_id, asset);
 			}
 
 			auto view1 = registry.view<UniqueId,Transform>();

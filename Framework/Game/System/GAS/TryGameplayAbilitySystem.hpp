@@ -72,7 +72,7 @@ struct TryGameplayAbilitySystem : public System
 
 					// todo:ÆäËû¼ì²é
 					auto e = registry.create();
-					auto& spec = registry.emplace<GameplayAbilitySpec>(e, ga, ga.script["new"](), 1, registry.get<UniqueId>(info.source), registry.get<UniqueId>(info.target));
+					auto& spec = registry.emplace<GameplayAbilitySpec>(e, info.ability, ga.script["new"](), 1, registry.get<UniqueId>(info.source), registry.get<UniqueId>(info.target));
 					
 					spec.script["Init"](spec.script, e, spec);
 

@@ -3,6 +3,7 @@
 
 #include "Framework/Game/Component/UniqueId.hpp"
 #include "Framework/Game/Component/LocalId.hpp"
+#include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
@@ -18,6 +19,7 @@ struct FrameData
 	uint32_t frame;
 	LocalId local_id;
 	std::unordered_map<LocalId, UniqueId> unique_ids;
+	std::unordered_map<UniqueId, Player> players;
 	std::unordered_map<UniqueId, ActorAsset> actor_assets;
 	std::unordered_map<UniqueId, Transform> transforms;
 	std::unordered_map<UniqueId, AnimationClip> animation_clips;
@@ -29,6 +31,8 @@ struct FrameData
 
 NON_MEMEBER_BAR(FrameData,
 	obj.frame,
+	obj.unique_ids,
+	obj.players,
 	obj.actor_assets,
 	obj.transforms,
 	obj.animation_clips,

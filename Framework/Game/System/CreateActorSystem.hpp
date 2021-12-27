@@ -39,6 +39,7 @@ struct CreateActorSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
+		auto& game_helper = registry.ctx<GameHelper>();
 		auto view = registry.view<ActorAsset>(entt::exclude<ViewAsset>);
 		for (auto e : view)
 		{
@@ -50,13 +51,17 @@ struct CreateActorSystem : public System
 			registry.emplace<Weapon>(e, actor_info.weapon());
 			registry.emplace<ColliderInfo>(e, actor_info.body());
 
-			// character controller相关
-			registry.emplace<MovementForward>(e);
-			registry.emplace<Character>(e);
-			registry.emplace<CharacterMovement>(e);
+			if (game_helper.IsAuthority() || registry.has<LocalId>(e))
+			{
+				// character controller相关
+				registry.emplace<MovementForward>(e);
+				registry.emplace<Character>(e);
+				registry.emplace<CharacterMovement>(e);
 
-			ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
-			GameplayEffectUtility::ApplyGameEffectToTarget(registry, e, actor_info.ge(), 1, e);
+				ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
+				GameplayEffectUtility::ApplyGameEffectToTarget(registry, e, actor_info.ge(), 1, e);
+			}
+			
 			//INFO("create actor");
 		}
 	}
