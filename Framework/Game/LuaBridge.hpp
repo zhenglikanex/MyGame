@@ -124,7 +124,7 @@ inline void RegisterGameplayAbility(sol::state& lua)
 inline void RegisterGameplayAbilitySpec(sol::state& lua)
 {
 	auto type = lua.new_usertype<GameplayAbilitySpec>("GameplayAbilitySpec");
-	type["ga"] = &GameplayAbilitySpec::ga;
+	type["ability"] = &GameplayAbilitySpec::ability;
 	type["script"] = &GameplayAbilitySpec::script;
 	type["level"] = &GameplayAbilitySpec::level;
 	type["source"] = &GameplayAbilitySpec::source;
