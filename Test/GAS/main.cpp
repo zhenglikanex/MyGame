@@ -96,7 +96,6 @@ int main()
 	RegisterLua(registry, lua);
 
 	ApplyGameplayEffectSystem system1(registry);
-	ExecuteGameplayEffectSystem system2(registry);
 	TryGameplayAbilitySystem system3(registry);
 	GameplayAttributeSystem system4(registry);
 	DelayTaskSystem system5(registry);
@@ -132,7 +131,6 @@ int main()
 		system5.FixedUpdate(fixed16(1));
 		system6.FixedUpdate(fixed16(1));
 		system1.FixedUpdate(fixed16(1));
-		system2.FixedUpdate(fixed16(1));
 		system4.FixedUpdate(fixed16(1));
 		system7.FixedUpdate(fixed16(1));
 

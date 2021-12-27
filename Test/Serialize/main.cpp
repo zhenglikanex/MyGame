@@ -10,8 +10,6 @@
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Contact.hpp"
-#include "Framework/Game/Component/Attributes.hpp"
-#include "Framework/Game/Component/Health.hpp"
 #include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/Skill.hpp"
 #include "Framework/Game/Component/SkillState.hpp"
@@ -269,20 +267,7 @@ TEST_CASE_METHOD(Serialize, "Transform")
 
 TEST_CASE_METHOD(Serialize, "Weapon")
 {
-	ColliderInfo info(Geometry(Sphere(10)), glm::identity<mat4>(), true,RigidType::kDynamic);
-	Weapon output(info);
-	output.attributes.emplace_back(Attribute{ CalculateType::kNumerical,fixed16(100) });
-	oar(output);
 
-	Weapon input;
-	iar(input);
-
-	REQUIRE(output.collider_info.geometry.type() == input.collider_info.geometry.type());
-	REQUIRE(output.collider_info.transform == input.collider_info.transform);
-	REQUIRE(output.collider_info.trigger == input.collider_info.trigger);
-	REQUIRE(output.attributes[0].calc_type == input.attributes[0].calc_type);
-	REQUIRE(output.attributes[0].value == input.attributes[0].value);
-	REQUIRE(buffer.IsFinish());
 }
 
 TEST_CASE_METHOD(Serialize, "Contact")
@@ -305,69 +290,12 @@ TEST_CASE_METHOD(Serialize, "Contact")
 
 TEST_CASE_METHOD(Serialize, "Attributes")
 {
-	AttributeUnitList output;
-	AttributeArray attributes{ Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
-	output.value.emplace_back(entt::null, attributes);
-	output.value.emplace_back((entt::entity)100, attributes);
-	
-	oar(output);
 
-	AttributeUnitList input;
-	iar(input);
-	
-
-	for (int i = 0; i < output.value.size(); ++i)
-	{
-		REQUIRE(input.value[i].owner == output.value[i].owner);
-		for (int j = 0; j < output.value[i].attributes.size(); ++j)
-		{
-			REQUIRE(input.value[i].attributes[i].calc_type == output.value[i].attributes[i].calc_type);
-			REQUIRE(input.value[i].attributes[i].value == output.value[i].attributes[i].value);
-		}
-	}
-
-	REQUIRE(buffer.IsFinish());
 }
 
 TEST_CASE_METHOD(Serialize, "Health")
 {
-	Health output;
-	output.cur = { Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
-	output.max = { Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
 
-	oar(output);
-	
-	Health input;
-	iar(input);
-
-	for (int i = 0; i < output.cur.size(); ++i)
-	{
-		REQUIRE(input.cur[i].calc_type == output.cur[i].calc_type);
-		REQUIRE(input.cur[i].value == output.cur[i].value);
-
-		REQUIRE(input.max[i].calc_type == output.max[i].calc_type);
-		REQUIRE(input.max[i].value == output.max[i].value);
-	}
-
-	REQUIRE(buffer.IsFinish());
-
-	ModifyHealthList output1;
-	output1.value.emplace_back(AttributeType::kHp, ModifyType::kNowPercentage, 10);
-	output1.value.emplace_back(AttributeType::kDamage, ModifyType::kNumerical, 0.32);
-
-	oar(output1);
-
-	ModifyHealthList input1;
-	iar(input1);
-
-	REQUIRE(output1.value.size() == input1.value.size());
-	for (int i = 0; i < output1.value.size(); ++i)
-	{
-		REQUIRE(output1.value[i].attribute_type == input1.value[i].attribute_type);
-		REQUIRE(output1.value[i].modify_type == input1.value[i].modify_type);
-		REQUIRE(output1.value[i].value == input1.value[i].value);
-	}
-	REQUIRE(buffer.IsFinish());
 }
 
 TEST_CASE_METHOD(Serialize, "Collider")
@@ -615,25 +543,6 @@ TEST_CASE_METHOD(Serialize, "entt")
 
 TEST_CASE_METHOD(Serialize, "SnapshotPerformance")
 {
-	entt::registry registry;
-	AttributeUnitList output;
-	AttributeArray attributes{ Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
-	output.value.emplace_back(entt::null, attributes);
-	output.value.emplace_back((entt::entity)100, attributes);
 
-	Health health;
-	health.cur = { Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
-	health.max = { Attribute{ CalculateType::kNumerical,fixed16(100)},Attribute{CalculateType::kNumerical,fixed16(100) },Attribute{CalculateType::kNumerical,fixed16(2)} };
-
-	Skill output1;
-	output1.owner = entt::entity(300);
-	output1.life = fixed16(10);
-	output1.time = fixed16(33311.22);
-	output1.targets.push_back(entt::entity(3333));
-	output1.targets.push_back(entt::entity(3333));
-	output1.targets.push_back(entt::entity(3322));
-	output1.hit_target.emplace(entt::entity(3322));
-	output1.hit_target.emplace(entt::entity(33221));
-	output1.hit_target.emplace(entt::entity(33221));
 
 }

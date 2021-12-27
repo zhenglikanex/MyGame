@@ -4,6 +4,7 @@
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
+#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
@@ -25,13 +26,17 @@ struct GameplayEffectSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
+		auto& e_by_unique_id_map = registry.ctx<EntityByUniqueIdMap>();
+		auto& ge_manager = registry.ctx<GameplayEffectManager>();
+
 		float time = static_cast<float>(dt);
 		auto view = registry.view<GameplayEffectSpec>(entt::exclude<Destory>);
 		for (auto e : view)
 		{
 			auto& spec = view.get<GameplayEffectSpec>(e);
-
-			if (!registry.valid(spec.owner))
+			
+			auto it = e_by_unique_id_map.value.find(spec.owner);
+			if (it == e_by_unique_id_map.value.end() || !registry.valid(it->second))
 			{
 				registry.emplace<Destory>(e);
 				continue;
@@ -39,25 +44,27 @@ struct GameplayEffectSystem : public System
 
 			spec.duration += time;
 
-			if (spec.ge->period.period > 0)
+			auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
+
+			if (ge.period.period > 0)
 			{
 				spec.period += time;
 
-				if (spec.period >= spec.ge->period.period)
+				if (spec.period >= ge.period.period)
 				{
-					if (!CheckOngoingTagRequirements(spec))
+					if (!CheckOngoingTagRequirements(it->second,ge))
 					{
-						GameplayEffectUtility::ApplyModifiers(registry, spec);
+						GameplayEffectUtility::ApplyModifiers(registry, ge, it->second, spec.level);
 					}
 
-					spec.period -= spec.ge->period.period;
+					spec.period -= ge.period.period;
 				}
 			}
 
 			// ÒÆ³ý
-			if (spec.duration >= spec.ge->period.duration && spec.ge->gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration)
+			if (spec.duration >= ge.period.duration && ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration)
 			{
-				if (spec.stack_count > 1 && spec.ge->stacking.statck_expiration_policy == GameplayEffect::StatckExpirationPolicy::RemoveSingleStackAndRefreshDuration)
+				if (spec.stack_count > 1 && ge.stacking.statck_expiration_policy == GameplayEffect::StatckExpirationPolicy::RemoveSingleStackAndRefreshDuration)
 				{
 					--spec.stack_count;
 					spec.duration = 0;
@@ -70,11 +77,11 @@ struct GameplayEffectSystem : public System
 		}
 	}
 
-	bool CheckOngoingTagRequirements(const GameplayEffectSpec& spec)
+	bool CheckOngoingTagRequirements(entt::entity owner,const GameplayEffect& ge)
 	{
-		auto owner_tags = registry.try_get<GameplayTags>(spec.owner);
+		auto owner_tags = registry.try_get<GameplayTags>(owner);
 
-		if(!owner_tags && !spec.ge->tag.application_tag_requirements.require_tags.Empty())
+		if(!owner_tags && !ge.tag.application_tag_requirements.require_tags.Empty())
 		{
 			return false;
 		}
@@ -84,7 +91,7 @@ struct GameplayEffectSystem : public System
 			return true;
 		}
 
-		return owner_tags->tags.HasAll(spec.ge->tag.application_tag_requirements.require_tags) && !owner_tags->tags.HasAny(spec.ge->tag.application_tag_requirements.ignore_tags);
+		return owner_tags->tags.HasAll(ge.tag.application_tag_requirements.require_tags) && !owner_tags->tags.HasAny(ge.tag.application_tag_requirements.ignore_tags);
 	}
 
 	void Finalize() override
