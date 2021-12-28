@@ -66,7 +66,11 @@ struct ServerSyncSystem : public System
 			{
 				auto& [unique_id,transform] = view1.get<UniqueId,Transform>(e);
 				frame_data.transforms.emplace(unique_id, transform);
+
+				INFO("id{} player{} x {} y {} z {} ", unique_id.value, registry.get<Player>(e).id, transform.position.x, transform.position.y, transform.position.z);
+				
 			}
+			INFO("-----------------------------");
 
 			auto view2 = registry.view<UniqueId,AnimationClip>();
 			for (auto e : view2)

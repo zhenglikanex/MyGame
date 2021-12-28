@@ -71,7 +71,7 @@ struct ClientSyncSystem : public System
 				bool is_need_rollback = CheckLocalEnity(frame_data);
 				MappingLocalEntity(frame_data, is_need_rollback);
 
-				is_need_rollback == is_need_rollback ? is_need_rollback : CheckEntityState(frame_data);
+				is_need_rollback = (is_need_rollback ? is_need_rollback : CheckEntityState(frame_data));
 				ReplicationServerData(frame_data, is_need_rollback);
 
 				++game_state.verified_frame;
@@ -98,7 +98,7 @@ struct ClientSyncSystem : public System
 	bool CheckLocalEnity(FrameData& frame_data)
 	{
 		auto& local_id_state = registry.ctx<LocalIdState>();
-		return frame_data.local_id == local_id_state.value[frame_data.frame % local_id_state.value.size()];
+		return frame_data.local_id != local_id_state.value[frame_data.frame % local_id_state.value.size()];
 	}
 
 	bool CheckEntityState(FrameData& frame_data)
@@ -112,14 +112,15 @@ struct ClientSyncSystem : public System
 			auto it = frame_data.transforms.find(unique_id);
 			if (it != frame_data.transforms.end())
 			{
-				if (!(it->second == transform_state.value[frame_data.frame % transform_state.value.size()]))
+				if (it->second != transform_state.value[frame_data.frame % transform_state.value.size()])
 				{
-					return false;
+					assert(false);
+					return true;
 				}
 			}
 			else
 			{
-				return false;
+				return true;
 			}
 		}
 
@@ -132,18 +133,18 @@ struct ClientSyncSystem : public System
 			auto it = frame_data.tags.find(unique_id);
 			if (it != frame_data.tags.end())
 			{
-				if (!(it->second.tags == gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()].tags))
+				if (it->second.tags == gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()].tags)
 				{
-					return false;
+					return true;
 				}
 			}
 			else
 			{
-				return false;
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	void MappingLocalEntity(FrameData& frame_data,bool is_need_rollback)
@@ -156,6 +157,7 @@ struct ClientSyncSystem : public System
 			{
 				if (!registry.has<UniqueId>(it->second))
 				{
+					INFO("e {} id{}", static_cast<uint32_t>(it->second),item.second.value);
 					registry.emplace<UniqueId>(it->second, item.second);
 				}
 			}
@@ -177,13 +179,16 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.transforms)
 		{
-			if (e_by_unique_id_map.value.find(item.first) != e_by_unique_id_map.value.end())
+			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
 
 			auto e = e_by_unique_id_map.value[item.first];
+			auto& transform = item.second;
+			auto& unique_id = item.first;
+			INFO("e {} id {} x {} y {} z {} ",static_cast<uint32_t>(e), unique_id.value, transform.position.x, transform.position.y, transform.position.z);
 			if (is_need_rollback || !registry.has<TransformState>(e))
 			{
 				registry.emplace_or_replace<Transform>(e, item.second);
@@ -192,7 +197,7 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.players)
 		{
-			if (e_by_unique_id_map.value.find(item.first) != e_by_unique_id_map.value.end())
+			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
@@ -207,7 +212,7 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.actor_assets)
 		{
-			if (e_by_unique_id_map.value.find(item.first) != e_by_unique_id_map.value.end())
+			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
@@ -222,7 +227,7 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.animation_clips)
 		{
-			if (e_by_unique_id_map.value.find(item.first) != e_by_unique_id_map.value.end())
+			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
@@ -237,7 +242,7 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.attribute_sets)
 		{
-			if (e_by_unique_id_map.value.find(item.first) != e_by_unique_id_map.value.end())
+			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
@@ -250,7 +255,7 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.tags)
 		{
-			if (e_by_unique_id_map.value.find(item.first) != e_by_unique_id_map.value.end())
+			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
@@ -265,7 +270,7 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.ability_specs)
 		{
-			if (e_by_unique_id_map.value.find(item.first) != e_by_unique_id_map.value.end())
+			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
@@ -281,7 +286,7 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.effect_specs)
 		{
-			if (e_by_unique_id_map.value.find(item.first) != e_by_unique_id_map.value.end())
+			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);

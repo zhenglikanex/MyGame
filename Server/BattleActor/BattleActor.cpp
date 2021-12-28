@@ -185,9 +185,12 @@ std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> BattleActor::Recv
 
 void BattleActor::SendGameMessage(uint32_t id,std::string_view name, std::vector<uint8_t>&& data)
 {
-	for (auto player : players_)
+	for (auto& item : ids_)
 	{
-		Call(player, "send", std::make_tuple(std::string(name.data()),data));
+		if (id == item.second)
+		{
+			Call(item.first, "send", std::make_tuple(std::string(name.data()), data));
+		}
 	}
 }
 

@@ -4,10 +4,12 @@
 
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/FileService.hpp"
+#include "Framework/Game/GameHelper.hpp"
 
 #include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/ActorState.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
+#include "Framework/Game/Component/LocalId.hpp"
 #include "Framework/Game/Component/AnimationAsset.hpp"
 #include "Framework/Game/Component/SkillGraphAsset.hpp"
 #include "Framework/Game/Component/ColliderInfo.hpp"
@@ -39,7 +41,7 @@ struct CreateActorSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		auto& game_helper = registry.ctx<GameHelper>();
+		auto& game_helper = registry.ctx<Locator>().Ref<const GameHelper>();
 		auto view = registry.view<ActorAsset>(entt::exclude<ViewAsset>);
 		for (auto e : view)
 		{

@@ -214,6 +214,7 @@ extern "C"
 						info.ParseFromArray(message.data().data(), message.data().size());
 
 						g_my_id = info.my_id();
+						INFO("myid {}", info.my_id());
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
 
 						//让客户端领先服务器1帧加半个rtt保证，使客户端的输入能在服务器执行当前帧时收到，后面可以再根据ping值来调整客户端领先的值

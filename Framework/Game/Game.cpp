@@ -272,7 +272,7 @@ void Game::CreatePlayer()
 {
 	for (auto& player_info : player_infos_)
 	{
-		ActorUtiltiy::CreatePlayer(registry_, player_info.id, player_info.actor_asset, vec3(player_info.id * 0.3f, 0, 0));
+		ActorUtiltiy::CreatePlayer(registry_, player_info.id, player_info.actor_asset, vec3(player_info.id * 2, 0, 0));
 	}
 }
 

@@ -31,6 +31,7 @@ struct FrameData
 
 NON_MEMEBER_BAR(FrameData,
 	obj.frame,
+	obj.local_id,
 	obj.unique_ids,
 	obj.players,
 	obj.actor_assets,

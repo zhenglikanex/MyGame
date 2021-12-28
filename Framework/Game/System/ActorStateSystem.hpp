@@ -14,6 +14,7 @@
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/SkillState.hpp"
+#include "Framework/Game/Component/Player.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -119,7 +120,7 @@ struct ActorStateSystem : public System
 			auto forward = glm::normalize(vec3(input.x, fixed16(0), input.y));
 			registry.emplace_or_replace<MovementForward>(e, forward);
 
-			INFO("input {}", glm::length(input));
+			INFO("input {} id{} ", glm::length(input),registry.get<Player>(e).id);
 
 			// 移动
 			// 移动动画通过动画混合得到,这类动画数据的时候将混合参数作为key导出所有离散的动画数据	

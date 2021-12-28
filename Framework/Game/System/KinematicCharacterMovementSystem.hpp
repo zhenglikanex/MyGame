@@ -5,6 +5,7 @@
 #include "Framework/Game/DebugService.hpp"
 
 #include "Framework/Game/Component/Command.hpp"
+#include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/LocalId.hpp"
@@ -119,7 +120,7 @@ struct KinematicCharacterMovementSystem : public System
 		auto view = registry.view<LocalId,Transform,CharacterMovement,Character,ColliderInfo,PhysicsActor>();
 		for (auto e : view)
 		{
-			INFO("UpdatePhase1");
+			INFO("UpdatePhase1{}",registry.get<Player>(e).id);
 			overlaps_count_ = 0;
 
 			auto&[transform, movement, character,collider, physics_actor] = 

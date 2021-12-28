@@ -40,6 +40,7 @@ struct CreatePhysicsActorSystem : public System
 		auto view = registry.view<Transform,ColliderInfo>(entt::exclude<PhysicsActor>);
 		for (auto e : view)
 		{
+			INFO("create physics actor e{}", static_cast<uint32_t>(e));
 			auto& [transform,collider_info] = view.get<Transform,ColliderInfo>(e);
 
 			PxRigidActor* actor = nullptr;
