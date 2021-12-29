@@ -13,6 +13,7 @@
 #include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/PlayerManager.hpp"
+#include "Framework/Game/Component/GAS/GameplayState.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -24,6 +25,7 @@ struct ActorUtiltiy
 		reg.emplace<Player>(e,id);
 		reg.emplace<Transform>(e, position, rotation);
 		reg.emplace<TransformState>(e);
+		reg.emplace<GameplayState>(e);
 		reg.emplace<ActorAsset>(e,actor_asset); // 通过createactoresystem创建具体actor信息
 		reg.emplace<LocalId>(e, reg.ctx<PlayerManager>().players[id].local_id_generator.value++);
 

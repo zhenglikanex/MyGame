@@ -9,15 +9,15 @@
 #include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/ActorState.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
-#include "Framework/Game/Component/LocalId.hpp"
 #include "Framework/Game/Component/AnimationAsset.hpp"
-#include "Framework/Game/Component/SkillGraphAsset.hpp"
 #include "Framework/Game/Component/ColliderInfo.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/Character.hpp"
 #include "Framework/Game/Component/Movement.hpp"
+#include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
+#include "Framework/Game/Component/GAS/GameplayState.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -53,7 +53,7 @@ struct CreateActorSystem : public System
 			registry.emplace<Weapon>(e, actor_info.weapon());
 			registry.emplace<ColliderInfo>(e, actor_info.body());
 
-			if (game_helper.IsAuthority() || registry.has<LocalId>(e))
+			if (registry.has<TransformState>(e))
 			{
 				// character controllerœ‡πÿ
 				registry.emplace<MovementForward>(e);
@@ -61,9 +61,13 @@ struct CreateActorSystem : public System
 				registry.emplace<CharacterMovement>(e);
 
 				ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
+				
+			}
+
+			if (registry.has<GameplayState>(e))
+			{
 				GameplayEffectUtility::ApplyGameEffectToTarget(registry, e, actor_info.ge(), 1, e);
 			}
-			
 			//INFO("create actor");
 		}
 	}

@@ -133,6 +133,8 @@ inline void RegisterGameplayAbilitySpec(sol::state& lua)
 
 inline void RegisterLua(entt::registry& registry,sol::state& lua)
 {
+	lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table, sol::lib::debug, sol::lib::os);
+
 	RegisterGameplayTag(lua);
 	RegisterGameplayEffect(lua);
 	RegisterGameplayAbility(lua);

@@ -20,7 +20,15 @@
 #include "Framework/Game/System/UpdateColliderTransformSystem.hpp"
 #include "Framework/Game/System/PhysicsSystem.hpp"
 #include "Framework/Game/System/KinematicCharacterMovementSystem.hpp"
-
+#include "Framework/Game/System/DestorySystem.hpp"
+#include "Framework/Game/System/GAS/ApplyGameplayEffectSystem.hpp"
+#include "Framework/Game/System/GAS/GameplayEffectSystem.hpp"
+#include "Framework/Game/System/GAS/TryGameplayAbilitySystem.hpp"
+#include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
+#include "Framework/Game/system/GAS/GameplayAttributeSystem.hpp"
+#include "Framework/Game/System/GAS/GameplayEventSystem.hpp"
+#include "Framework/Game/System/GAS/GameplayStateSystem.hpp"
+#include "Framework/Game/System/UpdatePlayerAttributeUISystem.hpp"
 #include "Client/System/ClientSyncSystem.hpp"
 
 ClientGameHelper::ClientGameHelper(uint32_t local_id)
@@ -62,6 +70,14 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	//systems.emplace_back(std::make_unique<CollisionSystem>(registry));
 	systems.emplace_back(std::make_unique<PhysicsSystem>(registry));
 	systems.emplace_back(std::make_unique<UpdateViewSystem>(registry));
+	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>());
+	systems.emplace_back(std::make_unique<GameplayEventSystem>());
+	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>());
+	systems.emplace_back(std::make_unique<GameplayAttributeSystem>());
+	systems.emplace_back(std::make_unique<GameplayStateSystem>());
+	systems.emplace_back(std::make_unique<DestorySystem>());
+	
+	
 
 #if DEBUG
 	systems.emplace_back(std::make_unique<DebugSystem>(registry));

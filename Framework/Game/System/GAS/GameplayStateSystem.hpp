@@ -3,7 +3,8 @@
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Component/GameState.hpp"
-#include "Framework/Game/Component/Local.hpp"
+#include "Framework/Game/Component/GAS/GameplayTags.hpp"
+#include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 
 struct GameplayStateSystem : public System
@@ -27,10 +28,17 @@ struct GameplayStateSystem : public System
 	void FixedUpdate(fixed16 dt) override
 	{
 		auto run_frame = registry.ctx<GameState>().run_frame;
-		auto view = registry.view<GameplayState,Local>();
+		auto view = registry.view<GameplayState,GameplayAttributeSet>();
 		for (auto e : view)
 		{
-			auto&[gameplay_state] = view.get<GameplayState>(e);
+			auto& [gameplay_state,attribute_set] = view.get<GameplayState,GameplayAttributeSet>(e);
+			gameplay_state.attribute_sets[run_frame % gameplay_state.attribute_sets.size()] = attribute_set;
+			
+			auto tags = registry.try_get<GameplayTags>(e);
+			if (tags)
+			{
+				gameplay_state.tags[run_frame % gameplay_state.tags.size()] = *tags;
+			}
 		}
 	}
 

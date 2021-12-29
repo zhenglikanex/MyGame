@@ -6,6 +6,7 @@
 #include "Framework/Game/GameHelper.hpp"
 #include "Framework/Game/InputService.hpp"
 #include "Framework/Game/DebugService.hpp"
+#include "Framework/Game/LuaBridge.hpp"
 
 #include "Framework/Game/Component/PlayerManager.hpp"
 #include "Framework/Game/Component/GameState.hpp"
@@ -82,6 +83,7 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
+	registry_.set<sol::state>();
 	registry_.set<GameplayEffectManager>(registry_);
 	registry_.set<GameplayAbilityManager>(registry_);
 
@@ -118,7 +120,8 @@ bool Game::Initialize()
 
 	auto& file_service = registry_.ctx<Locator>().Ref<FileService>();
 	//file_service.set_cur_path(std::filesystem::current_path().string() + "/Assets/Resources/");
-
+	
+	RegisterLua(registry_, registry_.ctx<sol::state>());
 	LoadAllConfig();
 	LoadScene("Battle.json");
 	CreatePlayer();
