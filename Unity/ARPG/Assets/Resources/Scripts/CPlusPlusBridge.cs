@@ -253,4 +253,15 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         message.PushData<int>(ping);
         message.Send();
     }
+
+    public static void RefreshUI(int hp,int max_hp,int mp,int max_mp)
+    {
+        Message message = new Message("refresh_ui");
+        message.PushData<int>(hp);
+        message.PushData<int>(max_hp);
+        message.PushData<int>(mp);
+        message.PushData<int>(max_mp);
+
+        message.Send();
+    }
 }

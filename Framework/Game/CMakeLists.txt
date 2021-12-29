@@ -12,6 +12,7 @@ InputService.hpp
 FileService.hpp
 FileService.cpp
 ViewService.hpp
+UIService.hpp
 IViewImpl.hpp
 NetworkService.hpp
 Json.hpp
@@ -66,6 +67,7 @@ System/KinematicCharacterMovementSystem.hpp
 System/CreatePhysicsActorSystem.hpp
 System/DelayTaskSystem.hpp
 System/DestorySystem.hpp
+System/UpdatePlayerAttributeUISystem.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/GameplayEffectSystem.hpp
 System/GAS/GameplayAttributeSystem.hpp

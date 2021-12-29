@@ -13,6 +13,8 @@ add_library(MyGameClient SHARED
     UnityDebugService.cpp
     UnityFileService.hpp
     UnityFileService.cpp
+    UnityUIService.hpp
+    UnityUIService.cpp
     ClientNetworkImpl.hpp
     ClientNetworkImpl.cpp
     ClientNetwork.hpp
