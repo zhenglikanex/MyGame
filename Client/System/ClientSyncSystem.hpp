@@ -137,15 +137,25 @@ struct ClientSyncSystem : public System
 			auto& unique_id = view2.get<UniqueId>(e);
 			auto& gameplay_state = view2.get<GameplayState>(e);
 
-			auto it = frame_data.tags.find(unique_id);
-			if (it != frame_data.tags.end())
+			auto tag_it = frame_data.tags.find(unique_id);
+			auto attribute_set_it = frame_data.attribute_sets.find(unique_id);
+
+			if (attribute_set_it == frame_data.attribute_sets.end())
 			{
-				if (it->second.tags == gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()].tags)
-				{
-					return true;
-				}
+				return true;
 			}
-			else
+
+			if (attribute_set_it->second.value != gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()].value)
+			{
+				return true;
+			}
+
+			if (tag_it == frame_data.tags.end() && !gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()].tags.Empty())
+			{
+				return true;
+			}
+
+			if (tag_it != frame_data.tags.end() && tag_it->second.tags != gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()].tags)
 			{
 				return true;
 			}

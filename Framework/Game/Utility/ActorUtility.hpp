@@ -27,7 +27,7 @@ struct ActorUtiltiy
 		reg.emplace<Player>(e,id);
 		reg.emplace<Transform>(e, position, rotation);
 		reg.emplace<TransformState>(e);
-		//reg.emplace<GameplayAttributeSet>(e);
+		reg.emplace<GameplayAttributeSet>(e);
 		reg.emplace<GameplayState>(e);
 
 		auto& helper = reg.ctx<Locator>().Ref<const GameHelper>();

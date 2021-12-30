@@ -11,6 +11,9 @@
 
 #include "Server/BattleActor/ServerNetworkService.hpp"
 
+using namespace std;
+using namespace std::chrono;
+
 struct ServerSyncSystem : public System
 {
 	kanex::Buffer buffer;
@@ -35,7 +38,7 @@ struct ServerSyncSystem : public System
 	void FixedUpdate(fixed16 dt) override
 	{
 		auto& player_manager = registry.ctx<PlayerManager>();
-
+		INFO("server sync{}",duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
 		for (auto item : player_manager.players)
 		{
 			auto& player_data = item.second;
@@ -43,6 +46,8 @@ struct ServerSyncSystem : public System
 			FrameData frame_data;
 			frame_data.frame = registry.ctx<GameState>().run_frame;
 			frame_data.local_id = player_data.local_id_generator;
+
+			INFO("frame {}", frame_data.frame);
 
 			auto view = registry.view<UniqueId, LocalId, Player>();
 			for (auto e : view)

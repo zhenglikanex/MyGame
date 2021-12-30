@@ -254,7 +254,7 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         message.Send();
     }
 
-    public static void RefreshUI(int hp,int max_hp,int mp,int max_mp)
+    public static void RefreshUI(int hp, int max_hp, int mp, int max_mp)
     {
         Message message = new Message("refresh_ui");
         message.PushData<int>(hp);

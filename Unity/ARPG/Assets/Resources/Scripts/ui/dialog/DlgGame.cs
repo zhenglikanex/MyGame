@@ -9,6 +9,8 @@ public class DlgGame : NormalUI
     private Text text_ping_;
     private Scrollbar hp_;
     private Scrollbar mp_;
+    private Text text_hp_;
+    private Text text_mp_;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +20,8 @@ public class DlgGame : NormalUI
         text_ping_ = transform.Find("text_ping").GetComponent<Text>();
         hp_ = transform.Find("hp").GetComponent<Scrollbar>();
         mp_ = transform.Find("mp").GetComponent<Scrollbar>();
+        text_hp_ = hp_.transform.Find("text_hp").GetComponent<Text>();
+        text_mp_ = mp_.transform.Find("text_mp").GetComponent<Text>();
 
         btn_start_.onClick.AddListener(() =>
         {
@@ -44,8 +48,27 @@ public class DlgGame : NormalUI
              int mp = msg.PopData<int>();
              int max_mp = msg.PopData<int>();
 
-             hp_.value = hp / max_hp;
-             mp_.value = mp / max_mp;
+             if (max_hp > 0)
+             {
+                 hp_.value = hp / max_hp;
+             }
+             else
+             {
+                 hp_.value = 0;
+             }
+
+             if (max_mp > 0)
+             {
+                 mp_.value = mp / max_mp;
+             }
+             else
+             {
+                 mp_.value = 0;
+
+             }
+
+             text_hp_.text = string.Format("{0}/{1}", hp, max_hp);
+             text_mp_.text = string.Format("{0}/{1}", mp, max_mp);
          });
 
         UpdateBtnState();

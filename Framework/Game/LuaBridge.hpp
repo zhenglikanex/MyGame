@@ -134,6 +134,8 @@ inline void RegisterGameplayAbilitySpec(sol::state& lua)
 inline void RegisterLua(entt::registry& registry,sol::state& lua)
 {
 	lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table, sol::lib::debug, sol::lib::os);
+	lua.script_file("Script/main.lua", sol::script_default_on_error);
+	sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
 
 	RegisterGameplayTag(lua);
 	RegisterGameplayEffect(lua);

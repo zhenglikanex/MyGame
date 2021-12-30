@@ -27,6 +27,7 @@ public:
 
 		gameplay_effects_.emplace(name, GameplayEffect());
 		auto& gameplay_effect = gameplay_effects_[name];
+		gameplay_effect.name = name;
 
 		auto& lua = registry_.ctx<sol::state>();
 		lua["LoadGameplayEffect"](name,gameplay_effect);
