@@ -76,7 +76,7 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<GameplayAttributeSystem>());
 	systems.emplace_back(std::make_unique<GameplayStateSystem>());
 	systems.emplace_back(std::make_unique<DestorySystem>());
-	
+	systems.emplace_back(std::make_unique<Update>)
 	
 
 #if DEBUG

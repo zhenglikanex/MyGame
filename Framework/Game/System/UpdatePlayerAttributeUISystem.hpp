@@ -1,7 +1,9 @@
 #pragma once
 
+#include "Framework/Game/Locator.hpp"
+#include "Framework/Game/UIService.hpp"
+
 #include "Framework/Game/Component/LocalId.hpp"
-#include "Framework/Game/Component/UIManager.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 
 #include "Framework/Game/System.hpp"
@@ -29,17 +31,20 @@ struct UpdatePlayerAttributeUISystem : public ObserverSystem
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		auto& ui_manager = registry.ctx<UIManager>();
+		auto& ui_service = registry.ctx<Locator>().Ref<UIService>();
+
 		auto view = registry.view<LocalId, GameplayAttributeSet>();
 		for (auto e : *updatelist)
 		{
 			auto& attribute_set = view.get<GameplayAttributeSet>(e);
-			ui_manager.value->RefreshUI(
+			ui_service.RefreshUI(
 				attribute_set.value[static_cast<uint32_t>(GameplayAttributeType::Hp)].current_value,
 				attribute_set.value[static_cast<uint32_t>(GameplayAttributeType::MaxHp)].current_value,
 				attribute_set.value[static_cast<uint32_t>(GameplayAttributeType::Mp)].current_value,
 				attribute_set.value[static_cast<uint32_t>(GameplayAttributeType::MaxMp)].current_value);
 		}
+
+		updatelist->clear();
 	}
 
 	void Finalize() override

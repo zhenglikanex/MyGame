@@ -12,6 +12,7 @@
 #include "Client/UnityDebugService.hpp"
 #include "Client/UnityInputService.hpp"
 #include "Client/UnityFileService.hpp"
+#include "Client/UnityUIService.hpp"
 
 #include "Framework/Game/Math.hpp"
 #include "Framework/Game/Game.hpp"
@@ -74,6 +75,7 @@ void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time,uint32_t 
 	locator.Set<ViewService>(std::make_unique<UnityViewService>());
 	locator.Set<InputService>(std::make_unique<UnityInputService>());
 	locator.Set<FileService>(std::make_unique<UnityFileService>());
+	locator.Set<UIService>(std::make_unique<UnityUIService>());
 	locator.Set<NetworkService>(std::make_unique<ClientNetworkService>(&RecvGameMessage, &SendGameMessage));
 	locator.Set<GameHelper>(std::make_unique<ClientGameHelper>(local_id));
 

@@ -61,7 +61,6 @@ struct CreateActorSystem : public System
 				registry.emplace<CharacterMovement>(e);
 
 				ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
-				
 			}
 
 			if (registry.has<GameplayState>(e))
