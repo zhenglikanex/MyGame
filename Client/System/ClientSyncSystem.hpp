@@ -41,6 +41,7 @@ struct ClientSyncSystem : public System
 	{
 		auto& game_state = registry.ctx<GameState>();
 		auto& network_service = registry.ctx<Locator>().Ref<const NetworkService>();
+		INFO("sync");
 		while (auto message = network_service.Recv())
 		{
 			auto&[name, data] = *message;
@@ -51,6 +52,8 @@ struct ClientSyncSystem : public System
 
 			FrameData frame_data;
 			ar(frame_data);
+
+			INFO("frame {}", frame_data.frame);
 
 			if (frame_data.frame >= game_state.run_frame)
 			{
@@ -103,6 +106,7 @@ struct ClientSyncSystem : public System
 
 	bool CheckEntityState(FrameData& frame_data)
 	{
+		auto& game_state = registry.ctx<GameState>();
 		auto view1 = registry.view<UniqueId, TransformState>();
 		for (auto e : view1)
 		{
@@ -112,6 +116,9 @@ struct ClientSyncSystem : public System
 			auto it = frame_data.transforms.find(unique_id);
 			if (it != frame_data.transforms.end())
 			{
+				auto tran = transform_state.value[frame_data.frame % transform_state.value.size()];
+				
+				INFO("frame {} local frame{} frame2 {} local x {} y{} z {} net", frame_data.frame, game_state.run_frame,game_state.verified_frame, tran.position.x, tran.position.y, tran.position.z, it->second.position.x, it->second.position.y, it->second.position.z);
 				if (it->second != transform_state.value[frame_data.frame % transform_state.value.size()])
 				{
 					assert(false);

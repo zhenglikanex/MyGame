@@ -83,9 +83,9 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
-	registry_.set<sol::state>();
-	registry_.set<GameplayEffectManager>(registry_);
-	registry_.set<GameplayAbilityManager>(registry_);
+	//registry_.set<sol::state>();
+	//registry_.set<GameplayEffectManager>(registry_);
+	//registry_.set<GameplayAbilityManager>(registry_);
 
 	registry_.set<EntityByUniqueIdMap>();
 	registry_.on_construct<UniqueId>().connect<&ConnectUniqueIdToEntity>();
@@ -121,7 +121,7 @@ bool Game::Initialize()
 	auto& file_service = registry_.ctx<Locator>().Ref<FileService>();
 	//file_service.set_cur_path(std::filesystem::current_path().string() + "/Assets/Resources/");
 	
-	RegisterLua(registry_, registry_.ctx<sol::state>());
+	//RegisterLua(registry_, registry_.ctx<sol::state>());
 	LoadAllConfig();
 	LoadScene("Battle.json");
 	CreatePlayer();

@@ -98,7 +98,6 @@ struct ApplyGameplayEffectSystem : public System
 	{
 		sol::state& lua = registry.ctx<sol::state>();
 		GameplayEffectManager& ge_manager = registry.ctx<GameplayEffectManager>();
-		GameHelper& game_helper = registry.ctx<GameHelper>();
 		
 		if (auto apply_ge = registry.try_ctx<ApplyGameplayEffect>())
 		{

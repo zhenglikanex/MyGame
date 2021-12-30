@@ -237,6 +237,7 @@ extern "C"
 					}
 					else
 					{
+						INFO("recv net message {}", duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
 						g_game_messages.emplace(std::make_unique<NetMessage>(std::move(message)));
 					}
 				});
