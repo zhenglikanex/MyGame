@@ -25,7 +25,7 @@ struct LocalId
 
 	bool operator!=(const LocalId& other) const
 	{
-		return *this == other;
+		return !(*this == other);
 	}
 };
 

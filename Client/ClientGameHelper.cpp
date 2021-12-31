@@ -29,6 +29,7 @@
 #include "Framework/Game/System/GAS/GameplayEventSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayStateSystem.hpp"
 #include "Framework/Game/System/UpdatePlayerAttributeUISystem.hpp"
+#include "Framework/Game/System/LocalIdStateSystem.hpp"
 #include "Client/System/ClientSyncSystem.hpp"
 
 ClientGameHelper::ClientGameHelper(uint32_t local_id)
@@ -52,7 +53,6 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 {
 	std::vector<std::unique_ptr<System>> systems;
 
-	systems.emplace_back(std::make_unique<ClientSyncSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateActorSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateViewSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateAnimationSystem>(registry));
@@ -63,7 +63,6 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<RootMotionSystem>(registry));
 	systems.emplace_back(std::make_unique<MovementSystem>(registry));
 	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(registry));
-	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
 	systems.emplace_back(std::make_unique<SkillSystem>(registry));
 	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
 	//systems.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry));
@@ -74,10 +73,12 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<GameplayEventSystem>(registry));
 	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayStateSystem>(registry));
 	systems.emplace_back(std::make_unique<DestorySystem>(registry));
 	systems.emplace_back(std::make_unique<UpdatePlayerAttributeUISystem>(registry));
-	
+	systems.emplace_back(std::make_unique<ClientSyncSystem>(registry));
+	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
+	systems.emplace_back(std::make_unique<GameplayStateSystem>(registry));
+	systems.emplace_back(std::make_unique<LocalIdStateSystem>(registry));
 
 #if DEBUG
 	systems.emplace_back(std::make_unique<DebugSystem>(registry));

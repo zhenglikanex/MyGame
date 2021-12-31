@@ -60,8 +60,8 @@ struct ClientSyncSystem : public System
 				MappingLocalEntity(frame_data, true);
 				ReplicationServerData(frame_data,true);
 
-				++game_state.run_frame;
-				++game_state.verified_frame;
+				game_state.run_frame = frame_data.frame;
+				game_state.verified_frame = frame_data.frame;
 
 				auto& player_manager = registry.ctx<PlayerManager>();
 				for (auto& item : player_manager.players)
@@ -77,7 +77,7 @@ struct ClientSyncSystem : public System
 				is_need_rollback = (is_need_rollback ? is_need_rollback : CheckEntityState(frame_data));
 				ReplicationServerData(frame_data, is_need_rollback);
 
-				++game_state.verified_frame;
+				game_state.verified_frame = frame_data.frame;
 
 				if (is_need_rollback)
 				{
@@ -106,6 +106,7 @@ struct ClientSyncSystem : public System
 
 	bool CheckEntityState(FrameData& frame_data)
 	{
+		INFO("CheckEntityState {}", frame_data.frame);
 		auto& game_state = registry.ctx<GameState>();
 		auto view1 = registry.view<UniqueId, TransformState>();
 		for (auto e : view1)
@@ -118,7 +119,7 @@ struct ClientSyncSystem : public System
 			{
 				auto tran = transform_state.value[frame_data.frame % transform_state.value.size()];
 				
-				INFO("frame {} local frame{} frame2 {} local x {} y{} z {} net", frame_data.frame, game_state.run_frame,game_state.verified_frame, tran.position.x, tran.position.y, tran.position.z, it->second.position.x, it->second.position.y, it->second.position.z);
+				INFO("frame {} local frame{} frame2 {} local x {} y{} z {} net x {} y{} z {}", frame_data.frame, game_state.run_frame,game_state.verified_frame, tran.position.x, tran.position.y, tran.position.z, it->second.position.x, it->second.position.y, it->second.position.z);
 				if (it->second != transform_state.value[frame_data.frame % transform_state.value.size()])
 				{
 					assert(false);
@@ -127,6 +128,7 @@ struct ClientSyncSystem : public System
 			}
 			else
 			{
+				assert(false);
 				return true;
 			}
 		}
@@ -140,15 +142,20 @@ struct ClientSyncSystem : public System
 			auto tag_it = frame_data.tags.find(unique_id);
 			auto attribute_set_it = frame_data.attribute_sets.find(unique_id);
 
+			if (true)
+			{
+				return false;
+			}
+
 			if (attribute_set_it == frame_data.attribute_sets.end())
 			{
 				return true;
 			}
 
-			/*if (attribute_set_it->second.value != gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()].value)
+			if (attribute_set_it->second.value != gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()].value)
 			{
 				return true;
-			}*/
+			}
 
 			if (tag_it == frame_data.tags.end() && !gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()].tags.Empty())
 			{

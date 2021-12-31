@@ -68,6 +68,7 @@ System/CreatePhysicsActorSystem.hpp
 System/DelayTaskSystem.hpp
 System/DestorySystem.hpp
 System/UpdatePlayerAttributeUISystem.hpp
+System/LocalIdStateSystem.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/GameplayEffectSystem.hpp
 System/GAS/GameplayAttributeSystem.hpp
