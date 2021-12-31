@@ -14,6 +14,7 @@
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/PlayerManager.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
+#include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -28,6 +29,8 @@ struct ActorUtiltiy
 		reg.emplace<Transform>(e, position, rotation);
 		reg.emplace<TransformState>(e);
 		reg.emplace<GameplayAttributeSet>(e);
+		reg.emplace<ModifierBaseAttributeSet>(e);
+		reg.emplace<ModifierAttributeSet>(e);
 		reg.emplace<GameplayState>(e);
 
 		auto& helper = reg.ctx<Locator>().Ref<const GameHelper>();

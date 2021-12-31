@@ -1,5 +1,9 @@
 #pragma once
 
+#include "Framework/Game/Locator.hpp"
+#include "Framework/Game/FileService.hpp"
+#include "Framework/Game/DebugService.hpp"
+
 #include "Framework/Game/GAS/GameplayTag.hpp"
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 #include "Framework/Game/GAS/GameplayAbility.hpp"
@@ -133,8 +137,12 @@ inline void RegisterGameplayAbilitySpec(sol::state& lua)
 
 inline void RegisterLua(entt::registry& registry,sol::state& lua)
 {
+	auto& file_service = registry.ctx<Locator>().Ref<FileService>();
+	INFO("path current {}", file_service.cur_path() + "Lua/Script/?.lua");
 	lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table, sol::lib::debug, sol::lib::os);
-	lua.script_file("Script/main.lua", sol::script_default_on_error);
+	lua["load_path"] = file_service.cur_path() + "Lua/Script/?.lua";
+	lua.add_package_loader(file_service.cur_path() + "Lua/Script/?.lua");
+	lua.script_file(file_service.cur_path() + "Lua/Script/main.lua", sol::script_default_on_error);
 	sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
 
 	RegisterGameplayTag(lua);

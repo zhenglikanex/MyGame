@@ -36,7 +36,7 @@ public:
 		if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
 			ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && ge.period.period > 0)
 		{
-			auto& mod_base_attr_set = registry.get_or_emplace<ModifierBaseAttributeSet>(target);
+			auto& mod_base_attr_set = registry.get<ModifierBaseAttributeSet>(target);
 			for (auto& mod : ge.gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
@@ -49,7 +49,7 @@ public:
 		}
 		else
 		{
-			auto& mod_attr_set = registry.get_or_emplace<ModifierAttributeSet>(target);
+			auto& mod_attr_set = registry.get<ModifierAttributeSet>(target);
 			for (auto& mod : ge.gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);

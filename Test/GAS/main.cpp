@@ -93,7 +93,7 @@ int main()
 
 	sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
 
-	RegisterLua(registry, lua);
+	//RegisterLua(registry, lua);
 
 	ApplyGameplayEffectSystem system1(registry);
 	TryGameplayAbilitySystem system3(registry);

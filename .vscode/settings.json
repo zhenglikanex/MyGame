@@ -11,6 +11,7 @@
         "DestoryEntity",
         "ApplyGameplayEffect",
         "ReceiveGameplayEvent",
-        "ApplyGameplayEffectToTarget"
+        "ApplyGameplayEffectToTarget",
+        "load_path"
     ]
 }

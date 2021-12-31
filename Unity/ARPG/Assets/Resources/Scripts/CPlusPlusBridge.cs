@@ -264,4 +264,9 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
         message.Send();
     }
+
+    public static string GetDataPath()
+    {
+        return Application.dataPath;
+    }
 }

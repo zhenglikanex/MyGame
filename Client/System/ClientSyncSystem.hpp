@@ -145,10 +145,10 @@ struct ClientSyncSystem : public System
 				return true;
 			}
 
-			if (attribute_set_it->second.value != gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()].value)
+			/*if (attribute_set_it->second.value != gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()].value)
 			{
 				return true;
-			}
+			}*/
 
 			if (tag_it == frame_data.tags.end() && !gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()].tags.Empty())
 			{
