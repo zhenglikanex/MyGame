@@ -186,7 +186,7 @@ void Game::UpdateFixedLogic()
 			return;
 		}
 
-		INFO("UpdateFixedLogic {}", duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
+		INFO("BEGIN UpdateFixedLogic {}", duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
 
 		for (auto e : registry_.view<ActorAsset,Player,LocalId>())
 		{

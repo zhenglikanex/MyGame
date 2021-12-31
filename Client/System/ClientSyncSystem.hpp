@@ -37,7 +37,7 @@ struct ClientSyncSystem : public System
 		return true;
 	}
 
-	void Update(fixed16 dt) override
+	void FixedUpdate(fixed16 dt) override
 	{
 		auto& game_state = registry.ctx<GameState>();
 		auto& network_service = registry.ctx<Locator>().Ref<const NetworkService>();
@@ -53,7 +53,7 @@ struct ClientSyncSystem : public System
 			FrameData frame_data;
 			ar(frame_data);
 
-			INFO("frame {}", frame_data.frame);
+			INFO("client frame {}", frame_data.frame);
 
 			if (frame_data.frame >= game_state.run_frame)
 			{
@@ -79,6 +79,8 @@ struct ClientSyncSystem : public System
 				}
 			}
 		}
+
+		INFO("END CLIENT SYNC");
 	}
 
 	void Finalize() override
