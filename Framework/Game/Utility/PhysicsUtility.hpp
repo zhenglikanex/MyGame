@@ -87,7 +87,7 @@ struct PhysicsUtility
 		scene_desc.cpuDispatcher = world.dispatcher;
 		scene_desc.filterShader = SubmarineFilterShader;
 		// 启用trigger之间的碰撞检测,保持跟unity一致，注意这个在physx3.5中被移除
-		scene_desc.flags |= PxSceneFlag::eDEPRECATED_TRIGGER_TRIGGER_REPORTS;
+		scene_desc.flags |= PxSceneFlag::eDEPRECATED_TRIGGER_TRIGGER_REPORTS | PxSceneFlag::eENABLE_ENHANCED_DETERMINISM;
 		scene_desc.simulationEventCallback = callback;
 		
 		world.scene = world.physics->createScene(scene_desc);

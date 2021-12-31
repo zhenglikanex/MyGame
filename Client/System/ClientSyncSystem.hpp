@@ -62,12 +62,6 @@ struct ClientSyncSystem : public System
 
 				game_state.run_frame = frame_data.frame;
 				game_state.verified_frame = frame_data.frame;
-
-				auto& player_manager = registry.ctx<PlayerManager>();
-				for (auto& item : player_manager.players)
-				{
-					item.second.local_id_generator = frame_data.local_id;
-				}
 			}
 			else
 			{
@@ -82,12 +76,6 @@ struct ClientSyncSystem : public System
 				if (is_need_rollback)
 				{
 					game_state.run_frame = frame_data.frame;
-
-					auto& player_manager = registry.ctx<PlayerManager>();
-					for (auto& item : player_manager.players)
-					{
-						item.second.local_id_generator = frame_data.local_id;
-					}
 				}
 			}
 		}
@@ -122,7 +110,8 @@ struct ClientSyncSystem : public System
 				INFO("frame {} local frame{} frame2 {} local x {} y{} z {} net x {} y{} z {}", frame_data.frame, game_state.run_frame,game_state.verified_frame, tran.position.x, tran.position.y, tran.position.z, it->second.position.x, it->second.position.y, it->second.position.z);
 				if (it->second != transform_state.value[frame_data.frame % transform_state.value.size()])
 				{
-					assert(false);
+					//assert(false);
+					INFO("*******************************");
 					return true;
 				}
 			}
@@ -321,6 +310,56 @@ struct ClientSyncSystem : public System
 			if (is_need_rollback || !registry.has<GameplayState>(owner))
 			{
 				registry.emplace_or_replace<GameplayEffectSpec>(e, item.second);
+			}
+		}
+
+		if (is_need_rollback)
+		{
+			auto chara_movement_view = registry.view<UniqueId, CharacterMovement>();
+			for (auto e : chara_movement_view)
+			{
+				auto& [id, chara_movement] = chara_movement_view.get<UniqueId, CharacterMovement>(e);
+				
+				auto it = frame_data.character_movements.find(id);
+				if (it != frame_data.character_movements.end())
+				{
+					INFO("character_movement last_movement_iteration_found_any_ground {} rigidbody_projection_hit_count{}", chara_movement.last_movement_iteration_found_any_ground, chara_movement.rigidbody_projection_hit_count);
+					chara_movement.base_velocity = it->second.base_velocity;
+					chara_movement.attached_rigidbody_velocity = it->second.attached_rigidbody_velocity;
+					chara_movement.grounding_status.ground_point = it->second.grounding_status.ground_point;
+					chara_movement.last_grounding_status.ground_point = it->second.last_grounding_status.ground_point;
+				}
+				else 
+				{
+					assert(false);
+				}
+			}
+
+			auto trans_state_view = registry.view<TransformState, Transform>();
+			for (auto e : trans_state_view)
+			{
+				auto& [transform_state,transform] = trans_state_view.get<TransformState, Transform>(e);
+				transform_state.value[frame_data.frame % transform_state.value.size()] = transform;
+			}
+
+			auto view = registry.view<GameplayState, GameplayAttributeSet>();
+			for (auto e : view)
+			{
+				auto& [gameplay_state, attribute_set] = view.get<GameplayState, GameplayAttributeSet>(e);
+				gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()] = attribute_set;
+
+				auto tags = registry.try_get<GameplayTags>(e);
+				if (tags)
+				{
+					gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()] = *tags;
+				}
+			}
+
+			auto& state = registry.ctx<LocalIdState>();
+			auto& player_manager = registry.ctx<PlayerManager>();
+			for (auto& item : player_manager.players)
+			{
+				state.value[registry.ctx<GameState>().run_frame % state.value.size()] = item.second.local_id_generator;
 			}
 		}
 	}

@@ -65,7 +65,7 @@ struct CreateActorSystem : public System
 
 			if (registry.has<GameplayState>(e))
 			{
-				GameplayEffectUtility::ApplyGameEffectToTarget(registry, e, actor_info.ge(), 1, e);
+				//GameplayEffectUtility::ApplyGameEffectToTarget(registry, e, actor_info.ge(), 1, e);
 			}
 			//INFO("create actor");
 		}

@@ -50,6 +50,8 @@ public:
 	CharacterGroundingReport(CharacterTransientGroundingReport* transient_grounding_report);
 };
 
+NON_MEMEBER_BAR(CharacterGroundingReport, obj.ground_point);
+
 class CharacterTransientGroundingReport
 {
 public:
@@ -117,6 +119,8 @@ struct CharacterMovement
 	std::array<RigidbodyProjectionHit, 16> internal_rigidbody_projection_hits;
 	int rigidbody_projection_hit_count;
 };
+
+NON_MEMEBER_BAR(CharacterMovement, obj.base_velocity, obj.attached_rigidbody_velocity,obj.grounding_status,obj.last_grounding_status);
 
 struct MovePositionTarget
 {

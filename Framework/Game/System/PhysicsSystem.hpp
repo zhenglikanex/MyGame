@@ -33,7 +33,7 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 	void FixedUpdate(fixed16 dt) override
 	{
 		ClearContactList();
-		UpdateStaticActor();
+		//UpdateStaticActor();
 
 		auto& world = registry.ctx<PhysicsWorld>();
 		world.scene->simulate(static_cast<float>(dt));

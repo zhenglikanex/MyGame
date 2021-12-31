@@ -6,6 +6,7 @@
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
+#include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
@@ -23,6 +24,7 @@ struct FrameData
 	std::unordered_map<UniqueId, ActorAsset> actor_assets;
 	std::unordered_map<UniqueId, Transform> transforms;
 	std::unordered_map<UniqueId, AnimationClip> animation_clips;
+	std::unordered_map<UniqueId, CharacterMovement> character_movements;
 	std::unordered_map<UniqueId, GameplayAttributeSet> attribute_sets;
 	std::unordered_map<UniqueId, GameplayTags> tags;
 	std::unordered_map<UniqueId, GameplayAbilitySpec> ability_specs;
@@ -37,6 +39,7 @@ NON_MEMEBER_BAR(FrameData,
 	obj.actor_assets,
 	obj.transforms,
 	obj.animation_clips,
+	obj.character_movements,
 	obj.attribute_sets,
 	obj.tags,
 	obj.ability_specs,

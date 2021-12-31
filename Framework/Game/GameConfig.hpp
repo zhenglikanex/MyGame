@@ -18,7 +18,7 @@ namespace GameConfig
 
 	const fixed16 kFrameTime = fixed16(0.033f);
 	const float kDefaultInputFrame = 0.033f;
-	constexpr uint32_t kMaxPredictFrame = 200;
+	constexpr uint32_t kMaxPredictFrame = 2000;
 	const uint32_t kMaxOnceFrameRunNum = 100;
 	const float kMaxBRTime = 0.33; //backwards reconcilation最大向后缓和(延迟补偿)时间
 }

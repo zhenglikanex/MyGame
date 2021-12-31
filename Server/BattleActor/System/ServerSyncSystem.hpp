@@ -84,6 +84,17 @@ struct ServerSyncSystem : public System
 				frame_data.animation_clips.emplace(unique_id, animation_clip);
 			}
 
+			auto character_movement_view = registry.view<UniqueId, Player,CharacterMovement>();
+			for (auto e : character_movement_view)
+			{
+				auto& [id, player, chara_movment] = character_movement_view.get<UniqueId, Player, CharacterMovement>(e);
+				if (player.id == item.second.id)
+				{
+					INFO("character_movement last_movement_iteration_found_any_ground {} rigidbody_projection_hit_count{}", chara_movment.last_movement_iteration_found_any_ground, chara_movment.rigidbody_projection_hit_count);
+					frame_data.character_movements.emplace(id, chara_movment);
+				}
+			}
+
 			auto view3 = registry.view<UniqueId,GameplayAttributeSet>();
 			for (auto e : view3)
 			{
