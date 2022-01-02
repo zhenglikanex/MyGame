@@ -16,7 +16,7 @@ struct UniqueId
 	UniqueId(uint32_t _value)
 		: value(_value)
 	{
-
+		
 	}
 
 	UniqueId(entt::entity e)

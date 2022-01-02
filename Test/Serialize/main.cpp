@@ -515,8 +515,6 @@ TEST_CASE_METHOD(Serialize, "Command")
 
 	REQUIRE(output1.x_axis == intput1.x_axis);
 	REQUIRE(output1.y_axis == intput1.y_axis);
-	REQUIRE(output1.skill == intput1.skill);
-	REQUIRE(output1.jump == intput1.jump);
 	REQUIRE(buffer.IsFinish());
 }
 

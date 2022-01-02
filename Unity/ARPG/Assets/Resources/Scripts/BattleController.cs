@@ -14,8 +14,6 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
         set;
     }
 
-    public int skill = 0;
-
     void Awake()
     {
         IsBattleing = false;
@@ -41,11 +39,6 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
 
             //Debug.Log(string.Format("deltaTime {0}", Time.deltaTime));
             CPlusPlusBridge.UpdateGame(Time.deltaTime);
-
-            if(skill == 0)
-            {
-                skill = Input.GetKeyDown("j") ? 100010 : 0;
-            }   
         }
     }
 
@@ -92,13 +85,13 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
             Proto.CS2CPlusPlusCommand command = new Proto.CS2CPlusPlusCommand();
             command.XAxis = Input.GetAxis("Horizontal");
             command.YAxis = Input.GetAxis("Vertical");
-            command.Skill = skill;
-            command.Jump = false;
+            if(Input.GetKeyDown("j"))
+            {
+                command.Ability = "AttackGA";
+            }
 
             var data = command.ToByteArray();
             CPlusPlusBridge.GameInput(data, data.Length);
-
-            skill = 0;
         }
     }
 }

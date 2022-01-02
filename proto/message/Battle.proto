@@ -26,9 +26,7 @@ message CS2CPlusPlusCommand
 	float x_axis = 1;		// 摇杆输入
 	float y_axis = 2;		// 摇杆输入
 
-	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
-	bool jump = 3;
-	int32 skill = 4;
+	string ability = 3;
 }
 
 message GameCommand
@@ -37,9 +35,8 @@ message GameCommand
 	uint64 y_axis = 2;		// 摇杆输入
 
 	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
-	bool jump = 3;
-	int32 skill = 4;
-	uint32 frame = 5;
+	string ability = 3;
+	uint32 frame = 4;
 }
 
 message GameCommandGroup

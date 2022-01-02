@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Framework/Game/GAS/GameplayAbility.hpp"
+#include "Framework/Game/Component/LocalId.hpp"
+#include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
@@ -20,5 +22,11 @@ public:
 			try_ga.value.emplace(source, std::vector<GameplayAbilityInfo>());
 		}
 		try_ga.value[source].emplace_back(ability, source, target);
+	}
+
+	static void LuanchGameplayAbility(entt::registry& registry,Player player)
+	{
+		auto e = registry.create();
+		//registry.emplace<LocalId>();
 	}
 };

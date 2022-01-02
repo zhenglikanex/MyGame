@@ -1,8 +1,15 @@
 #pragma once
 
 #include "Framework/Game/RandomEngine.hpp"
+#include "Framework/Game/GameHelper.hpp"
+#include "Framework/Game/Locator.hpp"
 
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
+
+#include "Framework/Game/Component/LocalId.hpp"
+#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/Player.hpp"
+#include "Framework/Game/Component/PlayerManager.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 #include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
@@ -42,7 +49,8 @@ struct TryGameplayAbilitySystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		GameplayAbilityManager& ga_manager = registry.ctx<GameplayAbilityManager>();
+		auto& game_helper = registry.ctx<Locator>().Ref<GameHelper>();
+		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 
 		if (auto try_ga = registry.try_ctx<TryGameplayAbility>())
 		{
@@ -50,6 +58,11 @@ struct TryGameplayAbilitySystem : public System
 			{
 				for (auto& info : ga_list.second)
 				{
+					if (!registry.valid(info.source))
+					{
+						continue;
+					}
+
 					if (!(registry.has<UniqueId>(info.source)) || !(registry.has<GameplayState>(info.source)))
 					{
 						continue;
@@ -58,7 +71,7 @@ struct TryGameplayAbilitySystem : public System
 					auto& ga = ga_manager.LoadGameplayAbility(info.ability);
 					
 					auto source_tags = registry.try_get<GameplayTags>(info.source);
-					auto target_tags = registry.try_get<GameplayTags>(info.target);
+					//auto target_tags = registry.try_get<GameplayTags>(info.target);
 
 					if (!CheckCoolDown(ga))
 					{
@@ -72,12 +85,17 @@ struct TryGameplayAbilitySystem : public System
 
 					// todo:其他检查
 					auto e = registry.create();
-					auto& spec = registry.emplace<GameplayAbilitySpec>(e, info.ability, ga.script["new"](), 1, registry.get<UniqueId>(info.source), registry.get<UniqueId>(info.target));
-					
-					spec.script["Init"](spec.script, e, spec);
-
-					//todo:调用ga的lua逻辑
-					spec.script["ActiveAbility"](spec.script);
+					if (game_helper.IsAuthority())
+					{
+						registry.emplace<UniqueId>(e, e);
+					}
+					registry.emplace<GameplayAbilitySpec>(e, info.ability, 1, registry.get<UniqueId>(info.source),UniqueId(entt::entity(entt::null)));
+					if (auto player = registry.try_get<Player>(info.source))
+					{
+						auto& player_manager = registry.ctx<PlayerManager>();
+						registry.emplace<LocalId>(e,player_manager.players[player->id].local_id_generator.value++);
+						registry.emplace<Player>(e, *player);
+					}
 				}
 
 				ga_list.second.clear();

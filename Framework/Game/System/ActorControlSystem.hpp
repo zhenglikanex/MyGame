@@ -7,20 +7,21 @@
 #include "Framework/Game/GameConfig.hpp"
 #include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/Locator.hpp"
+#include "Framework/Game/Fmt.hpp"
 
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/ActorState.hpp"
 #include "Framework/Game/Component/Animation.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
-#include "Framework/Game/Component/SkillState.hpp"
 #include "Framework/Game/Component/Player.hpp"
 
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
+#include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
 
-#include "Framework/Game/Fmt.hpp"
+
 
 inline vec2 SquareToCircle(const vec2& input)
 {
@@ -37,7 +38,7 @@ inline vec2 SquareToCircle(const vec2& input)
  * OnEnter事件中不能进行状态切换
  */
 
-struct ActorStateSystem : public System
+struct ActorControlSystem : public System
 {
 	struct State
 	{
@@ -62,8 +63,10 @@ struct ActorStateSystem : public System
 
 		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation, const Command& command) override
 		{
-			if (command.skill != 0)
+			if (command.ability != "")
 			{
+				GameplayAbilityUtility::TryGameplayAbility(registry, e, command.ability);
+
 				return ActorStateType::kAttack;
 			}
 
@@ -89,14 +92,11 @@ struct ActorStateSystem : public System
 
 		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation, const Command& command) override
 		{
-			if (command.skill != 0)
+			if (command.ability != "")
 			{
-				return ActorStateType::kAttack;
-			}
+				GameplayAbilityUtility::TryGameplayAbility(registry, e, command.ability);
 
-			if (command.jump)
-			{
-				return ActorStateType::kJump;
+				return ActorStateType::kAttack;
 			}
 
 			if (command.x_axis == fixed16(0) && command.y_axis == fixed16(0))
@@ -181,38 +181,12 @@ struct ActorStateSystem : public System
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
-			// 判断是否通过技能图执行
-			auto skill_grpah = registry.try_get<SkillGraph>(e);
-			if (skill_grpah != nullptr)
-			{
-				registry.emplace_or_replace<SkillState>(e, skill_grpah->value->entry());
-				auto skill_params =  registry.emplace_or_replace<SkillParams>(e);
-				skill_params.value.clear();
-				
-				SkillGraphInfo::Param skill;
-				skill.int_value = 0;
-				skill_params.value.emplace("skill", skill);
-
-				SkillGraphInfo::Param state_time;
-				skill.float_value = fixed16(0);
-				skill_params.value.emplace("state_time", state_time);
-			}
+			
 		}
 
 		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override 
 		{
-			auto skill_params = registry.try_get<SkillParams>(e);
-			if (skill_params != nullptr)
-			{
-				auto& skill = skill_params->value["skill"];
-				if (skill.int_value == 0)
-				{
-					skill.int_value = command.skill;
-				}
-
-				auto& state_time = skill_params->value["state_time"];
-				state_time.float_value = animction_clip.time;
-			}
+			
 		}
 	};
 
@@ -252,7 +226,7 @@ struct ActorStateSystem : public System
 
 	std::array<std::unique_ptr<State>, (size_t)ActorStateType::kMax> states;
 
-	ActorStateSystem(entt::registry& _registry)
+	ActorControlSystem(entt::registry& _registry)
 		: System(_registry)
 		, states({
 			std::make_unique<IdleState>(registry),
@@ -262,7 +236,7 @@ struct ActorStateSystem : public System
 			std::make_unique<HurtState>(registry),
 			std::make_unique<DeathState>(registry) })
 	{ }
-	~ActorStateSystem() {}
+	~ActorControlSystem() {}
 
 	bool Initialize() override
 	{

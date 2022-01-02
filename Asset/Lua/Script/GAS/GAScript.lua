@@ -1,12 +1,9 @@
 local GAScript = class("GAScript")
 
-function GAScript:ctor()
-end
-
-function GAScript:Init(entity,spec)
+function GAScript:ctor(entity,spec)
     self.entity = entity
     self.spec = spec
-end 
+end
 
 function GAScript:ActiveAbility()
 

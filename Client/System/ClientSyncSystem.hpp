@@ -66,6 +66,13 @@ struct ClientSyncSystem : public System
 			else
 			{
 				bool is_need_rollback = CheckLocalEnity(frame_data);
+
+				if (is_need_rollback)
+				{
+					//这帧时间创建的所有local entity
+					RollbackLocalEntity(frame_data);
+				}
+
 				MappingLocalEntity(frame_data, is_need_rollback);
 
 				is_need_rollback = (is_need_rollback ? is_need_rollback : CheckEntityState(frame_data));
@@ -112,8 +119,6 @@ struct ClientSyncSystem : public System
 				INFO("frame {} local frame{} frame2 {} local x {} y{} z {} net x {} y{} z {}", frame_data.frame, game_state.run_frame,game_state.verified_frame, tran.position.x, tran.position.y, tran.position.z, it->second.position.x, it->second.position.y, it->second.position.z);
 				if (it->second != transform_state.value[frame_data.frame % transform_state.value.size()])
 				{
-					//assert(false);
-					INFO("*******************************");
 					return true;
 				}
 			}
@@ -132,11 +137,6 @@ struct ClientSyncSystem : public System
 
 			auto tag_it = frame_data.tags.find(unique_id);
 			auto attribute_set_it = frame_data.attribute_sets.find(unique_id);
-
-			if (true)
-			{
-				return false;
-			}
 
 			if (attribute_set_it == frame_data.attribute_sets.end())
 			{
@@ -160,6 +160,24 @@ struct ClientSyncSystem : public System
 		}
 
 		return false;
+	}
+
+	void RollbackLocalEntity(FrameData& frame_data)
+	{
+		assert(frame_data.frame > 0 && "第一帧不可能出错!");
+
+		auto& e_by_local_id_map = registry.ctx<EntityByLocalIdMap>();
+
+		auto& local_id_state = registry.ctx<LocalIdState>();
+		for (auto i = local_id_state.value[frame_data.frame - 1 % local_id_state.value.size()].value;
+			i < frame_data.local_id.value; ++i)
+		{
+			auto it = e_by_local_id_map.value.find(i);
+			if (it != e_by_local_id_map.value.end())
+			{
+				registry.destroy(it->second);
+			}
+		}
 	}
 
 	void MappingLocalEntity(FrameData& frame_data,bool is_need_rollback)
@@ -266,6 +284,10 @@ struct ClientSyncSystem : public System
 			// 这个不预测
 			auto e = e_by_unique_id_map.value[item.first];
 			registry.emplace_or_replace<GameplayAttributeSet>(e, item.second);
+			if (registry.has<LocalId>(e))
+			{
+				int a = 10;
+			}
 		}
 
 		for (auto& item : frame_data.tags)
@@ -317,6 +339,16 @@ struct ClientSyncSystem : public System
 
 		if (is_need_rollback)
 		{
+			auto& e_by_local_id_map = registry.ctx<EntityByLocalIdMap>();
+			for (auto& item : frame_data.wait_tasks)
+			{
+				auto it = e_by_local_id_map.value.find(item.first);
+
+				assert(it != e_by_local_id_map.value.end() && "这里不可能不对应");
+
+				registry.emplace_or_replace<GameplayWaitTask>(it->second, item.second);
+			}
+
 			auto chara_movement_view = registry.view<UniqueId, CharacterMovement>();
 			for (auto e : chara_movement_view)
 			{
@@ -325,7 +357,6 @@ struct ClientSyncSystem : public System
 				auto it = frame_data.character_movements.find(id);
 				if (it != frame_data.character_movements.end())
 				{
-					INFO("character_movement last_movement_iteration_found_any_ground {} rigidbody_projection_hit_count{}", chara_movement.last_movement_iteration_found_any_ground, chara_movement.rigidbody_projection_hit_count);
 					chara_movement.base_velocity = it->second.base_velocity;
 					chara_movement.attached_rigidbody_velocity = it->second.attached_rigidbody_velocity;
 					chara_movement.grounding_status.ground_point = it->second.grounding_status.ground_point;

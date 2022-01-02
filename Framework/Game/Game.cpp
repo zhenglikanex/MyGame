@@ -21,6 +21,7 @@
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/EntityByLocalIdMap.hpp"
 #include "Framework/Game/Component/LocalIdState.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
@@ -106,6 +107,10 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 Game::~Game()
 {
 	registry_.clear();
+
+	registry_.unset<GameplayEffectManager>();
+	registry_.unset<GameplayAbilityManager>();
+	registry_.unset<sol::state>();
 }
 
 bool Game::Initialize()

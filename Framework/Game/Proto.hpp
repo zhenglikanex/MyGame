@@ -12,6 +12,7 @@
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
+#include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
 
 #include "Kanex.hpp"
 
@@ -20,6 +21,7 @@ struct FrameData
 	uint32_t frame;
 	LocalId local_id;
 	std::unordered_map<LocalId, UniqueId> unique_ids;
+	std::unordered_map<LocalId, GameplayWaitTask> wait_tasks;
 	std::unordered_map<UniqueId, Player> players;
 	std::unordered_map<UniqueId, ActorAsset> actor_assets;
 	std::unordered_map<UniqueId, Transform> transforms;
@@ -43,4 +45,5 @@ NON_MEMEBER_BAR(FrameData,
 	obj.attribute_sets,
 	obj.tags,
 	obj.ability_specs,
-	obj.effect_specs);
+	obj.effect_specs,
+	obj.wait_tasks);

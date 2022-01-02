@@ -406,17 +406,16 @@ class CS2CPlusPlusCommand : public ::google::protobuf::Message /* @@protoc_inser
   float y_axis() const;
   void set_y_axis(float value);
 
-  // optional bool jump = 3;
-  void clear_jump();
-  static const int kJumpFieldNumber = 3;
-  bool jump() const;
-  void set_jump(bool value);
-
-  // optional int32 skill = 4;
-  void clear_skill();
-  static const int kSkillFieldNumber = 4;
-  ::google::protobuf::int32 skill() const;
-  void set_skill(::google::protobuf::int32 value);
+  // optional string ability = 3;
+  void clear_ability();
+  static const int kAbilityFieldNumber = 3;
+  const ::std::string& ability() const;
+  void set_ability(const ::std::string& value);
+  void set_ability(const char* value);
+  void set_ability(const char* value, size_t size);
+  ::std::string* mutable_ability();
+  ::std::string* release_ability();
+  void set_allocated_ability(::std::string* ability);
 
   // @@protoc_insertion_point(class_scope:Proto.CS2CPlusPlusCommand)
  private:
@@ -425,8 +424,7 @@ class CS2CPlusPlusCommand : public ::google::protobuf::Message /* @@protoc_inser
   bool _is_default_instance_;
   float x_axis_;
   float y_axis_;
-  bool jump_;
-  ::google::protobuf::int32 skill_;
+  ::google::protobuf::internal::ArenaStringPtr ability_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
   friend void protobuf_AssignDesc_Battle_2eproto();
@@ -509,21 +507,20 @@ class GameCommand : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::uint64 y_axis() const;
   void set_y_axis(::google::protobuf::uint64 value);
 
-  // optional bool jump = 3;
-  void clear_jump();
-  static const int kJumpFieldNumber = 3;
-  bool jump() const;
-  void set_jump(bool value);
+  // optional string ability = 3;
+  void clear_ability();
+  static const int kAbilityFieldNumber = 3;
+  const ::std::string& ability() const;
+  void set_ability(const ::std::string& value);
+  void set_ability(const char* value);
+  void set_ability(const char* value, size_t size);
+  ::std::string* mutable_ability();
+  ::std::string* release_ability();
+  void set_allocated_ability(::std::string* ability);
 
-  // optional int32 skill = 4;
-  void clear_skill();
-  static const int kSkillFieldNumber = 4;
-  ::google::protobuf::int32 skill() const;
-  void set_skill(::google::protobuf::int32 value);
-
-  // optional uint32 frame = 5;
+  // optional uint32 frame = 4;
   void clear_frame();
-  static const int kFrameFieldNumber = 5;
+  static const int kFrameFieldNumber = 4;
   ::google::protobuf::uint32 frame() const;
   void set_frame(::google::protobuf::uint32 value);
 
@@ -534,8 +531,7 @@ class GameCommand : public ::google::protobuf::Message /* @@protoc_insertion_poi
   bool _is_default_instance_;
   ::google::protobuf::uint64 x_axis_;
   ::google::protobuf::uint64 y_axis_;
-  bool jump_;
-  ::google::protobuf::int32 skill_;
+  ::google::protobuf::internal::ArenaStringPtr ability_;
   ::google::protobuf::uint32 frame_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
@@ -1414,32 +1410,48 @@ inline void CS2CPlusPlusCommand::set_y_axis(float value) {
   // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.y_axis)
 }
 
-// optional bool jump = 3;
-inline void CS2CPlusPlusCommand::clear_jump() {
-  jump_ = false;
+// optional string ability = 3;
+inline void CS2CPlusPlusCommand::clear_ability() {
+  ability_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline bool CS2CPlusPlusCommand::jump() const {
-  // @@protoc_insertion_point(field_get:Proto.CS2CPlusPlusCommand.jump)
-  return jump_;
+inline const ::std::string& CS2CPlusPlusCommand::ability() const {
+  // @@protoc_insertion_point(field_get:Proto.CS2CPlusPlusCommand.ability)
+  return ability_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void CS2CPlusPlusCommand::set_jump(bool value) {
+inline void CS2CPlusPlusCommand::set_ability(const ::std::string& value) {
   
-  jump_ = value;
-  // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.jump)
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.ability)
 }
-
-// optional int32 skill = 4;
-inline void CS2CPlusPlusCommand::clear_skill() {
-  skill_ = 0;
-}
-inline ::google::protobuf::int32 CS2CPlusPlusCommand::skill() const {
-  // @@protoc_insertion_point(field_get:Proto.CS2CPlusPlusCommand.skill)
-  return skill_;
-}
-inline void CS2CPlusPlusCommand::set_skill(::google::protobuf::int32 value) {
+inline void CS2CPlusPlusCommand::set_ability(const char* value) {
   
-  skill_ = value;
-  // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.skill)
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Proto.CS2CPlusPlusCommand.ability)
+}
+inline void CS2CPlusPlusCommand::set_ability(const char* value, size_t size) {
+  
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Proto.CS2CPlusPlusCommand.ability)
+}
+inline ::std::string* CS2CPlusPlusCommand::mutable_ability() {
+  
+  // @@protoc_insertion_point(field_mutable:Proto.CS2CPlusPlusCommand.ability)
+  return ability_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* CS2CPlusPlusCommand::release_ability() {
+  // @@protoc_insertion_point(field_release:Proto.CS2CPlusPlusCommand.ability)
+  
+  return ability_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void CS2CPlusPlusCommand::set_allocated_ability(::std::string* ability) {
+  if (ability != NULL) {
+    
+  } else {
+    
+  }
+  ability_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ability);
+  // @@protoc_insertion_point(field_set_allocated:Proto.CS2CPlusPlusCommand.ability)
 }
 
 // -------------------------------------------------------------------
@@ -1474,35 +1486,51 @@ inline void GameCommand::set_y_axis(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:Proto.GameCommand.y_axis)
 }
 
-// optional bool jump = 3;
-inline void GameCommand::clear_jump() {
-  jump_ = false;
+// optional string ability = 3;
+inline void GameCommand::clear_ability() {
+  ability_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline bool GameCommand::jump() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommand.jump)
-  return jump_;
+inline const ::std::string& GameCommand::ability() const {
+  // @@protoc_insertion_point(field_get:Proto.GameCommand.ability)
+  return ability_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void GameCommand::set_jump(bool value) {
+inline void GameCommand::set_ability(const ::std::string& value) {
   
-  jump_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommand.jump)
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Proto.GameCommand.ability)
+}
+inline void GameCommand::set_ability(const char* value) {
+  
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Proto.GameCommand.ability)
+}
+inline void GameCommand::set_ability(const char* value, size_t size) {
+  
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Proto.GameCommand.ability)
+}
+inline ::std::string* GameCommand::mutable_ability() {
+  
+  // @@protoc_insertion_point(field_mutable:Proto.GameCommand.ability)
+  return ability_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* GameCommand::release_ability() {
+  // @@protoc_insertion_point(field_release:Proto.GameCommand.ability)
+  
+  return ability_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void GameCommand::set_allocated_ability(::std::string* ability) {
+  if (ability != NULL) {
+    
+  } else {
+    
+  }
+  ability_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ability);
+  // @@protoc_insertion_point(field_set_allocated:Proto.GameCommand.ability)
 }
 
-// optional int32 skill = 4;
-inline void GameCommand::clear_skill() {
-  skill_ = 0;
-}
-inline ::google::protobuf::int32 GameCommand::skill() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommand.skill)
-  return skill_;
-}
-inline void GameCommand::set_skill(::google::protobuf::int32 value) {
-  
-  skill_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommand.skill)
-}
-
-// optional uint32 frame = 5;
+// optional uint32 frame = 4;
 inline void GameCommand::clear_frame() {
   frame_ = 0u;
 }

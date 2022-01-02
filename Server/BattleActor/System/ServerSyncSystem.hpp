@@ -49,6 +49,10 @@ struct ServerSyncSystem : public System
 
 			INFO("frame {}", frame_data.frame);
 
+			
+
+			/**************************local entity/**************************/
+
 			auto view = registry.view<UniqueId, LocalId, Player>();
 			for (auto e : view)
 			{
@@ -58,6 +62,29 @@ struct ServerSyncSystem : public System
 					frame_data.unique_ids.emplace(local_id, unique_id);
 				}
 			}
+
+			auto character_movement_view = registry.view<UniqueId, Player, CharacterMovement>();
+			for (auto e : character_movement_view)
+			{
+				auto& [id, player, chara_movment] = character_movement_view.get<UniqueId, Player, CharacterMovement>(e);
+				if (player.id == item.second.id)
+				{
+					frame_data.character_movements.emplace(id, chara_movment);
+				}
+			}
+
+			auto wait_task_view = registry.view<LocalId, Player, GameplayWaitTask>();
+			for (auto e : wait_task_view)
+			{
+				auto& [id, player, task] = wait_task_view.get<LocalId, Player, GameplayWaitTask>(e);
+				if (player.id == player_data.id)
+				{
+					frame_data.wait_tasks.emplace(id, task);
+				}
+			}
+
+			/**************************local entity/**************************/
+
 
 			auto actor_asset_view = registry.view<UniqueId, ActorAsset>();
 			for (auto e : actor_asset_view)
@@ -70,29 +97,14 @@ struct ServerSyncSystem : public System
 			for (auto e : view1)
 			{
 				auto& [unique_id,transform] = view1.get<UniqueId,Transform>(e);
-				frame_data.transforms.emplace(unique_id, transform);
-
-				INFO("id{} player{} x {} y {} z {} ", unique_id.value, registry.get<Player>(e).id, transform.position.x, transform.position.y, transform.position.z);
-				
+				frame_data.transforms.emplace(unique_id, transform);				
 			}
-			INFO("-----------------------------");
 
 			auto view2 = registry.view<UniqueId,AnimationClip>();
 			for (auto e : view2)
 			{
 				auto& [unique_id,animation_clip] = view2.get<UniqueId,AnimationClip>(e);
 				frame_data.animation_clips.emplace(unique_id, animation_clip);
-			}
-
-			auto character_movement_view = registry.view<UniqueId, Player,CharacterMovement>();
-			for (auto e : character_movement_view)
-			{
-				auto& [id, player, chara_movment] = character_movement_view.get<UniqueId, Player, CharacterMovement>(e);
-				if (player.id == item.second.id)
-				{
-					INFO("character_movement last_movement_iteration_found_any_ground {} rigidbody_projection_hit_count{}", chara_movment.last_movement_iteration_found_any_ground, chara_movment.rigidbody_projection_hit_count);
-					frame_data.character_movements.emplace(id, chara_movment);
-				}
 			}
 
 			auto view3 = registry.view<UniqueId,GameplayAttributeSet>();

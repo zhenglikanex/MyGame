@@ -50,7 +50,7 @@ System/CollisionSystem.hpp
 System/CreateViewSystem.hpp
 System/MovementSystem.hpp
 System/UpdateViewSystem.hpp
-System/ActorStateSystem.hpp
+System/ActorControlSystem.hpp
 System/CreateAnimationSystem.hpp
 System/RootMotionSystem.hpp
 System/SkillStateSystem.hpp
@@ -76,6 +76,7 @@ System/GAS/GameplayAbilitySystem.hpp
 System/GAS/TryGameplayAbilitySystem.hpp
 System/GAS/GameplayEventSystem.hpp
 System/GAS/GameplayStateSystem.hpp
+System/GAS/GameplayWaitTaskSystem.hpp
 
 Component/GameState.hpp
 Component/Command.hpp
@@ -115,9 +116,11 @@ Component/GAS/GameplayTags.hpp
 Component/GAS/GameplayAttributeSet.hpp
 Component/GAS/ModifierAttribute.hpp
 Component/GAS/GameplayAbilitySpec.hpp
+Component/GAS/GameplayAbilityScript.hpp
 Component/GAS/TryGameplayAbility.hpp
 Component/GAS/GameplayEvent.hpp
 Component/GAS/GameplayState.hpp
+Component/GAS/GameplayWaitTask.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp

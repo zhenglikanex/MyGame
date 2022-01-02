@@ -8,9 +8,10 @@
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 #include "Framework/Game/GAS/GameplayAbility.hpp"
 
-#include "Framework/Game/Component/DelayTask.hpp"
+#include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Destory.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
+#include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 #include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
@@ -129,19 +130,17 @@ inline void RegisterGameplayAbilitySpec(sol::state& lua)
 {
 	auto type = lua.new_usertype<GameplayAbilitySpec>("GameplayAbilitySpec");
 	type["ability"] = &GameplayAbilitySpec::ability;
-	type["script"] = &GameplayAbilitySpec::script;
 	type["level"] = &GameplayAbilitySpec::level;
 	type["source"] = &GameplayAbilitySpec::source;
 	type["target"] = &GameplayAbilitySpec::target;
+	type["activation"] = &GameplayAbilitySpec::activation;
 }
 
 inline void RegisterLua(entt::registry& registry,sol::state& lua)
 {
 	auto& file_service = registry.ctx<Locator>().Ref<FileService>();
-	INFO("path current {}", file_service.cur_path() + "Lua/Script/?.lua");
 	lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table, sol::lib::debug, sol::lib::os);
 	lua["load_path"] = file_service.cur_path() + "Lua/Script/?.lua";
-	lua.add_package_loader(file_service.cur_path() + "Lua/Script/?.lua");
 	lua.script_file(file_service.cur_path() + "Lua/Script/main.lua", sol::script_default_on_error);
 	sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
 
@@ -149,16 +148,6 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	RegisterGameplayEffect(lua);
 	RegisterGameplayAbility(lua);
 	RegisterGameplayAbilitySpec(lua);
-
-	auto delay_task1 = [&registry](entt::entity entity, float time, const sol::function& func) {
-		auto& delay_task = registry.ctx_or_set<DelayTask>();
-		delay_task.entity_by_events[entity].emplace_back(time, func);
-	};
-
-	auto delay_task2 = [&registry](float time, const sol::function& func) {
-		auto& delay_task = registry.ctx_or_set<DelayTask>();
-	};
-	lua["DelayTask"] = sol::overload(delay_task1,delay_task2);
 
 	lua["ApplyGameplayEffectToTarget"] = [&registry](entt::entity source, std::string_view effect, uint32_t level, entt::entity target)
 	{
@@ -173,6 +162,12 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	lua["DestoryEntity"] = [&registry](entt::entity e)
 	{
 		registry.emplace<Destory>(e);
+	};
+
+	lua["GameplayWaitTask"] = [&registry](entt::entity ability, float time, std::string_view completed)
+	{
+		auto& task = registry.get_or_emplace<GameplayWaitTask>(ability);
+		task.value.emplace_back(time, completed);
 	};
 
 	lua["ReceiveGameplayEvent"] = [&registry](entt::entity e, std::string_view tag, const sol::function& func)

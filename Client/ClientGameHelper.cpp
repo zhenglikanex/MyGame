@@ -7,7 +7,7 @@
 #include "Framework/Game/System/CreateAnimationSystem.hpp"
 #include "Framework/Game/System/CreateSkillGraphSystem.hpp"
 #include "Framework/Game/System/CreatePhysicsActorSystem.hpp"
-#include "Framework/Game/System/ActorStateSystem.hpp"
+#include "Framework/Game/System/ActorControlSystem.hpp"
 #include "Framework/Game/System/MovementSystem.hpp"
 #include "Framework/Game/System/TransformStateSystem.hpp"
 #include "Framework/Game/System/UpdateViewSystem.hpp"
@@ -28,6 +28,8 @@
 #include "Framework/Game/system/GAS/GameplayAttributeSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayEventSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayStateSystem.hpp"
+#include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
+#include "Framework/Game/System/GAS/GameplayWaitTaskSystem.hpp"
 #include "Framework/Game/System/UpdatePlayerAttributeUISystem.hpp"
 #include "Framework/Game/System/LocalIdStateSystem.hpp"
 #include "Client/System/ClientSyncSystem.hpp"
@@ -59,7 +61,7 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<CreateSkillGraphSystem>(registry));
 	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(registry));
 	systems.emplace_back(std::make_unique<PhysicsSystem>(registry));
-	systems.emplace_back(std::make_unique<ActorStateSystem>(registry));
+	systems.emplace_back(std::make_unique<ActorControlSystem>(registry));
 	systems.emplace_back(std::make_unique<SkillStateSystem>(registry));
 	systems.emplace_back(std::make_unique<RootMotionSystem>(registry));
 	systems.emplace_back(std::make_unique<MovementSystem>(registry));
@@ -68,18 +70,19 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
 	//systems.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry));
 	//systems.emplace_back(std::make_unique<CollisionSystem>(registry));
-	systems.emplace_back(std::make_unique<UpdateViewSystem>(registry));
 	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(registry));
+	systems.emplace_back(std::make_unique<GameplayAbilitySystem>(registry));
+	systems.emplace_back(std::make_unique<GameplayWaitTaskSystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayEventSystem>(registry));
 	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(registry));
 	systems.emplace_back(std::make_unique<DestorySystem>(registry));
-	systems.emplace_back(std::make_unique<UpdatePlayerAttributeUISystem>(registry));
 	systems.emplace_back(std::make_unique<ClientSyncSystem>(registry));
 	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayStateSystem>(registry));
 	systems.emplace_back(std::make_unique<LocalIdStateSystem>(registry));
-
+	systems.emplace_back(std::make_unique<UpdatePlayerAttributeUISystem>(registry));
+	systems.emplace_back(std::make_unique<UpdateViewSystem>(registry));
 #if DEBUG
 	systems.emplace_back(std::make_unique<DebugSystem>(registry));
 #endif

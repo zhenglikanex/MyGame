@@ -119,11 +119,10 @@ void protobuf_AssignDesc_Battle_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartBattleInfo, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StartBattleInfo, _is_default_instance_));
   CS2CPlusPlusCommand_descriptor_ = file->message_type(3);
-  static const int CS2CPlusPlusCommand_offsets_[4] = {
+  static const int CS2CPlusPlusCommand_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CS2CPlusPlusCommand, x_axis_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CS2CPlusPlusCommand, y_axis_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CS2CPlusPlusCommand, jump_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CS2CPlusPlusCommand, skill_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CS2CPlusPlusCommand, ability_),
   };
   CS2CPlusPlusCommand_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -137,11 +136,10 @@ void protobuf_AssignDesc_Battle_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CS2CPlusPlusCommand, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CS2CPlusPlusCommand, _is_default_instance_));
   GameCommand_descriptor_ = file->message_type(4);
-  static const int GameCommand_offsets_[5] = {
+  static const int GameCommand_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommand, x_axis_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommand, y_axis_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommand, jump_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommand, skill_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommand, ability_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameCommand, frame_),
   };
   GameCommand_reflection_ =
@@ -369,25 +367,25 @@ void protobuf_AddDesc_Battle_2eproto() {
     "erInfos\022\'\n\014player_infos\030\001 \003(\0132\021.Proto.Pl"
     "ayerInfo\"b\n\017StartBattleInfo\022\r\n\005my_id\030\001 \001"
     "(\r\022,\n\014player_infos\030\002 \001(\0132\026.Proto.GamePla"
-    "yerInfos\022\022\n\nstart_time\030\003 \001(\r\"R\n\023CS2CPlus"
+    "yerInfos\022\022\n\nstart_time\030\003 \001(\r\"F\n\023CS2CPlus"
     "PlusCommand\022\016\n\006x_axis\030\001 \001(\002\022\016\n\006y_axis\030\002 "
-    "\001(\002\022\014\n\004jump\030\003 \001(\010\022\r\n\005skill\030\004 \001(\005\"Y\n\013Game"
-    "Command\022\016\n\006x_axis\030\001 \001(\004\022\016\n\006y_axis\030\002 \001(\004\022"
-    "\014\n\004jump\030\003 \001(\010\022\r\n\005skill\030\004 \001(\005\022\r\n\005frame\030\005 "
-    "\001(\r\"\237\001\n\020GameCommandGroup\022\r\n\005frame\030\001 \001(\r\022"
-    "7\n\010commands\030\002 \003(\0132%.Proto.GameCommandGro"
-    "up.CommandsEntry\032C\n\rCommandsEntry\022\013\n\003key"
-    "\030\001 \001(\r\022!\n\005value\030\002 \001(\0132\022.Proto.GameComman"
-    "d:\0028\001\"\'\n\004Vec3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z"
-    "\030\003 \001(\002\"2\n\004Quat\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001"
-    "z\030\003 \001(\002\022\t\n\001w\030\004 \001(\002\"I\n\tTransform\022\035\n\010posit"
-    "ion\030\001 \001(\0132\013.Proto.Vec3\022\035\n\010rotation\030\002 \001(\013"
-    "2\013.Proto.Quat\"0\n\tActorData\022#\n\ttransform\030"
-    "\001 \001(\0132\020.Proto.Transform\"\211\001\n\tFrameData\022\r\n"
-    "\005frame\030\001 \001(\r\022,\n\006actors\030\002 \003(\0132\034.Proto.Fra"
-    "meData.ActorsEntry\032\?\n\013ActorsEntry\022\013\n\003key"
-    "\030\001 \001(\r\022\037\n\005value\030\002 \001(\0132\020.Proto.ActorData:"
-    "\0028\001\"\024\n\004Ping\022\014\n\004time\030\001 \001(\rb\006proto3", 953);
+    "\001(\002\022\017\n\007ability\030\003 \001(\t\"M\n\013GameCommand\022\016\n\006x"
+    "_axis\030\001 \001(\004\022\016\n\006y_axis\030\002 \001(\004\022\017\n\007ability\030\003"
+    " \001(\t\022\r\n\005frame\030\004 \001(\r\"\237\001\n\020GameCommandGroup"
+    "\022\r\n\005frame\030\001 \001(\r\0227\n\010commands\030\002 \003(\0132%.Prot"
+    "o.GameCommandGroup.CommandsEntry\032C\n\rComm"
+    "andsEntry\022\013\n\003key\030\001 \001(\r\022!\n\005value\030\002 \001(\0132\022."
+    "Proto.GameCommand:\0028\001\"\'\n\004Vec3\022\t\n\001x\030\001 \001(\002"
+    "\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\"2\n\004Quat\022\t\n\001x\030\001 \001("
+    "\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\022\t\n\001w\030\004 \001(\002\"I\n\tTr"
+    "ansform\022\035\n\010position\030\001 \001(\0132\013.Proto.Vec3\022\035"
+    "\n\010rotation\030\002 \001(\0132\013.Proto.Quat\"0\n\tActorDa"
+    "ta\022#\n\ttransform\030\001 \001(\0132\020.Proto.Transform\""
+    "\211\001\n\tFrameData\022\r\n\005frame\030\001 \001(\r\022,\n\006actors\030\002"
+    " \003(\0132\034.Proto.FrameData.ActorsEntry\032\?\n\013Ac"
+    "torsEntry\022\013\n\003key\030\001 \001(\r\022\037\n\005value\030\002 \001(\0132\020."
+    "Proto.ActorData:\0028\001\"\024\n\004Ping\022\014\n\004time\030\001 \001("
+    "\rb\006proto3", 929);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Battle.proto", &protobuf_RegisterTypes);
   PlayerInfo::default_instance_ = new PlayerInfo();
@@ -1414,8 +1412,7 @@ void StartBattleInfo::clear_start_time() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int CS2CPlusPlusCommand::kXAxisFieldNumber;
 const int CS2CPlusPlusCommand::kYAxisFieldNumber;
-const int CS2CPlusPlusCommand::kJumpFieldNumber;
-const int CS2CPlusPlusCommand::kSkillFieldNumber;
+const int CS2CPlusPlusCommand::kAbilityFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CS2CPlusPlusCommand::CS2CPlusPlusCommand()
@@ -1438,11 +1435,11 @@ CS2CPlusPlusCommand::CS2CPlusPlusCommand(const CS2CPlusPlusCommand& from)
 
 void CS2CPlusPlusCommand::SharedCtor() {
     _is_default_instance_ = false;
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   x_axis_ = 0;
   y_axis_ = 0;
-  jump_ = false;
-  skill_ = 0;
+  ability_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 CS2CPlusPlusCommand::~CS2CPlusPlusCommand() {
@@ -1451,6 +1448,7 @@ CS2CPlusPlusCommand::~CS2CPlusPlusCommand() {
 }
 
 void CS2CPlusPlusCommand::SharedDtor() {
+  ability_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != default_instance_) {
   }
 }
@@ -1498,7 +1496,8 @@ void CS2CPlusPlusCommand::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(x_axis_, skill_);
+  ZR_(x_axis_, y_axis_);
+  ability_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -1540,33 +1539,20 @@ bool CS2CPlusPlusCommand::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_jump;
+        if (input->ExpectTag(26)) goto parse_ability;
         break;
       }
 
-      // optional bool jump = 3;
+      // optional string ability = 3;
       case 3: {
-        if (tag == 24) {
-         parse_jump:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &jump_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(32)) goto parse_skill;
-        break;
-      }
-
-      // optional int32 skill = 4;
-      case 4: {
-        if (tag == 32) {
-         parse_skill:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &skill_)));
-
+        if (tag == 26) {
+         parse_ability:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_ability()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->ability().data(), this->ability().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "Proto.CS2CPlusPlusCommand.ability"));
         } else {
           goto handle_unusual;
         }
@@ -1608,14 +1594,14 @@ void CS2CPlusPlusCommand::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(2, this->y_axis(), output);
   }
 
-  // optional bool jump = 3;
-  if (this->jump() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->jump(), output);
-  }
-
-  // optional int32 skill = 4;
-  if (this->skill() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->skill(), output);
+  // optional string ability = 3;
+  if (this->ability().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->ability().data(), this->ability().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "Proto.CS2CPlusPlusCommand.ability");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->ability(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:Proto.CS2CPlusPlusCommand)
@@ -1634,14 +1620,15 @@ void CS2CPlusPlusCommand::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(2, this->y_axis(), target);
   }
 
-  // optional bool jump = 3;
-  if (this->jump() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->jump(), target);
-  }
-
-  // optional int32 skill = 4;
-  if (this->skill() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->skill(), target);
+  // optional string ability = 3;
+  if (this->ability().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->ability().data(), this->ability().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "Proto.CS2CPlusPlusCommand.ability");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->ability(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:Proto.CS2CPlusPlusCommand)
@@ -1662,16 +1649,11 @@ int CS2CPlusPlusCommand::ByteSize() const {
     total_size += 1 + 4;
   }
 
-  // optional bool jump = 3;
-  if (this->jump() != 0) {
-    total_size += 1 + 1;
-  }
-
-  // optional int32 skill = 4;
-  if (this->skill() != 0) {
+  // optional string ability = 3;
+  if (this->ability().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->skill());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->ability());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -1708,11 +1690,9 @@ void CS2CPlusPlusCommand::MergeFrom(const CS2CPlusPlusCommand& from) {
   if (from.y_axis() != 0) {
     set_y_axis(from.y_axis());
   }
-  if (from.jump() != 0) {
-    set_jump(from.jump());
-  }
-  if (from.skill() != 0) {
-    set_skill(from.skill());
+  if (from.ability().size() > 0) {
+
+    ability_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ability_);
   }
 }
 
@@ -1742,8 +1722,7 @@ void CS2CPlusPlusCommand::Swap(CS2CPlusPlusCommand* other) {
 void CS2CPlusPlusCommand::InternalSwap(CS2CPlusPlusCommand* other) {
   std::swap(x_axis_, other->x_axis_);
   std::swap(y_axis_, other->y_axis_);
-  std::swap(jump_, other->jump_);
-  std::swap(skill_, other->skill_);
+  ability_.Swap(&other->ability_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1787,32 +1766,48 @@ void CS2CPlusPlusCommand::clear_y_axis() {
   // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.y_axis)
 }
 
-// optional bool jump = 3;
-void CS2CPlusPlusCommand::clear_jump() {
-  jump_ = false;
+// optional string ability = 3;
+void CS2CPlusPlusCommand::clear_ability() {
+  ability_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- bool CS2CPlusPlusCommand::jump() const {
-  // @@protoc_insertion_point(field_get:Proto.CS2CPlusPlusCommand.jump)
-  return jump_;
+ const ::std::string& CS2CPlusPlusCommand::ability() const {
+  // @@protoc_insertion_point(field_get:Proto.CS2CPlusPlusCommand.ability)
+  return ability_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- void CS2CPlusPlusCommand::set_jump(bool value) {
+ void CS2CPlusPlusCommand::set_ability(const ::std::string& value) {
   
-  jump_ = value;
-  // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.jump)
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.ability)
 }
-
-// optional int32 skill = 4;
-void CS2CPlusPlusCommand::clear_skill() {
-  skill_ = 0;
-}
- ::google::protobuf::int32 CS2CPlusPlusCommand::skill() const {
-  // @@protoc_insertion_point(field_get:Proto.CS2CPlusPlusCommand.skill)
-  return skill_;
-}
- void CS2CPlusPlusCommand::set_skill(::google::protobuf::int32 value) {
+ void CS2CPlusPlusCommand::set_ability(const char* value) {
   
-  skill_ = value;
-  // @@protoc_insertion_point(field_set:Proto.CS2CPlusPlusCommand.skill)
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Proto.CS2CPlusPlusCommand.ability)
+}
+ void CS2CPlusPlusCommand::set_ability(const char* value, size_t size) {
+  
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Proto.CS2CPlusPlusCommand.ability)
+}
+ ::std::string* CS2CPlusPlusCommand::mutable_ability() {
+  
+  // @@protoc_insertion_point(field_mutable:Proto.CS2CPlusPlusCommand.ability)
+  return ability_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* CS2CPlusPlusCommand::release_ability() {
+  // @@protoc_insertion_point(field_release:Proto.CS2CPlusPlusCommand.ability)
+  
+  return ability_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void CS2CPlusPlusCommand::set_allocated_ability(::std::string* ability) {
+  if (ability != NULL) {
+    
+  } else {
+    
+  }
+  ability_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ability);
+  // @@protoc_insertion_point(field_set_allocated:Proto.CS2CPlusPlusCommand.ability)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1822,8 +1817,7 @@ void CS2CPlusPlusCommand::clear_skill() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int GameCommand::kXAxisFieldNumber;
 const int GameCommand::kYAxisFieldNumber;
-const int GameCommand::kJumpFieldNumber;
-const int GameCommand::kSkillFieldNumber;
+const int GameCommand::kAbilityFieldNumber;
 const int GameCommand::kFrameFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -1847,11 +1841,11 @@ GameCommand::GameCommand(const GameCommand& from)
 
 void GameCommand::SharedCtor() {
     _is_default_instance_ = false;
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   x_axis_ = GOOGLE_ULONGLONG(0);
   y_axis_ = GOOGLE_ULONGLONG(0);
-  jump_ = false;
-  skill_ = 0;
+  ability_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   frame_ = 0u;
 }
 
@@ -1861,6 +1855,7 @@ GameCommand::~GameCommand() {
 }
 
 void GameCommand::SharedDtor() {
+  ability_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != default_instance_) {
   }
 }
@@ -1908,7 +1903,9 @@ void GameCommand::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(x_axis_, frame_);
+  ZR_(x_axis_, y_axis_);
+  ability_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  frame_ = 0u;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -1950,43 +1947,30 @@ bool GameCommand::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_jump;
+        if (input->ExpectTag(26)) goto parse_ability;
         break;
       }
 
-      // optional bool jump = 3;
+      // optional string ability = 3;
       case 3: {
-        if (tag == 24) {
-         parse_jump:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &jump_)));
-
+        if (tag == 26) {
+         parse_ability:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_ability()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->ability().data(), this->ability().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "Proto.GameCommand.ability"));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_skill;
+        if (input->ExpectTag(32)) goto parse_frame;
         break;
       }
 
-      // optional int32 skill = 4;
+      // optional uint32 frame = 4;
       case 4: {
         if (tag == 32) {
-         parse_skill:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &skill_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(40)) goto parse_frame;
-        break;
-      }
-
-      // optional uint32 frame = 5;
-      case 5: {
-        if (tag == 40) {
          parse_frame:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -2033,19 +2017,19 @@ void GameCommand::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->y_axis(), output);
   }
 
-  // optional bool jump = 3;
-  if (this->jump() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->jump(), output);
+  // optional string ability = 3;
+  if (this->ability().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->ability().data(), this->ability().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "Proto.GameCommand.ability");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->ability(), output);
   }
 
-  // optional int32 skill = 4;
-  if (this->skill() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->skill(), output);
-  }
-
-  // optional uint32 frame = 5;
+  // optional uint32 frame = 4;
   if (this->frame() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->frame(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->frame(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:Proto.GameCommand)
@@ -2064,19 +2048,20 @@ void GameCommand::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->y_axis(), target);
   }
 
-  // optional bool jump = 3;
-  if (this->jump() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->jump(), target);
+  // optional string ability = 3;
+  if (this->ability().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->ability().data(), this->ability().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "Proto.GameCommand.ability");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->ability(), target);
   }
 
-  // optional int32 skill = 4;
-  if (this->skill() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->skill(), target);
-  }
-
-  // optional uint32 frame = 5;
+  // optional uint32 frame = 4;
   if (this->frame() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->frame(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->frame(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:Proto.GameCommand)
@@ -2101,19 +2086,14 @@ int GameCommand::ByteSize() const {
         this->y_axis());
   }
 
-  // optional bool jump = 3;
-  if (this->jump() != 0) {
-    total_size += 1 + 1;
-  }
-
-  // optional int32 skill = 4;
-  if (this->skill() != 0) {
+  // optional string ability = 3;
+  if (this->ability().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->skill());
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->ability());
   }
 
-  // optional uint32 frame = 5;
+  // optional uint32 frame = 4;
   if (this->frame() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -2154,11 +2134,9 @@ void GameCommand::MergeFrom(const GameCommand& from) {
   if (from.y_axis() != 0) {
     set_y_axis(from.y_axis());
   }
-  if (from.jump() != 0) {
-    set_jump(from.jump());
-  }
-  if (from.skill() != 0) {
-    set_skill(from.skill());
+  if (from.ability().size() > 0) {
+
+    ability_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ability_);
   }
   if (from.frame() != 0) {
     set_frame(from.frame());
@@ -2191,8 +2169,7 @@ void GameCommand::Swap(GameCommand* other) {
 void GameCommand::InternalSwap(GameCommand* other) {
   std::swap(x_axis_, other->x_axis_);
   std::swap(y_axis_, other->y_axis_);
-  std::swap(jump_, other->jump_);
-  std::swap(skill_, other->skill_);
+  ability_.Swap(&other->ability_);
   std::swap(frame_, other->frame_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -2237,35 +2214,51 @@ void GameCommand::clear_y_axis() {
   // @@protoc_insertion_point(field_set:Proto.GameCommand.y_axis)
 }
 
-// optional bool jump = 3;
-void GameCommand::clear_jump() {
-  jump_ = false;
+// optional string ability = 3;
+void GameCommand::clear_ability() {
+  ability_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- bool GameCommand::jump() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommand.jump)
-  return jump_;
+ const ::std::string& GameCommand::ability() const {
+  // @@protoc_insertion_point(field_get:Proto.GameCommand.ability)
+  return ability_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- void GameCommand::set_jump(bool value) {
+ void GameCommand::set_ability(const ::std::string& value) {
   
-  jump_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommand.jump)
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:Proto.GameCommand.ability)
+}
+ void GameCommand::set_ability(const char* value) {
+  
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Proto.GameCommand.ability)
+}
+ void GameCommand::set_ability(const char* value, size_t size) {
+  
+  ability_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Proto.GameCommand.ability)
+}
+ ::std::string* GameCommand::mutable_ability() {
+  
+  // @@protoc_insertion_point(field_mutable:Proto.GameCommand.ability)
+  return ability_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* GameCommand::release_ability() {
+  // @@protoc_insertion_point(field_release:Proto.GameCommand.ability)
+  
+  return ability_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void GameCommand::set_allocated_ability(::std::string* ability) {
+  if (ability != NULL) {
+    
+  } else {
+    
+  }
+  ability_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ability);
+  // @@protoc_insertion_point(field_set_allocated:Proto.GameCommand.ability)
 }
 
-// optional int32 skill = 4;
-void GameCommand::clear_skill() {
-  skill_ = 0;
-}
- ::google::protobuf::int32 GameCommand::skill() const {
-  // @@protoc_insertion_point(field_get:Proto.GameCommand.skill)
-  return skill_;
-}
- void GameCommand::set_skill(::google::protobuf::int32 value) {
-  
-  skill_ = value;
-  // @@protoc_insertion_point(field_set:Proto.GameCommand.skill)
-}
-
-// optional uint32 frame = 5;
+// optional uint32 frame = 4;
 void GameCommand::clear_frame() {
   frame_ = 0u;
 }

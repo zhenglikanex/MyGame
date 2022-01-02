@@ -12,6 +12,7 @@
         "ApplyGameplayEffect",
         "ReceiveGameplayEvent",
         "ApplyGameplayEffectToTarget",
-        "load_path"
+        "load_path",
+        "GameplayWaitTask"
     ]
 }

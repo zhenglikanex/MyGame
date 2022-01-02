@@ -27,31 +27,30 @@ namespace Proto {
             "DHBsYXllcl9pbmZvcxgBIAMoCzIRLlByb3RvLlBsYXllckluZm8iYgoPU3Rh",
             "cnRCYXR0bGVJbmZvEg0KBW15X2lkGAEgASgNEiwKDHBsYXllcl9pbmZvcxgC",
             "IAEoCzIWLlByb3RvLkdhbWVQbGF5ZXJJbmZvcxISCgpzdGFydF90aW1lGAMg",
-            "ASgNIlIKE0NTMkNQbHVzUGx1c0NvbW1hbmQSDgoGeF9heGlzGAEgASgCEg4K",
-            "BnlfYXhpcxgCIAEoAhIMCgRqdW1wGAMgASgIEg0KBXNraWxsGAQgASgFIlkK",
-            "C0dhbWVDb21tYW5kEg4KBnhfYXhpcxgBIAEoBBIOCgZ5X2F4aXMYAiABKAQS",
-            "DAoEanVtcBgDIAEoCBINCgVza2lsbBgEIAEoBRINCgVmcmFtZRgFIAEoDSKf",
-            "AQoQR2FtZUNvbW1hbmRHcm91cBINCgVmcmFtZRgBIAEoDRI3Cghjb21tYW5k",
-            "cxgCIAMoCzIlLlByb3RvLkdhbWVDb21tYW5kR3JvdXAuQ29tbWFuZHNFbnRy",
-            "eRpDCg1Db21tYW5kc0VudHJ5EgsKA2tleRgBIAEoDRIhCgV2YWx1ZRgCIAEo",
-            "CzISLlByb3RvLkdhbWVDb21tYW5kOgI4ASInCgRWZWMzEgkKAXgYASABKAIS",
-            "CQoBeRgCIAEoAhIJCgF6GAMgASgCIjIKBFF1YXQSCQoBeBgBIAEoAhIJCgF5",
-            "GAIgASgCEgkKAXoYAyABKAISCQoBdxgEIAEoAiJJCglUcmFuc2Zvcm0SHQoI",
-            "cG9zaXRpb24YASABKAsyCy5Qcm90by5WZWMzEh0KCHJvdGF0aW9uGAIgASgL",
-            "MgsuUHJvdG8uUXVhdCIwCglBY3RvckRhdGESIwoJdHJhbnNmb3JtGAEgASgL",
-            "MhAuUHJvdG8uVHJhbnNmb3JtIokBCglGcmFtZURhdGESDQoFZnJhbWUYASAB",
-            "KA0SLAoGYWN0b3JzGAIgAygLMhwuUHJvdG8uRnJhbWVEYXRhLkFjdG9yc0Vu",
-            "dHJ5Gj8KC0FjdG9yc0VudHJ5EgsKA2tleRgBIAEoDRIfCgV2YWx1ZRgCIAEo",
-            "CzIQLlByb3RvLkFjdG9yRGF0YToCOAEiFAoEUGluZxIMCgR0aW1lGAEgASgN",
-            "YgZwcm90bzM="));
+            "ASgNIkYKE0NTMkNQbHVzUGx1c0NvbW1hbmQSDgoGeF9heGlzGAEgASgCEg4K",
+            "BnlfYXhpcxgCIAEoAhIPCgdhYmlsaXR5GAMgASgJIk0KC0dhbWVDb21tYW5k",
+            "Eg4KBnhfYXhpcxgBIAEoBBIOCgZ5X2F4aXMYAiABKAQSDwoHYWJpbGl0eRgD",
+            "IAEoCRINCgVmcmFtZRgEIAEoDSKfAQoQR2FtZUNvbW1hbmRHcm91cBINCgVm",
+            "cmFtZRgBIAEoDRI3Cghjb21tYW5kcxgCIAMoCzIlLlByb3RvLkdhbWVDb21t",
+            "YW5kR3JvdXAuQ29tbWFuZHNFbnRyeRpDCg1Db21tYW5kc0VudHJ5EgsKA2tl",
+            "eRgBIAEoDRIhCgV2YWx1ZRgCIAEoCzISLlByb3RvLkdhbWVDb21tYW5kOgI4",
+            "ASInCgRWZWMzEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIjIK",
+            "BFF1YXQSCQoBeBgBIAEoAhIJCgF5GAIgASgCEgkKAXoYAyABKAISCQoBdxgE",
+            "IAEoAiJJCglUcmFuc2Zvcm0SHQoIcG9zaXRpb24YASABKAsyCy5Qcm90by5W",
+            "ZWMzEh0KCHJvdGF0aW9uGAIgASgLMgsuUHJvdG8uUXVhdCIwCglBY3RvckRh",
+            "dGESIwoJdHJhbnNmb3JtGAEgASgLMhAuUHJvdG8uVHJhbnNmb3JtIokBCglG",
+            "cmFtZURhdGESDQoFZnJhbWUYASABKA0SLAoGYWN0b3JzGAIgAygLMhwuUHJv",
+            "dG8uRnJhbWVEYXRhLkFjdG9yc0VudHJ5Gj8KC0FjdG9yc0VudHJ5EgsKA2tl",
+            "eRgBIAEoDRIfCgV2YWx1ZRgCIAEoCzIQLlByb3RvLkFjdG9yRGF0YToCOAEi",
+            "FAoEUGluZxIMCgR0aW1lGAEgASgNYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerInfo), global::Proto.PlayerInfo.Parser, new[]{ "Id", "ActorAsset" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GamePlayerInfos), global::Proto.GamePlayerInfos.Parser, new[]{ "PlayerInfos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.StartBattleInfo), global::Proto.StartBattleInfo.Parser, new[]{ "MyId", "PlayerInfos", "StartTime" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.CS2CPlusPlusCommand), global::Proto.CS2CPlusPlusCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommand), global::Proto.GameCommand.Parser, new[]{ "XAxis", "YAxis", "Jump", "Skill", "Frame" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.CS2CPlusPlusCommand), global::Proto.CS2CPlusPlusCommand.Parser, new[]{ "XAxis", "YAxis", "Ability" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommand), global::Proto.GameCommand.Parser, new[]{ "XAxis", "YAxis", "Ability", "Frame" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommandGroup), global::Proto.GameCommandGroup.Parser, new[]{ "Frame", "Commands" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Vec3), global::Proto.Vec3.Parser, new[]{ "X", "Y", "Z" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Quat), global::Proto.Quat.Parser, new[]{ "X", "Y", "Z", "W" }, null, null, null),
@@ -527,8 +526,7 @@ namespace Proto {
     public CS2CPlusPlusCommand(CS2CPlusPlusCommand other) : this() {
       xAxis_ = other.xAxis_;
       yAxis_ = other.yAxis_;
-      jump_ = other.jump_;
-      skill_ = other.skill_;
+      ability_ = other.ability_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -564,28 +562,14 @@ namespace Proto {
       }
     }
 
-    /// <summary>Field number for the "jump" field.</summary>
-    public const int JumpFieldNumber = 3;
-    private bool jump_;
-    /// <summary>
-    ///  其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
-    /// </summary>
+    /// <summary>Field number for the "ability" field.</summary>
+    public const int AbilityFieldNumber = 3;
+    private string ability_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Jump {
-      get { return jump_; }
+    public string Ability {
+      get { return ability_; }
       set {
-        jump_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "skill" field.</summary>
-    public const int SkillFieldNumber = 4;
-    private int skill_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Skill {
-      get { return skill_; }
-      set {
-        skill_ = value;
+        ability_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -604,8 +588,7 @@ namespace Proto {
       }
       if (XAxis != other.XAxis) return false;
       if (YAxis != other.YAxis) return false;
-      if (Jump != other.Jump) return false;
-      if (Skill != other.Skill) return false;
+      if (Ability != other.Ability) return false;
       return true;
     }
 
@@ -614,8 +597,7 @@ namespace Proto {
       int hash = 1;
       if (XAxis != 0F) hash ^= XAxis.GetHashCode();
       if (YAxis != 0F) hash ^= YAxis.GetHashCode();
-      if (Jump != false) hash ^= Jump.GetHashCode();
-      if (Skill != 0) hash ^= Skill.GetHashCode();
+      if (Ability.Length != 0) hash ^= Ability.GetHashCode();
       return hash;
     }
 
@@ -634,13 +616,9 @@ namespace Proto {
         output.WriteRawTag(21);
         output.WriteFloat(YAxis);
       }
-      if (Jump != false) {
-        output.WriteRawTag(24);
-        output.WriteBool(Jump);
-      }
-      if (Skill != 0) {
-        output.WriteRawTag(32);
-        output.WriteInt32(Skill);
+      if (Ability.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Ability);
       }
     }
 
@@ -653,11 +631,8 @@ namespace Proto {
       if (YAxis != 0F) {
         size += 1 + 4;
       }
-      if (Jump != false) {
-        size += 1 + 1;
-      }
-      if (Skill != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Skill);
+      if (Ability.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Ability);
       }
       return size;
     }
@@ -673,11 +648,8 @@ namespace Proto {
       if (other.YAxis != 0F) {
         YAxis = other.YAxis;
       }
-      if (other.Jump != false) {
-        Jump = other.Jump;
-      }
-      if (other.Skill != 0) {
-        Skill = other.Skill;
+      if (other.Ability.Length != 0) {
+        Ability = other.Ability;
       }
     }
 
@@ -697,12 +669,8 @@ namespace Proto {
             YAxis = input.ReadFloat();
             break;
           }
-          case 24: {
-            Jump = input.ReadBool();
-            break;
-          }
-          case 32: {
-            Skill = input.ReadInt32();
+          case 26: {
+            Ability = input.ReadString();
             break;
           }
         }
@@ -737,8 +705,7 @@ namespace Proto {
     public GameCommand(GameCommand other) : this() {
       xAxis_ = other.xAxis_;
       yAxis_ = other.yAxis_;
-      jump_ = other.jump_;
-      skill_ = other.skill_;
+      ability_ = other.ability_;
       frame_ = other.frame_;
     }
 
@@ -775,33 +742,22 @@ namespace Proto {
       }
     }
 
-    /// <summary>Field number for the "jump" field.</summary>
-    public const int JumpFieldNumber = 3;
-    private bool jump_;
+    /// <summary>Field number for the "ability" field.</summary>
+    public const int AbilityFieldNumber = 3;
+    private string ability_ = "";
     /// <summary>
     ///  其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Jump {
-      get { return jump_; }
+    public string Ability {
+      get { return ability_; }
       set {
-        jump_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "skill" field.</summary>
-    public const int SkillFieldNumber = 4;
-    private int skill_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Skill {
-      get { return skill_; }
-      set {
-        skill_ = value;
+        ability_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     /// <summary>Field number for the "frame" field.</summary>
-    public const int FrameFieldNumber = 5;
+    public const int FrameFieldNumber = 4;
     private uint frame_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Frame {
@@ -826,8 +782,7 @@ namespace Proto {
       }
       if (XAxis != other.XAxis) return false;
       if (YAxis != other.YAxis) return false;
-      if (Jump != other.Jump) return false;
-      if (Skill != other.Skill) return false;
+      if (Ability != other.Ability) return false;
       if (Frame != other.Frame) return false;
       return true;
     }
@@ -837,8 +792,7 @@ namespace Proto {
       int hash = 1;
       if (XAxis != 0UL) hash ^= XAxis.GetHashCode();
       if (YAxis != 0UL) hash ^= YAxis.GetHashCode();
-      if (Jump != false) hash ^= Jump.GetHashCode();
-      if (Skill != 0) hash ^= Skill.GetHashCode();
+      if (Ability.Length != 0) hash ^= Ability.GetHashCode();
       if (Frame != 0) hash ^= Frame.GetHashCode();
       return hash;
     }
@@ -858,16 +812,12 @@ namespace Proto {
         output.WriteRawTag(16);
         output.WriteUInt64(YAxis);
       }
-      if (Jump != false) {
-        output.WriteRawTag(24);
-        output.WriteBool(Jump);
-      }
-      if (Skill != 0) {
-        output.WriteRawTag(32);
-        output.WriteInt32(Skill);
+      if (Ability.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Ability);
       }
       if (Frame != 0) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(32);
         output.WriteUInt32(Frame);
       }
     }
@@ -881,11 +831,8 @@ namespace Proto {
       if (YAxis != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(YAxis);
       }
-      if (Jump != false) {
-        size += 1 + 1;
-      }
-      if (Skill != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Skill);
+      if (Ability.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Ability);
       }
       if (Frame != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Frame);
@@ -904,11 +851,8 @@ namespace Proto {
       if (other.YAxis != 0UL) {
         YAxis = other.YAxis;
       }
-      if (other.Jump != false) {
-        Jump = other.Jump;
-      }
-      if (other.Skill != 0) {
-        Skill = other.Skill;
+      if (other.Ability.Length != 0) {
+        Ability = other.Ability;
       }
       if (other.Frame != 0) {
         Frame = other.Frame;
@@ -931,15 +875,11 @@ namespace Proto {
             YAxis = input.ReadUInt64();
             break;
           }
-          case 24: {
-            Jump = input.ReadBool();
+          case 26: {
+            Ability = input.ReadString();
             break;
           }
           case 32: {
-            Skill = input.ReadInt32();
-            break;
-          }
-          case 40: {
             Frame = input.ReadUInt32();
             break;
           }
