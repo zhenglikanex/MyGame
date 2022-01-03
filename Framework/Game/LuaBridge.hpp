@@ -10,7 +10,12 @@
 
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/Player.hpp"
+#include "Framework/Game/Component/ColliderInfo.hpp"
+#include "Framework/Game/Component/ParentAnimBone.hpp"
+#include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Destory.hpp"
+#include "Framework/Game/Component/Transform.hpp"
+#include "Framework/Game/Component/PlayerManager.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
@@ -21,6 +26,12 @@
 #include "Framework/Game/Utility/GameplayEventUtility.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
+
+inline void RegisterWeapon(sol::state& lua)
+{
+	auto type = lua.new_usertype<Weapon>("Weapon");
+	type["collider_info"] = &Weapon::collider_info;
+}
 
 inline void RegisterGameplayTag(sol::state& lua)
 {
@@ -137,6 +148,7 @@ inline void RegisterGameplayAbilitySpec(sol::state& lua)
 	type["source"] = &GameplayAbilitySpec::source;
 	type["target"] = &GameplayAbilitySpec::target;
 	type["activation"] = &GameplayAbilitySpec::activation;
+	type["entity_manager"] = &GameplayAbilitySpec::entity_manager;
 }
 
 inline void RegisterLua(entt::registry& registry,sol::state& lua)
@@ -202,5 +214,41 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	{
 		auto& task = registry.get_or_emplace<GameplayPlayAnimAndWaitTask>(ability);
 		task.value.emplace_back(name, completed, canceled);
+	};
+
+	lua["CreateColliderToAnimBone"] = [&registry](const ColliderInfo& collider, UniqueId target, std::string_view bone)
+	{
+		auto& map = registry.ctx<EntityByUniqueIdMap>();
+		auto it = map.value.find(target);
+		if (it != map.value.end())
+		{
+			auto e = registry.create();
+			registry.emplace<Transform>(e);
+			registry.emplace<ColliderInfo>(e, collider);
+			registry.emplace<ParentAnimBone>(e, target, bone);
+
+			entt::entity target_entity = it->second;
+
+			if (auto player = registry.try_get<Player>(it->second))
+			{
+				auto& player_manager = registry.ctx<PlayerManager>();
+				registry.emplace<LocalId>(e, player_manager.players[player->id].local_id_generator.value++);
+				registry.emplace<Player>(e, *player);
+			}
+		}
+	};
+
+	lua["GetWeapon"] = [&registry](UniqueId target)
+	{
+		Weapon* weapon = nullptr;
+
+		auto& map = registry.ctx<EntityByUniqueIdMap>();
+		auto it = map.value.find(target);
+		if (it != map.value.end())
+		{
+			weapon = registry.try_get<Weapon>(it->second);
+		}
+
+		return weapon;
 	};
 }

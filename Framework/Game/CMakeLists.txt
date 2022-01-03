@@ -69,6 +69,7 @@ System/DelayTaskSystem.hpp
 System/DestorySystem.hpp
 System/UpdatePlayerAttributeUISystem.hpp
 System/LocalIdStateSystem.hpp
+System/ComputeAnimBoneChildTransform.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/GameplayEffectSystem.hpp
 System/GAS/GameplayAttributeSystem.hpp
@@ -111,6 +112,7 @@ Component/EntityByUniqueIdMap.hpp
 Component/LocalId.hpp
 Component/LocalIdState.hpp
 Component/PlayerManager.hpp
+Component/ParentAnimBone.hpp
 Component/GAS/ApplyGameplayEffect.hpp
 Component/GAS/GameplayEffectSpec.hpp
 Component/GAS/GameplayTags.hpp
