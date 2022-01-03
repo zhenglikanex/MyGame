@@ -121,6 +121,7 @@ Component/GAS/TryGameplayAbility.hpp
 Component/GAS/GameplayEvent.hpp
 Component/GAS/GameplayState.hpp
 Component/GAS/GameplayWaitTask.hpp
+Component/GAS/GameplayPlayAnimAndWaitTask.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp

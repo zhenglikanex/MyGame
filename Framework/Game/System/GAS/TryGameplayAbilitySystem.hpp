@@ -3,6 +3,7 @@
 #include "Framework/Game/RandomEngine.hpp"
 #include "Framework/Game/GameHelper.hpp"
 #include "Framework/Game/Locator.hpp"
+#include "Framework/Game/DebugService.hpp"
 
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
 
@@ -94,6 +95,7 @@ struct TryGameplayAbilitySystem : public System
 					{
 						auto& player_manager = registry.ctx<PlayerManager>();
 						registry.emplace<LocalId>(e,player_manager.players[player->id].local_id_generator.value++);
+						INFO("create gameplayability local id{}", player_manager.players[player->id].local_id_generator.value);
 						registry.emplace<Player>(e, *player);
 					}
 				}

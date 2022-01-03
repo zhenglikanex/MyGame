@@ -30,6 +30,7 @@ struct LocalIdStateSystem : public System
 		auto& player_manager = registry.ctx<PlayerManager>();
 		for (auto& item : player_manager.players)
 		{
+			INFO("frame {} id {}", registry.ctx<GameState>().run_frame, item.second.local_id_generator.value);
 			state.value[registry.ctx<GameState>().run_frame % state.value.size()] = item.second.local_id_generator;
 		}
 		

@@ -7,6 +7,7 @@ using System;
 public class BattleController : SceneGameObjectSingleton<BattleController>
 {
     public uint MyId { get; set; }
+    public bool JDown { get; set; }
 
     public bool IsBattleing
     {
@@ -39,6 +40,11 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
 
             //Debug.Log(string.Format("deltaTime {0}", Time.deltaTime));
             CPlusPlusBridge.UpdateGame(Time.deltaTime);
+
+            if(!JDown)
+            {
+                JDown = Input.GetKeyDown("j");
+            }
         }
     }
 
@@ -85,11 +91,11 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
             Proto.CS2CPlusPlusCommand command = new Proto.CS2CPlusPlusCommand();
             command.XAxis = Input.GetAxis("Horizontal");
             command.YAxis = Input.GetAxis("Vertical");
-            if(Input.GetKeyDown("j"))
+            if (JDown)
             {
                 command.Ability = "AttackGA";
             }
-
+            JDown = false;
             var data = command.ToByteArray();
             CPlusPlusBridge.GameInput(data, data.Length);
         }

@@ -82,6 +82,7 @@ struct ClientSyncSystem : public System
 
 				if (is_need_rollback)
 				{
+					INFO("is need rollback  frame {}", frame_data.frame);
 					game_state.run_frame = frame_data.frame;
 				}
 			}
@@ -98,7 +99,12 @@ struct ClientSyncSystem : public System
 	bool CheckLocalEnity(FrameData& frame_data)
 	{
 		auto& local_id_state = registry.ctx<LocalIdState>();
-		return frame_data.local_id != local_id_state.value[frame_data.frame % local_id_state.value.size()];
+		auto result = frame_data.local_id != local_id_state.value[frame_data.frame % local_id_state.value.size()];
+		if (result)
+		{
+			INFO("CheckLocalEnity rollback");
+		}
+		return result;
 	}
 
 	bool CheckEntityState(FrameData& frame_data)
@@ -116,9 +122,9 @@ struct ClientSyncSystem : public System
 			{
 				auto tran = transform_state.value[frame_data.frame % transform_state.value.size()];
 				
-				INFO("frame {} local frame{} frame2 {} local x {} y{} z {} net x {} y{} z {}", frame_data.frame, game_state.run_frame,game_state.verified_frame, tran.position.x, tran.position.y, tran.position.z, it->second.position.x, it->second.position.y, it->second.position.z);
 				if (it->second != transform_state.value[frame_data.frame % transform_state.value.size()])
 				{
+					INFO("position not!");
 					return true;
 				}
 			}
@@ -169,7 +175,7 @@ struct ClientSyncSystem : public System
 		auto& e_by_local_id_map = registry.ctx<EntityByLocalIdMap>();
 
 		auto& local_id_state = registry.ctx<LocalIdState>();
-		for (auto i = local_id_state.value[frame_data.frame - 1 % local_id_state.value.size()].value;
+		for (auto i = local_id_state.value[(frame_data.frame - 1) % local_id_state.value.size()].value;
 			i < frame_data.local_id.value; ++i)
 		{
 			auto it = e_by_local_id_map.value.find(i);
@@ -190,7 +196,6 @@ struct ClientSyncSystem : public System
 			{
 				if (!registry.has<UniqueId>(it->second))
 				{
-					INFO("e {} id{}", static_cast<uint32_t>(it->second),item.second.value);
 					registry.emplace<UniqueId>(it->second, item.second);
 				}
 			}
@@ -221,7 +226,6 @@ struct ClientSyncSystem : public System
 			auto e = e_by_unique_id_map.value[item.first];
 			auto& transform = item.second;
 			auto& unique_id = item.first;
-			INFO("e {} id {} x {} y {} z {} ",static_cast<uint32_t>(e), unique_id.value, transform.position.x, transform.position.y, transform.position.z);
 			if (is_need_rollback || !registry.has<TransformState>(e))
 			{
 				registry.emplace_or_replace<Transform>(e, item.second);
@@ -392,7 +396,8 @@ struct ClientSyncSystem : public System
 			auto& player_manager = registry.ctx<PlayerManager>();
 			for (auto& item : player_manager.players)
 			{
-				state.value[registry.ctx<GameState>().run_frame % state.value.size()] = item.second.local_id_generator;
+				item.second.local_id_generator = frame_data.local_id;
+				state.value[frame_data.frame % state.value.size()] = item.second.local_id_generator;
 			}
 		}
 	}

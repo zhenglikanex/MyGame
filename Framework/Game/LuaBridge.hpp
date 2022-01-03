@@ -8,8 +8,10 @@
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 #include "Framework/Game/GAS/GameplayAbility.hpp"
 
+#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Destory.hpp"
+#include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
 
@@ -183,5 +185,15 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	lua["RemoveReceiveGameplayEvent"] = [&registry](entt::entity e,std::string_view tag)
 	{
 		GameplayEventUtility::RemoveReceiveGameplayEvent(registry, e, GameplayTag(tag));
+	};
+
+	lua["PlayAnimation"] = [&registry](UniqueId id, std::string_view name,float time = 0)
+	{
+		auto& map = registry.ctx<EntityByUniqueIdMap>();
+		auto it = map.value.find(id);
+		if (it != map.value.end())
+		{
+			registry.emplace_or_replace<AnimationClip>(it->second,name,fixed16(time));
+		}
 	};
 }

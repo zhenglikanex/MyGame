@@ -40,7 +40,7 @@ struct GameplayAbilitySystem : public System
 			if (!spec.activation)
 			{
 				spec.activation = true;
-				script.value["ActiveAbility"](script.value,e, spec);
+				script.value["ActiveAbility"](script.value);
 			}
 		}
 	}

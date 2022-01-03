@@ -9,8 +9,7 @@ function AttackGAScript:ActiveAbility()
         --ApplyGameplayEffectToTarget(self.entity,"AttackGE",1,target)
         --self:EndAbility()
     --end)
-
-    GameplayWaitTask(self.entity,3,"WaitAttack")
+    PlayAnimation(self.spec.source,"skill100010",0)
 end
 
 function AttackGAScript:WaitAttack()

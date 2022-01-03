@@ -10,7 +10,11 @@ function AttackGAScript:ActiveAbility()
         --self:EndAbility()
     --end)
 
-    GameplayWaitTask(self.entity,3,"WaitAttack")
+    print("lua")
+    print(self.spec)
+    print(self.spec.source)
+
+    PlayAnimation(self.spec.source,"skill100010",0)
 end
 
 function AttackGAScript:WaitAttack()
