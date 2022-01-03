@@ -1,20 +1,17 @@
 #ifndef ENTT_RESOURCE_CACHE_HPP
 #define ENTT_RESOURCE_CACHE_HPP
 
-
-#include <memory>
 #include <type_traits>
-#include <unordered_map>
 #include <utility>
 #include "../config/config.h"
+#include "../container/dense_hash_map.hpp"
 #include "../core/fwd.hpp"
+#include "../core/utility.hpp"
+#include "fwd.hpp"
 #include "handle.hpp"
 #include "loader.hpp"
-#include "fwd.hpp"
-
 
 namespace entt {
-
 
 /**
  * @brief Simple cache for resources of a given type.
@@ -27,7 +24,10 @@ namespace entt {
  * @tparam Resource Type of resources managed by a cache.
  */
 template<typename Resource>
-struct resource_cache {
+class resource_cache {
+    static_assert(std::is_same_v<Resource, std::remove_const_t<std::remove_reference_t<Resource>>>, "Invalid resource type");
+
+public:
     /*! @brief Unsigned integer type. */
     using size_type = std::size_t;
     /*! @brief Type of resources managed by a cache. */
@@ -40,7 +40,7 @@ struct resource_cache {
     resource_cache(resource_cache &&) = default;
 
     /*! @brief Default move assignment operator. @return This cache. */
-    resource_cache & operator=(resource_cache &&) = default;
+    resource_cache &operator=(resource_cache &&) = default;
 
     /**
      * @brief Number of resources managed by a cache.
@@ -91,20 +91,16 @@ struct resource_cache {
      * @return A handle for the given resource.
      */
     template<typename Loader, typename... Args>
-    resource_handle<Resource> load(const id_type id, Args &&... args) {
-        static_assert(std::is_base_of_v<resource_loader<Loader, Resource>, Loader>, "Invalid loader type");
-        resource_handle<Resource> resource{};
-
+    resource_handle<resource_type> load(const id_type id, Args &&...args) {
         if(auto it = resources.find(id); it == resources.cend()) {
-            if(auto instance = Loader{}.get(std::forward<Args>(args)...); instance) {
-                resources[id] = instance;
-                resource = std::move(instance);
+            if(auto handle = temp<Loader>(std::forward<Args>(args)...); handle) {
+                return (resources[id] = std::move(handle));
             }
         } else {
-            resource = it->second;
+            return it->second;
         }
 
-        return resource;
+        return {};
     }
 
     /**
@@ -131,7 +127,7 @@ struct resource_cache {
      * @return A handle for the given resource.
      */
     template<typename Loader, typename... Args>
-    resource_handle<Resource> reload(const id_type id, Args &&... args) {
+    resource_handle<resource_type> reload(const id_type id, Args &&...args) {
         return (discard(id), load<Loader>(id, std::forward<Args>(args)...));
     }
 
@@ -148,8 +144,8 @@ struct resource_cache {
      * @return A handle for the given resource.
      */
     template<typename Loader, typename... Args>
-    [[nodiscard]] resource_handle<Resource> temp(Args &&... args) const {
-        return { Loader{}.get(std::forward<Args>(args)...) };
+    [[nodiscard]] resource_handle<resource_type> temp(Args &&...args) const {
+        return Loader{}.get(std::forward<Args>(args)...);
     }
 
     /**
@@ -165,9 +161,21 @@ struct resource_cache {
      * @param id Unique resource identifier.
      * @return A handle for the given resource.
      */
-    [[nodiscard]] resource_handle<Resource> handle(const id_type id) const {
-        auto it = resources.find(id);
-        return { it == resources.end() ? nullptr : it->second };
+    [[nodiscard]] resource_handle<const resource_type> handle(const id_type id) const {
+        if(auto it = resources.find(id); it != resources.cend()) {
+            return it->second;
+        }
+
+        return {};
+    }
+
+    /*! @copydoc handle */
+    [[nodiscard]] resource_handle<resource_type> handle(const id_type id) {
+        if(auto it = resources.find(id); it != resources.end()) {
+            return it->second;
+        }
+
+        return {};
     }
 
     /**
@@ -203,14 +211,14 @@ struct resource_cache {
      *
      * @code{.cpp}
      * void(const entt::id_type);
-     * void(entt::resource_handle<Resource>);
-     * void(const entt::id_type, entt::resource_handle<Resource>);
+     * void(entt::resource_handle<const resource_type>);
+     * void(const entt::id_type, entt::resource_handle<const resource_type>);
      * @endcode
      *
      * @tparam Func Type of the function object to invoke.
      * @param func A valid function object.
      */
-    template <typename Func>
+    template<typename Func>
     void each(Func func) const {
         auto begin = resources.begin();
         auto end = resources.end();
@@ -220,20 +228,53 @@ struct resource_cache {
 
             if constexpr(std::is_invocable_v<Func, id_type>) {
                 func(curr->first);
-            } else if constexpr(std::is_invocable_v<Func, resource_handle<Resource>>) {
-                func(resource_handle{ curr->second });
+            } else if constexpr(std::is_invocable_v<Func, resource_handle<const resource_type>>) {
+                func(resource_handle<const resource_type>{curr->second});
             } else {
-                func(curr->first, resource_handle{ curr->second });
+                func(curr->first, resource_handle<const resource_type>{curr->second});
+            }
+        }
+    }
+
+    /**
+     * @copybrief each
+     *
+     * The function object is invoked for each element. It is provided with
+     * either the resource identifier, the resource handle or both of them.<br/>
+     * The signature of the function must be equivalent to one of the following
+     * forms:
+     *
+     * @code{.cpp}
+     * void(const entt::id_type);
+     * void(entt::resource_handle<resource_type>);
+     * void(const entt::id_type, entt::resource_handle<resource_type>);
+     * @endcode
+     *
+     * @tparam Func Type of the function object to invoke.
+     * @param func A valid function object.
+     */
+    template<typename Func>
+    void each(Func func) {
+        auto begin = resources.begin();
+        auto end = resources.end();
+
+        while(begin != end) {
+            auto curr = begin++;
+
+            if constexpr(std::is_invocable_v<Func, id_type>) {
+                func(curr->first);
+            } else if constexpr(std::is_invocable_v<Func, resource_handle<resource_type>>) {
+                func(curr->second);
+            } else {
+                func(curr->first, curr->second);
             }
         }
     }
 
 private:
-    std::unordered_map<id_type, std::shared_ptr<Resource>> resources;
+    dense_hash_map<id_type, resource_handle<resource_type>, identity> resources;
 };
 
-
-}
-
+} // namespace entt
 
 #endif

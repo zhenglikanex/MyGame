@@ -53,7 +53,7 @@ struct CreateActorSystem : public System
 			registry.emplace<Weapon>(e, actor_info.weapon());
 			registry.emplace<ColliderInfo>(e, actor_info.body());
 
-			if (registry.has<TransformState>(e))
+			if (registry.all_of<TransformState>(e))
 			{
 				// character controllerœ‡πÿ
 				registry.emplace<MovementForward>(e);
@@ -63,7 +63,7 @@ struct CreateActorSystem : public System
 				ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
 			}
 
-			if (registry.has<GameplayState>(e))
+			if (registry.all_of<GameplayState>(e))
 			{
 				GameplayEffectUtility::ApplyGameEffectToTarget(registry, e, actor_info.ge(), 1, e);
 			}

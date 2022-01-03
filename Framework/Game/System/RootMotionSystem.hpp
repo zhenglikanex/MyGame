@@ -36,7 +36,7 @@ struct RootMotionSystem : public System
 
 					if (it != iter->second.root_motions.crend())
 					{
-						if (!registry.has<CharacterMovement>(e))
+						if (!registry.all_of<CharacterMovement>(e))
 						{
 							auto movement = registry.try_get<Movement>(e);
 							if (movement)
@@ -58,9 +58,9 @@ struct RootMotionSystem : public System
 					}
 					else
 					{
-						if (!registry.has<CharacterMovement>(e))
+						if (!registry.all_of<CharacterMovement>(e))
 						{
-							registry.remove_if_exists<Movement>(e);
+							registry.remove<Movement>(e);
 						}
 						else
 						{

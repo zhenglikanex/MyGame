@@ -1,12 +1,15 @@
 #ifndef ENTT_ENTITY_HANDLE_HPP
 #define ENTT_ENTITY_HANDLE_HPP
 
-
+#include <tuple>
+#include <type_traits>
+#include <utility>
+#include "../config/config.h"
+#include "../core/type_traits.hpp"
+#include "fwd.hpp"
 #include "registry.hpp"
 
-
 namespace entt {
-
 
 /**
  * @brief Non-owning handle to an entity.
@@ -14,76 +17,78 @@ namespace entt {
  * Tiny wrapper around a registry and an entity.
  *
  * @tparam Entity A valid entity type (see entt_traits for more details).
+ * @tparam Type Types to which to restrict the scope of a handle.
  */
-template<typename Entity>
+template<typename Entity, typename... Type>
 struct basic_handle {
-    /*! @brief Underlying entity identifier. */
-    using entity_type = std::remove_const_t<Entity>;
-
     /*! @brief Type of registry accepted by the handle. */
-    using registry_type = std::conditional_t<
-        std::is_const_v<Entity>,
-        const basic_registry<entity_type>,
-        basic_registry<entity_type>
-    >;
+    using registry_type = constness_as_t<basic_registry<std::remove_const_t<Entity>>, Entity>;
+    /*! @brief Underlying entity identifier. */
+    using entity_type = typename registry_type::entity_type;
+    /*! @brief Underlying version type. */
+    using version_type = typename registry_type::version_type;
+    /*! @brief Unsigned integer type. */
+    using size_type = typename registry_type::size_type;
+
+    /*! @brief Constructs an invalid handle. */
+    basic_handle() ENTT_NOEXCEPT
+        : reg{},
+          entt{null} {}
 
     /**
      * @brief Constructs a handle from a given registry and entity.
      * @param ref An instance of the registry class.
-     * @param value An entity identifier.
+     * @param value A valid identifier.
      */
-    basic_handle(registry_type &ref, entity_type value = null) ENTT_NOEXCEPT
-        : reg{&ref}, entt{value}
-    {}
-
-    /**
-     * @brief Assigns an entity to a handle.
-     * @param value An entity identifier.
-     * @return This handle.
-     */
-    basic_handle & operator=(const entity_type value) ENTT_NOEXCEPT {
-        entt = value;
-        return *this;
-    }
-
-    /**
-     * @brief Assigns the null object to a handle.
-     * @return This handle.
-     */
-    basic_handle & operator=(null_t) ENTT_NOEXCEPT {
-        return (*this = static_cast<entity_type>(null));
-    }
+    basic_handle(registry_type &ref, entity_type value) ENTT_NOEXCEPT
+        : reg{&ref},
+          entt{value} {}
 
     /**
      * @brief Constructs a const handle from a non-const one.
-     * @return A const handle referring to the same entity.
+     * @tparam Other A valid entity type (see entt_traits for more details).
+     * @tparam Args Scope of the handle to construct.
+     * @return A const handle referring to the same registry and the same
+     * entity.
      */
-    [[nodiscard]] operator basic_handle<const entity_type>() const ENTT_NOEXCEPT {
-        return {*reg, entt};
+    template<typename Other, typename... Args>
+    operator basic_handle<Other, Args...>() const ENTT_NOEXCEPT {
+        static_assert(std::is_same_v<Other, Entity> || std::is_same_v<std::remove_const_t<Other>, Entity>, "Invalid conversion between different handles");
+        static_assert((sizeof...(Type) == 0 || ((sizeof...(Args) != 0 && sizeof...(Args) <= sizeof...(Type)) && ... && (type_list_contains_v<type_list<Type...>, Args>))), "Invalid conversion between different handles");
+
+        return reg ? basic_handle<Other, Args...>{*reg, entt} : basic_handle<Other, Args...>{};
     }
 
     /**
      * @brief Converts a handle to its underlying entity.
-     * @return An entity identifier.
+     * @return The contained identifier.
      */
     [[nodiscard]] operator entity_type() const ENTT_NOEXCEPT {
         return entity();
     }
 
     /**
+     * @brief Checks if a handle refers to non-null registry pointer and entity.
+     * @return True if the handle refers to non-null registry and entity, false otherwise.
+     */
+    [[nodiscard]] explicit operator bool() const ENTT_NOEXCEPT {
+        return reg && reg->valid(entt);
+    }
+
+    /**
      * @brief Checks if a handle refers to a valid entity or not.
      * @return True if the handle refers to a valid entity, false otherwise.
      */
-    [[nodiscard]] explicit operator bool() const {
+    [[nodiscard]] bool valid() const {
         return reg->valid(entt);
     }
 
     /**
-     * @brief Returns a reference to the underlying registry.
-     * @return A reference to the underlying registry.
+     * @brief Returns a pointer to the underlying registry, if any.
+     * @return A pointer to the underlying registry, if any.
      */
-    [[nodiscard]] registry_type & registry() const ENTT_NOEXCEPT {
-        return *reg;
+    [[nodiscard]] registry_type *registry() const ENTT_NOEXCEPT {
+        return reg;
     }
 
     /**
@@ -95,6 +100,23 @@ struct basic_handle {
     }
 
     /**
+     * @brief Destroys the entity associated with a handle.
+     * @sa basic_registry::destroy
+     */
+    void destroy() {
+        reg->destroy(entt);
+    }
+
+    /**
+     * @brief Destroys the entity associated with a handle.
+     * @sa basic_registry::destroy
+     * @param version A desired version upon destruction.
+     */
+    void destroy(const version_type version) {
+        reg->destroy(entt, version);
+    }
+
+    /**
      * @brief Assigns the given component to a handle.
      * @sa basic_registry::emplace
      * @tparam Component Type of component to create.
@@ -103,7 +125,8 @@ struct basic_handle {
      * @return A reference to the newly created component.
      */
     template<typename Component, typename... Args>
-    decltype(auto) emplace(Args &&... args) const {
+    decltype(auto) emplace(Args &&...args) const {
+        static_assert(((sizeof...(Type) == 0) || ... || std::is_same_v<Component, Type>), "Invalid type");
         return reg->template emplace<Component>(entt, std::forward<Args>(args)...);
     }
 
@@ -116,7 +139,8 @@ struct basic_handle {
      * @return A reference to the newly created component.
      */
     template<typename Component, typename... Args>
-    decltype(auto) emplace_or_replace(Args &&... args) const {
+    decltype(auto) emplace_or_replace(Args &&...args) const {
+        static_assert(((sizeof...(Type) == 0) || ... || std::is_same_v<Component, Type>), "Invalid type");
         return reg->template emplace_or_replace<Component>(entt, std::forward<Args>(args)...);
     }
 
@@ -129,7 +153,8 @@ struct basic_handle {
      * @return A reference to the patched component.
      */
     template<typename Component, typename... Func>
-    decltype(auto) patch(Func &&... func) const {
+    decltype(auto) patch(Func &&...func) const {
+        static_assert(((sizeof...(Type) == 0) || ... || std::is_same_v<Component, Type>), "Invalid type");
         return reg->template patch<Component>(entt, std::forward<Func>(func)...);
     }
 
@@ -142,7 +167,8 @@ struct basic_handle {
      * @return A reference to the component being replaced.
      */
     template<typename Component, typename... Args>
-    decltype(auto) replace(Args &&... args) const {
+    decltype(auto) replace(Args &&...args) const {
+        static_assert(((sizeof...(Type) == 0) || ... || std::is_same_v<Component, Type>), "Invalid type");
         return reg->template replace<Component>(entt, std::forward<Args>(args)...);
     }
 
@@ -150,52 +176,46 @@ struct basic_handle {
      * @brief Removes the given components from a handle.
      * @sa basic_registry::remove
      * @tparam Component Types of components to remove.
-     */
-    template<typename... Components>
-    void remove() const {
-        reg->template remove<Components...>(entt);
-    }
-
-    /**
-     * @brief Removes the given components from a handle.
-     * @sa basic_registry::remove_if_exists
-     * @tparam Component Types of components to remove.
      * @return The number of components actually removed.
      */
-    template<typename... Components>
-    decltype(auto) remove_if_exists() const {
-        return reg->template remove_if_exists<Components...>(entt);
+    template<typename... Component>
+    size_type remove() const {
+        static_assert(sizeof...(Type) == 0 || (type_list_contains_v<type_list<Type...>, Component> && ...), "Invalid type");
+        return reg->template remove<Component...>(entt);
     }
 
     /**
-     * @brief Removes all the components from a handle and makes it orphaned.
-     * @sa basic_registry::remove_all
+     * @brief Erases the given components from a handle.
+     * @sa basic_registry::erase
+     * @tparam Component Types of components to erase.
      */
-    void remove_all() const {
-        reg->remove_all(entt);
+    template<typename... Component>
+    void erase() const {
+        static_assert(sizeof...(Type) == 0 || (type_list_contains_v<type_list<Type...>, Component> && ...), "Invalid type");
+        reg->template erase<Component...>(entt);
     }
 
     /**
      * @brief Checks if a handle has all the given components.
-     * @sa basic_registry::has
+     * @sa basic_registry::all_of
      * @tparam Component Components for which to perform the check.
      * @return True if the handle has all the components, false otherwise.
      */
-    template<typename... Components>
-    [[nodiscard]] decltype(auto) has() const {
-        return reg->template has<Components...>(entt);
+    template<typename... Component>
+    [[nodiscard]] decltype(auto) all_of() const {
+        return reg->template all_of<Component...>(entt);
     }
 
     /**
      * @brief Checks if a handle has at least one of the given components.
-     * @sa basic_registry::any
+     * @sa basic_registry::any_of
      * @tparam Component Components for which to perform the check.
      * @return True if the handle has at least one of the given components,
      * false otherwise.
      */
-    template<typename... Components>
-    [[nodiscard]] decltype(auto) any() const {
-        return reg->template any<Components...>(entt);
+    template<typename... Component>
+    [[nodiscard]] decltype(auto) any_of() const {
+        return reg->template any_of<Component...>(entt);
     }
 
     /**
@@ -204,9 +224,10 @@ struct basic_handle {
      * @tparam Component Types of components to get.
      * @return References to the components owned by the handle.
      */
-    template<typename... Components>
+    template<typename... Component>
     [[nodiscard]] decltype(auto) get() const {
-        return reg->template get<Components...>(entt);
+        static_assert(sizeof...(Type) == 0 || (type_list_contains_v<type_list<Type...>, Component> && ...), "Invalid type");
+        return reg->template get<Component...>(entt);
     }
 
     /**
@@ -218,7 +239,8 @@ struct basic_handle {
      * @return Reference to the component owned by the handle.
      */
     template<typename Component, typename... Args>
-    [[nodiscard]] decltype(auto) get_or_emplace(Args &&... args) const {
+    [[nodiscard]] decltype(auto) get_or_emplace(Args &&...args) const {
+        static_assert(((sizeof...(Type) == 0) || ... || std::is_same_v<Component, Type>), "Invalid type");
         return reg->template get_or_emplace<Component>(entt, std::forward<Args>(args)...);
     }
 
@@ -228,9 +250,10 @@ struct basic_handle {
      * @tparam Component Types of components to get.
      * @return Pointers to the components owned by the handle.
      */
-    template<typename... Components>
-    [[nodiscard]] decltype(auto) try_get() const {
-        return reg->template try_get<Components...>(entt);
+    template<typename... Component>
+    [[nodiscard]] auto try_get() const {
+        static_assert(sizeof...(Type) == 0 || (type_list_contains_v<type_list<Type...>, Component> && ...), "Invalid type");
+        return reg->template try_get<Component...>(entt);
     }
 
     /**
@@ -242,14 +265,27 @@ struct basic_handle {
     }
 
     /**
-     * @brief Visits a handle and returns the types for its components.
-     * @sa basic_registry::visit
+     * @brief Visits a handle and returns the pools for its components.
+     *
+     * The signature of the function should be equivalent to the following:
+     *
+     * @code{.cpp}
+     * void(id_type, const basic_sparse_set<entity_type> &);
+     * @endcode
+     *
+     * Returned pools are those that contain the entity associated with the
+     * handle.
+     *
      * @tparam Func Type of the function object to invoke.
      * @param func A valid function object.
      */
     template<typename Func>
     void visit(Func &&func) const {
-        reg->visit(entt, std::forward<Func>(func));
+        for(auto [id, storage]: reg->storage()) {
+            if(storage.contains(entt)) {
+                func(id, storage);
+            }
+        }
     }
 
 private:
@@ -257,6 +293,33 @@ private:
     entity_type entt;
 };
 
+/**
+ * @brief Compares two handles.
+ * @tparam Args Scope of the first handle.
+ * @tparam Other Scope of the second handle.
+ * @param lhs A valid handle.
+ * @param rhs A valid handle.
+ * @return True if both handles refer to the same registry and the same
+ * entity, false otherwise.
+ */
+template<typename... Args, typename... Other>
+[[nodiscard]] bool operator==(const basic_handle<Args...> &lhs, const basic_handle<Other...> &rhs) ENTT_NOEXCEPT {
+    return lhs.registry() == rhs.registry() && lhs.entity() == rhs.entity();
+}
+
+/**
+ * @brief Compares two handles.
+ * @tparam Args Scope of the first handle.
+ * @tparam Other Scope of the second handle.
+ * @param lhs A valid handle.
+ * @param rhs A valid handle.
+ * @return False if both handles refer to the same registry and the same
+ * entity, true otherwise.
+ */
+template<typename... Args, typename... Other>
+[[nodiscard]] bool operator!=(const basic_handle<Args...> &lhs, const basic_handle<Other...> &rhs) ENTT_NOEXCEPT {
+    return !(lhs == rhs);
+}
 
 /**
  * @brief Deduction guide.
@@ -265,7 +328,6 @@ private:
 template<typename Entity>
 basic_handle(basic_registry<Entity> &, Entity) -> basic_handle<Entity>;
 
-
 /**
  * @brief Deduction guide.
  * @tparam Entity A valid entity type (see entt_traits for more details).
@@ -273,8 +335,6 @@ basic_handle(basic_registry<Entity> &, Entity) -> basic_handle<Entity>;
 template<typename Entity>
 basic_handle(const basic_registry<Entity> &, Entity) -> basic_handle<const Entity>;
 
-
-}
-
+} // namespace entt
 
 #endif

@@ -152,7 +152,7 @@ void GetCollsions(entt::registry& registry, entt::entity tree, const AABB& box, 
 
 void GetCollsions(entt::registry& registry, entt::entity tree, entt::entity e, std::vector<entt::entity>& collsions)
 {
-	if (!registry.has<OctTreeNode>(tree)) { return; }
+	if (!registry.all_of<OctTreeNode>(tree)) { return; }
 
 	auto box = registry.try_get<AABB>(e);
 	if (!box) { return; }

@@ -35,7 +35,7 @@ struct UpdateColliderTransformSystem : public ObserverSystem
 		{
 			auto [transform, collider_info] = view.get<const Transform, const ColliderInfo>(e);
 
-			if (registry.valid(collider_info.collider) && registry.has<Collider>(collider_info.collider))
+			if (registry.valid(collider_info.collider) && registry.all_of<Collider>(collider_info.collider))
 			{
 				mat4 mat = glm::mat4_cast(transform.rotation);
 				mat[3] = vec4(transform.position, 1);

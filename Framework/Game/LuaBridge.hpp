@@ -14,6 +14,7 @@
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
+#include "Framework/Game/Component/GAS/GameplayPlayAnimAndWaitTask.hpp"
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 #include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
@@ -195,5 +196,11 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		{
 			registry.emplace_or_replace<AnimationClip>(it->second,name,fixed16(time));
 		}
+	};
+
+	lua["GameplayPlayAnimAndWait"] = [&registry](entt::entity ability,std::string_view name,std::string_view completed,std::string_view canceled)
+	{
+		auto& task = registry.get_or_emplace<GameplayPlayAnimAndWaitTask>(ability);
+		task.value.emplace_back(name, completed, canceled);
 	};
 }

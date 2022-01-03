@@ -24,6 +24,6 @@ endmacro()
 
 ####################################################################################
 
-set(EnTT_VERSION "3.5.1")
+set(EnTT_VERSION "3.9.0")
 include("${CMAKE_CURRENT_LIST_DIR}/EnTTTargets.cmake")
 check_required_components("EnTT")

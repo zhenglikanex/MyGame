@@ -107,8 +107,8 @@ struct ApplyGameplayEffectSystem : public System
 
 				for (auto& info : ge_list.second)
 				{
-					if (!(registry.has<UniqueId>(info.target) && registry.has<UniqueId>(info.source)) ||
-						!(registry.has<GameplayState>(info.target) && registry.has<GameplayState>(info.source)))
+					if (!(registry.all_of<UniqueId>(info.target) && registry.all_of<UniqueId>(info.source)) ||
+						!(registry.all_of<GameplayState>(info.target) && registry.all_of<GameplayState>(info.source)))
 					{
 						continue;
 					}
@@ -276,7 +276,7 @@ struct ApplyGameplayEffectSystem : public System
 		std::unordered_map<GameplayTag, bool> flag;
 		for (auto e : target_spec_entities)
 		{
-			if (!registry.has<Destory>(e))
+			if (!registry.all_of<Destory>(e))
 			{
 				auto& spec = registry.get<GameplayEffectSpec>(e);
 				auto& ge = ge_manager.LoadGameplayEffect(spec.effect);

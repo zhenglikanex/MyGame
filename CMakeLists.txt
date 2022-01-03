@@ -66,6 +66,10 @@ add_subdirectory(Test)
 add_subdirectory(ClientProxy)
 add_subdirectory(3rdparty/src/lua-5.3.6)
 
+add_library(MyGame INTERFACE)
+
+
+
 #安装MyGameClient到Unity Plugins目录�??
 install(TARGETS MyGameClient
     RUNTIME DESTINATION Unity/ARPG

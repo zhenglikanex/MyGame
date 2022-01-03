@@ -1,17 +1,14 @@
 #ifndef ENTT_CORE_IDENT_HPP
 #define ENTT_CORE_IDENT_HPP
 
-
-#include <tuple>
 #include <cstddef>
-#include <utility>
 #include <type_traits>
+#include <utility>
 #include "../config/config.h"
 #include "fwd.hpp"
-
+#include "type_traits.hpp"
 
 namespace entt {
-
 
 /**
  * @brief Types identifiers.
@@ -42,12 +39,10 @@ namespace entt {
  */
 template<typename... Types>
 class identifier {
-    using tuple_type = std::tuple<std::decay_t<Types>...>;
-
-    template<typename Type, std::size_t... Indexes>
-    [[nodiscard]] static constexpr id_type get(std::index_sequence<Indexes...>) {
+    template<typename Type, std::size_t... Index>
+    [[nodiscard]] static constexpr id_type get(std::index_sequence<Index...>) {
         static_assert(std::disjunction_v<std::is_same<Type, Types>...>, "Invalid type");
-        return (0 + ... + (std::is_same_v<Type, std::tuple_element_t<Indexes, tuple_type>> ? id_type(Indexes) : id_type{}));
+        return (0 + ... + (std::is_same_v<Type, type_list_element_t<Index, type_list<std::decay_t<Types>...>>> ? id_type{Index} : id_type{}));
     }
 
 public:
@@ -59,8 +54,6 @@ public:
     static constexpr identifier_type type = get<std::decay_t<Type>>(std::index_sequence_for<Types...>{});
 };
 
-
-}
-
+} // namespace entt
 
 #endif

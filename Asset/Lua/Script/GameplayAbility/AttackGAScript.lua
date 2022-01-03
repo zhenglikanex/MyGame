@@ -9,7 +9,15 @@ function AttackGAScript:ActiveAbility()
         --ApplyGameplayEffectToTarget(self.entity,"AttackGE",1,target)
         --self:EndAbility()
     --end)
-    PlayAnimation(self.spec.source,"skill100010",0)
+    GameplayPlayAnimAndWait(self.entity,"skill100010","AnimCompleted","AnimCanceled")
+end
+
+function AttackGAScript:AnimCompleted()
+    print("this is AnimCompleted")
+end
+
+function AttackGAScript:AnimCanceled()
+    print("this is AnimCanceled")
 end
 
 function AttackGAScript:WaitAttack()

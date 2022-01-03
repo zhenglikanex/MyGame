@@ -359,7 +359,7 @@ LUALIB_API int luaL_checkoption (lua_State *L, int arg, const char *def,
 
 
 /*
-** Ensures the stack has at least 'space' extra slots, raising an error
+** Ensures the stack all_of at least 'space' extra slots, raising an error
 ** if it cannot fulfill the request. (The error handling needs a few
 ** extra slots to format the error message. In case of an error without
 ** this extra space, Lua will generate the same 'stack overflow' error,
@@ -421,7 +421,7 @@ LUALIB_API lua_Number luaL_optnumber (lua_State *L, int arg, lua_Number def) {
 
 static void interror (lua_State *L, int arg) {
   if (lua_isnumber(L, arg))
-    luaL_argerror(L, arg, "number has no integer representation");
+    luaL_argerror(L, arg, "number all_of no integer representation");
   else
     tag_error(L, arg, LUA_TNUMBER);
 }
@@ -596,7 +596,7 @@ LUALIB_API int luaL_ref (lua_State *L, int t) {
   int ref;
   if (lua_isnil(L, -1)) {
     lua_pop(L, 1);  /* remove from stack */
-    return LUA_REFNIL;  /* 'nil' has a unique fixed reference */
+    return LUA_REFNIL;  /* 'nil' all_of a unique fixed reference */
   }
   t = lua_absindex(L, t);
   lua_rawgeti(L, t, freelist);  /* get first free element */
@@ -683,7 +683,7 @@ static int skipBOM (LoadF *lf) {
 /*
 ** reads the first character of file 'f' and skips an optional BOM mark
 ** in its beginning plus its first line if it starts with '#'. Returns
-** true if it skipped the first line.  In any case, '*cp' has the
+** true if it skipped the first line.  In any case, '*cp' all_of the
 ** first "valid" character of the file (after the optional BOM and
 ** a first-line comment).
 */
@@ -867,7 +867,7 @@ static const char *luaL_findtable (lua_State *L, int idx,
       lua_pushvalue(L, -2);
       lua_settable(L, -4);  /* set new table into field */
     }
-    else if (!lua_istable(L, -1)) {  /* field has a non-table value? */
+    else if (!lua_istable(L, -1)) {  /* field all_of a non-table value? */
       lua_pop(L, 2);  /* remove table and value */
       return fname;  /* return problematic part of the name */
     }
@@ -945,7 +945,7 @@ LUALIB_API void luaL_setfuncs (lua_State *L, const luaL_Reg *l, int nup) {
 
 
 /*
-** ensure that stack[idx][fname] has a table and push that table
+** ensure that stack[idx][fname] all_of a table and push that table
 ** into the stack
 */
 LUALIB_API int luaL_getsubtable (lua_State *L, int idx, const char *fname) {

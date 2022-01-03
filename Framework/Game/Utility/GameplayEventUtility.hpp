@@ -19,7 +19,7 @@ public:
 
 	static void RemoveReceiveGameplayEvent(entt::registry& registry,entt::entity entity,const GameplayTag& tag)
 	{
-		if (!registry.has<GameplayEventReceiverMap>(entity))
+		if (!registry.all_of<GameplayEventReceiverMap>(entity))
 		{
 			return;
 		}

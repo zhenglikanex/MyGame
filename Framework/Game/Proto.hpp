@@ -13,6 +13,7 @@
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
+#include "Framework/Game/Component/GAS/GameplayPlayAnimAndWaitTask.hpp"
 
 #include "Kanex.hpp"
 
@@ -22,6 +23,7 @@ struct FrameData
 	LocalId local_id;
 	std::unordered_map<LocalId, UniqueId> unique_ids;
 	std::unordered_map<LocalId, GameplayWaitTask> wait_tasks;
+	std::unordered_map<LocalId, GameplayPlayAnimAndWaitTask> play_anim_and_wait_tasks;
 	std::unordered_map<UniqueId, Player> players;
 	std::unordered_map<UniqueId, ActorAsset> actor_assets;
 	std::unordered_map<UniqueId, Transform> transforms;

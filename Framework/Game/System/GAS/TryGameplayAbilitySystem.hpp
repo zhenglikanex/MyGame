@@ -64,7 +64,7 @@ struct TryGameplayAbilitySystem : public System
 						continue;
 					}
 
-					if (!(registry.has<UniqueId>(info.source)) || !(registry.has<GameplayState>(info.source)))
+					if (!(registry.all_of<UniqueId>(info.source)) || !(registry.all_of<GameplayState>(info.source)))
 					{
 						continue;
 					}

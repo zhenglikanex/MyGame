@@ -17,7 +17,7 @@ struct ActionStateUtility
 
 	static void ChangeState(entt::registry& registry, entt::entity e, ActorStateType state)
 	{
-		if (registry.has<ActorState>(e))
+		if (registry.all_of<ActorState>(e))
 		{
 			auto action_state = registry.get<ActorState>(e);
 			ChangeState(registry, e, action_state, state);

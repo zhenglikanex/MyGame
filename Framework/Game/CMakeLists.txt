@@ -77,6 +77,7 @@ System/GAS/TryGameplayAbilitySystem.hpp
 System/GAS/GameplayEventSystem.hpp
 System/GAS/GameplayStateSystem.hpp
 System/GAS/GameplayWaitTaskSystem.hpp
+System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp
 
 Component/GameState.hpp
 Component/Command.hpp
@@ -144,7 +145,28 @@ add_library(Game
     ${file_list}
 )
 
+add_library(Natvis INTERFACE)
+
+if(MSVC)
+    target_sources(
+        Natvis
+        INTERFACE
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rdparty/src/entt-3.9.0/natvis/entt/config.natvis>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rdparty/src/entt-3.9.0/natvis/entt/container.natvis>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rdparty/src/entt-3.9.0/natvis/entt/core.natvis>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rdparty/src/entt-3.9.0/natvis/entt/entity.natvis>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rdparty/src/entt-3.9.0/natvis/entt/locator.natvis>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rdparty/src/entt-3.9.0/natvis/entt/meta.natvis>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rdparty/src/entt-3.9.0/natvis/entt/platform.natvis>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rdparty/src/entt-3.9.0/natvis/entt/poly.natvis>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rdparty/src/entt-3.9.0/natvis/entt/process.natvis>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rdparty/src/entt-3.9.0/natvis/entt/resource.natvis>
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rdparty/src/entt-3.9.0/natvis/entt/signal.natvis>
+    )
+endif()
+
 target_link_libraries(Game
+    Natvis
     lua
     debug ${PHYSX_LIBRARY_DEBU0G}
     debug ${PHYSX_COMMON_LIBRARY_DEBU0G}

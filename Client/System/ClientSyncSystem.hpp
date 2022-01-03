@@ -194,7 +194,7 @@ struct ClientSyncSystem : public System
 			auto it = e_by_local_id_map.value.find(item.first);
 			if (it != e_by_local_id_map.value.end())
 			{
-				if (!registry.has<UniqueId>(it->second))
+				if (!registry.all_of<UniqueId>(it->second))
 				{
 					registry.emplace<UniqueId>(it->second, item.second);
 				}
@@ -226,7 +226,7 @@ struct ClientSyncSystem : public System
 			auto e = e_by_unique_id_map.value[item.first];
 			auto& transform = item.second;
 			auto& unique_id = item.first;
-			if (is_need_rollback || !registry.has<TransformState>(e))
+			if (is_need_rollback || !registry.all_of<TransformState>(e))
 			{
 				registry.emplace_or_replace<Transform>(e, item.second);
 			}
@@ -241,7 +241,7 @@ struct ClientSyncSystem : public System
 			}
 
 			auto e = e_by_unique_id_map.value[item.first];
-			if (!registry.has<LocalId>(e))
+			if (!registry.all_of<LocalId>(e))
 			{
 				registry.emplace_or_replace<Player>(e, item.second);
 			}
@@ -256,7 +256,7 @@ struct ClientSyncSystem : public System
 			}
 
 			auto e = e_by_unique_id_map.value[item.first];
-			if (!registry.has<LocalId>(e))
+			if (!registry.all_of<LocalId>(e))
 			{
 				registry.emplace_or_replace<ActorAsset>(e, item.second);
 			}
@@ -271,7 +271,7 @@ struct ClientSyncSystem : public System
 			}
 
 			auto e = e_by_unique_id_map.value[item.first];
-			if (is_need_rollback || !registry.has<TransformState>(e))
+			if (is_need_rollback || !registry.all_of<TransformState>(e))
 			{
 				registry.emplace_or_replace<AnimationClip>(e, item.second);
 			}
@@ -288,7 +288,7 @@ struct ClientSyncSystem : public System
 			// 这个不预测
 			auto e = e_by_unique_id_map.value[item.first];
 			registry.emplace_or_replace<GameplayAttributeSet>(e, item.second);
-			if (registry.has<LocalId>(e))
+			if (registry.all_of<LocalId>(e))
 			{
 				int a = 10;
 			}
@@ -303,7 +303,7 @@ struct ClientSyncSystem : public System
 			}
 
 			auto e = e_by_unique_id_map.value[item.first];
-			if (is_need_rollback || !registry.has<GameplayState>(e))
+			if (is_need_rollback || !registry.all_of<GameplayState>(e))
 			{
 				registry.emplace_or_replace<GameplayTags>(e, item.second);
 			}
@@ -319,7 +319,7 @@ struct ClientSyncSystem : public System
 
 			auto e = e_by_unique_id_map.value[item.first];
 			auto owner = e_by_unique_id_map.value[item.second.source];
-			if (is_need_rollback || !registry.has<GameplayState>(owner))
+			if (is_need_rollback || !registry.all_of<GameplayState>(owner))
 			{
 				registry.emplace_or_replace<GameplayAbilitySpec>(e, item.second);
 			}
@@ -335,7 +335,7 @@ struct ClientSyncSystem : public System
 
 			auto e = e_by_unique_id_map.value[item.first];
 			auto owner = e_by_unique_id_map.value[item.second.owner];
-			if (is_need_rollback || !registry.has<GameplayState>(owner))
+			if (is_need_rollback || !registry.all_of<GameplayState>(owner))
 			{
 				registry.emplace_or_replace<GameplayEffectSpec>(e, item.second);
 			}
@@ -351,6 +351,15 @@ struct ClientSyncSystem : public System
 				assert(it != e_by_local_id_map.value.end() && "这里不可能不对应");
 
 				registry.emplace_or_replace<GameplayWaitTask>(it->second, item.second);
+			}
+
+			for (auto& item : frame_data.play_anim_and_wait_tasks)
+			{
+				auto it = e_by_local_id_map.value.find(item.first);
+
+				assert(it != e_by_local_id_map.value.end() && "这里不可能不对应");
+
+				registry.emplace_or_replace<GameplayPlayAnimAndWaitTask>(it->second, item.second);
 			}
 
 			auto chara_movement_view = registry.view<UniqueId, CharacterMovement>();

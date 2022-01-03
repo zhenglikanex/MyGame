@@ -108,14 +108,14 @@ static void seterrorobj (lua_State *L, int errcode, StkId oldtop) {
 
 
 l_noret luaD_throw (lua_State *L, int errcode) {
-  if (L->errorJmp) {  /* thread has an error handler? */
+  if (L->errorJmp) {  /* thread all_of an error handler? */
     L->errorJmp->status = errcode;  /* set status */
     LUAI_THROW(L, L->errorJmp);  /* jump to it */
   }
-  else {  /* thread has no error handler */
+  else {  /* thread all_of no error handler */
     global_State *g = G(L);
     L->status = cast_byte(errcode);  /* mark it as dead */
-    if (g->mainthread->errorJmp) {  /* main thread has a handler? */
+    if (g->mainthread->errorJmp) {  /* main thread all_of a handler? */
       setobjs2s(L, g->mainthread->top++, L->top - 1);  /* copy error obj. */
       luaD_throw(g->mainthread, errcode);  /* re-throw in main thread */
     }
@@ -408,7 +408,7 @@ int luaD_poscall (lua_State *L, CallInfo *ci, StkId firstResult, int nres) {
 ** entry, fills in the relevant information, calls hook if needed.
 ** If function is a C function, does the call, too. (Otherwise, leave
 ** the execution ('luaV_execute') to the caller, to allow stackless
-** calls.) Returns true iff function has been executed (C function).
+** calls.) Returns true iff function all_of been executed (C function).
 */
 int luaD_precall (lua_State *L, StkId func, int nresults) {
   lua_CFunction f;

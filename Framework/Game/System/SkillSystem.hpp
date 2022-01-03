@@ -88,7 +88,7 @@ struct SkillSystem : public System
 
 	//		for (const auto& contact : contact_list.value)
 	//		{
-	//			if (contact.entity != skill.owner && registry.valid(contact.entity) && registry.has<ModifyHealthList>(contact.entity))
+	//			if (contact.entity != skill.owner && registry.valid(contact.entity) && registry.all_of<ModifyHealthList>(contact.entity))
 	//			{
 	//				skill.targets.emplace_back(contact.entity);
 	//			}
@@ -104,7 +104,7 @@ struct SkillSystem : public System
 	//		auto& skill = view.get<Skill>(e);
 	//		for (auto target : skill.targets)
 	//		{
-	//			if (registry.valid(target) && registry.has<ModifyHealthList>(target) && skill.hit_target.find(target) == skill.hit_target.end())
+	//			if (registry.valid(target) && registry.all_of<ModifyHealthList>(target) && skill.hit_target.find(target) == skill.hit_target.end())
 	//			{
 	//				INFO("hit target");
 	//				ActionStateUtility::ChangeState(registry, target, ActorStateType::kHurt);

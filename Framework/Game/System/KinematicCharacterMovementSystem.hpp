@@ -435,7 +435,7 @@ struct KinematicCharacterMovementSystem : public System
 			}
 			
 
-			if (registry.has<MovePositionTarget>(e))
+			if (registry.all_of<MovePositionTarget>(e))
 			{
 				SetTransientRotation(registry.get<MovePositionTarget>(e).value);
 			}
@@ -729,7 +729,7 @@ struct KinematicCharacterMovementSystem : public System
 		if (character_movement_->rigidbody_projection_hit_count < character_movement_->internal_rigidbody_projection_hits.size())
 		{
 			entt::entity e = static_cast<entt::entity>((entt::id_type)rigidbody->userData);
-			if (!registry.has<CharacterMovement>(e))
+			if (!registry.all_of<CharacterMovement>(e))
 			{
 				RigidbodyProjectionHit rph;
 				rph.rigidbody = rigidbody;
@@ -861,7 +861,7 @@ struct KinematicCharacterMovementSystem : public System
 		{
 			entt::entity e = static_cast<entt::entity>((entt::id_type)actor->userData);
 			//todo
-			/*if (registry.valid(e) && registry.has<PhysicsMover>(e))
+			/*if (registry.valid(e) && registry.all_of<PhysicsMover>(e))
 			{
 				return actor;
 			}*/

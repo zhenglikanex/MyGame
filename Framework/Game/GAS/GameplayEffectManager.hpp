@@ -17,6 +17,12 @@ public:
 
 	}
 
+	GameplayEffectManager(GameplayEffectManager&&) = default;
+	GameplayEffectManager& operator=(GameplayEffectManager&&) = default;
+
+	GameplayEffectManager(const GameplayEffectManager&) = delete;
+	GameplayEffectManager& operator=(const GameplayEffectManager&) = delete;
+
 	const GameplayEffect& LoadGameplayEffect(const std::string& name)
 	{
 		auto it = gameplay_effects_.find(name);
@@ -25,7 +31,7 @@ public:
 			return (it->second);
 		}
 
-		gameplay_effects_.emplace(name, GameplayEffect());
+		gameplay_effects_.emplace(name,GameplayEffect());
 		auto& gameplay_effect = gameplay_effects_[name];
 		gameplay_effect.name = name;
 

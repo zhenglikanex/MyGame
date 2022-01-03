@@ -1,20 +1,19 @@
 #ifndef ENTT_SIGNAL_DISPATCHER_HPP
 #define ENTT_SIGNAL_DISPATCHER_HPP
 
-
 #include <cstddef>
 #include <memory>
 #include <type_traits>
 #include <utility>
 #include <vector>
 #include "../config/config.h"
+#include "../container/dense_hash_map.hpp"
 #include "../core/fwd.hpp"
 #include "../core/type_info.hpp"
+#include "../core/utility.hpp"
 #include "sigh.hpp"
 
-
 namespace entt {
-
 
 /**
  * @brief Basic dispatcher implementation.
@@ -34,11 +33,12 @@ class dispatcher {
         virtual void publish() = 0;
         virtual void disconnect(void *) = 0;
         virtual void clear() ENTT_NOEXCEPT = 0;
-        [[nodiscard]] virtual id_type type_id() const ENTT_NOEXCEPT = 0;
     };
 
     template<typename Event>
     struct pool_handler final: basic_pool {
+        static_assert(std::is_same_v<Event, std::decay_t<Event>>, "Invalid event type");
+
         using signal_type = sigh<void(Event &)>;
         using sink_type = typename signal_type::sink_type;
 
@@ -49,38 +49,34 @@ class dispatcher {
                 signal.publish(events[pos]);
             }
 
-            events.erase(events.cbegin(), events.cbegin()+length);
+            events.erase(events.cbegin(), events.cbegin() + length);
         }
 
         void disconnect(void *instance) override {
-            sink().disconnect(instance);
+            bucket().disconnect(instance);
         }
 
         void clear() ENTT_NOEXCEPT override {
             events.clear();
         }
 
-        [[nodiscard]] sink_type sink() ENTT_NOEXCEPT {
-            return entt::sink{signal};
+        [[nodiscard]] sink_type bucket() ENTT_NOEXCEPT {
+            return sink_type{signal};
         }
 
         template<typename... Args>
-        void trigger(Args &&... args) {
+        void trigger(Args &&...args) {
             Event instance{std::forward<Args>(args)...};
             signal.publish(instance);
         }
 
         template<typename... Args>
-        void enqueue(Args &&... args) {
+        void enqueue(Args &&...args) {
             if constexpr(std::is_aggregate_v<Event>) {
                 events.push_back(Event{std::forward<Args>(args)...});
             } else {
                 events.emplace_back(std::forward<Args>(args)...);
             }
-        }
-
-        [[nodiscard]] id_type type_id() const ENTT_NOEXCEPT override {
-            return type_info<Event>::id();
         }
 
     private:
@@ -89,28 +85,26 @@ class dispatcher {
     };
 
     template<typename Event>
-    [[nodiscard]] pool_handler<Event> & assure() {
-        static_assert(std::is_same_v<Event, std::decay_t<Event>>, "Invalid event type");
-
-        if constexpr(ENTT_FAST_PATH(has_type_index_v<Event>)) {
-            const auto index = type_index<Event>::value();
-
-            if(!(index < pools.size())) {
-                pools.resize(index+1u);
-            }
-
-            if(!pools[index]) {
-                pools[index].reset(new pool_handler<Event>{});
-            }
-
-            return static_cast<pool_handler<Event> &>(*pools[index]);
+    [[nodiscard]] pool_handler<Event> &assure() {
+        if(auto &&ptr = pools[type_hash<Event>::value()]; !ptr) {
+            auto *cpool = new pool_handler<Event>{};
+            ptr.reset(cpool);
+            return *cpool;
         } else {
-            auto it = std::find_if(pools.begin(), pools.end(), [id = type_info<Event>::id()](const auto &cpool) { return id == cpool->type_id(); });
-            return static_cast<pool_handler<Event> &>(it == pools.cend() ? *pools.emplace_back(new pool_handler<Event>{}) : **it);
+            return static_cast<pool_handler<Event> &>(*ptr);
         }
     }
 
 public:
+    /*! @brief Default constructor. */
+    dispatcher() = default;
+
+    /*! @brief Default move constructor. */
+    dispatcher(dispatcher &&) = default;
+
+    /*! @brief Default move assignment operator. @return This dispatcher. */
+    dispatcher &operator=(dispatcher &&) = default;
+
     /**
      * @brief Returns a sink object for the given event.
      *
@@ -130,7 +124,7 @@ public:
      */
     template<typename Event>
     [[nodiscard]] auto sink() {
-        return assure<Event>().sink();
+        return assure<Event>().bucket();
     }
 
     /**
@@ -144,7 +138,7 @@ public:
      * @param args Arguments to use to construct the event.
      */
     template<typename Event, typename... Args>
-    void trigger(Args &&... args) {
+    void trigger(Args &&...args) {
         assure<Event>().trigger(std::forward<Args>(args)...);
     }
 
@@ -173,7 +167,7 @@ public:
      * @param args Arguments to use to construct the event.
      */
     template<typename Event, typename... Args>
-    void enqueue(Args &&... args) {
+    void enqueue(Args &&...args) {
         assure<Event>().enqueue(std::forward<Args>(args)...);
     }
 
@@ -211,9 +205,7 @@ public:
     template<typename Type>
     void disconnect(Type *value_or_instance) {
         for(auto &&cpool: pools) {
-            if(cpool) {
-                cpool->disconnect(value_or_instance);
-            }
+            cpool.second->disconnect(value_or_instance);
         }
     }
 
@@ -229,9 +221,7 @@ public:
     void clear() {
         if constexpr(sizeof...(Event) == 0) {
             for(auto &&cpool: pools) {
-                if(cpool) {
-                    cpool->clear();
-                }
+                cpool.second->clear();
             }
         } else {
             (assure<Event>().clear(), ...);
@@ -260,19 +250,15 @@ public:
      * to reduce at a minimum the time spent in the bodies of the listeners.
      */
     void update() const {
-        for(auto pos = pools.size(); pos; --pos) {
-            if(auto &&cpool = pools[pos-1]; cpool) {
-                cpool->publish();
-            }
+        for(auto &&cpool: pools) {
+            cpool.second->publish();
         }
     }
 
 private:
-    std::vector<std::unique_ptr<basic_pool>> pools;
+    dense_hash_map<id_type, std::unique_ptr<basic_pool>, identity> pools;
 };
 
-
-}
-
+} // namespace entt
 
 #endif

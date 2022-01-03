@@ -83,6 +83,16 @@ struct ServerSyncSystem : public System
 				}
 			}
 
+			auto play_anim_and_wait_task_view = registry.view<LocalId, Player, GameplayPlayAnimAndWaitTask>();
+			for (auto e : play_anim_and_wait_task_view)
+			{
+				auto& [id, player, task] = play_anim_and_wait_task_view.get<LocalId, Player, GameplayPlayAnimAndWaitTask>(e);
+				if (player.id == player_data.id)
+				{
+					frame_data.play_anim_and_wait_tasks.emplace(id, task);
+				}
+			}
+
 			/**************************local entity/**************************/
 
 

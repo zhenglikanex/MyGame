@@ -116,7 +116,7 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 				auto& other_contacts = registry.get<ContactList>(other);
 				other_contacts.value.emplace_back(trigger);
 
-				INFO("sKILL {}  {}", registry.has<Skill>(trigger), registry.has<Skill>(other));
+				INFO("sKILL {}  {}", registry.all_of<Skill>(trigger), registry.all_of<Skill>(other));
 
 				INFO("tigger e1 {}   e2 {}", trigger, other);
 			}

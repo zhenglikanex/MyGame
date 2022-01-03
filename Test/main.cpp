@@ -21,7 +21,12 @@ struct Serialize1
 
 TEST_CASE_METHOD(Serialize1, "NetMessage")
 {
+	std::any a = 10;
 	std::vector<GameplayTag> vec;
+	std::any b = vec;
+	std::string s("nibi");
+	std::any c = s;
+	
 
 	//std::numeric_limits<float>::epsilon()
 	/*auto v2 = ProjectOnPlane(vec3(0,1.0,0), vec3(0, 1.0, 0));

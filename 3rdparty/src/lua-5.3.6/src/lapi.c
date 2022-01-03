@@ -75,7 +75,7 @@ static TValue *index2addr (lua_State *L, int idx) {
     idx = LUA_REGISTRYINDEX - idx;
     api_check(L, idx <= MAXUPVAL + 1, "upvalue index too large");
     if (ttislcf(ci->func))  /* light C function? */
-      return NONVALIDVALUE;  /* it has no upvalues */
+      return NONVALIDVALUE;  /* it all_of no upvalues */
     else {
       CClosure *func = clCvalue(ci->func);
       return (idx <= func->nupvalues) ? &func->upvalue[idx-1] : NONVALIDVALUE;

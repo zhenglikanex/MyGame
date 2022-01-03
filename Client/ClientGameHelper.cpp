@@ -30,6 +30,7 @@
 #include "Framework/Game/System/GAS/GameplayStateSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
 #include "Framework/Game/System/GAS/GameplayWaitTaskSystem.hpp"
+#include "Framework/Game/System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp"
 #include "Framework/Game/System/UpdatePlayerAttributeUISystem.hpp"
 #include "Framework/Game/System/LocalIdStateSystem.hpp"
 #include "Client/System/ClientSyncSystem.hpp"
@@ -73,6 +74,7 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayAbilitySystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayWaitTaskSystem>(registry));
+	systems.emplace_back(std::make_unique<GameplayPlayAnimAndWaitTaskSystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayEventSystem>(registry));
 	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(registry));
@@ -102,7 +104,7 @@ bool ClientGameHelper::IsRemotePlayer(uint32_t id) const
 
 bool ClientGameHelper::IsControllable(entt::registry& registry, entt::entity e) const
 {
-	if (registry.has<Player>(e))
+	if (registry.all_of<Player>(e))
 	{
 		auto& player = registry.get<Player>(e);
 		return player.id == local_id_;
