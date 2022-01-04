@@ -15,7 +15,7 @@
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Destory.hpp"
 #include "Framework/Game/Component/Transform.hpp"
-#include "Framework/Game/Component/PlayerManager.hpp"
+#include "Framework/Game/Component/SyncManager.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
@@ -218,6 +218,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 
 	lua["CreateColliderToAnimBone"] = [&registry](const ColliderInfo& collider, UniqueId target, std::string_view bone)
 	{
+		Local* result = nullptr;
 		auto& map = registry.ctx<EntityByUniqueIdMap>();
 		auto it = map.value.find(target);
 		if (it != map.value.end())
@@ -229,13 +230,25 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 
 			entt::entity target_entity = it->second;
 
-			if (auto player = registry.try_get<Player>(it->second))
+			if (auto player = registry.try_get<Player>(target_entity))
 			{
-				auto& player_manager = registry.ctx<PlayerManager>();
-				registry.emplace<LocalId>(e, player_manager.players[player->id].local_id_generator.value++);
-				registry.emplace<Player>(e, *player);
+				// 玩家控制角色
+				auto& sync_manager = registry.ctx<SyncManager>();
+				auto sync = sync_manager.sync_datas[player->id];
+				registry.emplace<Local>(e, sync.owner, sync.identifier++);
 			}
+			else
+			{
+				//服务器控制角色
+				auto& sync_manager = registry.ctx<SyncManager>();
+				auto sync = sync_manager.sync_datas[std::numeric_limits<uint32_t>::max()];
+				registry.emplace<Local>(e, sync.owner, sync.identifier++);
+			}
+
+			result = &registry.get<Local>(e);
 		}
+
+		return result;
 	};
 
 	lua["GetWeapon"] = [&registry](UniqueId target)

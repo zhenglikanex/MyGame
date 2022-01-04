@@ -8,7 +8,7 @@
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Movement.hpp"
-#include "Framework/Game/Component/LocalId.hpp"
+#include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/Character.hpp"
 #include "Framework/Game/Component/PhysicsWorld.hpp"
 #include "Framework/Game/Component/ColliderInfo.hpp"
@@ -117,7 +117,7 @@ struct KinematicCharacterMovementSystem : public System
 
 	void UpdatePhase1(float dt)
 	{
-		auto view = registry.view<LocalId,Transform,CharacterMovement,Character,ColliderInfo,PhysicsActor>();
+		auto view = registry.view<Local,Transform,CharacterMovement,Character,ColliderInfo,PhysicsActor>();
 		for (auto e : view)
 		{
 			INFO("UpdatePhase1{}",registry.get<Player>(e).id);
@@ -393,7 +393,7 @@ struct KinematicCharacterMovementSystem : public System
 
 	void UpdatePhase2(float dt)
 	{
-		auto view = registry.view<LocalId, Transform, CharacterMovement,MovementForward,Character, ColliderInfo, PhysicsActor>();
+		auto view = registry.view<Local, Transform, CharacterMovement,MovementForward,Character, ColliderInfo, PhysicsActor>();
 		for (auto e : view)
 		{
 			overlaps_count_ = 0;

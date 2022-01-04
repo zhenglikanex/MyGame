@@ -20,7 +20,7 @@ struct AnimationSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		auto view = registry.view<LocalId,Animation,AnimationClip>();
+		auto view = registry.view<Local,Animation,AnimationClip>();
 		for (auto e : view)
 		{
 			auto& animation = view.get<Animation>(e);

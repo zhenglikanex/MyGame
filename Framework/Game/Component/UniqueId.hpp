@@ -6,7 +6,8 @@
 
 #include "3rdparty/include/entt/entt.hpp"
 
-//全局唯一的id
+//用来标记需要在所有客户端服务器之间同步的对象
+//拥有全局唯一id
 struct UniqueId
 {
 	uint32_t value;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Framework/Game/GAS/GameplayAbility.hpp"
-#include "Framework/Game/Component/LocalId.hpp"
+#include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
 

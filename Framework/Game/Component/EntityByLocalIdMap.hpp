@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 
-#include "Framework/Game/Component/LocalId.hpp"
+#include "Framework/Game/Component/Local.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 

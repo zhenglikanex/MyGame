@@ -12,7 +12,7 @@
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/Player.hpp"
-#include "Framework/Game/Component/PlayerManager.hpp"
+#include "Framework/Game/Component/SyncManager.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 
@@ -24,7 +24,7 @@ struct ActorUtiltiy
 	{
 		auto e = reg.create();
 		reg.emplace<ActorAsset>(e, actor_asset); // 通过createactoresystem创建具体actor信息
-		reg.emplace<LocalId>(e, reg.ctx<PlayerManager>().players[id].local_id_generator.value++);
+		reg.emplace<Local>(e, reg.ctx<SyncManager>().players[id].local_id_generator.value++);
 		reg.emplace<Player>(e,id);
 		reg.emplace<Transform>(e, position, rotation);
 		reg.emplace<TransformState>(e);
@@ -44,6 +44,6 @@ struct ActorUtiltiy
 
 	static entt::entity CreateMonster(entt::registry& reg, uint32_t id, const std::string& actore_asset, const vec3& position = vec3(0, 0, 0), const quat& rotation = glm::identity<quat>())
 	{
-
+		
 	}
 };

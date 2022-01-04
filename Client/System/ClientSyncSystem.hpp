@@ -8,8 +8,8 @@
 
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/EntityByLocalIdMap.hpp"
-#include "Framework/Game/Component/LocalIdState.hpp"
-#include "Framework/Game/Component/PlayerManager.hpp"
+#include "Framework/Game/Component/SyncDataState.hpp"
+#include "Framework/Game/Component/SyncManager.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/TransformState.hpp"
@@ -288,10 +288,6 @@ struct ClientSyncSystem : public System
 			// Õâ¸ö²»Ô¤²â
 			auto e = e_by_unique_id_map.value[item.first];
 			registry.emplace_or_replace<GameplayAttributeSet>(e, item.second);
-			if (registry.all_of<LocalId>(e))
-			{
-				int a = 10;
-			}
 		}
 
 		for (auto& item : frame_data.tags)

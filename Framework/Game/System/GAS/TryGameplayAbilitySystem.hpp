@@ -7,10 +7,10 @@
 
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
 
-#include "Framework/Game/Component/LocalId.hpp"
+#include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/UniqueId.hpp"
 #include "Framework/Game/Component/Player.hpp"
-#include "Framework/Game/Component/PlayerManager.hpp"
+#include "Framework/Game/Component/SyncManager.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 #include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
@@ -85,18 +85,26 @@ struct TryGameplayAbilitySystem : public System
 					}
 
 					// todo:其他检查
+
 					auto e = registry.create();
+					registry.emplace<GameplayAbilitySpec>(e, info.ability, 1, registry.get<UniqueId>(info.source), UniqueId(entt::entity(entt::null)));
 					if (game_helper.IsAuthority())
 					{
 						registry.emplace<UniqueId>(e, e);
 					}
-					registry.emplace<GameplayAbilitySpec>(e, info.ability, 1, registry.get<UniqueId>(info.source),UniqueId(entt::entity(entt::null)));
 					if (auto player = registry.try_get<Player>(info.source))
 					{
-						auto& player_manager = registry.ctx<PlayerManager>();
-						registry.emplace<LocalId>(e,player_manager.players[player->id].local_id_generator.value++);
-						INFO("create gameplayability local id{}", player_manager.players[player->id].local_id_generator.value);
-						registry.emplace<Player>(e, *player);
+						// 玩家控制角色
+						auto& sync_manager = registry.ctx<SyncManager>();
+						auto sync = sync_manager.sync_datas[player->id];
+						registry.emplace<Local>(e,sync.owner,sync.identifier++);
+					}
+					else
+					{
+						//服务器控制角色
+						auto& sync_manager = registry.ctx<SyncManager>();
+						auto sync = sync_manager.sync_datas[std::numeric_limits<uint32_t>::max()];
+						registry.emplace<Local>(e, sync.owner, sync.identifier++);
 					}
 				}
 

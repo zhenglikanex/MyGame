@@ -32,7 +32,7 @@
 #include "Framework/Game/System/GAS/GameplayWaitTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp"
 #include "Framework/Game/System/UpdatePlayerAttributeUISystem.hpp"
-#include "Framework/Game/System/LocalIdStateSystem.hpp"
+#include "Framework/Game/System/SyncDataStateSystem.hpp"
 #include "Client/System/ClientSyncSystem.hpp"
 
 ClientGameHelper::ClientGameHelper(uint32_t local_id)

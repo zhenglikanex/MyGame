@@ -3,7 +3,7 @@
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/UIService.hpp"
 
-#include "Framework/Game/Component/LocalId.hpp"
+#include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 
 #include "Framework/Game/System.hpp"

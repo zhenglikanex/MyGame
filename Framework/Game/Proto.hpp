@@ -2,7 +2,7 @@
 #include <cstdint>
 
 #include "Framework/Game/Component/UniqueId.hpp"
-#include "Framework/Game/Component/LocalId.hpp"
+#include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
@@ -20,15 +20,15 @@
 struct FrameData
 {
 	uint32_t frame;
-	LocalId local_id;
-	std::unordered_map<LocalId, UniqueId> unique_ids;
-	std::unordered_map<LocalId, GameplayWaitTask> wait_tasks;
-	std::unordered_map<LocalId, GameplayPlayAnimAndWaitTask> play_anim_and_wait_tasks;
+	Local local_id;
+	std::unordered_map<Local, UniqueId> unique_ids;
+	std::unordered_map<Local, CharacterMovement> character_movements;
+	std::unordered_map<Local, GameplayWaitTask> wait_tasks;
+	std::unordered_map<Local, GameplayPlayAnimAndWaitTask> play_anim_and_wait_tasks;
 	std::unordered_map<UniqueId, Player> players;
 	std::unordered_map<UniqueId, ActorAsset> actor_assets;
 	std::unordered_map<UniqueId, Transform> transforms;
 	std::unordered_map<UniqueId, AnimationClip> animation_clips;
-	std::unordered_map<UniqueId, CharacterMovement> character_movements;
 	std::unordered_map<UniqueId, GameplayAttributeSet> attribute_sets;
 	std::unordered_map<UniqueId, GameplayTags> tags;
 	std::unordered_map<UniqueId, GameplayAbilitySpec> ability_specs;
