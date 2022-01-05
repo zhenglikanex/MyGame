@@ -23,7 +23,7 @@ struct UpdatePlayerAttributeUISystem : public ObserverSystem
 
 	bool Initialize() override
 	{
-		updatelist = CreateObserver(entt::collector.group<LocalId, GameplayAttributeSet>().update<GameplayAttributeSet>().where<LocalId>());
+		updatelist = CreateObserver(entt::collector.group<Local, GameplayAttributeSet>().update<GameplayAttributeSet>().where<Local>());
 
 
 		return true;
@@ -33,7 +33,7 @@ struct UpdatePlayerAttributeUISystem : public ObserverSystem
 	{
 		auto& ui_service = registry.ctx<Locator>().Ref<UIService>();
 
-		auto view = registry.view<LocalId, GameplayAttributeSet>();
+		auto view = registry.view<Local, GameplayAttributeSet>();
 		for (auto e : *updatelist)
 		{
 			auto& attribute_set = view.get<GameplayAttributeSet>(e);
@@ -54,7 +54,7 @@ struct UpdatePlayerAttributeUISystem : public ObserverSystem
 
 	void Connect() override
 	{
-		updatelist->connect(registry, entt::collector.group<LocalId, GameplayAttributeSet>().update<GameplayAttributeSet>().where<LocalId>());
+		updatelist->connect(registry, entt::collector.group<Local, GameplayAttributeSet>().update<GameplayAttributeSet>().where<Local>());
 	}
 
 	void Disconnect() override

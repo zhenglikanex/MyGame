@@ -13,12 +13,6 @@ struct Local
 
 	Local() = default;
 
-	Local(uint32_t _value)
-		: id(_value)
-	{
-
-	}
-
 	Local(uint32_t _owner,uint32_t _id)
 		: owner(_owner)
 		, id(_id)
@@ -45,7 +39,8 @@ namespace std
 	struct hash<Local>
 	{
 		_NODISCARD size_t operator()(const Local& local) const noexcept {
-			return (local.owner << 32) | local.id;
+			size_t num = local.owner;
+			return num << 32 | local.id;
 		}
 	};
 }

@@ -69,10 +69,10 @@ struct ServerSyncSystem : public System
 			auto character_movement_view = registry.view<Local, CharacterMovement>();
 			for (auto e : character_movement_view)
 			{
-				auto&[id, player, chara_movment] = character_movement_view.get<UniqueId, Player, CharacterMovement>(e);
-				if (player.id == item.second.id)
+				auto&[local,chara_movment] = character_movement_view.get<Local,CharacterMovement>(e);
+				if (local.owner == sync_instance.owner)
 				{
-					frame_data.character_movements.emplace(id, chara_movment);
+					frame_data.character_movements.emplace(local, chara_movment);
 				}
 			}
 

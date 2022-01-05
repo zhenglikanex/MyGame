@@ -82,7 +82,7 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<ClientSyncSystem>(registry));
 	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayStateSystem>(registry));
-	systems.emplace_back(std::make_unique<LocalIdStateSystem>(registry));
+	systems.emplace_back(std::make_unique<SyncInstanceStateSystem>(registry));
 	systems.emplace_back(std::make_unique<UpdatePlayerAttributeUISystem>(registry));
 	systems.emplace_back(std::make_unique<UpdateViewSystem>(registry));
 #if DEBUG
