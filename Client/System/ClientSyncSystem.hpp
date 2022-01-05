@@ -7,8 +7,8 @@
 #include "Framework/Game/NetworkService.hpp"
 
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
-#include "Framework/Game/Component/EntityByLocalIdMap.hpp"
-#include "Framework/Game/Component/SyncDataState.hpp"
+#include "Framework/Game/Component/EntityByLocalMap.hpp"
+#include "Framework/Game/Component/SyncInstanceState.hpp"
 #include "Framework/Game/Component/SyncManager.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Player.hpp"
@@ -98,8 +98,8 @@ struct ClientSyncSystem : public System
 
 	bool CheckLocalEnity(FrameData& frame_data)
 	{
-		auto& local_id_state = registry.ctx<LocalIdState>();
-		auto result = frame_data.local_id != local_id_state.value[frame_data.frame % local_id_state.value.size()];
+		auto& state = registry.ctx<SyncInstanceState>();
+		auto result = frame_data.local_id != state.value[frame_data.frame % state.value.size()];
 		if (result)
 		{
 			INFO("CheckLocalEnity rollback");
@@ -172,11 +172,11 @@ struct ClientSyncSystem : public System
 	{
 		assert(frame_data.frame > 0 && "第一帧不可能出错!");
 
-		auto& e_by_local_id_map = registry.ctx<EntityByLocalIdMap>();
+		auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
 
-		auto& local_id_state = registry.ctx<LocalIdState>();
-		for (auto i = local_id_state.value[(frame_data.frame - 1) % local_id_state.value.size()].value;
-			i < frame_data.local_id.value; ++i)
+		auto& state = registry.ctx<SyncInstanceState>();
+		for (auto i = state.value[(frame_data.frame - 1) % state.value.size()];
+			i < frame_data.local_id; ++i)
 		{
 			auto it = e_by_local_id_map.value.find(i);
 			if (it != e_by_local_id_map.value.end())
@@ -188,7 +188,7 @@ struct ClientSyncSystem : public System
 
 	void MappingLocalEntity(FrameData& frame_data,bool is_need_rollback)
 	{
-		auto& e_by_local_id_map = registry.ctx<EntityByLocalIdMap>();
+		auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
 		for (auto& item : frame_data.unique_ids)
 		{
 			auto it = e_by_local_id_map.value.find(item.first);
@@ -205,7 +205,7 @@ struct ClientSyncSystem : public System
 				assert(is_need_rollback && "只有验证失败才可以进来!");
 
 				auto e = registry.create();
-				registry.emplace<LocalId>(e, item.first);
+				registry.emplace<Local>(e, item.first);
 				registry.emplace<UniqueId>(e, item.second);
 			}
 		}
@@ -241,7 +241,7 @@ struct ClientSyncSystem : public System
 			}
 
 			auto e = e_by_unique_id_map.value[item.first];
-			if (!registry.all_of<LocalId>(e))
+			if (!registry.all_of<Local>(e))
 			{
 				registry.emplace_or_replace<Player>(e, item.second);
 			}
@@ -256,7 +256,7 @@ struct ClientSyncSystem : public System
 			}
 
 			auto e = e_by_unique_id_map.value[item.first];
-			if (!registry.all_of<LocalId>(e))
+			if (!registry.all_of<Local>(e))
 			{
 				registry.emplace_or_replace<ActorAsset>(e, item.second);
 			}
@@ -339,7 +339,7 @@ struct ClientSyncSystem : public System
 
 		if (is_need_rollback)
 		{
-			auto& e_by_local_id_map = registry.ctx<EntityByLocalIdMap>();
+			auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
 			for (auto& item : frame_data.wait_tasks)
 			{
 				auto it = e_by_local_id_map.value.find(item.first);
@@ -358,23 +358,17 @@ struct ClientSyncSystem : public System
 				registry.emplace_or_replace<GameplayPlayAnimAndWaitTask>(it->second, item.second);
 			}
 
-			auto chara_movement_view = registry.view<UniqueId, CharacterMovement>();
-			for (auto e : chara_movement_view)
+			for (auto& item : frame_data.character_movements)
 			{
-				auto& [id, chara_movement] = chara_movement_view.get<UniqueId, CharacterMovement>(e);
-				
-				auto it = frame_data.character_movements.find(id);
-				if (it != frame_data.character_movements.end())
-				{
-					chara_movement.base_velocity = it->second.base_velocity;
-					chara_movement.attached_rigidbody_velocity = it->second.attached_rigidbody_velocity;
-					chara_movement.grounding_status.ground_point = it->second.grounding_status.ground_point;
-					chara_movement.last_grounding_status.ground_point = it->second.last_grounding_status.ground_point;
-				}
-				else 
-				{
-					assert(false);
-				}
+				auto it = e_by_local_id_map.value.find(item.first);
+
+				assert(it != e_by_local_id_map.value.end() && "这里不可能不对应");
+
+				auto& comp = registry.get_or_emplace<CharacterMovement>(it->second);
+				comp.base_velocity = item.second.base_velocity;
+				comp.attached_rigidbody_velocity = item.second.attached_rigidbody_velocity;
+				comp.grounding_status.ground_point = item.second.grounding_status.ground_point;
+				comp.last_grounding_status.ground_point = item.second.last_grounding_status.ground_point;
 			}
 
 			auto trans_state_view = registry.view<TransformState, Transform>();
@@ -397,12 +391,12 @@ struct ClientSyncSystem : public System
 				}
 			}
 
-			auto& state = registry.ctx<LocalIdState>();
-			auto& player_manager = registry.ctx<PlayerManager>();
-			for (auto& item : player_manager.players)
+			auto& state = registry.ctx<SyncInstanceState>();
+			auto& sync_manager = registry.ctx<SyncManager>();
+			for (auto& item : sync_manager.sync_instances)
 			{
-				item.second.local_id_generator = frame_data.local_id;
-				state.value[frame_data.frame % state.value.size()] = item.second.local_id_generator;
+				item.second.identifier = frame_data.local_id;
+				state.value[frame_data.frame % state.value.size()] = item.second.identifier;
 			}
 		}
 	}

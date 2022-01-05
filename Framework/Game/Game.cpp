@@ -19,8 +19,8 @@
 #include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/UniqueId.hpp"
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
-#include "Framework/Game/Component/EntityByLocalIdMap.hpp"
-#include "Framework/Game/Component/SyncDataState.hpp"
+#include "Framework/Game/Component/EntityByLocalMap.hpp"
+#include "Framework/Game/Component/SyncInstanceState.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
@@ -56,7 +56,7 @@ void ConnectLocalIdToEntity(entt::registry& registry, entt::entity e)
 {
 	auto& local_id = registry.get<Local>(e);
 
-	auto& map = registry.ctx<EntityByLocalIdMap>();
+	auto& map = registry.ctx<EntityByLocalMap>();
 	map.value.emplace(local_id, e);
 }
 
@@ -64,7 +64,7 @@ void DisconnectLocalIdToEntity(entt::registry& registry, entt::entity e)
 {
 	auto& local_id = registry.get<Local>(e);
 
-	auto& map = registry.ctx<EntityByLocalIdMap>();
+	auto& map = registry.ctx<EntityByLocalMap>();
 	map.value.erase(local_id);
 }
 
@@ -95,15 +95,16 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	auto& game_helper = registry_.ctx<Locator>().Ref<const GameHelper>();
 	if (!game_helper.IsAuthority())
 	{
-		registry_.set<EntityByLocalIdMap>();
+		registry_.set<EntityByLocalMap>();
 		registry_.on_construct<Local>().connect<&ConnectLocalIdToEntity>();
 		registry_.on_destroy<Local>().connect<&DisconnectLocalIdToEntity>();
-		registry_.set<SyncDataState>();
+		registry_.set<SyncInstanceState>();
 	}
 	else
 	{
 		//todo 插入服务器控制syncdata
-		sync_manager.sync_instances.emplace(std::numeric_limits<uint32_t>::max(), 0);
+		uint32_t id = std::numeric_limits<uint32_t>::max();
+		sync_manager.sync_instances.emplace(id, SyncInstance(id, 0));
 	}
 
 	systems_ = game_helper.CreateSystems(registry_);

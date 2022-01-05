@@ -6,7 +6,7 @@
 
 #include "3rdparty/include/entt/entt.hpp"
 
-struct EntityByLocalIdMap
+struct EntityByLocalMap
 {
-	std::unordered_map<LocalId, entt::entity> value;
+	std::unordered_map<Local, entt::entity> value;
 };

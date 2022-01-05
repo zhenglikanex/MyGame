@@ -10,6 +10,7 @@
 #include "Framework/Game/Math.hpp"
 
 #include "Framework/Game/GAS/GameplayTag.hpp"
+#include <iostream>
 
 using namespace std::chrono;
 
@@ -18,9 +19,16 @@ struct Serialize1
 	
 };
 
+std::size_t fun(std::size_t a, std::size_t b)
+{
+	return a | b;
+}
 
 TEST_CASE_METHOD(Serialize1, "NetMessage")
 {
+	std::size_t v = fun(std::numeric_limits<uint32_t>::max() << 32,std::numeric_limits<uint32_t>::max());
+	std::cout << std::numeric_limits<std::size_t>::max() << " " << v << std::endl;
+
 	std::any a = 10;
 	std::vector<GameplayTag> vec;
 	std::any b = vec;

@@ -3,18 +3,18 @@
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Component/GameState.hpp"
-#include "Framework/Game/Component/SyncDataState.hpp"
+#include "Framework/Game/Component/SyncInstanceState.hpp"
 #include "Framework/Game/Component/SyncManager.hpp"
 
-struct SyncDataStateSystem : public System
+struct SyncInstanceStateSystem : public System
 {
-	SyncDataStateSystem(entt::registry& _registry)
+	SyncInstanceStateSystem(entt::registry& _registry)
 		: System(_registry)
 	{
 
 	}
 
-	~SyncDataStateSystem()
+	~SyncInstanceStateSystem()
 	{
 
 	}
@@ -26,9 +26,9 @@ struct SyncDataStateSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		auto& state = registry.ctx<SyncDataState>();
+		auto& state = registry.ctx<SyncInstanceState>();
 		auto& sync_manager = registry.ctx<SyncManager>();
-		for (auto& item : sync_manager.sync_datas)
+		for (auto& item : sync_manager.sync_instances)
 		{
 			state.value[registry.ctx<GameState>().run_frame % state.value.size()] = item.second.identifier;
 		}

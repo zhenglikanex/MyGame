@@ -234,14 +234,14 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 			{
 				// 玩家控制角色
 				auto& sync_manager = registry.ctx<SyncManager>();
-				auto sync = sync_manager.sync_datas[player->id];
+				auto& sync = sync_manager.sync_instances[player->id];
 				registry.emplace<Local>(e, sync.owner, sync.identifier++);
 			}
 			else
 			{
 				//服务器控制角色
 				auto& sync_manager = registry.ctx<SyncManager>();
-				auto sync = sync_manager.sync_datas[std::numeric_limits<uint32_t>::max()];
+				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
 				registry.emplace<Local>(e, sync.owner, sync.identifier++);
 			}
 

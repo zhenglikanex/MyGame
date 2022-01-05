@@ -24,7 +24,7 @@ struct ActorUtiltiy
 	{
 		auto e = reg.create();
 		reg.emplace<ActorAsset>(e, actor_asset); // 通过createactoresystem创建具体actor信息
-		reg.emplace<Local>(e, reg.ctx<SyncManager>().players[id].local_id_generator.value++);
+		reg.emplace<Local>(e, reg.ctx<SyncManager>().sync_instances[id].identifier++);
 		reg.emplace<Player>(e,id);
 		reg.emplace<Transform>(e, position, rotation);
 		reg.emplace<TransformState>(e);

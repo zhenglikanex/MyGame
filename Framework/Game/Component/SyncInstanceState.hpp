@@ -4,7 +4,7 @@
 
 #include "Framework/Game/Component/Local.hpp"
 
-struct SyncDataState
+struct SyncInstanceState
 {
 	std::array<uint32_t,GameConfig::kMaxPredictFrame> value;
 };

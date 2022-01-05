@@ -20,7 +20,7 @@
 struct FrameData
 {
 	uint32_t frame;
-	Local local_id;
+	uint32_t local_id;
 	std::unordered_map<Local, UniqueId> unique_ids;
 	std::unordered_map<Local, CharacterMovement> character_movements;
 	std::unordered_map<Local, GameplayWaitTask> wait_tasks;

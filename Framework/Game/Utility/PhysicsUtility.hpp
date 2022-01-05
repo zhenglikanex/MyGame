@@ -38,7 +38,7 @@ struct PhysicsUtility
 		kActor	= (1 << 0),
 		kWeapon = (1 << 1),
 
-		kAll	= ~0
+		kAll	= ~0u
 	};
 
 	static PxU32 GetFilterMask(FilterGroup group)
