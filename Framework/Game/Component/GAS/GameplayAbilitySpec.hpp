@@ -17,7 +17,7 @@ struct GameplayAbilitySpec
 	UniqueId target;
 	bool activation;
 	//记录下技能过程中创建的其他对象
-	std::unordered_map<uint32_t, UniqueId> entity_manager;
+	std::unordered_map<uint32_t, Local> entity_manager;
 
 	GameplayAbilitySpec() = default;
 

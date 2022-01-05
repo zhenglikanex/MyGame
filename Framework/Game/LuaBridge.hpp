@@ -159,6 +159,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	lua.script_file(file_service.cur_path() + "Lua/Script/main.lua", sol::script_default_on_error);
 	sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
 
+	RegisterWeapon(lua);
 	RegisterGameplayTag(lua);
 	RegisterGameplayEffect(lua);
 	RegisterGameplayAbility(lua);
@@ -232,14 +233,14 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 
 			if (auto player = registry.try_get<Player>(target_entity))
 			{
-				// 玩家控制角色
+				// 玩家控制
 				auto& sync_manager = registry.ctx<SyncManager>();
 				auto& sync = sync_manager.sync_instances[player->id];
 				registry.emplace<Local>(e, sync.owner, sync.identifier++);
 			}
 			else
 			{
-				//服务器控制角色
+				//服务器控制
 				auto& sync_manager = registry.ctx<SyncManager>();
 				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
 				registry.emplace<Local>(e, sync.owner, sync.identifier++);

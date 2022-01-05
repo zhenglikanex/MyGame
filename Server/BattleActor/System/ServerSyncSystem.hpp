@@ -157,6 +157,8 @@ struct ServerSyncSystem : public System
 
 			buffer.Clear();
 
+			INFO("sync_frame_data owner{} frame{} size{}", sync_instance.owner, frame_data.frame, data.size());
+
 			auto& network_service = dynamic_cast<ServerNetworkService&>(registry.ctx<Locator>().Ref<NetworkService>());
 			network_service.Send(sync_instance.owner, "sync_frame_data", std::move(data));
 		}

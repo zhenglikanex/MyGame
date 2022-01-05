@@ -11,7 +11,7 @@ function AttackGAScript:ActiveAbility()
     --end)
     GameplayPlayAnimAndWait(self.entity,"skill100010","AnimCompleted","AnimCanceled")
     GameplayWaitTask(self.entity,0.3,"CreateWeaponCollider")
-    GameplayWaitTask(self.entity,0.5,"")
+    --GameplayWaitTask(self.entity,0.5,"")
 end
 
 function AttackGAScript:AnimCompleted()
@@ -23,14 +23,14 @@ function AttackGAScript:AnimCanceled()
 end
 
 function AttackGAScript:CreateWeaponCollider()
-    local weapon = GetWeapon(self.sepc.source)
+    local weapon = GetWeapon(self.spec.source)
     if weapon then
-        self.spec.entity_manager:insert(1,CreateColliderToAnimBone(self.spec.source, weapon.collider_info, "RightWeapon"))
+        self.spec.entity_manager:insert({1,CreateColliderToAnimBone(weapon.collider_info,self.spec.source,"RightWeapon")})
     end     
 end
 
 function AttackGAScript:DesotryWeaponCollider()
-    
+    self.spec.entity_manager:clear(1)
 end
 
 return AttackGAScript

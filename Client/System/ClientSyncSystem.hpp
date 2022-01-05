@@ -178,7 +178,7 @@ struct ClientSyncSystem : public System
 		// 删除多创建的local entity
 		for (auto& item : sync_manager.sync_instances)
 		{
-			for (auto i = frame_data.local_id + 1; i < item.second.identifier; ++i)
+			for (auto i = frame_data.local_id; i < item.second.identifier; ++i)
 			{
 				auto it = e_by_local_id_map.value.find(Local(item.second.owner, i));
 				if (it != e_by_local_id_map.value.end())
