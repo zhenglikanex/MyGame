@@ -9,7 +9,12 @@ struct Transform
 	vec3 position;
 	quat rotation;
 
-	Transform() = default;
+	Transform()
+		: position(0)
+		, rotation(glm::identity<quat>())
+	{
+
+	}
 
 	Transform(const vec3& _pos, const quat& _rotation)
 		: position(_pos)

@@ -130,6 +130,8 @@ void KcpGateActor::KcpSend(kcp_conv_t conv, Buffer&& buffer)
 	auto iter = connections_.find(conv);
 	if (iter != connections_.end())
 	{
+		std::cout << "KcpGateActor::KcpSend " << conv << std::endl;
+
 		iter->second->Send(std::move(buffer));
 	}
 }
@@ -158,6 +160,7 @@ void KcpGateActor::KcpReciveHandler(const KcpConnection& connection, Buffer&& bu
 
 void KcpGateActor::KcpSendHandler(const KcpConnection& connection, Buffer&& buffer)
 {
+	std::cout << "KcpGateActor::KcpSendHandler" << connection.conv() << " " << buffer.size()  << std::endl;
 	network_component_->UdpSend(connection.endpoint(), std::move(buffer));
 }
 
@@ -194,6 +197,7 @@ void KcpGateActor::DisconnectHandler(const asio::ip::udp::endpoint& endpoint, kc
 void KcpGateActor::Send(const std::any& data)
 {
 	auto& [conv, message] = std::any_cast<std::tuple<uint32_t, NetMessage>>(data);
+	std::cout << " KcpGateActor::Send " << conv << "  " << message.name() << message.GetByteSize() << std::endl;
 	Buffer buffer(message.GetByteSize());
 	message.Serialize(buffer.data());
 	KcpSend(conv, std::move(buffer));

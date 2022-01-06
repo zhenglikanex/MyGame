@@ -29,6 +29,8 @@ KcpConnection::~KcpConnection()
 
 void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 {
+	std::cout << "KcpConnection::Receive " << conv_ << " " << buffer.size() << std::endl;
+
 	last_recv_clock_ = cur_clock;
 
 	char* data = (char*)buffer.data();
@@ -39,7 +41,7 @@ void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 	{
 		while (true)
 		{
-			auto kcp_recvd_bytes = ikcp_recv(kcp_, data, size);
+			auto kcp_recvd_bytes = ikcp_recv(kcp_, data_.data(), data_.size());
 			if (kcp_recvd_bytes <= 0)
 			{
 				// todo:
@@ -48,7 +50,7 @@ void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 			else
 			{
 				Buffer recv_buffer(kcp_recvd_bytes);
-				std::copy_n((uint8_t*)data, kcp_recvd_bytes, recv_buffer.data());
+				std::copy_n((uint8_t*)data_.data(), kcp_recvd_bytes, recv_buffer.data());
 				receive_handler_(*this, std::move(recv_buffer));
 			}
 		}

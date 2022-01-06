@@ -44,7 +44,7 @@ struct ClientSyncSystem : public System
 		INFO("sync");
 		while (auto message = network_service.Recv())
 		{
-			auto&[name, data] = *message;
+			auto& [name, data] = *message;
 
 			kanex::Buffer buffer(std::move(data));
 			kanex::BinaryStream stream(buffer);
@@ -58,7 +58,7 @@ struct ClientSyncSystem : public System
 			if (frame_data.frame >= game_state.run_frame)
 			{
 				MappingLocalEntity(frame_data, true);
-				ReplicationServerData(frame_data,true);
+				ReplicationServerData(frame_data, true);
 
 				game_state.run_frame = frame_data.frame;
 				game_state.verified_frame = frame_data.frame;
@@ -99,7 +99,7 @@ struct ClientSyncSystem : public System
 	bool CheckLocalEnity(FrameData& frame_data)
 	{
 		auto& state = registry.ctx<SyncInstanceState>();
-		auto result = frame_data.local_id != state.value[frame_data.frame % state.value.size()];
+		auto result = frame_data.local_id != state.value[frame_data.frame % state.value.size()].identifier;
 		if (result)
 		{
 			INFO("CheckLocalEnity rollback");
@@ -121,7 +121,7 @@ struct ClientSyncSystem : public System
 			if (it != frame_data.transforms.end())
 			{
 				auto tran = transform_state.value[frame_data.frame % transform_state.value.size()];
-				
+
 				if (it->second != transform_state.value[frame_data.frame % transform_state.value.size()])
 				{
 					INFO("position not!");
@@ -173,20 +173,24 @@ struct ClientSyncSystem : public System
 		assert(frame_data.frame > 0 && "第一帧不可能出错!");
 
 		auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
+		auto& sync_manager = registry.ctx<SyncManager>();
 
-		auto& state = registry.ctx<SyncInstanceState>();
-		for (auto i = state.value[(frame_data.frame - 1) % state.value.size()];
-			i < frame_data.local_id; ++i)
+		// 删除多创建的local entity
+		for (auto& item : sync_manager.sync_instances)
 		{
-			auto it = e_by_local_id_map.value.find(i);
-			if (it != e_by_local_id_map.value.end())
+			for (auto i = frame_data.local_id; i < item.second.identifier; ++i)
 			{
-				registry.destroy(it->second);
+				auto it = e_by_local_id_map.value.find(Local(item.second.owner, i));
+				if (it != e_by_local_id_map.value.end())
+				{
+					registry.destroy(it->second);
+				}
 			}
 		}
+
 	}
 
-	void MappingLocalEntity(FrameData& frame_data,bool is_need_rollback)
+	void MappingLocalEntity(FrameData& frame_data, bool is_need_rollback)
 	{
 		auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
 		for (auto& item : frame_data.unique_ids)
@@ -210,8 +214,8 @@ struct ClientSyncSystem : public System
 			}
 		}
 	}
-	
-	void ReplicationServerData(FrameData& frame_data,bool is_need_rollback)
+
+	void ReplicationServerData(FrameData& frame_data, bool is_need_rollback)
 	{
 		auto& e_by_unique_id_map = registry.ctx<EntityByUniqueIdMap>();
 
@@ -374,7 +378,7 @@ struct ClientSyncSystem : public System
 			auto trans_state_view = registry.view<TransformState, Transform>();
 			for (auto e : trans_state_view)
 			{
-				auto& [transform_state,transform] = trans_state_view.get<TransformState, Transform>(e);
+				auto& [transform_state, transform] = trans_state_view.get<TransformState, Transform>(e);
 				transform_state.value[frame_data.frame % transform_state.value.size()] = transform;
 			}
 
@@ -396,7 +400,7 @@ struct ClientSyncSystem : public System
 			for (auto& item : sync_manager.sync_instances)
 			{
 				item.second.identifier = frame_data.local_id;
-				state.value[frame_data.frame % state.value.size()] = item.second.identifier;
+				state.value[frame_data.frame % state.value.size()] = item.second;
 			}
 		}
 	}

@@ -20,6 +20,7 @@ class KcpConnection
 {
 public:
 	static const uint32_t kTimeoutTime = 5 * 60 * 1000;	// 5min
+	static const uint16_t kMaxMsgSize = 0xFFFF;
 public:
 	KcpConnection(kcp_conv_t conv,const asio::ip::udp::endpoint& endpoint,uint32_t cur_clock);
 	~KcpConnection();
@@ -44,6 +45,7 @@ private:
 	asio::ip::udp::endpoint endpoint_;
 	ikcpcb* kcp_;
 	uint32_t last_recv_clock_;
+	std::array<char, kMaxMsgSize> data_;
 
 	KcpReceiveHandler receive_handler_;
 	KcpSendHanlder send_handler_;

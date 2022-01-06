@@ -270,6 +270,7 @@ void ClientNetworkImpl::UdpReceive()
 			{
 				if (bytes_recvd > 0)
 				{
+					std::cout << "UdpReceive!!!!!!!!!!!!!!!!!!!!!!!!! " << bytes_recvd << std::endl;
 					if (type_ == ConnectType::kTypeConnecting && IsRspKcpConnectMsg((char*)data_.data(), bytes_recvd))
 					{
 						Connected(GetKcpConv((char*)data_.data()));
@@ -305,7 +306,8 @@ void ClientNetworkImpl::KcpReceive(uint8_t* data, uint32_t len)
 		ikcp_input(kcp_, (char*)data, len);
 		while (true)
 		{
-			auto recv_bytes = ikcp_recv(kcp_, (char*)data, len);
+			auto recv_bytes = ikcp_recv(kcp_, (char*)data, kMaxMsgSize);
+			std::cout << "kcp recv_bytes" << recv_bytes << std::endl;
 			if (recv_bytes > 0)
 			{
 				// 客户端卡了，直接掉线
@@ -341,6 +343,7 @@ void ClientNetworkImpl::KcpUpdate()
 {
 	if (kcp_ && IsConnected())
 	{
+		std::cout << "kcp_update------------------" << std::endl;
 		cur_clock_ = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 
 		ikcp_update(kcp_, cur_clock_);
