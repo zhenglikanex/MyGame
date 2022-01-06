@@ -27,6 +27,7 @@
 #include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
 #include "Framework/Game/System/GAS/GameplayWaitTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp"
+#include "Framework/Game/System/ComputeAnimBoneChildTransform.hpp"
 
 #include "Server/BattleActor/System/ServerSyncSystem.hpp"
 
@@ -56,6 +57,7 @@ std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
 	systems.emplace_back(std::make_unique<SkillSystem>(registry));
 	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
+	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(registry));
 	//systems.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry));
 	//systems.emplace_back(std::make_unique<CollisionSystem>(registry));
 	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(registry));

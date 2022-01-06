@@ -33,6 +33,7 @@
 #include "Framework/Game/System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp"
 #include "Framework/Game/System/UpdatePlayerAttributeUISystem.hpp"
 #include "Framework/Game/System/SyncInstanceStateSystem.hpp"
+#include "Framework/Game/System/ComputeAnimBoneChildTransform.hpp"
 #include "Client/System/ClientSyncSystem.hpp"
 
 ClientGameHelper::ClientGameHelper(uint32_t local_id)
@@ -69,6 +70,7 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(registry));
 	systems.emplace_back(std::make_unique<SkillSystem>(registry));
 	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
+	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(registry));
 	//systems.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry));
 	//systems.emplace_back(std::make_unique<CollisionSystem>(registry));
 	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(registry));
