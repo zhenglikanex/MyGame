@@ -61,16 +61,18 @@ void ClientNetworkImpl::Run()
 
 void ClientNetworkImpl::Stop()
 {
+	Disconnect();
+
 	socket_.close();
 	connect_timer_.cancel();
 	kcp_update_timer_.cancel();
+
+	io_context_.stop();
 
 	if (thread_.joinable())
 	{
 		thread_.join();
 	}
-
-	Disconnect();
 }
 
 bool ClientNetworkImpl::Connect(const std::string& ip, uint16_t port, uint32_t timeout)
@@ -91,23 +93,24 @@ bool ClientNetworkImpl::Connect(const std::string& ip, uint16_t port, uint32_t t
 
 void ClientNetworkImpl::Disconnect()
 {
-	std::unique_lock<std::mutex> lock(mutex_);
-	if (IsConnected())
-	{
-		type_ = ConnectType::kTypeDisconnect;
-		connect_time_ = 0;
-		conv_ = 0;
-
-		if (kcp_)
+	io_context_.post([this] {
+		if (IsConnected())
 		{
-			ikcp_release(kcp_);
-			kcp_ = nullptr;
-		}
+			type_ = ConnectType::kTypeDisconnect;
+			connect_time_ = 0;
+			conv_ = 0;
 
-		cur_clock_ = 0;
-		cur_read_ = 0;
-		cur_write_ = 0;
-	}
+			if (kcp_)
+			{
+				ikcp_release(kcp_);
+				kcp_ = nullptr;
+			}
+
+			cur_clock_ = 0;
+			cur_read_ = 0;
+			cur_write_ = 0;
+		}
+	});
 }
 
 bool ClientNetworkImpl::IsConnected() const
