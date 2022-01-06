@@ -56,6 +56,16 @@ struct ServerSyncSystem : public System
 
 			/**************************local entity/**************************/
 
+			auto local_view = registry.view<Local>();
+			for (auto e : local_view)
+			{
+				auto& local = local_view.get<Local>(e);
+				if (local.owner == sync_instance.owner)
+				{
+					++frame_data.local_num;
+				}
+			}
+
 			auto view = registry.view<UniqueId, Local>();
 			for (auto e : view)
 			{

@@ -8,6 +8,7 @@
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 #include "Framework/Game/GAS/GameplayAbility.hpp"
 
+#include "Framework/Game/Component/EntityByLocalMap.hpp"
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/ColliderInfo.hpp"
@@ -16,6 +17,7 @@
 #include "Framework/Game/Component/Destory.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/SyncManager.hpp"
+#include "Framework/Game/Component/CollisionReceiver.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
@@ -26,6 +28,13 @@
 #include "Framework/Game/Utility/GameplayEventUtility.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
+
+inline void RegisterLocal(sol::state& lua)
+{
+	auto type = lua.new_usertype<Local>("Local");
+	type["owner"] = &Local::owner;
+	type["id"] = &Local::id;
+}
 
 inline void RegisterWeapon(sol::state& lua)
 {
@@ -217,7 +226,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		task.value.emplace_back(name, completed, canceled);
 	};
 
-	lua["CreateColliderToAnimBone"] = [&registry](const ColliderInfo& collider, UniqueId target, std::string_view bone)
+	lua["CreateColliderToAnimBone"] = [&registry](const ColliderInfo& collider, UniqueId target, std::string_view bone,Local receiver)
 	{
 		Local* result = nullptr;
 		auto& map = registry.ctx<EntityByUniqueIdMap>();
@@ -228,6 +237,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 			registry.emplace<Transform>(e);
 			registry.emplace<ColliderInfo>(e, collider);
 			registry.emplace<ParentAnimBone>(e, target, bone);
+			registry.emplace<CollisionReceiver>(e, receiver);
 
 			entt::entity target_entity = it->second;
 
@@ -265,4 +275,24 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 
 		return weapon;
 	};
+
+	lua["GetUniqueId"] = [&registry](entt::entity e)
+	{
+		return registry.try_get<UniqueId>(e);
+	};
+	
+	auto destory1 = [&registry](entt::entity entity) {
+		
+	};
+
+	auto destory2 = [&registry](Local local) {
+		auto& map = registry.ctx<EntityByLocalMap>();
+		auto it = map.value.find(local);
+		if (it != map.value.end())
+		{
+			registry.destroy(it->second);
+		}
+	};
+
+	lua["Destory"] = sol::overload(destory1, destory2);
 }

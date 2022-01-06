@@ -2,10 +2,11 @@
 
 #include "Framework/Game/System.hpp"
 
+#include "Framework/Game/Component/EntityByLocalMap.hpp"
 #include "Framework/Game/Component/PhysicsWorld.hpp"
 #include "Framework/Game/Component/PhysicsActor.hpp"
-#include "Framework/Game/Component/Contact.hpp"
-#include "Framework/Game/Component/Skill.hpp"
+#include "Framework/Game/Component/CollisionReceiver.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
 
 #include "Framework/Game/Utility/PhysicsUtility.hpp"
 
@@ -103,6 +104,8 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 
 	void onTrigger(PxTriggerPair* pairs, PxU32 count) override
 	{
+		auto& map = registry.ctx<EntityByLocalMap>();
+
 		for (PxU32 i = 0; i < count; ++i)
 		{
 			auto trigger = (entt::entity)reinterpret_cast<uint32_t>(pairs[i].triggerActor->userData);
@@ -110,15 +113,26 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 			
 			if (registry.valid(trigger) && registry.valid(other))
 			{
-				auto& tigger_contacts = registry.get<ContactList>(trigger);
-				tigger_contacts.value.emplace_back(other);
+				std::array<std::tuple<entt::entity, entt::entity>, 2> infos = { std::make_tuple(trigger,other),std::make_tuple(other,trigger) };
+				for (auto info : infos)
+				{
+					auto source = std::get<0>(info);
+					auto target = std::get<1>(info);
 
-				auto& other_contacts = registry.get<ContactList>(other);
-				other_contacts.value.emplace_back(trigger);
-
-				INFO("sKILL {}  {}", registry.all_of<Skill>(trigger), registry.all_of<Skill>(other));
-
-				INFO("tigger e1 {}   e2 {}", trigger, other);
+					if (auto reciver = registry.try_get<CollisionReceiver>(source))
+					{
+						auto it = map.value.find(reciver->value);
+						if (it != map.value.end())
+						{
+							entt::entity e = it->second;
+							if (registry.all_of<GameplayAbilityScript>(e))
+							{
+								auto& script = registry.get<GameplayAbilityScript>(e);
+								script.value["OnTrigger"](script.value,target);
+							}
+						}
+					}
+				}
 			}
 			else
 			{

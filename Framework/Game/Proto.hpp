@@ -21,6 +21,7 @@ struct FrameData
 {
 	uint32_t frame;
 	uint32_t local_id;
+	uint32_t local_num;
 	std::unordered_map<Local, UniqueId> unique_ids;
 	std::unordered_map<Local, CharacterMovement> character_movements;
 	std::unordered_map<Local, GameplayWaitTask> wait_tasks;
@@ -38,6 +39,7 @@ struct FrameData
 NON_MEMEBER_BAR(FrameData,
 	obj.frame,
 	obj.local_id,
+	obj.local_num,
 	obj.unique_ids,
 	obj.players,
 	obj.actor_assets,

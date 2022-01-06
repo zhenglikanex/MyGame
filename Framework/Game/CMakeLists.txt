@@ -112,6 +112,7 @@ Component/EntityByUniqueIdMap.hpp
 Component/Local.hpp
 Component/SyncInstanceState.hpp
 Component/SyncManager.hpp
+Component/CollisionReceiver.hpp
 Component/ParentAnimBone.hpp
 Component/GAS/ApplyGameplayEffect.hpp
 Component/GAS/GameplayEffectSpec.hpp

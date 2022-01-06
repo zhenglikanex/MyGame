@@ -85,6 +85,10 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	registry_.set<EntityByUniqueIdMap>();
 	registry_.on_construct<UniqueId>().connect<&ConnectUniqueIdToEntity>();
 	registry_.on_destroy<UniqueId>().connect<&DisconnectUniqueIdToEntity>();
+
+	registry_.set<EntityByLocalMap>();
+	registry_.on_construct<Local>().connect<&ConnectLocalIdToEntity>();
+	registry_.on_destroy<Local>().connect<&DisconnectLocalIdToEntity>();
 	
 	auto& sync_manager = registry_.set<SyncManager>();
 	for (auto& info : player_infos_)
@@ -95,9 +99,6 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	auto& game_helper = registry_.ctx<Locator>().Ref<const GameHelper>();
 	if (!game_helper.IsAuthority())
 	{
-		registry_.set<EntityByLocalMap>();
-		registry_.on_construct<Local>().connect<&ConnectLocalIdToEntity>();
-		registry_.on_destroy<Local>().connect<&DisconnectLocalIdToEntity>();
 		registry_.set<SyncInstanceState>();
 	}
 	else

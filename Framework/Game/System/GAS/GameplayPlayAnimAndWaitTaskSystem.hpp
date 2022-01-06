@@ -56,7 +56,7 @@ public:
 					{
 						if (task_spec.canceled != "")
 						{
-							script.value[task_spec.canceled]();
+							script.value[task_spec.canceled](script.value);
 						}
 						completed = true;
 					}
@@ -64,7 +64,7 @@ public:
 					{
 						if (task_spec.completed != "")
 						{
-							script.value[task_spec.completed]();
+							script.value[task_spec.completed](script.value);
 						}
 						completed = true;
 					} 

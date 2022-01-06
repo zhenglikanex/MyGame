@@ -17,6 +17,9 @@
         "PlayAnimation",
         "GameplayPlayAnimAndWait",
         "CreateColliderToAnimBone",
-        "GetWeapon"
+        "GetWeapon",
+        "GetUnique",
+        "Destory",
+        "GetUniqueId"
     ]
 }

@@ -103,7 +103,9 @@ struct ClientSyncSystem : public System
 		if (result)
 		{
 			INFO("CheckLocalEnity rollback");
+			return result;
 		}
+
 		return result;
 	}
 

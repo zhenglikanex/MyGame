@@ -21,21 +21,15 @@ struct GameplayAbilitySystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		ActiveAbility();
-		UpdateAbility(static_cast<float>(dt));
-	}
-
-	void ActiveAbility()
-	{
 		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
-		auto view = registry.view<GameplayAbilitySpec>(entt::exclude<GameplayAbilityScript>);
+		auto view = registry.view<Local, GameplayAbilitySpec>(entt::exclude<GameplayAbilityScript>);
 		for (auto e : view)
 		{
-			auto& spec = view.get<GameplayAbilitySpec>(e);
+			auto& [local, spec] = view.get<Local, GameplayAbilitySpec>(e);
 
 			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);
-			sol::table instance = ga.script["new"](e, spec);
-			auto& script = registry.emplace<GameplayAbilityScript>(e,instance);
+			sol::table instance = ga.script["new"](e, local, spec);
+			auto& script = registry.emplace<GameplayAbilityScript>(e, instance);
 
 			if (!spec.activation)
 			{
@@ -43,11 +37,6 @@ struct GameplayAbilitySystem : public System
 				script.value["ActiveAbility"](script.value);
 			}
 		}
-	}
-
-	void UpdateAbility(float dt)
-	{
-
 	}
 
 	void Finalize() override

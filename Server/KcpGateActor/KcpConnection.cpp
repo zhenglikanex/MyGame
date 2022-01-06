@@ -29,8 +29,6 @@ KcpConnection::~KcpConnection()
 
 void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 {
-	std::cout << "KcpConnection::Receive " << conv_ << " " << buffer.size() << std::endl;
-
 	last_recv_clock_ = cur_clock;
 
 	char* data = (char*)buffer.data();

@@ -1,7 +1,8 @@
 local GAScript = class("GAScript")
 
-function GAScript:ctor(entity,spec)
+function GAScript:ctor(entity,loc,spec)
     self.entity = entity
+    self.loc = loc
     self.spec = spec
 end
 
@@ -25,6 +26,7 @@ end
 function GAScript:EndAbility()
     local entity = self.entity
     self.entity = nil
+    self.loc = nil
     self.spec = nil
 
     DestoryEntity(entity)
