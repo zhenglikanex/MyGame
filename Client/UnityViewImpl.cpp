@@ -76,3 +76,17 @@ void UnityViewImpl::PlayAnimation(const std::string& name, float normalized_time
 		service.PlayAnimation(this, name,normalized_time);
 	}
 }
+
+void UnityViewImpl::ApplyCue(std::string_view name)
+{
+	if (g_game)
+	{
+		auto& locator = g_game->registry().ctx<Locator>();
+		auto& service = dynamic_cast<const UnityViewService&>(locator.Ref<ViewService>());
+		service.ApplyCue(this, name);
+	}
+}
+
+void UnityViewImpl::ApplyCue(const std::shared_ptr<IViewImpl>& view)
+{
+}

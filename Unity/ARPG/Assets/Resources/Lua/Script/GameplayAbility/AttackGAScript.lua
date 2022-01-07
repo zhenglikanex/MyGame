@@ -46,6 +46,9 @@ function AttackGAScript:OnTrigger(target)
     if unique_id and unique_id ~= self.spec.source then
        print("AttackGAScript:OnTrigger(target)!!!!!!!!") 
        ActorChangeState(unique_id)
+
+       ApplyCueToTarget(unique_id,"Hurt")
+
     end
 end
 

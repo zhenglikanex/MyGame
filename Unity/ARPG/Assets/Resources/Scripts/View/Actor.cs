@@ -132,4 +132,10 @@ public class Actor : UnityView
             animator.Play(animName,0,time);
         }
     }
+
+    public override void ApplyCue(string name)
+    {
+        var cue = PoolManager.Instance.Create(name);
+        cue.transform.SetParent(transform);
+    }
 }

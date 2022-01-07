@@ -265,6 +265,11 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         message.Send();
     }
 
+    public static void ApplyCue(int id, string name)
+    {
+        UnityViewServices.Instance.ApplyCue(id, name);
+    }
+
     public static string GetDataPath()
     {
         return Application.dataPath;

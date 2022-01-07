@@ -14,6 +14,8 @@ public:
 	void MoveRotation(const quat& rotation) override;
 	void PlayAnimation(const std::string& name) override;
 	void PlayAnimation(const std::string& name, float noramlized_time) override;
+	void ApplyCue(std::string_view name) override;
+	void ApplyCue(const std::shared_ptr<IViewImpl>& view) override;
 
 	int GetHandle() const { return handle_; }
 private:

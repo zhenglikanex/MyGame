@@ -57,4 +57,9 @@ public class UnityView : PoolObject
     {
 
     }
+
+    public virtual void ApplyCue(string name)
+    {
+
+    }
 }

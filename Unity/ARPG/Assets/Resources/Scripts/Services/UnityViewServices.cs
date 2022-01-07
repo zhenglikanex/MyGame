@@ -104,6 +104,15 @@ public class UnityViewServices : GlobalGameObjectSingleton<UnityViewServices>
         }
     }
 
+    public void ApplyCue(int id, string name)
+    { 
+        if(views.ContainsKey(id))
+        {
+            var view = views[id];
+            view.ApplyCue(name);
+        }
+    }
+
     int GenViewId()
     {
         if(old_ids.Count <= 0)

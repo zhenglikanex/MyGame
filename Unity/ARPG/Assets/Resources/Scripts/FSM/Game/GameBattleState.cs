@@ -12,12 +12,22 @@ public class GameBattleState : FSMState
         //    GameObjectPool pool = PoolManager.Instance.RegisterPool("FlyText", prefab);
         //    pool.AlllocCapacity(20);
         //}
-
-        GameObject prefab = Resources.Load<GameObject>("Prefab/Actor/Hero");
-        if (prefab)
         {
-            GameObjectPool pool = PoolManager.Instance.RegisterPool("Hero", prefab);
-            pool.AlllocCapacity(100);
+            GameObject prefab = Resources.Load<GameObject>("Prefab/Actor/Hero");
+            if (prefab)
+            {
+                GameObjectPool pool = PoolManager.Instance.RegisterPool("Hero", prefab);
+                pool.AlllocCapacity(100);
+            }
+        }
+        
+        {
+            GameObject prefab = Resources.Load<GameObject>("Prefab/Cue/Hurt");
+            if (prefab)
+            {
+                GameObjectPool pool = PoolManager.Instance.RegisterPool("Hurt", prefab);
+                pool.AlllocCapacity(10);
+            }
         }
 
         // 加载战斗场景

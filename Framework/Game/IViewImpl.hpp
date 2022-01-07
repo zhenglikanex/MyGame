@@ -1,5 +1,8 @@
 #pragma once
 
+#include <memory>
+#include <string_view>
+
 #include "Framework/Game/Math.hpp"
 
 class IViewImpl
@@ -14,4 +17,6 @@ public:
 	virtual void MoveRotation(const quat& rotation) = 0;
 	virtual void PlayAnimation(const std::string& name) = 0;
 	virtual void PlayAnimation(const std::string& name, float noramlized_time) = 0;
+	virtual void ApplyCue(std::string_view name) = 0;
+	virtual void ApplyCue(const std::shared_ptr<IViewImpl>& view) = 0;
 };

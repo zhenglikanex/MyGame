@@ -81,3 +81,13 @@ void UnityViewService::PlayAnimation(const IViewImpl* view, std::string_view nam
 	auto& unity_view = dynamic_cast<const UnityViewImpl&>(*view);
 	UnityBridge::Get().CallUnity<void>("PlayAnimationToTime", unity_view.GetHandle(), name.data(),normalized_time);
 }
+
+void UnityViewService::ApplyCue(const IViewImpl* view, std::string_view name) const
+{
+	if (!view)
+	{
+		return;
+	}
+	auto& unity_view = dynamic_cast<const UnityViewImpl&>(*view);
+	UnityBridge::Get().CallUnity<void>("ApplyCue", unity_view.GetHandle(), name.data());
+}

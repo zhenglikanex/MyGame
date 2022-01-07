@@ -102,7 +102,7 @@ void BattleActor::StartBattle(const std::any& data)
 	}
 
 	Locator locator;
-	locator.Set<ViewService>(std::make_unique<ServerViewService>());
+	//locator.Set<ViewService>(std::make_unique<ServerViewService>());
 	locator.Set<InputService>(std::make_unique<ServerInputService>(std::bind(&BattleActor::GameInput, this)));
 	locator.Set<FileService>(std::make_unique<ServerFileService>());
 	locator.Set<GameHelper>(std::make_unique<ServerGameHelper>());

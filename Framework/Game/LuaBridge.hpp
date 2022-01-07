@@ -10,6 +10,7 @@
 
 #include "Framework/Game/Component/EntityByLocalMap.hpp"
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
+#include "Framework/Game/Component/View.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/ColliderInfo.hpp"
 #include "Framework/Game/Component/ParentAnimBone.hpp"
@@ -311,6 +312,20 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		if (it != map.value.end())
 		{
 			ActionStateUtility::ChangeState(registry, it->second, ActorStateType::kHurt);
+		}
+	};
+
+	lua["ApplyCueToTarget"] = [&registry](UniqueId id, std::string_view cue)
+	{
+		auto& map = registry.ctx<EntityByUniqueIdMap>();
+		auto it = map.value.find(id);
+		if (it != map.value.end())
+		{
+			if (registry.all_of<View>(it->second))
+			{
+				auto& view = registry.get<View>(it->second);
+				view.value->ApplyCue(cue);
+			}
 		}
 	};
 }
