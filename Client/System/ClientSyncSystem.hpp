@@ -207,12 +207,16 @@ struct ClientSyncSystem : public System
 			}
 			else
 			{
-				// 只有验证
-				assert(is_need_rollback && "只有验证失败才可以进来!");
+				if (is_need_rollback)
+				{
+					auto e = registry.create();
+					registry.emplace<Local>(e, item.first);
+					registry.emplace<UniqueId>(e, item.second);
+				}
+				else
+				{
 
-				auto e = registry.create();
-				registry.emplace<Local>(e, item.first);
-				registry.emplace<UniqueId>(e, item.second);
+				}
 			}
 		}
 	}
@@ -402,7 +406,7 @@ struct ClientSyncSystem : public System
 			for (auto& item : sync_manager.sync_instances)
 			{
 				item.second.identifier = frame_data.local_id;
-				state.value[frame_data.frame % state.value.size()] = item.second;
+				state.value[frame_data.frame % state.value.size()].identifier = item.second.identifier;
 			}
 		}
 	}

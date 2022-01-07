@@ -1,6 +1,7 @@
 #pragma once
 
 #include <type_traits>
+#include "Framework/Game/DebugService.hpp"
 
 #include "FixedPoint.hpp"
 
@@ -39,6 +40,7 @@ struct ObserverSystem : System
 
 	virtual void Clear()
 	{
+		INFO("observer clear");
 		for (auto& observer : observers_)
 		{
 			observer->clear();

@@ -30,7 +30,7 @@ public:
 		float time = static_cast<float>(dt);
 
 		auto map = registry.ctx<EntityByUniqueIdMap>();
-		auto view = registry.view<GameplayAbilitySpec,GameplayAbilityScript,GameplayPlayAnimAndWaitTask>(entt::exclude<Destory>);
+		auto view = registry.view<GameplayAbilitySpec,GameplayAbilityScript,GameplayPlayAnimAndWaitTask>();
 		for (auto e : view)
 		{
 			auto& [spec, script, task] = registry.get<GameplayAbilitySpec, GameplayAbilityScript, GameplayPlayAnimAndWaitTask>(e);

@@ -13,10 +13,11 @@
 struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 {
 	entt::observer* kinematic_updater;
-
+	entt::observer ob;
 	PhysicsSystem(entt::registry& _registry) 
 		: ObserverSystem(_registry)
 		, kinematic_updater(nullptr)
+		//, ob{ registry, entt::collector.group<Transform, PhysicsKinematicTag, PhysicsActor>().update<Transform>().where<PhysicsActor, PhysicsKinematicTag>() }
 	{ 
 
 	}
@@ -28,17 +29,22 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 		registry.set<PhysicsWorld>(PhysicsUtility::CreatePhysicsWorld(this,registry));
 
 		kinematic_updater = CreateObserver(entt::collector.group<Transform, PhysicsKinematicTag, PhysicsActor>().update<Transform>().where<PhysicsActor, PhysicsKinematicTag>());
+		
 		return true;
 	}
 
 	void FixedUpdate(fixed16 dt) override
 	{
 		ClearContactList();
-		//UpdateStaticActor();
+		UpdateStaticActor();
 
 		auto& world = registry.ctx<PhysicsWorld>();
 		world.scene->simulate(static_cast<float>(dt));
 		world.scene->fetchResults(true);
+
+		INFO("PHY OB SIZE {} {}", ob.size(), kinematic_updater->size());
+
+		ob.clear();
 	}
 
 	void Finalize() override
@@ -69,6 +75,8 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 			auto rigid = (PxRigidStatic*)(physics_actor.actor);
 
 			assert(rigid != nullptr);
+
+			INFO("UpdateStaticActor {}", e);
 
 			rigid->setGlobalPose(PhysicsUtility::Transform(transform));
 		}
@@ -111,6 +119,8 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 			auto trigger = (entt::entity)reinterpret_cast<uint32_t>(pairs[i].triggerActor->userData);
 			auto other = (entt::entity)reinterpret_cast<uint32_t>(pairs[i].otherActor->userData);
 			
+			INFO("onTrigger trigger {} other {}", trigger, other);
+
 			if (registry.valid(trigger) && registry.valid(other))
 			{
 				std::array<std::tuple<entt::entity, entt::entity>, 2> infos = { std::make_tuple(trigger,other),std::make_tuple(other,trigger) };

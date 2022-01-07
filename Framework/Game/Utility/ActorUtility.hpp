@@ -22,7 +22,7 @@ struct ActorUtiltiy
 {
 	static entt::entity CreatePlayer(entt::registry& reg,uint32_t id, std::string_view actor_asset,const vec3& position = vec3(0,0,0),const quat& rotation = glm::identity<quat>())
 	{
-		auto sync = reg.ctx<SyncManager>().sync_instances[id];
+		auto& sync = reg.ctx<SyncManager>().sync_instances[id];
 		auto e = reg.create();
 		reg.emplace<Local>(e, sync.owner, sync.identifier++);
 		reg.emplace<ActorAsset>(e, actor_asset); // 通过createactoresystem创建具体actor信息

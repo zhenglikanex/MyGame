@@ -243,6 +243,7 @@ void Game::UpdateFixedLogic()
 		++registry_.ctx<GameState>().run_frame;
 
 		++run_frame_times;
+		INFO("END FixedUpdate");
 	}
 }
 

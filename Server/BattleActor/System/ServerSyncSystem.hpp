@@ -39,7 +39,7 @@ struct ServerSyncSystem : public System
 	{
 		auto& sync_manager = registry.ctx<SyncManager>();
 		INFO("server sync{}", duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
-		for (auto item : sync_manager.sync_instances)
+		for (auto& item : sync_manager.sync_instances)
 		{
 			auto& sync_instance = item.second;
 

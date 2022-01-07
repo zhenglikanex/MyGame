@@ -23,6 +23,7 @@
 #include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
 #include "Framework/Game/Component/GAS/GameplayPlayAnimAndWaitTask.hpp"
 
+#include "Framework/Game/Utility/ActorStateUtility.hpp"
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 #include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
 #include "Framework/Game/Utility/GameplayEventUtility.hpp"
@@ -184,11 +185,6 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		GameplayAbilityUtility::TryGameplayAbility(registry, source, ability, target);
 	};
 
-	lua["DestoryEntity"] = [&registry](entt::entity e)
-	{
-		registry.emplace<Destory>(e);
-	};
-
 	lua["GameplayWaitTask"] = [&registry](entt::entity ability, float time, std::string_view completed)
 	{
 		auto& task = registry.get_or_emplace<GameplayWaitTask>(ability);
@@ -233,13 +229,21 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		auto it = map.value.find(target);
 		if (it != map.value.end())
 		{
+			entt::entity target_entity = it->second;
+
 			auto e = registry.create();
-			registry.emplace<Transform>(e);
+			if (auto transform = registry.try_get<Transform>(target_entity))
+			{
+				registry.emplace<Transform>(e,*transform);
+			}
+			else 
+			{
+				registry.emplace<Transform>(e);
+			}
+			
 			registry.emplace<ColliderInfo>(e, collider);
 			registry.emplace<ParentAnimBone>(e, target, bone);
 			registry.emplace<CollisionReceiver>(e, receiver);
-
-			entt::entity target_entity = it->second;
 
 			if (auto player = registry.try_get<Player>(target_entity))
 			{
@@ -281,8 +285,12 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		return registry.try_get<UniqueId>(e);
 	};
 	
-	auto destory1 = [&registry](entt::entity entity) {
-		
+	auto destory1 = [&registry](entt::entity entity) 
+	{
+		if (!registry.all_of<Destory>(entity))
+		{
+			registry.emplace<Destory>(entity);
+		}
 	};
 
 	auto destory2 = [&registry](Local local) {
@@ -295,4 +303,14 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	};
 
 	lua["Destory"] = sol::overload(destory1, destory2);
+
+	lua["ActorChangeState"] = [&registry](UniqueId id)
+	{
+		auto& map = registry.ctx<EntityByUniqueIdMap>();
+		auto it = map.value.find(id);
+		if (it != map.value.end())
+		{
+			ActionStateUtility::ChangeState(registry, it->second, ActorStateType::kHurt);
+		}
+	};
 }

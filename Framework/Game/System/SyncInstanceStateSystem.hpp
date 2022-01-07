@@ -30,7 +30,7 @@ struct SyncInstanceStateSystem : public System
 		auto& sync_manager = registry.ctx<SyncManager>();
 		for (auto& item : sync_manager.sync_instances)
 		{
-			state.value[registry.ctx<GameState>().run_frame % state.value.size()] = item.second;
+			state.value[registry.ctx<GameState>().run_frame % state.value.size()].identifier = item.second.identifier;
 		}
 	}
 

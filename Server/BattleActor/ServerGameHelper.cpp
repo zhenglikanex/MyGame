@@ -48,7 +48,6 @@ std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<CreateAnimationSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateSkillGraphSystem>(registry));
 	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(registry));
-	systems.emplace_back(std::make_unique<PhysicsSystem>(registry));
 	systems.emplace_back(std::make_unique<ActorControlSystem>(registry));
 	systems.emplace_back(std::make_unique<SkillStateSystem>(registry));
 	systems.emplace_back(std::make_unique<RootMotionSystem>(registry));
@@ -57,7 +56,7 @@ std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
 	systems.emplace_back(std::make_unique<SkillSystem>(registry));
 	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
-	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(registry));
+	
 	//systems.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry));
 	//systems.emplace_back(std::make_unique<CollisionSystem>(registry));
 	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(registry));
@@ -68,8 +67,10 @@ std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayStateSystem>(registry));
-	systems.emplace_back(std::make_unique<ServerSyncSystem>(registry));
+	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(registry));
+	systems.emplace_back(std::make_unique<PhysicsSystem>(registry));
 	systems.emplace_back(std::make_unique<DestorySystem>(registry));
+	systems.emplace_back(std::make_unique<ServerSyncSystem>(registry));
 	
 
 	return systems;

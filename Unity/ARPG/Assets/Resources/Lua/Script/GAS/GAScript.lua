@@ -29,7 +29,7 @@ function GAScript:EndAbility()
     self.loc = nil
     self.spec = nil
 
-    DestoryEntity(entity)
+    Destory(entity)
 end
 
 return GAScript

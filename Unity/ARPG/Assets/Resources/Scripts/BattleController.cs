@@ -39,7 +39,7 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
             }
 
             //Debug.Log(string.Format("deltaTime {0}", Time.deltaTime));
-            CPlusPlusBridge.UpdateGame(Time.deltaTime);
+            CPlusPlusBridge.UpdateGame(Time.deltaTime / 10);
 
             if(!JDown)
             {

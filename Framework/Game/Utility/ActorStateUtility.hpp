@@ -6,15 +6,8 @@
 
 struct ActionStateUtility
 {
-	static void ChangeState(entt::registry& registry, entt::entity e, const ActorState& action_state, ActorStateType state)
-	{
-		if (action_state.cur_state != state)
-		{
-			registry.emplace_or_replace<ExitActorState>(e, action_state.cur_state);
-			registry.emplace_or_replace<EnterActorState>(e, state);
-		}
-	}
 
+public:
 	static void ChangeState(entt::registry& registry, entt::entity e, ActorStateType state)
 	{
 		if (registry.all_of<ActorState>(e))
@@ -24,6 +17,16 @@ struct ActionStateUtility
 		}
 		else
 		{
+			registry.emplace_or_replace<EnterActorState>(e, state);
+		}
+	}
+
+private:
+	static void ChangeState(entt::registry& registry, entt::entity e, const ActorState& action_state, ActorStateType state)
+	{
+		if (action_state.cur_state != state)
+		{
+			registry.emplace_or_replace<ExitActorState>(e, action_state.cur_state);
 			registry.emplace_or_replace<EnterActorState>(e, state);
 		}
 	}
