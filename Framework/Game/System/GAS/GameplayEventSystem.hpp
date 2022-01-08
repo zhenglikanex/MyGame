@@ -2,7 +2,11 @@
 
 #include <functional>
 
+#include "Framework/Game/Component/EntityByLocalMap.hpp"
 #include "Framework/Game/Component/GAS/GameplayEvent.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
+
+#include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -25,28 +29,44 @@ public:
 	{
 		float time = static_cast<float>(dt);
 
-		auto view = registry.view<GameplayEventReceiverMap>();
-		if (auto* sender = registry.try_ctx<GameplayEventSender>())
+		if (auto* manager = registry.try_ctx<GameplayEventSendManager>())
 		{
-			for (auto& event : sender->events)
+			auto& map = registry.ctx<EntityByLocalMap>();
+			for (auto& sender : manager->senders)
 			{
-				for (auto e : view)
+				auto it = map.value.find(sender.first);
+				if (it != map.value.end())
 				{
-					auto& map = view.get<GameplayEventReceiverMap>(e);
-					auto it = map.value.find(event.tag);
-					if (it != map.value.end())
+					entt::entity receiver = it->second;
+					
+					if (!registry.all_of<UniqueId>(receiver))
 					{
-						it->second.callback(event.data);
+						continue;
 					}
 
-					if (map.value.empty())
+					auto view = registry.view<GameplayAbilityScript>();
+					auto abilities = GameplayAbilityUtility::GetActiveGameplayAbilities(registry, registry.get<UniqueId>(receiver));
+					for (auto& event : sender.second)
 					{
-						registry.remove<GameplayEventReceiverMap>(e);
+						for (auto ability : abilities)
+						{
+							if (auto* task = registry.try_get<GameplayWaitEventTask>(ability))
+							{
+								auto it = task->value.find(event.tag);
+								if (it != task->value.end())
+								{
+									auto& script = view.get<GameplayAbilityScript>(ability);
+									script.value[it->second](script.value, event.data);
+								}
+							}
+
+						}
 					}
+					
 				}
 			}
 
-			sender->events.clear();
+			manager->senders.clear();
 		}
 	}
 

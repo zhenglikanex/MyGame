@@ -5,6 +5,8 @@
 #include "Framework/Game/Component/Animation.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 
+#include "Framework/Game/Utility/AnimEventUtility.hpp"
+
 #include "Framework/Game/System.hpp"
 
 
@@ -37,6 +39,8 @@ struct AnimationSystem : public System
 				if (!animation_clip.is_done)
 				{
 					animation_clip.time += dt;
+
+					
 				}
 
 				auto iter = animation.value->clips.find(animation_clip.name);
@@ -45,6 +49,16 @@ struct AnimationSystem : public System
 					if (animation_clip.time >= iter->second.length)
 					{
 						animation_clip.is_done = true;
+					}
+
+					uint32_t frame = static_cast<float>(animation_clip.time) / static_cast<float>(GameConfig::kFrameTime);
+					auto it = iter->second.anim_events_map.find(frame);
+					if (it != iter->second.anim_events_map.end())
+					{
+						for (auto& event : it->second)
+						{
+							AnimEventUtility::SendAnimEvent(registry, e, event.name);
+						}
 					}
 				}
 			}

@@ -22336,5 +22336,37 @@
         }
       ]
     }
+  },
+  "events":{
+    "skill100010":[
+        {
+          "time":0.4,
+          "AnimEvent":"StartInputTask"
+        },
+        {
+          "time":0.7,
+          "AnimEvent":"OverInputTask"
+        }
+      ],
+      "skill100020":[
+        {
+          "time":0.31,
+          "AnimEvent":"StartInputTask"
+        },
+        {
+          "time":0.7,
+          "AnimEvent":"OverInputTask"
+        }
+      ],
+      "skill100030":[
+        {
+          "time":0.5,
+          "AnimEvent":"StartInputTask"
+        },
+        {
+          "time":0.7,
+          "AnimEvent":"OverInputTask"
+        }
+      ]
   }
 }

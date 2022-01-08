@@ -23,6 +23,8 @@
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
 #include "Framework/Game/Component/GAS/GameplayPlayAnimAndWaitTask.hpp"
+#include "Framework/Game/Component/GAS/GameplayInputTask.hpp"
+#include "Framework/Game/Component/GAS/GameplayEvent.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
@@ -176,6 +178,8 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	RegisterGameplayAbility(lua);
 	RegisterGameplayAbilitySpec(lua);
 
+	lua["EnttNull"] = static_cast<entt::entity>(entt::null);
+
 	lua["ApplyGameplayEffectToTarget"] = [&registry](entt::entity source, std::string_view effect, uint32_t level, entt::entity target)
 	{
 		GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, effect, level, target);
@@ -192,21 +196,6 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		task.value.emplace_back(time, completed);
 	};
 
-	lua["ReceiveGameplayEvent"] = [&registry](entt::entity e, std::string_view tag, const sol::function& func)
-	{
-		GameplayEventUtility::ReceiveGameplayEvent(registry, e,GameplayTag(tag), func);
-	};
-
-	lua["SendGameplayEvent"] = [&registry](std::string_view tag,const GameplayEventData& data)
-	{
-		GameplayEventUtility::SendGameplayEvent(registry, GameplayTag(tag), data);
-	};
-
-	lua["RemoveReceiveGameplayEvent"] = [&registry](entt::entity e,std::string_view tag)
-	{
-		GameplayEventUtility::RemoveReceiveGameplayEvent(registry, e, GameplayTag(tag));
-	};
-
 	lua["PlayAnimation"] = [&registry](UniqueId id, std::string_view name,float time = 0)
 	{
 		auto& map = registry.ctx<EntityByUniqueIdMap>();
@@ -221,6 +210,31 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	{
 		auto& task = registry.get_or_emplace<GameplayPlayAnimAndWaitTask>(ability);
 		task.value.emplace_back(name, completed, canceled);
+	};
+
+	lua["GameplayInput"] = [&registry](entt::entity ability, std::string_view key, std::string_view pressed, std::string_view released)
+	{
+		auto& task = registry.get_or_emplace<GameplayInputTask>(ability);
+		task.value.emplace(key, pressed, released);
+	};
+
+	lua["RemoveGameplayInput"] = [&registry](entt::entity ability, std::string_view key)
+	{
+		auto& task = registry.get_or_emplace<GameplayInputTask>(ability);
+		task.value.emplace(key);
+	};
+
+	lua["GameplayWaitEvent"] = [&registry](entt::entity ability,std::string_view tag_name,std::string_view handler)
+	{
+		GameplayTag tag(tag_name);
+		auto& task = registry.get_or_emplace<GameplayWaitEventTask>(ability);
+		task.value.emplace(tag, GameplayWaitEventSpec(tag,handler));
+	};
+
+	lua["RemoveGameplayWaitEvent"] = [&registry](entt::entity ability, const GameplayTag& tag)
+	{
+		auto& task = registry.get_or_emplace<GameplayWaitEventTask>(ability);
+		task.value.erase(tag);
 	};
 
 	lua["CreateColliderToAnimBone"] = [&registry](const ColliderInfo& collider, UniqueId target, std::string_view bone,Local receiver)

@@ -8,9 +8,15 @@
 #include <any>
 #include <iostream>
 #include "Framework/Game/Math.hpp"
-
+#include <variant>
 #include "Framework/Game/GAS/GameplayTag.hpp"
 #include <iostream>
+
+
+enum class Enum : uint32_t {};
+
+using GameplayEventData = std::variant<Enum, std::vector<Enum>>;
+
 
 using namespace std::chrono;
 
@@ -26,6 +32,8 @@ std::size_t fun(std::size_t a, std::size_t b)
 
 TEST_CASE_METHOD(Serialize1, "NetMessage")
 {
+	
+
 	std::size_t v1 = std::numeric_limits<uint32_t>::max();
 	std::size_t v = fun(v1 << 32,std::numeric_limits<uint32_t>::max());
 	std::cout << std::numeric_limits<std::size_t>::max() << " " << v << std::endl;

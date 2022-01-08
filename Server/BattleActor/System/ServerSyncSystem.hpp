@@ -54,7 +54,7 @@ struct ServerSyncSystem : public System
 
 			INFO("frame {}", frame_data.frame);
 
-			/**************************local entity/**************************/
+			/**************************local entity**************************/
 
 			auto local_view = registry.view<Local>();
 			for (auto e : local_view)
@@ -99,13 +99,22 @@ struct ServerSyncSystem : public System
 			auto play_anim_and_wait_task_view = registry.view<Local, GameplayPlayAnimAndWaitTask>();
 			for (auto e : play_anim_and_wait_task_view)
 			{
-				auto&[local, task] = play_anim_and_wait_task_view.get<Local, GameplayPlayAnimAndWaitTask>(e);
+				auto& [local, task] = play_anim_and_wait_task_view.get<Local, GameplayPlayAnimAndWaitTask>(e);
 				if (local.owner == sync_instance.owner)
 				{
 					frame_data.play_anim_and_wait_tasks.emplace(local, task);
 				}
 			}
 
+			auto input_task_view = registry.view<Local, GameplayInputTask>();
+			for (auto e : input_task_view)
+			{
+				auto& [local, task] = input_task_view.get<Local, GameplayInputTask>(e);
+				if (local.owner == sync_instance.owner)
+				{
+					frame_data.input_tasks.emplace(local, task);
+				}
+			}
 			/**************************local entity/**************************/
 
 

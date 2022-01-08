@@ -223,17 +223,17 @@ struct ClientSyncSystem : public System
 
 	void ReplicationServerData(FrameData& frame_data, bool is_need_rollback)
 	{
-		auto& e_by_unique_id_map = registry.ctx<EntityByUniqueIdMap>();
+		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
 
 		for (auto& item : frame_data.transforms)
 		{
-			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
+			if (unique_map.value.find(item.first) == unique_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
 
-			auto e = e_by_unique_id_map.value[item.first];
+			auto e = unique_map.value[item.first];
 			auto& transform = item.second;
 			auto& unique_id = item.first;
 			if (is_need_rollback || !registry.all_of<TransformState>(e))
@@ -244,13 +244,13 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.players)
 		{
-			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
+			if (unique_map.value.find(item.first) == unique_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
 
-			auto e = e_by_unique_id_map.value[item.first];
+			auto e = unique_map.value[item.first];
 			if (!registry.all_of<Local>(e))
 			{
 				registry.emplace_or_replace<Player>(e, item.second);
@@ -259,13 +259,13 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.actor_assets)
 		{
-			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
+			if (unique_map.value.find(item.first) == unique_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
 
-			auto e = e_by_unique_id_map.value[item.first];
+			auto e = unique_map.value[item.first];
 			if (!registry.all_of<Local>(e))
 			{
 				registry.emplace_or_replace<ActorAsset>(e, item.second);
@@ -274,13 +274,13 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.animation_clips)
 		{
-			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
+			if (unique_map.value.find(item.first) == unique_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
 
-			auto e = e_by_unique_id_map.value[item.first];
+			auto e = unique_map.value[item.first];
 			if (is_need_rollback || !registry.all_of<TransformState>(e))
 			{
 				registry.emplace_or_replace<AnimationClip>(e, item.second);
@@ -289,26 +289,26 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.attribute_sets)
 		{
-			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
+			if (unique_map.value.find(item.first) == unique_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
 
 			// 这个不预测
-			auto e = e_by_unique_id_map.value[item.first];
+			auto e = unique_map.value[item.first];
 			registry.emplace_or_replace<GameplayAttributeSet>(e, item.second);
 		}
 
 		for (auto& item : frame_data.tags)
 		{
-			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
+			if (unique_map.value.find(item.first) == unique_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
 
-			auto e = e_by_unique_id_map.value[item.first];
+			auto e = unique_map.value[item.first];
 			if (is_need_rollback || !registry.all_of<GameplayState>(e))
 			{
 				registry.emplace_or_replace<GameplayTags>(e, item.second);
@@ -317,14 +317,14 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.ability_specs)
 		{
-			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
+			if (unique_map.value.find(item.first) == unique_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
 
-			auto e = e_by_unique_id_map.value[item.first];
-			auto owner = e_by_unique_id_map.value[item.second.source];
+			auto e = unique_map.value[item.first];
+			auto owner = unique_map.value[item.second.source];
 			if (is_need_rollback || !registry.all_of<GameplayState>(owner))
 			{
 				registry.emplace_or_replace<GameplayAbilitySpec>(e, item.second);
@@ -333,14 +333,14 @@ struct ClientSyncSystem : public System
 
 		for (auto& item : frame_data.effect_specs)
 		{
-			if (e_by_unique_id_map.value.find(item.first) == e_by_unique_id_map.value.end())
+			if (unique_map.value.find(item.first) == unique_map.value.end())
 			{
 				auto e = registry.create();
 				registry.emplace<UniqueId>(e, item.first);
 			}
 
-			auto e = e_by_unique_id_map.value[item.first];
-			auto owner = e_by_unique_id_map.value[item.second.owner];
+			auto e = unique_map.value[item.first];
+			auto owner = unique_map.value[item.second.owner];
 			if (is_need_rollback || !registry.all_of<GameplayState>(owner))
 			{
 				registry.emplace_or_replace<GameplayEffectSpec>(e, item.second);
@@ -349,30 +349,39 @@ struct ClientSyncSystem : public System
 
 		if (is_need_rollback)
 		{
-			auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
+			auto& local_map = registry.ctx<EntityByLocalMap>();
 			for (auto& item : frame_data.wait_tasks)
 			{
-				auto it = e_by_local_id_map.value.find(item.first);
+				auto it = local_map.value.find(item.first);
 
-				assert(it != e_by_local_id_map.value.end() && "这里不可能不对应");
+				assert(it != local_map.value.end() && "这里不可能不对应");
 
 				registry.emplace_or_replace<GameplayWaitTask>(it->second, item.second);
 			}
 
 			for (auto& item : frame_data.play_anim_and_wait_tasks)
 			{
-				auto it = e_by_local_id_map.value.find(item.first);
+				auto it = local_map.value.find(item.first);
 
-				assert(it != e_by_local_id_map.value.end() && "这里不可能不对应");
+				assert(it != local_map.value.end() && "这里不可能不对应");
 
 				registry.emplace_or_replace<GameplayPlayAnimAndWaitTask>(it->second, item.second);
 			}
 
+			for (auto& item : frame_data.input_tasks)
+			{
+				auto it = local_map.value.find(item.first);
+
+				assert(it != local_map.value.end() && "这里不可能不对应");
+
+				registry.emplace_or_replace<GameplayInputTask>(it->second, item.second);
+			}
+
 			for (auto& item : frame_data.character_movements)
 			{
-				auto it = e_by_local_id_map.value.find(item.first);
+				auto it = local_map.value.find(item.first);
 
-				assert(it != e_by_local_id_map.value.end() && "这里不可能不对应");
+				assert(it != local_map.value.end() && "这里不可能不对应");
 
 				auto& comp = registry.get_or_emplace<CharacterMovement>(it->second);
 				comp.base_velocity = item.second.base_velocity;

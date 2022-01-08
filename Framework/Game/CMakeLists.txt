@@ -28,6 +28,7 @@ Proto.hpp
 RandomEngine.hpp
 LuaBridge.hpp
 
+
 GAS/GameplayEffect.hpp
 GAS/GameplayTag.hpp
 GAS/GameplayEffectManager.hpp
@@ -44,6 +45,7 @@ Utility/GameplayAttributeUtility.hpp
 Utility/GameplayEffectUtility.hpp
 Utility/GameplayAbilityUtility.hpp
 Utility/GameplayEventUtility.hpp
+Utility/AnimEventUtility.hpp
 
 System/AnimationSystem.hpp
 System/CollisionSystem.hpp
@@ -79,6 +81,7 @@ System/GAS/GameplayEventSystem.hpp
 System/GAS/GameplayStateSystem.hpp
 System/GAS/GameplayWaitTaskSystem.hpp
 System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp
+System/GAS/GameplayInputTaskSystem.hpp
 
 Component/GameState.hpp
 Component/Command.hpp
@@ -126,6 +129,7 @@ Component/GAS/GameplayEvent.hpp
 Component/GAS/GameplayState.hpp
 Component/GAS/GameplayWaitTask.hpp
 Component/GAS/GameplayPlayAnimAndWaitTask.hpp
+Component/GAS/GameplayInputTask.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp

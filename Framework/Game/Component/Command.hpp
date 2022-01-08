@@ -15,12 +15,12 @@ struct Command
 
 	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
 	std::string ability;
+	std::string key;
 
 	Command()
 		: frame(0)
 		, x_axis(0)
 		, y_axis(0)
-		, ability()
 	{
 		
 	}

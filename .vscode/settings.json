@@ -1,5 +1,4 @@
 {
-    "files.encoding": "gbk",
     "Lua.diagnostics.globals": [
         "GameplayTag",
         "GEModifier",
@@ -21,6 +20,12 @@
         "GetUnique",
         "Destory",
         "GetUniqueId",
-        "ActorChangeState"
+        "ActorChangeState",
+        "ApplyCueToTarget",
+        "GameplayInput",
+        "TryGameplayAbility",
+        "EnttNull",
+        "GameplayWaitEvent",
+        "RemoveGameplayInput"
     ]
 }

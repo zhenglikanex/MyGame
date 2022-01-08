@@ -86,5 +86,6 @@ public class DlgGame : NormalUI
         btn_end_.gameObject.SetActive(BattleController.Instance.IsBattleing);
         hp_.gameObject.SetActive(BattleController.Instance.IsBattleing);
         mp_.gameObject.SetActive(BattleController.Instance.IsBattleing);
+
     }
 }

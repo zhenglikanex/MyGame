@@ -1,9 +1,12 @@
 #pragma once
 
 #include "Framework/Game/GAS/GameplayAbility.hpp"
+
+#include "Framework/Game/Component/UniqueId.hpp"
 #include "Framework/Game/Component/Local.hpp"
-#include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -28,5 +31,22 @@ public:
 	{
 		auto e = registry.create();
 		//registry.emplace<LocalId>();
+	}
+
+	static std::vector<entt::entity> GetActiveGameplayAbilities(entt::registry& registry, const UniqueId& id)
+	{
+		std::vector<entt::entity> abilities;
+
+		auto view = registry.view<GameplayAbilitySpec,GameplayAbilityScript>();
+		for (auto e : view)
+		{
+			auto& spec = view.get<GameplayAbilitySpec>(e);
+			if (spec.source == id)
+			{
+				abilities.emplace_back(e);
+			}
+		}
+
+		return abilities;
 	}
 };

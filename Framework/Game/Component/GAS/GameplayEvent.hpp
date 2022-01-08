@@ -8,23 +8,9 @@
 
 #include "3rdparty/include/entt/entt.hpp"
 
+#include "Kanex.hpp"
+
 using GameplayEventData = std::variant<entt::entity, std::vector<entt::entity>>;
-
-struct GameplayEventReceiver
-{
-	std::function<void(const GameplayEventData&)> callback;
-
-	GameplayEventReceiver(const std::function<void(const GameplayEventData&)>& _callback)
-		: callback(_callback)
-	{
-
-	}
-};
-
-struct GameplayEventReceiverMap
-{
-	std::unordered_map<GameplayTag,GameplayEventReceiver> value;
-};
 
 struct GameplayEvent
 {
@@ -37,10 +23,33 @@ struct GameplayEvent
 	{
 
 	}
-
 };
 
-struct GameplayEventSender
+struct GameplayEventSendManager
 {
-	std::vector<GameplayEvent> events;
+	std::unordered_map<Local, std::vector<GameplayEvent>> senders;
 };
+
+struct GameplayWaitEventSpec
+{
+	GameplayTag tag;
+	std::string handler;
+
+	GameplayWaitEventSpec() = default;
+
+	GameplayWaitEventSpec(const GameplayTag& _tag, std::string_view _handler)
+		: tag(_tag)
+		, handler(_handler)
+	{
+		
+	}
+};
+
+NON_MEMEBER_BAR(GameplayWaitEventSpec, obj.tag, obj.handler);
+
+struct GameplayWaitEventTask
+{
+	std::unordered_map<GameplayTag, GameplayWaitEventSpec> value;
+};
+
+NON_MEMEBER_BAR(GameplayWaitEventTask, obj.value);
