@@ -19,27 +19,6 @@
 
 #include "Framework/Game/Utility/PhysicsUtility.hpp"
 
-class IgnoreTiggerQueryCallback : public PxQueryFilterCallback
-{
-public:
-	PxQueryHitType::Enum preFilter(
-		const PxFilterData& filterData, const PxShape* shape, const PxRigidActor* actor, PxHitFlags& queryFlags) override
-	{
-		if (shape->getFlags() & PxShapeFlag::eTRIGGER_SHAPE)
-		{
-			return PxQueryHitType::eNONE;
-		}
-		return PxQueryHitType::eTOUCH;
-	}
-
-	PxQueryHitType::Enum postFilter(const PxFilterData& filterData, const PxQueryHit& hit) override
-	{
-		return PxQueryHitType::eTOUCH;
-	}
-
-	~IgnoreTiggerQueryCallback() {}
-};
-
 //包含碰撞稳定性(是否可以站立)评估的所有信息
 struct HitStabilityReport
 {

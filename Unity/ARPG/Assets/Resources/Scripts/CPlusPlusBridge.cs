@@ -123,6 +123,12 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
                 return json_result;
             }
         }
+
+        if(func == "CreateView")
+        {
+            int a = 10;
+        }
+
         return "";
     }
 

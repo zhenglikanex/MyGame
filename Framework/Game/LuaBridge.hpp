@@ -11,6 +11,7 @@
 #include "Framework/Game/Component/EntityByLocalMap.hpp"
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/View.hpp"
+#include "Framework/Game/Component/ViewAsset.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/ColliderInfo.hpp"
 #include "Framework/Game/Component/ParentAnimBone.hpp"
@@ -30,6 +31,7 @@
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 #include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
 #include "Framework/Game/Utility/GameplayEventUtility.hpp"
+#include "Framework/Game/Utility/PhysicsUtility.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -38,6 +40,30 @@ inline void RegisterLocal(sol::state& lua)
 	auto type = lua.new_usertype<Local>("Local");
 	type["owner"] = &Local::owner;
 	type["id"] = &Local::id;
+}
+
+inline void RegistryVec3(sol::state& lua)
+{
+	auto type = lua.new_usertype<vec3>("vec3", sol::constructors<vec3(float,float,float)>());
+	type["x"] = &vec3::x;
+	type["y"] = &vec3::y;
+	type["z"] = &vec3::z;
+}
+
+inline void RegistryQuat(sol::state& lua)
+{
+	auto type = lua.new_usertype<quat>("quat", sol::constructors<vec3(float, float, float, float)>());
+	type["x"] = &quat::x;
+	type["y"] = &quat::y;
+	type["z"] = &quat::z;
+	type["w"] = &quat::w;
+}
+
+inline void RegistryTransform(sol::state& lua)
+{
+	auto type = lua.new_usertype<Transform>("Transform");
+	type["position"] = &Transform::position;
+	type["rotation"] = &Transform::rotation;
 }
 
 inline void RegisterWeapon(sol::state& lua)
@@ -190,7 +216,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		GameplayAbilityUtility::TryGameplayAbility(registry, source, ability, target);
 	};
 
-	lua["GameplayWaitTask"] = [&registry](entt::entity ability, float time, std::string_view completed)
+	lua["GameplayWait"] = [&registry](entt::entity ability, float time, std::string_view completed)
 	{
 		auto& task = registry.get_or_emplace<GameplayWaitTask>(ability);
 		task.value.emplace_back(time, completed);
@@ -341,5 +367,40 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 				view.value->ApplyCue(cue);
 			}
 		}
+	};
+
+	auto get_transform1 = [&registry](UniqueId target)
+	{
+		Transform* transform = nullptr;
+
+		auto& map = registry.ctx<EntityByUniqueIdMap>();
+		auto it = map.value.find(target);
+		if (it != map.value.end())
+		{
+			transform = registry.try_get<Transform>(it->second);
+		}
+
+		return transform;
+	};
+
+	auto get_transform2 = [&registry](entt::entity e)
+	{
+		return registry.try_get<Transform>(e);
+	};
+
+	lua["GetTransform"] = sol::overload(get_transform1, get_transform2);
+
+	lua["CheckSphereOverlap"] = [&registry](const Transform& transform, float radius)
+	{
+		return PhysicsUtility::CheckSphereOverlap(registry, transform, radius);
+	};
+
+	lua["CreateView"] = [&registry](std::string_view asset, const Transform& transform)
+	{
+		auto e = registry.create();
+		registry.emplace<ViewAsset>(e,asset);
+		registry.emplace<Transform>(e,transform);
+		INFO("CreateViewCreateViewCreateViewCreateView");
+		return e;
 	};
 }

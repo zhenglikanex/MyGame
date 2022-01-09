@@ -30,6 +30,16 @@ public class GameBattleState : FSMState
             }
         }
 
+        {
+            GameObject prefab = Resources.Load<GameObject>("Prefab/Sphere");
+            if (prefab)
+            {
+                GameObjectPool pool = PoolManager.Instance.RegisterPool("Sphere", prefab);
+                pool.AlllocCapacity(10);
+            }
+        }
+
+
         // 加载战斗场景
         SceneManager.LoadScene("Resources/Scenes/Battle", LoadSceneMode.Single);
     }

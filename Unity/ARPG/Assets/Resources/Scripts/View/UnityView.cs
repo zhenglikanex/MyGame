@@ -30,12 +30,13 @@ public class UnityView : PoolObject
 
     public virtual void UpdatePosition(float x,float y,float z)
     {
-        
+        Vector3 pos = new Vector3(x, y, z);
+        transform.position = pos;
     }
 
     public virtual void UpdateRotation(float x,float y,float z, float w)
     {
-
+        transform.rotation = new Quaternion(x, y, z, w);
     }
 
     public virtual void MovePosition(float x,float y,float z)

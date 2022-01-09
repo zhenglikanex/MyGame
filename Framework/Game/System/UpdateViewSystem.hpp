@@ -43,6 +43,7 @@ struct UpdateViewSystem : public ObserverSystem
 	void UpdateTransform()
 	{
 		auto entt_view = registry.view<View, Transform>();
+		INFO("UpdateTransform Size{}", mover->size());
 		for (auto e : *mover)
 		{
 			auto& view = entt_view.get<View>(e);

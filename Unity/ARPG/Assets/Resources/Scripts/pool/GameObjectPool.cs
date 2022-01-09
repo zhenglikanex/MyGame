@@ -28,13 +28,19 @@ public class GameObjectPool : MonoBehaviour
 
     public GameObject Create()
     {
-        GameObject go = caches_.Dequeue();
-        if(!go)
+        GameObject go;
+
+        if (caches_.Count <= 0)
         {
             go = GameObject.Instantiate<GameObject>(prefab_);
             PoolObject po = go.GetComponent<PoolObject>();
             po.OwnerPoolName = Name;
         }
+        else
+        {
+            go = caches_.Dequeue();
+        }
+
         go.SetActive(true);
         PoolObject obj = go.GetComponent<PoolObject>();
         obj.IsUse = true;

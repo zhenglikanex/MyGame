@@ -15,6 +15,8 @@
 struct GameplayWaitTaskSystem : System
 {
 public:
+	std::vector<uint32_t> del_list;
+
 	GameplayWaitTaskSystem(entt::registry& _registry) : System(_registry)
 	{
 	}
@@ -35,22 +37,25 @@ public:
 		{
 			auto& [script,task] = registry.get<GameplayAbilityScript,GameplayWaitTask>(e);
 
-			auto it = task.value.begin();
-			while (it != task.value.end())
+			uint32_t size = task.value.size();
+			for (uint32_t i = 0; i < size; ++i)
 			{
-				auto& spec = *it;
+				auto& spec = task.value[i];
 				spec.time -= time;
 				if (spec.time <= 0)
 				{
 					script.value[spec.completed](script.value);
-					it = task.value.erase(it);
-				}
-				else
-				{
-					++it;
+					del_list.emplace_back(i);
 				}
 			}
 
+			for (int i = del_list.size() - 1; i >= 0; --i)
+			{
+				auto index = del_list[i];
+				task.value.erase(task.value.begin() + i);
+			}
+
+			del_list.clear();
 		}
 	}
 

@@ -26,6 +26,10 @@
         "TryGameplayAbility",
         "EnttNull",
         "GameplayWaitEvent",
-        "RemoveGameplayInput"
+        "RemoveGameplayInput",
+        "GameplayWait",
+        "GetTransform",
+        "CheckSphereOverlap",
+        "CreateView"
     ]
 }

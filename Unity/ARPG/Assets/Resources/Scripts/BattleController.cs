@@ -9,6 +9,8 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
     public uint MyId { get; set; }
     public bool JDown { get; set; }
 
+    public bool KDown { get; set; }
+
     public bool IsBattleing
     {
         get;
@@ -44,6 +46,11 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
             if(!JDown)
             {
                 JDown = Input.GetKeyDown("j");
+            }
+
+            if(!KDown)
+            {
+                KDown = Input.GetKeyDown("k");
             }
         }
     }
@@ -91,11 +98,18 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
             Proto.CS2CPlusPlusCommand command = new Proto.CS2CPlusPlusCommand();
             command.XAxis = Input.GetAxis("Horizontal");
             command.YAxis = Input.GetAxis("Vertical");
+
             if (JDown)
             {
                 command.Ability = "AttackGA";
             }
+            if(KDown)
+            {
+                command.Ability = "LeiFaGA";
+            }
+
             JDown = false;
+            KDown = false;
             var data = command.ToByteArray();
             CPlusPlusBridge.GameInput(data, data.Length);
         }

@@ -38,3 +38,24 @@ struct PhysicsWorld
 	}
 };
 
+class IgnoreTiggerQueryCallback : public PxQueryFilterCallback
+{
+public:
+	PxQueryHitType::Enum preFilter(
+		const PxFilterData& filterData, const PxShape* shape, const PxRigidActor* actor, PxHitFlags& queryFlags) override
+	{
+		if (shape->getFlags() & PxShapeFlag::eTRIGGER_SHAPE)
+		{
+			return PxQueryHitType::eNONE;
+		}
+		return PxQueryHitType::eTOUCH;
+	}
+
+	PxQueryHitType::Enum postFilter(const PxFilterData& filterData, const PxQueryHit& hit) override
+	{
+		return PxQueryHitType::eTOUCH;
+	}
+
+	~IgnoreTiggerQueryCallback() {}
+};
+
