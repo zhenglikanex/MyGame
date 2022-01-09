@@ -16181,6 +16181,16 @@
             }
           }
         }
+      ],
+      "events":[
+          {
+            "time":0.4,
+            "name":"StartInputTask"
+          },
+          {
+            "time":0.7,
+            "name":"OverInputTask"
+          }
       ]
     },
     "skill100020": {
@@ -17176,7 +17186,17 @@
             }
           }
         }
-      ]
+      ],
+      "events":[
+        {
+          "time":0.31,
+          "name":"StartInputTask"
+        },
+        {
+          "time":0.7,
+          "name":"OverInputTask"
+        }
+    ]
     },
     "skill100030": {
       "length": 0.8333435,
@@ -18171,7 +18191,17 @@
             }
           }
         }
-      ]
+      ],
+      "events":[
+        {
+          "time":0.5,
+          "name":"StartInputTask"
+        },
+        {
+          "time":0.7,
+          "name":"OverInputTask"
+        }
+    ]
     },
     "skill100040": {
       "length": 0.8333435,
@@ -19166,7 +19196,17 @@
             }
           }
         }
-      ]
+      ],
+      "events":[
+        {
+          "time":0.4,
+          "name":"StartInputTask"
+        },
+        {
+          "time":0.7,
+          "name":"OverInputTask"
+        }
+    ]
     },
     "skill100050": {
       "length": 1.883347,
@@ -22336,37 +22376,5 @@
         }
       ]
     }
-  },
-  "events":{
-    "skill100010":[
-        {
-          "time":0.4,
-          "AnimEvent":"StartInputTask"
-        },
-        {
-          "time":0.7,
-          "AnimEvent":"OverInputTask"
-        }
-      ],
-      "skill100020":[
-        {
-          "time":0.31,
-          "AnimEvent":"StartInputTask"
-        },
-        {
-          "time":0.7,
-          "AnimEvent":"OverInputTask"
-        }
-      ],
-      "skill100030":[
-        {
-          "time":0.5,
-          "AnimEvent":"StartInputTask"
-        },
-        {
-          "time":0.7,
-          "AnimEvent":"OverInputTask"
-        }
-      ]
   }
 }

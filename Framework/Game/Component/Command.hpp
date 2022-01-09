@@ -48,6 +48,6 @@ struct CommandGroup
 	}
 };
 
-NON_MEMEBER_BAR(Command,obj.frame, obj.x_axis, obj.y_axis,obj.ability);
+NON_MEMEBER_BAR(Command,obj.frame, obj.x_axis, obj.y_axis,obj.ability,obj.key);
 NON_MEMEBER_BAR(CommandGroup, obj.frame, obj.commands);
 

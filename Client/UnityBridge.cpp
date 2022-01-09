@@ -168,7 +168,7 @@ extern "C"
 			command.y_axis = fixed16(std::abs(csharp_command.y_axis()) < 0.1 ? 0 : csharp_command.y_axis());
 			command.ability = csharp_command.ability();
 			// todoÁãÊ±Ð´Ò»ÏÂ
-			command.key = csharp_command.ability() != "";
+			command.key = csharp_command.ability() != "" ? "j" : "";
 
 			g_game->InputCommand(g_game->run_frame(), g_my_id, command);
 

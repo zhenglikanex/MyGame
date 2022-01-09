@@ -1,6 +1,8 @@
 local GAScript = class("GAScript")
 
 function GAScript:ctor(entity,loc,spec)
+    dump(self)
+    print("function GAScript:ctor",self,entity,loc,spec)
     self.entity = entity
     self.loc = loc
     self.spec = spec

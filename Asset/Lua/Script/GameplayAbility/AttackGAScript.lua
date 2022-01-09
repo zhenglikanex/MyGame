@@ -55,8 +55,8 @@ end
 
 function AttackGAScript:OnKeyPressed()
     print("function AttackGAScript:OnKeyPressed()")
-    --self:EndAbility()
-    --TryGameplayAbility(self.spec.source,"AttackGA2",1,EnttNull)
+    TryGameplayAbility(self.spec.source,"AttackGA2",1,EnttNull)
+    self:EndAbility()
 end
 
 function AttackGAScript:OnKeyReleased()

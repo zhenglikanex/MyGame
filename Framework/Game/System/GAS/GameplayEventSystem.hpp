@@ -56,7 +56,7 @@ public:
 								if (it != task->value.end())
 								{
 									auto& script = view.get<GameplayAbilityScript>(ability);
-									script.value[it->second](script.value, event.data);
+									script.value[it->second.handler](script.value, event.data);
 								}
 							}
 

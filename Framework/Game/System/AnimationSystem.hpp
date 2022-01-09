@@ -50,15 +50,15 @@ struct AnimationSystem : public System
 					{
 						animation_clip.is_done = true;
 					}
+				}
 
-					uint32_t frame = static_cast<float>(animation_clip.time) / static_cast<float>(GameConfig::kFrameTime);
-					auto it = iter->second.anim_events_map.find(frame);
-					if (it != iter->second.anim_events_map.end())
+				uint32_t frame = static_cast<float>(animation_clip.time) / static_cast<float>(GameConfig::kFrameTime);
+				auto it = iter->second.anim_events_map.find(frame);
+				if (it != iter->second.anim_events_map.end())
+				{
+					for (auto& event : it->second)
 					{
-						for (auto& event : it->second)
-						{
-							AnimEventUtility::SendAnimEvent(registry, e, event.name);
-						}
+						AnimEventUtility::SendAnimEvent(registry, e, event.name);
 					}
 				}
 			}

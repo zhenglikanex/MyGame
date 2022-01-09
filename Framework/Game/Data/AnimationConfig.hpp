@@ -73,7 +73,7 @@ inline void from_json(const nlohmann::json& j, Skeleton& skeleton)
 inline void from_json(const nlohmann::json& j, AnimEvent& anim_event)
 {
 	j.at("time").get_to(anim_event.time);
-	j.at("anim_events").get_to(anim_event.name);
+	j.at("name").get_to(anim_event.name);
 }
 
 inline void from_json(const nlohmann::json& j, AnimationClipInfo& clip_info)
@@ -88,11 +88,14 @@ inline void from_json(const nlohmann::json& j, AnimationClipInfo& clip_info)
 	clip_info.skeletons.reserve(skeletons.size());
 	skeletons.get_to(clip_info.skeletons);
 
-	auto& anim_events = j.at("events").get<std::vector<AnimEvent>>();
-	for (auto& event : anim_events)
+	if (j.contains("events"))
 	{
-		uint32_t frame = event.time / static_cast<float>(GameConfig::kFrameTime);
-		clip_info.anim_events_map[frame].emplace_back(event);
+		auto& anim_events = j.at("events").get<std::vector<AnimEvent>>();
+		for (auto& event : anim_events)
+		{
+			uint32_t frame = event.time / static_cast<float>(GameConfig::kFrameTime);
+			clip_info.anim_events_map[frame].emplace_back(event);
+		}
 	}
 }
 

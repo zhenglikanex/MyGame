@@ -185,7 +185,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, effect, level, target);
 	};
 
-	lua["TryGameplayAbility"] = [&registry](entt::entity source, std::string_view ability, entt::entity target)
+	lua["TryGameplayAbility"] = [&registry](UniqueId source, std::string_view ability, entt::entity target)
 	{
 		GameplayAbilityUtility::TryGameplayAbility(registry, source, ability, target);
 	};
@@ -215,13 +215,13 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	lua["GameplayInput"] = [&registry](entt::entity ability, std::string_view key, std::string_view pressed, std::string_view released)
 	{
 		auto& task = registry.get_or_emplace<GameplayInputTask>(ability);
-		task.value.emplace(key, pressed, released);
+		task.value.emplace(key,GameplayInputSpec(key, pressed, released));
 	};
 
 	lua["RemoveGameplayInput"] = [&registry](entt::entity ability, std::string_view key)
 	{
 		auto& task = registry.get_or_emplace<GameplayInputTask>(ability);
-		task.value.emplace(key);
+		task.value.erase(key.data());
 	};
 
 	lua["GameplayWaitEvent"] = [&registry](entt::entity ability,std::string_view tag_name,std::string_view handler)

@@ -6,7 +6,8 @@ function AttackGAScript:ActiveAbility()
     self:CreateWeaponCollider()
 
     GameplayPlayAnimAndWait(self.entity,"skill100010","AnimCompleted","AnimCanceled")
-    GameplayWaitEvent(self.entity,"GA.StartInputTask","OnStartInputTask","OnOverInputTask")
+    GameplayWaitEvent(self.entity,"GA.StartInputTask","OnStartInputTask")
+    GameplayWaitEvent(self.entity,"GA.OverInputTask","OnOverInputTask")
 end
 
 function AttackGAScript:AnimCompleted()
@@ -54,8 +55,8 @@ end
 
 function AttackGAScript:OnKeyPressed()
     print("function AttackGAScript:OnKeyPressed()")
-    --self:EndAbility()
-    --TryGameplayAbility(self.spec.source,"AttackGA2",1,EnttNull)
+    TryGameplayAbility(self.spec.source,"AttackGA2",1,EnttNull)
+    self:EndAbility()
 end
 
 function AttackGAScript:OnKeyReleased()
