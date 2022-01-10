@@ -30,6 +30,8 @@
         "GameplayWait",
         "GetTransform",
         "CheckSphereOverlap",
-        "CreateView"
+        "CreateView",
+        "CreateMovementColliderView",
+        "vec3"
     ]
 }

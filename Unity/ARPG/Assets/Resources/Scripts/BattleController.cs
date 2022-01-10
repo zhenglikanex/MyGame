@@ -11,6 +11,8 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
 
     public bool KDown { get; set; }
 
+    public bool LDown { get; set; }
+
     public bool IsBattleing
     {
         get;
@@ -51,6 +53,11 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
             if(!KDown)
             {
                 KDown = Input.GetKeyDown("k");
+            }
+
+            if (!LDown)
+            {
+                LDown = Input.GetKeyDown("l");
             }
         }
     }
@@ -107,9 +114,14 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
             {
                 command.Ability = "LeiFaGA";
             }
+            if(LDown)
+            {
+                command.Ability = "HuoQiuGA";
+            }
 
             JDown = false;
             KDown = false;
+            LDown = false;
             var data = command.ToByteArray();
             CPlusPlusBridge.GameInput(data, data.Length);
         }

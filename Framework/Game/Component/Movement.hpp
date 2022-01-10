@@ -11,7 +11,17 @@ using namespace physx;
 struct MovementForward
 {
 	vec3 value;
+
+	MovementForward() = default;
+
+	MovementForward(const vec3& _value)
+		: value(_value)
+	{
+
+	}
 };
+
+NON_MEMEBER_BAR(MovementForward, obj.value);
 
 struct Movement
 {

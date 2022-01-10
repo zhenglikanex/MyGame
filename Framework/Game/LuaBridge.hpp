@@ -12,6 +12,8 @@
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/View.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
+#include "Framework/Game/Component/Movement.hpp"
+#include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/ColliderInfo.hpp"
 #include "Framework/Game/Component/ParentAnimBone.hpp"
@@ -42,7 +44,7 @@ inline void RegisterLocal(sol::state& lua)
 	type["id"] = &Local::id;
 }
 
-inline void RegistryVec3(sol::state& lua)
+inline void RegisterVec3(sol::state& lua)
 {
 	auto type = lua.new_usertype<vec3>("vec3", sol::constructors<vec3(float,float,float)>());
 	type["x"] = &vec3::x;
@@ -50,7 +52,7 @@ inline void RegistryVec3(sol::state& lua)
 	type["z"] = &vec3::z;
 }
 
-inline void RegistryQuat(sol::state& lua)
+inline void RegisterQuat(sol::state& lua)
 {
 	auto type = lua.new_usertype<quat>("quat", sol::constructors<vec3(float, float, float, float)>());
 	type["x"] = &quat::x;
@@ -59,7 +61,20 @@ inline void RegistryQuat(sol::state& lua)
 	type["w"] = &quat::w;
 }
 
-inline void RegistryTransform(sol::state& lua)
+inline void RegisterMovementForward(sol::state& lua)
+{
+	auto type = lua.new_usertype<MovementForward>("MovementForward", sol::constructors<MovementForward(), MovementForward(const vec3&)>());
+	type["value"] = &MovementForward::value;
+}
+
+inline void RegisterMovement(sol::state& lua)
+{
+	auto type = lua.new_usertype<Movement>("Movement",sol::constructors<Movement(),Movement(const vec3&,const vec3&)>());
+	type["velocity"] = &Movement::velocity;
+	type["angular_velocity"] = &Movement::angular_velocity;
+}
+
+inline void RegisterTransform(sol::state& lua)
 {
 	auto type = lua.new_usertype<Transform>("Transform");
 	type["position"] = &Transform::position;
@@ -198,6 +213,12 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	lua.script_file(file_service.cur_path() + "Lua/Script/main.lua", sol::script_default_on_error);
 	sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
 
+	RegisterLocal(lua);
+	RegisterVec3(lua);
+	RegisterQuat(lua);
+	RegisterMovementForward(lua);
+	RegisterMovement(lua);
+	RegisterTransform(lua);
 	RegisterWeapon(lua);
 	RegisterGameplayTag(lua);
 	RegisterGameplayEffect(lua);
@@ -395,12 +416,102 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		return PhysicsUtility::CheckSphereOverlap(registry, transform, radius);
 	};
 
-	lua["CreateView"] = [&registry](std::string_view asset, const Transform& transform)
+	lua["CreateView"] = [&registry](UniqueId target,std::string_view asset, const Transform& transform)
 	{
-		auto e = registry.create();
-		registry.emplace<ViewAsset>(e,asset);
-		registry.emplace<Transform>(e,transform);
-		INFO("CreateViewCreateViewCreateViewCreateView");
-		return e;
+		auto& map = registry.ctx<EntityByUniqueIdMap>();
+		auto it = map.value.find(target);
+		if (it != map.value.end())
+		{
+			entt::entity target_entity = it->second;
+			auto e = registry.create();
+			registry.emplace<ViewAsset>(e, asset);
+			registry.emplace<Transform>(e, transform);
+
+			auto& sync_manager = registry.ctx<SyncManager>();
+			if (auto player = registry.try_get<Player>(target_entity))
+			{
+				// 玩家控制
+				auto& sync_manager = registry.ctx<SyncManager>();
+				auto& sync = sync_manager.sync_instances[player->id];
+				registry.emplace<Local>(e, sync.owner, sync.identifier++);
+			}
+			else
+			{
+				//服务器控制
+				auto& sync_manager = registry.ctx<SyncManager>();
+				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
+				registry.emplace<Local>(e, sync.owner, sync.identifier++);
+			}
+
+			return e;
+		}
+
+		return static_cast<entt::entity>(entt::null);
+	};
+
+	lua["CreateMovementColliderView"] = [&registry](
+		UniqueId target,
+		const Local& receiver,
+		std::string_view asset,
+		const Transform& transform,
+		const vec3& forward,
+		const vec3& velocity,
+		const vec3& angular_velocity) // todo 懒的再搞技能子弹碰撞导出了，先这样
+		//const ColliderInfo& collider_info)
+	{
+		auto& map = registry.ctx<EntityByUniqueIdMap>();
+		auto it = map.value.find(target);
+		if (it != map.value.end())
+		{
+			entt::entity target_entity = it->second;
+			auto e = registry.create();
+			registry.emplace<ViewAsset>(e, asset);
+			registry.emplace<Transform>(e, transform);
+			registry.emplace<TransformState>(e);
+			registry.emplace<MovementForward>(e, forward);
+			registry.emplace<Movement>(e, velocity, angular_velocity);
+			registry.emplace<ColliderInfo>(e, ColliderInfo(Geometry(Sphere(1)), glm::identity<mat4>(), true, RigidType::kKinematic));
+			registry.emplace<CollisionReceiver>(e, receiver);
+
+			auto& sync_manager = registry.ctx<SyncManager>();
+			if (auto player = registry.try_get<Player>(target_entity))
+			{
+				// 玩家控制
+				auto& sync_manager = registry.ctx<SyncManager>();
+				auto& sync = sync_manager.sync_instances[player->id];
+				registry.emplace<Local>(e, sync.owner, sync.identifier++);
+			}
+			else
+			{
+				//服务器控制
+				auto& sync_manager = registry.ctx<SyncManager>();
+				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
+				registry.emplace<Local>(e, sync.owner, sync.identifier++);
+			}
+
+			return e;
+		}
+
+		return static_cast<entt::entity>(entt::null);
+	};
+
+	lua["EmplaceMovementForward"] = [&registry](entt::entity e, const vec3& value)
+	{
+		registry.emplace<MovementForward>(e, value);
+	};
+
+	lua["EmplaceMovement"] = [&registry](entt::entity e,const vec3& velocity,const vec3& angular_velocity)
+	{
+		registry.emplace<Movement>(e,velocity,angular_velocity);
+	};
+
+	lua["EmplaceTransformState"] = [&registry](entt::entity e)
+	{
+		registry.emplace<TransformState>(e);
+	};
+
+	lua["EmplaceColliderInfo"] = [&registry](entt::entity e, const ColliderInfo& collider_info)
+	{
+		registry.emplace<ColliderInfo>(e, collider_info);
 	};
 }

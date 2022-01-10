@@ -10,7 +10,7 @@ end
 
 function LeiFaGAScript:CreateSphere()
     local transform = GetTransform(self.spec.source)
-    self.sphere = CreateView("Sphere",transform)
+    self.sphere = CreateView(self.spec.source,"Sphere",transform)
     self:CheckHit()
 end
 
@@ -34,5 +34,7 @@ function LeiFaGAScript:RemoveSphere()
     end
     self:EndAbility()
 end
+
+
 
 return LeiFaGAScript

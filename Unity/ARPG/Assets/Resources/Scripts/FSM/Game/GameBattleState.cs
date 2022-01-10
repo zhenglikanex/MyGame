@@ -39,6 +39,15 @@ public class GameBattleState : FSMState
             }
         }
 
+        {
+            GameObject prefab = Resources.Load<GameObject>("Prefab/HuoQiu");
+            if (prefab)
+            {
+                GameObjectPool pool = PoolManager.Instance.RegisterPool("HuoQiu", prefab);
+                pool.AlllocCapacity(10);
+            }
+        }
+
 
         // 加载战斗场景
         SceneManager.LoadScene("Resources/Scenes/Battle", LoadSceneMode.Single);
