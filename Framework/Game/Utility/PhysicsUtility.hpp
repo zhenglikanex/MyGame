@@ -265,8 +265,20 @@ struct PhysicsUtility
 		return PxTransform(Vec3(v), Quat(q));
 	}
 
+	static void UpdateActorPose(PxRigidActor* actor, const ::Transform& transform)
+	{
+		assert(actor != nullptr);
+
+		auto rigid = dynamic_cast<PxRigidStatic*>(actor);
+
+		assert(rigid != nullptr);
+
+		rigid->setGlobalPose(PhysicsUtility::Transform(transform));
+	}
+
 	static std::vector<entt::entity> CheckSphereOverlap(entt::registry& registry,const ::Transform& transform,float radius)
 	{
+		PxGeometry geo;
 		PxSphereGeometry sphere(radius);
 
 		PxOverlapHit hit[16];

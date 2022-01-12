@@ -46,6 +46,7 @@ Utility/GameplayEffectUtility.hpp
 Utility/GameplayAbilityUtility.hpp
 Utility/GameplayEventUtility.hpp
 Utility/AnimEventUtility.hpp
+Utility/RollbackUtility.hpp
 
 System/AnimationSystem.hpp
 System/CollisionSystem.hpp
@@ -72,6 +73,7 @@ System/DestorySystem.hpp
 System/UpdatePlayerAttributeUISystem.hpp
 System/SyncInstanceStateSystem.hpp
 System/ComputeAnimBoneChildTransform.hpp
+System/HitTestSystem.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/GameplayEffectSystem.hpp
 System/GAS/GameplayAttributeSystem.hpp
@@ -117,6 +119,7 @@ Component/SyncInstanceState.hpp
 Component/SyncManager.hpp
 Component/CollisionReceiver.hpp
 Component/ParentAnimBone.hpp
+Component/Hit.hpp
 Component/GAS/ApplyGameplayEffect.hpp
 Component/GAS/GameplayEffectSpec.hpp
 Component/GAS/GameplayTags.hpp

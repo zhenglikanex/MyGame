@@ -69,16 +69,7 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 		for (auto e : *kinematic_updater)
 		{
 			auto& [transform, physics_actor] = view.get<Transform, PhysicsActor>(e);
-
-			assert(physics_actor.actor != nullptr);
-
-			auto rigid = (PxRigidStatic*)(physics_actor.actor);
-
-			assert(rigid != nullptr);
-
-			INFO("UpdateStaticActor {}", e);
-
-			rigid->setGlobalPose(PhysicsUtility::Transform(transform));
+			PhysicsUtility::UpdateActorPose(physics_actor.actor,transform);
 		}
 	}
 
