@@ -115,6 +115,16 @@ struct ServerSyncSystem : public System
 					frame_data.input_tasks.emplace(local, task);
 				}
 			}
+
+			auto hit_test_task_view = registry.view<Local, GameplayHitTestTask>();
+			for (auto e : hit_test_task_view)
+			{
+				auto& [local, task] = hit_test_task_view.get<Local, GameplayHitTestTask>(e);
+				if (local.owner == sync_instance.owner)
+				{
+					frame_data.hit_test_tasks.emplace(local, task);
+				}
+			}
 			/**************************local entity/**************************/
 
 

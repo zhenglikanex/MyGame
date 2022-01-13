@@ -28,6 +28,7 @@
 #include "Framework/Game/Component/GAS/GameplayPlayAnimAndWaitTask.hpp"
 #include "Framework/Game/Component/GAS/GameplayInputTask.hpp"
 #include "Framework/Game/Component/GAS/GameplayEvent.hpp"
+#include "Framework/Game/Component/GAS/GameplayHitTestTask.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
@@ -282,6 +283,54 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	{
 		auto& task = registry.get_or_emplace<GameplayWaitEventTask>(ability);
 		task.value.erase(tag);
+	};
+
+	lua["GameplayHitTest"] = [&registry](entt::entity ability, GameplayHitType type, const ColliderInfo& collider, const Transform& transform,std::string_view on_hit)
+	{
+		auto& task = registry.get_or_emplace<GameplayHitTestTask>(ability);
+		task.value.emplace_back(type, collider, transform, on_hit);
+	};
+
+	lua["CreateAnimBone"] = [&registry](UniqueId target, std::string_view bone)
+	{
+		Local* result = nullptr;
+		auto& map = registry.ctx<EntityByUniqueIdMap>();
+		auto it = map.value.find(target);
+		if (it != map.value.end())
+		{
+			entt::entity target_entity = it->second;
+
+			auto e = registry.create();
+			if (auto transform = registry.try_get<Transform>(target_entity))
+			{
+				registry.emplace<Transform>(e, *transform);
+			}
+			else
+			{
+				registry.emplace<Transform>(e);
+			}
+
+			registry.emplace<ParentAnimBone>(e, target, bone);
+
+			if (auto player = registry.try_get<Player>(target_entity))
+			{
+				// 玩家控制
+				auto& sync_manager = registry.ctx<SyncManager>();
+				auto& sync = sync_manager.sync_instances[player->id];
+				registry.emplace<Local>(e, sync.owner, sync.identifier++);
+			}
+			else
+			{
+				//服务器控制
+				auto& sync_manager = registry.ctx<SyncManager>();
+				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
+				registry.emplace<Local>(e, sync.owner, sync.identifier++);
+			}
+
+			result = &registry.get<Local>(e);
+		}
+
+		return result;
 	};
 
 	lua["CreateColliderToAnimBone"] = [&registry](const ColliderInfo& collider, UniqueId target, std::string_view bone,Local receiver)

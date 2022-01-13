@@ -73,7 +73,6 @@ System/DestorySystem.hpp
 System/UpdatePlayerAttributeUISystem.hpp
 System/SyncInstanceStateSystem.hpp
 System/ComputeAnimBoneChildTransform.hpp
-System/HitTestSystem.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/GameplayEffectSystem.hpp
 System/GAS/GameplayAttributeSystem.hpp
@@ -84,6 +83,7 @@ System/GAS/GameplayStateSystem.hpp
 System/GAS/GameplayWaitTaskSystem.hpp
 System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp
 System/GAS/GameplayInputTaskSystem.hpp
+System/GAS/GameplayHitTestTaskSystem.hpp
 
 Component/GameState.hpp
 Component/Command.hpp
@@ -119,7 +119,6 @@ Component/SyncInstanceState.hpp
 Component/SyncManager.hpp
 Component/CollisionReceiver.hpp
 Component/ParentAnimBone.hpp
-Component/Hit.hpp
 Component/GAS/ApplyGameplayEffect.hpp
 Component/GAS/GameplayEffectSpec.hpp
 Component/GAS/GameplayTags.hpp
@@ -133,6 +132,7 @@ Component/GAS/GameplayState.hpp
 Component/GAS/GameplayWaitTask.hpp
 Component/GAS/GameplayPlayAnimAndWaitTask.hpp
 Component/GAS/GameplayInputTask.hpp
+Component/GAS/GameplayHitTestTask.hpp
 
 ConfigManager.hpp
 ConfigManager.cpp

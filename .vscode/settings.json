@@ -32,6 +32,8 @@
         "CheckSphereOverlap",
         "CreateView",
         "CreateMovementColliderView",
-        "vec3"
+        "vec3",
+        "GameplayHitTest",
+        "CreateAnimBone"
     ]
 }

@@ -15,6 +15,7 @@
 #include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
 #include "Framework/Game/Component/GAS/GameplayPlayAnimAndWaitTask.hpp"
 #include "Framework/Game/Component/GAS/GameplayInputTask.hpp"
+#include "Framework/Game/Component/GAS/GameplayHitTestTask.hpp"
 
 #include "Kanex.hpp"
 
@@ -28,6 +29,7 @@ struct FrameData
 	std::unordered_map<Local, GameplayWaitTask> wait_tasks;
 	std::unordered_map<Local, GameplayPlayAnimAndWaitTask> play_anim_and_wait_tasks;
 	std::unordered_map<Local, GameplayInputTask> input_tasks;
+	std::unordered_map<Local, GameplayHitTestTask> hit_test_tasks;
 	std::unordered_map<UniqueId, Player> players;
 	std::unordered_map<UniqueId, ActorAsset> actor_assets;
 	std::unordered_map<UniqueId, Transform> transforms;

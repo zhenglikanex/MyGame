@@ -377,6 +377,15 @@ struct ClientSyncSystem : public System
 				registry.emplace_or_replace<GameplayInputTask>(it->second, item.second);
 			}
 
+			for (auto& item : frame_data.hit_test_tasks)
+			{
+				auto it = local_map.value.find(item.first);
+
+				assert(it != local_map.value.end() && "这里不可能不对应");
+			
+				registry.emplace_or_replace<GameplayHitTestTask>(it->second, item.second);
+			}
+
 			for (auto& item : frame_data.character_movements)
 			{
 				auto it = local_map.value.find(item.first);

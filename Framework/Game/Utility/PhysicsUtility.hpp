@@ -276,19 +276,15 @@ struct PhysicsUtility
 		rigid->setGlobalPose(PhysicsUtility::Transform(transform));
 	}
 
-	static std::vector<entt::entity> CheckSphereOverlap(entt::registry& registry,const ::Transform& transform,float radius)
+	static void CheckSphereOverlap(entt::registry& registry, const PxSphereGeometry& sphere, const PxTransform& transform, std::vector<entt::entity>& hits)
 	{
-		PxGeometry geo;
-		PxSphereGeometry sphere(radius);
-
 		PxOverlapHit hit[16];
 		PxOverlapBuffer hit_callback(hit, 16);
 		PxQueryFilterData filter_data(PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC | PxQueryFlag::ePREFILTER);
 		IgnoreTiggerQueryCallback filter_callback;
 		auto& physics_world = registry.ctx<PhysicsWorld>();
-		physics_world.scene->overlap(sphere, PhysicsUtility::Transform(transform), hit_callback, filter_data, &filter_callback);
+		physics_world.scene->overlap(sphere, transform, hit_callback, filter_data, &filter_callback);
 
-		std::vector<entt::entity> hits;
 		hits.reserve(hit_callback.getNbTouches());
 
 		for (int i = 0; i < hit_callback.getNbTouches(); ++i)
@@ -299,7 +295,40 @@ struct PhysicsUtility
 				hits.push_back(e);
 			}
 		}
+	}
 
+	static std::vector<entt::entity> CheckSphereOverlap(entt::registry& registry,const PxSphereGeometry& sphere, const PxTransform& transform)
+	{
+		std::vector <entt::entity> hits;
+		CheckSphereOverlap(registry, sphere, transform, hits);
+		return hits;
+	}
+
+	static void CheckBoxOverlap(entt::registry& registry, const PxBoxGeometry& box, const PxTransform& transform,std::vector<entt::entity>& hits)
+	{
+		PxOverlapHit hit[16];
+		PxOverlapBuffer hit_callback(hit, 16);
+		PxQueryFilterData filter_data(PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC | PxQueryFlag::ePREFILTER);
+		IgnoreTiggerQueryCallback filter_callback;
+		auto& physics_world = registry.ctx<PhysicsWorld>();
+		physics_world.scene->overlap(box, transform, hit_callback, filter_data, &filter_callback);
+
+		hits.reserve(hit_callback.getNbTouches());
+
+		for (int i = 0; i < hit_callback.getNbTouches(); ++i)
+		{
+			if (hit_callback.getTouch(i).actor->userData)
+			{
+				entt::entity e = (entt::entity)reinterpret_cast<uint32_t>(hit_callback.getTouch(i).actor->userData);
+				hits.push_back(e);
+			}
+		}
+	}
+
+	static std::vector<entt::entity> CheckBoxOverlap(entt::registry& registry, const PxBoxGeometry& box, const PxTransform& transform)
+	{
+		std::vector <entt::entity> hits;
+		CheckBoxOverlap(registry, box, transform, hits);
 		return hits;
 	}
 };
