@@ -226,6 +226,13 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	RegisterGameplayAbility(lua);
 	RegisterGameplayAbilitySpec(lua);
 
+	// todo:测试用
+	lua["TestSphereCollider"] = [&registry](float raduis)
+	{
+		ColliderInfo colldier(Geometry(Sphere(raduis)),glm::identity<mat4>(),true,RigidType::kKinematic);
+		return colldier;
+	};
+
 	lua["EnttNull"] = static_cast<entt::entity>(entt::null);
 
 	lua["ApplyGameplayEffectToTarget"] = [&registry](entt::entity source, std::string_view effect, uint32_t level, entt::entity target)
@@ -458,11 +465,25 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		return registry.try_get<Transform>(e);
 	};
 
-	lua["GetTransform"] = sol::overload(get_transform1, get_transform2);
+	auto get_transform3 = [&registry](const Local& target)
+	{
+		Transform* transform = nullptr;
+
+		auto& map = registry.ctx<EntityByLocalMap>();
+		auto it = map.value.find(target);
+		if (it != map.value.end())
+		{
+			transform = registry.try_get<Transform>(it->second);
+		}
+
+		return transform;
+	};
+
+	lua["GetTransform"] = sol::overload(get_transform1, get_transform2,get_transform3);
 
 	lua["CheckSphereOverlap"] = [&registry](const Transform& transform, float radius)
 	{
-		return PhysicsUtility::CheckSphereOverlap(registry, transform, radius);
+		//return PhysicsUtility::CheckSphereOverlap(registry, transform, radius);
 	};
 
 	lua["CreateView"] = [&registry](UniqueId target,std::string_view asset, const Transform& transform)
@@ -490,6 +511,61 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 				auto& sync_manager = registry.ctx<SyncManager>();
 				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
 				registry.emplace<Local>(e, sync.owner, sync.identifier++);
+			}
+
+			auto& game_helper = registry.ctx<Locator>().Ref<GameHelper>();
+			if (game_helper.IsAuthority())
+			{
+				registry.emplace<UniqueId>(e, e);
+			}
+
+			return e;
+		}
+
+		return static_cast<entt::entity>(entt::null);
+	};
+
+	lua["CreateMovementView"] = [&registry](
+		UniqueId target,
+		std::string_view asset,
+		const Transform& transform,
+		const vec3& forward,
+		const vec3& velocity,
+		const vec3& angular_velocity)
+	{
+		auto& map = registry.ctx<EntityByUniqueIdMap>();
+		auto it = map.value.find(target);
+		if (it != map.value.end())
+		{
+			entt::entity target_entity = it->second;
+			auto e = registry.create();
+			
+			registry.emplace<ViewAsset>(e, asset);
+			registry.emplace<Transform>(e, transform);
+			registry.emplace<TransformState>(e);
+			registry.emplace<MovementForward>(e, forward);
+			registry.emplace<Movement>(e, velocity, angular_velocity);
+
+			auto& sync_manager = registry.ctx<SyncManager>();
+			if (auto player = registry.try_get<Player>(target_entity))
+			{
+				// 玩家控制
+				auto& sync_manager = registry.ctx<SyncManager>();
+				auto& sync = sync_manager.sync_instances[player->id];
+				registry.emplace<Local>(e, sync.owner, sync.identifier++);
+			}
+			else
+			{
+				//服务器控制
+				auto& sync_manager = registry.ctx<SyncManager>();
+				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
+				registry.emplace<Local>(e, sync.owner, sync.identifier++);
+			}
+
+			auto& game_helper = registry.ctx<Locator>().Ref<GameHelper>();
+			if (game_helper.IsAuthority())
+			{
+				registry.emplace<UniqueId>(e,e);
 			}
 
 			return e;

@@ -269,7 +269,7 @@ struct PhysicsUtility
 	{
 		assert(actor != nullptr);
 
-		auto rigid = dynamic_cast<PxRigidStatic*>(actor);
+		auto rigid = actor->is<PxRigidDynamic>();
 
 		assert(rigid != nullptr);
 

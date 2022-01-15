@@ -34,7 +34,7 @@ public:
 		for (auto e : view)
 		{
 			auto& [state, actor] = view.get<TransformState, PhysicsActor>(e);
-			PhysicsUtility::UpdateActorPose(actor.actor, state.value[frame]);
+			PhysicsUtility::UpdateActorPose(actor.actor, state.value[frame % state.value.size()]);
 		}
 		//auto& physics_world = registry.ctx<PhysicsWorld>();
 		//physics_world.scene->flushQueryUpdates

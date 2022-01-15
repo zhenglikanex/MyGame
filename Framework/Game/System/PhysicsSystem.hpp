@@ -13,11 +13,9 @@
 struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 {
 	entt::observer* kinematic_updater;
-	entt::observer ob;
 	PhysicsSystem(entt::registry& _registry) 
 		: ObserverSystem(_registry)
 		, kinematic_updater(nullptr)
-		//, ob{ registry, entt::collector.group<Transform, PhysicsKinematicTag, PhysicsActor>().update<Transform>().where<PhysicsActor, PhysicsKinematicTag>() }
 	{ 
 
 	}
@@ -36,15 +34,13 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 	void FixedUpdate(fixed16 dt) override
 	{
 		ClearContactList();
-		UpdateStaticActor();
+		UpdateKinematicActor();
 
 		auto& world = registry.ctx<PhysicsWorld>();
 		world.scene->simulate(static_cast<float>(dt));
 		world.scene->fetchResults(true);
 
-		INFO("PHY OB SIZE {} {}", ob.size(), kinematic_updater->size());
-
-		ob.clear();
+		kinematic_updater->clear();
 	}
 
 	void Finalize() override
@@ -63,13 +59,14 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 		}
 	}
 
-	void UpdateStaticActor()
+	void UpdateKinematicActor()
 	{
 		auto view = registry.view<Transform, PhysicsKinematicTag, PhysicsActor>();
 		for (auto e : *kinematic_updater)
 		{
-			auto& [transform, physics_actor] = view.get<Transform, PhysicsActor>(e);
-			PhysicsUtility::UpdateActorPose(physics_actor.actor,transform);
+			auto& transform = view.get<Transform>(e);
+			auto& physics_actor = view.get<PhysicsActor>(e);
+			PhysicsUtility::UpdateActorPose(physics_actor.actor, transform);
 		}
 	}
 

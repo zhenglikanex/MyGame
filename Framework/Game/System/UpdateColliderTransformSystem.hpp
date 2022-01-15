@@ -18,7 +18,7 @@ struct UpdateColliderTransformSystem : public ObserverSystem
 		, mover(nullptr)
 	{
 
-	}
+	}	
 
 	~UpdateColliderTransformSystem() {}
 

@@ -76,6 +76,16 @@ struct ServerSyncSystem : public System
 				}
 			}
 
+			auto movement_forward_view = registry.view<Local, MovementForward>();
+			for (auto e : movement_forward_view)
+			{
+				auto& [local, movement_forward] = movement_forward_view.get<Local, MovementForward>(e);
+				if (local.owner == sync_instance.owner)
+				{
+					frame_data.movement_forwards.emplace(local, movement_forward);
+				}
+			}
+
 			auto character_movement_view = registry.view<Local, CharacterMovement>();
 			for (auto e : character_movement_view)
 			{
@@ -135,6 +145,13 @@ struct ServerSyncSystem : public System
 				frame_data.actor_assets.emplace(unique_id, asset);
 			}
 
+			auto view_asset_view = registry.view<UniqueId, ViewAsset>(entt::exclude<ActorAsset>);
+			for (auto e : view_asset_view)
+			{
+				auto& [unique_id, asset] = view_asset_view.get<UniqueId, ViewAsset>(e);
+				frame_data.view_assets.emplace(unique_id, asset);
+			}
+
 			auto view1 = registry.view<UniqueId, Transform>();
 			for (auto e : view1)
 			{
@@ -175,6 +192,13 @@ struct ServerSyncSystem : public System
 			{
 				auto&[unique_id, spec] = view6.get<UniqueId, GameplayAbilitySpec>(e);
 				frame_data.ability_specs.emplace(unique_id, spec);
+			}
+
+			auto view7 = registry.view<UniqueId, Destory>();
+			for (auto e : view7)
+			{
+				auto& unique_id = view7.get<UniqueId>(e);
+				frame_data.destorys.emplace(unique_id);
 			}
 
 			kanex::BinaryStream stream(buffer);

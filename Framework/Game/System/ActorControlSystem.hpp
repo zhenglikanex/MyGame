@@ -198,18 +198,26 @@ struct ActorControlSystem : public System
 		{
 			if (animtion_clip.is_done)
 			{
+				INFO("HurtState OnTransition kIdle");
 				return ActorStateType::kIdle;
 			}
+
+			INFO("HurtState OnTransition cur_state");
 
 			return action_state.cur_state;
 		}
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{
+			INFO("OnEnter Hurt");
+
 			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kHurt);
 		}
 
-		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override { }
+		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override 
+		{ 
+			INFO("OnUpdate HurtState");
+		}
 	};
 
 	struct DeathState : State

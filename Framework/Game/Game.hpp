@@ -41,6 +41,8 @@ public:
 
 	void InputCommand(uint32_t frame,uint32_t id,const Command& command);
 
+	uint32_t GetVerifiedFrame() const;
+
 	void set_start_time(uint32_t start_time) { start_time_ = start_time; }
 
 	uint32_t start_time() const { return start_time_; }

@@ -3,25 +3,44 @@ local AttackGAScript = class("AttackGAScript",GAScript)
 
 function AttackGAScript:ActiveAbility()
     self:CommitAbility()
+    
     self:CreateAnimBone()
-    GameplayWait(self.entity,0,"OnHitTest")
+    self:StartHitTest()
+
     GameplayPlayAnimAndWait(self.entity,"skill100010","AnimCompleted","AnimCanceled")
     GameplayWaitEvent(self.entity,"GA.StartInputTask","OnStartInputTask")
     GameplayWaitEvent(self.entity,"GA.OverInputTask","OnOverInputTask")
 end
 
-function AttackGAScript:OnHitTest()
-    local v = self.spec.entity_manager:find(1)
-    if v then
-        Destory(v)
-        self.spec.entity_manager:erase(1)
-    end
-    GameplayHitTest(self.entity,1,)
+function AttackGAScript:StartHitTest()
     GameplayWait(self.entity,0,"OnHitTest")
 end
 
+function AttackGAScript:OnHitTest()
+    local v = self.spec.entity_manager:find(1)
+    if v then
+        local weapon = GetWeapon(self.spec.source)
+        if weapon then
+            GameplayHitTest(self.entity,1,weapon.collider_info,GetTransform(v),"OnHit")
+        end
+    end
+    
+    self:StartHitTest()
+end
+
+function AttackGAScript:OnHit(hits)
+    for _,e in pairs(hits) do
+        local unique_id = GetUniqueId(e)
+        if unique_id and unique_id ~= self.spec.source then
+            ActorChangeState(unique_id)
+            ApplyCueToTarget(unique_id,"Hurt")
+        end
+    end
+end
+
 function AttackGAScript:AnimCompleted()
-    self:DesotryWeaponCollider()
+    self:DesotryAnimBone()
+    self:EndAbility()
 end
 
 function AttackGAScript:AnimCanceled()
@@ -40,15 +59,6 @@ function AttackGAScript:DesotryAnimBone()
     if v then
         Destory(v)
         self.spec.entity_manager:erase(1)
-    end
-    self:EndAbility()
-end
-
-function AttackGAScript:OnTrigger(target)
-    local unique_id = GetUniqueId(target)
-    if unique_id and unique_id ~= self.spec.source then
-       ActorChangeState(unique_id)
-       ApplyCueToTarget(unique_id,"Hurt")
     end
 end
 

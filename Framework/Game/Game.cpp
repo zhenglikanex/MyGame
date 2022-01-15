@@ -230,15 +230,6 @@ void Game::UpdateFixedLogic()
 			system->LateUpdate(GameConfig::kFrameTime);
 		}
 
-		for (auto& system : systems_)
-		{
-			auto observer_system = dynamic_cast<ObserverSystem*>(system.get());
-			if (observer_system != nullptr)
-			{
-				observer_system->Clear();
-			}
-		}
-
 		registry_.clear<Command>();
 		++registry_.ctx<GameState>().run_frame;
 
@@ -260,6 +251,11 @@ void Game::InputCommand(uint32_t frame,uint32_t id, const Command& command)
 {
 	auto& group = GetCommandGroup(frame);
 	group.commands.emplace(id,command);
+}
+
+uint32_t Game::GetVerifiedFrame() const
+{
+	return registry_.ctx<GameState>().verified_frame;
 }
 
 void Game::LoadAllConfig()

@@ -1,66 +1,81 @@
 local GAScript = require("GAS/GAScript")
-local AttackGA3Script = class("AttackGA3Script",GAScript)
+local AttackGAScript = class("AttackGAScript",GAScript)
 
-function AttackGA3Script:ActiveAbility()
+function AttackGAScript:ActiveAbility()
     self:CommitAbility()
-    self:CreateWeaponCollider()
+    
+    self:CreateAnimBone()
+    self:StartHitTest()
 
     GameplayPlayAnimAndWait(self.entity,"skill100030","AnimCompleted","AnimCanceled")
     GameplayWaitEvent(self.entity,"GA.StartInputTask","OnStartInputTask")
     GameplayWaitEvent(self.entity,"GA.OverInputTask","OnOverInputTask")
 end
 
-function AttackGA3Script:AnimCompleted()
-    self:DesotryWeaponCollider()
+function AttackGAScript:StartHitTest()
+    GameplayWait(self.entity,0,"OnHitTest")
 end
 
-function AttackGA3Script:AnimCanceled()
+function AttackGAScript:OnHitTest()
+    local v = self.spec.entity_manager:find(1)
+    if v then
+        local weapon = GetWeapon(self.spec.source)
+        if weapon then
+            GameplayHitTest(self.entity,1,weapon.collider_info,GetTransform(v),"OnHit")
+        end
+    end
+    
+    self:StartHitTest()
+end
+
+function AttackGAScript:OnHit(hits)
+    for _,e in pairs(hits) do
+        local unique_id = GetUniqueId(e)
+        if unique_id and unique_id ~= self.spec.source then
+            ActorChangeState(unique_id)
+            ApplyCueToTarget(unique_id,"Hurt")
+        end
+    end
+end
+
+function AttackGAScript:AnimCompleted()
+    self:DesotryAnimBone()
+    self:EndAbility()
+end
+
+function AttackGAScript:AnimCanceled()
     print("this is AnimCanceled")
 end
 
-function AttackGA3Script:CreateWeaponCollider()
-    local weapon = GetWeapon(self.spec.source)
-    if weapon then
-        local value = CreateColliderToAnimBone(weapon.collider_info,self.spec.source,"RightWeapon",self.loc)
-        self.spec.entity_manager:add(1,value)
-    end     
+function AttackGAScript:CreateAnimBone()
+    local value = CreateAnimBone(self.spec.source,"RightWeapon")
+    if value then
+        self.spec.entity_manager:add(1,value)     
+    end
 end
 
-function AttackGA3Script:DesotryWeaponCollider()
+function AttackGAScript:DesotryAnimBone()
     local v = self.spec.entity_manager:find(1)
     if v then
         Destory(v)
         self.spec.entity_manager:erase(1)
     end
-    self:EndAbility()
 end
 
-function AttackGA3Script:OnTrigger(target)
-    local unique_id = GetUniqueId(target)
-    if unique_id and unique_id ~= self.spec.source then
-       ActorChangeState(unique_id)
-       ApplyCueToTarget(unique_id,"Hurt")
-    end
-end
-
-function AttackGA3Script:OnStartInputTask()
-    print("---------------OnStartInputTask")
+function AttackGAScript:OnStartInputTask()
     GameplayInput(self.entity,"j","OnKeyPressed","OnKeyReleased")
 end
 
-function AttackGA3Script:OnOverInputTask()
-    print("---------------OnOverInputTask")
+function AttackGAScript:OnOverInputTask()
     RemoveGameplayInput(self.entity,"j")
 end
 
-function AttackGA3Script:OnKeyPressed()
-    print("function AttackGA3Script:OnKeyPressed()")
-    --self:EndAbility()
-    --TryGameplayAbility(self.spec.source,"AttackGA2",1,EnttNull)
+function AttackGAScript:OnKeyPressed()
+    TryGameplayAbility(self.spec.source,"AttackGA4",1,EnttNull)
+    self:EndAbility()
 end
 
-function AttackGA3Script:OnKeyReleased()
-    print("function AttackGA3Script:OnKeyReleased()")
+function AttackGAScript:OnKeyReleased()
 end
 
-return AttackGA3Script
+return AttackGAScript

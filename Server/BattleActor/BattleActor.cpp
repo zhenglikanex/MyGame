@@ -156,7 +156,7 @@ void BattleActor::InputCommand(const std::any& data)
 	}
 	else
 	{
-		//INFO("-----------------------not input command {} x {} y{}",command.frame, command.x_axis, command.y_axis);
+		INFO("server cur frame {} clinet input frame {}", player_commands_[id].size(), command.frame);
 	}
 }
 
@@ -168,7 +168,7 @@ void BattleActor::GameInput()
 		auto& commands = player_commands_[entry.second];
 		while (commands.size() <= frame)
 		{
-			//INFO("****************************************{}", frame);
+			INFO("****************************************{}", frame);
 			commands.emplace_back(Command());
 		}
 		

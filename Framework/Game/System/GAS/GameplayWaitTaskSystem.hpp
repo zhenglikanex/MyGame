@@ -52,7 +52,7 @@ public:
 			for (int i = del_list.size() - 1; i >= 0; --i)
 			{
 				auto index = del_list[i];
-				task.value.erase(task.value.begin() + i);
+				task.value.erase(task.value.begin() + index);
 			}
 
 			del_list.clear();

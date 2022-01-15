@@ -57,7 +57,8 @@ struct ClientSyncSystem : public System
 
 			if (frame_data.frame >= game_state.run_frame)
 			{
-				MappingLocalEntity(frame_data, true);
+				MappingLocalEntity(frame_data);
+				ReplicationServerLocalEntity(frame_data);
 				ReplicationServerData(frame_data, true);
 
 				game_state.run_frame = frame_data.frame;
@@ -65,17 +66,22 @@ struct ClientSyncSystem : public System
 			}
 			else
 			{
-				bool is_need_rollback = CheckLocalEnity(frame_data);
+				MappingLocalEntity(frame_data);
 
+				bool is_need_rollback = CheckLocalEnity(frame_data) || CheckEntityState(frame_data);
 				if (is_need_rollback)
 				{
 					//这帧时间创建的所有local entity
 					RollbackLocalEntity(frame_data);
+
+					//恢复缺少local entity
+					ReplicationServerLocalEntity(frame_data);
 				}
+				/*if (is_need_rollback)
+				{
+					MappingLocalEntity(frame_data, is_need_rollback);
+				}*/
 
-				MappingLocalEntity(frame_data, is_need_rollback);
-
-				is_need_rollback = (is_need_rollback ? is_need_rollback : CheckEntityState(frame_data));
 				ReplicationServerData(frame_data, is_need_rollback);
 
 				game_state.verified_frame = frame_data.frame;
@@ -137,6 +143,30 @@ struct ClientSyncSystem : public System
 			}
 		}
 
+		/*auto view = registry.view<UniqueId, ActorState>();
+		for (auto e : view)
+		{
+			auto& unique_id = view1.get<UniqueId>(e);
+			auto& transform_state = view1.get<ActorState>(e);
+
+			auto it = frame_data.transforms.find(unique_id);
+			if (it != frame_data.transforms.end())
+			{
+				auto tran = transform_state.value[frame_data.frame % transform_state.value.size()];
+
+				if (it->second != transform_state.value[frame_data.frame % transform_state.value.size()])
+				{
+					INFO("position not!");
+					return true;
+				}
+			}
+			else
+			{
+				assert(false);
+				return true;
+			}
+		}*/
+
 		auto view2 = registry.view<UniqueId, GameplayState>();
 		for (auto e : view2)
 		{
@@ -172,7 +202,10 @@ struct ClientSyncSystem : public System
 
 	void RollbackLocalEntity(FrameData& frame_data)
 	{
-		assert(frame_data.frame > 0 && "第一帧不可能出错!");
+		if (frame_data.frame <= 0)
+		{
+			return;
+		}
 
 		auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
 		auto& sync_manager = registry.ctx<SyncManager>();
@@ -192,7 +225,7 @@ struct ClientSyncSystem : public System
 
 	}
 
-	void MappingLocalEntity(FrameData& frame_data, bool is_need_rollback)
+	void MappingLocalEntity(FrameData& frame_data)
 	{
 		auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
 		for (auto& item : frame_data.unique_ids)
@@ -205,18 +238,20 @@ struct ClientSyncSystem : public System
 					registry.emplace<UniqueId>(it->second, item.second);
 				}
 			}
-			else
-			{
-				if (is_need_rollback)
-				{
-					auto e = registry.create();
-					registry.emplace<Local>(e, item.first);
-					registry.emplace<UniqueId>(e, item.second);
-				}
-				else
-				{
+		}
+	}
 
-				}
+	void ReplicationServerLocalEntity(FrameData& frame_data)
+	{
+		auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
+		for (auto& item : frame_data.unique_ids)
+		{
+			auto it = e_by_local_id_map.value.find(item.first);
+			if (it == e_by_local_id_map.value.end())
+			{
+				auto e = registry.create();
+				registry.emplace<Local>(e, item.first);
+				registry.emplace<UniqueId>(e, item.second);
 			}
 		}
 	}
@@ -269,6 +304,21 @@ struct ClientSyncSystem : public System
 			if (!registry.all_of<Local>(e))
 			{
 				registry.emplace_or_replace<ActorAsset>(e, item.second);
+			}
+		}
+
+		for (auto& item : frame_data.view_assets)
+		{
+			if (unique_map.value.find(item.first) == unique_map.value.end())
+			{
+				auto e = registry.create();
+				registry.emplace<UniqueId>(e, item.first);
+			}
+
+			auto e = unique_map.value[item.first];
+			if (!registry.all_of<Local>(e))
+			{
+				registry.emplace_or_replace<ViewAsset>(e, item.second);
 			}
 		}
 
@@ -347,6 +397,19 @@ struct ClientSyncSystem : public System
 			}
 		}
 
+		for (auto& item : frame_data.destorys)
+		{
+			auto it = unique_map.value.find(item.value);
+			if (it != unique_map.value.end())
+			{
+				entt::entity e = it->second;
+				if (!registry.all_of<Destory>(e))
+				{
+					registry.emplace<Destory>(e);
+				}
+			}
+		}
+
 		if (is_need_rollback)
 		{
 			auto& local_map = registry.ctx<EntityByLocalMap>();
@@ -357,6 +420,15 @@ struct ClientSyncSystem : public System
 				assert(it != local_map.value.end() && "这里不可能不对应");
 
 				registry.emplace_or_replace<GameplayWaitTask>(it->second, item.second);
+			}
+
+			for (auto& item : frame_data.movement_forwards)
+			{
+				auto it = local_map.value.find(item.first);
+
+				assert(it != local_map.value.end() && "这里不可能不对应");
+
+				registry.emplace_or_replace<MovementForward>(it->second, item.second);
 			}
 
 			for (auto& item : frame_data.play_anim_and_wait_tasks)

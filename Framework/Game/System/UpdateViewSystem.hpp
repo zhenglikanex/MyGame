@@ -6,9 +6,9 @@
 
 #include "Framework/Game/System.hpp"
 
-void func(entt::entity e)
+void func(entt::registry& registry,entt::entity e)
 {
-
+	(void)e;
 }
 
 struct UpdateViewSystem : public ObserverSystem
@@ -31,6 +31,8 @@ struct UpdateViewSystem : public ObserverSystem
 		mover = CreateObserver(entt::collector.group<Transform, View>().update<Transform>().where<View>());
 		animator = CreateObserver(entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>());
 
+		registry.on_update<Transform>().connect<&func>();
+
 		return true;
 	}
 
@@ -38,6 +40,9 @@ struct UpdateViewSystem : public ObserverSystem
 	{
 		UpdateTransform();
 		UpdateAnimation();
+
+		mover->clear();
+		animator->clear();
 	}
 
 	void UpdateTransform()

@@ -10,21 +10,22 @@ end
 
 function LeiFaGAScript:CreateSphere()
     local transform = GetTransform(self.spec.source)
-    self.sphere = CreateView("Sphere",transform)
+    self.sphere = CreateView(self.spec.source,"Sphere",transform)
     self:CheckHit()
 end
 
 function LeiFaGAScript:CheckHit()
     if self.sphere then
         local transform = GetTransform(self.sphere)
-        local radius = 2.5
-        local hits = CheckSphereOverlap(transform,radius)
-        for k,v in pairs(hits) do
-            print("CheckHit",v)
-        end
+        GameplayHitTest(self.entity,1,TestSphereCollider(2.5),transform,"OnHit")
     end
-
     --GameplayWait(self.entity,1,"CheckHit")
+end
+
+function LeiFaGAScript:OnHit(hits)
+    for k,v in pairs(hits) do
+        print("CheckHit",v)
+    end
 end
 
 function LeiFaGAScript:RemoveSphere()
@@ -34,5 +35,7 @@ function LeiFaGAScript:RemoveSphere()
     end
     self:EndAbility()
 end
+
+
 
 return LeiFaGAScript

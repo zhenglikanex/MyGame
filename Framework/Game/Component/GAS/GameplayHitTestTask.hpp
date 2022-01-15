@@ -21,7 +21,7 @@ struct GameplayHitTestSpec
 	std::string on_hit;
 
 	GameplayHitTestSpec() = default;
-	GameplayHitTestSpec(uint32_t _frame, GameplayHitType _type,const ColliderInfo& _collider_info,const Transform& _transform,std::string_view _on_hit)
+	GameplayHitTestSpec(GameplayHitType _type,const ColliderInfo& _collider_info,const Transform& _transform,std::string_view _on_hit)
 		: type(_type)
 		, collider_info(_collider_info)
 		, transform(_transform)
