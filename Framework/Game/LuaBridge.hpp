@@ -481,11 +481,6 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 
 	lua["GetTransform"] = sol::overload(get_transform1, get_transform2,get_transform3);
 
-	lua["CheckSphereOverlap"] = [&registry](const Transform& transform, float radius)
-	{
-		//return PhysicsUtility::CheckSphereOverlap(registry, transform, radius);
-	};
-
 	lua["CreateView"] = [&registry](UniqueId target,std::string_view asset, const Transform& transform)
 	{
 		auto& map = registry.ctx<EntityByUniqueIdMap>();
