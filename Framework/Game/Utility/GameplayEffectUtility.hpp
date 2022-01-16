@@ -30,6 +30,11 @@ public:
 		return entities;
 	}
 
+	static void ApplyExectue(entt::registry& registry, const GameplayEffect& ge, entt::entity target, uint32_t level)
+	{
+		
+	}
+
 	static void ApplyModifiers(entt::registry& registry,const GameplayEffect& ge,entt::entity target,uint32_t level)
 	{
 		//is modify base
@@ -49,16 +54,40 @@ public:
 		}
 		else
 		{
-			auto& mod_attr_set = registry.get<ModifierAttributeSet>(target);
+			auto& mod_attr_set = registry.get<InfiniteModifierAttributeSet>(target);
 			for (auto& mod : ge.gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
-				registry.patch<ModifierAttributeSet>(target, [&mod, value](ModifierAttributeSet& mod_attr_set)
+				registry.patch<InfiniteModifierAttributeSet>(target, [&ge,&mod, value](InfiniteModifierAttributeSet& mod_attr_set)
 					{
-						mod_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
+						mod_attr_set.value[mod.attribute].emplace_back(InfiniteModifierAttribute{ ge.name,mod.modifier_op,value });
 					});
 			}
 		}		
+	}
+
+	static void RemoveModifiers(entt::registry& registry, const GameplayEffect& ge, entt::entity target)
+	{
+		if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
+		{
+			auto& mod_attr_set = registry.get<InfiniteModifierAttributeSet>(target);
+			for (auto& attrs : mod_attr_set.value)
+			{
+				auto it = attrs.begin();
+				while (it != attrs.end())
+				{
+					if (it->name == ge.name)
+					{
+						it = attrs.erase(it);
+					}
+					else
+					{
+						++it;
+					}
+				}
+
+			}
+		}
 	}
 
 	static void ApplyGameEffectToTarget(entt::registry& registry, entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)

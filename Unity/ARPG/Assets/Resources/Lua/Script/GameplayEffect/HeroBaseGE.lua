@@ -9,42 +9,42 @@ local HeroBaseGE =
     application = {
         chance_to_apply_to_target = 100
     },
-    --ÉèÖÃµÄÊÇGEÓ¦ÓÃ×´Ì¬Ê±µÄÃâÒßĞ§¹û
+    --è®¾ç½®çš„æ˜¯GEåº”ç”¨çŠ¶æ€æ—¶çš„å…ç–«æ•ˆæœ
     immunity = {
         granted_application_immunity_tags = {
-            -- ÃâÒß´øÓĞÏÂÁĞ±êÇ©µÄGE
+            -- å…ç–«å¸¦æœ‰ä¸‹åˆ—æ ‡ç­¾çš„GE
             require_tags = {
                 
             },
-            -- ÃâÒßÃ»ÓĞÏÂÁĞ±êÇ©µÄGE
+            -- å…ç–«æ²¡æœ‰ä¸‹åˆ—æ ‡ç­¾çš„GE
             ignore_tags = {
                 
             }
         }
     },
-    --µ±ËùApplyµÄEffectµÄStack³¬¹ıÁËStackLimitCount£¬±ã»áµ÷ÓÃÕâ¸öÄ£¿é
+    --å½“æ‰€Applyçš„Effectçš„Stackè¶…è¿‡äº†StackLimitCountï¼Œä¾¿ä¼šè°ƒç”¨è¿™ä¸ªæ¨¡å—
     overflow = {    
-        overflow_effects = {    --³¬¹ıStackLimitCountÊıÁ¿µÄEffect±»ApplyÊ±½«»áµ÷ÓÃ¸ÃOverflowEffects
+        overflow_effects = {    --è¶…è¿‡StackLimitCountæ•°é‡çš„Effectè¢«Applyæ—¶å°†ä¼šè°ƒç”¨è¯¥OverflowEffects
         },
-        deny_overflow_application = true, --¶ÔÓ¦ÓÚStackDurationRefreshPolicy£¬Èç¹ûÎªTrueÔò¶àÓàµÄApply²»»áË¢ĞÂDuration
-        clear_stack_on_overflow = true, --µ±DenyOverflowApplicationÎªTrueÊÇ²ÅÓĞĞ§£¬µ±OverflowÊ±ÊÇ·ñÖ±½ÓÉ¾³ıËùÓĞ²ãÊı
+        deny_overflow_application = true, --å¯¹åº”äºStackDurationRefreshPolicyï¼Œå¦‚æœä¸ºTrueåˆ™å¤šä½™çš„Applyä¸ä¼šåˆ·æ–°Duration
+        clear_stack_on_overflow = true, --å½“DenyOverflowApplicationä¸ºTrueæ˜¯æ‰æœ‰æ•ˆï¼Œå½“Overflowæ—¶æ˜¯å¦ç›´æ¥åˆ é™¤æ‰€æœ‰å±‚æ•°
     },
-    --ÓÃÓÚEffectÔÚÌáÇ°½áÊø»¹ÊÇÕı³£½áÊøÊ±Ê¹ÓÃ
+    --ç”¨äºEffectåœ¨æå‰ç»“æŸè¿˜æ˜¯æ­£å¸¸ç»“æŸæ—¶ä½¿ç”¨
     expiration = {
-        --¿¼ÂÇÔõÃ´ÊµÏÖ£¬Òª×öĞ©Ê²Ã´
-        --PrematureExpirationEffectClasses£ºDuration»¹Î´½áÊøÊ±¸ÃEffect±ã±»Ç¿ÖÆ½áÊø£¬Ôòµ÷ÓÃPrematureExpirationEffectClasses
-        --RoutineExpirationEffectClasses£ºDurationÕı³£½áÊøÊ±£¬µ÷ÓÃ¸ÃRoutineExpirationEffectClasses
+        --è€ƒè™‘æ€ä¹ˆå®ç°ï¼Œè¦åšäº›ä»€ä¹ˆ
+        --PrematureExpirationEffectClassesï¼šDurationè¿˜æœªç»“æŸæ—¶è¯¥Effectä¾¿è¢«å¼ºåˆ¶ç»“æŸï¼Œåˆ™è°ƒç”¨PrematureExpirationEffectClasses
+        --RoutineExpirationEffectClassesï¼šDurationæ­£å¸¸ç»“æŸæ—¶ï¼Œè°ƒç”¨è¯¥RoutineExpirationEffectClasses
     },
-    stacking = { -- ´¦Àíµş¼ÓÏà¹Ø
+    stacking = { -- å¤„ç†å åŠ ç›¸å…³
         stacking_type = GEDefine.StackingType.None,
         stack_limit_count = 1,
-        stack_duration_refresh_policy = true, --Ã¿´ÎApplyEffectÊ±ÊÇ·ñË¢ĞÂEffectµÄ³ÖĞøÊ±¼ä£¬¼´Ê¹²ãÊı²»Ôö¼ÓÒ²»áË¢ĞÂDuration
-        statck_period_reset_policy = true,--Ã¿´ÎApplyEffectÊ±ÊÇ·ñË¢ĞÂÖÜÆÚÊ±¼ä£¨Period£©£¬¼´Ê¹²ãÊı²»Ôö¼ÓÒ²»áË¢ĞÂPeriod
-        statck_expiration_policy =  GEDefine.StatckExpirationPolicy.RemoveSingleStackAndRefreshDuration, --µ±EffectµÄDuration½áÊøÊ±,²ãÊıµÄ½áÊø·½Ê½
+        stack_duration_refresh_policy = true, --æ¯æ¬¡ApplyEffectæ—¶æ˜¯å¦åˆ·æ–°Effectçš„æŒç»­æ—¶é—´ï¼Œå³ä½¿å±‚æ•°ä¸å¢åŠ ä¹Ÿä¼šåˆ·æ–°Duration
+        statck_period_reset_policy = true,--æ¯æ¬¡ApplyEffectæ—¶æ˜¯å¦åˆ·æ–°å‘¨æœŸæ—¶é—´ï¼ˆPeriodï¼‰ï¼Œå³ä½¿å±‚æ•°ä¸å¢åŠ ä¹Ÿä¼šåˆ·æ–°Period
+        statck_expiration_policy =  GEDefine.StatckExpirationPolicy.RemoveSingleStackAndRefreshDuration, --å½“Effectçš„Durationç»“æŸæ—¶,å±‚æ•°çš„ç»“æŸæ–¹å¼
     },
     gameplay_effect = {
         duration_policy = GEDefine.DurationPolicy.Infinite,
-        modifiers = {   --½øĞĞÒ»Ğ©¼òµ¥µÄÊıÖµĞŞ¸Ä
+        modifiers = {   --è¿›è¡Œä¸€äº›ç®€å•çš„æ•°å€¼ä¿®æ”¹
             {
                 attribute = GameplayAttribute.Hp,    
                 modifier_op = GEDefine.ModifierOp.Add,
@@ -52,13 +52,13 @@ local HeroBaseGE =
                 {
                     calculation_type = GEDefine.ModifierMagnitudeCalculationType.ScalableFloat,
                     value = 1000,
-                    --table = ¿ÉÒÔÍ¨¹ıÖ¸¶¨±íÈ¥²éÑ¯value
+                    --table = å¯ä»¥é€šè¿‡æŒ‡å®šè¡¨å»æŸ¥è¯¢value
                 },
                 source_tags = {
-                    require_tags = {  -- Ö»ÓĞÓµÓĞ¸ÃTagµÄSource/Target Effect²Å¶ÔÆäÔì³ÉÓ°Ïì
+                    require_tags = {  -- åªæœ‰æ‹¥æœ‰è¯¥Tagçš„Source/Target Effectæ‰å¯¹å…¶é€ æˆå½±å“
 
                     },
-                    ignore_tags = { --Effect×÷ÓÃÊ±ÎŞÊÓÕâĞ©ÓµÓĞ¸Ã±êÇ©µÄSource/Target£¬²»¶ÔÆäÔì³ÉÓ°Ïì
+                    ignore_tags = { --Effectä½œç”¨æ—¶æ— è§†è¿™äº›æ‹¥æœ‰è¯¥æ ‡ç­¾çš„Source/Targetï¼Œä¸å¯¹å…¶é€ æˆå½±å“
 
                     }
                 },
@@ -78,13 +78,13 @@ local HeroBaseGE =
                 {
                     calculation_type = GEDefine.ModifierMagnitudeCalculationType.ScalableFloat,
                     value = 1000,
-                    --table = ¿ÉÒÔÍ¨¹ıÖ¸¶¨±íÈ¥²éÑ¯value
+                    --table = å¯ä»¥é€šè¿‡æŒ‡å®šè¡¨å»æŸ¥è¯¢value
                 },
                 source_tags = {
-                    require_tags = {  -- Ö»ÓĞÓµÓĞ¸ÃTagµÄSource/Target Effect²Å¶ÔÆäÔì³ÉÓ°Ïì
+                    require_tags = {  -- åªæœ‰æ‹¥æœ‰è¯¥Tagçš„Source/Target Effectæ‰å¯¹å…¶é€ æˆå½±å“
 
                     },
-                    ignore_tags = { --Effect×÷ÓÃÊ±ÎŞÊÓÕâĞ©ÓµÓĞ¸Ã±êÇ©µÄSource/Target£¬²»¶ÔÆäÔì³ÉÓ°Ïì
+                    ignore_tags = { --Effectä½œç”¨æ—¶æ— è§†è¿™äº›æ‹¥æœ‰è¯¥æ ‡ç­¾çš„Source/Targetï¼Œä¸å¯¹å…¶é€ æˆå½±å“
 
                     }
                 },
@@ -104,13 +104,13 @@ local HeroBaseGE =
                 {
                     calculation_type = GEDefine.ModifierMagnitudeCalculationType.ScalableFloat,
                     value = 1000,
-                    --table = ¿ÉÒÔÍ¨¹ıÖ¸¶¨±íÈ¥²éÑ¯value
+                    --table = å¯ä»¥é€šè¿‡æŒ‡å®šè¡¨å»æŸ¥è¯¢value
                 },
                 source_tags = {
-                    require_tags = {  -- Ö»ÓĞÓµÓĞ¸ÃTagµÄSource/Target Effect²Å¶ÔÆäÔì³ÉÓ°Ïì
+                    require_tags = {  -- åªæœ‰æ‹¥æœ‰è¯¥Tagçš„Source/Target Effectæ‰å¯¹å…¶é€ æˆå½±å“
 
                     },
-                    ignore_tags = { --Effect×÷ÓÃÊ±ÎŞÊÓÕâĞ©ÓµÓĞ¸Ã±êÇ©µÄSource/Target£¬²»¶ÔÆäÔì³ÉÓ°Ïì
+                    ignore_tags = { --Effectä½œç”¨æ—¶æ— è§†è¿™äº›æ‹¥æœ‰è¯¥æ ‡ç­¾çš„Source/Targetï¼Œä¸å¯¹å…¶é€ æˆå½±å“
 
                     }
                 },
@@ -130,13 +130,13 @@ local HeroBaseGE =
                 {
                     calculation_type = GEDefine.ModifierMagnitudeCalculationType.ScalableFloat,
                     value = 1000,
-                    --table = ¿ÉÒÔÍ¨¹ıÖ¸¶¨±íÈ¥²éÑ¯value
+                    --table = å¯ä»¥é€šè¿‡æŒ‡å®šè¡¨å»æŸ¥è¯¢value
                 },
                 source_tags = {
-                    require_tags = {  -- Ö»ÓĞÓµÓĞ¸ÃTagµÄSource/Target Effect²Å¶ÔÆäÔì³ÉÓ°Ïì
+                    require_tags = {  -- åªæœ‰æ‹¥æœ‰è¯¥Tagçš„Source/Target Effectæ‰å¯¹å…¶é€ æˆå½±å“
 
                     },
-                    ignore_tags = { --Effect×÷ÓÃÊ±ÎŞÊÓÕâĞ©ÓµÓĞ¸Ã±êÇ©µÄSource/Target£¬²»¶ÔÆäÔì³ÉÓ°Ïì
+                    ignore_tags = { --Effectä½œç”¨æ—¶æ— è§†è¿™äº›æ‹¥æœ‰è¯¥æ ‡ç­¾çš„Source/Targetï¼Œä¸å¯¹å…¶é€ æˆå½±å“
 
                     }
                 },
@@ -150,30 +150,30 @@ local HeroBaseGE =
                 }
             }
         },
-        executions = {  -- ¿ÉÒÔ½øĞĞ¸´ÔÓµÄĞŞ¸Ä,¿ÉÒÔ²¶»ñsourceºÍtargetµÄÊôĞÔ
+        executions = {  -- å¯ä»¥è¿›è¡Œå¤æ‚çš„ä¿®æ”¹,å¯ä»¥æ•è·sourceå’Œtargetçš„å±æ€§
 
         },
     },
     
-    --µ±¸ÃEffect±»ApplyÊ±£¬ÊÚÓèÄ¿±ê¼¼ÄÜ
+    --å½“è¯¥Effectè¢«Applyæ—¶ï¼Œæˆäºˆç›®æ ‡æŠ€èƒ½
     granted_abilities = {
         {
         }
     },
-    --ÔÚÓ¦ÓÃEffectÊ±µÄ±íÏÖĞÎÊ½£¬Èç¼ÓÑªÊ±ÉíÉÏÃ°³öÂÌÉ«µÄ»Ø¸´Êı×Ö
+    --åœ¨åº”ç”¨Effectæ—¶çš„è¡¨ç°å½¢å¼ï¼Œå¦‚åŠ è¡€æ—¶èº«ä¸Šå†’å‡ºç»¿è‰²çš„å›å¤æ•°å­—
     display = {
         cues = {
         }
     },
     tag = {
-        gameplay_effect_asset_tags = --GameplayEffectÓµÓĞµÄ±êÇ©, ËüÃÇ×ÔÉíÃ»ÓĞÈÎºÎ¹¦ÄÜÇÒÖ»ÓÃÓÚÃèÊöGameplayEffect
+        gameplay_effect_asset_tags = --GameplayEffectæ‹¥æœ‰çš„æ ‡ç­¾, å®ƒä»¬è‡ªèº«æ²¡æœ‰ä»»ä½•åŠŸèƒ½ä¸”åªç”¨äºæè¿°GameplayEffect
         {
             
         },
-        granted_tags = { --´æÓÚGameplayEffectÖĞÇÒÓÖÓÃÓÚGameplayEffectËùÓ¦ÓÃASCµÄ±êÇ©. µ±GameplayEffectÒÆ³ıÊ±ËüÃÇÒ²»á´ÓASCÖĞÒÆ³ı. ¸Ã±êÇ©Ö»×÷ÓÃÓÚ³ÖĞø(Duration)ºÍÎŞÏŞ(Infinite)GameplayEffect(´ı¿¼ÂÇÊÇ·ñÖ»×÷ÓÃÕâÁ½¸öÀàĞÍ).
+        granted_tags = { --å­˜äºGameplayEffectä¸­ä¸”åˆç”¨äºGameplayEffectæ‰€åº”ç”¨ASCçš„æ ‡ç­¾. å½“GameplayEffectç§»é™¤æ—¶å®ƒä»¬ä¹Ÿä¼šä»ASCä¸­ç§»é™¤. è¯¥æ ‡ç­¾åªä½œç”¨äºæŒç»­(Duration)å’Œæ— é™(Infinite)GameplayEffect(å¾…è€ƒè™‘æ˜¯å¦åªä½œç”¨è¿™ä¸¤ä¸ªç±»å‹).
             
         },
-        ongoing_tag_requirements = { --ÔÚGameplayEffectÓ¦ÓÃÆÚ¼ä£¬³ÖĞø¼à²âÊÇ·ñÂú×ãÕâĞ©tag,(),Ìá¹©¹Ø±ÕºÍÖØĞÂ¿ªÆôµÄ¹¦ÄÜ¡£ ¸Ã±êÇ©Ö»×÷ÓÃÓÚ³ÖĞø(Duration)ºÍÎŞÏŞ(Infinite)GameplayEffect.
+        ongoing_tag_requirements = { --åœ¨GameplayEffectåº”ç”¨æœŸé—´ï¼ŒæŒç»­ç›‘æµ‹æ˜¯å¦æ»¡è¶³è¿™äº›tag,(),æä¾›å…³é—­å’Œé‡æ–°å¼€å¯çš„åŠŸèƒ½ã€‚ è¯¥æ ‡ç­¾åªä½œç”¨äºæŒç»­(Duration)å’Œæ— é™(Infinite)GameplayEffect.
             require_tags = {
 
             },
@@ -181,7 +181,7 @@ local HeroBaseGE =
 
             }
         },
-        application_tag_requirements = { --Ä³¸öGameplayEffectÊÇ·ñ¿ÉÒÔÓ¦ÓÃµ½¸ÃÄ¿±êµÄ±êÇ©, Èç¹û²»Âú×ãÕâĞ©ĞèÇó, ÄÇÃ´GameplayEffect¾Í²»¿ÉÓ¦ÓÃ.
+        application_tag_requirements = { --æŸä¸ªGameplayEffectæ˜¯å¦å¯ä»¥åº”ç”¨åˆ°è¯¥ç›®æ ‡çš„æ ‡ç­¾, å¦‚æœä¸æ»¡è¶³è¿™äº›éœ€æ±‚, é‚£ä¹ˆGameplayEffectå°±ä¸å¯åº”ç”¨.
             require_tags = {
 
             },
@@ -189,7 +189,7 @@ local HeroBaseGE =
                 --"Test.Ignore"
             }
         },
-        remove_gameplay_effects_with_tags = --ÈôÊ©¼Ó³É¹¦£¬ÒÆ³ıÂú×ãÌõ¼şµÄËùÓĞGE
+        remove_gameplay_effects_with_tags = --è‹¥æ–½åŠ æˆåŠŸï¼Œç§»é™¤æ»¡è¶³æ¡ä»¶çš„æ‰€æœ‰GE
         {
             
         },

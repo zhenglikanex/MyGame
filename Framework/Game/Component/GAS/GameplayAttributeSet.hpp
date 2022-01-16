@@ -12,6 +12,8 @@ enum class GameplayAttributeType : uint8_t
 	MaxHp,
 	Mp,
 	MaxMp,
+	Defend,
+	Attack,
 	
 	MaxCount
 };

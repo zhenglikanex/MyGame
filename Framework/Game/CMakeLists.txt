@@ -35,6 +35,7 @@ GAS/GameplayEffectManager.hpp
 GAS/GameplayAttributeData.hpp
 GAS/GameplayAbility.hpp
 GAS/GameplayAbilityManager.hpp
+GAS/GameplayEffectExecutionCalculation.hpp
 
 Utility/ActorStateUtility.hpp
 Utility/AnimationUtility.hpp
@@ -119,6 +120,7 @@ Component/SyncInstanceState.hpp
 Component/SyncManager.hpp
 Component/CollisionReceiver.hpp
 Component/ParentAnimBone.hpp
+Component/GAS/ExecuteAttribute.hpp
 Component/GAS/ApplyGameplayEffect.hpp
 Component/GAS/GameplayEffectSpec.hpp
 Component/GAS/GameplayTags.hpp

@@ -5,12 +5,13 @@
 
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
+#include "Framework/Game/Component/GAS/ExecuteAttribute.hpp"
 
 #include "Framework/Game/System.hpp"
 
 struct GameplayAttributeSystem : public System
 {
-	entt::observer modify_list{ registry, entt::collector.group<GameplayAttributeSet,ModifierBaseAttributeSet,ModifierAttributeSet>().update<ModifierBaseAttributeSet>().update<ModifierAttributeSet>().where<GameplayAttributeSet>() };
+	entt::observer modify_list{ registry, entt::collector.group<GameplayAttributeSet,ModifierBaseAttributeSet,InfiniteModifierAttributeSet>().update<ModifierBaseAttributeSet>().update<InfiniteModifierAttributeSet>().where<GameplayAttributeSet>() };
 
 	GameplayAttributeSystem(entt::registry& _registry) : System(_registry) { }
 	~GameplayAttributeSystem() {}
@@ -108,8 +109,6 @@ struct GameplayAttributeSystem : public System
 						attribute_set.value[i].current_value = value;
 					}
 				}
-
-				
 			}
 		}
 

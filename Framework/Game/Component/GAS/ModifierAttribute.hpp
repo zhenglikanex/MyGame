@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <unordered_map>
 
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 
@@ -12,12 +13,19 @@ struct ModifierAttribute
 	float value;
 };
 
+struct InfiniteModifierAttribute
+{
+	std::string name;
+	GameplayEffect::ModifierOp modifier_op;
+	float value;
+};
+
 struct ModifierBaseAttributeSet
 {
 	std::array<std::vector<ModifierAttribute>, (size_t)GameplayAttributeType::MaxCount> value;
 };
 
-struct ModifierAttributeSet
+struct InfiniteModifierAttributeSet
 {
-	std::array<std::vector<ModifierAttribute>, (size_t)GameplayAttributeType::MaxCount> value;
+	std::array<std::vector<InfiniteModifierAttribute>, (size_t)GameplayAttributeType::MaxCount> value;
 };
