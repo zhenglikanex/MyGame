@@ -57,10 +57,10 @@ struct GameplayAttributeSystem : public System
 		//计算base_value
 		if (modify_list.size() > 0)
 		{
-			auto view = registry.view<GameplayAttributeSet,ModifierBaseAttributeSet,ModifierAttributeSet>();
+			auto view = registry.view<GameplayAttributeSet,ModifierBaseAttributeSet,InfiniteModifierAttributeSet>();
 			for (auto e : modify_list)
 			{
-				auto&[attribute_set, mod_base_attr_list,mod_attr_list] = view.get<GameplayAttributeSet, ModifierBaseAttributeSet, ModifierAttributeSet>(e);
+				auto&[attribute_set, mod_base_attr_list,mod_attr_list] = view.get<GameplayAttributeSet, ModifierBaseAttributeSet, InfiniteModifierAttributeSet>(e);
 
 				//计算base_value
 				for (int i = 0; i < mod_base_attr_list.value.size(); ++i)
@@ -121,6 +121,12 @@ struct GameplayAttributeSystem : public System
 	}
 
 	void Finalize() override
+	{
+
+	}
+
+	//在属性的base_value更改后调用
+	void PostGameplayEffectExecute(entt::entity e,)
 	{
 
 	}

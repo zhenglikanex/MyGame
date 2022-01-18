@@ -22,7 +22,7 @@ struct GameplayAttributeSet
 {
 	std::array<GameplayAttributeData, (size_t)GameplayAttributeType::MaxCount> value;
 
-	GameplayAttributeSet() = default;
+	GameplayAttributeSet() = default;	
 };
 
 NON_MEMEBER_BAR(GameplayAttributeSet, obj.value);

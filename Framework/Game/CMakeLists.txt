@@ -120,6 +120,7 @@ Component/SyncInstanceState.hpp
 Component/SyncManager.hpp
 Component/CollisionReceiver.hpp
 Component/ParentAnimBone.hpp
+Component/HpModify.hpp
 Component/GAS/ExecuteAttribute.hpp
 Component/GAS/ApplyGameplayEffect.hpp
 Component/GAS/GameplayEffectSpec.hpp

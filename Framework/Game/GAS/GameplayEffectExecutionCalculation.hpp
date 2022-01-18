@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Framework/Game/Component/HpModify.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 
@@ -158,8 +159,5 @@ struct RpgExecutionCalculation : public GameplayEffectExecutionCalculation
 			{
 				mod_attr_set.value[(size_t)GameplayAttributeType::Hp].emplace_back(ModifierAttribute{ GameplayEffect::ModifierOp::Add,-damage });
 			});
-
-		auto e = registry.create();
-
 	}
 };
