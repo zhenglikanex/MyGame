@@ -96,6 +96,7 @@ struct ApplyGameplayEffectSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
+		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
 		sol::state& lua = registry.ctx<sol::state>();
 		GameplayEffectManager& ge_manager = registry.ctx<GameplayEffectManager>();
 		
@@ -105,20 +106,22 @@ struct ApplyGameplayEffectSystem : public System
 			{
 				overflow_effects.clear();
 
-				for (auto& info : ge_list.second)
+				for (auto& spec : ge_list.second)
 				{
-					if (!(registry.all_of<UniqueId>(info.target) && registry.all_of<UniqueId>(info.source)) ||
-						!(registry.all_of<GameplayState>(info.target) && registry.all_of<GameplayState>(info.source)))
+					entt::entity target = unique_map.value.find(spec.target)->second;
+					entt::entity source = unique_map.value.find(spec.source)->second;
+
+					if (!(registry.all_of<GameplayState>(target) && registry.all_of<GameplayState>(source)))
 					{
 						continue;
 					}
 
-					auto& ge = ge_manager.LoadGameplayEffect(info.effect);
+					auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
 
-					auto target_tags = registry.try_get<GameplayTags>(info.target);
-					auto source_tags = registry.try_get<GameplayTags>(info.source);
+					auto target_tags = registry.try_get<GameplayTags>(target);
+					auto source_tags = registry.try_get<GameplayTags>(source);
 
-					auto& target_spec_entities = GameplayEffectUtility::GetGameplayEffectSpecEntitiesByOwner(registry,registry.get<UniqueId>(info.target));
+					auto& target_spec_entities = GameplayEffectUtility::GetGameplayEffectSpecEntitiesByOwner(registry,spec.target);
 
 					if (HasApplicationImmunity(target_spec_entities, source_tags))
 					{
@@ -136,18 +139,18 @@ struct ApplyGameplayEffectSystem : public System
 						continue;
 					}
 					
-					ApplyModifiers(ge,info.target,info.level);
+					ApplyModifiers(spec);
 
 					bool need_update_gameplay_tags = false;
 					if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
 						ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
 					{
-						need_update_gameplay_tags = ApplyGameEffectToTarget(info, ge, target_spec_entities);
+						need_update_gameplay_tags = ApplyGameEffectToTarget(spec, ge, target_spec_entities);
 					}
 					need_update_gameplay_tags = need_update_gameplay_tags && RemoveGameplayEffectsWithTags(ge, target_spec_entities);
 					if (need_update_gameplay_tags)
 					{
-						UpdateTargetGameplayTag(info.target,target_spec_entities);
+						UpdateTargetGameplayTag(target,target_spec_entities);
 					}
 					
 					// todo:
@@ -163,12 +166,12 @@ struct ApplyGameplayEffectSystem : public System
 		}		
 	}
 
-	void ApplyModifiers(const GameplayEffect& ge,entt::entity target,uint32_t level)
+	void ApplyModifiers(const GameplayEffectSpec& spec)
 	{
-		GameplayEffectUtility::ApplyModifiers(registry, ge,target,level);
+		GameplayEffectUtility::ApplyModifiers(registry,spec);
 	}
 
-	bool ApplyGameEffectToTarget(const GameplayEffectInfo& info,const GameplayEffect& ge,std::vector<entt::entity>& target_spec_entities)
+	bool ApplyGameEffectToTarget(GameplayEffectSpec& spec,const GameplayEffect& ge,std::vector<entt::entity>& target_spec_entities)
 	{		
 		bool need_update_gameply_tag = false;
 		bool stacking = false;
@@ -234,7 +237,7 @@ struct ApplyGameplayEffectSystem : public System
 		if (!stacking)
 		{
 			auto e = registry.create();
-			registry.emplace<GameplayEffectSpec>(e, info.effect, registry.get<UniqueId>(info.source), registry.get<UniqueId>(info.target), info.level);
+			registry.emplace<GameplayEffectSpec>(e,std::move(spec));
 			target_spec_entities.push_back(e);
 			
 			need_update_gameply_tag = !ge.tag.granted_tags.Empty();

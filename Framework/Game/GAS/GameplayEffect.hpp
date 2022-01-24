@@ -137,7 +137,8 @@ struct GameplayEffect
 
 	struct Execution
 	{
-		//std::function<void()> func;
+		std::string class_name;
+		std::vector<Modifier> modifiers;
 	};
 
 	struct GameplayEffectModifier

@@ -10,6 +10,37 @@
 //拥有全局唯一id
 struct UniqueId
 {
+    struct Null 
+	{
+        [[nodiscard]] constexpr operator UniqueId() const noexcept 
+		{
+            return std::numeric_limits<uint32_t>::max();
+        }
+
+        [[nodiscard]] constexpr bool operator==([[maybe_unused]] const Null other) const noexcept 
+		{
+            return true;
+        }
+
+        [[nodiscard]] constexpr bool operator!=([[maybe_unused]] const Null other) const noexcept 
+		{
+            return false;
+        }
+
+        [[nodiscard]] constexpr bool operator==(const UniqueId id) const noexcept 
+		{
+			return id == static_cast<UniqueId>(*this);
+        }
+
+        template<typename Entity>
+        [[nodiscard]] constexpr bool operator!=(const Entity entity) const noexcept 
+		{
+            return !(entity == *this);
+        }
+    };
+
+	static constexpr Null null{};
+
 	uint32_t value;
 
 	UniqueId() = default;
@@ -38,6 +69,16 @@ struct UniqueId
 };
 
 NON_MEMEBER_BAR(UniqueId, obj.value);
+
+[[nodiscard]] inline constexpr bool operator==(const UniqueId id, const UniqueId::Null other) noexcept
+{
+	return other.operator==(id);
+}
+
+[[nodiscard]] inline constexpr bool operator!=(const UniqueId entity, const UniqueId::Null other) noexcept 
+{
+	return !(other == entity);
+}
 
 namespace std
 {

@@ -13,7 +13,7 @@
 class GameplayEffectUtility
 {
 public:
-	static std::vector<entt::entity> GetGameplayEffectSpecEntitiesByOwner(entt::registry& registry,UniqueId owner)
+	static std::vector<entt::entity> GetGameplayEffectSpecEntitiesByOwner(entt::registry& registry,UniqueId target)
 	{
 		std::vector<entt::entity> entities;
 		
@@ -21,7 +21,7 @@ public:
 		for (auto e : view)
 		{
 			const auto& spec = view.get<GameplayEffectSpec>(e);
-			if (spec.owner == owner)
+			if (spec.target == target)
 			{
 				entities.push_back(e);
 			}
@@ -32,24 +32,32 @@ public:
 
 	static void ApplyExectue(entt::registry& registry, const GameplayEffect& ge, entt::entity target, uint32_t level)
 	{
-		
+		if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
+			ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && ge.period.period > 0)
+		{
+			for (auto& mod : ge.gameplay_effect.modifiers)
+			{
+				float value = GetModifyValue(mod.modifier_magnitude);
+				auto e = registry.create();
+				registry.emplace<ModifierAttribute>(e, target, mod.attribute, mod.modifier_op, value);
+			}
+		}
+
+		auto e = registry.create();
+		//registry.emplace<ExecutionAttribute>(e,ge.);
 	}
 
-	static void ApplyModifiers(entt::registry& registry,const GameplayEffect& ge,entt::entity target,uint32_t level)
+	static void ApplyModifiers(entt::registry& registry,const GameplayEffectSpec& spec,const GameplayEffect& ge,entt::entity target)
 	{
 		//is modify base
 		if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
 			ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && ge.period.period > 0)
 		{
-			auto& mod_base_attr_set = registry.get<ModifierBaseAttributeSet>(target);
 			for (auto& mod : ge.gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
-				registry.patch<ModifierBaseAttributeSet>(target, [&mod,value](ModifierBaseAttributeSet& mod_base_attr_set)
-					{
-						mod_base_attr_set.value[mod.attribute].emplace_back(ModifierAttribute{ mod.modifier_op,value });
-					});
-				
+				auto e = registry.create();
+				registry.emplace<ModifierAttribute>(e, target, mod.attribute, mod.modifier_op, value);
 			}
 		}
 		else
@@ -70,23 +78,24 @@ public:
 	{
 		if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
 		{
-			auto& mod_attr_set = registry.get<InfiniteModifierAttributeSet>(target);
-			for (auto& attrs : mod_attr_set.value)
-			{
-				auto it = attrs.begin();
-				while (it != attrs.end())
+			registry.patch<InfiniteModifierAttributeSet>(target, [&ge](InfiniteModifierAttributeSet& mod_attr_set)
 				{
-					if (it->name == ge.name)
+					for (auto& attrs : mod_attr_set.value)
 					{
-						it = attrs.erase(it);
+						auto it = attrs.begin();
+						while (it != attrs.end())
+						{
+							if (it->name == ge.name)
+							{
+								it = attrs.erase(it);
+							}
+							else
+							{
+								++it;
+							}
+						}
 					}
-					else
-					{
-						++it;
-					}
-				}
-
-			}
+				});
 		}
 	}
 
@@ -96,9 +105,28 @@ public:
 		auto it = apply_ge.value.find(source);
 		if (it == apply_ge.value.end())
 		{
-			apply_ge.value.emplace(source, std::vector<GameplayEffectInfo>());
+			apply_ge.value.emplace(source, std::vector<GameplayEffectSpec>());
 		}
-		apply_ge.value[source].emplace_back(effect_name, level, source, target);
+		apply_ge.value[source].emplace_back(GameplayEffectUtility::MakeGameplayEffectSpec(registry,source,effect_name,level,target));
+	}
+
+	static GameplayEffectSpec MakeGameplayEffectSpec(entt::registry& registry,entt::entity source,std::string_view effect,uint32_t level, entt::entity target)
+	{
+		auto& id = registry.get<UniqueId>(source);
+		auto& target_id = registry.get<UniqueId>(target);
+		auto& attr_set = registry.get<GameplayAttributeSet>(source);
+
+		GameplayEffectSpec spec(effect, id, target_id, level);
+		auto& ge = registry.ctx<GameplayEffectManager>().LoadGameplayEffect(effect.data());
+		for (auto& modifier : ge.gameplay_effect.modifiers)
+		{
+			//todo: snapshot_attrs
+		}
+
+		for (auto& modifier : ge.gameplay_effect.executions)
+		{
+			//todo: snapshot_attrs
+		}
 	}
 
 private:

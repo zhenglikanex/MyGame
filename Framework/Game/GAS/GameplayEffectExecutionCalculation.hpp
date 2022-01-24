@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/HpModify.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
+#include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -59,19 +61,22 @@ struct GameplayEffectExecutionCalculation
 
 	virtual void ExecutionCalculation(entt::registry&) = 0;
 
-	void Add(const GameplayAttributeCapture& capture)
+	static void Capture(entt::registry& registry,const GameplayAttributeCapture& capture,GameplayEffectSpec& spec)
 	{
-		entt::entity source;
-		entt::entity target;
+		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
+
+		entt::entity source = unique_map.value.find(spec.source)->second;
+		entt::entity target = unique_map.value.find(spec.target)->second;
+
 		if (capture.snapshot)
 		{
 			if (capture.owner == GameplayAttributeCaptureOwner::kTarget)
 			{
-				target_captures.emplace_back(capture.attribute, registry.get<GameplayAttributeSet>(target).value[(size_t)capture.attribute].current_value);
+				spec.target_snapshot_attrs.emplace(capture.attribute, registry.get<GameplayAttributeSet>(target).value[(size_t)capture.attribute].current_value);
 			}
 			else
 			{
-				source_captures.emplace_back(capture.attribute, registry.get<GameplayAttributeSet>(source).value[(size_t)capture.attribute].current_value);
+				spec.source_snapshot_attrs.emplace(capture.attribute, registry.get<GameplayAttributeSet>(source).value[(size_t)capture.attribute].current_value);
 			}
 		}
 	}
@@ -136,13 +141,18 @@ struct RpgCapture
 	}
 };
 
-struct RpgExecutionCalculation : public GameplayEffectExecutionCalculation
+class RpgExecutionCalculation : public GameplayEffectExecutionCalculation
 {
-	RpgExecutionCalculation(entt::registry& _registry)
+public:
+	static void Capture(entt::registry& registry,GameplayEffectSpec& spec)
+	{
+		RpgCapture::Get().attack;
+	}
+
+	RpgExecutionCalculation(entt::registry& _registry,)
 		: GameplayEffectExecutionCalculation(_registry)
 	{
-		Add(RpgCapture::Get().attack);
-		Add(RpgCapture::Get().defend);
+		
 	}
 
 	void ExecutionCalculation(entt::registry& registry) override
@@ -153,11 +163,9 @@ struct RpgExecutionCalculation : public GameplayEffectExecutionCalculation
 		float defend = Get(RpgCapture::Get().defend);
 		float attack = Get(RpgCapture::Get().attack);
 
-		// 这里直接减少生命值,并且显示伤害
 		float damage = attack - defend;
-		registry.patch<ModifierBaseAttributeSet>(target,[damage](ModifierBaseAttributeSet& mod_attr_set)
-			{
-				mod_attr_set.value[(size_t)GameplayAttributeType::Hp].emplace_back(ModifierAttribute{ GameplayEffect::ModifierOp::Add,-damage });
-			});
+		auto e = registry.create();
+		registry.emplace<ModifierAttribute>(e, target, GameplayAttributeType::Hp, GameplayEffect::ModifierOp::Add, -damage);
 	}
+private:
 };

@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+#include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
+
 #include "3rdparty/include/sol/sol.hpp"
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -25,5 +27,5 @@ struct GameplayEffectInfo
 
 struct ApplyGameplayEffect
 {
-	std::unordered_map<entt::entity, std::vector<GameplayEffectInfo>> value;
+	std::unordered_map<entt::entity, std::vector<GameplayEffectSpec>> value;
 };
