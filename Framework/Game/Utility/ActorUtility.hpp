@@ -30,8 +30,7 @@ struct ActorUtiltiy
 		reg.emplace<Transform>(e, position, rotation);
 		reg.emplace<TransformState>(e);
 		reg.emplace<GameplayAttributeSet>(e);
-		reg.emplace<ModifierBaseAttributeSet>(e);
-		reg.emplace<ModifierAttributeSet>(e);
+		reg.emplace<InfiniteModifierAttributeSet>(e);
 		reg.emplace<GameplayState>(e);
 
 		auto& helper = reg.ctx<Locator>().Ref<const GameHelper>();

@@ -36,19 +36,3 @@ struct InfiniteModifierAttributeSet
 {
 	std::array<std::vector<InfiniteModifierAttribute>, (size_t)GameplayAttributeType::MaxCount> value;
 };
-
-struct ExecutionAttribute
-{
-	entt::entity target;
-	std::string ge;
-
-	ExecutionAttribute() = default;
-
-	ExecutionAttribute(entt::entity _target, std::string_view _ge)
-		: target(_target)
-		, ge(_ge)
-	{
-
-	}
-
-};

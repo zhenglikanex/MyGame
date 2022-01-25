@@ -30,9 +30,16 @@ std::size_t fun(std::size_t a, std::size_t b)
 	return a | b;
 }
 
+enum class Type : uint8_t
+{
+	kType1
+};
+
+
 TEST_CASE_METHOD(Serialize1, "NetMessage")
 {
 	
+	Type t{ 1 };
 
 	std::size_t v1 = std::numeric_limits<uint32_t>::max();
 	std::size_t v = fun(v1 << 32,std::numeric_limits<uint32_t>::max());

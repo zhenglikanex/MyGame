@@ -12,7 +12,7 @@ struct UniqueId
 {
     struct Null 
 	{
-        [[nodiscard]] constexpr operator UniqueId() const noexcept 
+        [[nodiscard]] operator UniqueId() const noexcept 
 		{
             return std::numeric_limits<uint32_t>::max();
         }
@@ -27,15 +27,14 @@ struct UniqueId
             return false;
         }
 
-        [[nodiscard]] constexpr bool operator==(const UniqueId id) const noexcept 
+        [[nodiscard]] bool operator==(const UniqueId id) const noexcept 
 		{
 			return id == static_cast<UniqueId>(*this);
         }
 
-        template<typename Entity>
-        [[nodiscard]] constexpr bool operator!=(const Entity entity) const noexcept 
+        [[nodiscard]] bool operator!=(const UniqueId id) const noexcept
 		{
-            return !(entity == *this);
+            return !(id == *this);
         }
     };
 
@@ -70,14 +69,14 @@ struct UniqueId
 
 NON_MEMEBER_BAR(UniqueId, obj.value);
 
-[[nodiscard]] inline constexpr bool operator==(const UniqueId id, const UniqueId::Null other) noexcept
+[[nodiscard]] inline bool operator==(const UniqueId id, const UniqueId::Null other) noexcept
 {
 	return other.operator==(id);
 }
 
-[[nodiscard]] inline constexpr bool operator!=(const UniqueId entity, const UniqueId::Null other) noexcept 
+[[nodiscard]] inline bool operator!=(const UniqueId id, const UniqueId::Null other) noexcept 
 {
-	return !(other == entity);
+	return !(other == id);
 }
 
 namespace std

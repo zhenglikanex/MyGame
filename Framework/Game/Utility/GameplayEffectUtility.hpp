@@ -1,9 +1,11 @@
 #pragma once
 
+#include "Framework/Game/GAS/GameplayEffectManager.hpp"
 #include "Framework/Game/GAS/GameplayEffect.hpp"
+#include "Framework/Game/GAS/GameplayEffectExecutionCalculation.hpp"
 
+#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/Destory.hpp"
-
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
@@ -13,6 +15,19 @@
 class GameplayEffectUtility
 {
 public:
+	static GameplayEffectExecutionCalculation* MakeExecutionCalculation(std::string_view class_name)
+	{
+		if (class_name == "RpgExecutionCalculation")
+		{
+			static RpgExecutionCalculation execution;
+			return &execution;
+		}
+
+		assert("not GameplayEffectExecutionCalculation" && false);
+
+		return nullptr;
+	}
+
 	static std::vector<entt::entity> GetGameplayEffectSpecEntitiesByOwner(entt::registry& registry,UniqueId target)
 	{
 		std::vector<entt::entity> entities;
@@ -30,25 +45,30 @@ public:
 		return entities;
 	}
 
-	static void ApplyExectue(entt::registry& registry, const GameplayEffect& ge, entt::entity target, uint32_t level)
+	static void ApplyExecutions(entt::registry& registry, const GameplayEffectSpec& spec)
 	{
+		auto& ge_manager = registry.ctx<GameplayEffectManager>();
+		auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
+
 		if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
 			ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && ge.period.period > 0)
 		{
-			for (auto& mod : ge.gameplay_effect.modifiers)
+			for (auto& execution : ge.gameplay_effect.executions)
 			{
-				float value = GetModifyValue(mod.modifier_magnitude);
-				auto e = registry.create();
-				registry.emplace<ModifierAttribute>(e, target, mod.attribute, mod.modifier_op, value);
+				auto execut = GameplayEffectUtility::MakeExecutionCalculation(execution.class_name);
+				execut->ExecutionCalculation(registry,spec);
 			}
 		}
-
-		auto e = registry.create();
-		//registry.emplace<ExecutionAttribute>(e,ge.);
 	}
 
-	static void ApplyModifiers(entt::registry& registry,const GameplayEffectSpec& spec,const GameplayEffect& ge,entt::entity target)
+	static void ApplyModifiers(entt::registry& registry,const GameplayEffectSpec& spec)
 	{
+		auto& ge_manager = registry.ctx<GameplayEffectManager>();
+		auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
+
+		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
+		entt::entity target = unique_map.value.find(spec.target)->second;
+
 		//is modify base
 		if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
 			ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration && ge.period.period > 0)
@@ -57,7 +77,7 @@ public:
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
 				auto e = registry.create();
-				registry.emplace<ModifierAttribute>(e, target, mod.attribute, mod.modifier_op, value);
+				registry.emplace<ModifierAttribute>(e, target, static_cast<GameplayAttributeType>(mod.attribute), mod.modifier_op, value);
 			}
 		}
 		else
@@ -123,10 +143,13 @@ public:
 			//todo: snapshot_attrs
 		}
 
-		for (auto& modifier : ge.gameplay_effect.executions)
+		for (auto& execution : ge.gameplay_effect.executions)
 		{
-			//todo: snapshot_attrs
+			auto execut = GameplayEffectUtility::MakeExecutionCalculation(execution.class_name);
+			execut->Capture(registry, spec);
 		}
+
+		return spec;
 	}
 
 private:

@@ -15,6 +15,7 @@
 #include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
+#include "Framework/Game/Component/GAS/ActiveGameplayAbilityList.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -26,6 +27,18 @@ struct TryGameplayAbilitySystem : public System
 	bool Initialize() override
 	{
 		return true;
+	}
+
+	const ActiveGameplayAbility* GetActiveAbility(entt::entity e,const std::string& ability)
+	{
+		auto& active_ability_list = registry.get<ActiveGameplayAbilityList>(e);
+		auto it = active_ability_list.value.find(ability);
+		if (it != active_ability_list.value.end())
+		{
+			return &it->second;
+		}
+
+		return nullptr;
 	}
 
 	bool CheckCoolDown(const GameplayAbility& ga)
@@ -69,8 +82,13 @@ struct TryGameplayAbilitySystem : public System
 						continue;
 					}
 
+					auto active_ability = GetActiveAbility(info.source, info.ability);
+					if (!active_ability)
+					{
+						continue;
+					}
+
 					auto& ga = ga_manager.LoadGameplayAbility(info.ability);
-					
 					auto source_tags = registry.try_get<GameplayTags>(info.source);
 					//auto target_tags = registry.try_get<GameplayTags>(info.target);
 
@@ -85,9 +103,14 @@ struct TryGameplayAbilitySystem : public System
 					}
 
 					// todo:ÆäËû¼ì²é
+					UniqueId target = UniqueId::null;
+					if (info.target != entt::null)
+					{
+						target = registry.get<UniqueId>(info.target);
+					}
 
 					auto e = registry.create();
-					registry.emplace<GameplayAbilitySpec>(e, info.ability, 1, registry.get<UniqueId>(info.source), UniqueId(entt::entity(entt::null)));
+					registry.emplace<GameplayAbilitySpec>(e, info.ability,active_ability->level,registry.get<UniqueId>(info.source),target);
 					if (game_helper.IsAuthority())
 					{
 						registry.emplace<UniqueId>(e, e);

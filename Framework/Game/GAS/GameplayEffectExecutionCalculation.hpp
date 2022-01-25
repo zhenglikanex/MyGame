@@ -29,94 +29,64 @@ struct GameplayAttributeCapture
 	}
 };
 
-struct GameplayEffectExecutionCalculation
+class GameplayEffectExecutionCalculation
 {
-	struct CaptureAttribute
-	{
-		GameplayAttributeType attribute;
-		float value;
-
-		CaptureAttribute(GameplayAttributeType _attribute, float _value)
-			: attribute(_attribute)
-			, value(_value)
-		{
-
-		}
-	};
-
-	entt::registry& registry;
-	std::vector<CaptureAttribute> source_captures;
-	std::vector<CaptureAttribute> target_captures;
-
-	GameplayEffectExecutionCalculation(entt::registry& _registry)
-		: registry(_registry)
-	{
-
-	}
-
+public:
 	virtual ~GameplayEffectExecutionCalculation() = 0
 	{
 
 	}
+	
+	virtual void Capture(entt::registry& registry, GameplayEffectSpec& spec) = 0;
+	virtual void ExecutionCalculation(entt::registry&,const GameplayEffectSpec& spec) = 0;
 
-	virtual void ExecutionCalculation(entt::registry&) = 0;
-
-	static void Capture(entt::registry& registry,const GameplayAttributeCapture& capture,GameplayEffectSpec& spec)
+protected:
+	void Capture(entt::registry& registry,GameplayEffectSpec& spec,const GameplayAttributeCapture& capture)
 	{
-		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
-
-		entt::entity source = unique_map.value.find(spec.source)->second;
-		entt::entity target = unique_map.value.find(spec.target)->second;
-
 		if (capture.snapshot)
 		{
 			if (capture.owner == GameplayAttributeCaptureOwner::kTarget)
 			{
+				auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
+				entt::entity target = unique_map.value.find(spec.target)->second;
 				spec.target_snapshot_attrs.emplace(capture.attribute, registry.get<GameplayAttributeSet>(target).value[(size_t)capture.attribute].current_value);
 			}
 			else
 			{
+				auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
+				entt::entity source = unique_map.value.find(spec.source)->second;
 				spec.source_snapshot_attrs.emplace(capture.attribute, registry.get<GameplayAttributeSet>(source).value[(size_t)capture.attribute].current_value);
 			}
 		}
 	}
 
-	float Get(const GameplayAttributeCapture& capture_def)
+	float Get(entt::registry& registry,const GameplayEffectSpec& spec,const GameplayAttributeCapture& capture)
 	{
-		entt::entity source;
-		entt::entity target;
-		if (capture_def.snapshot)
+		if (capture.snapshot)
 		{
-			if (capture_def.owner == GameplayAttributeCaptureOwner::kTarget)
+			if (capture.owner == GameplayAttributeCaptureOwner::kTarget)
 			{
-				for (auto& capture : target_captures)
-				{
-					if (capture_def.attribute == capture.attribute)
-					{
-						return capture.value;
-					}
-				}
+				return spec.target_snapshot_attrs.find(capture.attribute)->second;
 			}
 			else
 			{
-				for (auto& capture : source_captures)
-				{
-					if (capture_def.attribute == capture.attribute)
-					{
-						return capture.value;
-					}
-				}
+				return spec.source_snapshot_attrs.find(capture.attribute)->second;
 			}
 		}
 		else
 		{
-			if (capture_def.owner == GameplayAttributeCaptureOwner::kTarget)
+			if (capture.owner == GameplayAttributeCaptureOwner::kTarget)
 			{
-				return registry.get<GameplayAttributeSet>(target).value[(size_t)capture_def.attribute].current_value;
+				auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
+				entt::entity target = unique_map.value.find(spec.target)->second;
+
+				return registry.get<GameplayAttributeSet>(target).value[(size_t)capture.attribute].current_value;
 			}
 			else 
 			{
-				return registry.get<GameplayAttributeSet>(source).value[(size_t)capture_def.attribute].current_value;
+				auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
+				entt::entity source = unique_map.value.find(spec.source)->second;
+				return registry.get<GameplayAttributeSet>(source).value[(size_t)capture.attribute].current_value;
 			}
 		}
 	}
@@ -144,28 +114,20 @@ struct RpgCapture
 class RpgExecutionCalculation : public GameplayEffectExecutionCalculation
 {
 public:
-	static void Capture(entt::registry& registry,GameplayEffectSpec& spec)
+	void Capture(entt::registry& registry,GameplayEffectSpec& spec) override
 	{
-		RpgCapture::Get().attack;
+		GameplayEffectExecutionCalculation::Capture(registry, spec, RpgCapture::Get().attack);
+		GameplayEffectExecutionCalculation::Capture(registry, spec, RpgCapture::Get().defend);
 	}
 
-	RpgExecutionCalculation(entt::registry& _registry,)
-		: GameplayEffectExecutionCalculation(_registry)
+	void ExecutionCalculation(entt::registry& registry,const GameplayEffectSpec& spec) override
 	{
-		
-	}
-
-	void ExecutionCalculation(entt::registry& registry) override
-	{
-		entt::entity source = entt::null;
-		entt::entity target = entt::null;
-
-		float defend = Get(RpgCapture::Get().defend);
-		float attack = Get(RpgCapture::Get().attack);
+		float defend = Get(registry,spec,RpgCapture::Get().defend);
+		float attack = Get(registry,spec,RpgCapture::Get().attack);
 
 		float damage = attack - defend;
 		auto e = registry.create();
-		registry.emplace<ModifierAttribute>(e, target, GameplayAttributeType::Hp, GameplayEffect::ModifierOp::Add, -damage);
+		//registry.emplace<ModifierAttribute>(e, target, GameplayAttributeType::Hp, GameplayEffect::ModifierOp::Add, -damage);
 	}
 private:
 };

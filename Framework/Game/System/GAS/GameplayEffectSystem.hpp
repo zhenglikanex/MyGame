@@ -35,12 +35,14 @@ struct GameplayEffectSystem : public System
 		{
 			auto& spec = view.get<GameplayEffectSpec>(e);
 			
-			auto it = e_by_unique_id_map.value.find(spec.owner);
+			auto it = e_by_unique_id_map.value.find(spec.target);
 			if (it == e_by_unique_id_map.value.end() || !registry.valid(it->second))
 			{
 				registry.emplace<Destory>(e);
 				continue;
 			}
+
+			entt::entity target = it->second;
 
 			spec.duration += time;
 
@@ -54,7 +56,8 @@ struct GameplayEffectSystem : public System
 				{
 					if (!CheckOngoingTagRequirements(it->second,ge))
 					{
-						GameplayEffectUtility::ApplyModifiers(registry, ge, it->second, spec.level);
+						GameplayEffectUtility::ApplyExecutions(registry, spec);
+						GameplayEffectUtility::ApplyModifiers(registry, spec);
 					}
 
 					spec.period -= ge.period.period;

@@ -139,7 +139,8 @@ struct ApplyGameplayEffectSystem : public System
 						continue;
 					}
 					
-					ApplyModifiers(spec);
+					GameplayEffectUtility::ApplyExecutions(registry, spec);
+					GameplayEffectUtility::ApplyModifiers(registry, spec);
 
 					bool need_update_gameplay_tags = false;
 					if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
@@ -164,11 +165,6 @@ struct ApplyGameplayEffectSystem : public System
 
 			apply_ge->value.clear();
 		}		
-	}
-
-	void ApplyModifiers(const GameplayEffectSpec& spec)
-	{
-		GameplayEffectUtility::ApplyModifiers(registry,spec);
 	}
 
 	bool ApplyGameEffectToTarget(GameplayEffectSpec& spec,const GameplayEffect& ge,std::vector<entt::entity>& target_spec_entities)
