@@ -93,7 +93,6 @@ struct ApplyGameplayEffectSystem : public System
 		return ge.application.chance_to_apply_to_target >= value;
 	}
 
-
 	void FixedUpdate(fixed16 dt) override
 	{
 		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
@@ -280,6 +279,16 @@ struct ApplyGameplayEffectSystem : public System
 				auto& spec = registry.get<GameplayEffectSpec>(e);
 				auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
 				for (auto it = ge.tag.granted_tags.Begin(); it != ge.tag.granted_tags.End(); ++it)
+				{
+					auto& tag = *it;
+					if (flag.find(tag) == flag.end())
+					{
+						flag[tag] = true;
+						tags.tags.Push(tag);
+					}
+				}
+
+				for (auto it = spec.dynamic_granted_tags.Begin(); it != spec.dynamic_granted_tags.End(); ++it)
 				{
 					auto& tag = *it;
 					if (flag.find(tag) == flag.end())

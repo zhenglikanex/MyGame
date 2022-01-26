@@ -17,6 +17,8 @@
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
 #include "Framework/Game/Component/GAS/ActiveGameplayAbilityList.hpp"
 
+#include "Framework/Game/Utility/GameplayEffectUtility.hpp"
+
 #include "Framework/Game/System.hpp"
 
 struct TryGameplayAbilitySystem : public System
@@ -41,13 +43,37 @@ struct TryGameplayAbilitySystem : public System
 		return nullptr;
 	}
 
-	bool CheckCoolDown(const GameplayAbility& ga)
+	bool CheckCoolDown(entt::entity e,const GameplayAbility& ga)
 	{
+		auto& tags = registry.get<GameplayTags>(e);
+		if (tags.tags.HasAny(ga.cooldown_tags))
+		{
+			return false;
+		}
+
 		return true;
 	}
 
-	bool CheckCost(const GameplayAbility& ga)
+	bool CheckCost(entt::entity e,const GameplayAbility& ga)
 	{
+		if (ga.cost_gameplay_effect == "")
+		{
+			return true;
+		}
+
+		auto modifiers = GameplayEffectUtility::GetModifiers(registry, ga.cost_gameplay_effect);
+		if (modifiers.size() > 0)
+		{
+			auto& attr_set = registry.get<GameplayAttributeSet>(e);
+			for (auto&[attribute, value] : modifiers)
+			{
+				if (attr_set.value[attribute].current_value < value)
+				{
+					return false;
+				}
+			}
+		}
+
 		return true;
 	}
 
@@ -92,12 +118,12 @@ struct TryGameplayAbilitySystem : public System
 					auto source_tags = registry.try_get<GameplayTags>(info.source);
 					//auto target_tags = registry.try_get<GameplayTags>(info.target);
 
-					if (!CheckCoolDown(ga))
+					if (!CheckCoolDown(info.source,ga))
 					{
 						continue;
 					}
 
-					if (!CheckCost(ga))
+					if (!CheckCost(info.source,ga))
 					{
 						continue;
 					}

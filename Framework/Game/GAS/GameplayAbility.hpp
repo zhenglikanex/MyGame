@@ -20,5 +20,8 @@ struct GameplayAbility
 	GameplayTagArray target_required_tags;		//该GameplayAbility只有在Target拥有所有这些GameplayTag时才会激活. Target GameplayTag只有在该GameplayAbility由Event触发时设置.
 	GameplayTagArray target_blocked_tags;		//该GameplayAbility在Target拥有任意这些标签时不能被激活. Target GameplayTag只有在该GameplayAbility由Event触发时设置.
 	
+	float cooldown_duration;					//冷却持续时间
+	GameplayTagArray cooldown_tags;				//冷却的tag
+	
 	sol::table script;
 };

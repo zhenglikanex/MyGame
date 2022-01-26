@@ -11,11 +11,11 @@ function GAScript:ActiveAbility()
 end
 
 function GAScript:CommitCost()
-    
+    CommitGameplayAbilityCost(self.entity)
 end
 
 function GAScript:CommitCooldown()
-    
+    CommitGameplayAbilityCooldown(self.entity)
 end
 
 function GAScript:CommitAbility()

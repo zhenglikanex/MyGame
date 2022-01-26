@@ -634,4 +634,14 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	{
 		registry.emplace<ColliderInfo>(e, collider_info);
 	};
+
+	lua["CommitGameplayAbilityCost"] = [&registry](entt::entity ability)
+	{
+		GameplayAbilityUtility::CommitGameplayAbilityCost(registry, ability);
+	};
+
+	lua["CommitGameplayAbilityCooldown"] = [&registry](entt::entity ability)
+	{
+		GameplayAbilityUtility::CommitGameplayAbilityCooldown(registry, ability);
+	};
 }

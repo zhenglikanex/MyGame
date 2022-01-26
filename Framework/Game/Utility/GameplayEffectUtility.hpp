@@ -94,6 +94,28 @@ public:
 		}		
 	}
 
+	static std::vector<std::tuple<uint32_t, float>> GetModifiers(entt::registry& registry,const std::string& name)
+	{
+		auto& ge_manager = registry.ctx<GameplayEffectManager>();
+		auto& ge = ge_manager.LoadGameplayEffect(name);
+
+		return GetModifiers(registry, ge);
+	}
+
+	static std::vector<std::tuple<uint32_t,float>> GetModifiers(entt::registry& registry, const GameplayEffect& ge)
+	{
+		std::vector<std::tuple<uint32_t, float>> modifiers;
+		modifiers.reserve(ge.gameplay_effect.modifiers.size());
+
+		for (auto& mod : ge.gameplay_effect.modifiers)
+		{
+			float value = GetModifyValue(mod.modifier_magnitude);
+			modifiers.emplace_back(mod.attribute, value);
+		}
+
+		return modifiers;
+	}
+
 	static void RemoveModifiers(entt::registry& registry, const GameplayEffect& ge, entt::entity target)
 	{
 		if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
@@ -121,13 +143,18 @@ public:
 
 	static void ApplyGameEffectToTarget(entt::registry& registry, entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
 	{
+		GameplayEffectUtility::ApplyGameEffectToTarget(registry,source,GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, effect_name, level, target));
+	}
+
+	static void ApplyGameEffectToTarget(entt::registry& registry,entt::entity source,GameplayEffectSpec&& spec)
+	{
 		auto& apply_ge = registry.ctx_or_set<ApplyGameplayEffect>();
 		auto it = apply_ge.value.find(source);
 		if (it == apply_ge.value.end())
 		{
 			apply_ge.value.emplace(source, std::vector<GameplayEffectSpec>());
 		}
-		apply_ge.value[source].emplace_back(GameplayEffectUtility::MakeGameplayEffectSpec(registry,source,effect_name,level,target));
+		apply_ge.value[source].emplace_back(std::move(spec));
 	}
 
 	static GameplayEffectSpec MakeGameplayEffectSpec(entt::registry& registry,entt::entity source,std::string_view effect,uint32_t level, entt::entity target)

@@ -36,6 +36,8 @@
         "GameplayHitTest",
         "CreateAnimBone",
         "TestSphereCollider",
-        "CreateMovementView"
+        "CreateMovementView",
+        "CommitGameplayAbilityCost",
+        "CommitGameplayAbilityCooldown"
     ]
 }

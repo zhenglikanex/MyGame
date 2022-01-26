@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Framework/Game/GAS/GameplayEffect.hpp"
+#include "Framework/Game/GAS/GameplayTag.hpp"
 
 #include "Framework/Game/Component/UniqueId.hpp"
 
@@ -21,6 +22,7 @@ struct GameplayEffectSpec
 	uint32_t stack_count;
 	std::unordered_map<GameplayAttributeType, float> source_snapshot_attrs;
 	std::unordered_map<GameplayAttributeType, float> target_snapshot_attrs;
+	GameplayTagArray dynamic_granted_tags;
 
 	GameplayEffectSpec() = default;
 

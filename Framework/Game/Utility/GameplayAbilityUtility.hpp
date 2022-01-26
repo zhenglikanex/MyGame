@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Framework/Game/GAS/GameplayAbility.hpp"
+#include "Framework/Game/GAS/GameplayAbilityManager.hpp"
 
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/UniqueId.hpp"
@@ -8,6 +9,9 @@
 #include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
+#include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
+
+#include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -34,7 +38,6 @@ public:
 		std::string_view ability,
 		entt::entity target = entt::null)
 	{
-
 		auto& map = registry.ctx<EntityByUniqueIdMap>();
 		auto it = map.value.find(unique_id);
 		if (it != map.value.end())
@@ -43,10 +46,56 @@ public:
 		}
 	}
 
-	static void LuanchGameplayAbility(entt::registry& registry,Player player)
+	static void CommitGameplayAbilityCost(entt::registry& registry,entt::entity ability)
 	{
-		auto e = registry.create();
-		//registry.emplace<LocalId>();
+		if (registry.valid(ability))
+		{
+			auto& spec = registry.get<GameplayAbilitySpec>(ability);
+			
+			auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
+			auto& it = unique_map.value.find(spec.source);
+			if (it == unique_map.value.end())
+			{
+				return;
+			}
+
+			entt::entity source = it->second;
+
+			auto& ga_manager = registry.ctx<GameplayAbilityManager>();
+			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);	
+
+			GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, ga.cost_gameplay_effect,spec.level,source);
+		}
+	}
+
+	static void CommitGameplayAbilityCooldown(entt::registry& registry, entt::entity ability)
+	{
+		if (registry.valid(ability))
+		{
+			auto& spec = registry.get<GameplayAbilitySpec>(ability);
+
+			auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
+			auto& it = unique_map.value.find(spec.source);
+			if (it == unique_map.value.end())
+			{
+				return;
+			}
+
+			entt::entity source = it->second;
+
+			auto& ga_manager = registry.ctx<GameplayAbilityManager>();
+			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);
+
+			auto effect_spec = GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, ga.cost_gameplay_effect, 1, source);
+			effect_spec.duration = ga.cooldown_duration;
+
+			for (auto it = ga.cooldown_tags.Begin(); it != ga.cooldown_tags.End(); ++it)
+			{
+				effect_spec.dynamic_granted_tags.Push(*it);
+			}
+
+			GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, std::move(effect_spec));
+		}
 	}
 
 	static std::vector<entt::entity> GetActiveGameplayAbilities(entt::registry& registry, const UniqueId& id)
