@@ -33,7 +33,7 @@
 #include "Framework/Game/System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayInputTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayHitTestTaskSystem.hpp"
-#include "Framework/Game/System/UpdatePlayerAttributeUISystem.hpp"
+#include "Framework/Game/System/UpdatePlayerUISystem.hpp"
 #include "Framework/Game/System/SyncInstanceStateSystem.hpp"
 #include "Framework/Game/System/ComputeAnimBoneChildTransform.hpp"
 #include "Client/System/ClientSyncSystem.hpp"
@@ -91,7 +91,7 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayStateSystem>(registry));
 	systems.emplace_back(std::make_unique<SyncInstanceStateSystem>(registry));
-	systems.emplace_back(std::make_unique<UpdatePlayerAttributeUISystem>(registry));
+	systems.emplace_back(std::make_unique<UpdatePlayerUISystem>(registry));
 	systems.emplace_back(std::make_unique<UpdateViewSystem>(registry));
 #if DEBUG
 	systems.emplace_back(std::make_unique<DebugSystem>(registry));

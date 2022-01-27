@@ -18,6 +18,7 @@
 #include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
+#include "Framework/Game/Component/GAS/ActiveGameplayAbilityList.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -65,6 +66,15 @@ struct CreateActorSystem : public System
 
 			if (registry.all_of<GameplayState>(e))
 			{
+				//todo:ÀÊ±„–¥À¿ ‘ ‘
+				auto& abilitys = registry.emplace<ActiveGameplayAbilityList>(e);
+				abilitys.value.emplace("AttackGA",ActiveGameplayAbility("AttackGA", 1));
+				abilitys.value.emplace("AttackGA2",ActiveGameplayAbility("AttackGA2", 1));
+				abilitys.value.emplace("AttackGA3", ActiveGameplayAbility("AttackGA3", 1));
+				abilitys.value.emplace("AttackGA4", ActiveGameplayAbility("AttackGA4", 1));
+				abilitys.value.emplace("LeiFaGA", ActiveGameplayAbility("LeiFaGA", 1));
+				abilitys.value.emplace("HuoQiuGA", ActiveGameplayAbility("HuoQiuGA", 1));
+
 				GameplayEffectUtility::ApplyGameEffectToTarget(registry, e, actor_info.ge(), 1, e);
 			}
 			//INFO("create actor");

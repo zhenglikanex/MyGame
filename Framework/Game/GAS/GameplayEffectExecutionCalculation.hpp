@@ -127,7 +127,7 @@ public:
 
 		float damage = attack - defend;
 		auto e = registry.create();
-		//registry.emplace<ModifierAttribute>(e, target, GameplayAttributeType::Hp, GameplayEffect::ModifierOp::Add, -damage);
+		registry.emplace<ModifierAttribute>(e, spec.source, spec.target, GameplayAttributeType::Hp, -damage);
 	}
 private:
 };

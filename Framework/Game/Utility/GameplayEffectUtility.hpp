@@ -76,8 +76,10 @@ public:
 			for (auto& mod : ge.gameplay_effect.modifiers)
 			{
 				float value = GetModifyValue(mod.modifier_magnitude);
+
+				// Instant和Duration的GE只可以应用GameplayEffect::ModifierOp::Add
 				auto e = registry.create();
-				registry.emplace<ModifierAttribute>(e, target, static_cast<GameplayAttributeType>(mod.attribute), mod.modifier_op, value);
+				registry.emplace<ModifierAttribute>(e, spec.source, spec.target, static_cast<GameplayAttributeType>(mod.attribute), value);
 			}
 		}
 		else

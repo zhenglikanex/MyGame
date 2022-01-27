@@ -9,16 +9,17 @@
 
 struct ModifierAttribute
 {
-	entt::entity target;
+	UniqueId source;
+	UniqueId target;
 	GameplayAttributeType attribute;
 	GameplayEffect::ModifierOp modifier_op;
 	float value;
 
 	ModifierAttribute() = default;
-	ModifierAttribute(entt::entity _target, GameplayAttributeType _attribute, GameplayEffect::ModifierOp _modifier_op, float _value)
-		: target(_target)
+	ModifierAttribute(UniqueId _source, UniqueId _target, GameplayAttributeType _attribute,float _value)
+		: source(_source)
+		, target(_target)
 		, attribute(_attribute)
-		, modifier_op(_modifier_op)
 		, value(_value)
 	{
 

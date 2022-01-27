@@ -390,7 +390,7 @@ struct ClientSyncSystem : public System
 			}
 
 			auto e = unique_map.value[item.first];
-			auto owner = unique_map.value[item.second.owner];
+			auto owner = unique_map.value[item.second.target];
 			if (is_need_rollback || !registry.all_of<GameplayState>(owner))
 			{
 				registry.emplace_or_replace<GameplayEffectSpec>(e, item.second);

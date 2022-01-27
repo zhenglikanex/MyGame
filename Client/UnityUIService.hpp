@@ -11,4 +11,6 @@ public:
 	~UnityUIService();
 
 	void RefreshUI(uint32_t hp, uint32_t max_hp, uint32_t mp, uint32_t max_mp) const override;
+	void RefreshAbilityCooldown(std::string_view json_info) const override;
+	void HpFlyingText(const vec3& pos, uint32_t value) const override;
 };

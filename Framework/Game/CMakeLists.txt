@@ -71,7 +71,8 @@ System/KinematicCharacterMovementSystem.hpp
 System/CreatePhysicsActorSystem.hpp
 System/DelayTaskSystem.hpp
 System/DestorySystem.hpp
-System/UpdatePlayerAttributeUISystem.hpp
+System/UpdatePlayerUISystem.hpp
+System/FlyingTextSystem.hpp
 System/SyncInstanceStateSystem.hpp
 System/ComputeAnimBoneChildTransform.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
