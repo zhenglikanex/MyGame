@@ -73,13 +73,13 @@ public:
 						break;
 					case GameplayHitType::kOverlap:
 					{
-						auto& geometry = spec.collider_info.geometry;
-						auto transform = PhysicsUtility::Transform(spec.transform) * PhysicsUtility::Transform(spec.collider_info.transform);
+						auto& geometry = spec.collider.geometry;
+						auto transform = PhysicsUtility::Transform(spec.transform) * PhysicsUtility::Transform(spec.collider.transform);
 						if (geometry.type() == GeometryType::kSphere)
 						{
 							PhysicsUtility::CheckSphereOverlap(registry, PxSphereGeometry(geometry.sphere().r), transform, hits);
 						}
-						else if (spec.collider_info.geometry.type() == GeometryType::kBox)
+						else if (spec.collider.geometry.type() == GeometryType::kBox)
 						{
 							PhysicsUtility::CheckBoxOverlap(registry, PxBoxGeometry(geometry.box().e.x, geometry.box().e.y, geometry.box().e.z), transform, hits);
 						}

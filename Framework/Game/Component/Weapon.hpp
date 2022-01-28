@@ -6,15 +6,15 @@
 
 struct Weapon
 {
-	Collider collider_info;
+	Collider collider;
 
 	Weapon() = default;
 
-	Weapon(const Collider& _collider_info)
-		:collider_info(_collider_info)
+	Weapon(const Collider& _collider)
+		:collider(_collider)
 	{
 
 	}
 };
 
-NON_MEMEBER_BAR(Weapon, obj.collider_info);
+NON_MEMEBER_BAR(Weapon, obj.collider);

@@ -85,7 +85,7 @@ inline void RegisterTransform(sol::state& lua)
 inline void RegisterWeapon(sol::state& lua)
 {
 	auto type = lua.new_usertype<Weapon>("Weapon");
-	type["collider_info"] = &Weapon::collider_info;
+	type["collider"] = &Weapon::collider;
 }
 
 inline void RegisterGameplayTag(sol::state& lua)
@@ -577,7 +577,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		const vec3& forward,
 		const vec3& velocity,
 		const vec3& angular_velocity) // todo 懒的再搞技能子弹碰撞导出了，先这样
-		//const ColliderInfo& collider_info)
+		//const ColliderInfo& collider)
 	{
 		auto& map = registry.ctx<EntityByUniqueIdMap>();
 		auto it = map.value.find(target);
@@ -630,9 +630,9 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		registry.emplace<TransformState>(e);
 	};
 
-	lua["EmplaceColliderInfo"] = [&registry](entt::entity e, const Collider& collider_info)
+	lua["EmplaceColliderInfo"] = [&registry](entt::entity e, const Collider& collider)
 	{
-		registry.emplace<Collider>(e, collider_info);
+		registry.emplace<Collider>(e, collider);
 	};
 
 	lua["CommitGameplayAbilityCost"] = [&registry](entt::entity ability)

@@ -16,14 +16,14 @@ enum class GameplayHitType : uint8_t
 struct GameplayHitTestSpec
 {
 	GameplayHitType type;
-	Collider collider_info;
+	Collider collider;
 	Transform transform;
 	std::string on_hit;
 
 	GameplayHitTestSpec() = default;
-	GameplayHitTestSpec(GameplayHitType _type,const Collider& _collider_info,const Transform& _transform,std::string_view _on_hit)
+	GameplayHitTestSpec(GameplayHitType _type,const Collider& _collider,const Transform& _transform,std::string_view _on_hit)
 		: type(_type)
-		, collider_info(_collider_info)
+		, collider(_collider)
 		, transform(_transform)
 		, on_hit(_on_hit)
 	{
@@ -31,7 +31,7 @@ struct GameplayHitTestSpec
 	}
 };
 
-NON_MEMEBER_BAR(GameplayHitTestSpec, obj.type, obj.collider_info, obj.transform, obj.on_hit);
+NON_MEMEBER_BAR(GameplayHitTestSpec, obj.type, obj.collider, obj.transform, obj.on_hit);
 
 struct GameplayHitTestTask
 {
