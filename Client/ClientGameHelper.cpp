@@ -57,15 +57,12 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::regis
 	systems.emplace_back(std::make_unique<CreateActorSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateViewSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateAnimationSystem>(registry));
-	systems.emplace_back(std::make_unique<CreateSkillGraphSystem>(registry));
 	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(registry));
 	
 	systems.emplace_back(std::make_unique<ActorControlSystem>(registry));
-	systems.emplace_back(std::make_unique<SkillStateSystem>(registry));
 	systems.emplace_back(std::make_unique<RootMotionSystem>(registry));
 	systems.emplace_back(std::make_unique<MovementSystem>(registry));
 	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(registry));
-	systems.emplace_back(std::make_unique<SkillSystem>(registry));
 	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
 	
 	//systems.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry));

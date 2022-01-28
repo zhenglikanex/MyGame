@@ -10,7 +10,7 @@
 #include "Framework/Game/Component/ActorState.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
 #include "Framework/Game/Component/AnimationAsset.hpp"
-#include "Framework/Game/Component/ColliderInfo.hpp"
+#include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/Character.hpp"

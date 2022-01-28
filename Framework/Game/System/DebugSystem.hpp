@@ -3,7 +3,7 @@
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/DebugService.hpp"
 
-#include "Framework/Game/Component/ColliderInfo.hpp"
+#include "Framework/Game/Component/Collider.hpp"
 
 #include "Framework/Game/System.hpp"
 

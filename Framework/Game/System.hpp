@@ -20,33 +20,3 @@ struct System
 
 	entt::registry& registry;
 };
-
-struct ObserverSystem : System
-{
-	ObserverSystem(entt::registry& _registry)
-		:System(_registry)
-	{
-
-	}
-
-	template<class Matcher>
-	entt::observer* CreateObserver(Matcher&& matcher)
-	{
-		return observers_.emplace_back(std::make_unique<entt::observer>(registry,std::forward<Matcher>(matcher))).get();
-	}
-
-	virtual void Connect() = 0;
-	virtual void Disconnect() = 0;
-
-	virtual void Clear()
-	{
-		INFO("observer clear");
-		for (auto& observer : observers_)
-		{
-			observer->clear();
-		}
-	}
-
-private:
-	std::vector<std::unique_ptr<entt::observer>> observers_;
-};

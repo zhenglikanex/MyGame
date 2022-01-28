@@ -2,18 +2,13 @@
 
 #include "Framework/Game/System/CreateActorSystem.hpp"
 #include "Framework/Game/System/CreateAnimationSystem.hpp"
-#include "Framework/Game/System/CreateSkillGraphSystem.hpp"
 #include "Framework/Game/System/CreatePhysicsActorSystem.hpp"
 #include "Framework/Game/System/ActorControlSystem.hpp"
 #include "Framework/Game/System/MovementSystem.hpp"
 #include "Framework/Game/System/TransformStateSystem.hpp"
 #include "Framework/Game/System/AnimationSystem.hpp"
-#include "Framework/Game/System/CollisionSystem.hpp"
 #include "Framework/Game/System/RootMotionSystem.hpp"
-#include "Framework/Game/System/SkillStateSystem.hpp"
 #include "Framework/Game/System/DebugSystem.hpp"
-#include "Framework/Game/System/SkillSystem.hpp"
-#include "Framework/Game/System/UpdateColliderTransformSystem.hpp"
 #include "Framework/Game/System/PhysicsSystem.hpp"
 #include "Framework/Game/System/KinematicCharacterMovementSystem.hpp"
 #include "Framework/Game/System/DestorySystem.hpp"
@@ -48,18 +43,13 @@ std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(entt::regis
 	std::vector<std::unique_ptr<System>> systems;
 	systems.emplace_back(std::make_unique<CreateActorSystem>(registry));
 	systems.emplace_back(std::make_unique<CreateAnimationSystem>(registry));
-	systems.emplace_back(std::make_unique<CreateSkillGraphSystem>(registry));
 	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(registry));
 	systems.emplace_back(std::make_unique<ActorControlSystem>(registry));
-	systems.emplace_back(std::make_unique<SkillStateSystem>(registry));
 	systems.emplace_back(std::make_unique<RootMotionSystem>(registry));
 	systems.emplace_back(std::make_unique<MovementSystem>(registry));
 	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(registry));
 	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
-	systems.emplace_back(std::make_unique<SkillSystem>(registry));
 	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
-	//systems.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry));
-	//systems.emplace_back(std::make_unique<CollisionSystem>(registry));
 	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayAbilitySystem>(registry));
 	systems.emplace_back(std::make_unique<GameplayWaitTaskSystem>(registry));

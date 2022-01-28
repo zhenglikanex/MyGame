@@ -8,12 +8,12 @@
 
 #include "Framework/Game/Utility/PhysicsUtility.hpp"
 
-struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
+struct PhysicsSystem : public System,public PxSimulationEventCallback
 {
-	entt::observer* kinematic_updater;
+	entt::observer kinematic_updater{registry,entt::collector.group<Transform, PhysicsKinematicTag, PhysicsActor>().update<Transform>().where<PhysicsActor, PhysicsKinematicTag>()};
+
 	PhysicsSystem(entt::registry& _registry) 
-		: ObserverSystem(_registry)
-		, kinematic_updater(nullptr)
+		: System(_registry)
 	{ 
 
 	}
@@ -23,21 +23,19 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 	bool Initialize() override
 	{
 		registry.set<PhysicsWorld>(PhysicsUtility::CreatePhysicsWorld(this,registry));
-		kinematic_updater = CreateObserver(entt::collector.group<Transform, PhysicsKinematicTag, PhysicsActor>().update<Transform>().where<PhysicsActor, PhysicsKinematicTag>());
 		
 		return true;
 	}
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		ClearContactList();
 		UpdateKinematicActor();
 
 		auto& world = registry.ctx<PhysicsWorld>();
 		world.scene->simulate(static_cast<float>(dt));
 		world.scene->fetchResults(true);
 
-		kinematic_updater->clear();
+		kinematic_updater.clear();
 	}
 
 	void Finalize() override
@@ -46,20 +44,10 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 		registry.unset<PhysicsWorld>();
 	}
 
-	void ClearContactList()
-	{
-		auto view = registry.view<ContactList>();
-		for (auto e : view)
-		{
-			auto& contact_list = view.get<ContactList>(e);
-			contact_list.value.clear();
-		}
-	}
-
 	void UpdateKinematicActor()
 	{
 		auto view = registry.view<Transform, PhysicsKinematicTag, PhysicsActor>();
-		for (auto e : *kinematic_updater)
+		for (auto e : kinematic_updater)
 		{
 			auto& transform = view.get<Transform>(e);
 			auto& physics_actor = view.get<PhysicsActor>(e);
@@ -158,16 +146,6 @@ struct PhysicsSystem : public ObserverSystem,public PxSimulationEventCallback
 	}
 
 	void onAdvance(const PxRigidBody* const*, const PxTransform*, const PxU32) 
-	{
-
-	}
-
-	void Connect() override
-	{
-
-	}
-
-	void Disconnect() override
 	{
 
 	}

@@ -6,20 +6,13 @@
 
 #include "Framework/Game/System.hpp"
 
-void func(entt::registry& registry,entt::entity e)
+struct UpdateViewSystem : public System
 {
-	(void)e;
-}
-
-struct UpdateViewSystem : public ObserverSystem
-{
-	entt::observer* mover;
-	entt::observer* animator;
+	entt::observer mover{ registry, entt::collector.group<Transform, View>().update<Transform>().where<View>() };
+	entt::observer animator{ registry, entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>() };
 
 	UpdateViewSystem(entt::registry& _registry) 
-		: ObserverSystem(_registry) 
-		, mover(nullptr)
-		, animator(nullptr)
+		: System(_registry)
 	{
 
 	}
@@ -28,11 +21,6 @@ struct UpdateViewSystem : public ObserverSystem
 
 	bool Initialize() override
 	{
-		mover = CreateObserver(entt::collector.group<Transform, View>().update<Transform>().where<View>());
-		animator = CreateObserver(entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>());
-
-		registry.on_update<Transform>().connect<&func>();
-
 		return true;
 	}
 
@@ -41,15 +29,14 @@ struct UpdateViewSystem : public ObserverSystem
 		UpdateTransform();
 		UpdateAnimation();
 
-		mover->clear();
-		animator->clear();
+		mover.clear();
+		animator.clear();
 	}
 
 	void UpdateTransform()
 	{
 		auto entt_view = registry.view<View, Transform>();
-		INFO("UpdateTransform Size{}", mover->size());
-		for (auto e : *mover)
+		for (auto e : mover)
 		{
 			auto& view = entt_view.get<View>(e);
 			const auto& transform = entt_view.get<Transform>(e);
@@ -62,7 +49,7 @@ struct UpdateViewSystem : public ObserverSystem
 	void UpdateAnimation()
 	{
 		auto entt_view = registry.view<View,Animation,AnimationClip>();
-		for (auto e : *animator)
+		for (auto e : animator)
 		{
 			auto& view = entt_view.get<View>(e);
 			auto& animation = entt_view.get<Animation>(e);
@@ -87,18 +74,5 @@ struct UpdateViewSystem : public ObserverSystem
 	void Finalize() override
 	{
 
-	}
-
-	// 注意因为观察对象包含view,所以在回滚的时候需要不需要清掉
-	void Connect() override
-	{
-		mover->connect(registry,entt::collector.group<Transform, View>().update<Transform>().where<View>());
-		animator->connect(registry,entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>());
-	}
-
-	void Disconnect() override
-	{
-		mover->disconnect();
-		animator->disconnect();
 	}
 };

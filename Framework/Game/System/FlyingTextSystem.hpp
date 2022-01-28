@@ -9,13 +9,10 @@
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 
-struct FlyingTextSystem : public ObserverSystem
+struct FlyingTextSystem : public System
 {
-	entt::observer* updatelist;
-
 	FlyingTextSystem(entt::registry& _registry)
-		: ObserverSystem(_registry)
-		, updatelist(nullptr)
+		: System(_registry)
 	{
 
 	}

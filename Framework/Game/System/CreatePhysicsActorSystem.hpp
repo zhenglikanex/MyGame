@@ -6,9 +6,8 @@
 
 #include "Framework/Game/Component/PhysicsWorld.hpp"
 #include "Framework/Game/Component/PhysicsActor.hpp"
-#include "Framework/Game/Component/ColliderInfo.hpp"
+#include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/Transform.hpp"
-#include "Framework/Game/Component/Contact.hpp"
 
 #include "Framework/Game/Utility/PhysicsUtility.hpp"
 
@@ -110,8 +109,6 @@ struct CreatePhysicsActorSystem : public System
 				}
 				registry.emplace<PhysicsActor>(e, e, actor);
 				actor->userData = (void*)e;
-
-				registry.emplace<ContactList>(e);
 			}
 
 		}

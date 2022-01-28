@@ -26,13 +26,12 @@ inline void to_json(nlohmann::json& j, const CooldownInfo& info)
 	j["duration"] = info.duration;
 }
 
-struct UpdatePlayerUISystem : public ObserverSystem
+struct UpdatePlayerUISystem : public System
 {
-	entt::observer* updatelist;
+	entt::observer updatelist{registry,entt::collector.group<Local, GameplayAttributeSet>().update<GameplayAttributeSet>().where<Local>() };
 
 	UpdatePlayerUISystem(entt::registry& _registry)
-		: ObserverSystem(_registry)
-		, updatelist(nullptr)
+		: System(_registry)
 	{
 
 	}
@@ -41,8 +40,6 @@ struct UpdatePlayerUISystem : public ObserverSystem
 
 	bool Initialize() override
 	{
-		updatelist = CreateObserver(entt::collector.group<Local, GameplayAttributeSet>().update<GameplayAttributeSet>().where<Local>());
-
 		return true;
 	}
 
@@ -51,7 +48,7 @@ struct UpdatePlayerUISystem : public ObserverSystem
 		auto& ui_service = registry.ctx<Locator>().Ref<UIService>();
 
 		auto view = registry.view<Local, GameplayAttributeSet>();
-		for (auto e : *updatelist)
+		for (auto e : updatelist)
 		{
 			auto& attribute_set = view.get<GameplayAttributeSet>(e);
 			ui_service.RefreshUI(
@@ -61,7 +58,7 @@ struct UpdatePlayerUISystem : public ObserverSystem
 				attribute_set.value[static_cast<uint32_t>(GameplayAttributeType::MaxMp)].current_value);
 		}
 
-		updatelist->clear();
+		updatelist.clear();
 	}
 
 	void UpdateAbilityCooldown()
@@ -129,15 +126,5 @@ struct UpdatePlayerUISystem : public ObserverSystem
 	void Finalize() override
 	{
 
-	}
-
-	void Connect() override
-	{
-		updatelist->connect(registry, entt::collector.group<Local, GameplayAttributeSet>().update<GameplayAttributeSet>().where<Local>());
-	}
-
-	void Disconnect() override
-	{
-		updatelist->disconnect();
 	}
 };
