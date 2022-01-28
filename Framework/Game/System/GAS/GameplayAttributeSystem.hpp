@@ -76,13 +76,25 @@ struct GameplayAttributeSystem : public System
 
 	void Modify()
 	{
+		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
 		auto view = registry.view<ModifierAttribute>();
 		for (auto e : view)
 		{
 			auto& modifier = view.get<ModifierAttribute>(e);
 			
+			auto&it = unique_map.value.find(modifier.target);
+			if (it == unique_map.value.end())
+			{
+				continue;
+			}
+
+			entt::entity target = it->second;
+			if (!registry.valid(target) || !registry.all_of<Transform>(target))
+			{
+				continue;
+			}
 			
-			auto& [attr_set, infinite_attr_set] = registry.get<GameplayAttributeSet, InfiniteModifierAttributeSet>(modifier.target);
+			auto& [attr_set, infinite_attr_set] = registry.get<GameplayAttributeSet, InfiniteModifierAttributeSet>(target);
 			
 			auto& attr_data = attr_set.value[(size_t)modifier.attribute];
 			attr_data.base_value += modifier.value;
