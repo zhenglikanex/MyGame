@@ -91,7 +91,7 @@ Component/Animation.hpp
 Component/AnimationClip.hpp
 Component/ActorAsset.hpp
 Component/Weapon.hpp
-Component/ColliderInfo.hpp
+Component/Collider.hpp
 Component/PhysicsWorld.hpp
 Component/PhysicsWorld.cpp
 Component/Character.hpp
