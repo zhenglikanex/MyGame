@@ -52,7 +52,7 @@ struct CreateActorSystem : public System
 			registry.emplace<ViewAsset>(e, actor_info.model_asset());
 			registry.emplace<AnimationAsset>(e, actor_info.anim_asset());
 			registry.emplace<Weapon>(e, actor_info.weapon());
-			registry.emplace<ColliderInfo>(e, actor_info.body());
+			registry.emplace<Collider>(e, actor_info.body());
 
 			if (registry.all_of<TransformState>(e))
 			{

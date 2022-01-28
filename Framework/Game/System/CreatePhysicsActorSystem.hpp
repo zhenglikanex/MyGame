@@ -37,11 +37,11 @@ struct CreatePhysicsActorSystem : public System
 
 	void FixedUpdate(fixed16 dt) override
 	{
-		auto view = registry.view<Transform,ColliderInfo>(entt::exclude<PhysicsActor>);
+		auto view = registry.view<Transform,Collider>(entt::exclude<PhysicsActor>);
 		for (auto e : view)
 		{
 			INFO("create physics actor e{}", static_cast<uint32_t>(e));
-			auto& [transform,collider_info] = view.get<Transform,ColliderInfo>(e);
+			auto& [transform,collider_info] = view.get<Transform,Collider>(e);
 
 			PxRigidActor* actor = nullptr;
 			PxTransform px_transform(PhysicsUtility::Transform(transform));

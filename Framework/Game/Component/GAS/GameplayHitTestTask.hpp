@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-#include "Framework/Game/Component/ColliderInfo.hpp"
+#include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 
 enum class GameplayHitType : uint8_t
@@ -16,12 +16,12 @@ enum class GameplayHitType : uint8_t
 struct GameplayHitTestSpec
 {
 	GameplayHitType type;
-	ColliderInfo collider_info;
+	Collider collider_info;
 	Transform transform;
 	std::string on_hit;
 
 	GameplayHitTestSpec() = default;
-	GameplayHitTestSpec(GameplayHitType _type,const ColliderInfo& _collider_info,const Transform& _transform,std::string_view _on_hit)
+	GameplayHitTestSpec(GameplayHitType _type,const Collider& _collider_info,const Transform& _transform,std::string_view _on_hit)
 		: type(_type)
 		, collider_info(_collider_info)
 		, transform(_transform)

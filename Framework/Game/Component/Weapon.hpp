@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Framework/Game/Component/ColliderInfo.hpp"
+#include "Framework/Game/Component/Collider.hpp"
 
 #include "Kanex.hpp"
 
 struct Weapon
 {
-	ColliderInfo collider_info;
+	Collider collider_info;
 
 	Weapon() = default;
 
-	Weapon(const ColliderInfo& _collider_info)
+	Weapon(const Collider& _collider_info)
 		:collider_info(_collider_info)
 	{
 

@@ -15,7 +15,7 @@
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/Player.hpp"
-#include "Framework/Game/Component/ColliderInfo.hpp"
+#include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/ParentAnimBone.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Destory.hpp"
@@ -229,7 +229,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 	// todo:≤‚ ‘”√
 	lua["TestSphereCollider"] = [&registry](float raduis)
 	{
-		ColliderInfo colldier(Geometry(Sphere(raduis)),glm::identity<mat4>(),true,RigidType::kKinematic);
+		Collider colldier(Geometry(Sphere(raduis)),glm::identity<mat4>(),true,RigidType::kKinematic);
 		return colldier;
 	};
 
@@ -292,7 +292,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		task.value.erase(tag);
 	};
 
-	lua["GameplayHitTest"] = [&registry](entt::entity ability, GameplayHitType type, const ColliderInfo& collider, const Transform& transform,std::string_view on_hit)
+	lua["GameplayHitTest"] = [&registry](entt::entity ability, GameplayHitType type, const Collider& collider, const Transform& transform,std::string_view on_hit)
 	{
 		auto& task = registry.get_or_emplace<GameplayHitTestTask>(ability);
 		task.value.emplace_back(type, collider, transform, on_hit);
@@ -340,7 +340,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		return result;
 	};
 
-	lua["CreateColliderToAnimBone"] = [&registry](const ColliderInfo& collider, UniqueId target, std::string_view bone,Local receiver)
+	lua["CreateColliderToAnimBone"] = [&registry](const Collider& collider, UniqueId target, std::string_view bone,Local receiver)
 	{
 		Local* result = nullptr;
 		auto& map = registry.ctx<EntityByUniqueIdMap>();
@@ -359,7 +359,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 				registry.emplace<Transform>(e);
 			}
 			
-			registry.emplace<ColliderInfo>(e, collider);
+			registry.emplace<Collider>(e, collider);
 			registry.emplace<ParentAnimBone>(e, target, bone);
 			registry.emplace<CollisionReceiver>(e, receiver);
 
@@ -590,7 +590,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 			registry.emplace<TransformState>(e);
 			registry.emplace<MovementForward>(e, forward);
 			registry.emplace<Movement>(e, velocity, angular_velocity);
-			registry.emplace<ColliderInfo>(e, ColliderInfo(Geometry(Sphere(1)), glm::identity<mat4>(), true, RigidType::kKinematic));
+			registry.emplace<Collider>(e, Collider(Geometry(Sphere(1)), glm::identity<mat4>(), true, RigidType::kKinematic));
 			registry.emplace<CollisionReceiver>(e, receiver);
 
 			auto& sync_manager = registry.ctx<SyncManager>();
@@ -630,9 +630,9 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		registry.emplace<TransformState>(e);
 	};
 
-	lua["EmplaceColliderInfo"] = [&registry](entt::entity e, const ColliderInfo& collider_info)
+	lua["EmplaceColliderInfo"] = [&registry](entt::entity e, const Collider& collider_info)
 	{
-		registry.emplace<ColliderInfo>(e, collider_info);
+		registry.emplace<Collider>(e, collider_info);
 	};
 
 	lua["CommitGameplayAbilityCost"] = [&registry](entt::entity ability)

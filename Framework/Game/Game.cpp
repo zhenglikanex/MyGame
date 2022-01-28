@@ -278,7 +278,7 @@ void Game::LoadScene(const std::string& name)
 	for (auto& obstacle : scene.obstacles())
 	{
 		auto e = registry_.create();
-		registry_.emplace<ColliderInfo>(e, obstacle.collider);
+		registry_.emplace<Collider>(e, obstacle.collider);
 		registry_.emplace<Transform>(e, obstacle.transform);
 	}
 }

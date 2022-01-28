@@ -22,14 +22,14 @@ public:
 	const std::string& model_asset() const { return model_asset_; }
 	const std::string& anim_asset() const { return anim_asset_; }
 	const std::string& ge() const { return ge_; }
-	const ColliderInfo& body() const { return body_; }
-	const ColliderInfo& weapon() const { return weapon_; }
+	const Collider& body() const { return body_; }
+	const Collider& weapon() const { return weapon_; }
 private:
 	std::string model_asset_;
 	std::string anim_asset_;
 	std::string ge_;
-	ColliderInfo body_;
-	ColliderInfo weapon_;
+	Collider body_;
+	Collider weapon_;
 };
 
 inline void from_json(const nlohmann::json& json, ActorInfo& info)

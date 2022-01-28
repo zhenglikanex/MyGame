@@ -96,14 +96,14 @@ struct KinematicCharacterMovementSystem : public System
 
 	void UpdatePhase1(float dt)
 	{
-		auto view = registry.view<Local,Transform,CharacterMovement,Character,ColliderInfo,PhysicsActor>();
+		auto view = registry.view<Local,Transform,CharacterMovement,Character,Collider,PhysicsActor>();
 		for (auto e : view)
 		{
 			INFO("UpdatePhase1{}",registry.get<Player>(e).id);
 			overlaps_count_ = 0;
 
 			auto&[transform, movement, character,collider, physics_actor] = 
-				view.get<Transform, CharacterMovement, Character,ColliderInfo, PhysicsActor>(e);
+				view.get<Transform, CharacterMovement, Character,Collider, PhysicsActor>(e);
 			
 			character_ = &character;
 			character_movement_ = &movement;
@@ -372,13 +372,13 @@ struct KinematicCharacterMovementSystem : public System
 
 	void UpdatePhase2(float dt)
 	{
-		auto view = registry.view<Local, Transform, CharacterMovement,MovementForward,Character, ColliderInfo, PhysicsActor>();
+		auto view = registry.view<Local, Transform, CharacterMovement,MovementForward,Character, Collider, PhysicsActor>();
 		for (auto e : view)
 		{
 			overlaps_count_ = 0;
 
 			auto& [transform, movement, forward, character, collider, physics_actor] =
-				view.get<Transform, CharacterMovement, MovementForward, Character, ColliderInfo, PhysicsActor>(e);
+				view.get<Transform, CharacterMovement, MovementForward, Character, Collider, PhysicsActor>(e);
 
 			character_ = &character;
 			character_movement_ = &movement;

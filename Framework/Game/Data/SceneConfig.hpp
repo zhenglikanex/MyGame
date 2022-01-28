@@ -6,7 +6,7 @@
 #include "Framework/Game/FileService.hpp"
 #include "Framework/Game/Json.hpp"
 
-#include "Framework/Game/Component/ColliderInfo.hpp"
+#include "Framework/Game/Component/Collider.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -14,7 +14,7 @@ struct Obstacle
 {
 	friend void from_json(const nlohmann::json& json, Obstacle& info);
 
-	ColliderInfo collider;
+	Collider collider;
 	mat4 transform;
 };
 

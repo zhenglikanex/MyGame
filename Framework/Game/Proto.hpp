@@ -9,7 +9,6 @@
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
 #include "Framework/Game/Component/Destory.hpp"
-#include "Framework/Game/Component/HpModify.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
@@ -44,7 +43,6 @@ struct FrameData
 	std::unordered_map<UniqueId, GameplayAbilitySpec> ability_specs;
 	std::unordered_map<UniqueId, GameplayEffectSpec> effect_specs;
 	std::unordered_set<UniqueId> destorys;
-	HpModify hp_modify;
 };
 
 NON_MEMEBER_BAR(FrameData,
@@ -64,5 +62,4 @@ NON_MEMEBER_BAR(FrameData,
 	obj.ability_specs,
 	obj.effect_specs,
 	obj.wait_tasks,
-	obj.destorys,
-	obj.hp_modify);
+	obj.destorys);

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
-#include "Framework/Game/Component/HpModify.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"

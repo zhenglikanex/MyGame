@@ -3,7 +3,7 @@
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/DebugService.hpp"
 
-#include "Framework/Game/Component/Collider.hpp"
+#include "Framework/Game/Component/ColliderInfo.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -24,10 +24,10 @@ struct DebugSystem : public System
 
 	void DrawCollider()
 	{
-		auto view = registry.view<Transform,ColliderInfo,PhysicsActor>();
+		auto view = registry.view<Transform,Collider,PhysicsActor>();
 		for (auto e : view)
 		{
-			auto& [transform,collider_info] = view.get<Transform,ColliderInfo>(e);
+			auto& [transform,collider_info] = view.get<Transform,Collider>(e);
 
 			auto m = GetMatrix4x4(transform) * collider_info.transform;
 			if (collider_info.geometry.type() == GeometryType::kBox)
