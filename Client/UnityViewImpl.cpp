@@ -20,7 +20,7 @@ void UnityViewImpl::UpdatePosition(const vec3& pos)
 	{
 		auto& locator = g_game->registry().ctx<Locator>();
 		auto& service = dynamic_cast<const UnityViewService&>(locator.Ref<ViewService>());
-		service.UpdatePosition(this, static_cast<float>(pos.x), static_cast<float>(pos.y), static_cast<float>(pos.z));
+		service.UpdatePosition(this, pos.x, pos.y, pos.z);
 	}
 }
 
@@ -30,7 +30,7 @@ void UnityViewImpl::UpdateRotation(const quat& rotation)
 	{
 		auto& locator = g_game->registry().ctx<Locator>();
 		auto& service = dynamic_cast<const UnityViewService&>(locator.Ref<ViewService>());
-		service.UpdateRotation(this, static_cast<float>(rotation.x), static_cast<float>(rotation.y), static_cast<float>(rotation.z), static_cast<float>(rotation.w));
+		service.UpdateRotation(this, rotation.x, rotation.y, rotation.z, rotation.w);
 	}
 }
 
@@ -40,9 +40,9 @@ void UnityViewImpl::MovePosition(const vec3& pos)
 	{
 		auto& locator = g_game->registry().ctx<Locator>();
 		auto& service = dynamic_cast<const UnityViewService&>(locator.Ref<ViewService>());
-		float x = static_cast<float>(pos.x);
-		float y = static_cast<float>(pos.y);
-		float z = static_cast<float>(pos.z);
+		float x = pos.x;
+		float y = pos.y;
+		float z = pos.z;
 		service.MovePosition(this, x, y, z);
 	}
 }
@@ -53,7 +53,7 @@ void UnityViewImpl::MoveRotation(const quat& rotation)
 	{
 		auto& locator = g_game->registry().ctx<Locator>();
 		auto& service = dynamic_cast<const UnityViewService&>(locator.Ref<ViewService>());
-		service.MoveRotation(this, static_cast<float>(rotation.x), static_cast<float>(rotation.y), static_cast<float>(rotation.z), static_cast<float>(rotation.w));
+		service.MoveRotation(this, rotation.x, rotation.y, rotation.z, rotation.w);
 	}
 }
 

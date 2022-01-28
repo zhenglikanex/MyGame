@@ -49,8 +49,8 @@ public:
 	virtual void Error(std::string_view view) const = 0;
 
 	virtual void DrawCube(const vec3& position, const quat& rotation, const vec3& size) const = 0;
-	virtual void DrawSphere(const vec3& position, fixed16 radius) const = 0;
-	virtual void DrawCapsule(const vec3& position, const quat& rotation, fixed16 half_height, fixed16 radius) const = 0;
+	virtual void DrawSphere(const vec3& position, float radius) const = 0;
+	virtual void DrawCapsule(const vec3& position, const quat& rotation, float half_height, float radius) const = 0;
 private:
 };
 

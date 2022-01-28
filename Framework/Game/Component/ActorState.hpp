@@ -17,14 +17,14 @@ enum class ActorStateType : uint8_t
 struct ActorState
 {
 	ActorStateType cur_state;
-	fixed16 time;
+	float time;
 
-	ActorState() : cur_state(ActorStateType::kIdle),time(fixed16(0))
+	ActorState() : cur_state(ActorStateType::kIdle),time(0.f)
 	{
 		
 	}
 
-	ActorState(ActorStateType state) : cur_state(state),time(fixed16(0))
+	ActorState(ActorStateType state) : cur_state(state),time(0.f)
 	{
 
 	}

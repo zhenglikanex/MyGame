@@ -12,11 +12,11 @@
 
 struct RootMotion
 {
-	fixed16 time;
+	float time;
 	vec3 velocity;
 	vec3 angular_velocity;
 
-	RootMotion() : time(fixed16(0)),velocity(zero<vec3>()), angular_velocity(zero<vec3>()) {}
+	RootMotion() : time(0.f),velocity(zero<vec3>()), angular_velocity(zero<vec3>()) {}
 };
 
 struct Bone
@@ -28,7 +28,7 @@ struct Bone
 
 struct Skeleton
 {
-	fixed16 time;
+	float time;
 	std::unordered_map<std::string, Bone> bones;
 };
 
@@ -40,7 +40,7 @@ struct AnimEvent
 
 struct AnimationClipInfo
 {
-	fixed16 length;
+	float length;
 	std::vector<RootMotion> root_motions;
 	std::vector<Skeleton> skeletons;
 	std::unordered_map<uint32_t,std::vector<AnimEvent>> anim_events_map;

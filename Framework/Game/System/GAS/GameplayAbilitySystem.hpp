@@ -19,7 +19,7 @@ struct GameplayAbilitySystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 		auto view = registry.view<Local, GameplayAbilitySpec>(entt::exclude<GameplayAbilityScript>);

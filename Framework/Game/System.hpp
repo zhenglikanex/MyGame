@@ -13,9 +13,9 @@ struct System
 	virtual ~System() = 0 {}
 
 	virtual bool Initialize() = 0;
-	virtual void Update(fixed16 dt) {}
-	virtual void FixedUpdate(fixed16 dt) {}
-	virtual void LateUpdate(fixed16 dt) {}
+	virtual void Update(float dt) {}
+	virtual void FixedUpdate(float dt) {}
+	virtual void LateUpdate(float dt) {}
 	virtual void Finalize() = 0;
 
 	entt::registry& registry;

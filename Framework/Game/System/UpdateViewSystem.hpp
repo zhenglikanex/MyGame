@@ -24,7 +24,7 @@ struct UpdateViewSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		UpdateTransform();
 		UpdateAnimation();
@@ -55,7 +55,7 @@ struct UpdateViewSystem : public System
 			auto& animation = entt_view.get<Animation>(e);
 			const auto& clip = entt_view.get<AnimationClip>(e);
 			
-			if (clip.time == fixed16(0.0f))
+			if (clip.time == 0.0f)
 			{
 				view.value->PlayAnimation(clip.name);
 			}

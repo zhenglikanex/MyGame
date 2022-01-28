@@ -16,7 +16,7 @@ struct RootMotionSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto view = registry.view<Animation,AnimationClip>();
 		for (auto e : view)

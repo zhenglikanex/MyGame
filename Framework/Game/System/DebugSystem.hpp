@@ -17,7 +17,7 @@ struct DebugSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		DrawCollider();
 	}

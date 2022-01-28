@@ -24,7 +24,7 @@ struct GameplayEffectSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto& e_by_unique_id_map = registry.ctx<EntityByUniqueIdMap>();
 		auto& ge_manager = registry.ctx<GameplayEffectManager>();

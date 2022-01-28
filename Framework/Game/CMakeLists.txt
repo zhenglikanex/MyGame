@@ -20,8 +20,6 @@ Math.hpp
 Fmt.hpp
 PlayerInfo.hpp
 Hash.hpp
-Collision.hpp
-Collision.cpp
 Geometry.hpp
 GameHelper.hpp
 Proto.hpp

@@ -24,7 +24,7 @@ struct FlyingTextSystem : public System
 		return true;
 	}
 
-	void Update(fixed16 dt) override
+	void Update(float dt) override
 	{
 		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
 		auto& ui_service = registry.ctx<Locator>().Ref<UIService>();

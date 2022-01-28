@@ -8,7 +8,7 @@
 struct AnimationClip
 {
 	std::string name;
-	fixed16 time;
+	float time;
 	bool is_done;
 	
 	AnimationClip() = default;
@@ -21,7 +21,7 @@ struct AnimationClip
 
 	}
 
-	AnimationClip(std::string_view _name, fixed16 _time)
+	AnimationClip(std::string_view _name, float _time)
 		: name(_name)
 		, time(_time)
 		, is_done(false)

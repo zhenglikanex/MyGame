@@ -15,8 +15,8 @@ struct Command
 	//进行延迟补偿
 	uint32_t verified_frame;
 
-	fixed16 x_axis;		// 摇杆输入
-	fixed16 y_axis;		// 摇杆输入
+	float x_axis;		// 摇杆输入
+	float y_axis;		// 摇杆输入
 
 	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
 	std::string ability;

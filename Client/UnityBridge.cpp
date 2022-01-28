@@ -165,8 +165,8 @@ extern "C"
 			Command command;
 			command.frame = g_game->run_frame();
 			command.verified_frame = g_game->GetVerifiedFrame();
-			command.x_axis = fixed16(std::abs(csharp_command.x_axis()) < 0.1 ? 0 : csharp_command.x_axis());
-			command.y_axis = fixed16(std::abs(csharp_command.y_axis()) < 0.1 ? 0 : csharp_command.y_axis());
+			command.x_axis = std::abs(csharp_command.x_axis()) < 0.1 ? 0 : csharp_command.x_axis();
+			command.y_axis = std::abs(csharp_command.y_axis()) < 0.1 ? 0 : csharp_command.y_axis();
 			command.ability = csharp_command.ability();
 			// todoÁãÊ±Ð´Ò»ÏÂ
 			command.key = csharp_command.ability() != "" ? "j" : "";

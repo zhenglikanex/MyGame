@@ -19,7 +19,7 @@ public:
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		
 		// 缓存下当帧销毁的entity,将在销毁中被销毁的关联对象移到下一帧销毁

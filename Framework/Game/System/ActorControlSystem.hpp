@@ -27,8 +27,8 @@ inline vec2 SquareToCircle(const vec2& input)
 {
 	vec2 output = zero<vec2>();
 	
-	output.x = input.x * sqrt(float(1) - (input.y * input.y) / float(2.0f));
-	output.y = input.y * sqrt(float(1) - (input.x * input.x) / float(2.0f));
+	output.x = input.x * sqrt(1.f - (input.y * input.y) / 2.0f);
+	output.y = input.y * sqrt(1.f - (input.x * input.x) / 2.0f);
 
 	return output;
 }
@@ -70,7 +70,7 @@ struct ActorControlSystem : public System
 				return ActorStateType::kAttack;
 			}
 
-			if (command.x_axis != fixed16(0) || command.y_axis != fixed16(0))
+			if (command.x_axis != 0.f || command.y_axis != 0.f)
 			{
 				return ActorStateType::kMovement;
 			}
@@ -99,7 +99,7 @@ struct ActorControlSystem : public System
 				return ActorStateType::kAttack;
 			}
 
-			if (command.x_axis == fixed16(0) && command.y_axis == fixed16(0))
+			if (command.x_axis == 0.f && command.y_axis == 0.f)
 			{	
 				return ActorStateType::kIdle;
 			}
@@ -117,7 +117,7 @@ struct ActorControlSystem : public System
 			vec2 input = SquareToCircle(vec2(command.x_axis, command.y_axis));
 
 			//Ðý×ª
-			auto forward = glm::normalize(vec3(input.x, fixed16(0), input.y));
+			auto forward = glm::normalize(vec3(input.x, 0.f, input.y));
 			registry.emplace_or_replace<MovementForward>(e, forward);
 
 			INFO("input {} id{} ", glm::length(input),registry.get<Player>(e).id);
@@ -251,7 +251,7 @@ struct ActorControlSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		OnTransition(dt);
 		OnExit();
@@ -263,7 +263,7 @@ struct ActorControlSystem : public System
 		registry.clear<ExitActorState>();
 	}
 
-	void OnTransition(fixed16 dt)
+	void OnTransition(float dt)
 	{
 		auto view = registry.view<ActorState,AnimationClip, Command>(entt::exclude<EnterActorState, ExitActorState>);
 		for (auto e : view)
@@ -304,7 +304,7 @@ struct ActorControlSystem : public System
 		}
 	}
 
-	void ProcessCurState(fixed16 dt)
+	void ProcessCurState(float dt)
 	{
 		auto view = registry.view<ActorState, Command, AnimationClip>();
 		for (auto e : view)
@@ -322,7 +322,7 @@ struct ActorControlSystem : public System
 		}
 	}
 
-	void LateUpdate(fixed16 dt) override
+	void LateUpdate(float dt) override
 	{
 		
 	}

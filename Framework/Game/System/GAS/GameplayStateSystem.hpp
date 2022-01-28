@@ -25,7 +25,7 @@ struct GameplayStateSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto run_frame = registry.ctx<GameState>().run_frame;
 		auto view = registry.view<GameplayState,GameplayAttributeSet>();

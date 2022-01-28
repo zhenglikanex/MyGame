@@ -129,7 +129,7 @@ struct GameplayAttributeSystem : public System
 		modify_list.clear();
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		Modify();
 	}

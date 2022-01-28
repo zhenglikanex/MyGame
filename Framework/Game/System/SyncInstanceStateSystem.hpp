@@ -24,7 +24,7 @@ struct SyncInstanceStateSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto& state = registry.ctx<SyncInstanceState>();
 		auto& sync_manager = registry.ctx<SyncManager>();

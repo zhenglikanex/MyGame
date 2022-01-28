@@ -71,25 +71,25 @@ void UnityDebugService::DrawCube(const vec3& position, const quat& rotation, con
 {
 	UnityBridge::Get().CallUnity<void>(
 		"DrawCube",
-		static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z),
-		static_cast<float>(rotation.x), static_cast<float>(rotation.y), static_cast<float>(rotation.z), static_cast<float>(rotation.w),
-		static_cast<float>(size.x), static_cast<float>(size.y), static_cast<float>(size.z));
+		position.x, position.y, position.z,
+		rotation.x, rotation.y, rotation.z, rotation.w,
+		size.x, size.y, size.z);
 }
 
-void UnityDebugService::DrawSphere(const vec3& position, fixed16 radius) const
+void UnityDebugService::DrawSphere(const vec3& position, float radius) const
 {
 	UnityBridge::Get().CallUnity<void>(
 		"DrawSphere",
-		static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z),
-		static_cast<float>(radius));
+		position.x, position.y, position.z,
+		radius);
 }
 
-void UnityDebugService::DrawCapsule(const vec3& position, const quat& rotation, fixed16 half_height, fixed16 radius) const
+void UnityDebugService::DrawCapsule(const vec3& position, const quat& rotation, float half_height, float radius) const
 {
 	UnityBridge::Get().CallUnity<void>(
 		"DrawCapsule",
-		static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z),
-		static_cast<float>(rotation.x), static_cast<float>(rotation.y), static_cast<float>(rotation.z), static_cast<float>(rotation.w),
-		static_cast<float>(half_height),
-		static_cast<float>(radius));
+		position.x, position.y, position.z,
+		rotation.x, rotation.y, rotation.z, rotation.w,
+		half_height,
+		radius);
 }

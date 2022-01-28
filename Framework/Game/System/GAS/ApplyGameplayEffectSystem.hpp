@@ -93,7 +93,7 @@ struct ApplyGameplayEffectSystem : public System
 		return ge.application.chance_to_apply_to_target >= value;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
 		sol::state& lua = registry.ctx<sol::state>();

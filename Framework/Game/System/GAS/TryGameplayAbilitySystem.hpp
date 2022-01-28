@@ -87,7 +87,7 @@ struct TryGameplayAbilitySystem : public System
 		}
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto& game_helper = registry.ctx<Locator>().Ref<GameHelper>();
 		auto& ga_manager = registry.ctx<GameplayAbilityManager>();

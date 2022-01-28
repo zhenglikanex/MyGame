@@ -25,7 +25,7 @@ public:
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		float time = static_cast<float>(dt);
 

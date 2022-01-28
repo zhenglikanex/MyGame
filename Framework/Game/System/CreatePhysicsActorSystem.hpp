@@ -34,7 +34,7 @@ struct CreatePhysicsActorSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto view = registry.view<Transform,Collider>(entt::exclude<PhysicsActor>);
 		for (auto e : view)

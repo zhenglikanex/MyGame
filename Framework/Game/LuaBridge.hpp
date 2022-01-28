@@ -257,7 +257,7 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		auto it = map.value.find(id);
 		if (it != map.value.end())
 		{
-			registry.emplace_or_replace<AnimationClip>(it->second,name,fixed16(time));
+			registry.emplace_or_replace<AnimationClip>(it->second,name,time);
 		}
 	};
 

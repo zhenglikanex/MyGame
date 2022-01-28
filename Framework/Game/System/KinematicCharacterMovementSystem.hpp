@@ -86,7 +86,7 @@ struct KinematicCharacterMovementSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		INFO("kcc update")
 		UpdatePhase1(static_cast<float>(dt));

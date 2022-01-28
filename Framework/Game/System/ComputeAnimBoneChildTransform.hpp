@@ -43,7 +43,7 @@ struct ComputeAnimBoneChildTransformSystem : public System
 		return nullptr;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto& map = registry.ctx<EntityByUniqueIdMap>();
 		auto view = registry.view<ParentAnimBone,Transform>();

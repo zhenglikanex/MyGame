@@ -22,12 +22,12 @@ void ServerDebugService::DrawCube(const vec3& position, const quat& rotation, co
 
 }
 
-void ServerDebugService::DrawSphere(const vec3& position, fixed16 radius) const
+void ServerDebugService::DrawSphere(const vec3& position, float radius) const
 {
 
 }
 
-void ServerDebugService::DrawCapsule(const vec3& position, const quat& rotation, fixed16 half_height, fixed16 radius) const
+void ServerDebugService::DrawCapsule(const vec3& position, const quat& rotation, float half_height, float radius) const
 {
 
 }

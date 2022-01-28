@@ -16,7 +16,7 @@ namespace GameConfig
 		const std::string kDeath = "Death";
 	}
 
-	const fixed16 kFrameTime = fixed16(0.033f);
+	const float kFrameTime = 0.033f;
 	const float kDefaultInputFrame = 0.033f;
 	constexpr uint32_t kMaxPredictFrame = 2000;
 	const uint32_t kMaxOnceFrameRunNum = 100;

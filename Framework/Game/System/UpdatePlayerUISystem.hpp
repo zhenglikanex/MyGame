@@ -117,7 +117,7 @@ struct UpdatePlayerUISystem : public System
 		});
 	}
 
-	void Update(fixed16 dt) override
+	void Update(float dt) override
 	{
 		UpdateAttribute();
 		UpdateAbilityCooldown();

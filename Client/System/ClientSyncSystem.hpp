@@ -37,7 +37,7 @@ struct ClientSyncSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto& game_state = registry.ctx<GameState>();
 		auto& network_service = registry.ctx<Locator>().Ref<const NetworkService>();

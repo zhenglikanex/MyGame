@@ -35,7 +35,7 @@ struct ServerSyncSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto& sync_manager = registry.ctx<SyncManager>();
 		INFO("server sync{}", duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());

@@ -35,7 +35,7 @@ public:
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		// todo:考虑是否要命中的判断放到一起处理
 		// 放到一起后可以按照要回滚的帧数排序来提高效率?

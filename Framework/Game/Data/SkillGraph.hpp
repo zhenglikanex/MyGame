@@ -22,7 +22,7 @@ public:
 		union
 		{
 			int int_value;
-			fixed16 float_value;
+			float float_value;
 			bool bool_value;
 		};
 	};
@@ -99,10 +99,10 @@ public:
 			{}
 
 			const std::string& name() const { return name_; }
-			fixed16 time() const { return time_; }
+			float time() const { return time_; }
 		private:
 			std::string name_;
-			fixed16 time_;
+			float time_;
 		};
 
 		const std::string& name() const { return name_; }
@@ -194,7 +194,7 @@ inline void from_json(const json& j, SkillGraphInfo::Skill::Transition::Conditio
 		condition.value_.int_value = std::stoi(str);
 		break;
 	case SkillGraphInfo::Skill::Transition::Condition::ConditionType::kFloat:
-		condition.value_.float_value = fixed16(str);
+		condition.value_.float_value = std::stof(str);
 		break;
 	case SkillGraphInfo::Skill::Transition::Condition::ConditionType::kBool:
 		condition.value_.bool_value = str == "true" ? true : false;
@@ -240,7 +240,7 @@ namespace kanex
 {
 	inline void Save(BinaryOutputArchive& ar,const SkillGraphInfo::Param& param)
 	{
-		if constexpr (sizeof(int) > sizeof(fixed16))
+		if constexpr (sizeof(int) > sizeof(float))
 		{
 			ar(param.int_value);
 		}
@@ -252,7 +252,7 @@ namespace kanex
 
 	inline void Load(BinaryInputArchive& ar,SkillGraphInfo::Param& param)
 	{
-		if constexpr (sizeof(int) > sizeof(fixed16))
+		if constexpr (sizeof(int) > sizeof(float))
 		{
 			ar(param.int_value);
 		}

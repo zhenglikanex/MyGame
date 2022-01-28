@@ -20,7 +20,7 @@ struct AnimationSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(fixed16 dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto view = registry.view<Local,Animation,AnimationClip>();
 		for (auto e : view)
@@ -33,7 +33,7 @@ struct AnimationSystem : public System
 				if (animation_clip.is_done)
 				{
 					animation_clip.is_done = false;
-					animation_clip.time = fixed16(0);
+					animation_clip.time = 0.f;
 				}
 
 				if (!animation_clip.is_done)
