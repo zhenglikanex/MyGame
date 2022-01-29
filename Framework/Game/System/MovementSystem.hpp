@@ -29,7 +29,7 @@ inline quat ForwardRotation(const vec3& forward)
 
 struct MovementSystem : public System
 {
-	MovementSystem(entt::registry& _registry) : System(_registry) { }
+	MovementSystem(Registry& _registry) : System(_registry) { }
 	~MovementSystem() {}
 
 	bool Initialize() override

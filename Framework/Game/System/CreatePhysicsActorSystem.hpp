@@ -13,7 +13,7 @@
 
 struct CreatePhysicsActorSystem : public System
 {
-	CreatePhysicsActorSystem(entt::registry& _registry) : System(_registry) { }
+	CreatePhysicsActorSystem(Registry& _registry) : System(_registry) { }
 	~CreatePhysicsActorSystem() {}
 
 	static void RemovePhysicActor(entt::registry& registry,entt::entity e)

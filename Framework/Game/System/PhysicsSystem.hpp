@@ -12,7 +12,7 @@ struct PhysicsSystem : public System,public PxSimulationEventCallback
 {
 	entt::observer kinematic_updater{registry,entt::collector.group<Transform, PhysicsKinematicTag, PhysicsActor>().update<Transform>().where<PhysicsActor, PhysicsKinematicTag>()};
 
-	PhysicsSystem(entt::registry& _registry) 
+	PhysicsSystem(Registry& _registry) 
 		: System(_registry)
 	{ 
 

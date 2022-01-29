@@ -25,7 +25,7 @@ GameHelper.hpp
 Proto.hpp
 RandomEngine.hpp
 LuaBridge.hpp
-
+Registry.hpp
 
 GAS/GameplayEffect.hpp
 GAS/GameplayTag.hpp

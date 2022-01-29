@@ -9,7 +9,7 @@
 struct DestorySystem : System
 {
 public:
-	DestorySystem(entt::registry& _registry) : System(_registry)
+	DestorySystem(Registry& _registry) : System(_registry)
 	{
 	}
 	~DestorySystem() {}

@@ -9,7 +9,7 @@
 
 struct GameplayStateSystem : public System
 {
-	GameplayStateSystem(entt::registry& _registry)
+	GameplayStateSystem(Registry& _registry)
 		: System(_registry)
 	{
 

@@ -17,7 +17,7 @@ struct GameplayWaitTaskSystem : System
 public:
 	std::vector<uint32_t> del_list;
 
-	GameplayWaitTaskSystem(entt::registry& _registry) : System(_registry)
+	GameplayWaitTaskSystem(Registry& _registry) : System(_registry)
 	{
 	}
 

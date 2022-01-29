@@ -13,17 +13,15 @@
 #include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/PlayerInfo.hpp"
+#include "Framework/Game/Registry.hpp"
 
 #include "Framework/Game/Component/Command.hpp"
-#include "Framework/Game/Component/Transform.hpp"
 
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Data/Config.hpp"
 
 #include "Kanex.hpp"
-
-#include "3rdparty/include/entt/entt.hpp"
 
 class Game
 {
@@ -40,15 +38,13 @@ public:
 	void UpdateFixedLogic();
 
 	void InputCommand(uint32_t frame,uint32_t id,const Command& command);
-
 	uint32_t GetVerifiedFrame() const;
 
 	void set_start_time(uint32_t start_time) { start_time_ = start_time; }
-
 	uint32_t start_time() const { return start_time_; }
 	float run_time() const { return run_time_; }
 	uint32_t run_frame() const { return run_frame_; }
-	entt::registry& registry() { return registry_; }
+	Registry& registry() { return registry_; }
 private:
 	void LoadAllConfig();
 	void LoadScene(const std::string& name);
@@ -80,8 +76,7 @@ private:
 	float run_time_;
 	uint32_t run_frame_;
 	float input_frame_rate_;
-	
-	entt::registry registry_;
+	Registry registry_;
 	std::vector<std::unique_ptr<System>> systems_;
 	std::vector<PlayerInfo> player_infos_;
 	std::array<CommandGroup, GameConfig::kMaxPredictFrame> command_groups_;

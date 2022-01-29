@@ -12,7 +12,7 @@
 
 struct ComputeAnimBoneChildTransformSystem : public System
 {
-	ComputeAnimBoneChildTransformSystem(entt::registry& _registry) : System(_registry) { }
+	ComputeAnimBoneChildTransformSystem(Registry& _registry) : System(_registry) { }
 	~ComputeAnimBoneChildTransformSystem() {}
 
 	bool Initialize() override

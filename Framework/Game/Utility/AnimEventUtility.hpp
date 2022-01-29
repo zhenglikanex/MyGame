@@ -11,7 +11,7 @@
 
 struct AnimEventUtility
 {
-	static void SendAnimEvent(entt::registry& registry, entt::entity e, std::string_view event)
+	static void SendAnimEvent(Registry& registry, entt::entity e, std::string_view event)
 	{
 		if (event == "StartInputTask")
 		{

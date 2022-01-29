@@ -11,7 +11,7 @@
 
 struct FlyingTextSystem : public System
 {
-	FlyingTextSystem(entt::registry& _registry)
+	FlyingTextSystem(Registry& _registry)
 		: System(_registry)
 	{
 

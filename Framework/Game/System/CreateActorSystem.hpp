@@ -32,7 +32,7 @@ struct CreateActorSystem : public System
 	const std::string path = "Config/Actor/";
 	std::unordered_map<std::string, ActorInfo> actor_infos;
 
-	CreateActorSystem(entt::registry& _registry) : System(_registry) { }
+	CreateActorSystem(Registry& _registry) : System(_registry) { }
 	~CreateActorSystem() {}
 
 	bool Initialize() override

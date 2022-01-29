@@ -8,7 +8,7 @@ struct ActionStateUtility
 {
 
 public:
-	static void ChangeState(entt::registry& registry, entt::entity e, ActorStateType state)
+	static void ChangeState(Registry& registry, entt::entity e, ActorStateType state)
 	{
 		if (registry.all_of<ActorState>(e))
 		{
@@ -22,7 +22,7 @@ public:
 	}
 
 private:
-	static void ChangeState(entt::registry& registry, entt::entity e, const ActorState& action_state, ActorStateType state)
+	static void ChangeState(Registry& registry, entt::entity e, const ActorState& action_state, ActorStateType state)
 	{
 		if (action_state.cur_state != state)
 		{

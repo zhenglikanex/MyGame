@@ -12,7 +12,7 @@ struct CreateAnimationSystem : System
 	const std::string path = "Config/Anim/";
 	std::unordered_map<std::string, AnimationInfo> animation_infos;
 
-	CreateAnimationSystem(entt::registry& registry) 
+	CreateAnimationSystem(Registry& registry) 
 		: System(registry)
 	{
 

@@ -24,7 +24,7 @@ struct GameplayHitTestTaskSystem : System
 public:
 	std::vector<entt::entity> hits;
 
-	GameplayHitTestTaskSystem(entt::registry& _registry) : System(_registry)
+	GameplayHitTestTaskSystem(Registry& _registry) : System(_registry)
 	{
 	}
 

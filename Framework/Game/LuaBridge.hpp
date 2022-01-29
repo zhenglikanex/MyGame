@@ -3,6 +3,7 @@
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/FileService.hpp"
 #include "Framework/Game/DebugService.hpp"
+#include "Framework/Game/Registry.hpp"
 
 #include "Framework/Game/GAS/GameplayTag.hpp"
 #include "Framework/Game/GAS/GameplayEffect.hpp"
@@ -206,7 +207,7 @@ inline void RegisterGameplayAbilitySpec(sol::state& lua)
 	type["entity_manager"] = &GameplayAbilitySpec::entity_manager;
 }
 
-inline void RegisterLua(entt::registry& registry,sol::state& lua)
+inline void RegisterLua(Registry& registry,sol::state& lua)
 {
 	auto& file_service = registry.ctx<Locator>().Ref<FileService>();
 	lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table, sol::lib::debug, sol::lib::os);
@@ -340,62 +341,10 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		return result;
 	};
 
-	lua["CreateColliderToAnimBone"] = [&registry](const Collider& collider, UniqueId target, std::string_view bone,Local receiver)
-	{
-		Local* result = nullptr;
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
-		auto it = map.value.find(target);
-		if (it != map.value.end())
-		{
-			entt::entity target_entity = it->second;
-
-			auto e = registry.create();
-			if (auto transform = registry.try_get<Transform>(target_entity))
-			{
-				registry.emplace<Transform>(e,*transform);
-			}
-			else 
-			{
-				registry.emplace<Transform>(e);
-			}
-			
-			registry.emplace<Collider>(e, collider);
-			registry.emplace<ParentAnimBone>(e, target, bone);
-			registry.emplace<CollisionReceiver>(e, receiver);
-
-			if (auto player = registry.try_get<Player>(target_entity))
-			{
-				// 玩家控制
-				auto& sync_manager = registry.ctx<SyncManager>();
-				auto& sync = sync_manager.sync_instances[player->id];
-				registry.emplace<Local>(e, sync.owner, sync.identifier++);
-			}
-			else
-			{
-				//服务器控制
-				auto& sync_manager = registry.ctx<SyncManager>();
-				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
-				registry.emplace<Local>(e, sync.owner, sync.identifier++);
-			}
-
-			result = &registry.get<Local>(e);
-		}
-
-		return result;
-	};
-
 	lua["GetWeapon"] = [&registry](UniqueId target)
 	{
-		Weapon* weapon = nullptr;
-
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
-		auto it = map.value.find(target);
-		if (it != map.value.end())
-		{
-			weapon = registry.try_get<Weapon>(it->second);
-		}
-
-		return weapon;
+		entt::entity e = registry.get(target);
+		return registry.try_get<Weapon>(e);
 	};
 
 	lua["GetUniqueId"] = [&registry](entt::entity e)
@@ -411,53 +360,35 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 		}
 	};
 
-	auto destory2 = [&registry](Local local) {
-		auto& map = registry.ctx<EntityByLocalMap>();
-		auto it = map.value.find(local);
-		if (it != map.value.end())
+	auto destory2 = [&registry](const Local& local) 
+	{
+		entt::entity e = registry.get(local);
+		if (!registry.all_of<Destory>(e))
 		{
-			registry.destroy(it->second);
+			registry.emplace<Destory>(e);
 		}
 	};
 
 	lua["Destory"] = sol::overload(destory1, destory2);
 
-	lua["ActorChangeState"] = [&registry](UniqueId id)
+	lua["ActorChangeState"] = [&registry](entt::entity e)
 	{
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
-		auto it = map.value.find(id);
-		if (it != map.value.end())
-		{
-			ActionStateUtility::ChangeState(registry, it->second, ActorStateType::kHurt);
-		}
+		ActionStateUtility::ChangeState(registry, e, ActorStateType::kHurt);
 	};
 
-	lua["ApplyCueToTarget"] = [&registry](UniqueId id, std::string_view cue)
+	lua["ApplyCueToTarget"] = [&registry](entt::entity e, std::string_view cue)
 	{
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
-		auto it = map.value.find(id);
-		if (it != map.value.end())
+		if (registry.all_of<View>(e))
 		{
-			if (registry.all_of<View>(it->second))
-			{
-				auto& view = registry.get<View>(it->second);
-				view.value->ApplyCue(cue);
-			}
+			auto& view = registry.get<View>(e);
+			view.value->ApplyCue(cue);
 		}
 	};
 
 	auto get_transform1 = [&registry](UniqueId target)
 	{
-		Transform* transform = nullptr;
-
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
-		auto it = map.value.find(target);
-		if (it != map.value.end())
-		{
-			transform = registry.try_get<Transform>(it->second);
-		}
-
-		return transform;
+		entt::entity e = registry.get(target);
+		return registry.try_get<Transform>(e);
 	};
 
 	auto get_transform2 = [&registry](entt::entity e)
@@ -467,149 +398,43 @@ inline void RegisterLua(entt::registry& registry,sol::state& lua)
 
 	auto get_transform3 = [&registry](const Local& target)
 	{
-		Transform* transform = nullptr;
-
-		auto& map = registry.ctx<EntityByLocalMap>();
-		auto it = map.value.find(target);
-		if (it != map.value.end())
-		{
-			transform = registry.try_get<Transform>(it->second);
-		}
-
-		return transform;
+		entt::entity e = registry.get(target);
+		return registry.try_get<Transform>(e);
 	};
 
 	lua["GetTransform"] = sol::overload(get_transform1, get_transform2,get_transform3);
 
-	lua["CreateView"] = [&registry](UniqueId target,std::string_view asset, const Transform& transform)
+	lua["CreateView"] = [&registry](UniqueId source,std::string_view asset, const Transform& transform)
 	{
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
-		auto it = map.value.find(target);
-		if (it != map.value.end())
+		if (registry.valid(source))
 		{
-			entt::entity target_entity = it->second;
-			auto e = registry.create();
+			entt::entity source_e = registry.get(source);
+			auto e = registry.create_predict();
 			registry.emplace<ViewAsset>(e, asset);
 			registry.emplace<Transform>(e, transform);
-
-			auto& sync_manager = registry.ctx<SyncManager>();
-			if (auto player = registry.try_get<Player>(target_entity))
-			{
-				// 玩家控制
-				auto& sync_manager = registry.ctx<SyncManager>();
-				auto& sync = sync_manager.sync_instances[player->id];
-				registry.emplace<Local>(e, sync.owner, sync.identifier++);
-			}
-			else
-			{
-				//服务器控制
-				auto& sync_manager = registry.ctx<SyncManager>();
-				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
-				registry.emplace<Local>(e, sync.owner, sync.identifier++);
-			}
-
-			auto& game_helper = registry.ctx<Locator>().Ref<GameHelper>();
-			if (game_helper.IsAuthority())
-			{
-				registry.emplace<UniqueId>(e, e);
-			}
-
-			return e;
 		}
 
 		return static_cast<entt::entity>(entt::null);
 	};
 
 	lua["CreateMovementView"] = [&registry](
-		UniqueId target,
+		UniqueId source,
 		std::string_view asset,
 		const Transform& transform,
 		const vec3& forward,
 		const vec3& velocity,
 		const vec3& angular_velocity)
 	{
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
-		auto it = map.value.find(target);
-		if (it != map.value.end())
+		if (registry.valid(source))
 		{
-			entt::entity target_entity = it->second;
-			auto e = registry.create();
-			
+			entt::entity source_e = registry.get(source);
+
+			auto e = registry.create_predict();
 			registry.emplace<ViewAsset>(e, asset);
 			registry.emplace<Transform>(e, transform);
 			registry.emplace<TransformState>(e);
 			registry.emplace<MovementForward>(e, forward);
 			registry.emplace<Movement>(e, velocity, angular_velocity);
-
-			auto& sync_manager = registry.ctx<SyncManager>();
-			if (auto player = registry.try_get<Player>(target_entity))
-			{
-				// 玩家控制
-				auto& sync_manager = registry.ctx<SyncManager>();
-				auto& sync = sync_manager.sync_instances[player->id];
-				registry.emplace<Local>(e, sync.owner, sync.identifier++);
-			}
-			else
-			{
-				//服务器控制
-				auto& sync_manager = registry.ctx<SyncManager>();
-				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
-				registry.emplace<Local>(e, sync.owner, sync.identifier++);
-			}
-
-			auto& game_helper = registry.ctx<Locator>().Ref<GameHelper>();
-			if (game_helper.IsAuthority())
-			{
-				registry.emplace<UniqueId>(e,e);
-			}
-
-			return e;
-		}
-
-		return static_cast<entt::entity>(entt::null);
-	};
-
-	lua["CreateMovementColliderView"] = [&registry](
-		UniqueId target,
-		const Local& receiver,
-		std::string_view asset,
-		const Transform& transform,
-		const vec3& forward,
-		const vec3& velocity,
-		const vec3& angular_velocity) // todo 懒的再搞技能子弹碰撞导出了，先这样
-		//const ColliderInfo& collider)
-	{
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
-		auto it = map.value.find(target);
-		if (it != map.value.end())
-		{
-			entt::entity target_entity = it->second;
-			auto e = registry.create();
-			registry.emplace<ViewAsset>(e, asset);
-			registry.emplace<Transform>(e, transform);
-			registry.emplace<TransformState>(e);
-			registry.emplace<MovementForward>(e, forward);
-			registry.emplace<Movement>(e, velocity, angular_velocity);
-			registry.emplace<Collider>(e, Collider(Geometry(Sphere(1)), glm::identity<mat4>(), true, RigidType::kKinematic));
-			registry.emplace<CollisionReceiver>(e, receiver);
-
-			auto& sync_manager = registry.ctx<SyncManager>();
-			if (auto player = registry.try_get<Player>(target_entity))
-			{
-				// 玩家控制
-				auto& sync_manager = registry.ctx<SyncManager>();
-				auto& sync = sync_manager.sync_instances[player->id];
-				registry.emplace<Local>(e, sync.owner, sync.identifier++);
-			}
-			else
-			{
-				//服务器控制
-				auto& sync_manager = registry.ctx<SyncManager>();
-				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
-				registry.emplace<Local>(e, sync.owner, sync.identifier++);
-			}
-
-			return e;
 		}
 
 		return static_cast<entt::entity>(entt::null);

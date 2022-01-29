@@ -18,7 +18,7 @@ struct ServerSyncSystem : public System
 {
 	kanex::Buffer buffer;
 
-	ServerSyncSystem(entt::registry& _registry)
+	ServerSyncSystem(Registry& _registry)
 		: System(_registry)
 		, buffer(1024)
 	{

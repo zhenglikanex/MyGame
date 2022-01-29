@@ -8,7 +8,7 @@
 
 struct SyncInstanceStateSystem : public System
 {
-	SyncInstanceStateSystem(entt::registry& _registry)
+	SyncInstanceStateSystem(Registry& _registry)
 		: System(_registry)
 	{
 

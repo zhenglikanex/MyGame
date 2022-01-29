@@ -6,7 +6,7 @@
 class GameplayEventUtility
 {
 public:
-	static void SendGameplayEvent(entt::registry& registry,const Local& local,const GameplayTag& tag, const GameplayEventData& data)
+	static void SendGameplayEvent(Registry& registry,const Local& local,const GameplayTag& tag, const GameplayEventData& data)
 	{
 		auto& manager = registry.ctx_or_set<GameplayEventSendManager>();
 		auto& sender = manager.senders[local];

@@ -78,7 +78,7 @@ struct KinematicCharacterMovementSystem : public System
 	// 指定角色的移动算法可以检测到的碰撞的 LayerMask。 默认情况下，这使用刚体层的碰撞矩阵
 	uint32_t collidable_layers = -1;
 
-	KinematicCharacterMovementSystem(entt::registry& _registry) : System(_registry) { }
+	KinematicCharacterMovementSystem(Registry& _registry) : System(_registry) { }
 	~KinematicCharacterMovementSystem() {}
 
 	bool Initialize() override

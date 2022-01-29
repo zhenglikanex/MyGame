@@ -9,7 +9,7 @@
 
 struct DebugSystem : public System
 {
-	DebugSystem(entt::registry& _registry) : System(_registry) { }
+	DebugSystem(Registry& _registry) : System(_registry) { }
 	~DebugSystem() {}
 
 	bool Initialize() override

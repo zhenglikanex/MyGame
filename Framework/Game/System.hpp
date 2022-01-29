@@ -1,15 +1,18 @@
 #pragma once
 
 #include <type_traits>
-#include "Framework/Game/DebugService.hpp"
 
-#include "FixedPoint.hpp"
+#include "Framework/Game/DebugService.hpp"
+#include "Framework/Game/Registry.hpp"
 
 #include "entt/entt.hpp"
 
 struct System
 {
-	System(entt::registry& _registry) : registry(_registry) { }
+	System(Registry& _registry) 
+		: registry(_registry) 
+	{ }
+
 	virtual ~System() = 0 {}
 
 	virtual bool Initialize() = 0;
@@ -18,5 +21,5 @@ struct System
 	virtual void LateUpdate(float dt) {}
 	virtual void Finalize() = 0;
 
-	entt::registry& registry;
+	Registry& registry;
 };

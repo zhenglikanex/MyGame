@@ -23,7 +23,7 @@
 
 struct TryGameplayAbilitySystem : public System
 {
-	TryGameplayAbilitySystem(entt::registry& _registry) : System(_registry) { }
+	TryGameplayAbilitySystem(Registry& _registry) : System(_registry) { }
 	~TryGameplayAbilitySystem() {}
 
 	bool Initialize() override
@@ -135,26 +135,8 @@ struct TryGameplayAbilitySystem : public System
 						target = registry.get<UniqueId>(info.target);
 					}
 
-					auto e = registry.create();
-					registry.emplace<GameplayAbilitySpec>(e, info.ability,active_ability->level,registry.get<UniqueId>(info.source),target);
-					if (game_helper.IsAuthority())
-					{
-						registry.emplace<UniqueId>(e, e);
-					}
-					if (auto player = registry.try_get<Player>(info.source))
-					{
-						// 玩家控制角色
-						auto& sync_manager = registry.ctx<SyncManager>();
-						auto& sync = sync_manager.sync_instances[player->id];
-						registry.emplace<Local>(e,sync.owner,sync.identifier++);
-					}
-					else
-					{
-						//服务器控制角色
-						auto& sync_manager = registry.ctx<SyncManager>();
-						auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
-						registry.emplace<Local>(e, sync.owner, sync.identifier++);
-					}
+					auto e = registry.create_predict(info.source);
+					registry.emplace<GameplayAbilitySpec>(e, info.ability, active_ability->level, registry.get<UniqueId>(info.source), target);
 				}
 
 				ga_list.second.clear();

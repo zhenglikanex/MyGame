@@ -13,7 +13,7 @@
 struct GameplayPlayInputSystem : System
 {
 public:
-	GameplayPlayInputSystem(entt::registry& _registry) : System(_registry)
+	GameplayPlayInputSystem(Registry& _registry) : System(_registry)
 	{
 	}
 

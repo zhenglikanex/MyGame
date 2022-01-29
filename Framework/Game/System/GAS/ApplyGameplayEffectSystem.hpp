@@ -21,7 +21,7 @@ struct ApplyGameplayEffectSystem : public System
 {
 	std::vector<std::string> overflow_effects;
 
-	ApplyGameplayEffectSystem(entt::registry& _registry) : System(_registry) { }
+	ApplyGameplayEffectSystem(Registry& _registry) : System(_registry) { }
 	~ApplyGameplayEffectSystem() {}
 
 	bool Initialize() override

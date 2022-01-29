@@ -8,7 +8,7 @@
 
 struct RootMotionSystem : public System
 {
-	RootMotionSystem(entt::registry& _registry) : System(_registry) { }
+	RootMotionSystem(Registry& _registry) : System(_registry) { }
 	~RootMotionSystem() {}
 
 	bool Initialize() override

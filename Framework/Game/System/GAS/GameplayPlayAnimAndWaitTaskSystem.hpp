@@ -14,7 +14,7 @@
 struct GameplayPlayAnimAndWaitTaskSystem : System
 {
 public:
-	GameplayPlayAnimAndWaitTaskSystem(entt::registry& _registry) : System(_registry)
+	GameplayPlayAnimAndWaitTaskSystem(Registry& _registry) : System(_registry)
 	{
 	}
 

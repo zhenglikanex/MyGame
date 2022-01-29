@@ -7,6 +7,7 @@
 #include "Framework/Game/InputService.hpp"
 #include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/LuaBridge.hpp"
+#include "Framework/Game/Registry.hpp"
 
 #include "Framework/Game/Component/SyncManager.hpp"
 #include "Framework/Game/Component/GameState.hpp"
@@ -36,59 +37,18 @@
 
 using namespace std::chrono;
 
-void ConnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
-{
-	auto& unique_id = registry.get<UniqueId>(e);
-
-	auto& map = registry.ctx<EntityByUniqueIdMap>();
-	map.value.emplace(unique_id, e);
-}
-
-void DisconnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
-{
-	auto& unique_id = registry.get<UniqueId>(e);
-
-	auto& map = registry.ctx<EntityByUniqueIdMap>();
-	map.value.erase(unique_id);
-}
-
-void ConnectLocalIdToEntity(entt::registry& registry, entt::entity e)
-{
-	auto& local_id = registry.get<Local>(e);
-
-	auto& map = registry.ctx<EntityByLocalMap>();
-	map.value.emplace(local_id, e);
-}
-
-void DisconnectLocalIdToEntity(entt::registry& registry, entt::entity e)
-{
-	auto& local_id = registry.get<Local>(e);
-
-	auto& map = registry.ctx<EntityByLocalMap>();
-	map.value.erase(local_id);
-}
-
 Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	: start_time_(0)
 	, run_time_(0)
 	, run_frame_(0)
 	, input_frame_rate_(GameConfig::kDefaultInputFrame)
 	, player_infos_(players)
-	
 {
 	registry_.set<Locator>(std::move(locator));
 	registry_.set<GameState>();
 	registry_.set<sol::state>();
 	registry_.set<GameplayEffectManager>(registry_);
 	registry_.set<GameplayAbilityManager>(registry_);
-
-	registry_.set<EntityByUniqueIdMap>();
-	registry_.on_construct<UniqueId>().connect<&ConnectUniqueIdToEntity>();
-	registry_.on_destroy<UniqueId>().connect<&DisconnectUniqueIdToEntity>();
-
-	registry_.set<EntityByLocalMap>();
-	registry_.on_construct<Local>().connect<&ConnectLocalIdToEntity>();
-	registry_.on_destroy<Local>().connect<&DisconnectLocalIdToEntity>();
 	
 	auto& sync_manager = registry_.set<SyncManager>();
 	for (auto& info : player_infos_)
@@ -103,9 +63,8 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	}
 	else
 	{
-		//todo 插入服务器控制syncdata
-		uint32_t id = std::numeric_limits<uint32_t>::max();
-		sync_manager.sync_instances.emplace(id, SyncInstance(id, 0));
+		//插入服务器控制syncdata
+		sync_manager.sync_instances.emplace(ServerInstance, SyncInstance(ServerInstance, 0));
 	}
 
 	systems_ = game_helper.CreateSystems(registry_);
@@ -129,9 +88,6 @@ bool Game::Initialize()
 			return false;
 		}
 	}
-
-	auto& file_service = registry_.ctx<Locator>().Ref<FileService>();
-	//file_service.set_cur_path(std::filesystem::current_path().string() + "/Assets/Resources/");
 	
 	RegisterLua(registry_, registry_.ctx<sol::state>());
 	LoadAllConfig();

@@ -8,7 +8,7 @@
 
 struct TransformStateSystem : public System
 {
-	TransformStateSystem(entt::registry& _registry)
+	TransformStateSystem(Registry& _registry)
 		: System(_registry)
 	{
 

@@ -17,7 +17,7 @@
 struct RollbackUtility
 {
 public:
-	static bool CheckRollback(entt::registry& registry, uint32_t frame)
+	static bool CheckRollback(Registry& registry, uint32_t frame)
 	{
 		auto& game_state = registry.ctx<GameState>();
 		return game_state.run_frame - frame <= GameConfig::kMaxRollbackFrameNum;
@@ -28,7 +28,7 @@ public:
 		
 	}
 
-	static void RollbackPhysicActor(entt::registry& registry,uint32_t frame)
+	static void RollbackPhysicActor(Registry& registry,uint32_t frame)
 	{
 		auto view = registry.view<TransformState, PhysicsActor>();
 		for (auto e : view)

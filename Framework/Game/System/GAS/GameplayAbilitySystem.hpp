@@ -11,7 +11,7 @@
 
 struct GameplayAbilitySystem : public System
 {
-	GameplayAbilitySystem(entt::registry& _registry) : System(_registry) { }
+	GameplayAbilitySystem(Registry& _registry) : System(_registry) { }
 	~GameplayAbilitySystem() {}
 
 	bool Initialize() override

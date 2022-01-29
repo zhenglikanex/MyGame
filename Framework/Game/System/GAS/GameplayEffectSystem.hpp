@@ -16,7 +16,7 @@
 struct GameplayEffectSystem : public System
 {
 
-	GameplayEffectSystem(entt::registry& _registry) : System(_registry) { }
+	GameplayEffectSystem(Registry& _registry) : System(_registry) { }
 	~GameplayEffectSystem() {}
 
 	bool Initialize() override

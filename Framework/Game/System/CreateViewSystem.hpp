@@ -10,7 +10,7 @@
 
 struct CreateViewSystem : public System
 {
-	CreateViewSystem(entt::registry& _registry) : System(_registry) { }
+	CreateViewSystem(Registry& _registry) : System(_registry) { }
 	~CreateViewSystem() {}
 
 	bool Initialize() override

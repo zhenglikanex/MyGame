@@ -15,7 +15,7 @@
 struct GameplayEventSystem : System
 {
 public:
-	GameplayEventSystem(entt::registry& _registry) : System(_registry)
+	GameplayEventSystem(Registry& _registry) : System(_registry)
 	{
 	}
 	~GameplayEventSystem() {}

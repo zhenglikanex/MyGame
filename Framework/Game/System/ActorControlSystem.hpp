@@ -234,7 +234,7 @@ struct ActorControlSystem : public System
 
 	std::array<std::unique_ptr<State>, (size_t)ActorStateType::kMax> states;
 
-	ActorControlSystem(entt::registry& _registry)
+	ActorControlSystem(Registry& _registry)
 		: System(_registry)
 		, states({
 			std::make_unique<IdleState>(registry),

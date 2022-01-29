@@ -12,7 +12,7 @@
 
 struct AnimationSystem : public System
 {
-	AnimationSystem(entt::registry& _registry) : System(_registry) { }
+	AnimationSystem(Registry& _registry) : System(_registry) { }
 	~AnimationSystem() {}
 
 	bool Initialize() override

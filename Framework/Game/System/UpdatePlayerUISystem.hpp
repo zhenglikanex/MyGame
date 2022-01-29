@@ -30,7 +30,7 @@ struct UpdatePlayerUISystem : public System
 {
 	entt::observer updatelist{registry,entt::collector.group<Local, GameplayAttributeSet>().update<GameplayAttributeSet>().where<Local>() };
 
-	UpdatePlayerUISystem(entt::registry& _registry)
+	UpdatePlayerUISystem(Registry& _registry)
 		: System(_registry)
 	{
 

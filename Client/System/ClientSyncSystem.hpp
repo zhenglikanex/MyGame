@@ -21,7 +21,7 @@
 
 struct ClientSyncSystem : public System
 {
-	ClientSyncSystem(entt::registry& _registry)
+	ClientSyncSystem(Registry& _registry)
 		: System(_registry)
 	{
 
