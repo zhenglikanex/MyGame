@@ -9,8 +9,6 @@
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 #include "Framework/Game/GAS/GameplayAbility.hpp"
 
-#include "Framework/Game/Component/EntityByLocalMap.hpp"
-#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/View.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
 #include "Framework/Game/Component/Movement.hpp"
@@ -254,12 +252,8 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["PlayAnimation"] = [&registry](UniqueId id, std::string_view name,float time = 0)
 	{
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
-		auto it = map.value.find(id);
-		if (it != map.value.end())
-		{
-			registry.emplace_or_replace<AnimationClip>(it->second,name,time);
-		}
+		auto e = registry.get(id);
+		registry.emplace_or_replace<AnimationClip>(e, name, time);
 	};
 
 	lua["GameplayPlayAnimAndWait"] = [&registry](entt::entity ability,std::string_view name,std::string_view completed,std::string_view canceled)
@@ -301,44 +295,19 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["CreateAnimBone"] = [&registry](UniqueId target, std::string_view bone)
 	{
-		Local* result = nullptr;
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
-		auto it = map.value.find(target);
-		if (it != map.value.end())
+		entt::entity target_entity = registry.get(target);
+		auto e = registry.create_local(target_entity);
+		if (auto transform = registry.try_get<Transform>(target_entity))
 		{
-			entt::entity target_entity = it->second;
-
-			auto e = registry.create();
-			if (auto transform = registry.try_get<Transform>(target_entity))
-			{
-				registry.emplace<Transform>(e, *transform);
-			}
-			else
-			{
-				registry.emplace<Transform>(e);
-			}
-
-			registry.emplace<ParentAnimBone>(e, target, bone);
-
-			if (auto player = registry.try_get<Player>(target_entity))
-			{
-				// 玩家控制
-				auto& sync_manager = registry.ctx<SyncManager>();
-				auto& sync = sync_manager.sync_instances[player->id];
-				registry.emplace<Local>(e, sync.owner, sync.identifier++);
-			}
-			else
-			{
-				//服务器控制
-				auto& sync_manager = registry.ctx<SyncManager>();
-				auto& sync = sync_manager.sync_instances[std::numeric_limits<uint32_t>::max()];
-				registry.emplace<Local>(e, sync.owner, sync.identifier++);
-			}
-
-			result = &registry.get<Local>(e);
+			registry.emplace<Transform>(e, *transform);
 		}
+		else
+		{
+			registry.emplace<Transform>(e);
+		}
+		registry.emplace<ParentAnimBone>(e, target, bone);
 
-		return result;
+		return registry.get<Local>(e);
 	};
 
 	lua["GetWeapon"] = [&registry](UniqueId target)
@@ -406,9 +375,9 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["CreateView"] = [&registry](UniqueId source,std::string_view asset, const Transform& transform)
 	{
-		if (registry.valid(source))
+		entt::entity source_e = registry.get(source);
+		if (source_e != entt::null)
 		{
-			entt::entity source_e = registry.get(source);
 			auto e = registry.create_predict();
 			registry.emplace<ViewAsset>(e, asset);
 			registry.emplace<Transform>(e, transform);

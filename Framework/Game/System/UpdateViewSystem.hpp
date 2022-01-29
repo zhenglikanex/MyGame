@@ -65,7 +65,7 @@ struct UpdateViewSystem : public System
 				if (iter != animation.value->clips.end())
 				{
 					auto time = clip.time / iter->second.length;
-					view.value->PlayAnimation(clip.name, static_cast<float>(time));
+					view.value->PlayAnimation(clip.name,time);
 				}
 			}
 		}

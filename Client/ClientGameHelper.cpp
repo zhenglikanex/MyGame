@@ -1,6 +1,6 @@
 #include "ClientGameHelper.hpp"
 
-#include "Framework/Game/Component/Player.hpp"
+#include "Framework/Game/Registry.hpp"
 
 #include "Framework/Game/System/CreateActorSystem.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
@@ -50,43 +50,39 @@ bool ClientGameHelper::IsAuthority() const
 	return false;
 }
 
-std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(entt::registry& registry) const
+std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(Registry* registry) const
 {
 	std::vector<std::unique_ptr<System>> systems;
 
-	systems.emplace_back(std::make_unique<CreateActorSystem>(registry));
-	systems.emplace_back(std::make_unique<CreateViewSystem>(registry));
-	systems.emplace_back(std::make_unique<CreateAnimationSystem>(registry));
-	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(registry));
-	
-	systems.emplace_back(std::make_unique<ActorControlSystem>(registry));
-	systems.emplace_back(std::make_unique<RootMotionSystem>(registry));
-	systems.emplace_back(std::make_unique<MovementSystem>(registry));
-	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(registry));
-	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
-	
-	//systems.emplace_back(std::make_unique<UpdateColliderTransformSystem>(registry));
-	//systems.emplace_back(std::make_unique<CollisionSystem>(registry));
-	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayAbilitySystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayWaitTaskSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayPlayAnimAndWaitTaskSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayPlayInputSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayHitTestTaskSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayEventSystem>(registry));
-	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(registry));
-	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(registry));
-	systems.emplace_back(std::make_unique<PhysicsSystem>(registry));
-	systems.emplace_back(std::make_unique<DestorySystem>(registry));
-	systems.emplace_back(std::make_unique<ClientSyncSystem>(registry));
-	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayStateSystem>(registry));
-	systems.emplace_back(std::make_unique<SyncInstanceStateSystem>(registry));
-	systems.emplace_back(std::make_unique<UpdatePlayerUISystem>(registry));
-	systems.emplace_back(std::make_unique<UpdateViewSystem>(registry));
+	systems.emplace_back(std::make_unique<CreateActorSystem>(*registry));
+	systems.emplace_back(std::make_unique<CreateViewSystem>(*registry));
+	systems.emplace_back(std::make_unique<CreateAnimationSystem>(*registry));
+	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(*registry));
+	systems.emplace_back(std::make_unique<ActorControlSystem>(*registry));
+	systems.emplace_back(std::make_unique<RootMotionSystem>(*registry));
+	systems.emplace_back(std::make_unique<MovementSystem>(*registry));
+	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(*registry));
+	systems.emplace_back(std::make_unique<AnimationSystem>(*registry));
+	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayAbilitySystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayWaitTaskSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayPlayAnimAndWaitTaskSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayPlayInputSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayHitTestTaskSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayEventSystem>(*registry));
+	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(*registry));
+	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(*registry));
+	systems.emplace_back(std::make_unique<PhysicsSystem>(*registry));
+	systems.emplace_back(std::make_unique<DestorySystem>(*registry));
+	systems.emplace_back(std::make_unique<ClientSyncSystem>(*registry));
+	systems.emplace_back(std::make_unique<TransformStateSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayStateSystem>(*registry));
+	systems.emplace_back(std::make_unique<SyncInstanceStateSystem>(*registry));
+	systems.emplace_back(std::make_unique<UpdatePlayerUISystem>(*registry));
+	systems.emplace_back(std::make_unique<UpdateViewSystem>(*registry));
 #if DEBUG
-	systems.emplace_back(std::make_unique<DebugSystem>(registry));
+	systems.emplace_back(std::make_unique<DebugSystem>(*registry));
 #endif
 
 	return systems;
@@ -100,15 +96,4 @@ bool ClientGameHelper::IsLocalPlayer(uint32_t id) const
 bool ClientGameHelper::IsRemotePlayer(uint32_t id) const
 {
 	return id != local_id_;
-}
-
-bool ClientGameHelper::IsControllable(entt::registry& registry, entt::entity e) const
-{
-	if (registry.all_of<Player>(e))
-	{
-		auto& player = registry.get<Player>(e);
-		return player.id == local_id_;
-	}
-	
-	return false;
 }

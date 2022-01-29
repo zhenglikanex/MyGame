@@ -16,8 +16,6 @@
 #include "Framework/Game/System/GAS/GameplayEventSystem.hpp"
 #include "Framework/Game/System/DestorySystem.hpp"
 
-#include "Framework/Game/System/DelayTaskSystem.hpp"
-
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 
 #include "Framework/Game/LuaBridge.hpp"

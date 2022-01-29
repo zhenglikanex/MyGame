@@ -32,7 +32,7 @@ struct PhysicsSystem : public System,public PxSimulationEventCallback
 		UpdateKinematicActor();
 
 		auto& world = registry.ctx<PhysicsWorld>();
-		world.scene->simulate(static_cast<float>(dt));
+		world.scene->simulate(dt);
 		world.scene->fetchResults(true);
 
 		kinematic_updater.clear();

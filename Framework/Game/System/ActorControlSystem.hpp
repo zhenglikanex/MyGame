@@ -44,7 +44,7 @@ struct ActorControlSystem : public System
 	{
 		entt::registry& registry;
 
-		State(entt::registry& _registry) : registry(_registry) {}
+		State(Registry& _registry) : registry(_registry) {}
 		virtual ~State() = 0 {}
 
 		virtual ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation_clip, const Command& command)
@@ -59,7 +59,7 @@ struct ActorControlSystem : public System
 
 	struct IdleState : State
 	{
-		IdleState(entt::registry& _registry) : State(_registry) {}
+		IdleState(Registry& _registry) : State(_registry) {}
 
 		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation, const Command& command) override
 		{
@@ -88,7 +88,7 @@ struct ActorControlSystem : public System
 
 	struct MovementState : State
 	{
-		MovementState(entt::registry& _registry) : State(_registry) {}
+		MovementState(Registry& _registry) : State(_registry) {}
 
 		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation, const Command& command) override
 		{
@@ -145,7 +145,7 @@ struct ActorControlSystem : public System
 
 	struct JumpState : State
 	{
-		JumpState(entt::registry& _registry) : State(_registry) {}
+		JumpState(Registry& _registry) : State(_registry) {}
 
 		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animtion_clip, const Command& command) override
 		{
@@ -167,7 +167,7 @@ struct ActorControlSystem : public System
 
 	struct AttackState : State
 	{
-		AttackState(entt::registry& _registry) : State(_registry) {}
+		AttackState(Registry& _registry) : State(_registry) {}
 
 		ActorStateType OnTransition(entt::entity e, const ActorState& action_state,  const AnimationClip& animtion_clip, const Command& command) override
 		{
@@ -192,7 +192,7 @@ struct ActorControlSystem : public System
 
 	struct HurtState : State
 	{
-		HurtState(entt::registry& _registry) : State(_registry) {}
+		HurtState(Registry& _registry) : State(_registry) {}
 
 		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animtion_clip, const Command& command) override
 		{
@@ -222,7 +222,7 @@ struct ActorControlSystem : public System
 
 	struct DeathState : State
 	{
-		DeathState(entt::registry& _registry) : State(_registry) {}
+		DeathState(Registry& _registry) : State(_registry) {}
 
 		void OnEnter(entt::entity e, const EnterActorState& action_state) override
 		{

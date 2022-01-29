@@ -37,17 +37,16 @@ public:
 
 	void DestoryGameplayAbility()
 	{
-		auto& map = registry.ctx<EntityByLocalMap>();
 		auto view = registry.view<GameplayAbilitySpec,Destory>();
 		for (auto e : view)
 		{
 			auto& spec = view.get<GameplayAbilitySpec>(e);
 			for (auto& item : spec.entity_manager)
 			{
-				auto it = map.value.find(item.second);
-				if (it != map.value.end())
+				auto e = registry.get(item.second);
+				if (e != entt::null)
 				{
-					registry.emplace<Destory>(it->second);
+					registry.emplace<Destory>(e);
 				}
 			}
 		}

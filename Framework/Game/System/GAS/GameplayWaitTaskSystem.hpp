@@ -30,8 +30,6 @@ public:
 
 	void FixedUpdate(float dt) override
 	{
-		float time = static_cast<float>(dt);
-
 		auto view = registry.view<GameplayAbilityScript,GameplayWaitTask>(entt::exclude<Destory>);
 		for (auto e : view)
 		{
@@ -41,7 +39,7 @@ public:
 			for (uint32_t i = 0; i < size; ++i)
 			{
 				auto& spec = task.value[i];
-				spec.time -= time;
+				spec.time -= dt;
 				if (spec.time <= 0)
 				{
 					script.value[spec.completed](script.value);

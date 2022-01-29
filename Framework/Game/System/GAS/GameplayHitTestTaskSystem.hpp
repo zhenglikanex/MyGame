@@ -3,7 +3,6 @@
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/GameHelper.hpp"
 
-#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
@@ -41,20 +40,16 @@ public:
 		// 放到一起后可以按照要回滚的帧数排序来提高效率?
 		// 而且在查询阶段cache的效率会更高?
 		// 带来的时同步和预测回滚、复制的开销？
-		float time = static_cast<float>(dt);
-
 		auto& game_helper = registry.ctx<Locator>().Ref<GameHelper>();
 		auto& game_state = registry.ctx<GameState>();
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
 
 		auto view = registry.view<GameplayAbilitySpec, GameplayAbilityScript, GameplayHitTestTask>();
 		for (auto e : view)
 		{
 			auto& [spec, script, task] = registry.get<GameplayAbilitySpec, GameplayAbilityScript, GameplayHitTestTask>(e);
-			auto it = map.value.find(spec.source);
-			if (it != map.value.end())
+			if (registry.valid(spec.source))
 			{
-				entt::entity source = it->second;
+				entt::entity source = registry.get(spec.source);
 				auto& command = registry.get<Command>(source);
 
 				bool rollback = game_helper.IsAuthority() && RollbackUtility::CheckRollback(registry, command.verified_frame);

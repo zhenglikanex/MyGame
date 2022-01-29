@@ -3,7 +3,6 @@
 #include "Framework/Game/GAS/GameplayAbility.hpp"
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
 
-#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/UniqueId.hpp"
 #include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
@@ -19,7 +18,7 @@ struct GameplayAbilityUtility
 {
 public:
 	static void TryGameplayAbility(
-		entt::registry& registry,
+		Registry& registry,
 		entt::entity source,
 		std::string_view ability,
 		entt::entity target = entt::null)
@@ -33,33 +32,21 @@ public:
 	}
 
 	static void TryGameplayAbility(
-		entt::registry& registry,
-		UniqueId unique_id,
+		Registry& registry,
+		UniqueId source,
 		std::string_view ability,
-		entt::entity target = entt::null)
+		UniqueId target = UniqueId::null)
 	{
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
-		auto it = map.value.find(unique_id);
-		if (it != map.value.end())
-		{
-			GameplayAbilityUtility::TryGameplayAbility(registry, it->second, ability, target);
-		}
+		GameplayAbilityUtility::TryGameplayAbility(registry,registry.get(source), ability, registry.get(target));
 	}
 
-	static void CommitGameplayAbilityCost(entt::registry& registry,entt::entity ability)
+	static void CommitGameplayAbilityCost(Registry& registry,entt::entity ability)
 	{
 		if (registry.valid(ability))
 		{
 			auto& spec = registry.get<GameplayAbilitySpec>(ability);
 			
-			auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
-			auto& it = unique_map.value.find(spec.source);
-			if (it == unique_map.value.end())
-			{
-				return;
-			}
-
-			entt::entity source = it->second;
+			entt::entity source = registry.get(spec.source);
 
 			auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);	
@@ -68,20 +55,13 @@ public:
 		}
 	}
 
-	static void CommitGameplayAbilityCooldown(entt::registry& registry, entt::entity ability)
+	static void CommitGameplayAbilityCooldown(Registry& registry, entt::entity ability)
 	{
 		if (registry.valid(ability))
 		{
 			auto& spec = registry.get<GameplayAbilitySpec>(ability);
 
-			auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
-			auto& it = unique_map.value.find(spec.source);
-			if (it == unique_map.value.end())
-			{
-				return;
-			}
-
-			entt::entity source = it->second;
+			entt::entity source = registry.get(spec.source);
 
 			auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);
@@ -98,7 +78,7 @@ public:
 		}
 	}
 
-	static std::vector<entt::entity> GetActiveGameplayAbilities(entt::registry& registry, const UniqueId& id)
+	static std::vector<entt::entity> GetActiveGameplayAbilities(Registry& registry, const UniqueId& id)
 	{
 		std::vector<entt::entity> abilities;
 

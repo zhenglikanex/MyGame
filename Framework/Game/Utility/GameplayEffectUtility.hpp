@@ -28,7 +28,7 @@ public:
 		return nullptr;
 	}
 
-	static std::vector<entt::entity> GetGameplayEffectSpecEntitiesByOwner(entt::registry& registry,UniqueId target)
+	static std::vector<entt::entity> GetGameplayEffectSpecEntitiesByOwner(Registry& registry,UniqueId target)
 	{
 		std::vector<entt::entity> entities;
 		
@@ -45,7 +45,7 @@ public:
 		return entities;
 	}
 
-	static void ApplyExecutions(entt::registry& registry, const GameplayEffectSpec& spec)
+	static void ApplyExecutions(Registry& registry, const GameplayEffectSpec& spec)
 	{
 		auto& ge_manager = registry.ctx<GameplayEffectManager>();
 		auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
@@ -61,13 +61,10 @@ public:
 		}
 	}
 
-	static void ApplyModifiers(entt::registry& registry,const GameplayEffectSpec& spec)
+	static void ApplyModifiers(Registry& registry,const GameplayEffectSpec& spec)
 	{
 		auto& ge_manager = registry.ctx<GameplayEffectManager>();
 		auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
-
-		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
-		entt::entity target = unique_map.value.find(spec.target)->second;
 
 		//is modify base
 		if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Instant ||
@@ -84,6 +81,7 @@ public:
 		}
 		else
 		{
+			entt::entity target = registry.get(spec.target);
 			auto& mod_attr_set = registry.get<InfiniteModifierAttributeSet>(target);
 			for (auto& mod : ge.gameplay_effect.modifiers)
 			{
@@ -96,7 +94,7 @@ public:
 		}		
 	}
 
-	static std::vector<std::tuple<uint32_t, float>> GetModifiers(entt::registry& registry,const std::string& name)
+	static std::vector<std::tuple<uint32_t, float>> GetModifiers(Registry& registry,const std::string& name)
 	{
 		auto& ge_manager = registry.ctx<GameplayEffectManager>();
 		auto& ge = ge_manager.LoadGameplayEffect(name);
@@ -104,7 +102,7 @@ public:
 		return GetModifiers(registry, ge);
 	}
 
-	static std::vector<std::tuple<uint32_t,float>> GetModifiers(entt::registry& registry, const GameplayEffect& ge)
+	static std::vector<std::tuple<uint32_t,float>> GetModifiers(Registry& registry, const GameplayEffect& ge)
 	{
 		std::vector<std::tuple<uint32_t, float>> modifiers;
 		modifiers.reserve(ge.gameplay_effect.modifiers.size());
@@ -118,7 +116,7 @@ public:
 		return modifiers;
 	}
 
-	static void RemoveModifiers(entt::registry& registry, const GameplayEffect& ge, entt::entity target)
+	static void RemoveModifiers(Registry& registry, const GameplayEffect& ge, entt::entity target)
 	{
 		if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
 		{
@@ -143,12 +141,12 @@ public:
 		}
 	}
 
-	static void ApplyGameEffectToTarget(entt::registry& registry, entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
+	static void ApplyGameEffectToTarget(Registry& registry, entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
 	{
 		GameplayEffectUtility::ApplyGameEffectToTarget(registry,source,GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, effect_name, level, target));
 	}
 
-	static void ApplyGameEffectToTarget(entt::registry& registry,entt::entity source,GameplayEffectSpec&& spec)
+	static void ApplyGameEffectToTarget(Registry& registry,entt::entity source,GameplayEffectSpec&& spec)
 	{
 		auto& apply_ge = registry.ctx_or_set<ApplyGameplayEffect>();
 		auto it = apply_ge.value.find(source);
@@ -159,7 +157,7 @@ public:
 		apply_ge.value[source].emplace_back(std::move(spec));
 	}
 
-	static GameplayEffectSpec MakeGameplayEffectSpec(entt::registry& registry,entt::entity source,std::string_view effect,uint32_t level, entt::entity target)
+	static GameplayEffectSpec MakeGameplayEffectSpec(Registry& registry,entt::entity source,std::string_view effect,uint32_t level, entt::entity target)
 	{
 		auto& id = registry.get<UniqueId>(source);
 		auto& target_id = registry.get<UniqueId>(target);

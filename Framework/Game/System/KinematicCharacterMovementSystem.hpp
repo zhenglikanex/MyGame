@@ -89,9 +89,9 @@ struct KinematicCharacterMovementSystem : public System
 	void FixedUpdate(float dt) override
 	{
 		INFO("kcc update")
-		UpdatePhase1(static_cast<float>(dt));
+		UpdatePhase1(dt);
 		//
-		UpdatePhase2(static_cast<float>(dt));
+		UpdatePhase2(dt);
 	}
 
 	void UpdatePhase1(float dt)

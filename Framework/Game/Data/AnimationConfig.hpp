@@ -93,7 +93,7 @@ inline void from_json(const nlohmann::json& j, AnimationClipInfo& clip_info)
 		auto& anim_events = j.at("events").get<std::vector<AnimEvent>>();
 		for (auto& event : anim_events)
 		{
-			uint32_t frame = event.time / static_cast<float>(GameConfig::kFrameTime);
+			uint32_t frame = event.time / GameConfig::kFrameTime;
 			clip_info.anim_events_map[frame].emplace_back(event);
 		}
 	}

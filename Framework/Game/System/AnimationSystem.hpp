@@ -39,8 +39,6 @@ struct AnimationSystem : public System
 				if (!animation_clip.is_done)
 				{
 					animation_clip.time += dt;
-
-					
 				}
 
 				auto iter = animation.value->clips.find(animation_clip.name);
@@ -52,7 +50,7 @@ struct AnimationSystem : public System
 					}
 				}
 
-				uint32_t frame = static_cast<float>(animation_clip.time) / static_cast<float>(GameConfig::kFrameTime);
+				uint32_t frame = animation_clip.time / GameConfig::kFrameTime;
 				auto it = iter->second.anim_events_map.find(frame);
 				if (it != iter->second.anim_events_map.end())
 				{

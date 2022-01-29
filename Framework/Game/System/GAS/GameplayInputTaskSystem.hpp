@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
@@ -26,17 +25,13 @@ public:
 
 	void FixedUpdate(float dt) override
 	{
-		float time = static_cast<float>(dt);
-
-		auto map = registry.ctx<EntityByUniqueIdMap>();
 		auto view = registry.view<GameplayAbilitySpec, GameplayAbilityScript, GameplayInputTask>();
 		for (auto e : view)
 		{
 			auto& [spec, script, task] = registry.get<GameplayAbilitySpec, GameplayAbilityScript,GameplayInputTask>(e);
-			auto it = map.value.find(spec.source);
-			if (it != map.value.end())
+			if (registry.valid(spec.source))
 			{
-				entt::entity source = it->second;
+				entt::entity source = registry.get(spec.source);
 
 				auto it = task.value.begin();
 				while (it != task.value.end())

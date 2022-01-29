@@ -2,7 +2,6 @@
 
 #include "Framework/Game/GameConfig.hpp"
 
-#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/ParentAnimBone.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
@@ -27,7 +26,7 @@ struct ComputeAnimBoneChildTransformSystem : public System
 		if (iter != animation->value->clips.end())
 		{
 			//根据clip的time直接算出来
-			uint32_t frame = static_cast<float>(clip->time) / static_cast<float>(GameConfig::kFrameTime);
+			uint32_t frame = clip->time / GameConfig::kFrameTime;
 
 			if (frame < iter->second.skeletons.size())
 			{
@@ -45,17 +44,14 @@ struct ComputeAnimBoneChildTransformSystem : public System
 
 	void FixedUpdate(float dt) override
 	{
-		auto& map = registry.ctx<EntityByUniqueIdMap>();
 		auto view = registry.view<ParentAnimBone,Transform>();
 		for (auto e : view)
 		{
 			auto& [parent, transform] = view.get<ParentAnimBone, Transform>(e);
 			
-			auto it = map.value.find(parent.target);
-			if (it != map.value.end())
+			entt::entity target = registry.get(parent.target);
+			if (target == entt::null)
 			{
-				entt::entity target = it->second;
-
 				const auto owner_transform = registry.try_get<Transform>(target);
 				const auto animation = registry.try_get<Animation>(target);
 				const auto anim_clip = registry.try_get<AnimationClip>(target);

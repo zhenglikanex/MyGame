@@ -5,7 +5,6 @@
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
-#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/Destory.hpp"
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
@@ -26,8 +25,6 @@ struct ApplyGameplayEffectSystem : public System
 
 	bool Initialize() override
 	{
-		sol::state& lua = registry.ctx<sol::state>();
-
 		return true;
 	}
 
@@ -95,7 +92,6 @@ struct ApplyGameplayEffectSystem : public System
 
 	void FixedUpdate(float dt) override
 	{
-		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
 		sol::state& lua = registry.ctx<sol::state>();
 		GameplayEffectManager& ge_manager = registry.ctx<GameplayEffectManager>();
 		
@@ -107,8 +103,13 @@ struct ApplyGameplayEffectSystem : public System
 
 				for (auto& spec : ge_list.second)
 				{
-					entt::entity target = unique_map.value.find(spec.target)->second;
-					entt::entity source = unique_map.value.find(spec.source)->second;
+					entt::entity target = registry.get(spec.target);
+					entt::entity source = registry.get(spec.source);
+
+					if (target == entt::null || source == entt::null)
+					{
+						continue;
+					}
 
 					if (!(registry.all_of<GameplayState>(target) && registry.all_of<GameplayState>(source)))
 					{
@@ -129,7 +130,6 @@ struct ApplyGameplayEffectSystem : public System
 
 					if (!CheckApplicationTagRequirements(ge,target_tags))
 					{
-						std::cout << "CheckApplicationTagRequirements Failed! " << std::endl;
 						continue;
 					}
 

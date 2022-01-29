@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 
+#include "Framework/Game/Registry.hpp"
 #include "Framework/Game/GAS/GameplayAbility.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
@@ -11,7 +12,7 @@
 class GameplayAbilityManager
 {
 public:
-	GameplayAbilityManager(entt::registry& registry)
+	GameplayAbilityManager(Registry& registry)
 		: registry_(registry)
 	{
 
@@ -35,6 +36,6 @@ public:
 	}
 
 private:
-	entt::registry& registry_;
+	Registry& registry_;
 	std::unordered_map<std::string, GameplayAbility> gameplay_abilities_;
 };

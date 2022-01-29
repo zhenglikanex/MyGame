@@ -4,7 +4,6 @@
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
-#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
@@ -26,35 +25,32 @@ struct GameplayEffectSystem : public System
 
 	void FixedUpdate(float dt) override
 	{
-		auto& e_by_unique_id_map = registry.ctx<EntityByUniqueIdMap>();
 		auto& ge_manager = registry.ctx<GameplayEffectManager>();
 
-		float time = static_cast<float>(dt);
 		auto view = registry.view<GameplayEffectSpec>(entt::exclude<Destory>);
 		for (auto e : view)
 		{
 			auto& spec = view.get<GameplayEffectSpec>(e);
 			
-			auto it = e_by_unique_id_map.value.find(spec.target);
-			if (it == e_by_unique_id_map.value.end() || !registry.valid(it->second))
+			if (!registry.valid(spec.target))
 			{
 				registry.emplace<Destory>(e);
 				continue;
 			}
 
-			entt::entity target = it->second;
+			entt::entity target = registry.get(spec.target);
 
-			spec.duration += time;
+			spec.duration += dt;
 
 			auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
 
 			if (ge.period.period > 0)
 			{
-				spec.period += time;
+				spec.period += dt;
 
 				if (spec.period >= ge.period.period)
 				{
-					if (!CheckOngoingTagRequirements(it->second,ge))
+					if (!CheckOngoingTagRequirements(target,ge))
 					{
 						GameplayEffectUtility::ApplyExecutions(registry, spec);
 						GameplayEffectUtility::ApplyModifiers(registry, spec);
@@ -80,21 +76,21 @@ struct GameplayEffectSystem : public System
 		}
 	}
 
-	bool CheckOngoingTagRequirements(entt::entity owner,const GameplayEffect& ge)
+	bool CheckOngoingTagRequirements(entt::entity target,const GameplayEffect& ge)
 	{
-		auto owner_tags = registry.try_get<GameplayTags>(owner);
+		auto tags = registry.try_get<GameplayTags>(target);
 
-		if(!owner_tags && !ge.tag.application_tag_requirements.require_tags.Empty())
+		if(!tags && !ge.tag.application_tag_requirements.require_tags.Empty())
 		{
 			return false;
 		}
 
-		if (!owner_tags)
+		if (!tags)
 		{
 			return true;
 		}
 
-		return owner_tags->tags.HasAll(ge.tag.application_tag_requirements.require_tags) && !owner_tags->tags.HasAny(ge.tag.application_tag_requirements.ignore_tags);
+		return tags->tags.HasAll(ge.tag.application_tag_requirements.require_tags) && !tags->tags.HasAny(ge.tag.application_tag_requirements.ignore_tags);
 	}
 
 	void Finalize() override

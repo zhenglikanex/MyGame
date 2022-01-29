@@ -16,7 +16,7 @@ struct CreatePhysicsActorSystem : public System
 	CreatePhysicsActorSystem(Registry& _registry) : System(_registry) { }
 	~CreatePhysicsActorSystem() {}
 
-	static void RemovePhysicActor(entt::registry& registry,entt::entity e)
+	static void RemovePhysicActor(Registry& registry,entt::entity e)
 	{
 		auto& physics_world = registry.ctx<PhysicsWorld>();
 		auto& physics_actor = registry.get<PhysicsActor>(e);

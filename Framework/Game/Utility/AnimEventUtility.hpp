@@ -15,11 +15,11 @@ struct AnimEventUtility
 	{
 		if (event == "StartInputTask")
 		{
-			GameplayEventUtility::SendGameplayEvent(registry, registry.get<Local>(e), GameplayTag("GA.StartInputTask"),e);
+			GameplayEventUtility::SendGameplayEvent(registry, e, GameplayTag("GA.StartInputTask"),e);
 		}
 		else if (event == "OverInputTask")
 		{
-			GameplayEventUtility::SendGameplayEvent(registry, registry.get<Local>(e), GameplayTag("GA.OverInputTask"),e);
+			GameplayEventUtility::SendGameplayEvent(registry, e, GameplayTag("GA.OverInputTask"),e);
 		}
 	}
 };

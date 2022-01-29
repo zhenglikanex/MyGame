@@ -47,7 +47,7 @@ struct MovementSystem : public System
 			auto& transform = view.get<Transform>(e);
 
 			// todo:
-			auto position = transform.position + forward.value * movement.velocity.z * static_cast<float>(dt);
+			auto position = transform.position + forward.value * movement.velocity.z * dt;
 			auto rotation = ForwardRotation(forward.value);
 
 			if (position != transform.position || rotation != transform.rotation)

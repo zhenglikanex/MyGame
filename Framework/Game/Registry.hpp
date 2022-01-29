@@ -146,32 +146,32 @@ public:
 	}
 
 	template<typename Component, typename... Other, typename... Exclude>
-	[[nodiscard]] entt::basic_view<entt::entity, entt::get_t<std::add_const_t<Component>, std::add_const_t<Other>...>, entt::exclude_t<Exclude...>> view() const {
+	[[nodiscard]] entt::basic_view<entt::entity, entt::get_t<std::add_const_t<Component>, std::add_const_t<Other>...>, entt::exclude_t<Exclude...>> view(entt::exclude_t<Exclude...> = {}) const {
 		return registry_.view<Component, Other..., Exclude...>();
 	}
 
 	template<typename Component, typename... Other, typename... Exclude>
-	[[nodiscard]] entt::basic_view<entt::entity, entt::get_t<Component, Other...>, entt::exclude_t<Exclude...>> view() {
+	[[nodiscard]] entt::basic_view<entt::entity, entt::get_t<Component, Other...>, entt::exclude_t<Exclude...>> view(entt::exclude_t<Exclude...> = {}) {
 		return registry_.view<Component, Other..., Exclude...>();
 	}
 
 	template<typename... Owned, typename... Get, typename... Exclude>
-	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<Owned...>, entt::get_t<Get...>, entt::exclude_t<Exclude...>> group() {
+	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<Owned...>, entt::get_t<Get...>, entt::exclude_t<Exclude...>> group(entt::get_t<Get...>, entt::exclude_t<Exclude...> = {}) {
 		return registry_.group<Owned..., Get..., Exclude...>();
 	}
 
 	template<typename... Owned, typename... Get, typename... Exclude>
-	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<std::add_const_t<Owned>...>, entt::get_t<std::add_const_t<Get>...>, entt::exclude_t<Exclude...>> group_if_exists() const {
+	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<std::add_const_t<Owned>...>, entt::get_t<std::add_const_t<Get>...>, entt::exclude_t<Exclude...>> group_if_exists(entt::get_t<Get...>, entt::exclude_t<Exclude...> = {}) const {
 		return registry_.group<Owned..., Get..., Exclude...>();
 	}
 
 	template<typename... Owned, typename... Exclude>
-	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<Owned...>, entt::get_t<>, entt::exclude_t<Exclude...>> group() {
+	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<Owned...>, entt::get_t<>, entt::exclude_t<Exclude...>> group(entt::exclude_t<Exclude...> = {}) {
 		return registry_.group<Owned...,Exclude...>();
 	}
 
 	template<typename... Owned, typename... Exclude>
-	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<std::add_const_t<Owned>...>, entt::get_t<>, entt::exclude_t<Exclude...>> group_if_exists() const {
+	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<std::add_const_t<Owned>...>, entt::get_t<>, entt::exclude_t<Exclude...>> group_if_exists(entt::exclude_t<Exclude...> = {}) const {
 		return registry_.group_if_exists<Owned..., Exclude...>();
 	}
 
@@ -237,7 +237,17 @@ public:
 	}
 
 public:
-	entt::entity create_predict(uint32_t player) const
+	const entt::registry& registry() const
+	{
+		return registry_;
+	}
+
+	entt::registry& registry()
+	{
+		return registry_;
+	}
+
+	entt::entity create_predict(uint32_t player)
 	{
 		auto e = registry_.create();
 		if (game_helper_.IsAuthority())
@@ -253,7 +263,7 @@ public:
 	}
 
 	// 根据source预测创建可以在客户端之间同步的实体
-	entt::entity create_predict(entt::entity source) const
+	entt::entity create_predict(entt::entity source)
 	{
 		if (auto player = registry_.try_get<Player>(source))
 		{
@@ -266,20 +276,21 @@ public:
 		}
 	}
 
-	entt::entity create_predict() const
+	entt::entity create_predict()
 	{
 		return create_predict(ServerInstance);
 	}
 
-	std::tuple<entt::entity,UniqueId> create_unique() const 
+	entt::entity create_unique() 
 	{
 		auto e = registry_.create();
-		auto& unique_id = registry_.emplace<UniqueId>(e, e);
-		return { e,unique_id };
+		registry_.emplace<UniqueId>(e, e);
+
+		return e;
 	}
 
 	// 根据source预测创建本地实体,不在客户端之间同步
-	std::tuple<entt::entity,Local> create_local(entt::entity source) const
+	entt::entity create_local(entt::entity source)
 	{
 		if (auto player = registry_.try_get<Player>(source))
 		{
@@ -287,77 +298,66 @@ public:
 			auto e = registry_.create();
 			auto& sync_manager = registry_.ctx<SyncManager>();
 			auto& sync = sync_manager.sync_instances[player->id];
-			auto& local = registry_.emplace<Local>(e, sync.owner, sync.identifier++);
+			registry_.emplace<Local>(e, sync.owner, sync.identifier++);
 
-			return { e,local };
+			return e;
 		}
 		
 		return create_local();
 	}
 
 	// 创建服务端本地实体
-	std::tuple<entt::entity, Local> create_local() const
+	entt::entity create_local()
 	{
 		//服务端控制的实体
 		auto e = registry_.create();
 		auto& sync_manager = registry_.ctx<SyncManager>();
 		auto& sync = sync_manager.sync_instances[ServerInstance];
 		registry_.emplace<Local>(e, sync.owner, sync.identifier++);
+
+		return e;
 	}
 
 	bool valid(UniqueId id) const
 	{
-		auto it = unique_map_.value.find(id);
-		if (it == unique_map_.value.end())
-		{
-			return false;
-		}
-
-		return registry_.valid(it->second);
+		return get(id) != entt::null;
 	}
 
-	bool valid(Local id) const 
+	bool valid(const Local& id) const 
 	{
-		auto it = local_map_.value.find(id);
-		if (it == local_map_.value.end())
-		{
-			return false;
-		}
-
-		return registry_.valid(it->second);
+		return get(id) != entt::null;
 	}
 
 	entt::entity get(UniqueId id) const
 	{
-		assert(valid(id));
-		
-		return unique_map_.value.find(id)->second;
+		auto it = unique_map_.value.find(id);
+		if (it == unique_map_.value.end())
+		{
+			return entt::null;
+		}
+
+		entt::entity e = it->second;
+
+		assert(registry_.valid(e));
+
+		return e;
 	}
 
 	entt::entity get(const Local& local) const
 	{
-		assert(valid(local));
-
-		return local_map_.value.find(local)->second;
-	}
-
-	entt::entity try_get(UniqueId id) const
-	{
-		if (valid(id))
+		auto it = local_map_.value.find(local);
+		if (it == local_map_.value.end())
 		{
-			return get(id);
+			return entt::null;
 		}
-		return entt::null;
+
+		entt::entity e = it->second;
+
+		assert(registry_.valid(e));
+
+		return e;
 	}
 
-	entt::entity try_get(const Local& local) const
-	{
-		if (valid(local))
-		{
-			return get(local);
-		}
-		return entt::null;
-	}
 
 private:
 	static void ConnectUniqueIdToEntity(Registry& registry, entt::entity e)

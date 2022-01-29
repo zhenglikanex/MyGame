@@ -2,7 +2,6 @@
 
 #include <functional>
 
-#include "Framework/Game/Component/EntityByLocalMap.hpp"
 #include "Framework/Game/Component/GAS/GameplayEvent.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
 
@@ -27,18 +26,13 @@ public:
 
 	void FixedUpdate(float dt) override
 	{
-		float time = static_cast<float>(dt);
-
 		if (auto* manager = registry.try_ctx<GameplayEventSendManager>())
 		{
-			auto& map = registry.ctx<EntityByLocalMap>();
 			for (auto& sender : manager->senders)
 			{
-				auto it = map.value.find(sender.first);
-				if (it != map.value.end())
+				entt::entity receiver = sender.first;
+				if (registry.valid(receiver))
 				{
-					entt::entity receiver = it->second;
-					
 					if (!registry.all_of<UniqueId>(receiver))
 					{
 						continue;

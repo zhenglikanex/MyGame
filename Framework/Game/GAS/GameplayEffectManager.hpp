@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 
+#include "Framework/Game/Registry.hpp"
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
@@ -11,7 +12,7 @@
 class GameplayEffectManager
 {
 public:
-	GameplayEffectManager(entt::registry& registry)
+	GameplayEffectManager(Registry& registry)
 		: registry_(registry)
 	{
 
@@ -42,6 +43,6 @@ public:
 	}
 
 private:
-	entt::registry& registry_;
+	Registry& registry_;
 	std::unordered_map<std::string, GameplayEffect> gameplay_effects_;
 };
