@@ -67,7 +67,7 @@ struct TryGameplayAbilitySystem : public System
 			auto& attr_set = registry.get<GameplayAttributeSet>(e);
 			for (auto&[attribute, value] : modifiers)
 			{
-				if (attr_set.value[attribute].current_value < value)
+				if (attr_set.value[attribute].current_value + value < 0)
 				{
 					return false;
 				}
@@ -115,8 +115,6 @@ struct TryGameplayAbilitySystem : public System
 					}
 
 					auto& ga = ga_manager.LoadGameplayAbility(info.ability);
-					auto source_tags = registry.try_get<GameplayTags>(info.source);
-					//auto target_tags = registry.try_get<GameplayTags>(info.target);
 
 					if (!CheckCoolDown(info.source,ga))
 					{

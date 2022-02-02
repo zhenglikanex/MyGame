@@ -21,7 +21,7 @@ function AttackGAScript:OnHitTest()
     if v then
         local weapon = GetWeapon(self.spec.source)
         if weapon then
-            GameplayHitTest(self.entity,1,weapon.collider_info,GetTransform(v),"OnHit")
+            GameplayHitTest(self.entity,1,weapon.collider,GetTransform(v),"OnHit")
         end
     end
     

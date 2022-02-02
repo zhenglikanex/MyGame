@@ -116,8 +116,12 @@ struct GameplayAttributeSystem : public System
 					{
 						auto& attr_data = attr_set.value[i];
 						attr_data.current_value = CalculationCurrentValue(modifiers, attr_data.base_value);
-						PostGameplayEffectExecute(attr_set, static_cast<GameplayAttributeType>(i), attr_data.current_value);
 					}
+				}
+
+				for (auto i = 0; i < attr_set.value.size(); ++i)
+				{
+					PostGameplayEffectExecute(attr_set, static_cast<GameplayAttributeType>(i), attr_set.value[i].current_value);
 				}
 			}
 		}

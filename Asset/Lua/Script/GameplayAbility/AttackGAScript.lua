@@ -1,6 +1,10 @@
 local GAScript = require("GAS/GAScript")
 local AttackGAScript = class("AttackGAScript",GAScript)
 
+function AttackGAScript:GetGameplayEffect()
+    return "AttackGE"
+end
+
 function AttackGAScript:ActiveAbility()
     self:CommitAbility()
     
@@ -21,7 +25,7 @@ function AttackGAScript:OnHitTest()
     if v then
         local weapon = GetWeapon(self.spec.source)
         if weapon then
-            GameplayHitTest(self.entity,1,weapon.collider_info,GetTransform(v),"OnHit")
+            GameplayHitTest(self.entity,1,weapon.collider,GetTransform(v),"OnHit")
         end
     end
     
@@ -29,11 +33,15 @@ function AttackGAScript:OnHitTest()
 end
 
 function AttackGAScript:OnHit(hits)
-    for _,e in pairs(hits) do
-        local unique_id = GetUniqueId(e)
-        if unique_id and unique_id ~= self.spec.source then
-            ActorChangeState(e)
-            ApplyCueToTarget(e,"Hurt")
+    local source = GetEntity(self.spec.source)
+    if source ~= EnttNull then
+        for _,e in pairs(hits) do
+            local unique_id = GetUniqueId(e)
+            if unique_id and unique_id ~= self.spec.source then
+                ApplyGameplayEffectToTarget(source,self:GetGameplayEffect(),self.spec.level,e)
+                ActorChangeState(e)
+                ApplyCueToTarget(e,"Hurt")
+            end
         end
     end
 end

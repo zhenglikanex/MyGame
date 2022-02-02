@@ -71,6 +71,7 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(Registry* r
 	systems.emplace_back(std::make_unique<GameplayHitTestTaskSystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayEventSystem>(*registry));
 	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayEffectSystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(*registry));
 	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(*registry));
 	systems.emplace_back(std::make_unique<PhysicsSystem>(*registry));

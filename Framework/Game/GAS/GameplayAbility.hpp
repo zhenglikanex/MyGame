@@ -22,6 +22,6 @@ struct GameplayAbility
 	
 	float cooldown_duration;					//冷却持续时间
 	GameplayTagArray cooldown_tags;				//冷却的tag
-	
+
 	sol::table script;
 };

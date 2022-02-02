@@ -40,7 +40,7 @@ struct GameplayEffectSystem : public System
 
 			entt::entity target = registry.get(spec.target);
 
-			spec.duration += dt;
+			spec.time += dt;
 
 			auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
 
@@ -61,16 +61,18 @@ struct GameplayEffectSystem : public System
 			}
 
 			// ÒÆ³ý
-			if (spec.duration >= ge.period.duration && ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration)
+			if (spec.time >= spec.duration && ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration)
 			{
 				if (spec.stack_count > 1 && ge.stacking.statck_expiration_policy == GameplayEffect::StatckExpirationPolicy::RemoveSingleStackAndRefreshDuration)
 				{
 					--spec.stack_count;
-					spec.duration = 0;
+					spec.time = 0;
 				}
 				else
 				{
 					registry.emplace<Destory>(e);
+
+					GameplayEffectUtility::UpdateGameplayTag(registry, target);
 				}
 			}
 		}

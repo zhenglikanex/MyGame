@@ -33,6 +33,7 @@ public:
 
 		DestoryGameplayAbility();
 		DestoryEntity(entities);
+		DestoryModifierAttribute();	
 	}
 
 	void DestoryGameplayAbility()
@@ -55,6 +56,12 @@ public:
 	void DestoryEntity(const std::vector<entt::entity>& entities) 
 	{
 		registry.destroy(entities.begin(), entities.end());
+	}
+
+	void DestoryModifierAttribute()
+	{
+		auto view = registry.view<ModifierAttribute>();
+		registry.destroy(view.begin(), view.end());
 	}
 
 	void Finalize() override

@@ -9,6 +9,7 @@
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
+#include "Framework/Game/Component/GAS/GameplayTags.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -141,6 +142,50 @@ public:
 		}
 	}
 
+	static void UpdateGameplayTag(Registry& registry, entt::entity target)
+	{
+		if (!registry.all_of<UniqueId>(target))
+		{
+			return;
+		}
+
+		auto& ge_manager = registry.ctx<GameplayEffectManager>();
+
+		auto& tags = registry.get<GameplayTags>(target);
+		tags.tags.Clear();
+
+		auto& target_spec_entities = GameplayEffectUtility::GetGameplayEffectSpecEntitiesByOwner(registry, registry.get<UniqueId>(target));
+
+		std::unordered_map<GameplayTag, bool> flag;
+		for (auto e : target_spec_entities)
+		{
+			if (!registry.all_of<Destory>(e))
+			{
+				auto& spec = registry.get<GameplayEffectSpec>(e);
+				auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
+				for (auto it = ge.tag.granted_tags.Begin(); it != ge.tag.granted_tags.End(); ++it)
+				{
+					auto& tag = *it;
+					if (flag.find(tag) == flag.end())
+					{
+						flag[tag] = true;
+						tags.tags.Push(tag);
+					}
+				}
+
+				for (auto it = spec.dynamic_granted_tags.Begin(); it != spec.dynamic_granted_tags.End(); ++it)
+				{
+					auto& tag = *it;
+					if (flag.find(tag) == flag.end())
+					{
+						flag[tag] = true;
+						tags.tags.Push(tag);
+					}
+				}
+			}
+		}
+	}
+
 	static void ApplyGameEffectToTarget(Registry& registry, entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
 	{
 		if (!registry.all_of<UniqueId>(source))
@@ -148,10 +193,15 @@ public:
 			return;
 		}
 
+		if (effect_name.size() <= 0)
+		{
+			return;
+		}
+
 		GameplayEffectUtility::ApplyGameEffectToTarget(registry,source,GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, effect_name, level, target));
 	}
 
-	static void ApplyGameEffectToTarget(Registry& registry,entt::entity source,GameplayEffectSpec&& spec)
+	static void ApplyGameEffectToTarget(Registry& registry,entt::entity source,const GameplayEffectSpec& spec)
 	{
 		auto& apply_ge = registry.ctx_or_set<ApplyGameplayEffect>();
 		auto it = apply_ge.value.find(source);
@@ -159,7 +209,7 @@ public:
 		{
 			apply_ge.value.emplace(source, std::vector<GameplayEffectSpec>());
 		}
-		apply_ge.value[source].emplace_back(std::move(spec));
+		apply_ge.value[source].emplace_back(spec);
 	}
 
 	static GameplayEffectSpec MakeGameplayEffectSpec(Registry& registry,entt::entity source,std::string_view effect,uint32_t level, entt::entity target)
@@ -168,8 +218,8 @@ public:
 		auto& target_id = registry.get<UniqueId>(target);
 		auto& attr_set = registry.get<GameplayAttributeSet>(source);
 
-		GameplayEffectSpec spec(effect, id, target_id, level);
 		auto& ge = registry.ctx<GameplayEffectManager>().LoadGameplayEffect(effect.data());
+		GameplayEffectSpec spec(effect, id, target_id, level,ge.period.duration);
 		for (auto& modifier : ge.gameplay_effect.modifiers)
 		{
 			//todo: snapshot_attrs

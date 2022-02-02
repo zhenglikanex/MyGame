@@ -1,6 +1,6 @@
 local AttackGA = {
-    cooldown_gameplay_effect = "",
-	cost_gameplay_effect = "",
+    cooldown_gameplay_effect = "DefaultCooldownGE",
+	cost_gameplay_effect = "DefaultCostGE",
 
 	ability_tags = {},
 	cancel_ability = {},
@@ -12,6 +12,9 @@ local AttackGA = {
 	source_blocked_tags = {},
 	target_required_tags = {},
 	target_blocked_tags = {},
+
+	cooldown_duration = 1,
+	cooldown_tags = { "Cooldown.AttackGA" },
 }
 
 return AttackGA

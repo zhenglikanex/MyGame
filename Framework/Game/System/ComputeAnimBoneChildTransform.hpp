@@ -50,7 +50,7 @@ struct ComputeAnimBoneChildTransformSystem : public System
 			auto& [parent, transform] = view.get<ParentAnimBone, Transform>(e);
 			
 			entt::entity target = registry.get(parent.target);
-			if (target == entt::null)
+			if (target != entt::null)
 			{
 				const auto owner_transform = registry.try_get<Transform>(target);
 				const auto animation = registry.try_get<Animation>(target);

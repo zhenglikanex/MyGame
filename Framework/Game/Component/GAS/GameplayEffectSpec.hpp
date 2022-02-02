@@ -19,8 +19,9 @@ struct GameplayEffectSpec
 	UniqueId source;
 	UniqueId target;
 	uint8_t level;
-	float period;
 	float duration;
+	float time;
+	float period;
 	uint32_t stack_count;
 	std::unordered_map<GameplayAttributeType, float> source_snapshot_attrs;
 	std::unordered_map<GameplayAttributeType, float> target_snapshot_attrs;
@@ -28,13 +29,14 @@ struct GameplayEffectSpec
 
 	GameplayEffectSpec() = default;
 
-	GameplayEffectSpec(std::string_view _effect,UniqueId _source,UniqueId _target,uint8_t _level)
+	GameplayEffectSpec(std::string_view _effect,UniqueId _source,UniqueId _target,uint8_t _level,float _duration)
 		: effect(_effect)
 		, source(_source)
 		, target(_target)
 		, level(_level)
+		, duration(_duration)
+		, time(0)
 		, period(0)
-		, duration(0)
 		, stack_count(1)
 	{
 

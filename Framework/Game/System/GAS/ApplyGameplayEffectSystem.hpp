@@ -147,10 +147,10 @@ struct ApplyGameplayEffectSystem : public System
 					{
 						need_update_gameplay_tags = ApplyGameEffectToTarget(spec, ge, target_spec_entities);
 					}
-					need_update_gameplay_tags = need_update_gameplay_tags && RemoveGameplayEffectsWithTags(ge, target_spec_entities);
+					need_update_gameplay_tags |= RemoveGameplayEffectsWithTags(ge, target_spec_entities);
 					if (need_update_gameplay_tags)
 					{
-						UpdateTargetGameplayTag(target,target_spec_entities);
+						GameplayEffectUtility::UpdateGameplayTag(registry,target);
 					}
 					
 					// todo:
@@ -231,12 +231,11 @@ struct ApplyGameplayEffectSystem : public System
 
 		if (!stacking)
 		{
+			need_update_gameply_tag = (!ge.tag.granted_tags.Empty() || !spec.dynamic_granted_tags.Empty());
+
 			auto e = registry.create();
 			registry.emplace<GameplayEffectSpec>(e,std::move(spec));
 			target_spec_entities.push_back(e);
-			
-			need_update_gameply_tag = !ge.tag.granted_tags.Empty();
-
 			// todo ¸³Óè¼¼ÄÜ
 		}
 
@@ -262,43 +261,6 @@ struct ApplyGameplayEffectSystem : public System
 		}
 
 		return need_update_gameply_tag;
-	}
-
-	void UpdateTargetGameplayTag(entt::entity target,const std::vector<entt::entity>& target_spec_entities)
-	{
-		auto& ge_manager = registry.ctx<GameplayEffectManager>();
-
-		auto& tags = registry.get_or_emplace<GameplayTags>(target);
-		tags.tags.Clear();
-
-		std::unordered_map<GameplayTag, bool> flag;
-		for (auto e : target_spec_entities)
-		{
-			if (!registry.all_of<Destory>(e))
-			{
-				auto& spec = registry.get<GameplayEffectSpec>(e);
-				auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
-				for (auto it = ge.tag.granted_tags.Begin(); it != ge.tag.granted_tags.End(); ++it)
-				{
-					auto& tag = *it;
-					if (flag.find(tag) == flag.end())
-					{
-						flag[tag] = true;
-						tags.tags.Push(tag);
-					}
-				}
-
-				for (auto it = spec.dynamic_granted_tags.Begin(); it != spec.dynamic_granted_tags.End(); ++it)
-				{
-					auto& tag = *it;
-					if (flag.find(tag) == flag.end())
-					{
-						flag[tag] = true;
-						tags.tags.Push(tag);
-					}
-				}
-			}
-		}
 	}
 
 	void Finalize() override

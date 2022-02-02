@@ -142,6 +142,8 @@ inline void RegisterGameplayEffect(sol::state& lua)
 	type8["target_tags"] = &GameplayEffect::Modifier::target_tags;
 
 	auto type9 = lua.new_usertype<GameplayEffect::Execution>("GEExecution");
+	type9["class_name"] = &GameplayEffect::Execution::class_name;
+	type9["modifiers"] = &GameplayEffect::Execution::modifiers;
 
 	auto type10 = lua.new_usertype<GameplayEffect::GameplayEffectModifier>("GEGameplayEffectModifier");
 	type10["duration_policy"] = &GameplayEffect::GameplayEffectModifier::duration_policy;
@@ -180,7 +182,7 @@ inline void RegisterGameplayAbility(sol::state& lua)
 {
 	auto type = lua.new_usertype<GameplayAbility>("GameplayAbility");
 	type["cooldown_gameplay_effect"] = &GameplayAbility::cooldown_gameplay_effect;
-	type["cost_gameplay_effect"] = &GameplayAbility::cooldown_gameplay_effect;
+	type["cost_gameplay_effect"] = &GameplayAbility::cost_gameplay_effect;
 	type["ability_tags"] = &GameplayAbility::ability_tags;
 	type["cancel_ability"] = &GameplayAbility::cancel_ability;
 	type["block_abilites_with_tag"] = &GameplayAbility::block_abilites_with_tag;
@@ -191,6 +193,9 @@ inline void RegisterGameplayAbility(sol::state& lua)
 	type["source_blocked_tags"] = &GameplayAbility::source_blocked_tags;
 	type["target_required_tags"] = &GameplayAbility::target_required_tags;
 	type["target_blocked_tags"] = &GameplayAbility::target_blocked_tags;
+	type["cooldown_duration"] = &GameplayAbility::cooldown_duration;
+	type["cooldown_tags"] = &GameplayAbility::cooldown_tags;
+
 	type["script"] = &GameplayAbility::script;
 }
 
@@ -356,17 +361,34 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	auto get_transform1 = [&registry](UniqueId target)
 	{
+		Transform* transform = nullptr;
 		entt::entity e = registry.get(target);
+		if (e != entt::null)
+		{
+			transform = registry.try_get<Transform>(e);
+		}
+
+		return transform;
+	};
+
+	auto get_transform2 = [&registry](entt::entity e)
+	{
 		return registry.try_get<Transform>(e);
 	};
 
 	auto get_transform3 = [&registry](const Local& target)
 	{
+		Transform* transform = nullptr;
 		entt::entity e = registry.get(target);
-		return registry.try_get<Transform>(e);
+		if (e != entt::null)
+		{
+			transform = registry.try_get<Transform>(e);
+		}
+
+		return transform;
 	};
 
-	lua["GetTransform"] = sol::overload(get_transform1,get_transform3);
+	lua["GetTransform"] = sol::overload(get_transform1,get_transform2,get_transform3);
 
 	lua["CreateView"] = [&registry](UniqueId source,std::string_view asset, const Transform& transform)
 	{
@@ -376,6 +398,8 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 			auto e = registry.create_predict();
 			registry.emplace<ViewAsset>(e, asset);
 			registry.emplace<Transform>(e, transform);
+
+			return e;
 		}
 
 		return static_cast<entt::entity>(entt::null);
@@ -389,16 +413,17 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		const vec3& velocity,
 		const vec3& angular_velocity)
 	{
-		if (registry.valid(source))
+		entt::entity source_e = registry.get(source);
+		if (source_e != entt::null)
 		{
-			entt::entity source_e = registry.get(source);
-
 			auto e = registry.create_predict();
 			registry.emplace<ViewAsset>(e, asset);
 			registry.emplace<Transform>(e, transform);
 			registry.emplace<TransformState>(e);
 			registry.emplace<MovementForward>(e, forward);
 			registry.emplace<Movement>(e, velocity, angular_velocity);
+
+			return e;
 		}
 
 		return static_cast<entt::entity>(entt::null);
@@ -433,4 +458,33 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 	{
 		GameplayAbilityUtility::CommitGameplayAbilityCooldown(registry, ability);
 	};
+
+	auto ApplyGameplayEffectToTarget1 = [&registry](entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
+	{
+		GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, effect_name, level, target);
+	};
+
+	auto ApplyGameplayEffectToTarget2 = [&registry](entt::entity source, const GameplayEffectSpec& spec)
+	{
+		GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, spec);
+	};
+
+	lua["ApplyGameplayEffectToTarget"] = sol::overload(ApplyGameplayEffectToTarget1, ApplyGameplayEffectToTarget2);
+
+	lua["MakeGameplayEffectSpec"] = [&registry](entt::entity source, std::string_view effect, uint32_t level, entt::entity target)
+	{
+		return GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, effect, level, target);
+	};
+
+	auto GetEntity1 = [&registry](UniqueId id)
+	{
+		return registry.get(id);
+	};
+
+	auto GetEntity2 = [&registry](const Local& local)
+	{
+		return registry.get(local);
+	};
+
+	lua["GetEntity"] = sol::overload(GetEntity1, GetEntity2);
 }

@@ -48,10 +48,15 @@ public:
 			
 			entt::entity source = registry.get(spec.source);
 
-			auto& ga_manager = registry.ctx<GameplayAbilityManager>();
-			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);	
+			if (source == entt::null)
+			{
+				return;
+			}
 
-			GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, ga.cost_gameplay_effect,spec.level,source);
+			auto& ga_manager = registry.ctx<GameplayAbilityManager>();
+			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);
+
+			GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, ga.cost_gameplay_effect, spec.level, source);
 		}
 	}
 
@@ -62,11 +67,21 @@ public:
 			auto& spec = registry.get<GameplayAbilitySpec>(ability);
 
 			entt::entity source = registry.get(spec.source);
+			
+			if (source == entt::null)
+			{
+				return;
+			}
 
 			auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);
 
-			auto effect_spec = GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, ga.cost_gameplay_effect, 1, source);
+			if (ga.cooldown_duration <= 0)
+			{
+				return;
+			}
+
+			auto effect_spec = GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, ga.cooldown_gameplay_effect,spec.level, source);
 			effect_spec.duration = ga.cooldown_duration;
 
 			for (auto it = ga.cooldown_tags.Begin(); it != ga.cooldown_tags.End(); ++it)
