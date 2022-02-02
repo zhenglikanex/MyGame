@@ -208,7 +208,7 @@ public:
 
 	template<typename Type, typename... Args>
 	[[nodiscard]] Type &ctx_or_set(Args &&...args) {
-		return registry_.ctx<Type>(std::forward<Args>(args)...);
+		return registry_.ctx_or_set<Type>(std::forward<Args>(args)...);
 	}
 
 	template<typename Type>

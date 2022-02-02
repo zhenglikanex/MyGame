@@ -9,17 +9,11 @@
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/Transform.hpp"
-#include "Framework/Game/Component/Contact.hpp"
 #include "Framework/Game/Component/Collider.hpp"
-#include "Framework/Game/Component/Skill.hpp"
-#include "Framework/Game/Component/SkillState.hpp"
-#include "Framework/Game/Component/ColliderInfo.hpp"
 #include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
-#include "Framework/Game/Component/Matrix4x4.hpp"
 #include "Framework/Game/Component/Command.hpp"
-#include "Framework/Game/Component/SkillGraphAsset.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -72,21 +66,6 @@ TEST_CASE_METHOD(Serialize, "ActorAsset")
 
 	REQUIRE(output.value == input.value);
 }
-
-TEST_CASE_METHOD(Serialize, "SkillGraphAsset")
-{
-	SkillGraphAsset output("131231231");
-
-	oar(output);
-
-	SkillGraphAsset input;
-
-	iar(input);
-
-	REQUIRE(output.value == input.value);
-	REQUIRE(buffer.IsFinish());
-}
-
 
 TEST_CASE_METHOD(Serialize, "Fixed")
 {
@@ -182,53 +161,6 @@ TEST_CASE_METHOD(Serialize, "Math")
 	REQUIRE(buffer.IsFinish());
 }
 
-TEST_CASE_METHOD(Serialize, "AnimationClip")
-{
-	
-	AnimationClip src("123");
-	src.is_done = true;
-	src.time = fixed16(19);
-	
-	oar(src);
-
-	AnimationClip out1;
-	iar(out1);
-
-	REQUIRE(src.time == out1.time);
-	REQUIRE(src.is_done == out1.is_done);
-	REQUIRE(src.name == src.name);
-
-	REQUIRE(buffer.IsFinish());
-}
-
-TEST_CASE_METHOD(Serialize, "ActoreState")
-{
-
-	ActorState src1(ActorStateType::kAttack);
-	src1.time = fixed16(10);
-
-	EnterActorState src2(ActorStateType::kDeath);
-	ExitActorState src3(ActorStateType::kHurt);
-
-	oar(src1);
-	oar(src2);
-	oar(src3);
-
-	ActorState out1;
-	EnterActorState out2;
-	ExitActorState out3;
-	
-	iar(out1);
-	iar(out2);
-	iar(out3);
-
-	REQUIRE(src1.cur_state == out1.cur_state);
-	REQUIRE(src1.time == out1.time);
-	REQUIRE(src2.value == out2.value);
-	REQUIRE(src3.value == out3.value);
-	REQUIRE(buffer.IsFinish());
-}
-
 TEST_CASE_METHOD(Serialize, "Movement")
 {
 	Movement src(vec3(10, 20, 30.3), vec3(30, 20, 20));
@@ -270,24 +202,6 @@ TEST_CASE_METHOD(Serialize, "Weapon")
 
 }
 
-TEST_CASE_METHOD(Serialize, "Contact")
-{
-	ContactList output;
-	output.value.push_back(Contact{ (entt::entity)10 });
-	output.value.push_back(Contact{ (entt::entity)31 });
-	output.value.push_back(Contact{ (entt::entity)20 });
-
-	oar(output);
-
-	ContactList input;
-	iar(input);
-
-	REQUIRE(output.value[0].entity == input.value[0].entity);
-	REQUIRE(output.value[1].entity == input.value[1].entity);
-	REQUIRE(output.value[2].entity == input.value[2].entity);
-	REQUIRE(buffer.IsFinish());
-}
-
 TEST_CASE_METHOD(Serialize, "Attributes")
 {
 
@@ -296,42 +210,6 @@ TEST_CASE_METHOD(Serialize, "Attributes")
 TEST_CASE_METHOD(Serialize, "Health")
 {
 
-}
-
-TEST_CASE_METHOD(Serialize, "Collider")
-{
-	Collider output1(Geometry(Sphere(10)), true, entt::entity(10));
-	Collider output2(Geometry(OBB(vec3(50))), false, entt::entity(10));
-	Collider output3(Geometry(Capsule(10.2, 0.3)), true, entt::entity(10));	
-	oar(output1);
-	oar(output2);
-	oar(output3);
-
-	Collider input1;
-	Collider input2;
-	Collider input3;
-
-	iar(input1);
-	iar(input2);
-	iar(input3);
-
-	REQUIRE(output1.geometry.type() == input1.geometry.type());
-	REQUIRE(output1.geometry.sphere().r == input1.geometry.sphere().r);
-	REQUIRE(output1.trigger == input1.trigger);
-	REQUIRE(output1.owner == input1.owner);
-
-	REQUIRE(output2.geometry.type() == input2.geometry.type());
-	REQUIRE(output2.geometry.box().e == input2.geometry.box().e);
-	REQUIRE(output2.trigger == input2.trigger);
-	REQUIRE(output2.owner == input2.owner);
-
-	REQUIRE(output3.geometry.type() == input3.geometry.type());
-	REQUIRE(output3.geometry.capsule().h == input3.geometry.capsule().h);
-	REQUIRE(output3.geometry.capsule().r == input3.geometry.capsule().r);
-	REQUIRE(output3.trigger == input3.trigger);
-	REQUIRE(output3.owner == input3.owner);
-
-	REQUIRE(buffer.IsFinish());
 }
 
 TEST_CASE_METHOD(Serialize, "Set")
@@ -368,114 +246,6 @@ TEST_CASE_METHOD(Serialize, "Set")
 	REQUIRE(buffer.IsFinish());
 }
 
-TEST_CASE_METHOD(Serialize, "Skill")
-{
-	Skill output1;
-	output1.owner = entt::entity(300);
-	output1.life = fixed16(10);
-	output1.time = fixed16(33311.22);
-	output1.targets.push_back(entt::entity(3333));
-	output1.targets.push_back(entt::entity(3333));
-	output1.targets.push_back(entt::entity(3322));
-	output1.hit_target.emplace(entt::entity(3322));
-	output1.hit_target.emplace(entt::entity(33221));
-	output1.hit_target.emplace(entt::entity(33221));
-
-	oar(output1);
-
-	Skill input1;
-	iar(input1);
-
-	REQUIRE(output1.owner == input1.owner);
-	REQUIRE(output1.life == input1.life);
-	REQUIRE(output1.time == input1.time);
-	REQUIRE(output1.targets == input1.targets);
-	REQUIRE(output1.hit_target == input1.hit_target);
-	REQUIRE(buffer.IsFinish());
-
-	SkillAttacthBone output2("12313","3331");
-	oar(output2);
-
-	SkillAttacthBone input2;
-	iar(input2);
-
-	REQUIRE(output2.anim_name == input2.anim_name);
-	REQUIRE(output2.bone_name == input2.bone_name);
-
-	REQUIRE(buffer.IsFinish());
-}
-
-TEST_CASE_METHOD(Serialize, "SkillState")
-{
-	SkillState output1("skilll");
-	output1.time = 10;
-	output1.executed_events.emplace("niubi");
-	output1.executed_events.emplace("niubi2");
-	output1.executed_events.emplace("niubi");
-
-	oar(output1);
-	
-	SkillState input1;
-	iar(input1);
-
-	REQUIRE(output1.name == input1.name);
-	REQUIRE(output1.time == input1.time);
-	REQUIRE(output1.executed_events == input1.executed_events);
-
-	REQUIRE(buffer.IsFinish());
-
-	ExitSkillState output2("mniubi");
-	oar(output2);
-
-	ExitSkillState input2("12112");
-	iar(input2);
-
-	REQUIRE(output2.name == input2.name);
-	REQUIRE(buffer.IsFinish());
-
-	SkillGraphInfo::Param output3;
-	output3.bool_value = true;
-	
-	SkillGraphInfo::Param output4;
-	output4.int_value = 10003;
-
-	SkillGraphInfo::Param output5;
-	output5.float_value = 103.4;
-
-	oar(output3);
-	oar(output4);
-	oar(output5);
-
-	SkillGraphInfo::Param input3;
-	SkillGraphInfo::Param input4;
-	SkillGraphInfo::Param input5;
-
-	iar(input3);
-	iar(input4);
-	iar(input5);
-
-	REQUIRE(output3.bool_value == input3.bool_value);
-	REQUIRE(output4.int_value == input4.int_value);
-	REQUIRE(output5.float_value == input5.float_value);
-	
-	REQUIRE(buffer.IsFinish());
-}
-
-TEST_CASE_METHOD(Serialize, "ColliderInfo")
-{
-	ColliderInfo output1(Geometry(Sphere(10)), glm::identity<mat4>(), true, RigidType::kDynamic);
-	
-	oar(output1);
-
-	ColliderInfo intput1;
-	iar(intput1);
-
-	REQUIRE(output1.geometry.sphere().r == intput1.geometry.sphere().r);
-	REQUIRE(output1.transform == intput1.transform);
-	REQUIRE(output1.trigger == intput1.trigger);
-	REQUIRE(buffer.IsFinish());
-}
-
 TEST_CASE_METHOD(Serialize, "Player")
 {
 	Player output1(111);
@@ -486,19 +256,6 @@ TEST_CASE_METHOD(Serialize, "Player")
 	iar(intput1);
 
 	REQUIRE(output1.id == intput1.id);
-	REQUIRE(buffer.IsFinish());
-}
-
-TEST_CASE_METHOD(Serialize, "Matrix4x4")
-{
-	Matrix4x4 output1;
-
-	oar(output1);
-
-	Matrix4x4 intput1;
-	iar(intput1);
-
-	REQUIRE(output1.value == intput1.value);
 	REQUIRE(buffer.IsFinish());
 }
 
@@ -515,27 +272,6 @@ TEST_CASE_METHOD(Serialize, "Command")
 
 	REQUIRE(output1.x_axis == intput1.x_axis);
 	REQUIRE(output1.y_axis == intput1.y_axis);
-	REQUIRE(buffer.IsFinish());
-}
-
-TEST_CASE_METHOD(Serialize, "entt")
-{
-	entt::registry registry;
-	auto e1 = registry.create();
-	registry.emplace<AnimationClip>(e1, "123");
-	auto e2 = registry.create();
-	registry.emplace<ColliderInfo>(e2, Geometry(Sphere(10)), glm::identity<mat4>(), true, RigidType::kDynamic);
-	auto e3 = registry.create();
-	auto e4 = registry.create();
-
-	entt::snapshot { registry }.entities(oar).component<AnimationClip,ColliderInfo>(oar);
-
-	entt::registry reg2;
-	entt::snapshot_loader{ reg2 }
-		.entities(iar)
-		.component<AnimationClip, ColliderInfo>(iar);
-	
-	reg2;
 	REQUIRE(buffer.IsFinish());
 }
 

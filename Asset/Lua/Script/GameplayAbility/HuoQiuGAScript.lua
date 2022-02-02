@@ -8,6 +8,7 @@ function HuoQiuGAScript:ActiveAbility()
 end
 
 function HuoQiuGAScript:CreateHuoqiue()
+    print(self.spec.source)
     self.huoqiu = CreateMovementView(self.spec.source,"HuoQiu",GetTransform(self.spec.source),vec3.new(0,0,1),vec3.new(0,0,1),vec3.new(0,0,0))
     self:StartHitTest()
 end

@@ -329,7 +329,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		}
 	};
 
-	auto destory2 = [&registry](const Local& local) 
+	auto destory2 = [&registry](Local local) 
 	{
 		entt::entity e = registry.get(local);
 		if (!registry.all_of<Destory>(e))
@@ -360,18 +360,13 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		return registry.try_get<Transform>(e);
 	};
 
-	auto get_transform2 = [&registry](entt::entity e)
-	{
-		return registry.try_get<Transform>(e);
-	};
-
 	auto get_transform3 = [&registry](const Local& target)
 	{
 		entt::entity e = registry.get(target);
 		return registry.try_get<Transform>(e);
 	};
 
-	lua["GetTransform"] = sol::overload(get_transform1, get_transform2,get_transform3);
+	lua["GetTransform"] = sol::overload(get_transform1,get_transform3);
 
 	lua["CreateView"] = [&registry](UniqueId source,std::string_view asset, const Transform& transform)
 	{

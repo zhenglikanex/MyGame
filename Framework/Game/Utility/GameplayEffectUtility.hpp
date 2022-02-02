@@ -143,6 +143,11 @@ public:
 
 	static void ApplyGameEffectToTarget(Registry& registry, entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
 	{
+		if (!registry.all_of<UniqueId>(source))
+		{
+			return;
+		}
+
 		GameplayEffectUtility::ApplyGameEffectToTarget(registry,source,GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, effect_name, level, target));
 	}
 

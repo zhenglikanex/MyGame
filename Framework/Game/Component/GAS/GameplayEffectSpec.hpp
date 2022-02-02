@@ -7,6 +7,8 @@
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 #include "Framework/Game/GAS/GameplayTag.hpp"
 
+#include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
+
 #include "Framework/Game/Component/UniqueId.hpp"
 
 #include "Kanex.hpp"

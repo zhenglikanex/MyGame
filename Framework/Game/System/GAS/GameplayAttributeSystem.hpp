@@ -80,13 +80,13 @@ struct GameplayAttributeSystem : public System
 		for (auto e : view)
 		{
 			auto& modifier = view.get<ModifierAttribute>(e);
-			
-			if (!registry.valid(modifier.target))
+
+			entt::entity target = registry.get(modifier.target);
+			if (target == entt::null)
 			{
 				continue;
 			}
 
-			entt::entity target = registry.get(modifier.target);			
 			auto& [attr_set, infinite_attr_set] = registry.get<GameplayAttributeSet, InfiniteModifierAttributeSet>(target);
 			
 			auto& attr_data = attr_set.value[(size_t)modifier.attribute];
@@ -97,7 +97,8 @@ struct GameplayAttributeSystem : public System
 				auto& modifiers = infinite_attr_set.value[(size_t)modifier.attribute];
 				if (modifiers.size() > 0)
 				{
-					PostGameplayEffectExecute(attr_set,modifier.attribute, CalculationCurrentValue(modifiers, attr_data.base_value));
+					attr_data.current_value = CalculationCurrentValue(modifiers, attr_data.base_value);
+					PostGameplayEffectExecute(attr_set,modifier.attribute, attr_data.current_value);
 				}
 			}
 		}
@@ -113,7 +114,9 @@ struct GameplayAttributeSystem : public System
 					auto& modifiers = infinite_attr_set.value[i];
 					if (modifiers.size() > 0)
 					{
-						PostGameplayEffectExecute(attr_set, static_cast<GameplayAttributeType>(i), CalculationCurrentValue(modifiers, attr_set.value[i].base_value));
+						auto& attr_data = attr_set.value[i];
+						attr_data.current_value = CalculationCurrentValue(modifiers, attr_data.base_value);
+						PostGameplayEffectExecute(attr_set, static_cast<GameplayAttributeType>(i), attr_data.current_value);
 					}
 				}
 			}
