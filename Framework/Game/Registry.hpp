@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cassert>
+#include <type_traits>
 
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/GameHelper.hpp"
@@ -16,16 +17,16 @@
 class Registry
 {
 public:
-	Registry()
+	Registry(const GameHelper& game_helper)
 		: local_map_(registry_.set<EntityByLocalMap>())
 		, unique_map_(registry_.set<EntityByUniqueIdMap>())
-		, game_helper_(registry_.ctx<Locator>().Ref<GameHelper>())
+		, game_helper_(game_helper)
 	{
-		registry_.on_construct<Local>().connect<&ConnectLocalIdToEntity>();
-		registry_.on_destroy<Local>().connect<&DisconnectLocalIdToEntity>();
+		registry_.on_construct<Local>().connect<&Registry::ConnectLocalIdToEntity>();
+		registry_.on_destroy<Local>().connect<&Registry::DisconnectLocalIdToEntity>();
 
-		registry_.on_construct<UniqueId>().connect<&ConnectUniqueIdToEntity>();
-		registry_.on_destroy<UniqueId>().connect<&DisconnectUniqueIdToEntity>();
+		registry_.on_construct<UniqueId>().connect<&Registry::ConnectUniqueIdToEntity>();
+		registry_.on_destroy<UniqueId>().connect<&Registry::DisconnectUniqueIdToEntity>();
 	}
 
 	[[nodiscard]] bool valid(const entt::registry::entity_type entity) const {
@@ -47,42 +48,42 @@ public:
 
 	template<typename Component, typename... Args>
 	decltype(auto) emplace(const entt::registry::entity_type entity, Args &&...args) {
-		return registry.emplace(entity, std::forward(args)...);
+		return registry_.emplace<Component>(entity, std::forward<Args>(args)...);
 	}
 
 	template<typename Component, typename It>
 	void insert(It first, It last, const Component &value = {}) {
-		registry_.insert(first, last, value);
+		registry_.insert<Component>(first, last, value);
 	}
 
 	template<typename Component, typename EIt, typename CIt, typename = std::enable_if_t<std::is_same_v<std::decay_t<typename std::iterator_traits<CIt>::value_type>, Component>>>
 	void insert(EIt first, EIt last, CIt from) {
-		registry_.insert(first, last, from);
+		registry_.insert<Component>(first, last, from);
 	}
 
 	template<typename Component, typename... Args>
 	decltype(auto) emplace_or_replace(const entt::registry::entity_type entity, Args &&...args) {
-		registry_.emplace_or_replace(entity, std::forward(args)...);
+		registry_.emplace_or_replace<Component>(entity, std::forward<Args>(args)...);
 	}
 
 	template<typename Component, typename... Func>
 	decltype(auto) patch(const entt::registry::entity_type entity, Func &&...func) {
-		registry_.patch(entity, std::forward(func)...);
+		registry_.patch<Component>(entity, std::forward<Func>(func)...);
 	}
 
 	template<typename Component, typename... Args>
 	decltype(auto) replace(const entt::registry::entity_type entity, Args &&...args) {
-		registry_.replace(entity, std::forward(args)...);
+		registry_.replace<Component>(entity, std::forward<Args>(args)...);
 	}
 
 	template<typename Component, typename... Other>
 	entt::registry::size_type remove(const entt::registry::entity_type entity) {
-		return registry_.remove(entity);
+		return registry_.remove<Component>(entity);
 	}
 
 	template<typename Component, typename... Other, typename It>
 	entt::registry::size_type remove(It first, It last) {
-		return registry_.remove(first, last);
+		return registry_.remove<Component>(first, last);
 	}
 
 	template<typename... Component>
@@ -107,7 +108,7 @@ public:
 
 	template<typename Component, typename... Args>
 	[[nodiscard]] decltype(auto) get_or_emplace(const entt::registry::entity_type entity, Args &&...args) {
-		return get_or_emplace<Component>(entity, std::forward(args)...);
+		return registry_.get_or_emplace<Component>(entity, std::forward<Args>(args)...);
 	}
 
 	template<typename... Component>
@@ -127,7 +128,7 @@ public:
 
 	template<typename Func>
 	void each(Func func) const {
-		registry_.each(std::forward(func));
+		registry_.each(std::forward<Func>(func));
 	}
 
 	template<typename Component>
@@ -147,32 +148,32 @@ public:
 
 	template<typename Component, typename... Other, typename... Exclude>
 	[[nodiscard]] entt::basic_view<entt::entity, entt::get_t<std::add_const_t<Component>, std::add_const_t<Other>...>, entt::exclude_t<Exclude...>> view(entt::exclude_t<Exclude...> = {}) const {
-		return registry_.view<Component, Other..., Exclude...>();
+		return registry_.view<Component, Other...>(entt::exclude<Exclude...>);
 	}
 
 	template<typename Component, typename... Other, typename... Exclude>
 	[[nodiscard]] entt::basic_view<entt::entity, entt::get_t<Component, Other...>, entt::exclude_t<Exclude...>> view(entt::exclude_t<Exclude...> = {}) {
-		return registry_.view<Component, Other..., Exclude...>();
+		return registry_.view<Component, Other...>(entt::exclude<Exclude...>);
 	}
 
 	template<typename... Owned, typename... Get, typename... Exclude>
 	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<Owned...>, entt::get_t<Get...>, entt::exclude_t<Exclude...>> group(entt::get_t<Get...>, entt::exclude_t<Exclude...> = {}) {
-		return registry_.group<Owned..., Get..., Exclude...>();
+		return registry_.group<Owned...>(entt::get<Get...>, entt::exclude<Exclude...>);
 	}
 
 	template<typename... Owned, typename... Get, typename... Exclude>
 	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<std::add_const_t<Owned>...>, entt::get_t<std::add_const_t<Get>...>, entt::exclude_t<Exclude...>> group_if_exists(entt::get_t<Get...>, entt::exclude_t<Exclude...> = {}) const {
-		return registry_.group<Owned..., Get..., Exclude...>();
+		return registry_.group<Owned...>(entt::get<Get...>, entt::exclude<Exclude...>);
 	}
 
 	template<typename... Owned, typename... Exclude>
 	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<Owned...>, entt::get_t<>, entt::exclude_t<Exclude...>> group(entt::exclude_t<Exclude...> = {}) {
-		return registry_.group<Owned...,Exclude...>();
+		return registry_.group<Owned...>(entt::exclude<Exclude...>);
 	}
 
 	template<typename... Owned, typename... Exclude>
 	[[nodiscard]] entt::basic_group<entt::entity, entt::owned_t<std::add_const_t<Owned>...>, entt::get_t<>, entt::exclude_t<Exclude...>> group_if_exists(entt::exclude_t<Exclude...> = {}) const {
-		return registry_.group_if_exists<Owned..., Exclude...>();
+		return registry_.group_if_exists<Owned...>(entt::exclude<Exclude...>);
 	}
 
 	template<typename... Component>
@@ -181,13 +182,13 @@ public:
 	}
 
 	template<typename... Owned, typename... Get, typename... Exclude>
-	[[nodiscard]] bool sortable() ENTT_NOEXCEPT {
-		return registry_.sortable<Owned..., Get..., Exclude...>();
+	[[nodiscard]] bool sortable(const entt::basic_group<entt::entity, entt::owned_t<Owned...>, entt::get_t<Get...>, entt::exclude_t<Exclude...>>& group) ENTT_NOEXCEPT {
+		return registry_.sortable<Owned...>(group);
 	}
 
 	template<typename Component, typename Compare, typename Sort = entt::std_sort, typename... Args>
 	void sort(Compare compare, Sort algo = Sort{}, Args &&...args) {
-		registry_.sort<Component>(std::forward(compare), std::forward(algo), std::forward(args)...);
+		registry_.sort<Component>(std::forward<Compare>(compare), std::forward<Sort>(algo), std::forward<Args>(args)...);
 	}
 
 	template<typename To, typename From>
@@ -197,7 +198,7 @@ public:
 
 	template<typename Type, typename... Args>
 	Type &set(Args &&...args) {
-		return registry_.set<Type>(std::forward(args)...);
+		return registry_.set<Type>(std::forward<Args>(args)...);
 	}
 
 	template<typename Type>
@@ -207,7 +208,7 @@ public:
 
 	template<typename Type, typename... Args>
 	[[nodiscard]] Type &ctx_or_set(Args &&...args) {
-		return registry_.ctx<>
+		return registry_.ctx<Type>(std::forward<Args>(args)...);
 	}
 
 	template<typename Type>
@@ -233,16 +234,26 @@ public:
 
 	template<typename Func>
 	void ctx(Func func) const {
-		registry_.ctx(std::forward(func));
+		registry_.ctx(std::forward<Func>(func));
 	}
 
 public:
-	const entt::registry& registry() const
+	/*const entt::registry& registry() const
 	{
 		return registry_;
 	}
 
 	entt::registry& registry()
+	{
+		return registry_;
+	}*/
+
+	operator entt::registry&()
+	{
+		return registry_;
+	}
+
+	operator const entt::registry& () const
 	{
 		return registry_;
 	}
@@ -360,7 +371,7 @@ public:
 
 
 private:
-	static void ConnectUniqueIdToEntity(Registry& registry, entt::entity e)
+	static void ConnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
 	{
 		auto& unique_id = registry.get<UniqueId>(e);
 
@@ -368,7 +379,7 @@ private:
 		map.value.emplace(unique_id, e);
 	}
 
-	static void DisconnectUniqueIdToEntity(Registry& registry, entt::entity e)
+	static void DisconnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
 	{
 		auto& unique_id = registry.get<UniqueId>(e);
 
@@ -376,7 +387,7 @@ private:
 		map.value.erase(unique_id);
 	}
 
-	static void ConnectLocalIdToEntity(Registry& registry, entt::entity e)
+	static void ConnectLocalIdToEntity(entt::registry& registry, entt::entity e)
 	{
 		auto& local_id = registry.get<Local>(e);
 
@@ -384,7 +395,7 @@ private:
 		map.value.emplace(local_id, e);
 	}
 
-	static void DisconnectLocalIdToEntity(Registry& registry, entt::entity e)
+	static void DisconnectLocalIdToEntity(entt::registry& registry, entt::entity e)
 	{
 		auto& local_id = registry.get<Local>(e);
 
@@ -395,5 +406,5 @@ private:
 	entt::registry registry_;
 	EntityByLocalMap& local_map_;
 	EntityByUniqueIdMap& unique_map_;
-	GameHelper& game_helper_;
+	const GameHelper& game_helper_;
 };

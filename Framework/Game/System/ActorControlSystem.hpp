@@ -42,7 +42,7 @@ struct ActorControlSystem : public System
 {
 	struct State
 	{
-		entt::registry& registry;
+		Registry& registry;
 
 		State(Registry& _registry) : registry(_registry) {}
 		virtual ~State() = 0 {}

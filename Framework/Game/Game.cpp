@@ -15,14 +15,8 @@
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/Transform.hpp"
-#include "Framework/Game/Component/TransformState.hpp"
-#include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/Local.hpp"
-#include "Framework/Game/Component/UniqueId.hpp"
-#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
-#include "Framework/Game/Component/EntityByLocalMap.hpp"
 #include "Framework/Game/Component/SyncInstanceState.hpp"
-#include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
@@ -31,7 +25,6 @@
 #include "Framework/Game/System/CreateViewSystem.hpp"
 
 #include "Framework/Game/Utility/ActorUtility.hpp"
-#include "Framework/Game/Utility/PhysicsUtility.hpp"
 
 #include "Framework/Game/Data/SceneConfig.hpp"
 
@@ -42,6 +35,7 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 	, run_time_(0)
 	, run_frame_(0)
 	, input_frame_rate_(GameConfig::kDefaultInputFrame)
+	, registry_(locator.Ref<const GameHelper>())
 	, player_infos_(players)
 {
 	registry_.set<Locator>(std::move(locator));
@@ -67,7 +61,7 @@ Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
 		sync_manager.sync_instances.emplace(ServerInstance, SyncInstance(ServerInstance, 0));
 	}
 
-	systems_ = game_helper.CreateSystems(registry_);
+	systems_ = game_helper.CreateSystems(&registry_);
 }
 
 Game::~Game()

@@ -38,32 +38,32 @@ bool ServerGameHelper::IsAuthority() const
 	return true;
 }
 
-std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(entt::registry& registry) const
+std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(Registry* registry) const
 {
 	std::vector<std::unique_ptr<System>> systems;
-	systems.emplace_back(std::make_unique<CreateActorSystem>(registry));
-	systems.emplace_back(std::make_unique<CreateAnimationSystem>(registry));
-	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(registry));
-	systems.emplace_back(std::make_unique<ActorControlSystem>(registry));
-	systems.emplace_back(std::make_unique<RootMotionSystem>(registry));
-	systems.emplace_back(std::make_unique<MovementSystem>(registry));
-	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(registry));
-	systems.emplace_back(std::make_unique<TransformStateSystem>(registry));
-	systems.emplace_back(std::make_unique<AnimationSystem>(registry));
-	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayAbilitySystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayWaitTaskSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayPlayAnimAndWaitTaskSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayPlayInputSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayHitTestTaskSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayEventSystem>(registry));
-	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(registry));
-	systems.emplace_back(std::make_unique<GameplayStateSystem>(registry));
-	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(registry));
-	systems.emplace_back(std::make_unique<PhysicsSystem>(registry));
-	systems.emplace_back(std::make_unique<ServerSyncSystem>(registry));
-	systems.emplace_back(std::make_unique<DestorySystem>(registry));
+	systems.emplace_back(std::make_unique<CreateActorSystem>(*registry));
+	systems.emplace_back(std::make_unique<CreateAnimationSystem>(*registry));
+	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(*registry));
+	systems.emplace_back(std::make_unique<ActorControlSystem>(*registry));
+	systems.emplace_back(std::make_unique<RootMotionSystem>(*registry));
+	systems.emplace_back(std::make_unique<MovementSystem>(*registry));
+	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(*registry));
+	systems.emplace_back(std::make_unique<TransformStateSystem>(*registry));
+	systems.emplace_back(std::make_unique<AnimationSystem>(*registry));
+	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayAbilitySystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayWaitTaskSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayPlayAnimAndWaitTaskSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayPlayInputSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayHitTestTaskSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayEventSystem>(*registry));
+	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayStateSystem>(*registry));
+	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(*registry));
+	systems.emplace_back(std::make_unique<PhysicsSystem>(*registry));
+	systems.emplace_back(std::make_unique<ServerSyncSystem>(*registry));
+	systems.emplace_back(std::make_unique<DestorySystem>(*registry));
 
 	return systems;
 }
@@ -76,9 +76,4 @@ bool ServerGameHelper::IsLocalPlayer(uint32_t id) const
 bool ServerGameHelper::IsRemotePlayer(uint32_t id) const
 {
 	return false;
-}
-
-bool ServerGameHelper::IsControllable(entt::registry& registry, entt::entity e) const
-{
-	return true;
 }

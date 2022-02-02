@@ -1,10 +1,12 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
+#include <memory>
 
-#include "Framework/Game/System.hpp"
 #include "Framework/Game/Service.hpp"
 
+class System;
 class Registry;
 
 class GameHelper : public Service

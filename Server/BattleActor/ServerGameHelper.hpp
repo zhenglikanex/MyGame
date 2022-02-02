@@ -10,11 +10,9 @@ public:
 
 	bool IsAuthority() const override;
 
-	std::vector<std::unique_ptr<System>> CreateSystems(entt::registry& registry) const override;
+	std::vector<std::unique_ptr<System>> CreateSystems(Registry* registry) const override;
 
 	bool IsLocalPlayer(uint32_t id) const override;
 	bool IsRemotePlayer(uint32_t id) const override;
-	
-	bool IsControllable(entt::registry& registry, entt::entity e) const override;
 private:
 };
