@@ -395,7 +395,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		entt::entity source_e = registry.get(source);
 		if (source_e != entt::null)
 		{
-			auto e = registry.create_predict();
+			auto e = registry.create_predict(source_e);
 			registry.emplace<ViewAsset>(e, asset);
 			registry.emplace<Transform>(e, transform);
 
@@ -416,7 +416,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		entt::entity source_e = registry.get(source);
 		if (source_e != entt::null)
 		{
-			auto e = registry.create_predict();
+			auto e = registry.create_predict(source_e);
 			registry.emplace<ViewAsset>(e, asset);
 			registry.emplace<Transform>(e, transform);
 			registry.emplace<TransformState>(e);

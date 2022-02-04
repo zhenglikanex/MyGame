@@ -43,7 +43,7 @@ struct ServerSyncSystem : public System
 		{
 			auto& sync_instance = item.second;
 
-			if (sync_instance.owner == std::numeric_limits<uint32_t>::max())
+			if (sync_instance.owner == ServerInstance)
 			{
 				continue;
 			}
@@ -93,6 +93,16 @@ struct ServerSyncSystem : public System
 				if (local.owner == sync_instance.owner)
 				{
 					frame_data.character_movements.emplace(local, chara_movment);
+				}
+			}
+
+			auto infinite_modifier_attribute_set_view = registry.view<Local, InfiniteModifierAttributeSet>();
+			for (auto e : infinite_modifier_attribute_set_view)
+			{
+				auto& [local, infinite_modifier_attribute_set] = infinite_modifier_attribute_set_view.get<Local, InfiniteModifierAttributeSet>(e);
+				if (local.owner == sync_instance.owner)
+				{
+					frame_data.infinite_modifier_attribute_sets.emplace(local, infinite_modifier_attribute_set);
 				}
 			}
 
@@ -199,6 +209,13 @@ struct ServerSyncSystem : public System
 			{
 				auto& unique_id = view7.get<UniqueId>(e);
 				frame_data.destorys.emplace(unique_id);
+			}
+
+			auto view8 = registry.view<ModifierAttribute>();
+			for (auto e : view8)
+			{
+				auto& modifier_attribute = view8.get<ModifierAttribute>(e);
+				frame_data.modifier_attributes.emplace_back(modifier_attribute);
 			}
 
 			kanex::BinaryStream stream(buffer);

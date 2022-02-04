@@ -43,4 +43,15 @@ struct GameplayEffectSpec
 	}
 };
 
-NON_MEMEBER_BAR(GameplayEffectSpec, obj.effect, obj.source, obj.target, obj.level, obj.period, obj.duration, obj.stack_count);
+NON_MEMEBER_BAR(GameplayEffectSpec, 
+	obj.effect, 
+	obj.source, 
+	obj.target, 
+	obj.level, 
+	obj.duration,
+	obj.time,
+	obj.period,
+	obj.stack_count,
+	obj.source_snapshot_attrs,
+	obj.target_snapshot_attrs,
+	obj.dynamic_granted_tags);

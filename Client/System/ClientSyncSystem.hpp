@@ -92,6 +92,12 @@ struct ClientSyncSystem : public System
 					game_state.run_frame = frame_data.frame;
 				}
 			}
+
+			for (auto& mod_attr : frame_data.modifier_attributes)
+			{
+				auto e = registry.create();
+				registry.emplace<ModifierAttribute>(e, mod_attr);
+			}
 		}
 
 		INFO("END CLIENT SYNC");
@@ -128,8 +134,6 @@ struct ClientSyncSystem : public System
 			auto it = frame_data.transforms.find(unique_id);
 			if (it != frame_data.transforms.end())
 			{
-				auto tran = transform_state.value[frame_data.frame % transform_state.value.size()];
-
 				if (it->second != transform_state.value[frame_data.frame % transform_state.value.size()])
 				{
 					INFO("position not!");
@@ -142,30 +146,6 @@ struct ClientSyncSystem : public System
 				return true;
 			}
 		}
-
-		/*auto view = registry.view<UniqueId, ActorState>();
-		for (auto e : view)
-		{
-			auto& unique_id = view1.get<UniqueId>(e);
-			auto& transform_state = view1.get<ActorState>(e);
-
-			auto it = frame_data.transforms.find(unique_id);
-			if (it != frame_data.transforms.end())
-			{
-				auto tran = transform_state.value[frame_data.frame % transform_state.value.size()];
-
-				if (it->second != transform_state.value[frame_data.frame % transform_state.value.size()])
-				{
-					INFO("position not!");
-					return true;
-				}
-			}
-			else
-			{
-				assert(false);
-				return true;
-			}
-		}*/
 
 		auto view2 = registry.view<UniqueId, GameplayState>();
 		for (auto e : view2)
@@ -390,8 +370,7 @@ struct ClientSyncSystem : public System
 			}
 
 			auto e = unique_map.value[item.first];
-			auto owner = unique_map.value[item.second.target];
-			if (is_need_rollback || !registry.all_of<GameplayState>(owner))
+			if (is_need_rollback || !registry.all_of<Local>(e))
 			{
 				registry.emplace_or_replace<GameplayEffectSpec>(e, item.second);
 			}
@@ -403,6 +382,7 @@ struct ClientSyncSystem : public System
 			if (it != unique_map.value.end())
 			{
 				entt::entity e = it->second;
+				registry.get_or_emplace<>()
 				if (!registry.all_of<Destory>(e))
 				{
 					registry.emplace<Destory>(e);
@@ -429,6 +409,15 @@ struct ClientSyncSystem : public System
 				assert(it != local_map.value.end() && "这里不可能不对应");
 
 				registry.emplace_or_replace<MovementForward>(it->second, item.second);
+			}
+
+			for (auto& item : frame_data.infinite_modifier_attribute_sets)
+			{
+				auto it = local_map.value.find(item.first);
+
+				assert(it != local_map.value.end() && "这里不可能不对应");
+
+				registry.emplace_or_replace<InfiniteModifierAttributeSet>(it->second, item.second);
 			}
 
 			for (auto& item : frame_data.play_anim_and_wait_tasks)

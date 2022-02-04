@@ -7,6 +7,7 @@ public class UnityViewServices : GlobalGameObjectSingleton<UnityViewServices>
     [SerializeField]
     public Queue<int> old_ids = new Queue<int>();
     public Dictionary<int, UnityView> views = new Dictionary<int, UnityView>();
+    private int identifier_ = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -115,9 +116,9 @@ public class UnityViewServices : GlobalGameObjectSingleton<UnityViewServices>
 
     int GenViewId()
     {
-        if(old_ids.Count <= 0)
+        if (old_ids.Count <= 0)
         {
-            return views.Count;
+            return identifier_++;
         }
         return old_ids.Dequeue();
     }

@@ -27,7 +27,7 @@ struct GameplayEffectSystem : public System
 	{
 		auto& ge_manager = registry.ctx<GameplayEffectManager>();
 
-		auto view = registry.view<GameplayEffectSpec>(entt::exclude<Destory>);
+		auto view = registry.view<Local,GameplayEffectSpec>(entt::exclude<Destory>);
 		for (auto e : view)
 		{
 			auto& spec = view.get<GameplayEffectSpec>(e);

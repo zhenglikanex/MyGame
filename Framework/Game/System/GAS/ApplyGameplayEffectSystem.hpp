@@ -233,7 +233,7 @@ struct ApplyGameplayEffectSystem : public System
 		{
 			need_update_gameply_tag = (!ge.tag.granted_tags.Empty() || !spec.dynamic_granted_tags.Empty());
 
-			auto e = registry.create();
+			auto e = registry.create_predict(registry.get(spec.target));
 			registry.emplace<GameplayEffectSpec>(e,std::move(spec));
 			target_spec_entities.push_back(e);
 			// todo ¸³Óè¼¼ÄÜ

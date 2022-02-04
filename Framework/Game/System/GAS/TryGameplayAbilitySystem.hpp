@@ -128,7 +128,7 @@ struct TryGameplayAbilitySystem : public System
 
 					// todo:ÆäËû¼ì²é
 					UniqueId target = UniqueId::null;
-					if (info.target != entt::null)
+					if (registry.valid(info.target))
 					{
 						target = registry.get<UniqueId>(info.target);
 					}

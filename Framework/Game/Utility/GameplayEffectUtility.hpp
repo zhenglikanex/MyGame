@@ -10,6 +10,7 @@
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayTags.hpp"
+#include "Framework/Game/Component/GAS/GameplayState.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -145,6 +146,11 @@ public:
 	static void UpdateGameplayTag(Registry& registry, entt::entity target)
 	{
 		if (!registry.all_of<UniqueId>(target))
+		{
+			return;
+		}
+
+		if (!registry.all_of<GameplayState>(target))
 		{
 			return;
 		}

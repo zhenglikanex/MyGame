@@ -17,7 +17,7 @@
 #include "Framework/Game/Component/GAS/GameplayPlayAnimAndWaitTask.hpp"
 #include "Framework/Game/Component/GAS/GameplayInputTask.hpp"
 #include "Framework/Game/Component/GAS/GameplayHitTestTask.hpp"
-
+#include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 
 #include "Kanex.hpp"
 
@@ -29,6 +29,7 @@ struct FrameData
 	std::unordered_map<Local, UniqueId> unique_ids;
 	std::unordered_map<Local, MovementForward> movement_forwards;
 	std::unordered_map<Local, CharacterMovement> character_movements;
+	std::unordered_map<Local, InfiniteModifierAttributeSet> infinite_modifier_attribute_sets;
 	std::unordered_map<Local, GameplayWaitTask> wait_tasks;
 	std::unordered_map<Local, GameplayPlayAnimAndWaitTask> play_anim_and_wait_tasks;
 	std::unordered_map<Local, GameplayInputTask> input_tasks;
@@ -43,6 +44,7 @@ struct FrameData
 	std::unordered_map<UniqueId, GameplayAbilitySpec> ability_specs;
 	std::unordered_map<UniqueId, GameplayEffectSpec> effect_specs;
 	std::unordered_set<UniqueId> destorys;
+	std::vector<ModifierAttribute> modifier_attributes;
 };
 
 NON_MEMEBER_BAR(FrameData,
@@ -62,4 +64,5 @@ NON_MEMEBER_BAR(FrameData,
 	obj.ability_specs,
 	obj.effect_specs,
 	obj.wait_tasks,
-	obj.destorys);
+	obj.destorys,
+	obj.modifier_attributes);

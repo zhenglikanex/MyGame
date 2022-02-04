@@ -74,14 +74,14 @@ struct UpdatePlayerUISystem : public System
 			{
 				// 遍历所有ge找到相关cooldowntas,
 				// 记录最长的冷却时间
-				auto view = registry.view<GameplayEffectSpec>();
+				auto view = this->registry.view<GameplayEffectSpec>();
 				for (auto e : view)
 				{
 					auto& spec = view.get<GameplayEffectSpec>(e);
 					if (spec.target == id)
 					{
 						auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
-						if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration)
+						if (ge.gameplay_effect.duration_policy != GameplayEffect::DurationPolicy::Duration)
 						{
 							continue;
 						}
@@ -93,16 +93,16 @@ struct UpdatePlayerUISystem : public System
 							auto it = cooldowns.find(item.first);
 							if(it != cooldowns.end())
 							{
-								float remaining = ge.period.duration - spec.duration;
+								float remaining = spec.duration - spec.time;
 								if (remaining > it->second.remaining)
 								{
 									it->second.remaining = remaining;
-									it->second.duration = ge.period.duration;
+									it->second.duration = spec.duration;
 								}
 							}
 							else
 							{
-								cooldowns.emplace(item.first, CooldownInfo{ ge.period.duration - spec.duration,ge.period.duration });
+								cooldowns.emplace(item.first, CooldownInfo{ spec.duration - spec.time,spec.duration });
 							}
 						}
 					}

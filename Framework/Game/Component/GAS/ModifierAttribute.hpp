@@ -7,6 +7,8 @@
 
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 
+#include "Kanex.hpp"
+
 struct ModifierAttribute
 {
 	UniqueId source;
@@ -26,6 +28,8 @@ struct ModifierAttribute
 	}
 };
 
+NON_MEMEBER_BAR(ModifierAttribute, obj.source, obj.target, obj.attribute, obj.modifier_op, obj.value);
+
 struct InfiniteModifierAttribute
 {
 	std::string name;
@@ -33,7 +37,11 @@ struct InfiniteModifierAttribute
 	float value;
 };
 
+NON_MEMEBER_BAR(InfiniteModifierAttribute, obj.name, obj.modifier_op, obj.value);
+
 struct InfiniteModifierAttributeSet
 {
 	std::array<std::vector<InfiniteModifierAttribute>, (size_t)GameplayAttributeType::MaxCount> value;
 };
+
+NON_MEMEBER_BAR(InfiniteModifierAttributeSet, obj.value);

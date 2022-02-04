@@ -74,6 +74,7 @@ System/GAS/GameplayWaitTaskSystem.hpp
 System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp
 System/GAS/GameplayInputTaskSystem.hpp
 System/GAS/GameplayHitTestTaskSystem.hpp
+System/GAS/DestroyModifierAttributeSystem.hpp
 
 Component/GameState.hpp
 Component/Command.hpp
@@ -118,6 +119,7 @@ Component/GAS/GameplayPlayAnimAndWaitTask.hpp
 Component/GAS/GameplayInputTask.hpp
 Component/GAS/GameplayHitTestTask.hpp
 Component/GAS/ActiveGameplayAbilityList.hpp
+
 
 Data/Config.hpp
 Data/Config.cpp

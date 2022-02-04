@@ -23,7 +23,7 @@ struct FlyingTextSystem : public System
 		return true;
 	}
 
-	void Update(float dt) override
+	void FixedUpdate(float dt) override
 	{
 		auto& ui_service = registry.ctx<Locator>().Ref<UIService>();
 		auto view = registry.view<ModifierAttribute>();

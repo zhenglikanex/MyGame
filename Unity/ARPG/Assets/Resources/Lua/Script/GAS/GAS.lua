@@ -41,6 +41,13 @@ function LoadGameplayEffect(name,ge)
         ge.gameplay_effect.modifiers:add( mod )
     end
 
+    for _,execution in pairs(template.gameplay_effect.executions) do
+        print(execution.class_name)
+        local exec = GEExecution.new()
+        exec.class_name = execution.class_name
+        ge.gameplay_effect.executions:add( exec )
+    end
+
     for _,ability in pairs(template.granted_abilities) do
         local ga = GEGrantedAbility.new()
         CopyTable(ability,ga)
@@ -72,9 +79,12 @@ end
 
 function LoadGameplayAbility(name,ga)
     local template = require("GameplayAbility/" .. name)
+
     ga.cooldown_gameplay_effect = template.cooldown_gameplay_effect
     ga.cost_gameplay_effect = template.cost_gameplay_effect
     
+    print(ga.cost_gameplay_effect, template.cost_gameplay_effect)
+
     for _,tag in pairs(template.ability_tags) do
         ga.ability_tags:Push(GameplayTag.new(tag))
     end
@@ -113,6 +123,13 @@ function LoadGameplayAbility(name,ga)
 
     for _,tag in pairs(template.target_blocked_tags) do
         ga.target_blocked_tags:Push(GameplayTag.new(tag))
+    end
+
+    ga.cooldown_duration = template.cooldown_duration or 0
+    if template.cooldown_tags then
+        for _,tag in pairs(template.cooldown_tags) do
+            ga.cooldown_tags:Push(GameplayTag.new(tag))
+        end
     end
 
     ga.script = require("GameplayAbility/" .. name.."Script")

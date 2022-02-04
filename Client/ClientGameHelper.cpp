@@ -28,9 +28,11 @@
 #include "Framework/Game/System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayInputTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayHitTestTaskSystem.hpp"
+#include "Framework/Game/System/GAS/DestroyModifierAttributeSystem.hpp"
 #include "Framework/Game/System/UpdatePlayerUISystem.hpp"
 #include "Framework/Game/System/SyncInstanceStateSystem.hpp"
 #include "Framework/Game/System/ComputeAnimBoneChildTransform.hpp"
+#include "Framework/Game/System/FlyingTextSystem.hpp"
 #include "Client/System/ClientSyncSystem.hpp"
 
 ClientGameHelper::ClientGameHelper(uint32_t local_id)
@@ -76,12 +78,17 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(Registry* r
 	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(*registry));
 	systems.emplace_back(std::make_unique<PhysicsSystem>(*registry));
 	systems.emplace_back(std::make_unique<DestorySystem>(*registry));
+	// 进行两次,清理客户端自己创建ModifierAttribute
+	systems.emplace_back(std::make_unique<DestroyModifierAttributeSystem>(*registry));
 	systems.emplace_back(std::make_unique<ClientSyncSystem>(*registry));
 	systems.emplace_back(std::make_unique<TransformStateSystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayStateSystem>(*registry));
 	systems.emplace_back(std::make_unique<SyncInstanceStateSystem>(*registry));
 	systems.emplace_back(std::make_unique<UpdatePlayerUISystem>(*registry));
 	systems.emplace_back(std::make_unique<UpdateViewSystem>(*registry));
+	systems.emplace_back(std::make_unique<FlyingTextSystem>(*registry));
+	// 进行两次,清理服务器返回ModifierAttribute
+	systems.emplace_back(std::make_unique<DestroyModifierAttributeSystem>(*registry));
 #if DEBUG
 	systems.emplace_back(std::make_unique<DebugSystem>(*registry));
 #endif

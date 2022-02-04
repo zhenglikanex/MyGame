@@ -2,13 +2,14 @@ local GAScript = require("GAS/GAScript")
 local LeiFaGAScript = class("LeiFaGAScript",GAScript)
 
 function LeiFaGAScript:ActiveAbility()
-    self:CommitAbility()
+    --self:CommitAbility()
        
     self:CreateSphere()
     GameplayWait(self.entity,5,"RemoveSphere")
 end
 
 function LeiFaGAScript:CreateSphere()
+    print(self.spec.source)
     local transform = GetTransform(self.spec.source)
     self.sphere = CreateView(self.spec.source,"Sphere",transform)
     self:CheckHit()

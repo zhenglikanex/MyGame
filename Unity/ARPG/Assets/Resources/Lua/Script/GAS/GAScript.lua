@@ -1,8 +1,6 @@
 local GAScript = class("GAScript")
 
 function GAScript:ctor(entity,loc,spec)
-    dump(self)
-    print("function GAScript:ctor",self,entity,loc,spec)
     self.entity = entity
     self.loc = loc
     self.spec = spec
@@ -13,11 +11,11 @@ function GAScript:ActiveAbility()
 end
 
 function GAScript:CommitCost()
-    
+    CommitGameplayAbilityCost(self.entity)
 end
 
 function GAScript:CommitCooldown()
-    
+    CommitGameplayAbilityCooldown(self.entity)
 end
 
 function GAScript:CommitAbility()

@@ -24,6 +24,7 @@
 #include "Framework/Game/System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayInputTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayHitTestTaskSystem.hpp"
+#include "Framework/Game/System/GAS/DestroyModifierAttributeSystem.hpp"
 #include "Framework/Game/System/ComputeAnimBoneChildTransform.hpp"
 
 #include "Server/BattleActor/System/ServerSyncSystem.hpp"
@@ -65,6 +66,7 @@ std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(Registry* r
 	systems.emplace_back(std::make_unique<PhysicsSystem>(*registry));
 	systems.emplace_back(std::make_unique<ServerSyncSystem>(*registry));
 	systems.emplace_back(std::make_unique<DestorySystem>(*registry));
+	systems.emplace_back(std::make_unique<DestroyModifierAttributeSystem>(*registry));
 
 	return systems;
 }

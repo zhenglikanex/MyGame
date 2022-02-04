@@ -46,7 +46,7 @@ local HeroBaseGE =
         duration_policy = GEDefine.DurationPolicy.Infinite,
         modifiers = {   --进行一些简单的数值修改
             {
-                attribute = GameplayAttribute.Hp,    
+                attribute = GameplayAttribute.MaxHp,    
                 modifier_op = GEDefine.ModifierOp.Add,
                 modifier_magnitude = 
                 {
@@ -72,7 +72,33 @@ local HeroBaseGE =
                 }
             },
             {
-                attribute = GameplayAttribute.MaxHp,
+                attribute = GameplayAttribute.Hp,
+                modifier_op = GEDefine.ModifierOp.Add,
+                modifier_magnitude = 
+                {
+                    calculation_type = GEDefine.ModifierMagnitudeCalculationType.ScalableFloat,
+                    value = 1000,
+                    --table = 可以通过指定表去查询value
+                },
+                source_tags = {
+                    require_tags = {  -- 只有拥有该Tag的Source/Target Effect才对其造成影响
+
+                    },
+                    ignore_tags = { --Effect作用时无视这些拥有该标签的Source/Target，不对其造成影响
+
+                    }
+                },
+                target_tags = {
+                    require_tags = {
+
+                    },
+                    ignore_tags = {
+
+                    }
+                }
+            },
+            {
+                attribute = GameplayAttribute.MaxMp,
                 modifier_op = GEDefine.ModifierOp.Add,
                 modifier_magnitude = 
                 {
@@ -124,12 +150,38 @@ local HeroBaseGE =
                 }
             },
             {
-                attribute = GameplayAttribute.MaxMp,
+                attribute = GameplayAttribute.Defend,
                 modifier_op = GEDefine.ModifierOp.Add,
                 modifier_magnitude = 
                 {
                     calculation_type = GEDefine.ModifierMagnitudeCalculationType.ScalableFloat,
-                    value = 1000,
+                    value = 500,
+                    --table = 可以通过指定表去查询value
+                },
+                source_tags = {
+                    require_tags = {  -- 只有拥有该Tag的Source/Target Effect才对其造成影响
+
+                    },
+                    ignore_tags = { --Effect作用时无视这些拥有该标签的Source/Target，不对其造成影响
+
+                    }
+                },
+                target_tags = {
+                    require_tags = {
+
+                    },
+                    ignore_tags = {
+
+                    }
+                }
+            },
+            {
+                attribute = GameplayAttribute.Attack,
+                modifier_op = GEDefine.ModifierOp.Add,
+                modifier_magnitude = 
+                {
+                    calculation_type = GEDefine.ModifierMagnitudeCalculationType.ScalableFloat,
+                    value = 600,
                     --table = 可以通过指定表去查询value
                 },
                 source_tags = {

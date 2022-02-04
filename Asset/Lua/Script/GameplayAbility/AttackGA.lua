@@ -13,7 +13,7 @@ local AttackGA = {
 	target_required_tags = {},
 	target_blocked_tags = {},
 
-	cooldown_duration = 1,
+	cooldown_duration = 20,
 	cooldown_tags = { "Cooldown.AttackGA" },
 }
 

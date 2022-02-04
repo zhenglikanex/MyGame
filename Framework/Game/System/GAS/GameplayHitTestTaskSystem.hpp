@@ -91,12 +91,9 @@ public:
 
 					}
 
-					for (auto hit : hits)
+					if (spec.on_hit != "")
 					{
-						if (spec.on_hit != "")
-						{
-							script.value[spec.on_hit](script.value,hits);
-						}
+						script.value[spec.on_hit](script.value,hits);
 					}
 				}
 

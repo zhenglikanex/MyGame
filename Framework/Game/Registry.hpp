@@ -289,9 +289,12 @@ public:
 
 	entt::entity create_predict()
 	{
+		assert(game_helper_.IsAuthority() && "只能在服务端上执行");
+
 		return create_predict(ServerInstance);
 	}
 
+	// 创建在客户端之间同步的实体
 	entt::entity create_unique() 
 	{
 		auto e = registry_.create();

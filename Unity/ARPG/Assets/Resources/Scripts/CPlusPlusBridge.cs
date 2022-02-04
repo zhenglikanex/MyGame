@@ -271,9 +271,26 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         message.Send();
     }
 
+    public static void RefreshAbilityCooldown(string json_info)
+    {
+        Message message = new Message("refresh_ability_cooldown");
+        message.PushData<string>(json_info);
+
+        message.Send();
+    }
+
     public static void ApplyCue(int id, string name)
     {
         UnityViewServices.Instance.ApplyCue(id, name);
+    }
+
+    public static void HpFlyingText(double x,double y,double z,int value)
+    {
+        var prefab = Resources.Load<GameObject>("Prefab/Cue/FlyText");
+        var instance = GameObject.Instantiate(prefab);
+        instance.GetComponent<FlyText>().value = value;
+        instance.transform.SetParent(GameObject.Find("World").transform);
+        instance.transform.position = new Vector3((float)x, (float)y, (float)z);
     }
 
     public static string GetDataPath()
