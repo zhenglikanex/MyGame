@@ -27,6 +27,7 @@ RandomEngine.hpp
 LuaBridge.hpp
 Registry.hpp
 
+
 GAS/GameplayEffect.hpp
 GAS/GameplayTag.hpp
 GAS/GameplayEffectManager.hpp
@@ -34,6 +35,7 @@ GAS/GameplayAttributeData.hpp
 GAS/GameplayAbility.hpp
 GAS/GameplayAbilityManager.hpp
 GAS/GameplayEffectExecutionCalculation.hpp
+GAS/GameplayTagDefine.hpp
 
 Utility/ActorStateUtility.hpp
 Utility/ActorUtility.hpp

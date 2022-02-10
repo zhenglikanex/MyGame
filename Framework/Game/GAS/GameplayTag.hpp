@@ -72,6 +72,16 @@ public:
 		return !(*this == tag);
 	}
 
+	GameplayTag operator+(const std::string& str) const
+	{
+		return GameplayTag(tag() + "." + str);
+	}
+
+	GameplayTag operator+(const GameplayTag& other) const
+	{
+		return GameplayTag(tag() + "." + other.tag());
+	}
+
 	bool Contain(const GameplayTag& tag) const
 	{
 		if (hierarchy_.size() > tag.hierarchy_.size())

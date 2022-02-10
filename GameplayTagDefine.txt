@@ -1,0 +1,16 @@
+Ability.Jump
+Ability.Sprint
+Ability.Roll
+Ability.MeleeAttack
+
+State.Idle
+State.Grounded
+State.Flying
+State.Attack
+State.Jump
+State.Roll
+State.Sprint
+State.Hurt.Normal
+State.Hurt.Floating
+State.Hurt.KnockBack
+State.Hurt.Flying

@@ -65,6 +65,7 @@ add_subdirectory(Server)
 add_subdirectory(Test)
 add_subdirectory(ClientProxy)
 add_subdirectory(3rdparty/src/lua-5.3.6)
+add_subdirectory(Tool)
 
 add_library(MyGame INTERFACE)
 
