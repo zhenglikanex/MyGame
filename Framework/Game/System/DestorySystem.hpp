@@ -54,23 +54,7 @@ public:
 
 	void DestoryEntity(const std::vector<entt::entity>& entities) 
 	{
-		auto& game_helper = registry.ctx<Locator>().Ref<GameHelper>();
-		if (game_helper.IsAuthority())
-		{
-			registry.destroy(entities.begin(), entities.end());
-		}
-		else
-		{
-			auto view = registry.view<Destory>();
-			for (auto& e : entities)
-			{
-				auto destory = view.get<Destory>(e);
-				if (destory.verify)
-				{
-					registry.destroy(e);
-				}
-			}
-		}
+		registry.destroy(entities.begin(), entities.end());
 	}
 
 	void Finalize() override
