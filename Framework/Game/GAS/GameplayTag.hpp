@@ -131,7 +131,6 @@ private:
 
 			first = second + 1;
 		}
-
 	}
 
 	std::string tag_;
