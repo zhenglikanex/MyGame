@@ -13,7 +13,6 @@
 #include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/SyncManager.hpp"
-#include "Framework/Game/Component/GAS/GameplayTags.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 
@@ -31,7 +30,7 @@ struct ActorUtiltiy
 		reg.emplace<GameplayAttributeSet>(e);
 		reg.emplace<InfiniteModifierAttributeSet>(e);
 		reg.emplace<GameplayState>(e);
-		reg.emplace<GameplayTags>(e);
+		reg.emplace<GameplayTagCountContainer>(e);
 
 		return e;
 	}

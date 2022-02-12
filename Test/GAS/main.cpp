@@ -1,146 +1,110 @@
-
-#include "3rdparty/include/sol/sol.hpp"
-#include <fstream>
-#include <cassert>
-#include <iostream>
-#include <thread>
-#include <chrono>
-
-#include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
-
-#include "Framework/Game/System/GAS/ApplyGameplayEffectSystem.hpp"
-#include "Framework/Game/System/GAS/GameplayEffectSystem.hpp"
-#include "Framework/Game/System/GAS/TryGameplayAbilitySystem.hpp"
-#include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
-#include "Framework/Game/System/GAS/GameplayAttributeSystem.hpp"
-#include "Framework/Game/System/GAS/GameplayEventSystem.hpp"
-#include "Framework/Game/System/DestorySystem.hpp"
-
-#include "Framework/Game/Utility/GameplayEffectUtility.hpp"
-
-#include "Framework/Game/LuaBridge.hpp"
-#include "Framework/Game/RandomEngine.hpp"
+#define CATCH_CONFIG_MAIN
 
 #include "3rdparty/include/catch2/catch.hpp"
+#include "Framework/Game/GAS/GameplayTagDefine.hpp"
 
-//struct Test 
-//{
-//
-//};
-//
-//TEST_CASE_METHOD(Test, "TAG")
-//{
-//	GameplayTag tag1("Test.Tag1");
-//	GameplayTag tag2("Test.Tag2");
-//	GameplayTag tag3("Test.Tag3");
-//	GameplayTag tag4("Test.Tag1");
-//	GameplayTag tag5("Test");
-//
-//	REQUIRE(tag1 == tag4);
-//	REQUIRE(tag1.Contain(tag4));
-//	REQUIRE(!tag1.Contain(tag2));
-//	REQUIRE(tag5.Contain(tag1));
-//	REQUIRE(tag5.Contain(tag2));
-//	REQUIRE(tag5.Contain(tag3));
-//	REQUIRE(tag5.Contain(tag4));
-//
-//	GameplayTagArray array1;
-//	REQUIRE(array1.Empty());
-//	
-//	array1.Push(tag1);
-//	REQUIRE(array1.Find(tag1));
-//	REQUIRE(!array1.Find(tag2));
-//	REQUIRE(array1.Find(tag4));
-//
-//	array1.Clear();
-//	REQUIRE(array1.Empty());
-//	array1.Push(tag5);
-//	array1.Push(tag2);
-//	REQUIRE(!array1.Find(tag1));
-//
-//
-//	GameplayTagArray array2;
-//	array2.Push(tag1);
-//
-//	REQUIRE(!array1.HasAny(array2));
-//	REQUIRE(array2.HasAny(array1));
-//
-//	REQUIRE(!array2.HasAll(array1));
-//	REQUIRE(array1.HasAll(array2));
-//	array2.Push(GameplayTag("Test2"));
-//	REQUIRE(!array1.HasAll(array2));
-//}
-//
-//TEST_CASE_METHOD(Test, "GAS")
-//{
-//	
-//}
-
-int main()
+struct Test
 {
-	/*
-	entt::registry registry;
 
-	registry.set<sol::state>();
-	registry.set<GameplayEffectManager>(registry);
-	registry.set<GameplayAbilityManager>(registry);
-	registry.set<RandomEngine>((uint32_t)1000);
+};
 
-	auto& lua = registry.ctx<sol::state>();
-	lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table, sol::lib::debug, sol::lib::os);
-	lua.script_file("Script/main.lua", sol::script_default_on_error);
-
-	sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
-
-	//RegisterLua(registry, lua);
-
-	ApplyGameplayEffectSystem system1(registry);
-	TryGameplayAbilitySystem system3(registry);
-	GameplayAttributeSystem system4(registry);
-	DelayTaskSystem system5(registry);
-	GameplayEventSystem system6(registry);
-	DestorySystem system7(registry);
-
-	auto source = registry.create();
-	auto target = registry.create();
-
-	//GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, "AttackGE", 1, target);
-	GameplayAbilityUtility::TryGameplayAbility(registry, source, "AttackGA", target);
-
-	auto& delay_task = registry.ctx_or_set<DelayTask>();
-	delay_task.entity_by_events[source].emplace_back(1, [&registry,target]()
-	{
-		GameplayEventUtility::SendGameplayEvent(registry, GameplayTag("GA.AttackGA"),target);
-	});
-
-	registry.emplace<GameplayAttributeSet>(source);
-	registry.emplace<ModifierAttributeSet>(source);
-	registry.emplace<ModifierBaseAttributeSet>(source);
-	registry.emplace<GameplayAttributeSet>(target);
-	registry.emplace<ModifierAttributeSet>(target);
-	registry.emplace<ModifierBaseAttributeSet>(target);
-
-	GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, "IngoreTestGE", 1, target);
-	GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, "HeroBaseGE", 1, source);
-	GameplayEffectUtility::ApplyGameEffectToTarget(registry, target, "HeroBaseGE", 1, target);
+TEST_CASE_METHOD(Test, "GameplayTag")
+{
+	REQUIRE(GameplayTagDefine::kAbilityJump.Matching(GameplayTagDefine::kAbility));
+	REQUIRE(GameplayTagDefine::kAbility.Matching(GameplayTagDefine::kAbility));
+	REQUIRE(!GameplayTagDefine::kAbility.Matching(GameplayTagDefine::kAbilityJump));
+	REQUIRE(!GameplayTagDefine::kAbility.Matching(GameplayTagDefine::kState));
 	
-	while (true)
-	{
-		system3.FixedUpdate(fixed16(1));
-		system5.FixedUpdate(fixed16(1));
-		system6.FixedUpdate(fixed16(1));
-		system1.FixedUpdate(fixed16(1));
-		system4.FixedUpdate(fixed16(1));
-		system7.FixedUpdate(fixed16(1));
+	REQUIRE(GameplayTagDefine::kAbilityJump.MatchingExact(GameplayTagDefine::kAbilityJump));
+	REQUIRE(!GameplayTagDefine::kAbilityJump.MatchingExact(GameplayTagDefine::kAbility));
 
-		auto view = registry.view<GameplayAttributeSet>();
-		for (auto e : view)
-		{
-			auto& attribute_set = view.get<GameplayAttributeSet>(e);
-		}
+	REQUIRE((GameplayTagDefine::kAbility.value() >> 56) == 1);
+	REQUIRE(((GameplayTagDefine::kAbilityJump.value() >> 48) & 0xFF) == 1);
+	REQUIRE(((GameplayTagDefine::kAbilitySprint.value() >> 48) & 0xFF) == 2);
+	REQUIRE((GameplayTagDefine::kAbilityMeleeAttack.value() >> 56) == 1);
+	REQUIRE((GameplayTagDefine::kState.value() >> 56) == 2);
+}
 
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-	}
-	*/
-	return 0;
+
+TEST_CASE_METHOD(Test, "GameplayTagArray")
+{
+	GameplayTagArray tags;
+
+	REQUIRE(!tags.HasTag(GameplayTagDefine::kAbility));
+	REQUIRE(!tags.HasTagExact(GameplayTagDefine::kAbility));
+
+	tags.Push(GameplayTagDefine::kAbility);
+	tags.Push(GameplayTagDefine::kAbilityJump);
+	tags.Push(GameplayTagDefine::kStateSprint);
+
+	REQUIRE(tags.HasTag(GameplayTagDefine::kState));
+	REQUIRE(tags.HasTag(GameplayTagDefine::kStateSprint));
+	REQUIRE(!tags.HasTag(GameplayTagDefine::kAbilityMeleeAttack));
+
+	REQUIRE(!tags.HasTagExact(GameplayTagDefine::kState));
+	REQUIRE(tags.HasTagExact(GameplayTagDefine::kAbility));
+	REQUIRE(tags.HasTagExact(GameplayTagDefine::kAbilityJump));
+
+	REQUIRE(tags.HasAll({ GameplayTagDefine::kAbility,GameplayTagDefine::kState }));
+	REQUIRE(tags.HasAll({ GameplayTagDefine::kAbilityJump,GameplayTagDefine::kStateSprint }));
+	REQUIRE(tags.HasAll({}));
+	REQUIRE(!tags.HasAll({ GameplayTagDefine::kAbilityMeleeAttack }));
+	REQUIRE(!tags.HasAll({ GameplayTagDefine::kStateAttack }));
+
+	REQUIRE(tags.HasAllExact({ GameplayTagDefine::kAbility,GameplayTagDefine::kStateSprint }));
+	REQUIRE(tags.HasAllExact({}));
+	REQUIRE(!tags.HasAllExact({ GameplayTagDefine::kAbility,GameplayTagDefine::kState }));
+
+	REQUIRE(tags.HasAny({ GameplayTagDefine::kAbility,GameplayTagDefine::kAbilityMeleeAttack }));
+	REQUIRE(tags.HasAny({ GameplayTagDefine::kState }));
+	REQUIRE(tags.HasAny({ GameplayTagDefine::kAbilityJump }));
+	REQUIRE(!tags.HasAny({ GameplayTagDefine::kAbilityMeleeAttack,GameplayTagDefine::kAbilityRoll }));
+	REQUIRE(!tags.HasAny({}));
+
+	REQUIRE(tags.HasAnyExact({ GameplayTagDefine::kAbility,GameplayTagDefine::kState }));
+	REQUIRE(!tags.HasAnyExact({ GameplayTagDefine::kState }));
+	REQUIRE(!tags.HasAnyExact({}));
+}
+
+TEST_CASE_METHOD(Test, "GameplayTagCountContainer")
+{
+	GameplayTagCountContainer tag_count;
+	
+	tag_count.UpdateTagCount({ GameplayTagDefine::kAbilityJump,GameplayTagDefine::kStateAttack }, 2);
+	
+	REQUIRE(tag_count.HasTag(GameplayTagDefine::kAbilityJump));
+	REQUIRE(tag_count.HasTag(GameplayTagDefine::kStateAttack));
+	REQUIRE(tag_count.HasTag(GameplayTagDefine::kAbility));
+	REQUIRE(tag_count.HasTag(GameplayTagDefine::kState));
+	REQUIRE(!tag_count.HasTag(GameplayTagDefine::kStateJump));
+
+	REQUIRE(tag_count.HasTagExact(GameplayTagDefine::kAbilityJump));
+	REQUIRE(tag_count.HasTagExact(GameplayTagDefine::kStateAttack));
+	REQUIRE(!tag_count.HasTagExact(GameplayTagDefine::kAbility));
+	REQUIRE(!tag_count.HasTagExact(GameplayTagDefine::kState));
+	REQUIRE(!tag_count.HasTagExact(GameplayTagDefine::kStateJump));
+
+	REQUIRE(tag_count.GetTagCount(GameplayTagDefine::kAbilityJump) == 2);
+	REQUIRE(tag_count.GetTagCount(GameplayTagDefine::kStateAttack) == 2);
+
+	tag_count.SetTagCount(GameplayTagDefine::kAbilityJump, 0);
+	REQUIRE(tag_count.GetTagCount(GameplayTagDefine::kAbilityJump) == 0);
+	REQUIRE(!tag_count.HasTag(GameplayTagDefine::kAbilityJump));
+
+	tag_count.UpdateTagCount({ GameplayTagDefine::kAbilityJump ,GameplayTagDefine::kStateJump,GameplayTagDefine::kStateAttack }, 1);
+	REQUIRE(tag_count.GetTagCount(GameplayTagDefine::kAbilityJump) == 1);
+	REQUIRE(tag_count.GetTagCount(GameplayTagDefine::kStateJump) == 1);
+	REQUIRE(tag_count.GetTagCount(GameplayTagDefine::kStateAttack) == 3);
+	REQUIRE(tag_count.HasTag(GameplayTagDefine::kStateJump));
+	REQUIRE(tag_count.HasTag(GameplayTagDefine::kAbilityJump));
+
+	REQUIRE(tag_count.HasAll({ GameplayTagDefine::kAbility, GameplayTagDefine::kState }));
+	REQUIRE(tag_count.HasAll({ GameplayTagDefine::kAbility,GameplayTagDefine::kStateJump}));
+	REQUIRE(tag_count.HasAll({}));
+	REQUIRE(!tag_count.HasAll({ GameplayTagDefine::kAbility,GameplayTagDefine::kStateFlying }));
+
+	REQUIRE(tag_count.HasAny({ GameplayTagDefine::kAbility,GameplayTagDefine::kAbilityMeleeAttack }));
+	REQUIRE(tag_count.HasAny({ GameplayTagDefine::kStateAttack,GameplayTagDefine::kAbilityMeleeAttack }));
+	REQUIRE(tag_count.HasAny({ GameplayTagDefine::kState,GameplayTagDefine::kAbilityMeleeAttack }));
+	REQUIRE(!tag_count.HasAny({ GameplayTagDefine::kStateHurtFloating,GameplayTagDefine::kAbilityMeleeAttack }));
 }

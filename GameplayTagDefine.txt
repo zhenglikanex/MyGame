@@ -1,4 +1,5 @@
 Ability.Jump
+Ability.Jump
 Ability.Sprint
 Ability.Roll
 Ability.MeleeAttack

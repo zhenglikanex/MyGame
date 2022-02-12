@@ -9,7 +9,6 @@
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
-#include "Framework/Game/Component/GAS/GameplayTags.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
@@ -143,55 +142,6 @@ public:
 		}
 	}
 
-	static void UpdateGameplayTag(Registry& registry, entt::entity target)
-	{
-		if (!registry.all_of<UniqueId>(target))
-		{
-			return;
-		}
-
-		if (!registry.all_of<GameplayState>(target))
-		{
-			return;
-		}
-
-		auto& ge_manager = registry.ctx<GameplayEffectManager>();
-
-		auto& tags = registry.get<GameplayTags>(target);
-		tags.tags.Clear();
-
-		auto& target_spec_entities = GameplayEffectUtility::GetGameplayEffectSpecEntitiesByOwner(registry, registry.get<UniqueId>(target));
-
-		std::unordered_map<GameplayTag, bool> flag;
-		for (auto e : target_spec_entities)
-		{
-			if (!registry.all_of<Destory>(e))
-			{
-				auto& spec = registry.get<GameplayEffectSpec>(e);
-				auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
-				for (auto it = ge.tag.granted_tags.Begin(); it != ge.tag.granted_tags.End(); ++it)
-				{
-					auto& tag = *it;
-					if (flag.find(tag) == flag.end())
-					{
-						flag[tag] = true;
-						tags.tags.Push(tag);
-					}
-				}
-
-				for (auto it = spec.dynamic_granted_tags.Begin(); it != spec.dynamic_granted_tags.End(); ++it)
-				{
-					auto& tag = *it;
-					if (flag.find(tag) == flag.end())
-					{
-						flag[tag] = true;
-						tags.tags.Push(tag);
-					}
-				}
-			}
-		}
-	}
-
 	static void ApplyGameEffectToTarget(Registry& registry, entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
 	{
 		if (!registry.all_of<UniqueId>(source))
@@ -238,6 +188,20 @@ public:
 		}
 
 		return spec;
+	}
+
+	static void RemoveGameplayEffectForTarget(Registry& registry,entt::entity target, entt::entity target_ge)
+	{
+		auto& ge_manager = registry.ctx<GameplayEffectManager>();
+		auto& spec = registry.get<GameplayEffectSpec>(target_ge);
+		auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
+		registry.patch<GameplayTagCountContainer>(target, [&ge](GameplayTagCountContainer& tag_count)
+			{
+				tag_count.UpdateTagCount(ge.tag.granted_tags, -1);
+			});
+
+		// todo:ÒÆ³ý¼¼ÄÜµÈ
+		registry.emplace<Destory>(target_ge);
 	}
 
 private:

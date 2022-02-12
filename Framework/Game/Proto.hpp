@@ -10,7 +10,6 @@
 #include "Framework/Game/Component/ViewAsset.hpp"
 #include "Framework/Game/Component/Destory.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
-#include "Framework/Game/Component/GAS/GameplayTags.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
@@ -40,7 +39,7 @@ struct FrameData
 	std::unordered_map<UniqueId, Transform> transforms;
 	std::unordered_map<UniqueId, AnimationClip> animation_clips;
 	std::unordered_map<UniqueId, GameplayAttributeSet> attribute_sets;
-	std::unordered_map<UniqueId, GameplayTags> tags;
+	std::unordered_map<UniqueId, GameplayTagCountContainer> tag_counts;
 	std::unordered_map<UniqueId, GameplayAbilitySpec> ability_specs;
 	std::unordered_map<UniqueId, GameplayEffectSpec> effect_specs;
 	std::unordered_set<UniqueId> destorys;
@@ -60,7 +59,7 @@ NON_MEMEBER_BAR(FrameData,
 	obj.animation_clips,
 	obj.character_movements,
 	obj.attribute_sets,
-	obj.tags,
+	obj.tag_counts,
 	obj.ability_specs,
 	obj.effect_specs,
 	obj.wait_tasks,

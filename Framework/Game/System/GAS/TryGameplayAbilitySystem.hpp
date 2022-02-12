@@ -14,7 +14,6 @@
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 #include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
-#include "Framework/Game/Component/GAS/GameplayTags.hpp"
 #include "Framework/Game/Component/GAS/ActiveGameplayAbilityList.hpp"
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
@@ -31,7 +30,7 @@ struct TryGameplayAbilitySystem : public System
 		return true;
 	}
 
-	const ActiveGameplayAbility* GetActiveAbility(entt::entity e,const std::string& ability)
+	const ActiveGameplayAbility* GetActiveAbility(entt::entity e,const std::string& ability) const
 	{
 		auto& active_ability_list = registry.get<ActiveGameplayAbilityList>(e);
 		auto it = active_ability_list.value.find(ability);
@@ -43,10 +42,10 @@ struct TryGameplayAbilitySystem : public System
 		return nullptr;
 	}
 
-	bool CheckCoolDown(entt::entity e,const GameplayAbility& ga)
+	bool CheckCoolDown(entt::entity e,const GameplayAbility& ga) const
 	{
-		auto& tags = registry.get<GameplayTags>(e);
-		if (tags.tags.HasAny(ga.cooldown_tags))
+		auto& tag_count = registry.get<GameplayTagCountContainer>(e);
+		if (tag_count.HasAny(ga.cooldown_tags))
 		{
 			return false;
 		}
@@ -54,7 +53,7 @@ struct TryGameplayAbilitySystem : public System
 		return true;
 	}
 
-	bool CheckCost(entt::entity e,const GameplayAbility& ga)
+	bool CheckCost(entt::entity e,const GameplayAbility& ga) const
 	{
 		if (ga.cost_gameplay_effect == "")
 		{
@@ -78,13 +77,42 @@ struct TryGameplayAbilitySystem : public System
 	}
 
 	// 检查是否会被其他技能阻塞
-	bool CheckOtherBlock(const GameplayAbility& ga,const std::vector<entt::entity>& entities)
+	bool CheckActiveAbiliesBlocked(entt::entity source,const GameplayAbility& ga) const
 	{
+		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
+	
+		auto entities = GameplayAbilityUtility::GetActiveGameplayAbilities(registry, source);
 		for (auto e : entities)
 		{
 			auto& spec = registry.get<GameplayAbilitySpec>(e);
-			
+			auto& active_ga = ga_manager.LoadGameplayAbility(spec.ability);
+			if (ga.ability_tags.HasAll(active_ga.activation_blocked_tags))
+			{
+				return false;
+			}
 		}
+
+		return true;
+	}
+
+	bool CheckActivationRequiredTags(const GameplayTagCountContainer& tag_count,const GameplayAbility& ga) const
+	{
+		return tag_count.HasAll(ga.activation_required_tags);
+	}
+
+	bool CheckActivationBlockedTags(const GameplayTagCountContainer& tag_count, const GameplayAbility& ga) const
+	{
+		return !tag_count.HasAny(ga.activation_blocked_tags);
+	}
+
+	bool CheckTargetRequiredTags(const GameplayTagCountContainer& tag_count, const GameplayAbility& ga) const
+	{
+		return tag_count.HasAll(ga.target_required_tags);
+	}
+
+	bool CheckTargetBlockedTags(const GameplayTagCountContainer& tag_count, const GameplayAbility& ga) const
+	{
+		return !tag_count.HasAny(ga.target_blocked_tags);
 	}
 
 	void FixedUpdate(float dt) override
@@ -108,6 +136,10 @@ struct TryGameplayAbilitySystem : public System
 						continue;
 					}
 
+					auto source = registry.get<UniqueId>(info.source);
+
+					auto& source_tag_count = registry.get<GameplayTagCountContainer>(info.source);
+
 					auto active_ability = GetActiveAbility(info.source, info.ability);
 					if (!active_ability)
 					{
@@ -126,15 +158,45 @@ struct TryGameplayAbilitySystem : public System
 						continue;
 					}
 
-					// todo:其他检查
+					if (!CheckActiveAbiliesBlocked(info.source,ga))
+					{
+						continue;
+					}
+
+					if (!CheckActivationRequiredTags(source_tag_count, ga))
+					{
+						continue;
+					}
+
+					if (!CheckActivationBlockedTags(source_tag_count, ga))
+					{
+						continue;
+					}
+
 					UniqueId target = UniqueId::null;
 					if (registry.valid(info.target))
 					{
 						target = registry.get<UniqueId>(info.target);
+
+						auto& target_tag_count = registry.get<GameplayTagCountContainer>(info.target);
+						if (!CheckTargetRequiredTags(target_tag_count, ga))
+						{
+							continue;
+						}
+
+						if (!CheckTargetBlockedTags(target_tag_count, ga))
+						{
+							continue;
+						}
 					}
 
 					auto e = registry.create_predict(info.source);
-					registry.emplace<GameplayAbilitySpec>(e, info.ability, active_ability->level, registry.get<UniqueId>(info.source), target);
+					registry.emplace<GameplayAbilitySpec>(e, info.ability, active_ability->level, source, target);
+
+					registry.patch<GameplayTagCountContainer>(info.source, [&ga](GameplayTagCountContainer& tag_count)
+						{
+							tag_count.UpdateTagCount(ga.activation_owned_tags, 1);
+						});
 				}
 
 				ga_list.second.clear();
@@ -142,7 +204,6 @@ struct TryGameplayAbilitySystem : public System
 		}
 	}
 	
-
 	void Finalize() override
 	{
 

@@ -3,6 +3,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <functional>
 
 #include "Kanex.hpp"
 
@@ -11,60 +12,15 @@ class GameplayTag
 public:
 	GameplayTag() = default;
 
-	explicit GameplayTag(std::string_view tag)
-		:tag_(tag)
+	explicit GameplayTag(uint64_t value)
+		: value_(value)
 	{
-		Split();
-	}
 
-	GameplayTag(const GameplayTag& rhs)
-		: tag_(rhs.tag_)
-	{
-		Split();
-	}
-
-	GameplayTag(GameplayTag&& rhs)
-		:tag_(std::move(rhs.tag_))
-	{
-		Split();
-	}
-
-	const GameplayTag& operator=(const GameplayTag& rhs)
-	{
-		if (this == &rhs)
-		{
-			return *this;
-		}
-
-		tag_ = rhs.tag_;
-		hierarchy_.clear();
-		Split();
-
-		return *this;
-	}
-
-	const GameplayTag& operator=(GameplayTag&& rhs)
-	{
-		if (this == &rhs)
-		{
-			return *this;
-		}
-
-		tag_ = std::move(rhs.tag_);
-		hierarchy_.clear();
-		Split();
-
-		return *this;
 	}
 
 	bool operator==(const GameplayTag& tag) const
 	{
-		if (this == &tag)
-		{
-			return true;
-		}
-
-		return tag_ == tag.tag_;
+		return value_ == tag.value_;
 	}
 
 	bool operator!=(const GameplayTag& tag) const
@@ -72,69 +28,26 @@ public:
 		return !(*this == tag);
 	}
 
-	GameplayTag operator+(const std::string& str) const
+	// "A.1".Matching."A" true "A.1".Matching."A.1" true
+	bool Matching(const GameplayTag& tag) const
 	{
-		return GameplayTag(tag() + "." + str);
+		return (value_ & tag.value_) == tag.value_;
 	}
 
-	GameplayTag operator+(const GameplayTag& other) const
+	// "A.1".Matching."A" false "A.1".Matching."A.1" true
+	bool MatchingExact(const GameplayTag& tag) const
 	{
-		return GameplayTag(tag() + "." + other.tag());
+		return value_ == tag.value_;
 	}
 
-	bool Contain(const GameplayTag& tag) const
+	uint64_t value() const
 	{
-		if (hierarchy_.size() > tag.hierarchy_.size())
-		{
-			return false;
-		}
-
-		for (int i = 0; i < hierarchy_.size(); ++i)
-		{
-			if (hierarchy_[i] != tag.hierarchy_[i])
-			{
-				return false;
-			}
-		}
-
-		return true;
+		return value_;
 	}
 
-	const std::string& tag() const { return tag_; }
-
-	void Serialize(kanex::BinaryOutputArchive& ar)
-	{
-		ar(tag_);
-	}
-	void Serialize(kanex::BinaryInputArchive& ar)
-	{
-		ar(tag_);
-		Split();
-	}
+	BAR(value_);
 private:
-	void Split()
-	{
-		std::string_view strv = tag_;
-		std::string_view delims = ".";
-
-		size_t first = 0;
-
-		while (first < strv.size())
-		{
-			const auto second = strv.find_first_of(delims, first);
-
-			if (first != second)
-				hierarchy_.emplace_back(strv.substr(first, second - first));
-
-			if (second == std::string_view::npos)
-				break;
-
-			first = second + 1;
-		}
-	}
-
-	std::string tag_;
-	std::vector<std::string_view> hierarchy_;
+	uint64_t value_;
 };
 
 namespace std
@@ -142,16 +55,25 @@ namespace std
 	template<>
 	struct hash<GameplayTag>
 	{
-		_NODISCARD size_t operator()(const GameplayTag& value) const noexcept {
-			return std::hash<std::string>()(value.tag());
+		_NODISCARD size_t operator()(const GameplayTag& tag) const noexcept {
+			return tag.value();
 		}
 	};
-
 }
 
 class GameplayTagArray
 {
 public:
+	GameplayTagArray() = default;
+
+	GameplayTagArray(std::initializer_list<GameplayTag> args)
+	{
+		for (auto& tag : args)
+		{
+			tags_.emplace_back(tag);
+		}
+	}
+
 	bool operator==(const GameplayTagArray& other) const
 	{
 		return tags_ == other.tags_;
@@ -177,69 +99,107 @@ public:
 		return tags_.empty();
 	}
 
-	bool Find(const GameplayTag& tag) const
+	// { "A.1" }.HasTag{"A"} return true { "A.1" }.HasTagExact{"A.1"} true
+	bool HasTag(const GameplayTag& check_tag) const
 	{
-		return std::find(tags_.begin(), tags_.end(), tag) != tags_.end();
+		auto v = std::bind(&GameplayTagArray::Push,std::placeholders::_1);
+		return std::find_if(tags_.begin(), tags_.end(),[&check_tag](const GameplayTag& tag)
+			{
+				return tag.Matching(check_tag);
+			}) != tags_.end();
 	}
 
-	bool HasAny(const GameplayTagArray& array) const
+	// { "A.1" }.HasTagExact{"A"} return false { "A.1" }.HasTagExact{"A.1"} true
+	bool HasTagExact(const GameplayTag& check_tag) const
 	{
-		if (this == &array)
-		{
-			return true;
-		}
-
-		if (array.tags_.size() == 0)
-		{
-			return false;
-		}
-
-		for (int i = 0; i < tags_.size(); ++i)
-		{
-			for (int j = 0; j < array.tags_.size(); ++j)
+		return std::find_if(tags_.begin(), tags_.end(), [&check_tag](const GameplayTag& tag)
 			{
-				if (tags_[i].Contain(array.tags_[j]))
-				{
-					return true;
-				}
-			}
-		}
-
-		return false;
+				return tag.MatchingExact(check_tag);
+			}) != tags_.end();
 	}
 
-	bool HasAll(const GameplayTagArray& array) const
+	// { "A.1"}.HasAll{ "A","B" } return false { "A.1","B.1"}.HasAll{ "A","B" } return true
+	// { "A.1"}.HasAll{ }return true
+	bool HasAll(const GameplayTagArray& tags) const
 	{
-		if (this == &array)
+		if (tags.Empty())
 		{
 			return true;
 		}
 
-		if (array.tags_.size() == 0)
+		for (auto it = tags.Begin(); it != tags.End(); ++it)
 		{
-			return true;
-		}
-
-		// todo:后面改成查表的方式来做
-		for (int i = 0; i < array.tags_.size(); ++i)
-		{
-			bool found = false;
-			for (int j = 0; j < tags_.size(); ++j)
-			{
-				if (tags_[j].Contain(array.tags_[i]))
-				{
-					found = true;
-					break;
-				}
-			}
-
-			if (!found)
+			auto& check_tag = *it;
+			if (!HasTag(check_tag))
 			{
 				return false;
 			}
 		}
 
 		return true;
+	}
+
+	// { "A.1"}.HasAll{ "A","B" } return false { "A.1","B.1"}.HasAll{ "A","B" } return true
+	// { "A.1"}.HasAll{ }return true
+	bool HasAllExact(const GameplayTagArray& tags) const
+	{
+		if (tags.Empty())
+		{
+			return true;
+		}
+
+		for (auto it = tags.Begin(); it != tags.End(); ++it)
+		{
+			auto& check_tag = *it;
+			if (!HasTagExact(check_tag))
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	// { "A.1"}.HasAny{ "A","B" } return true { "C.1" }.HasAny{ "A","B" } return false
+	// { "A.1"}.HasAny{ } return false
+	bool HasAny(const GameplayTagArray& tags) const
+	{
+		if (tags.Empty())
+		{
+			return false;
+		}
+
+		for (auto it = tags.Begin(); it != tags.End(); ++it)
+		{
+			auto& check_tag = *it;
+			if (HasTag(check_tag))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	// { "A.1"}.HasAny{ "A","B" } return false { "A.1"}.HasAny{ "A.1","B.1" } return true
+	// { "A.1"}.HasAny{ } return false
+	bool HasAnyExact(const GameplayTagArray& tags) const
+	{
+		if (tags.Empty())
+		{
+			return false;
+		}
+
+		for (auto it = tags.Begin(); it != tags.End(); ++it)
+		{
+			auto& check_tag = *it;
+			if (HasTagExact(check_tag))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	std::vector<GameplayTag>::iterator Begin()
@@ -265,4 +225,139 @@ public:
 	BAR(tags_);
 private:
 	std::vector<GameplayTag> tags_;
+};
+
+class GameplayTagCountContainer
+{
+public:
+	bool operator==(const GameplayTagCountContainer& other) const
+	{
+		return tag_count_map_ == other.tag_count_map_;
+	}
+
+	bool operator!=(const GameplayTagCountContainer& other) const
+	{
+		return !(*this == other);
+	}
+
+	GameplayTagArray GetExplicitGameplayTags() const
+	{
+		GameplayTagArray tags;
+
+		for (auto& item : tag_count_map_)
+		{
+			if(item.second > 0)
+			{ 
+				tags.Push(item.first);
+			}
+		}
+
+		return tags;
+	}
+
+	int32_t GetTagCount(const GameplayTag& tag) const
+	{
+		auto it = tag_count_map_.find(tag);
+		if (it != tag_count_map_.end())
+		{
+			return it->second;
+		}
+		return 0;
+	}
+
+	// { "A.1" }.HasTag{"A"} return true { "A.1" }.HasTagExact{"A.1"} true
+	bool HasTag(const GameplayTag& check_tag) const
+	{
+		return std::find_if(tag_count_map_.begin(), tag_count_map_.end(), [&check_tag](const std::pair<GameplayTag, uint8_t>& value)
+			{
+				return value.second > 0 && value.first.Matching(check_tag);
+			}) != tag_count_map_.end();
+	}
+
+	// { "A.1" }.HasTagExact{"A"} return false { "A.1" }.HasTagExact{"A.1"} true
+	bool HasTagExact(const GameplayTag& check_tag) const
+	{
+		return GetTagCount(check_tag) > 0;
+	}
+
+	// { "A.1"}.HasAll{ "A","B" } return false { "A.1","B.1"}.HasAll{ "A","B" } return true
+	// { "A.1"}.HasAll{ }return true
+	bool HasAll(const GameplayTagArray& tags) const
+	{
+		if (tags.Empty())
+		{
+			return true;
+		}
+
+		for (auto it = tags.Begin(); it != tags.End(); ++it)
+		{
+			auto& check_tag = *it;
+			if (!HasTag(check_tag))
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	// { "A.1"}.HasAny{ "A","B" } return true { "C.1" }.HasAny{ "A","B" } return false
+	// { "A.1"}.HasAny{ } return false
+	bool HasAny(const GameplayTagArray& tags) const
+	{
+		if (tags.Empty())
+		{
+			return false;
+		}
+
+		for (auto it = tags.Begin(); it != tags.End(); ++it)
+		{
+			auto& check_tag = *it;
+			if (HasTag(check_tag))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	void SetTagCount(const GameplayTag& tag, int32_t count)
+	{
+		if (count <= 0)
+		{
+			tag_count_map_.erase(tag);
+			return;
+		}
+
+		tag_count_map_[tag] = count;
+	}
+
+	void UpdateTagCount(const GameplayTag& tag, int32_t delta)
+	{
+		auto it = tag_count_map_.find(tag);
+		if (it != tag_count_map_.end())
+		{
+			it->second += delta;
+		}
+		else
+		{
+			if (delta > 0)
+			{
+				tag_count_map_[tag] = delta;
+			}
+		}
+	}
+
+	void UpdateTagCount(const GameplayTagArray& tags, int32_t delta)
+	{
+		for (auto it = tags.Begin(); it != tags.End(); ++it)
+		{
+			UpdateTagCount(*it, delta);
+		}
+	}
+
+	BAR(tag_count_map_);
+private:
+	std::unordered_map<GameplayTag, int32_t> tag_count_map_;
 };

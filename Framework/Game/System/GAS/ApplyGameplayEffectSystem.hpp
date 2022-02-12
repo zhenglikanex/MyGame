@@ -8,7 +8,6 @@
 #include "Framework/Game/Component/Destory.hpp"
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
-#include "Framework/Game/Component/GAS/GameplayTags.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
@@ -30,45 +29,15 @@ struct ApplyGameplayEffectSystem : public System
 
 	// 检查目标是否会免疫该ge
 	// todo: source_tags来自技能或者拥有者,还没想好怎么实现
-	bool HasApplicationImmunity(const std::vector<entt::entity>& entities, const GameplayTags* source_tags)
+	bool HasApplicationImmunity(const std::vector<entt::entity>& entities,const GameplayTagCountContainer& tag_count)
 	{
 		return false;
-		/*if (!source_tags)
-		{
-			return false;
-		}
-
-		for (auto e : entities)
-		{
-			if (auto ge_spec = registry.try_get<GameplayEffectSpec>(e))
-			{
-				if (source_tags->HasAll(ge_spec->ge->immunity.granted_application_immunity_tags.require_tags) ||
-					source_tags->HasAny(ge_spec->ge->immunity.granted_application_immunity_tags.ignore_tags))
-				{
-
-					return true;
-				}
-			}
-		}
-
-		return false;*/
 	}
 
 	// 检查目标是否可以应用GE
-	bool CheckApplicationTagRequirements(const GameplayEffect& ge,const GameplayTags* target_tags)
+	bool CheckApplicationTagRequirements(const GameplayEffect& ge,const GameplayTagCountContainer& tag_count)
 	{
-		if (!target_tags && !ge.tag.application_tag_requirements.require_tags.Empty())
-		{
-			return false;
-		}
-
-		if (!target_tags)
-		{
-			return true;
-		}
-
-		return target_tags->tags.HasAll(ge.tag.application_tag_requirements.require_tags) && !target_tags->tags.HasAny(ge.tag.application_tag_requirements.ignore_tags);
-
+		return tag_count.HasAll(ge.tag.application_tag_requirements.require_tags) && !tag_count.HasAny(ge.tag.application_tag_requirements.ignore_tags);
 	}
 
 	// 检查概率
@@ -92,7 +61,6 @@ struct ApplyGameplayEffectSystem : public System
 
 	void FixedUpdate(float dt) override
 	{
-		sol::state& lua = registry.ctx<sol::state>();
 		GameplayEffectManager& ge_manager = registry.ctx<GameplayEffectManager>();
 		
 		if (auto apply_ge = registry.try_ctx<ApplyGameplayEffect>())
@@ -118,17 +86,17 @@ struct ApplyGameplayEffectSystem : public System
 
 					auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
 
-					auto target_tags = registry.try_get<GameplayTags>(target);
-					auto source_tags = registry.try_get<GameplayTags>(source);
+					auto& target_tag_count = registry.get<GameplayTagCountContainer>(target);
+					auto& source_tag_count = registry.get<GameplayTagCountContainer>(source);
 
 					auto& target_spec_entities = GameplayEffectUtility::GetGameplayEffectSpecEntitiesByOwner(registry,spec.target);
 
-					if (HasApplicationImmunity(target_spec_entities, source_tags))
+					if (HasApplicationImmunity(target_spec_entities, source_tag_count))
 					{
 						continue;
 					}
 
-					if (!CheckApplicationTagRequirements(ge,target_tags))
+					if (!CheckApplicationTagRequirements(ge, target_tag_count))
 					{
 						continue;
 					}
@@ -141,17 +109,13 @@ struct ApplyGameplayEffectSystem : public System
 					GameplayEffectUtility::ApplyExecutions(registry, spec);
 					GameplayEffectUtility::ApplyModifiers(registry, spec);
 
-					bool need_update_gameplay_tags = false;
 					if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
 						ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
 					{
-						need_update_gameplay_tags = ApplyGameEffectToTarget(spec, ge, target_spec_entities);
+						ApplyGameEffectToTarget(target,spec, ge, target_spec_entities);
 					}
-					need_update_gameplay_tags |= RemoveGameplayEffectsWithTags(ge, target_spec_entities);
-					if (need_update_gameplay_tags)
-					{
-						GameplayEffectUtility::UpdateGameplayTag(registry,target);
-					}
+
+					RemoveGameplayEffectsWithTags(target,ge,target_spec_entities);
 					
 					// todo:
 					if (overflow_effects.size() > 0)
@@ -159,16 +123,15 @@ struct ApplyGameplayEffectSystem : public System
 
 					}
 				}
-				
 			}
 
 			apply_ge->value.clear();
 		}		
 	}
 
-	bool ApplyGameEffectToTarget(GameplayEffectSpec& spec,const GameplayEffect& ge,std::vector<entt::entity>& target_spec_entities)
+	void ApplyGameEffectToTarget(entt::entity target,GameplayEffectSpec& spec,const GameplayEffect& ge,std::vector<entt::entity>& target_spec_entities)
 	{		
-		bool need_update_gameply_tag = false;
+		bool apply_instance = false;
 		bool stacking = false;
 
 		if (ge.stacking.stacking_type != GameplayEffect::StackingType::None)
@@ -231,22 +194,24 @@ struct ApplyGameplayEffectSystem : public System
 
 		if (!stacking)
 		{
-			need_update_gameply_tag = (!ge.tag.granted_tags.Empty() || !spec.dynamic_granted_tags.Empty());
-
+			registry.patch<GameplayTagCountContainer>(target, [&ge,&spec](GameplayTagCountContainer& tag_count)
+				{
+					tag_count.UpdateTagCount(ge.tag.granted_tags,1);
+					tag_count.UpdateTagCount(spec.dynamic_granted_tags,1);
+				});
+			
 			auto e = registry.create_predict(registry.get(spec.target));
 			registry.emplace<GameplayEffectSpec>(e,std::move(spec));
 			target_spec_entities.push_back(e);
+
 			// todo 赋予技能
 		}
 
 		//添加cue
-
-		return need_update_gameply_tag;
 	}
 
-	bool RemoveGameplayEffectsWithTags(const GameplayEffect& ge,const std::vector<entt::entity>& target_spec_entities)
+	void RemoveGameplayEffectsWithTags(entt::entity target,const GameplayEffect& ge,const std::vector<entt::entity>& target_spec_entities)
 	{
-		bool need_update_gameply_tag = false;
 		auto& ge_manager = registry.ctx<GameplayEffectManager>();
 
 		for (auto e : target_spec_entities)
@@ -255,12 +220,9 @@ struct ApplyGameplayEffectSystem : public System
 			auto& act_ge = ge_manager.LoadGameplayEffect(act_sepc.effect);
 			if (act_ge.tag.gameplay_effect_asset_tags.HasAny(ge.tag.remove_gameplay_effects_with_tags))
 			{
-				need_update_gameply_tag = true;
-				registry.emplace<Destory>(e);
+				GameplayEffectUtility::RemoveGameplayEffectForTarget(registry,target,e);
 			}
 		}
-
-		return need_update_gameply_tag;
 	}
 
 	void Finalize() override

@@ -89,16 +89,40 @@ inline void RegisterWeapon(sol::state& lua)
 
 inline void RegisterGameplayTag(sol::state& lua)
 {
-	auto type = lua.new_usertype<GameplayTag>("GameplayTag", sol::constructors<GameplayTag(const std::string&), GameplayTag(const GameplayTag&)>());
-	type["tag"] = &GameplayTag::tag;
-	type["Contain"] = &GameplayTag::Contain;
+	auto type = lua.new_usertype<GameplayTag>("GameplayTag", sol::constructors<GameplayTag(uint64_t), GameplayTag(const GameplayTag&)>());
+	type["value"] = &GameplayTag::value;
+	type["Matching"] = &GameplayTag::Matching;
+	type["MatchingExact"] = &GameplayTag::MatchingExact;
+}
 
-	auto type2 = lua.new_usertype<GameplayTagArray>("GameplayTagArray");
-	type2["Push"] = &GameplayTagArray::Push;
-	type2["Clear"] = &GameplayTagArray::Clear;
-	type2["Find"] = &GameplayTagArray::Find;
-	type2["HasAll"] = &GameplayTagArray::HasAll;
-	type2["HasAny"] = &GameplayTagArray::HasAny;
+inline void RegisterGameplayTagArray(sol::state& lua)
+{
+	auto type = lua.new_usertype<GameplayTagArray>("GameplayTagArray");
+	type["Push"] = &GameplayTagArray::Push;
+	type["Clear"] = &GameplayTagArray::Clear;
+	type["HasTag"] = &GameplayTagArray::HasTag;
+	type["HasTagExact"] = &GameplayTagArray::HasTagExact;
+	type["HasAll"] = &GameplayTagArray::HasAll;
+	type["HasAllExact"] = &GameplayTagArray::HasAllExact;
+	type["HasAny"] = &GameplayTagArray::HasAny;
+	type["HasAnyExact"] = &GameplayTagArray::HasAnyExact;
+}
+
+inline void RegisterGameplayTagCountContainer(sol::state& lua)
+{
+	auto type = lua.new_usertype<GameplayTagCountContainer>("GameplayTagCountContainer");
+	type["GetExplicitGameplayTags"] = &GameplayTagCountContainer::GetExplicitGameplayTags;
+	type["GetTagCount"] = &GameplayTagCountContainer::GetTagCount;
+	type["HasTag"] = &GameplayTagCountContainer::HasTag;
+	type["HasTagExact"] = &GameplayTagCountContainer::HasTagExact;
+	type["HasAll"] = &GameplayTagCountContainer::HasAll;
+	type["HasAny"] = &GameplayTagCountContainer::HasAny;
+	type["SetTagCount"] = &GameplayTagCountContainer::SetTagCount;
+
+	//todo:
+	auto UpdateTagCount1 = std::bind((void(GameplayTagCountContainer::*)(const GameplayTag&, int32_t)) & GameplayTagCountContainer::UpdateTagCount, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	auto UpdateTagCount2 = std::bind((void(GameplayTagCountContainer::*)(const GameplayTagArray&, int32_t)) & GameplayTagCountContainer::UpdateTagCount, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	//type["UpdateTagCount"] = sol::overload(UpdateTagCount1,UpdateTagCount2);
 }
 
 inline void RegisterGameplayEffect(sol::state& lua)
@@ -279,9 +303,8 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		task.value.erase(key.data());
 	};
 
-	lua["GameplayWaitEvent"] = [&registry](entt::entity ability,std::string_view tag_name,std::string_view handler)
+	lua["GameplayWaitEvent"] = [&registry](entt::entity ability,const GameplayTag& tag,std::string_view handler)
 	{
-		GameplayTag tag(tag_name);
 		auto& task = registry.get_or_emplace<GameplayWaitEventTask>(ability);
 		task.value.emplace(tag, GameplayWaitEventSpec(tag,handler));
 	};

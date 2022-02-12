@@ -3,7 +3,6 @@
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Component/GameState.hpp"
-#include "Framework/Game/Component/GAS/GameplayTags.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 
@@ -34,11 +33,8 @@ struct GameplayStateSystem : public System
 			auto& [gameplay_state,attribute_set] = view.get<GameplayState,GameplayAttributeSet>(e);
 			gameplay_state.attribute_sets[run_frame % gameplay_state.attribute_sets.size()] = attribute_set;
 			
-			auto tags = registry.try_get<GameplayTags>(e);
-			if (tags)
-			{
-				gameplay_state.tags[run_frame % gameplay_state.tags.size()] = *tags;
-			}
+			auto& tag_count = registry.get<GameplayTagCountContainer>(e);
+			gameplay_state.tag_counts[run_frame % gameplay_state.tag_counts.size()] = tag_count;
 		}
 	}
 

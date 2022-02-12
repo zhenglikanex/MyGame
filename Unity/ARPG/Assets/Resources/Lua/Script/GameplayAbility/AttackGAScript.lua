@@ -12,8 +12,6 @@ function AttackGAScript:ActiveAbility()
     self:StartHitTest()
 
     GameplayPlayAnimAndWait(self.entity,"skill100010","AnimCompleted","AnimCanceled")
-    GameplayWaitEvent(self.entity,"GA.StartInputTask","OnStartInputTask")
-    GameplayWaitEvent(self.entity,"GA.OverInputTask","OnOverInputTask")
 end
 
 function AttackGAScript:StartHitTest()

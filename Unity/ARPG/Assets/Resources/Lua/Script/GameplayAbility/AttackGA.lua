@@ -14,7 +14,7 @@ local AttackGA = {
 	target_blocked_tags = {},
 
 	cooldown_duration = 20,
-	cooldown_tags = { "Cooldown.AttackGA" },
+	cooldown_tags = { },
 }
 
 return AttackGA

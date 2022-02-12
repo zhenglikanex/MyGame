@@ -153,7 +153,7 @@ struct ClientSyncSystem : public System
 			auto& unique_id = view2.get<UniqueId>(e);
 			auto& gameplay_state = view2.get<GameplayState>(e);
 
-			auto tag_it = frame_data.tags.find(unique_id);
+			auto tag_it = frame_data.tag_counts.find(unique_id);
 			auto attribute_set_it = frame_data.attribute_sets.find(unique_id);
 
 			if (attribute_set_it == frame_data.attribute_sets.end())
@@ -161,17 +161,13 @@ struct ClientSyncSystem : public System
 				return true;
 			}
 
+			// todo:怎么处理这里的浮点数?
 			if (attribute_set_it->second.value != gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()].value)
 			{
 				return true;
 			}
 
-			if (tag_it == frame_data.tags.end() && !gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()].tags.Empty())
-			{
-				return true;
-			}
-
-			if (tag_it != frame_data.tags.end() && tag_it->second.tags != gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()].tags)
+			if (tag_it != frame_data.tag_counts.end() && tag_it->second != gameplay_state.tag_counts[frame_data.frame % gameplay_state.tag_counts.size()])
 			{
 				return true;
 			}
@@ -330,7 +326,7 @@ struct ClientSyncSystem : public System
 			registry.emplace_or_replace<GameplayAttributeSet>(e, item.second);
 		}
 
-		for (auto& item : frame_data.tags)
+		for (auto& item : frame_data.tag_counts)
 		{
 			if (unique_map.value.find(item.first) == unique_map.value.end())
 			{
@@ -341,7 +337,7 @@ struct ClientSyncSystem : public System
 			auto e = unique_map.value[item.first];
 			if (is_need_rollback || !registry.all_of<GameplayState>(e))
 			{
-				registry.emplace_or_replace<GameplayTags>(e, item.second);
+				registry.emplace_or_replace<GameplayTagCountContainer>(e, item.second);
 			}
 		}
 
@@ -382,7 +378,6 @@ struct ClientSyncSystem : public System
 			if (it != unique_map.value.end())
 			{
 				entt::entity e = it->second;
-				registry.get_or_emplace<>()
 				if (!registry.all_of<Destory>(e))
 				{
 					registry.emplace<Destory>(e);
@@ -473,11 +468,8 @@ struct ClientSyncSystem : public System
 				auto& [gameplay_state, attribute_set] = view.get<GameplayState, GameplayAttributeSet>(e);
 				gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()] = attribute_set;
 
-				auto tags = registry.try_get<GameplayTags>(e);
-				if (tags)
-				{
-					gameplay_state.tags[frame_data.frame % gameplay_state.tags.size()] = *tags;
-				}
+				auto& tag_count = registry.get<GameplayTagCountContainer>(e);
+				gameplay_state.tag_counts[frame_data.frame % gameplay_state.tag_counts.size()] = tag_count;
 			}
 
 			auto& state = registry.ctx<SyncInstanceState>();

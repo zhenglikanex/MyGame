@@ -21,7 +21,6 @@ public:
 
 	void FixedUpdate(float dt) override
 	{
-		
 		// 缓存下当帧销毁的entity,将在销毁中被销毁的关联对象移到下一帧销毁
 		auto view = registry.view<Destory>();
 		std::vector<entt::entity> entities;
@@ -37,10 +36,22 @@ public:
 
 	void DestoryGameplayAbility()
 	{
+		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 		auto view = registry.view<GameplayAbilitySpec,Destory>();
 		for (auto e : view)
 		{
 			auto& spec = view.get<GameplayAbilitySpec>(e);
+			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);
+
+			auto source = registry.get(spec.source);
+			if (source != entt::null)
+			{
+				registry.patch<GameplayTagCountContainer>(source,[&ga](GameplayTagCountContainer tag_count)
+					{
+						tag_count.UpdateTagCount(ga.activation_owned_tags, -1);
+					});
+			}
+
 			for (auto& item : spec.entity_manager)
 			{
 				auto e = registry.get(item.second);

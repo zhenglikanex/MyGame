@@ -6,7 +6,6 @@
 
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
-#include "Framework/Game/Component/GAS/GameplayTags.hpp"
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 
@@ -14,7 +13,6 @@
 
 struct GameplayEffectSystem : public System
 {
-
 	GameplayEffectSystem(Registry& _registry) : System(_registry) { }
 	~GameplayEffectSystem() {}
 
@@ -71,8 +69,6 @@ struct GameplayEffectSystem : public System
 				else
 				{
 					registry.emplace<Destory>(e);
-
-					GameplayEffectUtility::UpdateGameplayTag(registry, target);
 				}
 			}
 		}
@@ -80,19 +76,8 @@ struct GameplayEffectSystem : public System
 
 	bool CheckOngoingTagRequirements(entt::entity target,const GameplayEffect& ge)
 	{
-		auto tags = registry.try_get<GameplayTags>(target);
-
-		if(!tags && !ge.tag.application_tag_requirements.require_tags.Empty())
-		{
-			return false;
-		}
-
-		if (!tags)
-		{
-			return true;
-		}
-
-		return tags->tags.HasAll(ge.tag.application_tag_requirements.require_tags) && !tags->tags.HasAny(ge.tag.application_tag_requirements.ignore_tags);
+		auto& tag_count = registry.get<GameplayTagCountContainer>(target);
+		return tag_count.HasAll(ge.tag.application_tag_requirements.require_tags) && !tag_count.HasAny(ge.tag.application_tag_requirements.ignore_tags);
 	}
 
 	void Finalize() override

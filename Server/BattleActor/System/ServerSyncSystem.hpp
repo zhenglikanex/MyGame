@@ -183,11 +183,11 @@ struct ServerSyncSystem : public System
 				frame_data.attribute_sets.emplace(unique_id, attribute_set);
 			}
 
-			auto view4 = registry.view<UniqueId, GameplayTags>();
+			auto view4 = registry.view<UniqueId, GameplayTagCountContainer>();
 			for (auto e : view4)
 			{
-				auto&[unique_id, tags] = view4.get<UniqueId, GameplayTags>(e);
-				frame_data.tags.emplace(unique_id, tags);
+				auto&[unique_id, tags] = view4.get<UniqueId, GameplayTagCountContainer>(e);
+				frame_data.tag_counts.emplace(unique_id, tags);
 			}
 
 			auto view5 = registry.view<UniqueId, GameplayEffectSpec>();

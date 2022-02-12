@@ -32,7 +32,7 @@ std::vector<std::string> Split(std::string_view strv,std::string_view delims = "
 	return tokens;
 }
 
-std::string GenTagName(const std::vector<std::string>& tokens,size_t size)
+std::string GenTagName(const std::vector<std::string>& tokens,int size)
 {
 	std::string name = "k";
 	for (int i = 0; i < size; ++i)
@@ -47,27 +47,27 @@ void OutCPulsPuls(const std::string& enums)
 {
 	std::string head = 
 R"(#pragma once
+#include "Framework/Game/GAS/GameplayTag.hpp"
 
-enum class GameplayTagEnums : uint64_t
+namespace GameplayTagDefine
 {
 	)";
 
 	
-	std::ofstream out("Framework/Game/GAS/GameplayTagEnums.hpp", std::ios_base::out);
+	std::ofstream out("Framework/Game/GAS/GameplayTagDefine.hpp", std::ios_base::out);
 	out << head + enums + "\n};";
-
 }
 
 void OutLua(const std::string& enums)
 {
 	std::string head =
-		R"(GameplayTagEnums = 
+		R"(GameplayTagDefine = 
 {
 	)";
 
 
-	std::ofstream out("Asset/Lua/GAS/GameplayTagEnums.lua", std::ios_base::out);
-	out << head + enums + "\n};";
+	std::ofstream out("Asset/Lua/Script/GAS/GameplayTagDefine.lua", std::ios_base::out);
+	out << head + enums + "\n};\nreturn";
 
 }
 
@@ -107,7 +107,7 @@ int main()
 
 		for (auto i = 0; i < tokens.size(); ++i)
 		{
-			uint8_t sub_value = 0;
+			uint64_t sub_value = 0;
 
 			auto& id_map = id_map_array[i];
 			auto it = id_map.find(tokens[i]);
@@ -122,7 +122,15 @@ int main()
 
 				if (sub_value > 255)
 				{
-					std::cout << line << " " << tokens[i - 1] << ":" << "该层级的大于255" << std::endl;
+					if (i > 0)
+					{
+						auto v = i - 1;
+						std::cout << line << " " << tokens[v] << ":" << "该层级的大于255" << std::endl;
+					}
+					else
+					{
+						std::cout << "顶层该层级的大于255" << std::endl;
+					}
 				}
 			}
 
@@ -151,18 +159,31 @@ int main()
 	}
 
 	
-
-	std::string enums;
-
-	int num = 0;
-	for (auto& name : order)
 	{
-		++num;
-		enums = enums + name + "=" + std::to_string(tag_map[name]) + (order.size() == num ? "" : ",\n\t");
+		std::string enums;
+
+		int num = 0;
+		for (auto& name : order)
+		{
+			++num;
+			enums = enums + "const GameplayTag " + name + " = " + "GameplayTag(" + std::to_string(tag_map[name]) + ")" + ";\n\t";
+		}
+
+		OutCPulsPuls(enums);
 	}
 
-	OutCPulsPuls(enums);
-	OutLua(enums);
+	{
+		std::string enums;
+
+		int num = 0;
+		for (auto& name : order)
+		{
+			++num;
+			enums = enums + name + " = " + "GameplayTag.new(" + std::to_string(tag_map[name]) + ")" + ",\n\t";
+		}
+		OutLua(enums);
+	}
+	
 	return 0;
 }
 
