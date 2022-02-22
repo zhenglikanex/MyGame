@@ -28,13 +28,21 @@ struct GameplayAbilitySystem : public System
 			auto& [local, spec] = view.get<Local, GameplayAbilitySpec>(e);
 
 			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);
-			sol::table instance = ga.script["new"](e, local, spec);
-			auto& script = registry.emplace<GameplayAbilityScript>(e, instance);
-
-			if (!spec.activation)
+			if (ga.script)
 			{
-				spec.activation = true;
-				script.value["ActiveAbility"](script.value);
+				sol::table instance = ga.script["new"](e);
+				auto& script = registry.emplace<GameplayAbilityScript>(e, instance);
+
+				if (!spec.activation)
+				{
+					spec.activation = true;
+					script.value["ActiveAbility"](script.value);
+				}
+			} 
+			else
+			{
+				registry.emplace<Destory>(e);
+				assert("LoadGameplayAbilityFailed!" && false);
 			}
 		}
 	}

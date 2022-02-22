@@ -33,6 +33,7 @@ public class ConfigAnimationClip
 
 public class ConfigAnimation
 {
+    public string default_clip;
     public Dictionary<string, ConfigAnimationClip> clips = new Dictionary<string, ConfigAnimationClip>();
 }
 

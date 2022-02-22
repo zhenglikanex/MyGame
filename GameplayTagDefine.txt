@@ -1,12 +1,21 @@
 Ability.Jump
-Ability.Jump
+Ability.DoubleJump
 Ability.Sprint
 Ability.Roll
 Ability.MeleeAttack
+Ability.MeleeAttack.Light.A
+Ability.MeleeAttack.Light.B
+Ability.MeleeAttack.Light.C
+Ability.MeleeAttack.Heavy.A
+Ability.MeleeAttack.Heavy.B
+Ability.MeleeAttack.Heavy.C
+Ability.MeleeAttack.Heavy.D
+Ability.MeleeAttack.Dash.Light
+Ability.MeleeAttack.Dash.Heavy
+Ability.MeleeAttack.Jump.A
 
-State.Idle
+State.BlockMove
 State.Grounded
-State.Flying
 State.Attack
 State.Jump
 State.Roll
@@ -15,3 +24,10 @@ State.Hurt.Normal
 State.Hurt.Floating
 State.Hurt.KnockBack
 State.Hurt.Flying
+State.MeleeAttack.Light.A
+State.MeleeAttack.Light.B
+State.MeleeAttack.Light.C
+State.MeleeAttack.Heavy.A
+State.MeleeAttack.Heavy.B
+State.MeleeAttack.Heavy.C
+State.MeleeAttack.Heavy.D

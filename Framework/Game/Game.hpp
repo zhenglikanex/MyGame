@@ -29,7 +29,7 @@ public:
 	Game(Locator&& locator,std::vector<PlayerInfo>&& players);
 	~Game();
 
-	bool Initialize();
+	bool Initialize(uint32_t start_time);
 	void Update(float dt);
 	void Finalize();
 	
@@ -40,7 +40,6 @@ public:
 	void InputCommand(uint32_t frame,uint32_t id,const Command& command);
 	uint32_t GetVerifiedFrame() const;
 
-	void set_start_time(uint32_t start_time) { start_time_ = start_time; }
 	uint32_t start_time() const { return start_time_; }
 	float run_time() const { return run_time_; }
 	uint32_t run_frame() const { return run_frame_; }

@@ -25,6 +25,8 @@ struct FrameData
 	uint32_t frame;
 	uint32_t local_id;
 	uint32_t local_num;
+	
+	// local
 	std::unordered_map<Local, UniqueId> unique_ids;
 	std::unordered_map<Local, MovementForward> movement_forwards;
 	std::unordered_map<Local, CharacterMovement> character_movements;
@@ -33,6 +35,9 @@ struct FrameData
 	std::unordered_map<Local, GameplayPlayAnimAndWaitTask> play_anim_and_wait_tasks;
 	std::unordered_map<Local, GameplayInputTask> input_tasks;
 	std::unordered_map<Local, GameplayHitTestTask> hit_test_tasks;
+	std::vector<Local> ignore_gravity_tags;
+
+	// unique
 	std::unordered_map<UniqueId, Player> players;
 	std::unordered_map<UniqueId, ActorAsset> actor_assets;
 	std::unordered_map<UniqueId, ViewAsset> view_assets;
@@ -52,16 +57,21 @@ NON_MEMEBER_BAR(FrameData,
 	obj.local_num,
 	obj.unique_ids,
 	obj.movement_forwards,
+	obj.character_movements,
+	obj.infinite_modifier_attribute_sets,
+	obj.wait_tasks,
+	obj.play_anim_and_wait_tasks,
+	obj.input_tasks,
+	obj.hit_test_tasks,
+	obj.ignore_gravity_tags,
 	obj.players,
 	obj.actor_assets,
 	obj.view_assets,
 	obj.transforms,
 	obj.animation_clips,
-	obj.character_movements,
 	obj.attribute_sets,
 	obj.tag_counts,
 	obj.ability_specs,
 	obj.effect_specs,
-	obj.wait_tasks,
 	obj.destorys,
 	obj.modifier_attributes);

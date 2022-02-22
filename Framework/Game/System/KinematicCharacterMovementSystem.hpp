@@ -88,7 +88,7 @@ struct KinematicCharacterMovementSystem : public System
 
 	void FixedUpdate(float dt) override
 	{
-		INFO("kcc update")
+		INFO("kcc update");
 		UpdatePhase1(dt);
 		//
 		UpdatePhase2(dt);
@@ -105,6 +105,7 @@ struct KinematicCharacterMovementSystem : public System
 			auto&[transform, movement, character,collider, physics_actor] = 
 				view.get<Transform, CharacterMovement, Character,Collider, PhysicsActor>(e);
 			
+			e_ = e;
 			character_ = &character;
 			character_movement_ = &movement;
 
@@ -573,7 +574,7 @@ struct KinematicCharacterMovementSystem : public System
 
 	void UpdateVelocity(vec3& current_velocity,float dt)
 	{
-		if (character_movement_->grounding_status.is_stable_on_ground)
+		if (character_movement_->grounding_status.is_stable_on_ground && !registry.all_of<IgnoreGravity>(e_))
 		{
 			// Reorient source velocity on current ground slope (this is because we don't want our smoothing to cause any velocity losses in slope changes)
 			current_velocity = GetDirectionTangentToSurface(current_velocity, character_movement_->grounding_status.ground_normal) * glm::length(current_velocity);
@@ -590,8 +591,11 @@ struct KinematicCharacterMovementSystem : public System
 			}
 			
 			// Gravity
-			current_velocity.y += -30.f * dt;
-
+			if(!registry.all_of<IgnoreGravity>(e_))
+			{
+				current_velocity.y += -100.f * dt;
+			}
+			
 			// Drag
 			//currentVelocity *= (1f / (1f + (Drag * deltaTime)));
 			current_velocity *= (1.f / (1.f + 0.1 * dt));
@@ -1691,6 +1695,7 @@ private:
 	std::array<OverlapResult, kMaxRigidbodyOverlapsCount> overlaps_;
 
 	// 缓存当前控制的角色信息
+	entt::entity e_;
 	Character* character_;
 	CharacterMovement* character_movement_;
 	PxCapsuleGeometry px_caspule_;

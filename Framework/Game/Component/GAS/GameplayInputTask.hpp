@@ -10,7 +10,6 @@ struct GameplayInputSpec
 	std::string key;
 	std::string pressed;
 	std::string released;
-	bool is_pressed;
 
 	GameplayInputSpec() = default;
 
@@ -18,13 +17,12 @@ struct GameplayInputSpec
 		: key(_key)
 		, pressed(_pressed)
 		, released(_released)
-		, is_pressed(false)
 	{
 
 	}
 };
 
-NON_MEMEBER_BAR(GameplayInputSpec,obj.key,obj.pressed)
+NON_MEMEBER_BAR(GameplayInputSpec,obj.key,obj.pressed,obj.released)
 
 struct GameplayInputTask
 {

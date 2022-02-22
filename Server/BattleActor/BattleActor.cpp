@@ -70,7 +70,7 @@ void BattleActor::StartBattle(const std::any& data)
 	{
 		auto player_info = player_infos.add_player_infos();
 		player_info->set_id(ids_[player]);
-		player_info->set_actor_asset("hero.json");
+		player_info->set_actor_asset("SuperHero.json");
 	}
 
 	auto start_time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
@@ -82,7 +82,7 @@ void BattleActor::StartBattle(const std::any& data)
 		auto player_infos = info.mutable_player_infos();
 		auto player_info = player_infos->add_player_infos();
 		player_info->set_id(ids_[player]);
-		player_info->set_actor_asset("hero.json");
+		player_info->set_actor_asset("SuperHero.json");
 
 		info.set_start_time(start_time);
 
@@ -111,8 +111,11 @@ void BattleActor::StartBattle(const std::any& data)
 		std::bind(&BattleActor::SendGameMessage, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
 	
 	game_ = std::make_unique<Game>(std::move(locator),std::move(players));
-	game_->Initialize();
-	game_->set_start_time(start_time);
+	if (!game_->Initialize(start_time))
+	{
+		g_game->Finalize();
+		game_ = nullptr;
+	}
 
 	AddTimer(1, -1, [this]()
 		{
@@ -122,7 +125,10 @@ void BattleActor::StartBattle(const std::any& data)
 
 void BattleActor::Update()
 {
-	game_->Update(0);
+	if (game_)
+	{
+		game_->Update(0);
+	}
 }
 
 void BattleActor::InputCommand(const std::any& data)

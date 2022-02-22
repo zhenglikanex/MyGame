@@ -4,14 +4,15 @@ using UnityEngine;
 using Google.Protobuf;
 using System;
 
+enum KeyStatus
+{
+    kDown,
+    kUp
+}
+
 public class BattleController : SceneGameObjectSingleton<BattleController>
 {
     public uint MyId { get; set; }
-    public bool JDown { get; set; }
-
-    public bool KDown { get; set; }
-
-    public bool LDown { get; set; }
 
     public bool IsBattleing
     {
@@ -19,11 +20,56 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
         set;
     }
 
+    private Dictionary<KeyCode, List<string>> abilityBindInfos = new Dictionary<KeyCode, List<string>>();
+    private Dictionary<KeyCode, KeyStatus> keyStatusDic = new Dictionary<KeyCode, KeyStatus>();
+
     void Awake()
     {
         IsBattleing = false;
 
         UIManager.Instance.OpenUI<DlgGame>();
+
+        
+        {
+            List<string> abilities = new List<string>();
+            abilities.Add("GA_Roll");
+            abilityBindInfos.Add(KeyCode.LeftControl, abilities);
+        }
+
+        {
+            List<string> abilities = new List<string>();
+            abilities.Add("GA_Jump");
+            abilities.Add("GA_DoubleJump");
+            abilityBindInfos.Add(KeyCode.Space, abilities);
+        }
+
+        {
+            List<string> abilities = new List<string>();
+            abilities.Add("GA_Sprint");
+            abilityBindInfos.Add(KeyCode.LeftShift, abilities);
+        }
+
+        {
+            List<string> abilities = new List<string>();
+            abilities.Add("GA_LightAttackA");
+            abilities.Add("GA_LightAttackB");
+            abilities.Add("GA_LightAttackC");
+            abilities.Add("GA_DashLightAttack");
+            abilities.Add("GA_JumpAttackA");
+            abilities.Add("GA_JumpAttackB");
+            abilities.Add("GA_JumpAttackC");
+            abilityBindInfos.Add(KeyCode.J, abilities);
+        }
+
+        {
+            List<string> abilities = new List<string>();
+            abilities.Add("GA_HeavyAttackA");
+            abilities.Add("GA_HeavyAttackB");
+            abilities.Add("GA_HeavyAttackC");
+            abilities.Add("GA_HeavyAttackD");
+            abilities.Add("GA_DashHeavyAttack");
+            abilityBindInfos.Add(KeyCode.K, abilities);
+        }
     }
 
     // Start is called before the first frame update
@@ -37,27 +83,20 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
     {
         if(IsBattleing)
         {
-            if (Input.GetKeyDown("r"))
-            {
-                CPlusPlusBridge.GameRollback();
-            }
-
             //Debug.Log(string.Format("deltaTime {0}", Time.deltaTime));
             CPlusPlusBridge.UpdateGame(Time.deltaTime / 10);
 
-            if(!JDown)
+            foreach(var key in abilityBindInfos.Keys)
             {
-                JDown = Input.GetKeyDown("j");
-            }
+                if(Input.GetKeyDown(key))
+                {
+                    keyStatusDic.Add(key, KeyStatus.kDown);
+                }
 
-            if(!KDown)
-            {
-                KDown = Input.GetKeyDown("k");
-            }
-
-            if (!LDown)
-            {
-                LDown = Input.GetKeyDown("l");
+                if(Input.GetKeyUp(key))
+                {
+                    keyStatusDic.Add(key, KeyStatus.kUp);
+                }
             }
         }
     }
@@ -71,17 +110,6 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
     {
         if(!IsBattleing)
         {
-            //Proto.GamePlayerInfos player_infos = new Proto.GamePlayerInfos();
-            //for (uint i =0;i<40;++i)
-            //{
-            //    Proto.PlayerInfo player = new Proto.PlayerInfo();
-            //    player.Id = i;
-            //    player.ActorAsset = "hero.json";
-            //    player_infos.PlayerInfos.Add(player);
-            //}
-            //var data = player_infos.ToByteArray();
-            //CPlusPlusBridge.InitGame(data, data.Length);
-
             CPlusPlusBridge.JoinMatch();
 
             IsBattleing = true;
@@ -106,22 +134,19 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
             command.XAxis = Input.GetAxis("Horizontal");
             command.YAxis = Input.GetAxis("Vertical");
 
-            if (JDown)
+            foreach(var bindInfo in abilityBindInfos)
             {
-                command.Ability = "AttackGA";
-            }
-            if(KDown)
-            {
-                command.Ability = "LeiFaGA";
-            }
-            if(LDown)
-            {
-                command.Ability = "HuoQiuGA";
+                if(keyStatusDic.ContainsKey(bindInfo.Key))
+                {
+                    foreach(var ability in bindInfo.Value)
+                    {
+                        command.Abilities.Add(ability,(uint)keyStatusDic[bindInfo.Key]);
+                    }
+                }
             }
 
-            JDown = false;
-            KDown = false;
-            LDown = false;
+            keyStatusDic.Clear();
+
             var data = command.ToByteArray();
             CPlusPlusBridge.GameInput(data, data.Length);
         }

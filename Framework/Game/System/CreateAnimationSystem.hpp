@@ -2,6 +2,7 @@
 
 #include "Framework/Game/Component/AnimationAsset.hpp"
 #include "Framework/Game/Component/Animation.hpp"
+#include "Framework/Game/Component/AnimationClip.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -36,6 +37,10 @@ struct CreateAnimationSystem : System
 			auto& asset = view.get<AnimationAsset>(e);
 			auto& animation_info = GetAnimationInfo(asset.value);
 			registry.emplace<Animation>(e, &animation_info);
+			if (!registry.all_of<AnimationClip>(e) && animation_info.default_clip != "")
+			{
+				registry.emplace<AnimationClip>(e, animation_info.default_clip);
+			}
 		}
 	}
 

@@ -48,15 +48,15 @@ struct AnimationSystem : public System
 					{
 						animation_clip.is_done = true;
 					}
-				}
 
-				uint32_t frame = animation_clip.time / GameConfig::kFrameTime;
-				auto it = iter->second.anim_events_map.find(frame);
-				if (it != iter->second.anim_events_map.end())
-				{
-					for (auto& event : it->second)
+					uint32_t frame = animation_clip.time / GameConfig::kFrameTime;
+					auto it = iter->second.anim_events_map.find(frame);
+					if (it != iter->second.anim_events_map.end())
 					{
-						AnimEventUtility::SendAnimEvent(registry, e, event.name);
+						for (auto& event : it->second)
+						{
+							AnimEventUtility::SendAnimEvent(registry, e, event.name);
+						}
 					}
 				}
 			}

@@ -9,18 +9,19 @@
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/Fmt.hpp"
 
+#include "Framework/Game/GAS/GameplayTagDefine.hpp"
+#include "Framework/Game/GAS/GameplayTag.hpp"
+
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/ActorState.hpp"
 #include "Framework/Game/Component/Animation.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
-#include "Framework/Game/Component/Player.hpp"
 
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Utility/ActorStateUtility.hpp"
 #include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
-
 
 
 inline vec2 SquareToCircle(const vec2& input)
@@ -33,216 +34,10 @@ inline vec2 SquareToCircle(const vec2& input)
 	return output;
 }
 
-/*
- * 状态会在下一帧进行实际
- * OnEnter事件中不能进行状态切换
- */
-
 struct ActorControlSystem : public System
 {
-	struct State
-	{
-		Registry& registry;
-
-		State(Registry& _registry) : registry(_registry) {}
-		virtual ~State() = 0 {}
-
-		virtual ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation_clip, const Command& command)
-		{
-			return action_state.cur_state;
-		}
-
-		virtual void OnEnter(entt::entity e, const EnterActorState& action_state) { }
-		virtual void OnExit(entt::entity e, const ExitActorState& action_state) { }
-		virtual void OnUpdate(entt::entity e,const Command& command,const AnimationClip& animction_clip) { }
-	};
-
-	struct IdleState : State
-	{
-		IdleState(Registry& _registry) : State(_registry) {}
-
-		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation, const Command& command) override
-		{
-			if (command.ability != "")
-			{
-				GameplayAbilityUtility::TryGameplayAbility(registry, e, command.ability);
-
-				return ActorStateType::kAttack;
-			}
-
-			if (command.x_axis != 0.f || command.y_axis != 0.f)
-			{
-				return ActorStateType::kMovement;
-			}
-
-			return action_state.cur_state;
-		}
-
-		void OnEnter(entt::entity e, const EnterActorState& action_state) override
-		{
-			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
-		}
-
-		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override { }
-	};
-
-	struct MovementState : State
-	{
-		MovementState(Registry& _registry) : State(_registry) {}
-
-		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animation, const Command& command) override
-		{
-			if (command.ability != "")
-			{
-				GameplayAbilityUtility::TryGameplayAbility(registry, e, command.ability);
-
-				return ActorStateType::kAttack;
-			}
-
-			if (command.x_axis == 0.f && command.y_axis == 0.f)
-			{	
-				return ActorStateType::kIdle;
-			}
-
-			return action_state.cur_state;
-		}
-
-		void OnEnter(entt::entity e, const EnterActorState& action_state) override
-		{
-			
-		}
-
-		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override
-		{
-			vec2 input = SquareToCircle(vec2(command.x_axis, command.y_axis));
-
-			//旋转
-			auto forward = glm::normalize(vec3(input.x, 0.f, input.y));
-			registry.emplace_or_replace<MovementForward>(e, forward);
-
-			INFO("input {} id{} ", glm::length(input),registry.get<Player>(e).id);
-
-			// 移动
-			// 移动动画通过动画混合得到,这类动画数据的时候将混合参数作为key导出所有离散的动画数据	
-			// todo:存在浮点数问题,这里会四舍五入所有问题应该不是很大？
-			std::string name = fmt::format("{}|{:.1f}", GameConfig::ActionAnimation::kLocomotion,glm::length(input));
-			if (name == animction_clip.name)
-			{
-				return;
-			}
-
-			auto animation_clip = registry.try_get<AnimationClip>(e);
-			if (animation_clip && animation_clip->name.find(GameConfig::ActionAnimation::kLocomotion) != std::string::npos)
-			{
-				registry.replace<AnimationClip>(e, name,animation_clip->time);
-			}
-			else
-			{
-				registry.emplace_or_replace<AnimationClip>(e, name);
-			}
-		}
-	};
-
-	struct JumpState : State
-	{
-		JumpState(Registry& _registry) : State(_registry) {}
-
-		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animtion_clip, const Command& command) override
-		{
-			if (animtion_clip.is_done)
-			{
-				return ActorStateType::kIdle;
-			}
-
-			return action_state.cur_state;
-		}
-
-		void OnEnter(entt::entity e, const EnterActorState& action_state) override
-		{
-			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
-		}
-
-		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override { }
-	};
-
-	struct AttackState : State
-	{
-		AttackState(Registry& _registry) : State(_registry) {}
-
-		ActorStateType OnTransition(entt::entity e, const ActorState& action_state,  const AnimationClip& animtion_clip, const Command& command) override
-		{
-			if (animtion_clip.is_done)
-			{
-				return ActorStateType::kIdle;
-			}
-
-			return action_state.cur_state;
-		}
-
-		void OnEnter(entt::entity e, const EnterActorState& action_state) override
-		{
-			
-		}
-
-		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override 
-		{
-			
-		}
-	};
-
-	struct HurtState : State
-	{
-		HurtState(Registry& _registry) : State(_registry) {}
-
-		ActorStateType OnTransition(entt::entity e, const ActorState& action_state, const AnimationClip& animtion_clip, const Command& command) override
-		{
-			if (animtion_clip.is_done)
-			{
-				INFO("HurtState OnTransition kIdle");
-				return ActorStateType::kIdle;
-			}
-
-			INFO("HurtState OnTransition cur_state");
-
-			return action_state.cur_state;
-		}
-
-		void OnEnter(entt::entity e, const EnterActorState& action_state) override
-		{
-			INFO("OnEnter Hurt");
-
-			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kHurt);
-		}
-
-		void OnUpdate(entt::entity e, const Command& command, const AnimationClip& animction_clip) override 
-		{ 
-			INFO("OnUpdate HurtState");
-		}
-	};
-
-	struct DeathState : State
-	{
-		DeathState(Registry& _registry) : State(_registry) {}
-
-		void OnEnter(entt::entity e, const EnterActorState& action_state) override
-		{
-			registry.emplace_or_replace<AnimationClip>(e, GameConfig::ActionAnimation::kDeath);
-		}
-
-		void OnUpdate(entt::entity e, const Command& command,const AnimationClip& animction_clip) override { }
-	};
-
-	std::array<std::unique_ptr<State>, (size_t)ActorStateType::kMax> states;
-
 	ActorControlSystem(Registry& _registry)
 		: System(_registry)
-		, states({
-			std::make_unique<IdleState>(registry),
-			std::make_unique<MovementState>(registry),
-			std::make_unique<JumpState>(registry),
-			std::make_unique<AttackState>(registry),
-			std::make_unique<HurtState>(registry),
-			std::make_unique<DeathState>(registry) })
 	{ }
 	~ActorControlSystem() {}
 
@@ -251,74 +46,93 @@ struct ActorControlSystem : public System
 		return true;
 	}
 
+	bool CanMove(const GameplayTagCountContainer& tag_count)
+	{
+		return !tag_count.HasTagExact(GameplayTagDefine::kStateBlockMove);
+	}
+	
+	bool CanTransIdle(const GameplayTagCountContainer& tag_count)
+	{
+		return !tag_count.HasTag(GameplayTagDefine::kState);
+	}
+
+	bool IsJump(const GameplayTagCountContainer& tag_count)
+	{
+		return tag_count.HasTag(GameplayTagDefine::kStateJump);
+	}
+
 	void FixedUpdate(float dt) override
 	{
-		OnTransition(dt);
-		OnExit();
-		OnEnter();
-
-		ProcessCurState(dt);
-
-		registry.clear<EnterActorState>();
-		registry.clear<ExitActorState>();
-	}
-
-	void OnTransition(float dt)
-	{
-		auto view = registry.view<ActorState,AnimationClip, Command>(entt::exclude<EnterActorState, ExitActorState>);
+		auto view = registry.view<GameplayTagCountContainer, AnimationClip, CharacterMovement, Command>();
 		for (auto e : view)
 		{
-			auto& action_state = view.get<ActorState>(e);
-			const auto& animation_clip = view.get<AnimationClip>(e);
-			const auto& command = view.get<Command>(e);
-
-			auto& executor = states[(size_t)action_state.cur_state];
-			auto next_state = executor->OnTransition(e, action_state,animation_clip, command);
-			ActionStateUtility::ChangeState(registry, e, next_state);
-		}
-	}
-
-	void OnExit()
-	{
-		auto view = registry.view<ExitActorState>();
-		for (auto e : view)
-		{
-			auto& exit_state = view.get<ExitActorState>(e);
-
-			auto& executor = states[(size_t)exit_state.value];
-			executor->OnExit(e, exit_state);
-		}
-	}
-
-	void OnEnter()
-	{
-		auto view = registry.view<EnterActorState>();
-		for (auto e : view)
-		{
-			auto& enter_state = view.get<EnterActorState>(e);
+			auto& [tag_count, animation_clip, character_movment,command] = view.get<GameplayTagCountContainer, AnimationClip,CharacterMovement,Command>(e);
 			
-			auto& executor = states[(size_t)enter_state.value];
-			executor->OnEnter(e,enter_state);
+			//自动转到空闲状态
+			if (animation_clip.is_done && animation_clip.name != GameConfig::ActionAnimation::kIdle)
+			{
+				registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
+			}
 
-			registry.emplace_or_replace<ActorState>(e, enter_state.value);
-		}
-	}
+			// 更新接地状态
+			if (character_movment.grounding_status.is_stable_on_ground)
+			{
+				tag_count.SetTagCount(GameplayTagDefine::kStateGrounded, 1);
+			}
+			else
+			{
+				tag_count.SetTagCount(GameplayTagDefine::kStateGrounded, 0);
+			}
 
-	void ProcessCurState(float dt)
-	{
-		auto view = registry.view<ActorState, Command, AnimationClip>();
-		for (auto e : view)
-		{
-			auto& action_state = view.get<ActorState>(e);
-			auto& command = view.get<Command>(e);
-			auto& animction_clip = view.get<AnimationClip>(e);
+			if ((command.x_axis != 0.f || command.y_axis != 0.f) && CanMove(tag_count))
+			{
+				vec2 input = SquareToCircle(vec2(command.x_axis, command.y_axis));
 
-			action_state.time += dt;
+				//旋转
+				auto forward = glm::normalize(vec3(input.x, 0.f, input.y));
+				registry.emplace_or_replace<MovementForward>(e, forward);
 
-			//INFO("process command x {} y {}", command.x_axis, command.y_axis);
+				// 移动
+				// 移动动画通过动画混合得到,这类动画数据的时候将混合参数作为key导出所有离散的动画数据
+				if (tag_count.HasTagExact(GameplayTagDefine::kStateSprint))
+				{
+					input *= 2;
+				}
 
-			auto& executor = states[(size_t)action_state.cur_state];
-			executor->OnUpdate(e, command, animction_clip);
+				std::string name = fmt::format("{}|{:.1f}", GameConfig::ActionAnimation::kLocomotion, glm::length(input));
+				if (name != animation_clip.name)
+				{
+					auto animation_clip = registry.try_get<AnimationClip>(e);
+					if (animation_clip && animation_clip->name.find(GameConfig::ActionAnimation::kLocomotion) != std::string::npos)
+					{
+						registry.replace<AnimationClip>(e, name, animation_clip->time);
+					}
+					else
+					{
+						registry.emplace_or_replace<AnimationClip>(e, name);
+					}
+				}
+			}
+
+			if (IsJump(tag_count))
+			{
+				if (!registry.all_of<IgnoreGravity>(e))
+				{
+					registry.emplace<IgnoreGravity>(e);
+				}
+			}
+			else
+			{
+				registry.remove<IgnoreGravity>(e);
+			}
+
+			for (auto& item : command.abilities)
+			{
+				if (item.second == AbilityStatus::kDown)
+				{
+					GameplayAbilityUtility::TryGameplayAbility(registry, e, item.first);
+				}
+			}
 		}
 	}
 

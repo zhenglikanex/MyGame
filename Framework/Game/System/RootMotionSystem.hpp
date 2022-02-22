@@ -22,38 +22,28 @@ struct RootMotionSystem : public System
 		for (auto e : view)
 		{
 			auto& animtion = view.get<Animation>(e);
-			auto& animtion_clip = view.get<AnimationClip>(e);
+			auto& animation_clip = view.get<AnimationClip>(e);
 
 			if (animtion.value)
 			{
-				auto iter = animtion.value->clips.find(animtion_clip.name);
+				auto iter = animtion.value->clips.find(animation_clip.name);
 				if (iter != animtion.value->clips.end())
 				{
-					auto it = std::find_if(iter->second.root_motions.crbegin(), iter->second.root_motions.crend(), [&animtion_clip](const RootMotion& root_motion)
-					{
-						return animtion_clip.time >= root_motion.time;
-					});
+					uint32_t frame = animation_clip.time / GameConfig::kFrameTime;
 
-					if (it != iter->second.root_motions.crend())
+					if (frame < iter->second.root_motions.size())
 					{
+						auto& root_motion = iter->second.root_motions[frame];
 						if (!registry.all_of<CharacterMovement>(e))
 						{
-							auto movement = registry.try_get<Movement>(e);
-							if (movement)
-							{
-								movement->velocity = it->velocity;
-								movement->angular_velocity = it->angular_velocity;
-							}
-							else
-							{
-								registry.emplace<Movement>(e,it->velocity, it->angular_velocity);
-							}
+							registry.emplace_or_replace<Movement>(e, root_motion.velocity, root_motion.angular_velocity);
 						}
 						else
 						{
 							auto& forward = registry.get<MovementForward>(e);
 							auto& character_movement = registry.get<CharacterMovement>(e);
-							character_movement.base_velocity = forward.value * it->velocity.z;
+							character_movement.base_velocity = forward.value * root_motion.velocity.z;
+							character_movement.base_velocity.y += root_motion.velocity.y;
 						}
 					}
 					else

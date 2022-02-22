@@ -1,5 +1,7 @@
 #define CATCH_CONFIG_MAIN
 
+#include <iostream>
+#include <bitset>
 #include "3rdparty/include/catch2/catch.hpp"
 #include "Framework/Game/GAS/GameplayTagDefine.hpp"
 
@@ -10,6 +12,8 @@ struct Test
 
 TEST_CASE_METHOD(Test, "GameplayTag")
 {
+	REQUIRE(!GameplayTagDefine::kAbilitySprint.Matching(GameplayTagDefine::kAbilityJump));
+
 	REQUIRE(GameplayTagDefine::kAbilityJump.Matching(GameplayTagDefine::kAbility));
 	REQUIRE(GameplayTagDefine::kAbility.Matching(GameplayTagDefine::kAbility));
 	REQUIRE(!GameplayTagDefine::kAbility.Matching(GameplayTagDefine::kAbilityJump));
@@ -17,12 +21,6 @@ TEST_CASE_METHOD(Test, "GameplayTag")
 	
 	REQUIRE(GameplayTagDefine::kAbilityJump.MatchingExact(GameplayTagDefine::kAbilityJump));
 	REQUIRE(!GameplayTagDefine::kAbilityJump.MatchingExact(GameplayTagDefine::kAbility));
-
-	REQUIRE((GameplayTagDefine::kAbility.value() >> 56) == 1);
-	REQUIRE(((GameplayTagDefine::kAbilityJump.value() >> 48) & 0xFF) == 1);
-	REQUIRE(((GameplayTagDefine::kAbilitySprint.value() >> 48) & 0xFF) == 2);
-	REQUIRE((GameplayTagDefine::kAbilityMeleeAttack.value() >> 56) == 1);
-	REQUIRE((GameplayTagDefine::kState.value() >> 56) == 2);
 }
 
 
@@ -101,7 +99,7 @@ TEST_CASE_METHOD(Test, "GameplayTagCountContainer")
 	REQUIRE(tag_count.HasAll({ GameplayTagDefine::kAbility, GameplayTagDefine::kState }));
 	REQUIRE(tag_count.HasAll({ GameplayTagDefine::kAbility,GameplayTagDefine::kStateJump}));
 	REQUIRE(tag_count.HasAll({}));
-	REQUIRE(!tag_count.HasAll({ GameplayTagDefine::kAbility,GameplayTagDefine::kStateFlying }));
+	//REQUIRE(!tag_count.HasAll({ GameplayTagDefine::kAbility,GameplayTagDefine::kStateFlying }));
 
 	REQUIRE(tag_count.HasAny({ GameplayTagDefine::kAbility,GameplayTagDefine::kAbilityMeleeAttack }));
 	REQUIRE(tag_count.HasAny({ GameplayTagDefine::kStateAttack,GameplayTagDefine::kAbilityMeleeAttack }));

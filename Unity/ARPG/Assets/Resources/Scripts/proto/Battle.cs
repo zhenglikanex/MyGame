@@ -27,30 +27,32 @@ namespace Proto {
             "DHBsYXllcl9pbmZvcxgBIAMoCzIRLlByb3RvLlBsYXllckluZm8iYgoPU3Rh",
             "cnRCYXR0bGVJbmZvEg0KBW15X2lkGAEgASgNEiwKDHBsYXllcl9pbmZvcxgC",
             "IAEoCzIWLlByb3RvLkdhbWVQbGF5ZXJJbmZvcxISCgpzdGFydF90aW1lGAMg",
-            "ASgNIkYKE0NTMkNQbHVzUGx1c0NvbW1hbmQSDgoGeF9heGlzGAEgASgCEg4K",
-            "BnlfYXhpcxgCIAEoAhIPCgdhYmlsaXR5GAMgASgJIk0KC0dhbWVDb21tYW5k",
-            "Eg4KBnhfYXhpcxgBIAEoBBIOCgZ5X2F4aXMYAiABKAQSDwoHYWJpbGl0eRgD",
-            "IAEoCRINCgVmcmFtZRgEIAEoDSKfAQoQR2FtZUNvbW1hbmRHcm91cBINCgVm",
-            "cmFtZRgBIAEoDRI3Cghjb21tYW5kcxgCIAMoCzIlLlByb3RvLkdhbWVDb21t",
-            "YW5kR3JvdXAuQ29tbWFuZHNFbnRyeRpDCg1Db21tYW5kc0VudHJ5EgsKA2tl",
-            "eRgBIAEoDRIhCgV2YWx1ZRgCIAEoCzISLlByb3RvLkdhbWVDb21tYW5kOgI4",
-            "ASInCgRWZWMzEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIjIK",
-            "BFF1YXQSCQoBeBgBIAEoAhIJCgF5GAIgASgCEgkKAXoYAyABKAISCQoBdxgE",
-            "IAEoAiJJCglUcmFuc2Zvcm0SHQoIcG9zaXRpb24YASABKAsyCy5Qcm90by5W",
-            "ZWMzEh0KCHJvdGF0aW9uGAIgASgLMgsuUHJvdG8uUXVhdCIwCglBY3RvckRh",
-            "dGESIwoJdHJhbnNmb3JtGAEgASgLMhAuUHJvdG8uVHJhbnNmb3JtIokBCglG",
-            "cmFtZURhdGESDQoFZnJhbWUYASABKA0SLAoGYWN0b3JzGAIgAygLMhwuUHJv",
-            "dG8uRnJhbWVEYXRhLkFjdG9yc0VudHJ5Gj8KC0FjdG9yc0VudHJ5EgsKA2tl",
-            "eRgBIAEoDRIfCgV2YWx1ZRgCIAEoCzIQLlByb3RvLkFjdG9yRGF0YToCOAEi",
-            "FAoEUGluZxIMCgR0aW1lGAEgASgNYgZwcm90bzM="));
+            "ASgNIqUBChNDUzJDUGx1c1BsdXNDb21tYW5kEg4KBnhfYXhpcxgBIAEoAhIO",
+            "CgZ5X2F4aXMYAiABKAISPAoJYWJpbGl0aWVzGAMgAygLMikuUHJvdG8uQ1My",
+            "Q1BsdXNQbHVzQ29tbWFuZC5BYmlsaXRpZXNFbnRyeRowCg5BYmlsaXRpZXNF",
+            "bnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKA06AjgBIk8KC0dhbWVD",
+            "b21tYW5kEg4KBnhfYXhpcxgBIAEoBBIOCgZ5X2F4aXMYAiABKAQSEQoJYWJp",
+            "bGl0aWVzGAMgAygJEg0KBWZyYW1lGAQgASgNIp8BChBHYW1lQ29tbWFuZEdy",
+            "b3VwEg0KBWZyYW1lGAEgASgNEjcKCGNvbW1hbmRzGAIgAygLMiUuUHJvdG8u",
+            "R2FtZUNvbW1hbmRHcm91cC5Db21tYW5kc0VudHJ5GkMKDUNvbW1hbmRzRW50",
+            "cnkSCwoDa2V5GAEgASgNEiEKBXZhbHVlGAIgASgLMhIuUHJvdG8uR2FtZUNv",
+            "bW1hbmQ6AjgBIicKBFZlYzMSCQoBeBgBIAEoAhIJCgF5GAIgASgCEgkKAXoY",
+            "AyABKAIiMgoEUXVhdBIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgDIAEo",
+            "AhIJCgF3GAQgASgCIkkKCVRyYW5zZm9ybRIdCghwb3NpdGlvbhgBIAEoCzIL",
+            "LlByb3RvLlZlYzMSHQoIcm90YXRpb24YAiABKAsyCy5Qcm90by5RdWF0IjAK",
+            "CUFjdG9yRGF0YRIjCgl0cmFuc2Zvcm0YASABKAsyEC5Qcm90by5UcmFuc2Zv",
+            "cm0iiQEKCUZyYW1lRGF0YRINCgVmcmFtZRgBIAEoDRIsCgZhY3RvcnMYAiAD",
+            "KAsyHC5Qcm90by5GcmFtZURhdGEuQWN0b3JzRW50cnkaPwoLQWN0b3JzRW50",
+            "cnkSCwoDa2V5GAEgASgNEh8KBXZhbHVlGAIgASgLMhAuUHJvdG8uQWN0b3JE",
+            "YXRhOgI4ASIUCgRQaW5nEgwKBHRpbWUYASABKA1iBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.PlayerInfo), global::Proto.PlayerInfo.Parser, new[]{ "Id", "ActorAsset" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GamePlayerInfos), global::Proto.GamePlayerInfos.Parser, new[]{ "PlayerInfos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.StartBattleInfo), global::Proto.StartBattleInfo.Parser, new[]{ "MyId", "PlayerInfos", "StartTime" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.CS2CPlusPlusCommand), global::Proto.CS2CPlusPlusCommand.Parser, new[]{ "XAxis", "YAxis", "Ability" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommand), global::Proto.GameCommand.Parser, new[]{ "XAxis", "YAxis", "Ability", "Frame" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.CS2CPlusPlusCommand), global::Proto.CS2CPlusPlusCommand.Parser, new[]{ "XAxis", "YAxis", "Abilities" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommand), global::Proto.GameCommand.Parser, new[]{ "XAxis", "YAxis", "Abilities", "Frame" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.GameCommandGroup), global::Proto.GameCommandGroup.Parser, new[]{ "Frame", "Commands" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Vec3), global::Proto.Vec3.Parser, new[]{ "X", "Y", "Z" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Quat), global::Proto.Quat.Parser, new[]{ "X", "Y", "Z", "W" }, null, null, null),
@@ -526,7 +528,7 @@ namespace Proto {
     public CS2CPlusPlusCommand(CS2CPlusPlusCommand other) : this() {
       xAxis_ = other.xAxis_;
       yAxis_ = other.yAxis_;
-      ability_ = other.ability_;
+      abilities_ = other.abilities_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -562,15 +564,14 @@ namespace Proto {
       }
     }
 
-    /// <summary>Field number for the "ability" field.</summary>
-    public const int AbilityFieldNumber = 3;
-    private string ability_ = "";
+    /// <summary>Field number for the "abilities" field.</summary>
+    public const int AbilitiesFieldNumber = 3;
+    private static readonly pbc::MapField<string, uint>.Codec _map_abilities_codec
+        = new pbc::MapField<string, uint>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForUInt32(16), 26);
+    private readonly pbc::MapField<string, uint> abilities_ = new pbc::MapField<string, uint>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Ability {
-      get { return ability_; }
-      set {
-        ability_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
+    public pbc::MapField<string, uint> Abilities {
+      get { return abilities_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -588,7 +589,7 @@ namespace Proto {
       }
       if (XAxis != other.XAxis) return false;
       if (YAxis != other.YAxis) return false;
-      if (Ability != other.Ability) return false;
+      if (!Abilities.Equals(other.Abilities)) return false;
       return true;
     }
 
@@ -597,7 +598,7 @@ namespace Proto {
       int hash = 1;
       if (XAxis != 0F) hash ^= XAxis.GetHashCode();
       if (YAxis != 0F) hash ^= YAxis.GetHashCode();
-      if (Ability.Length != 0) hash ^= Ability.GetHashCode();
+      hash ^= Abilities.GetHashCode();
       return hash;
     }
 
@@ -616,10 +617,7 @@ namespace Proto {
         output.WriteRawTag(21);
         output.WriteFloat(YAxis);
       }
-      if (Ability.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Ability);
-      }
+      abilities_.WriteTo(output, _map_abilities_codec);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -631,9 +629,7 @@ namespace Proto {
       if (YAxis != 0F) {
         size += 1 + 4;
       }
-      if (Ability.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Ability);
-      }
+      size += abilities_.CalculateSize(_map_abilities_codec);
       return size;
     }
 
@@ -648,9 +644,7 @@ namespace Proto {
       if (other.YAxis != 0F) {
         YAxis = other.YAxis;
       }
-      if (other.Ability.Length != 0) {
-        Ability = other.Ability;
-      }
+      abilities_.Add(other.abilities_);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -670,7 +664,7 @@ namespace Proto {
             break;
           }
           case 26: {
-            Ability = input.ReadString();
+            abilities_.AddEntriesFrom(input, _map_abilities_codec);
             break;
           }
         }
@@ -705,7 +699,7 @@ namespace Proto {
     public GameCommand(GameCommand other) : this() {
       xAxis_ = other.xAxis_;
       yAxis_ = other.yAxis_;
-      ability_ = other.ability_;
+      abilities_ = other.abilities_.Clone();
       frame_ = other.frame_;
     }
 
@@ -742,18 +736,17 @@ namespace Proto {
       }
     }
 
-    /// <summary>Field number for the "ability" field.</summary>
-    public const int AbilityFieldNumber = 3;
-    private string ability_ = "";
+    /// <summary>Field number for the "abilities" field.</summary>
+    public const int AbilitiesFieldNumber = 3;
+    private static readonly pb::FieldCodec<string> _repeated_abilities_codec
+        = pb::FieldCodec.ForString(26);
+    private readonly pbc::RepeatedField<string> abilities_ = new pbc::RepeatedField<string>();
     /// <summary>
     ///  其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Ability {
-      get { return ability_; }
-      set {
-        ability_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
+    public pbc::RepeatedField<string> Abilities {
+      get { return abilities_; }
     }
 
     /// <summary>Field number for the "frame" field.</summary>
@@ -782,7 +775,7 @@ namespace Proto {
       }
       if (XAxis != other.XAxis) return false;
       if (YAxis != other.YAxis) return false;
-      if (Ability != other.Ability) return false;
+      if(!abilities_.Equals(other.abilities_)) return false;
       if (Frame != other.Frame) return false;
       return true;
     }
@@ -792,7 +785,7 @@ namespace Proto {
       int hash = 1;
       if (XAxis != 0UL) hash ^= XAxis.GetHashCode();
       if (YAxis != 0UL) hash ^= YAxis.GetHashCode();
-      if (Ability.Length != 0) hash ^= Ability.GetHashCode();
+      hash ^= abilities_.GetHashCode();
       if (Frame != 0) hash ^= Frame.GetHashCode();
       return hash;
     }
@@ -812,10 +805,7 @@ namespace Proto {
         output.WriteRawTag(16);
         output.WriteUInt64(YAxis);
       }
-      if (Ability.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Ability);
-      }
+      abilities_.WriteTo(output, _repeated_abilities_codec);
       if (Frame != 0) {
         output.WriteRawTag(32);
         output.WriteUInt32(Frame);
@@ -831,9 +821,7 @@ namespace Proto {
       if (YAxis != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(YAxis);
       }
-      if (Ability.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Ability);
-      }
+      size += abilities_.CalculateSize(_repeated_abilities_codec);
       if (Frame != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Frame);
       }
@@ -851,9 +839,7 @@ namespace Proto {
       if (other.YAxis != 0UL) {
         YAxis = other.YAxis;
       }
-      if (other.Ability.Length != 0) {
-        Ability = other.Ability;
-      }
+      abilities_.Add(other.abilities_);
       if (other.Frame != 0) {
         Frame = other.Frame;
       }
@@ -876,7 +862,7 @@ namespace Proto {
             break;
           }
           case 26: {
-            Ability = input.ReadString();
+            abilities_.AddEntriesFrom(input, _repeated_abilities_codec);
             break;
           }
           case 32: {

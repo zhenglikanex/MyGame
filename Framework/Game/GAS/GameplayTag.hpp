@@ -12,8 +12,9 @@ class GameplayTag
 public:
 	GameplayTag() = default;
 
-	explicit GameplayTag(uint64_t value)
-		: value_(value)
+	explicit GameplayTag(uint64_t mask,uint64_t value)
+		: mask_(mask)
+		, value_(value)
 	{
 
 	}
@@ -31,7 +32,7 @@ public:
 	// "A.1".Matching."A" true "A.1".Matching."A.1" true
 	bool Matching(const GameplayTag& tag) const
 	{
-		return (value_ & tag.value_) == tag.value_;
+		return (value_ & tag.mask_) == tag.value_;
 	}
 
 	// "A.1".Matching."A" false "A.1".Matching."A.1" true
@@ -40,13 +41,19 @@ public:
 		return value_ == tag.value_;
 	}
 
+	uint64_t mask() const
+	{
+		return mask_;
+	}
+
 	uint64_t value() const
 	{
 		return value_;
 	}
 
-	BAR(value_);
+	BAR(mask_,value_);
 private:
+	uint64_t mask_;
 	uint64_t value_;
 };
 
@@ -339,6 +346,11 @@ public:
 		if (it != tag_count_map_.end())
 		{
 			it->second += delta;
+
+			if (it->second < 0)
+			{
+				tag_count_map_.erase(it);
+			}
 		}
 		else
 		{

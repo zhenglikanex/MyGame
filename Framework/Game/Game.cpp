@@ -73,8 +73,10 @@ Game::~Game()
 	registry_.unset<sol::state>();
 }
 
-bool Game::Initialize()
+bool Game::Initialize(uint32_t start_time)
 {
+	start_time_ = start_time;
+
 	for (auto& system : systems_)
 	{
 		if (!system->Initialize())

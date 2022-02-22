@@ -17,10 +17,19 @@ public class GameBattleState : FSMState
             if (prefab)
             {
                 GameObjectPool pool = PoolManager.Instance.RegisterPool("Hero", prefab);
-                pool.AlllocCapacity(100);
+                pool.AlllocCapacity(1);
             }
         }
-        
+
+        {
+            GameObject prefab = Resources.Load<GameObject>("Prefab/Actor/SuperHero");
+            if (prefab)
+            {
+                GameObjectPool pool = PoolManager.Instance.RegisterPool("SuperHero", prefab);
+                pool.AlllocCapacity(1);
+            }
+        }
+
         {
             GameObject prefab = Resources.Load<GameObject>("Prefab/Cue/Hurt");
             if (prefab)

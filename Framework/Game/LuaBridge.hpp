@@ -89,7 +89,7 @@ inline void RegisterWeapon(sol::state& lua)
 
 inline void RegisterGameplayTag(sol::state& lua)
 {
-	auto type = lua.new_usertype<GameplayTag>("GameplayTag", sol::constructors<GameplayTag(uint64_t), GameplayTag(const GameplayTag&)>());
+	auto type = lua.new_usertype<GameplayTag>("GameplayTag", sol::constructors<GameplayTag(uint64_t,uint64_t), GameplayTag(const GameplayTag&)>());
 	type["value"] = &GameplayTag::value;
 	type["Matching"] = &GameplayTag::Matching;
 	type["MatchingExact"] = &GameplayTag::MatchingExact;
@@ -120,9 +120,9 @@ inline void RegisterGameplayTagCountContainer(sol::state& lua)
 	type["SetTagCount"] = &GameplayTagCountContainer::SetTagCount;
 
 	//todo:
-	auto UpdateTagCount1 = std::bind((void(GameplayTagCountContainer::*)(const GameplayTag&, int32_t)) & GameplayTagCountContainer::UpdateTagCount, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-	auto UpdateTagCount2 = std::bind((void(GameplayTagCountContainer::*)(const GameplayTagArray&, int32_t)) & GameplayTagCountContainer::UpdateTagCount, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-	//type["UpdateTagCount"] = sol::overload(UpdateTagCount1,UpdateTagCount2);
+	//auto UpdateTagCount1 = std::bind((void(GameplayTagCountContainer::*)(const GameplayTag&, int32_t)) & GameplayTagCountContainer::UpdateTagCount, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	//auto UpdateTagCount2 = std::bind((void(GameplayTagCountContainer::*)(const GameplayTagArray&, int32_t)) & GameplayTagCountContainer::UpdateTagCount, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	type["UpdateTagCount"] = (void(GameplayTagCountContainer::*)(const GameplayTag&, int32_t)) & GameplayTagCountContainer::UpdateTagCount;
 }
 
 inline void RegisterGameplayEffect(sol::state& lua)
@@ -238,9 +238,6 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 {
 	auto& file_service = registry.ctx<Locator>().Ref<FileService>();
 	lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table, sol::lib::debug, sol::lib::os);
-	lua["load_path"] = file_service.cur_path() + "Lua/Script/?.lua";
-	lua.script_file(file_service.cur_path() + "Lua/Script/main.lua", sol::script_default_on_error);
-	sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
 
 	RegisterLocal(lua);
 	RegisterVec3(lua);
@@ -250,9 +247,15 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 	RegisterTransform(lua);
 	RegisterWeapon(lua);
 	RegisterGameplayTag(lua);
+	RegisterGameplayTagArray(lua);
+	RegisterGameplayTagCountContainer(lua);
 	RegisterGameplayEffect(lua);
 	RegisterGameplayAbility(lua);
 	RegisterGameplayAbilitySpec(lua);
+
+	lua["load_path"] = file_service.cur_path() + "Lua/Script/?.lua";
+	lua.script_file(file_service.cur_path() + "Lua/Script/main.lua", sol::script_default_on_error);
+	sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
 
 	// todo:≤‚ ‘”√
 	lua["TestSphereCollider"] = [&registry](float raduis)
@@ -340,8 +343,14 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["GetWeapon"] = [&registry](UniqueId target)
 	{
+		Weapon* weapon = nullptr;
 		entt::entity e = registry.get(target);
-		return registry.try_get<Weapon>(e);
+		if (e != entt::null)
+		{
+			weapon = registry.try_get<Weapon>(e);
+		}
+
+		return weapon;
 	};
 
 	lua["GetUniqueId"] = [&registry](entt::entity e)
@@ -360,9 +369,12 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 	auto destory2 = [&registry](Local local) 
 	{
 		entt::entity e = registry.get(local);
-		if (!registry.all_of<Destory>(e))
+		if (e != entt::null)
 		{
-			registry.emplace<Destory>(e);
+			if (!registry.all_of<Destory>(e))
+			{
+				registry.emplace<Destory>(e);
+			}
 		}
 	};
 
@@ -510,4 +522,19 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 	};
 
 	lua["GetEntity"] = sol::overload(GetEntity1, GetEntity2);
+
+	lua["GetGameplayAbilitySpec"] = [&registry](entt::entity e)
+	{
+		return registry.get<GameplayAbilitySpec>(e);
+	};
+
+	lua["GetLocal"] = [&registry](entt::entity e)
+	{
+		return registry.get<Local>(e);
+	};
+
+	lua["GetGameplayTagCountContainer"] = [&registry](entt::entity e)
+	{
+		return registry.try_get<GameplayTagCountContainer>(e);
+	};
 }

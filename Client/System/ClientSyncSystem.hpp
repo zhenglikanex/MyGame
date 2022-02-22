@@ -442,6 +442,15 @@ struct ClientSyncSystem : public System
 				registry.emplace_or_replace<GameplayHitTestTask>(it->second, item.second);
 			}
 
+			for (auto& local_id : frame_data.ignore_gravity_tags)
+			{
+				auto it = local_map.value.find(local_id);
+
+				assert(it != local_map.value.end() && "这里不可能不对应");
+
+				registry.emplace_or_replace<IgnoreGravity>(it->second);
+			}
+
 			for (auto& item : frame_data.character_movements)
 			{
 				auto it = local_map.value.find(item.first);

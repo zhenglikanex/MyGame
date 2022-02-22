@@ -66,10 +66,16 @@ void OutLua(const std::string& enums)
 	)";
 
 
-	std::ofstream out("Asset/Lua/Script/GAS/GameplayTagDefine.lua", std::ios_base::out);
+	std::ofstream out("Unity/ARPG/Assets/Resources/Lua/Script/GAS/GameplayTagDefine.lua", std::ios_base::out);
 	out << head + enums + "\n};\nreturn";
 
 }
+
+struct Tag
+{
+	int64_t mask;
+	int64_t value;
+};
 
 int main() 
 {
@@ -78,7 +84,7 @@ int main()
 
 	std::ifstream in("GameplayTagDefine.txt");
 
-	std::unordered_map<std::string, uint64_t> tag_map;
+	std::unordered_map<std::string, Tag> tag_map;
 
 	std::array<std::unordered_map<std::string, uint8_t>, 8> id_map_array;
 
@@ -103,11 +109,12 @@ int main()
 			continue;
 		}
 
-		uint64_t value = 0;
+		int64_t value = 0;
+		int64_t mask = 0;
 
 		for (auto i = 0; i < tokens.size(); ++i)
 		{
-			uint64_t sub_value = 0;
+			int64_t sub_value = 0;
 
 			auto& id_map = id_map_array[i];
 			auto it = id_map.find(tokens[i]);
@@ -134,19 +141,22 @@ int main()
 				}
 			}
 
+			
 			value = (sub_value << (7 - i) * 8) | value;
+			int64_t sub_mask = 0xFF;
+			mask = (sub_mask << (7 - i) * 8) | mask;
 
 			auto name = GenTagName(tokens,i + 1);
 			if (tag_map.find(name) == tag_map.end())
 			{
-				tag_map.emplace(name, value);
+				tag_map.emplace(name, Tag{ mask,value });
 			}
 		}
 
 		auto name = GenTagName(tokens, tokens.size());
 		if (tag_map.find(name) == tag_map.end())
 		{
-			tag_map.emplace(name, value);
+			tag_map.emplace(name, Tag{ mask,value });
 		}
 	}
 
@@ -166,7 +176,7 @@ int main()
 		for (auto& name : order)
 		{
 			++num;
-			enums = enums + "const GameplayTag " + name + " = " + "GameplayTag(" + std::to_string(tag_map[name]) + ")" + ";\n\t";
+			enums = enums + "const GameplayTag " + name + " = " + "GameplayTag(" + std::to_string(tag_map[name].mask) + "," + std::to_string(tag_map[name].value) + ")" + ";\n\t";
 		}
 
 		OutCPulsPuls(enums);
@@ -179,7 +189,7 @@ int main()
 		for (auto& name : order)
 		{
 			++num;
-			enums = enums + name + " = " + "GameplayTag.new(" + std::to_string(tag_map[name]) + ")" + ",\n\t";
+			enums = enums + name + " = " + "GameplayTag.new(" + std::to_string(tag_map[name].mask) + "," + std::to_string(tag_map[name].value) + ")" + ",\n\t";
 		}
 		OutLua(enums);
 	}

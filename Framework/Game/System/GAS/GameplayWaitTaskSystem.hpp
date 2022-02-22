@@ -42,8 +42,9 @@ public:
 				spec.time -= dt;
 				if (spec.time <= 0)
 				{
+					auto& ability_spec = registry.get<GameplayAbilitySpec>(e);
 					script.value[spec.completed](script.value);
-					del_list.emplace_back(i);
+					del_list.emplace_back(i);	
 				}
 			}
 

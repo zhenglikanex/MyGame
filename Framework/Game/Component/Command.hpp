@@ -4,7 +4,11 @@
 #include <unordered_map>
 #include <memory>
 
-#include "Framework/Game/FixedPoint.hpp"
+enum class AbilityStatus : uint8_t
+{
+	kDown,
+	kUp,
+};
 
 struct Command
 {
@@ -18,9 +22,7 @@ struct Command
 	float x_axis;		// 摇杆输入
 	float y_axis;		// 摇杆输入
 
-	// 其他按键的一些输入,如跳跃,攻击啥的一些键位是否按下
-	std::string ability;
-	std::string key;
+	std::unordered_map<std::string, AbilityStatus> abilities;
 
 	Command()
 		: frame(0)
@@ -29,16 +31,6 @@ struct Command
 		, y_axis(0)
 	{
 		
-	}
-
-	bool operator==(const Command& rhs) const
-	{
-		return x_axis == rhs.x_axis && y_axis == rhs.y_axis && ability == rhs.ability;
-	}
-
-	bool operator!=(const Command& rhs) const
-	{
-		return !(*this == rhs);
 	}
 };
 
@@ -54,6 +46,6 @@ struct CommandGroup
 	}
 };
 
-NON_MEMEBER_BAR(Command, obj.frame, obj.verified_frame, obj.x_axis, obj.y_axis, obj.ability, obj.key);
+NON_MEMEBER_BAR(Command, obj.frame, obj.verified_frame, obj.x_axis, obj.y_axis,obj.abilities);
 NON_MEMEBER_BAR(CommandGroup, obj.frame, obj.commands);
 

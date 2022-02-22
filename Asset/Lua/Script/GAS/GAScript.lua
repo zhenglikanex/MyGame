@@ -1,9 +1,15 @@
 local GAScript = class("GAScript")
 
-function GAScript:ctor(entity,loc,spec)
+function GAScript:ctor(entity)
     self.entity = entity
-    self.loc = loc
-    self.spec = spec
+end
+
+function GAScript:GetSpec()
+    return GetGameplayAbilitySpec(self.entity)
+end
+
+function GAScript:GetLocal()
+    return GetLocal(self.entity)
 end
 
 function GAScript:ActiveAbility()
@@ -25,10 +31,6 @@ end
 
 function GAScript:EndAbility()
     local entity = self.entity
-    self.entity = nil
-    self.loc = nil
-    self.spec = nil
-
     Destory(entity)
 end
 

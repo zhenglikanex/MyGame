@@ -48,6 +48,8 @@ struct AnimationClipInfo
 
 struct AnimationInfo
 {
+	// todo:懒的去修改编辑器到处默认动画了,先写死
+	std::string default_clip{ GameConfig::ActionAnimation::kLocomotion + "|0.0" };
 	std::unordered_map<std::string, AnimationClipInfo> clips;
 };
 

@@ -38,6 +38,13 @@
         "TestSphereCollider",
         "CreateMovementView",
         "CommitGameplayAbilityCost",
-        "CommitGameplayAbilityCooldown"
-    ]
+        "CommitGameplayAbilityCooldown",
+        "GetGameplayAbilitySpec",
+        "GetLocal",
+        "GetGameplayTagCountContainer",
+        "GetEntity"
+    ],
+    "files.exclude": {
+        "**/.meta": true
+    }
 }

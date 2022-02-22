@@ -145,6 +145,12 @@ struct ServerSyncSystem : public System
 					frame_data.hit_test_tasks.emplace(local, task);
 				}
 			}
+
+			auto ignore_gravity_view = registry.view<Local, IgnoreGravity>();
+			for (auto e : ignore_gravity_view)
+			{
+				frame_data.ignore_gravity_tags.emplace_back(registry.get<Local>(e));
+			}
 			/**************************local entity/**************************/
 
 

@@ -57,24 +57,30 @@ struct CreateActorSystem : public System
 			if (registry.all_of<TransformState>(e))
 			{
 				// character controllerœ‡πÿ
-				registry.emplace<MovementForward>(e);
+				registry.emplace<MovementForward>(e,vec3(0,0,1.f));
 				registry.emplace<Character>(e);
 				registry.emplace<CharacterMovement>(e);
-
-				ActionStateUtility::ChangeState(registry, e, ActorStateType::kIdle);
 			}
 
 			if (registry.all_of<GameplayState>(e))
 			{
 				//todo:ÀÊ±„–¥À¿ ‘ ‘
 				auto& abilitys = registry.emplace<ActiveGameplayAbilityList>(e);
-				abilitys.value.emplace("AttackGA",ActiveGameplayAbility("AttackGA", 1));
-				abilitys.value.emplace("AttackGA2",ActiveGameplayAbility("AttackGA2", 1));
-				abilitys.value.emplace("AttackGA3", ActiveGameplayAbility("AttackGA3", 1));
-				abilitys.value.emplace("AttackGA4", ActiveGameplayAbility("AttackGA4", 1));
-				abilitys.value.emplace("LeiFaGA", ActiveGameplayAbility("LeiFaGA", 1));
-				abilitys.value.emplace("HuoQiuGA", ActiveGameplayAbility("HuoQiuGA", 1));
-
+				abilitys.value.emplace("GA_Roll",ActiveGameplayAbility("GA_Roll", 1));
+				abilitys.value.emplace("GA_Jump", ActiveGameplayAbility("GA_Jump", 1));
+				abilitys.value.emplace("GA_DoubleJump", ActiveGameplayAbility("GA_DoubleJump", 1));
+				abilitys.value.emplace("GA_Sprint", ActiveGameplayAbility("GA_Sprint", 1));
+				abilitys.value.emplace("GA_LightAttackA", ActiveGameplayAbility("GA_LightAttackA", 1));
+				abilitys.value.emplace("GA_LightAttackB", ActiveGameplayAbility("GA_LightAttackB", 1));
+				abilitys.value.emplace("GA_LightAttackC", ActiveGameplayAbility("GA_LightAttackC", 1));
+				abilitys.value.emplace("GA_HeavyAttackA", ActiveGameplayAbility("GA_HeavyAttackA", 1));
+				abilitys.value.emplace("GA_HeavyAttackB", ActiveGameplayAbility("GA_HeavyAttackB", 1));
+				abilitys.value.emplace("GA_HeavyAttackC", ActiveGameplayAbility("GA_HeavyAttackC", 1));
+				abilitys.value.emplace("GA_HeavyAttackD", ActiveGameplayAbility("GA_HeavyAttackD", 1));
+				abilitys.value.emplace("GA_DashLightAttack", ActiveGameplayAbility("GA_DashLightAttack", 1));
+				abilitys.value.emplace("GA_DashHeavyAttack", ActiveGameplayAbility("GA_DashHeavyAttack", 1));
+				abilitys.value.emplace("GA_JumpAttackA", ActiveGameplayAbility("GA_JumpAttackA", 1));
+				
 				GameplayEffectUtility::ApplyGameEffectToTarget(registry, e, actor_info.ge(), 1, e);
 			}
 			//INFO("create actor");

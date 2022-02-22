@@ -61,10 +61,6 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(Registry* r
 	systems.emplace_back(std::make_unique<CreateAnimationSystem>(*registry));
 	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(*registry));
 	systems.emplace_back(std::make_unique<ActorControlSystem>(*registry));
-	systems.emplace_back(std::make_unique<RootMotionSystem>(*registry));
-	systems.emplace_back(std::make_unique<MovementSystem>(*registry));
-	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(*registry));
-	systems.emplace_back(std::make_unique<AnimationSystem>(*registry));
 	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayAbilitySystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayWaitTaskSystem>(*registry));
@@ -75,14 +71,18 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(Registry* r
 	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayEffectSystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(*registry));
+	systems.emplace_back(std::make_unique<RootMotionSystem>(*registry));
+	systems.emplace_back(std::make_unique<AnimationSystem>(*registry));
+	systems.emplace_back(std::make_unique<MovementSystem>(*registry));
+	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(*registry));
 	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(*registry));
 	systems.emplace_back(std::make_unique<PhysicsSystem>(*registry));
-	systems.emplace_back(std::make_unique<DestorySystem>(*registry));
 	// 进行两次,清理客户端自己创建ModifierAttribute
 	systems.emplace_back(std::make_unique<DestroyModifierAttributeSystem>(*registry));
 	systems.emplace_back(std::make_unique<ClientSyncSystem>(*registry));
 	systems.emplace_back(std::make_unique<TransformStateSystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayStateSystem>(*registry));
+	systems.emplace_back(std::make_unique<DestorySystem>(*registry));
 	systems.emplace_back(std::make_unique<SyncInstanceStateSystem>(*registry));
 	systems.emplace_back(std::make_unique<UpdatePlayerUISystem>(*registry));
 	systems.emplace_back(std::make_unique<UpdateViewSystem>(*registry));

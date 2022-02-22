@@ -9,14 +9,24 @@
 #include <iostream>
 #include "Framework/Game/Math.hpp"
 #include <variant>
-#include "Framework/Game/GAS/GameplayTag.hpp"
 #include <iostream>
+#include <bitset>
 
 
 enum class Enum : uint32_t {};
 
 using GameplayEventData = std::variant<Enum, std::vector<Enum>>;
 
+
+class A {
+	uint64_t a;
+	uint8_t b;
+};
+
+class B {
+	uint64_t b;
+	uint64_t a;
+};
 
 using namespace std::chrono;
 
@@ -38,18 +48,11 @@ enum class Type : uint8_t
 
 TEST_CASE_METHOD(Serialize1, "NetMessage")
 {
+	std::cout << std::numeric_limits<int64_t>::max() << std::endl << (uint64_t)std::pow(2ul,32ul)-1 << std::endl;
 	
-	Type t{ 1 };
+	std::cout << sizeof(A) << std::endl;
+	std::cout << sizeof(B) << std::endl;
 
-	std::size_t v1 = std::numeric_limits<uint32_t>::max();
-	std::size_t v = fun(v1 << 32,std::numeric_limits<uint32_t>::max());
-	std::cout << std::numeric_limits<std::size_t>::max() << " " << v << std::endl;
-
-	std::any a = 10;
-	std::vector<GameplayTag> vec;
-	std::any b = vec;
-	std::string s("nibi");
-	std::any c = s;
 	
 
 	//std::numeric_limits<float>::epsilon()

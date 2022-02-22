@@ -86,7 +86,7 @@ struct TryGameplayAbilitySystem : public System
 		{
 			auto& spec = registry.get<GameplayAbilitySpec>(e);
 			auto& active_ga = ga_manager.LoadGameplayAbility(spec.ability);
-			if (ga.ability_tags.HasAll(active_ga.activation_blocked_tags))
+			if (ga.ability_tags.HasAny(active_ga.block_abilites_with_tag))
 			{
 				return false;
 			}
@@ -147,7 +147,6 @@ struct TryGameplayAbilitySystem : public System
 					}
 
 					auto& ga = ga_manager.LoadGameplayAbility(info.ability);
-
 					if (!CheckCoolDown(info.source,ga))
 					{
 						continue;

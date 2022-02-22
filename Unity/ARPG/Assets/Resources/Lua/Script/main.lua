@@ -4,6 +4,7 @@ print("package.path",package.path)
 require("Base/Base")
 require("GAS/GAS")
 require("GAS/GEDefine")
+require("GAS/GameplayTagDefine")
 require("GameplayAttribute")
 
 __G__TRACKBACK__ = function(msg)

@@ -46,11 +46,6 @@ std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(Registry* r
 	systems.emplace_back(std::make_unique<CreateAnimationSystem>(*registry));
 	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(*registry));
 	systems.emplace_back(std::make_unique<ActorControlSystem>(*registry));
-	systems.emplace_back(std::make_unique<RootMotionSystem>(*registry));
-	systems.emplace_back(std::make_unique<MovementSystem>(*registry));
-	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(*registry));
-	systems.emplace_back(std::make_unique<TransformStateSystem>(*registry));
-	systems.emplace_back(std::make_unique<AnimationSystem>(*registry));
 	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayAbilitySystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayWaitTaskSystem>(*registry));
@@ -62,6 +57,11 @@ std::vector<std::unique_ptr<System>> ServerGameHelper::CreateSystems(Registry* r
 	systems.emplace_back(std::make_unique<GameplayEffectSystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayStateSystem>(*registry));
+	systems.emplace_back(std::make_unique<RootMotionSystem>(*registry));
+	systems.emplace_back(std::make_unique<TransformStateSystem>(*registry));
+	systems.emplace_back(std::make_unique<AnimationSystem>(*registry));
+	systems.emplace_back(std::make_unique<MovementSystem>(*registry));
+	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(*registry));
 	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(*registry));
 	systems.emplace_back(std::make_unique<PhysicsSystem>(*registry));
 	systems.emplace_back(std::make_unique<ServerSyncSystem>(*registry));

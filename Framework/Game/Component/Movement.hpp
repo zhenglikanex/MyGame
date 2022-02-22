@@ -108,10 +108,17 @@ struct RigidbodyProjectionHit
 	vec3 effective_hit_normal;
 	vec3 hit_velocity;
 	bool stable_on_hit;
+
+	RigidbodyProjectionHit() 
+		: rigidbody(nullptr)
+		, stable_on_hit(false)
+	{
+
+	}
 };
 
 struct CharacterMovement
-{
+{	
 	vec3 base_velocity;
 	vec3 attached_rigidbody_velocity;
 
@@ -128,9 +135,24 @@ struct CharacterMovement
 
 	std::array<RigidbodyProjectionHit, 16> internal_rigidbody_projection_hits;
 	int rigidbody_projection_hit_count;
+
+	CharacterMovement()
+		: base_velocity(vec3(0))
+		, attached_rigidbody_velocity(vec3(0))
+		, last_movement_iteration_found_any_ground(false)
+		, attached_rigidbody(nullptr)
+		, last_attached_rigidbody(nullptr)
+		, rigidbody_projection_hit_count(0)
+	{
+
+	}
 };
 
-NON_MEMEBER_BAR(CharacterMovement, obj.base_velocity, obj.attached_rigidbody_velocity,obj.grounding_status,obj.last_grounding_status);
+NON_MEMEBER_BAR(CharacterMovement,obj.base_velocity, obj.attached_rigidbody_velocity, obj.grounding_status, obj.last_grounding_status);
+
+struct IgnoreGravity
+{
+};
 
 struct MovePositionTarget
 {

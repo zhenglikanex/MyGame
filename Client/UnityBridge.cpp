@@ -84,8 +84,11 @@ void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time,uint32_t 
 	locator.Set<GameHelper>(std::make_unique<ClientGameHelper>(local_id));
 
 	g_game = std::make_unique<Game>(std::move(locator),std::move(players));
-	g_game->Initialize();
-	g_game->set_start_time(start_time);
+	if (g_game->Initialize(start_time))
+	{
+		g_game->Finalize();
+		g_game = nullptr;
+	}	
 }
 
 void CheckPing()
@@ -167,9 +170,10 @@ extern "C"
 			command.verified_frame = g_game->GetVerifiedFrame();
 			command.x_axis = std::abs(csharp_command.x_axis()) < 0.1 ? 0 : csharp_command.x_axis();
 			command.y_axis = std::abs(csharp_command.y_axis()) < 0.1 ? 0 : csharp_command.y_axis();
-			command.ability = csharp_command.ability();
-			// todoÁãÊ±Ð´Ò»ÏÂ
-			command.key = csharp_command.ability() != "" ? "j" : "";
+			for (auto& item : csharp_command.abilities())
+			{
+				command.abilities.emplace(item.first,static_cast<AbilityStatus>(item.second));
+			}
 
 			g_game->InputCommand(g_game->run_frame(), g_my_id, command);
 

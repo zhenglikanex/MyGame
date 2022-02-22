@@ -25,6 +25,7 @@ public:
 
 	void FixedUpdate(float dt) override
 	{
+		
 		auto view = registry.view<GameplayAbilitySpec, GameplayAbilityScript, GameplayInputTask>();
 		for (auto e : view)
 		{
@@ -42,22 +43,28 @@ public:
 					auto commond = registry.try_get<Command>(source);
 					if (commond)
 					{
-						if (!task_spec.is_pressed && commond->key == task_spec.key && task_spec.pressed != "")
+						auto it = commond->abilities.find(task_spec.key);
+						if (it != commond->abilities.end())
 						{
-							script.value[task_spec.pressed](script.value);
-
-							// 如果没有监听按钮释放,可以提前结束task
-							if (task_spec.released == "")
+							if (it->second == AbilityStatus::kDown)
 							{
-								completed = true;
+								script.value[task_spec.pressed](script.value);
+
+								// 如果没有监听按钮释放,可以提前结束task
+								if (task_spec.released == "")
+								{
+									completed = true;
+								}
 							}
-						}
+							else if (it->second == AbilityStatus::kUp)
+							{
+								if (task_spec.released != "")
+								{
+									script.value[task_spec.released](script.value);
 
-						if (task_spec.is_pressed && commond->key != task_spec.key && task_spec.released != "")
-						{
-							script.value[task_spec.released](script.value);
-
-							completed = true;
+									completed = true;
+								}
+							}
 						}
 					}
 
@@ -72,6 +79,7 @@ public:
 				}
 			}
 		}
+		
 	}
 
 	void Finalize() override

@@ -46,7 +46,7 @@ public:
 			auto source = registry.get(spec.source);
 			if (source != entt::null)
 			{
-				registry.patch<GameplayTagCountContainer>(source,[&ga](GameplayTagCountContainer tag_count)
+				registry.patch<GameplayTagCountContainer>(source,[&ga](GameplayTagCountContainer& tag_count)
 					{
 						tag_count.UpdateTagCount(ga.activation_owned_tags, -1);
 					});
