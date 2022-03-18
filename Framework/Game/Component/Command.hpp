@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <memory>
 
+#include "Framework/Game/Component/UniqueId.hpp"
+
 enum class AbilityStatus : uint8_t
 {
 	kDown,
@@ -12,6 +14,7 @@ enum class AbilityStatus : uint8_t
 
 struct Command
 {
+	UniqueId target;
 	uint32_t frame;
 
 	//这个操作命令时的已经确认的帧,
@@ -46,6 +49,6 @@ struct CommandGroup
 	}
 };
 
-NON_MEMEBER_BAR(Command, obj.frame, obj.verified_frame, obj.x_axis, obj.y_axis,obj.abilities);
+NON_MEMEBER_BAR(Command, obj.target, obj.frame, obj.verified_frame, obj.x_axis, obj.y_axis, obj.abilities);
 NON_MEMEBER_BAR(CommandGroup, obj.frame, obj.commands);
 

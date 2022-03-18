@@ -273,7 +273,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["TryGameplayAbility"] = [&registry](UniqueId source, std::string_view ability, entt::entity target)
 	{
-		GameplayAbilityUtility::TryGameplayAbility(registry, source, ability, target);
+		GameplayAbilityUtility::BuildGameplayAbilityCommand(registry, source, ability, target);
 	};
 
 	lua["GameplayWait"] = [&registry](entt::entity ability, float time, std::string_view completed)

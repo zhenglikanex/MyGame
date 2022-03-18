@@ -26,7 +26,7 @@ Proto.hpp
 RandomEngine.hpp
 LuaBridge.hpp
 Registry.hpp
-
+SerializationManager.hpp
 
 GAS/GameplayEffect.hpp
 GAS/GameplayTag.hpp
@@ -47,11 +47,13 @@ Utility/GameplayEventUtility.hpp
 Utility/AnimEventUtility.hpp
 Utility/RollbackUtility.hpp
 
+System/CommandSystem.hpp
+System/MoveCommandSystem.hpp
 System/AnimationSystem.hpp
 System/CreateViewSystem.hpp
 System/MovementSystem.hpp
 System/UpdateViewSystem.hpp
-System/ActorControlSystem.hpp
+System/ActorSystem.hpp
 System/CreateAnimationSystem.hpp
 System/RootMotionSystem.hpp
 System/CreateActorSystem.hpp
@@ -69,7 +71,7 @@ System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/GameplayEffectSystem.hpp
 System/GAS/GameplayAttributeSystem.hpp
 System/GAS/GameplayAbilitySystem.hpp
-System/GAS/TryGameplayAbilitySystem.hpp
+System/GAS/GameplayAbilityCommandSystem.hpp
 System/GAS/GameplayEventSystem.hpp
 System/GAS/GameplayStateSystem.hpp
 System/GAS/GameplayWaitTaskSystem.hpp
@@ -80,6 +82,7 @@ System/GAS/DestroyModifierAttributeSystem.hpp
 
 Component/GameState.hpp
 Component/Command.hpp
+Component/MoveCommand.hpp
 Component/Player.hpp
 Component/View.hpp
 Component/Transform.hpp
@@ -94,7 +97,6 @@ Component/ActorAsset.hpp
 Component/Weapon.hpp
 Component/Collider.hpp
 Component/PhysicsWorld.hpp
-Component/PhysicsWorld.cpp
 Component/Character.hpp
 Component/PhysicsActor.hpp
 Component/Destory.hpp
@@ -112,7 +114,7 @@ Component/GAS/GameplayAttributeSet.hpp
 Component/GAS/ModifierAttribute.hpp
 Component/GAS/GameplayAbilitySpec.hpp
 Component/GAS/GameplayAbilityScript.hpp
-Component/GAS/TryGameplayAbility.hpp
+Component/GAS/GameplayAbilityCommand.hpp
 Component/GAS/GameplayEvent.hpp
 Component/GAS/GameplayState.hpp
 Component/GAS/GameplayWaitTask.hpp
@@ -163,17 +165,17 @@ endif()
 target_link_libraries(Game
     Natvis
     lua
-    debug ${PHYSX_LIBRARY_DEBU0G}
-    debug ${PHYSX_COMMON_LIBRARY_DEBU0G}
-    debug ${PX_FOUNDATION_LIBARY_DEBUG}
-    debug ${PHYSX_COOKING_LIBRARY_DEBUG}
-    debug ${PX_PVD_LIBARY_DEBUG}
-    debug ${PHYSX_EXTENSIONS_LIBRARY_DEBU0G}
+    #debug ${PHYSX_LIBRARY_DEBU0G}
+    #debug ${PHYSX_COMMON_LIBRARY_DEBU0G}
+    #debug ${PX_FOUNDATION_LIBARY_DEBUG}
+    #debug ${PHYSX_COOKING_LIBRARY_DEBUG}
+    #debug ${PX_PVD_LIBARY_DEBUG}
+    #debug ${PHYSX_EXTENSIONS_LIBRARY_DEBU0G}
 
-    optimized ${PHYSX_LIBRARY}
-    optimized ${PHYSX_COMMON_LIBRARY}
-    optimized ${PX_FOUNDATION_LIBARY}
-    optimized ${PHYSX_COOKING_LIBRARY}
-    optimized ${PX_PVD_LIBARY}
-    optimized ${PHYSX_EXTENSIONS_LIBRARY}
+    #optimized ${PHYSX_LIBRARY}
+    #optimized ${PHYSX_COMMON_LIBRARY}
+    #optimized ${PX_FOUNDATION_LIBARY}
+    #optimized ${PHYSX_COOKING_LIBRARY}
+    #optimized ${PX_PVD_LIBARY}
+    #optimized ${PHYSX_EXTENSIONS_LIBRARY}
 )

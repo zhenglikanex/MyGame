@@ -2,25 +2,24 @@
 
 #include "Framework/Game/System.hpp"
 
-#include "Framework/Game/Proto.hpp"
+#include "Framework/Game/SerializationManager.hpp"
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/NetworkService.hpp"
 
-#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
-#include "Framework/Game/Component/EntityByLocalMap.hpp"
-#include "Framework/Game/Component/SyncInstanceState.hpp"
 #include "Framework/Game/Component/SyncManager.hpp"
-#include "Framework/Game/Component/Transform.hpp"
-#include "Framework/Game/Component/Player.hpp"
+#include "Framework/Game/Component/LocalEntityState.hpp"
 #include "Framework/Game/Component/TransformState.hpp"
-#include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 
 #include "Kanex.hpp"
 
+#include "3rdparty/include/glm/gtx/vector_angle.hpp"
+
 struct ClientSyncSystem : public System
 {
+	SerializationManager serialization_manager;
+
 	ClientSyncSystem(Registry& _registry)
 		: System(_registry)
 	{
@@ -39,454 +38,344 @@ struct ClientSyncSystem : public System
 
 	void FixedUpdate(float dt) override
 	{
-		auto& game_state = registry.ctx<GameState>();
 		auto& network_service = registry.ctx<Locator>().Ref<const NetworkService>();
-		INFO("sync");
 		while (auto message = network_service.Recv())
 		{
-			auto& [name, data] = *message;
+			auto&[name, data] = *message;
 
-			kanex::Buffer buffer(std::move(data));
-			kanex::BinaryStream stream(buffer);
-			kanex::BinaryInputArchive ar(stream);
+			serialization_manager.Deserialize(std::move(data));
 
-			FrameData frame_data;
-			ar(frame_data);
+			auto& frame_data = serialization_manager.frame_data();
+			auto& game_state = registry.ctx<GameState>();
 
-			INFO("client frame {}", frame_data.frame);
+			game_state.verified_frame = frame_data.frame;
+
+			MappingLocalEntity();
+			ReplicationRemoteEntity();
 
 			if (frame_data.frame >= game_state.run_frame)
 			{
-				MappingLocalEntity(frame_data);
-				ReplicationServerLocalEntity(frame_data);
-				ReplicationServerData(frame_data, true);
-
-				game_state.run_frame = frame_data.frame;
-				game_state.verified_frame = frame_data.frame;
+				// 客户端比服务器慢(客户端卡了),直接复制服务器数据
+				ReplicationLocalEntity();
+				ReplicationLocalState();
 			}
-			else
-			{
-				MappingLocalEntity(frame_data);
+			else if(IsNeedRollback())
+			{					
+				RollbackLocalEntity();
 
-				bool is_need_rollback = CheckLocalEnity(frame_data) || CheckEntityState(frame_data);
-				if (is_need_rollback)
-				{
-					//这帧时间创建的所有local entity
-					RollbackLocalEntity(frame_data);
-
-					//恢复缺少local entity
-					ReplicationServerLocalEntity(frame_data);
-				}
-				/*if (is_need_rollback)
-				{
-					MappingLocalEntity(frame_data, is_need_rollback);
-				}*/
-
-				ReplicationServerData(frame_data, is_need_rollback);
-
-				game_state.verified_frame = frame_data.frame;
-
-				if (is_need_rollback)
-				{
-					INFO("is need rollback  frame {}", frame_data.frame);
-					game_state.run_frame = frame_data.frame;
-				}
+				ReplicationLocalEntity();
+				ReplicationLocalState();
 			}
 
-			for (auto& mod_attr : frame_data.modifier_attributes)
-			{
-				auto e = registry.create();
-				registry.emplace<ModifierAttribute>(e, mod_attr);
-			}
+			ReplicationSingleEntity();
 		}
-
-		INFO("END CLIENT SYNC");
 	}
 
 	void Finalize() override
 	{
 
-	}
-
-	bool CheckLocalEnity(FrameData& frame_data)
+	}	
+public:
+	void MappingLocalEntity()
 	{
-		auto& state = registry.ctx<SyncInstanceState>();
-		auto result = frame_data.local_id != state.value[frame_data.frame % state.value.size()].identifier;
-		if (result)
+		auto& components = serialization_manager.GetLocalEntityComponents<UniqueId>();
+
+		auto view = registry.view<Local>(entt::exclude<UniqueId>);
+		for (auto e : view)
 		{
-			INFO("CheckLocalEnity rollback");
-			return result;
-		}
+			auto& local = view.get<Local>(e);
+			auto& it = components.find(local);
 
-		return result;
+			if (it != components.end())
+			{
+				registry.emplace<UniqueId>(e, it->second);
+			}
+		}
 	}
 
-	bool CheckEntityState(FrameData& frame_data)
+	void ReplicationLocalState()
 	{
-		INFO("CheckEntityState {}", frame_data.frame);
+		auto& frame_data = serialization_manager.frame_data();
+
 		auto& game_state = registry.ctx<GameState>();
-		auto view1 = registry.view<UniqueId, TransformState>();
-		for (auto e : view1)
-		{
-			auto& unique_id = view1.get<UniqueId>(e);
-			auto& transform_state = view1.get<TransformState>(e);
+		game_state.run_frame = frame_data.frame;
 
-			auto it = frame_data.transforms.find(unique_id);
-			if (it != frame_data.transforms.end())
-			{
-				if (it->second != transform_state.value[frame_data.frame % transform_state.value.size()])
-				{
-					INFO("position not!");
-					return true;
-				}
-			}
-			else
-			{
-				assert(false);
-				return true;
-			}
-		}
-
-		auto view2 = registry.view<UniqueId, GameplayState>();
-		for (auto e : view2)
-		{
-			auto& unique_id = view2.get<UniqueId>(e);
-			auto& gameplay_state = view2.get<GameplayState>(e);
-
-			auto tag_it = frame_data.tag_counts.find(unique_id);
-			auto attribute_set_it = frame_data.attribute_sets.find(unique_id);
-
-			if (attribute_set_it == frame_data.attribute_sets.end())
-			{
-				return true;
-			}
-
-			// todo:怎么处理这里的浮点数?
-			if (attribute_set_it->second.value != gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()].value)
-			{
-				return true;
-			}
-
-			if (tag_it != frame_data.tag_counts.end() && tag_it->second != gameplay_state.tag_counts[frame_data.frame % gameplay_state.tag_counts.size()])
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	void RollbackLocalEntity(FrameData& frame_data)
-	{
-		if (frame_data.frame <= 0)
-		{
-			return;
-		}
-
-		auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
 		auto& sync_manager = registry.ctx<SyncManager>();
-
-		// 删除多创建的local entity
 		for (auto& item : sync_manager.sync_instances)
 		{
-			for (auto i = frame_data.local_id; i < item.second.identifier; ++i)
-			{
-				auto it = e_by_local_id_map.value.find(Local(item.second.owner, i));
-				if (it != e_by_local_id_map.value.end())
-				{
-					registry.destroy(it->second);
-				}
-			}
+			item.second.identifier = frame_data.local_entity_identifier;
 		}
 
-	}
-
-	void MappingLocalEntity(FrameData& frame_data)
-	{
-		auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
-		for (auto& item : frame_data.unique_ids)
 		{
-			auto it = e_by_local_id_map.value.find(item.first);
-			if (it != e_by_local_id_map.value.end())
+			auto view = registry.view<TransformState, Transform>();
+			for (auto e : view)
 			{
-				if (!registry.all_of<UniqueId>(it->second))
-				{
-					registry.emplace<UniqueId>(it->second, item.second);
-				}
-			}
-		}
-	}
-
-	void ReplicationServerLocalEntity(FrameData& frame_data)
-	{
-		auto& e_by_local_id_map = registry.ctx<EntityByLocalMap>();
-		for (auto& item : frame_data.unique_ids)
-		{
-			auto it = e_by_local_id_map.value.find(item.first);
-			if (it == e_by_local_id_map.value.end())
-			{
-				auto e = registry.create();
-				registry.emplace<Local>(e, item.first);
-				registry.emplace<UniqueId>(e, item.second);
-			}
-		}
-	}
-
-	void ReplicationServerData(FrameData& frame_data, bool is_need_rollback)
-	{
-		auto& unique_map = registry.ctx<EntityByUniqueIdMap>();
-
-		for (auto& item : frame_data.transforms)
-		{
-			if (unique_map.value.find(item.first) == unique_map.value.end())
-			{
-				auto e = registry.create();
-				registry.emplace<UniqueId>(e, item.first);
-			}
-
-			auto e = unique_map.value[item.first];
-			auto& transform = item.second;
-			auto& unique_id = item.first;
-			if (is_need_rollback || !registry.all_of<TransformState>(e))
-			{
-				registry.emplace_or_replace<Transform>(e, item.second);
-			}
-		}
-
-		for (auto& item : frame_data.players)
-		{
-			if (unique_map.value.find(item.first) == unique_map.value.end())
-			{
-				auto e = registry.create();
-				registry.emplace<UniqueId>(e, item.first);
-			}
-
-			auto e = unique_map.value[item.first];
-			if (!registry.all_of<Local>(e))
-			{
-				registry.emplace_or_replace<Player>(e, item.second);
-			}
-		}
-
-		for (auto& item : frame_data.actor_assets)
-		{
-			if (unique_map.value.find(item.first) == unique_map.value.end())
-			{
-				auto e = registry.create();
-				registry.emplace<UniqueId>(e, item.first);
-			}
-
-			auto e = unique_map.value[item.first];
-			if (!registry.all_of<Local>(e))
-			{
-				registry.emplace_or_replace<ActorAsset>(e, item.second);
-			}
-		}
-
-		for (auto& item : frame_data.view_assets)
-		{
-			if (unique_map.value.find(item.first) == unique_map.value.end())
-			{
-				auto e = registry.create();
-				registry.emplace<UniqueId>(e, item.first);
-			}
-
-			auto e = unique_map.value[item.first];
-			if (!registry.all_of<Local>(e))
-			{
-				registry.emplace_or_replace<ViewAsset>(e, item.second);
-			}
-		}
-
-		for (auto& item : frame_data.animation_clips)
-		{
-			if (unique_map.value.find(item.first) == unique_map.value.end())
-			{
-				auto e = registry.create();
-				registry.emplace<UniqueId>(e, item.first);
-			}
-
-			auto e = unique_map.value[item.first];
-			if (is_need_rollback || !registry.all_of<TransformState>(e))
-			{
-				registry.emplace_or_replace<AnimationClip>(e, item.second);
-			}
-		}
-
-		for (auto& item : frame_data.attribute_sets)
-		{
-			if (unique_map.value.find(item.first) == unique_map.value.end())
-			{
-				auto e = registry.create();
-				registry.emplace<UniqueId>(e, item.first);
-			}
-
-			// 这个不预测
-			auto e = unique_map.value[item.first];
-			registry.emplace_or_replace<GameplayAttributeSet>(e, item.second);
-		}
-
-		for (auto& item : frame_data.tag_counts)
-		{
-			if (unique_map.value.find(item.first) == unique_map.value.end())
-			{
-				auto e = registry.create();
-				registry.emplace<UniqueId>(e, item.first);
-			}
-
-			auto e = unique_map.value[item.first];
-			if (is_need_rollback || !registry.all_of<GameplayState>(e))
-			{
-				registry.emplace_or_replace<GameplayTagCountContainer>(e, item.second);
-			}
-		}
-
-		for (auto& item : frame_data.ability_specs)
-		{
-			if (unique_map.value.find(item.first) == unique_map.value.end())
-			{
-				auto e = registry.create();
-				registry.emplace<UniqueId>(e, item.first);
-			}
-
-			auto e = unique_map.value[item.first];
-			auto owner = unique_map.value[item.second.source];
-			if (is_need_rollback || !registry.all_of<GameplayState>(owner))
-			{
-				registry.emplace_or_replace<GameplayAbilitySpec>(e, item.second);
-			}
-		}
-
-		for (auto& item : frame_data.effect_specs)
-		{
-			if (unique_map.value.find(item.first) == unique_map.value.end())
-			{
-				auto e = registry.create();
-				registry.emplace<UniqueId>(e, item.first);
-			}
-
-			auto e = unique_map.value[item.first];
-			if (is_need_rollback || !registry.all_of<Local>(e))
-			{
-				registry.emplace_or_replace<GameplayEffectSpec>(e, item.second);
-			}
-		}
-
-		for (auto& item : frame_data.destorys)
-		{
-			auto it = unique_map.value.find(item.value);
-			if (it != unique_map.value.end())
-			{
-				entt::entity e = it->second;
-				if (!registry.all_of<Destory>(e))
-				{
-					registry.emplace<Destory>(e);
-				}
-			}
-		}
-
-		if (is_need_rollback)
-		{
-			auto& local_map = registry.ctx<EntityByLocalMap>();
-			for (auto& item : frame_data.wait_tasks)
-			{
-				auto it = local_map.value.find(item.first);
-
-				assert(it != local_map.value.end() && "这里不可能不对应");
-
-				registry.emplace_or_replace<GameplayWaitTask>(it->second, item.second);
-			}
-
-			for (auto& item : frame_data.movement_forwards)
-			{
-				auto it = local_map.value.find(item.first);
-
-				assert(it != local_map.value.end() && "这里不可能不对应");
-
-				registry.emplace_or_replace<MovementForward>(it->second, item.second);
-			}
-
-			for (auto& item : frame_data.infinite_modifier_attribute_sets)
-			{
-				auto it = local_map.value.find(item.first);
-
-				assert(it != local_map.value.end() && "这里不可能不对应");
-
-				registry.emplace_or_replace<InfiniteModifierAttributeSet>(it->second, item.second);
-			}
-
-			for (auto& item : frame_data.play_anim_and_wait_tasks)
-			{
-				auto it = local_map.value.find(item.first);
-
-				assert(it != local_map.value.end() && "这里不可能不对应");
-
-				registry.emplace_or_replace<GameplayPlayAnimAndWaitTask>(it->second, item.second);
-			}
-
-			for (auto& item : frame_data.input_tasks)
-			{
-				auto it = local_map.value.find(item.first);
-
-				assert(it != local_map.value.end() && "这里不可能不对应");
-
-				registry.emplace_or_replace<GameplayInputTask>(it->second, item.second);
-			}
-
-			for (auto& item : frame_data.hit_test_tasks)
-			{
-				auto it = local_map.value.find(item.first);
-
-				assert(it != local_map.value.end() && "这里不可能不对应");
-			
-				registry.emplace_or_replace<GameplayHitTestTask>(it->second, item.second);
-			}
-
-			for (auto& local_id : frame_data.ignore_gravity_tags)
-			{
-				auto it = local_map.value.find(local_id);
-
-				assert(it != local_map.value.end() && "这里不可能不对应");
-
-				registry.emplace_or_replace<IgnoreGravity>(it->second);
-			}
-
-			for (auto& item : frame_data.character_movements)
-			{
-				auto it = local_map.value.find(item.first);
-
-				assert(it != local_map.value.end() && "这里不可能不对应");
-
-				auto& comp = registry.get_or_emplace<CharacterMovement>(it->second);
-				comp.base_velocity = item.second.base_velocity;
-				comp.attached_rigidbody_velocity = item.second.attached_rigidbody_velocity;
-				comp.grounding_status.ground_point = item.second.grounding_status.ground_point;
-				comp.last_grounding_status.ground_point = item.second.last_grounding_status.ground_point;
-			}
-
-			auto trans_state_view = registry.view<TransformState, Transform>();
-			for (auto e : trans_state_view)
-			{
-				auto& [transform_state, transform] = trans_state_view.get<TransformState, Transform>(e);
+				auto&[transform_state, transform] = view.get<TransformState, Transform>(e);
 				transform_state.value[frame_data.frame % transform_state.value.size()] = transform;
 			}
+		}
 
+		{
 			auto view = registry.view<GameplayState, GameplayAttributeSet>();
 			for (auto e : view)
 			{
-				auto& [gameplay_state, attribute_set] = view.get<GameplayState, GameplayAttributeSet>(e);
+				auto&[gameplay_state, attribute_set] = view.get<GameplayState, GameplayAttributeSet>(e);
 				gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()] = attribute_set;
 
 				auto& tag_count = registry.get<GameplayTagCountContainer>(e);
 				gameplay_state.tag_counts[frame_data.frame % gameplay_state.tag_counts.size()] = tag_count;
 			}
+		}
 
-			auto& state = registry.ctx<SyncInstanceState>();
-			auto& sync_manager = registry.ctx<SyncManager>();
-			for (auto& item : sync_manager.sync_instances)
+		{
+			auto& state = registry.ctx_or_set<LocalEntityState>();
+			state.identifiers[frame_data.frame % state.identifiers.size()] = frame_data.local_entity_identifier;
+			state.nums[frame_data.frame % state.nums.size()] = frame_data.local_entity_num;
+		}
+	}
+
+	void ReplicationLocalEntity()
+	{
+		ReplicationLocalEntityComponents(LocalComponents{});
+		ReplicationLocalEntityComponents(RemoteComponents{});
+	}
+
+	template<class ... Components>
+	void ReplicationLocalEntityComponents(TypeList<Components...> = {})
+	{
+		(ReplicationLocalEntityComponent<Components>(), ...);
+	}
+
+	template<class Components>
+	void ReplicationLocalEntityComponent()
+	{
+		auto& components = serialization_manager.GetLocalEntityComponents<Component>();
+		for (auto& item : components)
+		{
+			entt::entity e = registry.get(item.first);
+			if (e == entt::null)
 			{
-				item.second.identifier = frame_data.local_id;
-				state.value[frame_data.frame % state.value.size()].identifier = item.second.identifier;
+				e = registry.create();
+				registry.emplace<Local>(e, item.first);
+			}
+
+			registry.emplace_or_replace<Component>(e, item.second);
+		}
+	}
+
+public:
+	void ReplicationRemoteEntity()
+	{
+		ReplicationRemoteEntityComponents(RemoteComponents{});
+	}
+
+	template<class ... Components>
+	void ReplicationRemoteEntityComponents(TypeList<Components...> = {})
+	{
+		(ReplicationRemoteEntityComponent<Components>(), ...);
+	}
+
+	template<class Component>
+	void ReplicationRemoteEntityComponent()
+	{
+		auto& components = serialization_manager.GetRemoteEntityComponents<Component>();
+
+		for (auto& item : components)
+		{
+			entt::entity e = registry.get(item.first);
+
+			if (e == entt::null)
+			{
+				e = registry.create();
+				registry.emplace<UniqueId>(e, item.first);
+			}
+
+			//todo:可能还会有其他需要屏蔽情况?
+			if (!registry.all_of<Local>(e))
+			{
+				registry.emplace_or_replace<Component>(e, item.second);
+			}
+		}
+	}
+public:
+	void ReplicationSingleEntity()
+	{
+		ReplicationSingleEntityComponents(SingleComponents{});
+	}
+
+	template<class ... Components>
+	void ReplicationSingleEntityComponents(TypeList<Components...> = {})
+	{
+		(ReplicationSingleEntityComponent<Components>(), ...);
+	}
+
+	template<class Components>
+	void ReplicationSingleEntityComponent()
+	{
+		auto& components = serialization_manager.GetSingleEntityComponents<Component>();
+		for (auto& component : components)
+		{
+			auto e = registry.create();
+			registry.emplace<Component>(e, component);
+		}
+	}
+	
+public:
+	bool CheckLocalState()
+	{
+		auto& frame_data = serialization_manager.frame_data();
+		auto& state = registry.ctx<LocalEntityState>();
+		if (frame_data.local_entity_identifier != state.identifiers[frame_data.frame % state.identifiers.size()])
+		{
+			INFO("CheckLocalState Identifiers Rollback");
+			return false;
+		}
+
+		if (frame_data.local_entity_identifier != state.nums[frame_data.frame % state.nums.size()])
+		{
+			INFO("CheckLocalState Num Rollback");
+			return false;
+		}
+
+		return true;
+	}
+
+	bool CheckLocalEntityComponents()
+	{
+		auto& frame_data = serialization_manager.frame_data();
+
+		{
+			auto& components = serialization_manager.GetLocalEntityComponents<Transform>();
+			auto view = registry.view<Local,TransformState>();
+			for (auto e : view)
+			{
+				auto& local = view.get<Local>(e);
+				auto& transform_state = view.get<TransformState>(e);
+
+				auto& it = components.find(local);
+				if (it != components.end())
+				{
+					auto& server_transform = it->second;
+					auto& local_transform = transform_state.value[frame_data.frame % transform_state.value.size()];
+
+					if (glm::distance(server_transform.position, local_transform.position) >= 0.1f)
+					{
+						INFO("Position Rollback");
+						return false;
+					}
+					
+					auto& server_forward = server_transform.rotation * vec3(0, 0, 1);
+					auto& local_forward = local_transform.rotation * vec3(0, 0, 1);
+
+					// 旋转不一致应该没问题?是否需要判断
+					float angle = glm::angle(server_forward, local_forward);
+					if (glm::degrees(angle) > 2.f)
+					{
+						INFO("Rotation Rollback");
+						return false;
+					}
+				}
+				else
+				{
+					assert(false && "CheckLocalComponents!");
+					return false;
+				}
+			}
+		}
+
+		{
+			auto view = registry.view<Local, GameplayState>();
+			for (auto e : view)
+			{
+				auto&[local, gameplay_state] = view.get<Local, GameplayState>(e);
+				
+				// tag
+				{
+					auto& components = serialization_manager.GetLocalEntityComponents<GameplayTagCountContainer>();
+					auto it = components.find(local);
+					if (it != components.end())
+					{
+						if (it->second != gameplay_state.tag_counts[frame_data.frame % gameplay_state.tag_counts.size()])
+						{
+							INFO("GameplayTagCountContainer Rollback");
+							return false;
+						}
+					}
+					else
+					{
+						assert(false && "CheckLocalComponents!");
+						return false;
+					}
+				}
+
+				// attribute
+				{
+					auto& components = serialization_manager.GetLocalEntityComponents<GameplayAttributeSet>();
+					auto it = components.find(local);
+					if (it != components.end())
+					{
+						auto& server_attr_set = it->second;
+						auto& local_attr_set = gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()];
+
+						for (size_t i = 0; i < server_attr_set.value.size(); ++i)
+						{
+							if (server_attr_set.value[i].base_value - local_attr_set.value[i].base_value > 0.1f)
+							{
+								INFO("GameplayAttributeSet BaseValue Rollback");
+								return false;
+							}
+
+							if (server_attr_set.value[i].current_value - local_attr_set.value[i].current_value > 0.1f)
+							{
+								INFO("GameplayTagCountContainer CurrentValue Rollback");
+								return false;
+							}
+						}
+
+					}
+					else
+					{
+						assert(false && "CheckLocalComponents!");
+						return false;
+					}
+				}
+			}
+
+		}
+
+		return true;
+	}
+
+public:
+	bool IsNeedRollback()
+	{
+		if (!CheckLocalState())
+		{
+			return true;
+		}
+
+		if (!CheckLocalEntityComponents())
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	void RollbackLocalEntity()
+	{
+		auto& frame_data = serialization_manager.frame_data();
+		// 删除多创建的local entity
+		auto& sync_manager = registry.ctx<SyncManager>();
+		for (auto& item : sync_manager.sync_instances)
+		{
+			for (auto i = frame_data.local_entity_identifier; i < item.second.identifier; ++i)
+			{
+				entt::entity e = registry.get(Local(item.second.owner, i));
+				if (e != entt::null)
+				{
+					registry.destroy(e);
+				}
 			}
 		}
 	}

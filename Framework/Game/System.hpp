@@ -5,10 +5,10 @@
 #include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/Registry.hpp"
 
-#include "entt/entt.hpp"
-
 struct System
 {
+	Registry& registry;
+
 	System(Registry& _registry) 
 		: registry(_registry) 
 	{ }
@@ -20,6 +20,4 @@ struct System
 	virtual void FixedUpdate(float dt) {}
 	virtual void LateUpdate(float dt) {}
 	virtual void Finalize() = 0;
-
-	Registry& registry;
 };

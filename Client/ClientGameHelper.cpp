@@ -2,11 +2,13 @@
 
 #include "Framework/Game/Registry.hpp"
 
+#include "Framework/Game/System/CommandSystem.hpp"
+#include "Framework/Game/System/MoveCommandSystem.hpp"
 #include "Framework/Game/System/CreateActorSystem.hpp"
 #include "Framework/Game/System/CreateViewSystem.hpp"
 #include "Framework/Game/System/CreateAnimationSystem.hpp"
 #include "Framework/Game/System/CreatePhysicsActorSystem.hpp"
-#include "Framework/Game/System/ActorControlSystem.hpp"
+#include "Framework/Game/System/ActorSystem.hpp"
 #include "Framework/Game/System/MovementSystem.hpp"
 #include "Framework/Game/System/TransformStateSystem.hpp"
 #include "Framework/Game/System/UpdateViewSystem.hpp"
@@ -18,7 +20,7 @@
 #include "Framework/Game/System/DestorySystem.hpp"
 #include "Framework/Game/System/GAS/ApplyGameplayEffectSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayEffectSystem.hpp"
-#include "Framework/Game/System/GAS/TryGameplayAbilitySystem.hpp"
+#include "Framework/Game/System/GAS/GameplayAbilityCommandSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
 #include "Framework/Game/system/GAS/GameplayAttributeSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayEventSystem.hpp"
@@ -30,7 +32,7 @@
 #include "Framework/Game/System/GAS/GameplayHitTestTaskSystem.hpp"
 #include "Framework/Game/System/GAS/DestroyModifierAttributeSystem.hpp"
 #include "Framework/Game/System/UpdatePlayerUISystem.hpp"
-#include "Framework/Game/System/SyncInstanceStateSystem.hpp"
+#include "Framework/Game/System/LocalEntityStateSystem.hpp"
 #include "Framework/Game/System/ComputeAnimBoneChildTransform.hpp"
 #include "Framework/Game/System/FlyingTextSystem.hpp"
 #include "Client/System/ClientSyncSystem.hpp"
@@ -55,13 +57,15 @@ bool ClientGameHelper::IsAuthority() const
 std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(Registry* registry) const
 {
 	std::vector<std::unique_ptr<System>> systems;
-
+	
 	systems.emplace_back(std::make_unique<CreateActorSystem>(*registry));
 	systems.emplace_back(std::make_unique<CreateViewSystem>(*registry));
 	systems.emplace_back(std::make_unique<CreateAnimationSystem>(*registry));
 	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(*registry));
-	systems.emplace_back(std::make_unique<ActorControlSystem>(*registry));
-	systems.emplace_back(std::make_unique<TryGameplayAbilitySystem>(*registry));
+	systems.emplace_back(std::make_unique<CommandSystem>(*registry));
+	systems.emplace_back(std::make_unique<MoveCommandSystem>(*registry));
+	systems.emplace_back(std::make_unique<GameplayAbilityCommandSystem>(*registry));
+	systems.emplace_back(std::make_unique<ActorSystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayAbilitySystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayWaitTaskSystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayPlayAnimAndWaitTaskSystem>(*registry));
@@ -83,7 +87,7 @@ std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(Registry* r
 	systems.emplace_back(std::make_unique<TransformStateSystem>(*registry));
 	systems.emplace_back(std::make_unique<GameplayStateSystem>(*registry));
 	systems.emplace_back(std::make_unique<DestorySystem>(*registry));
-	systems.emplace_back(std::make_unique<SyncInstanceStateSystem>(*registry));
+	systems.emplace_back(std::make_unique<LocalEntityStateSystem>(*registry));
 	systems.emplace_back(std::make_unique<UpdatePlayerUISystem>(*registry));
 	systems.emplace_back(std::make_unique<UpdateViewSystem>(*registry));
 	systems.emplace_back(std::make_unique<FlyingTextSystem>(*registry));

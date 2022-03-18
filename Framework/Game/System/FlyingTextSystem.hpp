@@ -23,7 +23,7 @@ struct FlyingTextSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(float dt) override
+	void Update(float dt) override
 	{
 		auto& ui_service = registry.ctx<Locator>().Ref<UIService>();
 		auto view = registry.view<ModifierAttribute>();
@@ -38,7 +38,7 @@ struct FlyingTextSystem : public System
 					continue;
 				}
 				auto& transform = registry.get<Transform>(target);
-				ui_service.HpFlyingText(transform.position.x,transform.position.y,transform.position.z,modifier.value);
+				ui_service.HpFlyingText(transform.position.x, transform.position.y, transform.position.z, modifier.value);
 			}
 		}
 	}

@@ -10,7 +10,7 @@
 //拥有全局唯一id
 struct UniqueId
 {
-    struct Null 
+    struct Null
 	{
         [[nodiscard]] operator UniqueId() const noexcept 
 		{

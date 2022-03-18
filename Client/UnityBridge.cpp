@@ -93,8 +93,6 @@ void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time,uint32_t 
 
 void CheckPing()
 {
-	static int count = 0;
-
 	if (g_network_service)
 	{
 		uint32_t time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
@@ -128,8 +126,6 @@ extern "C"
 	{
 		std::this_thread::sleep_for(milliseconds(2));
 
-		static float total_time = 0;
-
 		if (g_network_service)
 		{
 			if (g_network_service->IsConnected())
@@ -153,8 +149,6 @@ extern "C"
 			float dt = (now - g_last_time) / 1000.0f;
 			g_game->Update(dt);
 			g_last_time = now;
-
-			//INFO("game time : {} client_run_time:{} , run_frame {} dt{}", (now1 - g_start_time1) / 1000.0f, g_game->run_time(),g_game->run_frame(),total_time);
 		}
 	}
 

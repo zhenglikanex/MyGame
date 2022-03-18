@@ -2,6 +2,7 @@
 #include <cstdint>
 
 #include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Transform.hpp"
@@ -18,60 +19,53 @@
 #include "Framework/Game/Component/GAS/GameplayHitTestTask.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 
+#include "Framework/Game/Component/TransformState.hpp"
+#include "Framework/Game/Component/LocalEntityState.hpp"
+#include "Framework/Game/Component/GAS/GameplayState.hpp"
+
 #include "Kanex.hpp"
 
 struct FrameData
 {
 	uint32_t frame;
-	uint32_t local_id;
-	uint32_t local_num;
-	
-	// local
-	std::unordered_map<Local, UniqueId> unique_ids;
-	std::unordered_map<Local, MovementForward> movement_forwards;
-	std::unordered_map<Local, CharacterMovement> character_movements;
-	std::unordered_map<Local, InfiniteModifierAttributeSet> infinite_modifier_attribute_sets;
-	std::unordered_map<Local, GameplayWaitTask> wait_tasks;
-	std::unordered_map<Local, GameplayPlayAnimAndWaitTask> play_anim_and_wait_tasks;
-	std::unordered_map<Local, GameplayInputTask> input_tasks;
-	std::unordered_map<Local, GameplayHitTestTask> hit_test_tasks;
-	std::vector<Local> ignore_gravity_tags;
-
-	// unique
-	std::unordered_map<UniqueId, Player> players;
-	std::unordered_map<UniqueId, ActorAsset> actor_assets;
-	std::unordered_map<UniqueId, ViewAsset> view_assets;
-	std::unordered_map<UniqueId, Transform> transforms;
-	std::unordered_map<UniqueId, AnimationClip> animation_clips;
-	std::unordered_map<UniqueId, GameplayAttributeSet> attribute_sets;
-	std::unordered_map<UniqueId, GameplayTagCountContainer> tag_counts;
-	std::unordered_map<UniqueId, GameplayAbilitySpec> ability_specs;
-	std::unordered_map<UniqueId, GameplayEffectSpec> effect_specs;
-	std::unordered_set<UniqueId> destorys;
-	std::vector<ModifierAttribute> modifier_attributes;
+	uint32_t local_entity_identifier;
+	uint32_t local_entity_num;
 };
 
-NON_MEMEBER_BAR(FrameData,
-	obj.frame,
-	obj.local_id,
-	obj.local_num,
-	obj.unique_ids,
-	obj.movement_forwards,
-	obj.character_movements,
-	obj.infinite_modifier_attribute_sets,
-	obj.wait_tasks,
-	obj.play_anim_and_wait_tasks,
-	obj.input_tasks,
-	obj.hit_test_tasks,
-	obj.ignore_gravity_tags,
-	obj.players,
-	obj.actor_assets,
-	obj.view_assets,
-	obj.transforms,
-	obj.animation_clips,
-	obj.attribute_sets,
-	obj.tag_counts,
-	obj.ability_specs,
-	obj.effect_specs,
-	obj.destorys,
-	obj.modifier_attributes);
+NON_MEMEBER_BAR(FrameData, obj.frame, obj.identifier, obj.local_num);
+
+template<class ... Components>
+struct TypeList
+{};
+
+using LocalComponents = TypeList
+<
+	UniqueId,
+	MovementForward,
+	CharacterMovement,
+	InfiniteModifierAttributeSet,
+	GameplayWaitTask,
+	GameplayPlayAnimAndWaitTask,
+	GameplayInputTask,
+	GameplayHitTestTask,
+	IgnoreGravity
+>;
+
+using RemoteComponents = TypeList
+<
+	Player,
+	ActorAsset,
+	ViewAsset,
+	Transform,
+	AnimationClip,
+	GameplayAttributeSet,
+	GameplayTagCountContainer,
+	GameplayAbilitySpec,
+	GameplayEffectSpec,
+	Destory
+>;
+
+using SingleComponents = TypeList
+<
+	ModifierAttribute
+>;

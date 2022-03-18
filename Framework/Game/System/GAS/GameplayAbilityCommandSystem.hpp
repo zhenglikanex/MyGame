@@ -9,10 +9,8 @@
 
 #include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/UniqueId.hpp"
-#include "Framework/Game/Component/Player.hpp"
-#include "Framework/Game/Component/SyncManager.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
-#include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilityCommand.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/ActiveGameplayAbilityList.hpp"
 
@@ -20,10 +18,10 @@
 
 #include "Framework/Game/System.hpp"
 
-struct TryGameplayAbilitySystem : public System
+struct GameplayAbilityCommandSystem : public System
 {
-	TryGameplayAbilitySystem(Registry& _registry) : System(_registry) { }
-	~TryGameplayAbilitySystem() {}
+	GameplayAbilityCommandSystem(Registry& _registry) : System(_registry) { }
+	~GameplayAbilityCommandSystem() {}
 
 	bool Initialize() override
 	{
@@ -120,7 +118,7 @@ struct TryGameplayAbilitySystem : public System
 		auto& game_helper = registry.ctx<Locator>().Ref<GameHelper>();
 		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 
-		if (auto try_ga = registry.try_ctx<TryGameplayAbility>())
+		if (auto try_ga = registry.try_ctx<GameplayAbilityCommand>())
 		{
 			for (auto& ga_list : try_ga->value)
 			{
@@ -135,8 +133,6 @@ struct TryGameplayAbilitySystem : public System
 					{
 						continue;
 					}
-
-					auto source = registry.get<UniqueId>(info.source);
 
 					auto& source_tag_count = registry.get<GameplayTagCountContainer>(info.source);
 
@@ -190,8 +186,7 @@ struct TryGameplayAbilitySystem : public System
 					}
 
 					auto e = registry.create_predict(info.source);
-					registry.emplace<GameplayAbilitySpec>(e, info.ability, active_ability->level, source, target);
-
+					registry.emplace<GameplayAbilitySpec>(e, info.ability, active_ability->level, registry.get<UniqueId>(info.source), target);
 					registry.patch<GameplayTagCountContainer>(info.source, [&ga](GameplayTagCountContainer& tag_count)
 						{
 							tag_count.UpdateTagCount(ga.activation_owned_tags, 1);

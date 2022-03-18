@@ -76,10 +76,8 @@ private:
 extern "C"
 {
 	EXPORT_DLL void SetUnityDelegate(UnityDelegate delegate);
+	EXPORT_DLL void JoinMatch();
 	EXPORT_DLL void DestoryGame();
 	EXPORT_DLL void UpdateGame(float dt);
 	EXPORT_DLL void GameInput(const char* data, int32_t size);
-	EXPORT_DLL void GameRollback();
-	EXPORT_DLL void JoinMatch();
-	EXPORT_DLL void CheckPing();
 }

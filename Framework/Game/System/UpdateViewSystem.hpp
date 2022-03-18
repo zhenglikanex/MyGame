@@ -24,7 +24,7 @@ struct UpdateViewSystem : public System
 		return true;
 	}
 
-	void FixedUpdate(float dt) override
+	void Update(float dt) override
 	{
 		UpdateTransform();
 		UpdateAnimation();

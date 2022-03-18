@@ -6,11 +6,8 @@
 #include <unordered_map>
 #include <cassert>
 #include <cstdint>
-#include <queue>
 
 #include "Framework/Game/GameConfig.hpp"
-#include "Framework/Game/FileService.hpp"
-#include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/PlayerInfo.hpp"
 #include "Framework/Game/Registry.hpp"
@@ -18,8 +15,6 @@
 #include "Framework/Game/Component/Command.hpp"
 
 #include "Framework/Game/System.hpp"
-
-#include "Framework/Game/Data/Config.hpp"
 
 #include "Kanex.hpp"
 
@@ -45,29 +40,11 @@ public:
 	uint32_t run_frame() const { return run_frame_; }
 	Registry& registry() { return registry_; }
 private:
-	void LoadAllConfig();
+	void InitializeSyncInstances();
+	void SetCtx();
+	void UnSetCtx();
 	void LoadScene(const std::string& name);
 	void CreatePlayer();
-
-	template<class T>
-	std::enable_if_t<std::is_base_of_v<BaseConfig,T>,void>
-		LoadConfig(const std::string& file)
-	{
-		auto& locator = registry_.ctx<Locator>();
-		auto& file_service = locator.Ref<const FileService>();
-		try
-		{
-			T config;
-			std::string data = file_service.OpenFile(file);
-			config.Load(data);
-			registry_.set<T>(std::move(config));
-		}
-		catch (std::exception& e)
-		{
-			ERROR("{} load failed,error:{}", file, e.what());
-			//assert(false && "load config failed!");
-		}
-	}
 
 	CommandGroup& GetCommandGroup(uint32_t frame);
 

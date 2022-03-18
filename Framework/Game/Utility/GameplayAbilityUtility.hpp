@@ -5,7 +5,7 @@
 
 #include "Framework/Game/Component/UniqueId.hpp"
 #include "Framework/Game/Component/Local.hpp"
-#include "Framework/Game/Component/GAS/TryGameplayAbility.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilityCommand.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
@@ -17,27 +17,27 @@
 struct GameplayAbilityUtility
 {
 public:
-	static void TryGameplayAbility(
+	static void BuildGameplayAbilityCommand(
 		Registry& registry,
 		entt::entity source,
 		std::string_view ability,
 		entt::entity target = entt::null)
 	{
-		auto& try_ga = registry.ctx_or_set<::TryGameplayAbility>();
+		auto& try_ga = registry.ctx_or_set<::GameplayAbilityCommand>();
 		if (try_ga.value.find(source) == try_ga.value.end())
 		{
-			try_ga.value.emplace(source, std::vector<GameplayAbilityInfo>());
+			try_ga.value.emplace(source, std::vector<GameplayAbilityCommandSpec>());
 		}
 		try_ga.value[source].emplace_back(ability, source, target);
 	}
 
-	static void TryGameplayAbility(
+	static void BuildGameplayAbilityCommand(
 		Registry& registry,
 		UniqueId source,
 		std::string_view ability,
 		UniqueId target = UniqueId::null)
 	{
-		GameplayAbilityUtility::TryGameplayAbility(registry,registry.get(source), ability, registry.get(target));
+		GameplayAbilityUtility::BuildGameplayAbilityCommand(registry,registry.get(source), ability, registry.get(target));
 	}
 
 	static void CommitGameplayAbilityCost(Registry& registry,entt::entity ability)

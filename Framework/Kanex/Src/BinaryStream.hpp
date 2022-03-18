@@ -15,6 +15,21 @@ namespace kanex
 		Buffer(const std::vector<uint8_t>& buffer) :buffer_(buffer), write_cursor_(buffer.size()), read_cursor_(0) { }
 		Buffer(std::vector<uint8_t>&& buffer) : buffer_(std::move(buffer)), write_cursor_(buffer.size()), read_cursor_(0) { }
 
+		Buffer& operator=(const Buffer&) = default;
+		Buffer& operator=(Buffer&& rhs)
+		{
+			if (this == &rhs)
+			{
+				return *this;
+			}
+
+			buffer_ = std::move(rhs.buffer_);
+			write_cursor_ = rhs.write_cursor_;
+			read_cursor_ = rhs.read_cursor_;
+
+			return *this;
+		}
+
 		void Write(const void* data, size_t size)
 		{
 			if (write_cursor_ + size > buffer_.size())

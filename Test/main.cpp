@@ -2,31 +2,13 @@
 
 #include "3rdparty/include/catch2/catch.hpp"
 #include <chrono>
-#include "Framework/Proto/NetMessage.hpp"
-#include "Framework/Proto/Battle.pb.h"
-#include "Framework/Game/Component/TransformState.hpp"
 #include <any>
 #include <iostream>
 #include "Framework/Game/Math.hpp"
 #include <variant>
 #include <iostream>
 #include <bitset>
-
-
-enum class Enum : uint32_t {};
-
-using GameplayEventData = std::variant<Enum, std::vector<Enum>>;
-
-
-class A {
-	uint64_t a;
-	uint8_t b;
-};
-
-class B {
-	uint64_t b;
-	uint64_t a;
-};
+#include "Framework/Game/Proto.hpp"
 
 using namespace std::chrono;
 
@@ -35,24 +17,24 @@ struct Serialize1
 	
 };
 
-std::size_t fun(std::size_t a, std::size_t b)
+
+template<class Component>
+int Func1(uint32_t i)
 {
-	return a | b;
+	std::cout << i << std::endl;
+	return 1;
 }
 
-enum class Type : uint8_t
+template<class ... Components>
+void Func(TypeList<Components...> = {})
 {
-	kType1
-};
+	(Func1<Components>(), ...);
+}
 
 
 TEST_CASE_METHOD(Serialize1, "NetMessage")
 {
-	std::cout << std::numeric_limits<int64_t>::max() << std::endl << (uint64_t)std::pow(2ul,32ul)-1 << std::endl;
-	
-	std::cout << sizeof(A) << std::endl;
-	std::cout << sizeof(B) << std::endl;
-
+	Func(LocalComponents{});
 	
 
 	//std::numeric_limits<float>::epsilon()
