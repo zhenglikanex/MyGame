@@ -5,7 +5,7 @@
 
 #include "Kanex.hpp"
 
-#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
@@ -13,15 +13,15 @@ struct GameplayAbilitySpec
 {
 	std::string ability;
 	uint32_t level;
-	UniqueId source;
-	UniqueId target;
+	Remote source;
+	Remote target;
 	bool activation;
 	//记录下技能过程中创建的其他对象
 	std::unordered_map<uint32_t, Local> entity_manager;
 
 	GameplayAbilitySpec() = default;
 
-	GameplayAbilitySpec(std::string_view _ability,uint32_t _level, UniqueId _source, UniqueId _target)
+	GameplayAbilitySpec(std::string_view _ability,uint32_t _level, Remote _source, Remote _target)
 		: ability(_ability)
 		, level(_level)
 		, source(_source)

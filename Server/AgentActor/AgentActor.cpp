@@ -38,7 +38,6 @@ bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	ClientConnect("ping", &AgentActor::Ping);
 	ClientConnect("join_match", &AgentActor::JoinMatch);
 	ClientConnect("battle_loaded", &AgentActor::BattledLoaded);
-	ClientConnect("input_command", &AgentActor::InputCommand);
 
 	std::cout << "AgentInit:" << id() << std::endl;
 
@@ -72,7 +71,10 @@ void AgentActor::ClientReceive(const std::any& data)
 	}
 	else
 	{
-		std::cout << "未处理的客户端消息:" << message.name() << std::endl;
+		if (battle_ != kNull)
+		{
+			Call(battle_, "push_game_message",std::make_tuple(message.name(),message.data()));
+		}
 	}
 }
 
@@ -185,16 +187,6 @@ void AgentActor::BattledLoaded(const NetMessage& request)
 	NetMessage response;
 	response.set_session(request.session());
 	Call(gate_,"send", std::move(response));
-}
-
-void AgentActor::InputCommand(const NetMessage& request)
-{
-	if (battle_ != kNull)
-	{		
-		auto data = request.data();
-
-		Call(battle_, "input_command", std::make_tuple(id(),std::move(data)));
-	}
 }
 
 ACTOR_IMPLEMENT(AgentActor)

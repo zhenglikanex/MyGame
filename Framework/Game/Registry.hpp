@@ -3,8 +3,8 @@
 #include <cassert>
 #include <type_traits>
 
+#include "Framework/Game/GameMode.hpp"
 #include "Framework/Game/Locator.hpp"
-#include "Framework/Game/GameHelper.hpp"
 
 #include "Framework/Game/Component/EntityByLocalMap.hpp"
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
@@ -17,16 +17,18 @@
 class Registry
 {
 public:
-	Registry(const GameHelper& game_helper)
-		: local_map_(registry_.set<EntityByLocalMap>())
+	Registry(GameMode game_mode,Locator&& locator)
+		: game_mode_(game_mode)
+		, local_map_(registry_.set<EntityByLocalMap>())
 		, unique_map_(registry_.set<EntityByUniqueIdMap>())
-		, game_helper_(game_helper)
 	{
+		registry_.set<Locator>(locator);
+
 		registry_.on_construct<Local>().connect<&Registry::ConnectLocalIdToEntity>();
 		registry_.on_destroy<Local>().connect<&Registry::DisconnectLocalIdToEntity>();
 
-		registry_.on_construct<UniqueId>().connect<&Registry::ConnectUniqueIdToEntity>();
-		registry_.on_destroy<UniqueId>().connect<&Registry::DisconnectUniqueIdToEntity>();
+		registry_.on_construct<Remote>().connect<&Registry::ConnectUniqueIdToEntity>();
+		registry_.on_destroy<Remote>().connect<&Registry::DisconnectUniqueIdToEntity>();
 	}
 
 	[[nodiscard]] bool valid(const entt::registry::entity_type entity) const {
@@ -261,9 +263,9 @@ public:
 	entt::entity create_predict(uint32_t player)
 	{
 		auto e = registry_.create();
-		if (game_helper_.IsAuthority())
+		if (game_mode_ == GameMode::kAuthority)
 		{
-			registry_.emplace<UniqueId>(e, e);
+			registry_.emplace<Remote>(e, e);
 		}
 
 		auto& sync_manager = registry_.ctx<SyncManager>();
@@ -289,7 +291,7 @@ public:
 
 	entt::entity create_predict()
 	{
-		assert(game_helper_.IsAuthority() && "只能在服务端上执行");
+		assert(game_mode_ == GameMode::kAuthority && "只能在服务端上执行");
 
 		return create_predict(ServerInstance);
 	}
@@ -298,7 +300,7 @@ public:
 	entt::entity create_unique() 
 	{
 		auto e = registry_.create();
-		registry_.emplace<UniqueId>(e, e);
+		registry_.emplace<Remote>(e, e);
 
 		return e;
 	}
@@ -332,7 +334,7 @@ public:
 		return e;
 	}
 
-	bool valid(UniqueId id) const
+	bool valid(Remote id) const
 	{
 		return get(id) != entt::null;
 	}
@@ -342,7 +344,7 @@ public:
 		return get(id) != entt::null;
 	}
 
-	entt::entity get(UniqueId id) const
+	entt::entity get(Remote id) const
 	{
 		auto it = unique_map_.value.find(id);
 		if (it == unique_map_.value.end())
@@ -376,7 +378,7 @@ public:
 private:
 	static void ConnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
 	{
-		auto& unique_id = registry.get<UniqueId>(e);
+		auto& unique_id = registry.get<Remote>(e);
 
 		auto& map = registry.ctx<EntityByUniqueIdMap>();
 		map.value.emplace(unique_id, e);
@@ -384,7 +386,7 @@ private:
 
 	static void DisconnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
 	{
-		auto& unique_id = registry.get<UniqueId>(e);
+		auto& unique_id = registry.get<Remote>(e);
 
 		auto& map = registry.ctx<EntityByUniqueIdMap>();
 		map.value.erase(unique_id);
@@ -407,7 +409,7 @@ private:
 	}
 private:
 	entt::registry registry_;
+	GameMode game_mode_;
 	EntityByLocalMap& local_map_;
 	EntityByUniqueIdMap& unique_map_;
-	const GameHelper& game_helper_;
 };

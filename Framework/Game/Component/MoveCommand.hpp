@@ -2,16 +2,18 @@
 
 #include <vector>
 
-#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 
 struct MoveCommandSpec
 {
-	UniqueId target;
+	Remote target;
 
 	float x;
 	float y;
 
-	MoveCommandSpec(UniqueId _target, float _x, float _y)
+	MoveCommandSpec() = default;
+
+	MoveCommandSpec(Remote _target, float _x, float _y)
 		: target(_target)
 		, x(_x)
 		, y(_y)
@@ -20,10 +22,12 @@ struct MoveCommandSpec
 	}
 };
 
+NON_MEMEBER_BAR(MoveCommandSpec, obj.target,obj.x,obj.y);
+
 struct MoveCommand
 {
 	std::vector<MoveCommandSpec> value;
-	
-	MoveCommand(const MoveCommand&) = delete;
-	MoveCommand(MoveCommand&&) = delete;
+
 };
+
+NON_MEMEBER_BAR(MoveCommand, obj.value);

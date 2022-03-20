@@ -6,11 +6,13 @@
 
 struct GameState
 {
-	uint32_t run_frame;			// 当前运行帧,包含预测帧
-	uint32_t verified_frame;	// 
+	uint32_t real_frame;		// 游戏从开始到现在过去的帧
+	uint32_t run_frame;			// 当前运行到的帧
+	uint32_t verified_frame;	// 确认的帧
 
 	GameState()
-		: run_frame(0)
+		: real_frame(0)
+		, run_frame(0)
 		, verified_frame(0)
 	{
 

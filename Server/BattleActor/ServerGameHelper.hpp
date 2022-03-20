@@ -2,17 +2,15 @@
 
 #include "Framework/Game/GameHelper.hpp"
 
-
 class ServerGameHelper : public GameHelper
 {
 public:
+
 	~ServerGameHelper();
 
-	bool IsAuthority() const override;
+	GameMode GetGameMode() const override;
 
-	std::vector<std::unique_ptr<System>> CreateSystems(Registry* registry) const override;
-
-	bool IsLocalPlayer(uint32_t id) const override;
-	bool IsRemotePlayer(uint32_t id) const override;
+	void CreateSystems(Game* game) const override;
 private:
+
 };

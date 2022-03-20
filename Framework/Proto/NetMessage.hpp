@@ -86,6 +86,8 @@ public:
 		return sizeof(uint16_t) + sizeof(uint8_t) + name_.size() + data_.size();
 	}
 
+	std::vector<uint8_t> MoveData() { return std::move(data_); }
+
 	void set_session(uint16_t session) { session_ = session; }
 
 	void set_name(std::string_view name) 

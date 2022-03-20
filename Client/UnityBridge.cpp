@@ -34,21 +34,26 @@ std::unique_ptr<ClientNetwork> g_network_service = nullptr;
 
 uint32_t g_my_id = 0;
 uint32_t g_ping = 0;
-uint32_t g_last_time = 0;
+uint64_t g_last_time = 0;
 
-std::queue<std::unique_ptr<NetMessage>> g_game_messages;
+std::unordered_map<std::string,std::queue<std::unique_ptr<NetMessage>>> g_game_messages;
 
-kanex::Buffer g_input_buffer(20);
-
-std::unique_ptr<NetMessage> RecvGameMessage()
+std::unique_ptr<NetMessage> RecvGameMessage(const std::string& name)
 {
-	if (g_game_messages.empty())
+	if (g_game_messages.find(name) == g_game_messages.end())
 	{
 		return nullptr;
 	}
 
-	auto message = std::move(g_game_messages.front());
-	g_game_messages.pop();
+	auto& messages = g_game_messages[name];
+
+	if (messages.empty())
+	{
+		return nullptr;
+	}
+
+	auto message = std::move(messages.front());
+	messages.pop();
 	return std::move(message);
 }
 
@@ -81,14 +86,23 @@ void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time,uint32_t 
 	locator.Set<InputService>(std::make_unique<UnityInputService>());
 	locator.Set<UIService>(std::make_unique<UnityUIService>());
 	locator.Set<NetworkService>(std::make_unique<ClientNetworkService>(&RecvGameMessage, &SendGameMessage));
-	locator.Set<GameHelper>(std::make_unique<ClientGameHelper>(local_id));
 
-	g_game = std::make_unique<Game>(std::move(locator),std::move(players));
-	if (g_game->Initialize(start_time))
+	g_game = std::make_unique<Game>(std::make_unique<ClientGameHelper>(local_id),std::move(locator),std::move(players));
+	if (g_game->Initialize())
 	{
 		g_game->Finalize();
 		g_game = nullptr;
-	}	
+	}
+
+	if (g_game)
+	{
+		//加上服务器到这里的延迟
+		uint32_t delay = duration_cast<milliseconds>(high_resolution_clock::now().time_since_epoch()).count() - start_time;
+
+		//让客户端领先服务器1帧加半个rtt保证，使客户端的输入能在服务器执行当前帧时收到，后面可以再根据ping值来调整客户端领先的值
+		// todo:这里计算的g_ping有点不太准,暂时放大领先的帧数
+		g_game->Update((delay + g_ping / 1.5 + 34) * 1000000);
+	}
 }
 
 void CheckPing()
@@ -144,56 +158,9 @@ extern "C"
 
 		if (g_game)
 		{
-			// todo:这个dt精度不够，先不用
-			uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-			float dt = (now - g_last_time) / 1000.0f;
-			g_game->Update(dt);
+			uint64_t now = duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();
+			g_game->Update(now - g_last_time);
 			g_last_time = now;
-		}
-	}
-
-	EXPORT_DLL void GameInput(const char* data, int32_t size)
-	{
-		if (g_game)
-		{
-			Proto::CS2CPlusPlusCommand csharp_command;
-			csharp_command.ParseFromArray(data, size);
-
-			Command command;
-			command.frame = g_game->run_frame();
-			command.verified_frame = g_game->GetVerifiedFrame();
-			command.x_axis = std::abs(csharp_command.x_axis()) < 0.1 ? 0 : csharp_command.x_axis();
-			command.y_axis = std::abs(csharp_command.y_axis()) < 0.1 ? 0 : csharp_command.y_axis();
-			for (auto& item : csharp_command.abilities())
-			{
-				command.abilities.emplace(item.first,static_cast<AbilityStatus>(item.second));
-			}
-
-			g_game->InputCommand(g_game->run_frame(), g_my_id, command);
-
-			kanex::BinaryStream stream(g_input_buffer);
-			kanex::BinaryOutputArchive oar(stream);
-
-			oar(command);
-
-			std::vector<uint8_t> data(g_input_buffer.Size());
-			g_input_buffer.Read(data.data(), data.size());
-
-			g_input_buffer.Clear();
-
-			if (g_network_service)
-			{
-				g_network_service->Send("input_command",std::move(data));
-			}
-		}
-	}
-
-	EXPORT_DLL void GameRollback()
-	{
-		if (g_game)
-		{
-			uint32_t min = 0;
-			//g_game->Rollback(std::max(min,g_game->run_frame() - 1000));
 		}
 	}
 
@@ -214,7 +181,7 @@ extern "C"
 					{
 						INFO("start_battle");
 						
-						g_last_time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+						g_last_time = duration_cast<milliseconds>(high_resolution_clock::now().time_since_epoch()).count();
 
 						Proto::StartBattleInfo info;
 						info.ParseFromArray(message.data().data(), message.data().size());
@@ -223,12 +190,7 @@ extern "C"
 						INFO("myid {}", info.my_id());
 						UnityBridge::Get().CallUnity<void>("SetMyId", info.my_id());
 
-						//让客户端领先服务器1帧加半个rtt保证，使客户端的输入能在服务器执行当前帧时收到，后面可以再根据ping值来调整客户端领先的值
-						//todo:这个应该用dt 逝去的时间来做的，之前写的精度不够，导致客户端和是服务器的时间随着物理时间增长，逻辑时间对不上了，
-						//先用当前时间减去开始时间，后面再改
-						// todo:这里计算的g_ping有点不太准,暂时放大领先的帧数
-						uint32_t start_time = info.start_time() - (g_ping / 1.5 + 34);
-						InitGame(info.player_infos(),start_time, info.my_id());
+						InitGame(info.player_infos(),info.start_time(), info.my_id());
 					}
 					else if (message.name() == "ping")
 					{
@@ -242,7 +204,13 @@ extern "C"
 					}
 					else
 					{
-						g_game_messages.emplace(std::make_unique<NetMessage>(std::move(message)));
+						if (g_game_messages.find(message.name()) == g_game_messages.end())
+						{
+							g_game_messages.emplace(message.name(), std::queue<std::unique_ptr<NetMessage>>());
+						}
+
+						auto& messges = g_game_messages[message.name()];
+						messges.emplace(std::make_unique<NetMessage>(std::move(message)));
 					}
 				});
 

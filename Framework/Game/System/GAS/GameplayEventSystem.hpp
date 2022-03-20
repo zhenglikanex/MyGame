@@ -33,13 +33,13 @@ public:
 				entt::entity receiver = sender.first;
 				if (registry.valid(receiver))
 				{
-					if (!registry.all_of<UniqueId>(receiver))
+					if (!registry.all_of<Remote>(receiver))
 					{
 						continue;
 					}
 
 					auto view = registry.view<GameplayAbilityScript>();
-					auto abilities = GameplayAbilityUtility::GetActiveGameplayAbilities(registry, registry.get<UniqueId>(receiver));
+					auto abilities = GameplayAbilityUtility::GetActiveGameplayAbilities(registry, registry.get<Remote>(receiver));
 					for (auto& event : sender.second)
 					{
 						for (auto ability : abilities)

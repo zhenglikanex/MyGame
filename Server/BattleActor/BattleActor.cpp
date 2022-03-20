@@ -17,7 +17,7 @@ using namespace std::chrono;
 BattleActor::BattleActor(ActorId id)
 	: Actor(id)
 	, start_(false)
-	, start_time_(0)
+	, last_time_(0)
 {
 
 }
@@ -35,7 +35,7 @@ bool BattleActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	}
 
 	ActorConnect("start_battle", &BattleActor::StartBattle, this);
-	ActorConnect("input_command", &BattleActor::InputCommand, this);
+	ActorConnect("input_command", &BattleActor::RecvGameMessage, this);
 
 	return true;
 }
@@ -51,6 +51,7 @@ void BattleActor::Stop()
 
 void BattleActor::Receive(ActorMessage&& actor_msg)
 {
+
 }
 
 void BattleActor::StartBattle(const std::any& data)
@@ -59,12 +60,6 @@ void BattleActor::StartBattle(const std::any& data)
 	std::cout << "Battle Start Success!" << std::endl;
 	
 	// todo:不做上下线处理了
-	for (uint32_t i = 0; i < players_.size(); ++i)
-	{
-		ids_.emplace(players_[i], i);
-		player_commands_.emplace(i, std::vector<Command>());
-	}
-
 	Proto::GamePlayerInfos player_infos;
 	for (auto player : players_)
 	{
@@ -73,7 +68,7 @@ void BattleActor::StartBattle(const std::any& data)
 		player_info->set_actor_asset("SuperHero.json");
 	}
 
-	auto start_time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+	auto start_time = duration_cast<milliseconds>(high_resolution_clock::now().time_since_epoch()).count();
 	for (auto player : players_)
 	{
 		Proto::StartBattleInfo info;
@@ -90,7 +85,7 @@ void BattleActor::StartBattle(const std::any& data)
 	}
 
 	start_ = true;
-	start_time_ = start_time;
+	last_time_ = start_time;
 	
 	std::vector<PlayerInfo> players;
 	for (auto iter = player_infos.player_infos().cbegin(); iter < player_infos.player_infos().cend(); ++iter)
@@ -102,24 +97,21 @@ void BattleActor::StartBattle(const std::any& data)
 	}
 
 	Locator locator;
-	//locator.Set<ViewService>(std::make_unique<ServerViewService>());
-	locator.Set<InputService>(std::make_unique<ServerInputService>(std::bind(&BattleActor::GameInput, this)));
 	locator.Set<FileService>(std::make_unique<ServerFileService>());
-	locator.Set<GameHelper>(std::make_unique<ServerGameHelper>());
 	locator.Set<NetworkService>(std::make_unique<ServerNetworkService>(
 		std::bind(&BattleActor::RecvGameMessage, this),
 		std::bind(&BattleActor::SendGameMessage, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
 	
 	game_ = std::make_unique<Game>(std::move(locator),std::move(players));
-	if (!game_->Initialize(start_time))
+	if (!game_->Initialize())
 	{
-		g_game->Finalize();
+		game_->Finalize();
 		game_ = nullptr;
 	}
 
 	AddTimer(1, -1, [this]()
 		{
-			Update();
+			Update();	
 		});
 }
 
@@ -127,66 +119,22 @@ void BattleActor::Update()
 {
 	if (game_)
 	{
-		game_->Update(0);
+		uint64_t now = duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();
+		game_->Update(now - last_time_);
+		last_time_ = now;
 	}
 }
 
-void BattleActor::InputCommand(const std::any& data)
+void BattleActor::PushGameMessage(const std::any& data)
 {
-	auto& [player,buffer] = std::any_cast<std::tuple<ActorId,std::vector<uint8_t>>>(data);
+	auto& [name, message_data] = std::any_cast<std::tuple<std::string, std::vector<uint8_t>>>(data);
+
+	if (g_game_messages.find(name) == g_game_messages.end())
+	{
+		//g_game_messages.emplace( std: )
+	}
 	
-	kanex::Buffer buf(std::move(buffer));
-	kanex::BinaryStream stream(buf);
-	kanex::BinaryInputArchive ar(stream);
-
-	Command command;
-	ar(command);
-
-	auto iter = ids_.find(player);
-	if (iter == ids_.end())
-	{
-		return;
-	}
-
-	auto id = iter->second;
-	auto it = player_commands_.find(id);
-	if (it == player_commands_.end())
-	{
-		return;
-	}
-
-	if (player_commands_[id].size() <= command.frame)
-	{
-		player_commands_[id].emplace_back(command);
-		//INFO("input command {} x {} y{}", command.frame, command.x_axis, command.y_axis);
-	}
-	else
-	{
-		INFO("server cur frame {} clinet input frame {}", player_commands_[id].size(), command.frame);
-	}
-}
-
-void BattleActor::GameInput()
-{
-	auto frame = game_->run_frame();
-	for (auto entry : ids_)
-	{
-		auto& commands = player_commands_[entry.second];
-		while (commands.size() <= frame)
-		{
-			INFO("****************************************{}", frame);
-			commands.emplace_back(Command());
-		}
-		
-		//INFO("run command {} x {} y{}",commands[frame].frame, commands[frame].x_axis, commands[frame].y_axis);
-		game_->InputCommand(frame,entry.second, commands[frame]);
-	}
-}
-
-std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> BattleActor::RecvGameMessage()
-{
-	// todo:
-	return nullptr;
+	return ;
 }
 
 void BattleActor::SendGameMessage(uint32_t id,std::string_view name, std::vector<uint8_t>&& data)

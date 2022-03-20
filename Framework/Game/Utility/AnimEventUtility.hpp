@@ -2,7 +2,7 @@
 
 #include <string_view>
 
-#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 #include "Framework/Game/Component/GAS/GameplayEvent.hpp"
 #include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
 #include "Framework/Game/Utility/GameplayEventUtility.hpp"

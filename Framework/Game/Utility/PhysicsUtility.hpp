@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Framework/Game/Math.hpp"
-#include "Framework/Game/GameHelper.hpp"
 
 #include "Framework/Game/Component/PhysicsWorld.hpp"
 #include "Framework/Game/Component/Transform.hpp"
@@ -67,14 +66,10 @@ struct PhysicsUtility
 		PhysicsWorld world;
 		world.foundation = PxCreateFoundation(PX_FOUNDATION_VERSION,PhysicsWorld::s_allocator,PhysicsWorld::s_error_callback);
 		
-#if USE_PVD
-		auto& helper = reg.ctx<Locator>().Ref<const GameHelper>();
-		if (helper.IsAuthority())
-		{
-			world.pvd = PxCreatePvd(*world.foundation);
-			PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
-			world.pvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
-		}
+#if USE_PVD && USE_PX_DEBUG
+		world.pvd = PxCreatePvd(*world.foundation);
+		PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
+		world.pvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
 		
 		world.physics = PxCreatePhysics(PX_PHYSICS_VERSION, *world.foundation, PxTolerancesScale(), true, world.pvd);
 #else
@@ -92,7 +87,8 @@ struct PhysicsUtility
 		
 		world.scene = world.physics->createScene(scene_desc);
 		
-#if USE_PVD
+#if USE_PVD && USE_PX_DEBUG
+
 		PxPvdSceneClient* pvdClient = world.scene->getScenePvdClient();
 		if (pvdClient)
 		{

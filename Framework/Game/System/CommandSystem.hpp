@@ -21,34 +21,16 @@ struct CommandSystem : public System
 
 	void FixedUpdate(float dt) override
 	{
-		auto view = registry.view<Command>();
-		for (auto e : view)
-		{
-			auto& command = view.get<Command>(e);
-			
-			BuildMoveCommand(command);
-			BuildAbilityCommand(command);
-		}
-	}
+		auto& game_state = registry.ctx<GameState>();
+		auto& command_state = registry.ctx_or_set<CommandState>();
 
-	void BuildMoveCommand(const Command& command)
-	{
-		if (command.x_axis > 0 || command.y_axis > 0)
-		{
-			auto& move_command = registry.ctx_or_set<MoveCommand>();
-			move_command.value.emplace_back(command.target, command.x_axis, command.y_axis);
-		}
-	}
+		auto& command = command_state.value[game_state.run_frame % command_state.value.size()];
 
-	void BuildAbilityCommand(const Command& command)
-	{
-		for (auto& item : command.abilities)
-		{
-			if (item.second == AbilityStatus::kDown)
-			{
-				GameplayAbilityUtility::BuildGameplayAbilityCommand(registry, command.target, item.first);
-			}
-		}
+		auto& move_command = registry.ctx_or_set<MoveCommand>();
+		move_command.value = command.move_command.value;
+
+		auto& ability_command = registry.ctx_or_set<GameplayAbilityCommand>();
+		ability_command.value = command.gameplay_ability_command.value;
 	}
 
 	void Finalize() override

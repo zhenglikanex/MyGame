@@ -3,7 +3,7 @@
 #include "Framework/Game/GAS/GameplayAbility.hpp"
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
 
-#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 #include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilityCommand.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
@@ -33,9 +33,9 @@ public:
 
 	static void BuildGameplayAbilityCommand(
 		Registry& registry,
-		UniqueId source,
+		Remote source,
 		std::string_view ability,
-		UniqueId target = UniqueId::null)
+		Remote target = Remote::null)
 	{
 		GameplayAbilityUtility::BuildGameplayAbilityCommand(registry,registry.get(source), ability, registry.get(target));
 	}
@@ -93,7 +93,7 @@ public:
 		}
 	}
 
-	static std::vector<entt::entity> GetActiveGameplayAbilities(Registry& registry, const UniqueId& id)
+	static std::vector<entt::entity> GetActiveGameplayAbilities(Registry& registry, const Remote& id)
 	{
 		std::vector<entt::entity> abilities;
 

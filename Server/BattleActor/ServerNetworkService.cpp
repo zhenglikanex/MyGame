@@ -16,7 +16,7 @@ ServerNetworkService::~ServerNetworkService()
 
 }
 
-std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> ServerNetworkService::Recv() const
+std::unique_ptr<std::vector<uint8_t>> ServerNetworkService::Recv() const
 {
 	if (recv_handler_)
 	{

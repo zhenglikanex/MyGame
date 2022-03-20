@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Framework/Game/RandomEngine.hpp"
-#include "Framework/Game/GameHelper.hpp"
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 

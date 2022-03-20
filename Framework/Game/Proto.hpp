@@ -1,7 +1,7 @@
 #include <unordered_map>
 #include <cstdint>
 
-#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 #include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/Player.hpp"
@@ -40,7 +40,7 @@ struct TypeList
 
 using LocalComponents = TypeList
 <
-	UniqueId,
+	Remote,
 	MovementForward,
 	CharacterMovement,
 	InfiniteModifierAttributeSet,

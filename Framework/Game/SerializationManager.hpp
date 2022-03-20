@@ -5,7 +5,7 @@
 #include "Framework/Game/Registry.hpp"
 
 #include "Framework/Game/Component/GameState.hpp"
-#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 #include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/Local.hpp"
 #include "Framework/Game/Component/Player.hpp"
@@ -31,7 +31,7 @@ struct TypeList
 
 using LocalComponents = TypeList
 <
-	UniqueId,
+	Remote,
 	MovementForward,
 	CharacterMovement,
 	InfiniteModifierAttributeSet,
@@ -184,10 +184,10 @@ private:
 		auto& components = GetRemoteEntityComponents<Component>();
 		components.clear();
 
-		auto view = registry.view<UniqueId,Component>();
+		auto view = registry.view<Remote,Component>();
 		for (auto e : view)
 		{
-			auto&[id, component] = view.get<UniqueId,Component>(e);
+			auto&[id, component] = view.get<Remote,Component>(e);
 			components.emplace(i, component);
 		}
 

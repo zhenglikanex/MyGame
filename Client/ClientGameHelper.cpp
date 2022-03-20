@@ -1,6 +1,6 @@
 #include "ClientGameHelper.hpp"
 
-#include "Framework/Game/Registry.hpp"
+#include "Framework/Game/Game.hpp"
 
 #include "Framework/Game/System/CommandSystem.hpp"
 #include "Framework/Game/System/MoveCommandSystem.hpp"
@@ -22,7 +22,7 @@
 #include "Framework/Game/System/GAS/GameplayEffectSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAbilityCommandSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
-#include "Framework/Game/system/GAS/GameplayAttributeSystem.hpp"
+#include "Framework/Game/System/GAS/GameplayAttributeSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayEventSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayStateSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
@@ -35,7 +35,10 @@
 #include "Framework/Game/System/LocalEntityStateSystem.hpp"
 #include "Framework/Game/System/ComputeAnimBoneChildTransform.hpp"
 #include "Framework/Game/System/FlyingTextSystem.hpp"
+
+#include "Client/System/InputSystem.hpp"
 #include "Client/System/ClientSyncSystem.hpp"
+
 
 ClientGameHelper::ClientGameHelper(uint32_t local_id)
 	: GameHelper()
@@ -49,63 +52,56 @@ ClientGameHelper::~ClientGameHelper()
 
 }
 
-bool ClientGameHelper::IsAuthority() const
+GameMode ClientGameHelper::GetGameMode() const
 {
-	return false;
+	return GameMode::kSimulation;
 }
 
-std::vector<std::unique_ptr<System>> ClientGameHelper::CreateSystems(Registry* registry) const
+void ClientGameHelper::CreateSystems(Game* game) const
 {
-	std::vector<std::unique_ptr<System>> systems;
-	
-	systems.emplace_back(std::make_unique<CreateActorSystem>(*registry));
-	systems.emplace_back(std::make_unique<CreateViewSystem>(*registry));
-	systems.emplace_back(std::make_unique<CreateAnimationSystem>(*registry));
-	systems.emplace_back(std::make_unique<CreatePhysicsActorSystem>(*registry));
-	systems.emplace_back(std::make_unique<CommandSystem>(*registry));
-	systems.emplace_back(std::make_unique<MoveCommandSystem>(*registry));
-	systems.emplace_back(std::make_unique<GameplayAbilityCommandSystem>(*registry));
-	systems.emplace_back(std::make_unique<ActorSystem>(*registry));
-	systems.emplace_back(std::make_unique<GameplayAbilitySystem>(*registry));
-	systems.emplace_back(std::make_unique<GameplayWaitTaskSystem>(*registry));
-	systems.emplace_back(std::make_unique<GameplayPlayAnimAndWaitTaskSystem>(*registry));
-	systems.emplace_back(std::make_unique<GameplayPlayInputSystem>(*registry));
-	systems.emplace_back(std::make_unique<GameplayHitTestTaskSystem>(*registry));
-	systems.emplace_back(std::make_unique<GameplayEventSystem>(*registry));
-	systems.emplace_back(std::make_unique<ApplyGameplayEffectSystem>(*registry));
-	systems.emplace_back(std::make_unique<GameplayEffectSystem>(*registry));
-	systems.emplace_back(std::make_unique<GameplayAttributeSystem>(*registry));
-	systems.emplace_back(std::make_unique<RootMotionSystem>(*registry));
-	systems.emplace_back(std::make_unique<AnimationSystem>(*registry));
-	systems.emplace_back(std::make_unique<MovementSystem>(*registry));
-	systems.emplace_back(std::make_unique<KinematicCharacterMovementSystem>(*registry));
-	systems.emplace_back(std::make_unique<ComputeAnimBoneChildTransformSystem>(*registry));
-	systems.emplace_back(std::make_unique<PhysicsSystem>(*registry));
-	// 进行两次,清理客户端自己创建ModifierAttribute
-	systems.emplace_back(std::make_unique<DestroyModifierAttributeSystem>(*registry));
-	systems.emplace_back(std::make_unique<ClientSyncSystem>(*registry));
-	systems.emplace_back(std::make_unique<TransformStateSystem>(*registry));
-	systems.emplace_back(std::make_unique<GameplayStateSystem>(*registry));
-	systems.emplace_back(std::make_unique<DestorySystem>(*registry));
-	systems.emplace_back(std::make_unique<LocalEntityStateSystem>(*registry));
-	systems.emplace_back(std::make_unique<UpdatePlayerUISystem>(*registry));
-	systems.emplace_back(std::make_unique<UpdateViewSystem>(*registry));
-	systems.emplace_back(std::make_unique<FlyingTextSystem>(*registry));
-	// 进行两次,清理服务器返回ModifierAttribute
-	systems.emplace_back(std::make_unique<DestroyModifierAttributeSystem>(*registry));
+	game->AddSystem <
+		InputSystem,
+		CommandSystem,
+		MoveCommandSystem,
+		GameplayAbilityCommandSystem,
+		CreateActorSystem,
+		CreateViewSystem,
+		CreateAnimationSystem,
+		CreatePhysicsActorSystem,
+		ActorSystem,
+		GameplayAbilitySystem,
+		GameplayWaitTaskSystem,
+		GameplayPlayAnimAndWaitTaskSystem,
+		GameplayPlayInputSystem,
+		GameplayHitTestTaskSystem,
+		GameplayEventSystem,
+		ApplyGameplayEffectSystem,
+		GameplayEffectSystem,
+		GameplayAttributeSystem,
+		RootMotionSystem,
+		AnimationSystem,
+		MovementSystem,
+		KinematicCharacterMovementSystem,
+		ComputeAnimBoneChildTransformSystem,
+		PhysicsSystem,
+		DestroyModifierAttributeSystem, //客户端自己创建ModifierAttribute
+		ClientSyncSystem,
+		TransformStateSystem,
+		GameplayStateSystem,
+		DestorySystem,
+		LocalEntityStateSystem,
+		UpdatePlayerUISystem,
+		UpdateViewSystem,
+		FlyingTextSystem,
+		DestroyModifierAttributeSystem, //服务器返回ModifierAttribute
 #if DEBUG
-	systems.emplace_back(std::make_unique<DebugSystem>(*registry));
+		DebugSystem
 #endif
-
-	return systems;
+	> ();
 }
 
-bool ClientGameHelper::IsLocalPlayer(uint32_t id) const
+float ClientGameHelper::GameFrameTime() const
 {
-	return id == local_id_;
-}
-
-bool ClientGameHelper::IsRemotePlayer(uint32_t id) const
-{
-	return id != local_id_;
+	// todo:可以根据延迟动态调整
+	return GameConfig::kFrameTime;
 }

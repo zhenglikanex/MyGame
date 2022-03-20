@@ -9,15 +9,15 @@
 
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 
-#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 
 #include "Kanex.hpp"
 
 struct GameplayEffectSpec
 {
 	std::string effect;
-	UniqueId source;
-	UniqueId target;
+	Remote source;
+	Remote target;
 	uint8_t level;
 	float duration;
 	float time;
@@ -29,7 +29,7 @@ struct GameplayEffectSpec
 
 	GameplayEffectSpec() = default;
 
-	GameplayEffectSpec(std::string_view _effect,UniqueId _source,UniqueId _target,uint8_t _level,float _duration)
+	GameplayEffectSpec(std::string_view _effect,Remote _source,Remote _target,uint8_t _level,float _duration)
 		: effect(_effect)
 		, source(_source)
 		, target(_target)

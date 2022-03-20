@@ -29,7 +29,7 @@ public:
 		return nullptr;
 	}
 
-	static std::vector<entt::entity> GetGameplayEffectSpecEntitiesByOwner(Registry& registry,UniqueId target)
+	static std::vector<entt::entity> GetGameplayEffectSpecEntitiesByOwner(Registry& registry,Remote target)
 	{
 		std::vector<entt::entity> entities;
 		
@@ -144,7 +144,7 @@ public:
 
 	static void ApplyGameEffectToTarget(Registry& registry, entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
 	{
-		if (!registry.all_of<UniqueId>(source))
+		if (!registry.all_of<Remote>(source))
 		{
 			return;
 		}
@@ -170,8 +170,8 @@ public:
 
 	static GameplayEffectSpec MakeGameplayEffectSpec(Registry& registry,entt::entity source,std::string_view effect,uint32_t level, entt::entity target)
 	{
-		auto& id = registry.get<UniqueId>(source);
-		auto& target_id = registry.get<UniqueId>(target);
+		auto& id = registry.get<Remote>(source);
+		auto& target_id = registry.get<Remote>(target);
 		auto& attr_set = registry.get<GameplayAttributeSet>(source);
 
 		auto& ge = registry.ctx<GameplayEffectManager>().LoadGameplayEffect(effect.data());

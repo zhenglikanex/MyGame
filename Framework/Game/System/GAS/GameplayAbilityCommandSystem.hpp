@@ -1,14 +1,13 @@
 #pragma once
 
 #include "Framework/Game/RandomEngine.hpp"
-#include "Framework/Game/GameHelper.hpp"
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/DebugService.hpp"
 
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
 
 #include "Framework/Game/Component/Local.hpp"
-#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilityCommand.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
@@ -115,7 +114,6 @@ struct GameplayAbilityCommandSystem : public System
 
 	void FixedUpdate(float dt) override
 	{
-		auto& game_helper = registry.ctx<Locator>().Ref<GameHelper>();
 		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 
 		if (auto try_ga = registry.try_ctx<GameplayAbilityCommand>())
@@ -129,7 +127,7 @@ struct GameplayAbilityCommandSystem : public System
 						continue;
 					}
 
-					if (!(registry.all_of<UniqueId>(info.source)) || !(registry.all_of<GameplayState>(info.source)))
+					if (!(registry.all_of<Remote>(info.source)) || !(registry.all_of<GameplayState>(info.source)))
 					{
 						continue;
 					}
@@ -168,10 +166,10 @@ struct GameplayAbilityCommandSystem : public System
 						continue;
 					}
 
-					UniqueId target = UniqueId::null;
+					Remote target = Remote::null;
 					if (registry.valid(info.target))
 					{
-						target = registry.get<UniqueId>(info.target);
+						target = registry.get<Remote>(info.target);
 
 						auto& target_tag_count = registry.get<GameplayTagCountContainer>(info.target);
 						if (!CheckTargetRequiredTags(target_tag_count, ga))
@@ -186,7 +184,7 @@ struct GameplayAbilityCommandSystem : public System
 					}
 
 					auto e = registry.create_predict(info.source);
-					registry.emplace<GameplayAbilitySpec>(e, info.ability, active_ability->level, registry.get<UniqueId>(info.source), target);
+					registry.emplace<GameplayAbilitySpec>(e, info.ability, active_ability->level, registry.get<Remote>(info.source), target);
 					registry.patch<GameplayTagCountContainer>(info.source, [&ga](GameplayTagCountContainer& tag_count)
 						{
 							tag_count.UpdateTagCount(ga.activation_owned_tags, 1);

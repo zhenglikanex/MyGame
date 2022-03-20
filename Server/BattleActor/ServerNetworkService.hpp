@@ -11,7 +11,7 @@ public:
 		const std::function<void(uint32_t id, std::string_view, std::vector<uint8_t>)>& send_handler);
 	~ServerNetworkService();
 
-	std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> Recv() const override;
+	std::unique_ptr<std::vector<uint8_t>> Recv(const std::string&) const override;
 	void Send(std::string_view name, std::vector<uint8_t>&& data) const override;
 	void Send(uint32_t id, std::string_view name, std::vector<uint8_t>&& data) const;
 private:

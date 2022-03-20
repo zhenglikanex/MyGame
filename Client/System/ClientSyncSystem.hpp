@@ -39,9 +39,9 @@ struct ClientSyncSystem : public System
 	void FixedUpdate(float dt) override
 	{
 		auto& network_service = registry.ctx<Locator>().Ref<const NetworkService>();
-		while (auto message = network_service.Recv())
+		while (auto message = network_service.Recv("sync_frame_data"))
 		{
-			auto&[name, data] = *message;
+			auto& data = *message;
 
 			serialization_manager.Deserialize(std::move(data));
 
@@ -78,9 +78,9 @@ struct ClientSyncSystem : public System
 public:
 	void MappingLocalEntity()
 	{
-		auto& components = serialization_manager.GetLocalEntityComponents<UniqueId>();
+		auto& components = serialization_manager.GetLocalEntityComponents<Remote>();
 
-		auto view = registry.view<Local>(entt::exclude<UniqueId>);
+		auto view = registry.view<Local>(entt::exclude<Remote>);
 		for (auto e : view)
 		{
 			auto& local = view.get<Local>(e);
@@ -88,7 +88,7 @@ public:
 
 			if (it != components.end())
 			{
-				registry.emplace<UniqueId>(e, it->second);
+				registry.emplace<Remote>(e, it->second);
 			}
 		}
 	}
@@ -187,7 +187,7 @@ public:
 			if (e == entt::null)
 			{
 				e = registry.create();
-				registry.emplace<UniqueId>(e, item.first);
+				registry.emplace<Remote>(e, item.first);
 			}
 
 			//todo:可能还会有其他需要屏蔽情况?

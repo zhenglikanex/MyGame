@@ -11,14 +11,14 @@
 
 struct ModifierAttribute
 {
-	UniqueId source;
-	UniqueId target;
+	Remote source;
+	Remote target;
 	GameplayAttributeType attribute;
 	GameplayEffect::ModifierOp modifier_op;
 	float value;
 
 	ModifierAttribute() = default;
-	ModifierAttribute(UniqueId _source, UniqueId _target, GameplayAttributeType _attribute,float _value)
+	ModifierAttribute(Remote _source, Remote _target, GameplayAttributeType _attribute,float _value)
 		: source(_source)
 		, target(_target)
 		, attribute(_attribute)

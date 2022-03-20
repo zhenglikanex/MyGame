@@ -40,7 +40,6 @@ public:
 		// 放到一起后可以按照要回滚的帧数排序来提高效率?
 		// 而且在查询阶段cache的效率会更高?
 		// 带来的时同步和预测回滚、复制的开销？
-		auto& game_helper = registry.ctx<Locator>().Ref<GameHelper>();
 		auto& game_state = registry.ctx<GameState>();
 
 		auto view = registry.view<GameplayAbilitySpec, GameplayAbilityScript, GameplayHitTestTask>();
@@ -52,10 +51,9 @@ public:
 				entt::entity source = registry.get(spec.source);
 				auto& command = registry.get<Command>(source);
 
-				bool rollback = game_helper.IsAuthority() && RollbackUtility::CheckRollback(registry, command.verified_frame);
-				if (rollback)
+				if (rollback_utility::CheckRollback(registry, command.verified_frame))
 				{
-					RollbackUtility::RollbackPhysicActor(registry, command.verified_frame);
+					rollback_utility::RollbackPhysicActor(registry, command.verified_frame);
 				}
 
 				for (auto& spec : task.value)

@@ -2,11 +2,11 @@
 
 #include <unordered_map>
 
-#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
 
 struct EntityByUniqueIdMap
 {
-	std::unordered_map<UniqueId, entt::entity> value;
+	std::unordered_map<Remote, entt::entity> value;
 };

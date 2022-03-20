@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <queue>
 
 #include "Actor.h"
 
@@ -30,17 +31,16 @@ public:
 	void Update();
 private:
 	void StartBattle(const std::any& data);
-	void InputCommand(const std::any& data);
+	void PushGameMessage(const std::any& data);
 private:
-	void GameInput();
-	std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> RecvGameMessage();
+	void RecvGameMessage(const std::string& name);
 	void SendGameMessage(uint32_t player, std::string_view name, std::vector<uint8_t>&& data);
 private:
 	std::vector<ActorId> players_;
 	std::unordered_map<ActorId, uint32_t> ids_;
-	std::unordered_map<uint32_t,std::vector<Command>> player_commands_;
 
 	bool start_;
-	uint32_t start_time_;
+	uint64_t last_time_;
 	std::unique_ptr<Game> game_;
+	std::unordered_map<std::string, std::queue<std::unique_ptr<std::vector<uint8_t>>>> g_game_messages;
 };

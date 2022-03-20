@@ -1,18 +1,18 @@
 #pragma once
 
 #include <string>
-#include "Framework/Game/Component/UniqueId.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 
 #include "Kanex.hpp"
 
 struct ParentAnimBone
 {
-	UniqueId target;
+	Remote target;
 	std::string bone;
 
 	ParentAnimBone() = default;
 
-	ParentAnimBone(UniqueId _target,std::string_view _bone)
+	ParentAnimBone(Remote _target,std::string_view _bone)
 		: target(_target)
 		, bone(_bone)
 	{

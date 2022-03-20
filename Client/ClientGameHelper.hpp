@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Framework/Game/GameMode.hpp"
 #include "Framework/Game/GameHelper.hpp"
 
 class ClientGameHelper : public GameHelper
@@ -8,12 +9,11 @@ public:
 	ClientGameHelper(uint32_t local_id);
 	~ClientGameHelper();
 	
-	bool IsAuthority() const override;
+	GameMode GetGameMode() const override;
 
-	std::vector<std::unique_ptr<System>> CreateSystems(Registry* registry) const override;
-
-	bool IsLocalPlayer(uint32_t id) const override;
-	bool IsRemotePlayer(uint32_t id) const override;
+	void CreateSystems(Game* game) const override;
+	
+	uint64_t GameFrameTime() const override;
 private:
 	uint32_t local_id_;
 };

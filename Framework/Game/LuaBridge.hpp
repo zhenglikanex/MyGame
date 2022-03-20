@@ -271,7 +271,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, effect, level, target);
 	};
 
-	lua["TryGameplayAbility"] = [&registry](UniqueId source, std::string_view ability, entt::entity target)
+	lua["TryGameplayAbility"] = [&registry](Remote source, std::string_view ability, entt::entity target)
 	{
 		GameplayAbilityUtility::BuildGameplayAbilityCommand(registry, source, ability, target);
 	};
@@ -282,7 +282,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		task.value.emplace_back(time, completed);
 	};
 
-	lua["PlayAnimation"] = [&registry](UniqueId id, std::string_view name,float time = 0)
+	lua["PlayAnimation"] = [&registry](Remote id, std::string_view name,float time = 0)
 	{
 		auto e = registry.get(id);
 		registry.emplace_or_replace<AnimationClip>(e, name, time);
@@ -324,7 +324,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		task.value.emplace_back(type, collider, transform, on_hit);
 	};
 
-	lua["CreateAnimBone"] = [&registry](UniqueId target, std::string_view bone)
+	lua["CreateAnimBone"] = [&registry](Remote target, std::string_view bone)
 	{
 		entt::entity target_entity = registry.get(target);
 		auto e = registry.create_local(target_entity);
@@ -341,7 +341,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		return registry.get<Local>(e);
 	};
 
-	lua["GetWeapon"] = [&registry](UniqueId target)
+	lua["GetWeapon"] = [&registry](Remote target)
 	{
 		Weapon* weapon = nullptr;
 		entt::entity e = registry.get(target);
@@ -355,7 +355,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["GetUniqueId"] = [&registry](entt::entity e)
 	{
-		return registry.try_get<UniqueId>(e);
+		return registry.try_get<Remote>(e);
 	};
 	
 	auto destory1 = [&registry](entt::entity entity) 
@@ -394,7 +394,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		}
 	};
 
-	auto get_transform1 = [&registry](UniqueId target)
+	auto get_transform1 = [&registry](Remote target)
 	{
 		Transform* transform = nullptr;
 		entt::entity e = registry.get(target);
@@ -425,7 +425,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["GetTransform"] = sol::overload(get_transform1,get_transform2,get_transform3);
 
-	lua["CreateView"] = [&registry](UniqueId source,std::string_view asset, const Transform& transform)
+	lua["CreateView"] = [&registry](Remote source,std::string_view asset, const Transform& transform)
 	{
 		entt::entity source_e = registry.get(source);
 		if (source_e != entt::null)
@@ -441,7 +441,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 	};
 
 	lua["CreateMovementView"] = [&registry](
-		UniqueId source,
+		Remote source,
 		std::string_view asset,
 		const Transform& transform,
 		const vec3& forward,
@@ -511,7 +511,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		return GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, effect, level, target);
 	};
 
-	auto GetEntity1 = [&registry](UniqueId id)
+	auto GetEntity1 = [&registry](Remote id)
 	{
 		return registry.get(id);
 	};

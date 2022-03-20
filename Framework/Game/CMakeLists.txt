@@ -47,6 +47,7 @@ Utility/GameplayEventUtility.hpp
 Utility/AnimEventUtility.hpp
 Utility/RollbackUtility.hpp
 
+System/RecvCommandSystem.hpp
 System/CommandSystem.hpp
 System/MoveCommandSystem.hpp
 System/AnimationSystem.hpp
@@ -65,7 +66,7 @@ System/CreatePhysicsActorSystem.hpp
 System/DestorySystem.hpp
 System/UpdatePlayerUISystem.hpp
 System/FlyingTextSystem.hpp
-System/SyncInstanceStateSystem.hpp
+System/LocalEntityStateSystem.hpp
 System/ComputeAnimBoneChildTransform.hpp
 System/GAS/ApplyGameplayEffectSystem.hpp
 System/GAS/GameplayEffectSystem.hpp
@@ -103,7 +104,7 @@ Component/Destory.hpp
 Component/UniqueId.hpp
 Component/EntityByUniqueIdMap.hpp
 Component/Local.hpp
-Component/SyncInstanceState.hpp
+Component/LocalEntityState.hpp
 Component/SyncManager.hpp
 Component/CollisionReceiver.hpp
 Component/ParentAnimBone.hpp

@@ -14,21 +14,21 @@
 
 #include "3rdparty/include/entt/entt.hpp"
 
-struct RollbackUtility
+namespace rollback_utility
 {
-public:
-	static bool CheckRollback(Registry& registry, uint32_t frame)
+
+	inline bool CheckRollback(Registry& registry, uint32_t verified_frame)
 	{
 		auto& game_state = registry.ctx<GameState>();
-		return game_state.run_frame - frame <= GameConfig::kMaxRollbackFrameNum;
+		return  game_state.run_frame > verified_frame && game_state.run_frame - verified_frame <= GameConfig::kMaxRollbackFrameNum;
 	}
 
-	static void RollbackTransform(uint32_t frame)
+	inline void RollbackTransform(uint32_t frame)
 	{
 		
 	}
 
-	static void RollbackPhysicActor(Registry& registry,uint32_t frame)
+	inline void RollbackPhysicActor(Registry& registry,uint32_t frame)
 	{
 		auto view = registry.view<TransformState, PhysicsActor>();
 		for (auto e : view)
@@ -40,7 +40,7 @@ public:
 		//physics_world.scene->flushQueryUpdates
 	}
 
-	static void RollbackGameplayState(uint32_t frame)
+	inline void RollbackGameplayState(uint32_t frame)
 	{
 
 	}

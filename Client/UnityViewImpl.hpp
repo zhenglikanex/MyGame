@@ -2,10 +2,12 @@
 
 #include "Framework/Game/IViewImpl.hpp"
 
+class UnityViewService;
+
 class UnityViewImpl : public IViewImpl
 {
 public:
-	UnityViewImpl(int handle) : IViewImpl(),handle_(handle) {}
+	UnityViewImpl(UnityViewService* service, int handle);
 	~UnityViewImpl();
 
 	void UpdatePosition(const vec3& pos) override;
@@ -19,5 +21,6 @@ public:
 
 	int GetHandle() const { return handle_; }
 private:
+	UnityViewService* service_;
 	int handle_;
 };

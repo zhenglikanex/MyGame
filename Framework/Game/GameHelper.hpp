@@ -4,18 +4,21 @@
 #include <vector>
 #include <memory>
 
-#include "Framework/Game/Service.hpp"
+#include "Framework/Game/GameMode.hpp"
+#include "Framework/Game/GameConfig.hpp"
 
 class System;
-class Registry;
+class Game;
 
-class GameHelper : public Service
+class GameHelper
 {
 public:
-	virtual bool IsAuthority() const = 0;
-	virtual std::vector<std::unique_ptr<System>> CreateSystems(Registry* registry) const = 0;
+	virtual GameMode GetGameMode() const = 0;
 
-	virtual bool IsLocalPlayer(uint32_t id) const = 0;
-	virtual bool IsRemotePlayer(uint32_t id) const = 0;
-private:
+	virtual void CreateSystems(Game* game) const = 0;
+
+	virtual uint64_t GameFrameTime() const 
+	{
+		return GameConfig::kFrameTimeNanoseconds;
+	}
 };

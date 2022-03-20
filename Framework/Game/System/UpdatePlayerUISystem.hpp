@@ -63,7 +63,7 @@ struct UpdatePlayerUISystem : public System
 
 	void UpdateAbilityCooldown()
 	{
-		registry.view<ActiveGameplayAbilityList,UniqueId,Local>().each([this](entt::entity e,const ActiveGameplayAbilityList& list,const UniqueId& id, const Local&)
+		registry.view<ActiveGameplayAbilityList,Remote,Local>().each([this](entt::entity e,const ActiveGameplayAbilityList& list,const Remote& id, const Local&)
 		{
 			std::unordered_map<std::string, CooldownInfo> cooldowns;
 

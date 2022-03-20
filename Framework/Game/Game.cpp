@@ -3,16 +3,11 @@
 #include <chrono>
 
 #include "Framework/Game/GameHelper.hpp"
-#include "Framework/Game/InputService.hpp"
-#include "Framework/Game/DebugService.hpp"
 #include "Framework/Game/LuaBridge.hpp"
 #include "Framework/Game/Registry.hpp"
 
 #include "Framework/Game/Component/SyncManager.hpp"
 #include "Framework/Game/Component/GameState.hpp"
-#include "Framework/Game/Component/Command.hpp"
-#include "Framework/Game/Component/Player.hpp"
-#include "Framework/Game/Component/Local.hpp"
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
@@ -23,17 +18,13 @@
 
 #include "Framework/Game/Data/SceneConfig.hpp"
 
-using namespace std::chrono;
-
-Game::Game(Locator&& locator,std::vector<PlayerInfo>&& players)
-	: start_time_(0)
-	, run_time_(0)
-	, run_frame_(0)
-	, input_frame_rate_(GameConfig::kDefaultInputFrame)
-	, registry_(locator.Ref<const GameHelper>())
+Game::Game(std::unique_ptr<GameHelper> game_helper, Locator locator,std::vector<PlayerInfo> players)
+	: cur_frame_time_(0)
+	, game_helper_(std::move(game_helper))
+	, registry_(game_helper_->GetGameMode(), std::move(locator))
 	, player_infos_(players)
 {
-	registry_.set<Locator>(std::move(locator));
+
 }
 
 Game::~Game()
@@ -41,10 +32,8 @@ Game::~Game()
 	
 }
 
-bool Game::Initialize(uint32_t start_time)
+bool Game::Initialize()
 {
-	start_time_ = start_time;
-
 	SetCtx();
 
 	InitializeSyncInstances();
@@ -55,8 +44,7 @@ bool Game::Initialize(uint32_t start_time)
 
 	CreatePlayer();
 
-	auto& game_helper = registry_.ctx<Locator>().Ref<const GameHelper>();
-	systems_ = game_helper.CreateSystems(&registry_);
+	game_helper_->CreateSystems(this);
 
 	for (auto& system : systems_)
 	{
@@ -71,14 +59,13 @@ bool Game::Initialize(uint32_t start_time)
 
 void Game::InitializeSyncInstances()
 {
-	auto& game_helper = registry_.ctx<Locator>().Ref<const GameHelper>();
 	auto& sync_manager = registry_.set<SyncManager>();
 	for (auto& info : player_infos_)
 	{
 		sync_manager.sync_instances.emplace(info.id, SyncInstance(info.id, 0));
 	}
 
-	if (game_helper.IsAuthority())
+	if (game_helper_->GetGameMode() == GameMode::kAuthority)
 	{
 		//插入服务器控制syncdata
 		sync_manager.sync_instances.emplace(ServerInstance, SyncInstance(ServerInstance, 0));
@@ -103,33 +90,20 @@ void Game::UnSetCtx()
 	registry_.unset<GameState>();
 }
 
-void Game::Update(float dt)
+void Game::Update(uint64_t dt)
 {
-	//run_time_ += dt;
-	// todo:暂时用这种方式计算时间，dt精度不够，后面再改
-	uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
-	run_time_ = (now - start_time_) / 1000.0f;
+	auto& game_state = registry_.ctx<GameState>();
 
-	UpdateInput();
-	UpdateLogic(dt);
-	UpdateFixedLogic();
-}
-
-void Game::UpdateInput()
-{
-	while (run_time_ > run_frame_ * input_frame_rate_ + input_frame_rate_)
-		//&& (run_frame_ - real_frame_) < GameConfig::kMaxPredictFrame)
+	cur_frame_time_ += dt;
+	uint32_t frame_time = game_helper_->GameFrameTime();
+	while(cur_frame_time_ >= frame_time)
 	{
-		//会触发InputCommand,相当于getcommands
-		auto& input_service = registry_.ctx<Locator>().Ref<const InputService>();
-		input_service.InputHandler();
-
-		auto& group = GetCommandGroup(run_frame_);
-
-		assert((group.commands.size() == player_infos_.size()) && "not commands");
-
-		++run_frame_;
+		cur_frame_time_ -= frame_time;
+		++game_state.real_frame;
 	}
+
+	UpdateLogic(dt / 1000000000.f);
+	UpdateFixedLogic();
 }
 
 void Game::UpdateLogic(float dt)
@@ -144,30 +118,9 @@ void Game::UpdateFixedLogic()
 {
 	int run_frame_times = 0;
 	auto& game_state = registry_.ctx<GameState>();
-	while (true)
+
+	while (game_state.run_frame < game_state.real_frame)
 	{
-		// 模拟帧数不能超过当前可以运行帧数，因为有可能提前收到服务器帧
-		if (game_state.run_frame >= run_frame_)
-		{
-			return;
-		}
-
-		auto& command_group = GetCommandGroup(game_state.run_frame);
-		if (command_group.frame != game_state.run_frame || run_frame_times >= GameConfig::kMaxOnceFrameRunNum)
-		{
-			return;
-		}
-
-		for (auto e : registry_.view<Player,Local>())
-		{
-			const auto& player = registry_.get<Player>(e);
-			auto iter = command_group.commands.find(player.id);
-			if (iter != command_group.commands.end())
-			{
-				registry_.emplace_or_replace<Command>(e, iter->second);
-			}
-		}
-
 		for (auto& system : systems_)
 		{
 			system->FixedUpdate(GameConfig::kFrameTime);
@@ -178,9 +131,7 @@ void Game::UpdateFixedLogic()
 			system->LateUpdate(GameConfig::kFrameTime);
 		}
 
-		registry_.clear<Command>();
-		++registry_.ctx<GameState>().run_frame;
-
+		++game_state.run_frame;
 		++run_frame_times;
 	}
 }
@@ -195,17 +146,6 @@ void Game::Finalize()
 	registry_.clear();
 
 	UnSetCtx();
-}
-
-void Game::InputCommand(uint32_t frame,uint32_t id, const Command& command)
-{
-	auto& group = GetCommandGroup(frame);
-	group.commands.emplace(id,command);
-}
-
-uint32_t Game::GetVerifiedFrame() const
-{
-	return registry_.ctx<GameState>().verified_frame;
 }
 
 void Game::LoadScene(const std::string& name)
@@ -234,16 +174,4 @@ void Game::CreatePlayer()
 	{
 		actor_utiltiy::CreatePlayer(registry_, player_info.id, player_info.actor_asset, vec3(player_info.id * 2, 0, 0));
 	}
-}
-
-CommandGroup& Game::GetCommandGroup(uint32_t frame)
-{
-	auto& command_group = command_groups_[frame % command_groups_.size()];
-	// 清理旧的命令
-	if (frame > command_group.frame)
-	{
-		command_group.commands.clear();
-		command_group.frame = frame;
-	}
-	return command_group;
 }

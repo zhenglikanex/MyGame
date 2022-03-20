@@ -4,7 +4,6 @@
 
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/FileService.hpp"
-#include "Framework/Game/GameHelper.hpp"
 
 #include "Framework/Game/Component/ActorAsset.hpp"
 #include "Framework/Game/Component/ActorState.hpp"

@@ -1,7 +1,7 @@
 #include "ClientNetworkService.hpp"
 
 ClientNetworkService::ClientNetworkService(
-	const std::function<std::unique_ptr<NetMessage>()>& recv_handler,
+	const std::function<std::unique_ptr<NetMessage>(const std::string&)>& recv_handler,
 	const std::function<void(std::string_view, std::vector<uint8_t>)>& send_handler)
 	: recv_handler_(recv_handler)
 	, send_handler_(send_handler)
@@ -14,15 +14,14 @@ ClientNetworkService::~ClientNetworkService()
 
 }
 
-std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>> ClientNetworkService::Recv() const
+std::unique_ptr<std::vector<uint8_t>> ClientNetworkService::Recv(const std::string& name) const
 {
 	if (recv_handler_)
 	{
-		auto message = recv_handler_();
+		auto message = recv_handler_(name);
 		if (message)
 		{
-			// todo:暂时这么写一下，还没找到合适的结构
-			return std::make_unique<std::tuple<std::string, std::vector<uint8_t>>>(std::make_tuple(message->name(), message->data()));
+			return std::make_unique<std::vector<uint8_t>>(message->MoveData());
 		}
 	}
 

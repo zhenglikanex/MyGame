@@ -3,13 +3,19 @@
 #include <unordered_map>
 #include <vector>
 
+#include "Framework/Game/Component/Remote.hpp"
+
+#include "Kanex.hpp"
+
 struct GameplayAbilityCommandSpec
 {
 	std::string ability;
-	entt::entity source;
-	entt::entity target;
+	Remote source;
+	Remote target;
 
-	GameplayAbilityCommandSpec(std::string_view _ability, entt::entity _source, entt::entity _target)
+	GameplayAbilityCommandSpec() = default;
+
+	GameplayAbilityCommandSpec(std::string_view _ability, Remote _source, Remote _target)
 		: ability(_ability)
 		, source(_source)
 		, target(_target)
@@ -18,7 +24,11 @@ struct GameplayAbilityCommandSpec
 	}
 };
 
+NON_MEMEBER_BAR(GameplayAbilityCommandSpec, obj.ability, obj.source, obj.target);
+
 struct GameplayAbilityCommand
 {
-	std::unordered_map<entt::entity, std::vector<GameplayAbilityCommandSpec>> value;
+	std::unordered_map<Remote, std::vector<GameplayAbilityCommandSpec>> value;
 };
+
+NON_MEMEBER_BAR(GameplayAbilityCommand, obj.value);
