@@ -33,7 +33,7 @@ private:
 	void StartBattle(const std::any& data);
 	void PushGameMessage(const std::any& data);
 private:
-	void RecvGameMessage(const std::string& name);
+	std::unique_ptr<std::vector<uint8_t>> RecvGameMessage(const std::string& name);
 	void SendGameMessage(uint32_t player, std::string_view name, std::vector<uint8_t>&& data);
 private:
 	std::vector<ActorId> players_;
@@ -42,5 +42,5 @@ private:
 	bool start_;
 	uint64_t last_time_;
 	std::unique_ptr<Game> game_;
-	std::unordered_map<std::string, std::queue<std::unique_ptr<std::vector<uint8_t>>>> g_game_messages;
+	std::unordered_map<std::string, std::queue<std::unique_ptr<std::vector<uint8_t>>>> game_messages_;
 };

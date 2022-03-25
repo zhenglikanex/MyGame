@@ -99,7 +99,7 @@ void BattleActor::StartBattle(const std::any& data)
 	Locator locator;
 	locator.Set<FileService>(std::make_unique<ServerFileService>());
 	locator.Set<NetworkService>(std::make_unique<ServerNetworkService>(
-		std::bind(&BattleActor::RecvGameMessage, this),
+		std::bind(&BattleActor::RecvGameMessage, this, std::placeholders::_1),
 		std::bind(&BattleActor::SendGameMessage, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
 	
 	game_ = std::make_unique<Game>(std::move(locator),std::move(players));
@@ -128,17 +128,38 @@ void BattleActor::Update()
 void BattleActor::PushGameMessage(const std::any& data)
 {
 	auto& [name, message_data] = std::any_cast<std::tuple<std::string, std::vector<uint8_t>>>(data);
-
-	if (g_game_messages.find(name) == g_game_messages.end())
+	
+	if (game_messages_.find(name) == game_messages_.end())
 	{
-		//g_game_messages.emplace( std: )
+		game_messages_.emplace(name, std::vector<std::unique_ptr<std::vector<uint8_t>>>());
 	}
 	
-	return ;
+	auto& messages = game_messages_[name];
+	messages.emplace(std::move(data));
+}
+
+std::unique_ptr<std::vector<uint8_t>> BattleActor::RecvGameMessage(const std::string & name)
+{
+	if (game_messages_.find(name) == game_messages_.end())
+	{
+		return nullptr;
+	}
+
+	auto& messages = game_messages_[name];
+
+	if (messages.empty())
+	{
+		return nullptr;
+	}
+
+	auto message = std::move(messages.front());
+	messages.pop();
+	return message;
 }
 
 void BattleActor::SendGameMessage(uint32_t id,std::string_view name, std::vector<uint8_t>&& data)
 {
+
 	for (auto& item : ids_)
 	{
 		if (id == item.second)

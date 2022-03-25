@@ -3,8 +3,8 @@
 #include <cassert>
 
 ServerNetworkService::ServerNetworkService(
-	const std::function<std::unique_ptr<std::tuple<std::string, std::vector<uint8_t>>>()>& recv_handler,
-	const std::function<void(uint32_t id, std::string_view, std::vector<uint8_t>)>& send_handler)
+	const NetRecvHandler& recv_handler,
+	const NetSendHandler& send_handler)
 	: recv_handler_(recv_handler)
 	, send_handler_(send_handler)
 {
@@ -16,14 +16,14 @@ ServerNetworkService::~ServerNetworkService()
 
 }
 
-std::unique_ptr<std::vector<uint8_t>> ServerNetworkService::Recv() const
+std::unique_ptr<std::vector<uint8_t>> ServerNetworkService::Recv(const std::string & name) const
 {
 	if (recv_handler_)
 	{
-		return recv_handler_();
+		return recv_handler_(name);
 	}
 
-	return nullptr; 
+	return nullptr;
 }
 
 void ServerNetworkService::Send(std::string_view name, std::vector<uint8_t>&& data) const
