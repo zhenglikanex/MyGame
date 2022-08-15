@@ -84,8 +84,8 @@ public:
 		for (auto e : view)
 		{
 			auto& local = view.get<Local>(e);
-			auto& it = components.find(local);
 
+			auto it = components.find(local);
 			if (it != components.end())
 			{
 				registry.emplace<Remote>(e, it->second);
@@ -221,7 +221,7 @@ public:
 	}
 	
 public:
-	bool CheckLocalState()
+	bool CheckLocalState() const
 	{
 		auto& frame_data = serialization_manager.frame_data();
 		auto& state = registry.ctx<LocalEntityState>();
@@ -252,7 +252,7 @@ public:
 				auto& local = view.get<Local>(e);
 				auto& transform_state = view.get<TransformState>(e);
 
-				auto& it = components.find(local);
+				auto it = components.find(local);
 				if (it != components.end())
 				{
 					auto& server_transform = it->second;
@@ -264,8 +264,8 @@ public:
 						return false;
 					}
 					
-					auto& server_forward = server_transform.rotation * vec3(0, 0, 1);
-					auto& local_forward = local_transform.rotation * vec3(0, 0, 1);
+					auto server_forward = server_transform.rotation * vec3(0, 0, 1);
+					auto local_forward = local_transform.rotation * vec3(0, 0, 1);
 
 					// 旋转不一致应该没问题?是否需要判断
 					float angle = glm::angle(server_forward, local_forward);
@@ -284,6 +284,8 @@ public:
 		}
 
 		{
+			auto& tag_components = serialization_manager.GetLocalEntityComponents<GameplayTagCountContainer>();
+			auto& attr_components = serialization_manager.GetLocalEntityComponents<GameplayAttributeSet>();
 			auto view = registry.view<Local, GameplayState>();
 			for (auto e : view)
 			{
@@ -291,9 +293,8 @@ public:
 				
 				// tag
 				{
-					auto& components = serialization_manager.GetLocalEntityComponents<GameplayTagCountContainer>();
-					auto it = components.find(local);
-					if (it != components.end())
+					auto it = tag_components.find(local);
+					if (it != tag_components.end())
 					{
 						if (it->second != gameplay_state.tag_counts[frame_data.frame % gameplay_state.tag_counts.size()])
 						{
@@ -310,9 +311,8 @@ public:
 
 				// attribute
 				{
-					auto& components = serialization_manager.GetLocalEntityComponents<GameplayAttributeSet>();
-					auto it = components.find(local);
-					if (it != components.end())
+					auto it = attr_components.find(local);
+					if (it != attr_components.end())
 					{
 						auto& server_attr_set = it->second;
 						auto& local_attr_set = gameplay_state.attribute_sets[frame_data.frame % gameplay_state.attribute_sets.size()];

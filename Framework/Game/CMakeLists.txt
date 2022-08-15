@@ -101,7 +101,7 @@ Component/PhysicsWorld.hpp
 Component/Character.hpp
 Component/PhysicsActor.hpp
 Component/Destory.hpp
-Component/UniqueId.hpp
+Component/Remote.hpp
 Component/EntityByUniqueIdMap.hpp
 Component/Local.hpp
 Component/LocalEntityState.hpp

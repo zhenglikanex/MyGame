@@ -67,7 +67,7 @@ public:
 		}
 	}
 
-	Command BuildCommand(const Command& command,const Input& input)
+	void BuildCommand(const Command& command,const Input& input)
 	{
 		BuildMoveCommand(command,input);
 		BuildAbilityCommand(command,input);

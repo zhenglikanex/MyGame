@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdint>
-
 #include "Kanex.hpp"
 
 #include "3rdparty/include/entt/entt.hpp"
@@ -36,6 +35,7 @@ struct Remote
 		{
             return !(id == *this);
         }
+		
     };
 
 	static constexpr Null null{};

@@ -187,8 +187,8 @@ private:
 		auto view = registry.view<Remote,Component>();
 		for (auto e : view)
 		{
-			auto&[id, component] = view.get<Remote,Component>(e);
-			components.emplace(i, component);
+			auto&[remote, component] = view.get<Remote,Component>(e);
+			components.emplace(remote, component);
 		}
 
 		oar_(components);
@@ -293,37 +293,37 @@ public:
 	template<class Component>
 	std::unordered_map<Local, Component>& GetLocalEntityComponents()
 	{
-		auto it = local_components_map.find(entt::type_hash<Component>::value());
-		if (it == local_components_map.end())
+		auto it = local_component_enities_.find(entt::type_hash<Component>::value());
+		if (it == local_component_enities_.end())
 		{
-			local_components_map.emplace(entt::type_hash<Component>::value(), std::unordered_map<Local, Component>{});
+			local_component_enities_.emplace(entt::type_hash<Component>::value(), std::unordered_map<Local, Component>{});
 		}
 
-		return local_components_map[entt::type_hash<Component>::value()];
+		return local_component_enities_[entt::type_hash<Component>::value()];
 	}
 
 	template<class Component>
-	std::unordered_map<Local, Component>& GetRemoteEntityComponents()
+	std::unordered_map<Remote, Component>& GetRemoteEntityComponents()
 	{
-		auto it = remote_components_map.find(entt::type_hash<Component>::value());
-		if (it == remote_components_map.end())
+		auto it = remote_component_enities_.find(entt::type_hash<Component>::value());
+		if (it == remote_component_enities_.end())
 		{
-			remote_components_map.emplace(entt::type_hash<Component>::value(), std::unordered_map<Local, Component>{});
+			remote_component_enities_.emplace(entt::type_hash<Component>::value(), std::unordered_map<Remote, Component>{});
 		}
 
-		return remote_components_map[entt::type_hash<Component>::value()];
+		return remote_component_enities_[entt::type_hash<Component>::value()];
 	}
 
 	template<class Component>
 	std::vector<Component>& GetSingleEntityComponents()
 	{
-		auto it = single_components_map.find(entt::type_hash<Component>::value());
-		if (it == single_components_map.end())
+		auto it = single_component_enities_.find(entt::type_hash<Component>::value());
+		if (it == single_component_enities_.end())
 		{
-			single_components_map.emplace(entt::type_hash<Component>::value(), std::vector<Component>{});
+			single_component_enities_.emplace(entt::type_hash<Component>::value(), std::vector<Component>{});
 		}
 
-		return single_components_map[entt::type_hash<Component>::value()];
+		return single_component_enities_[entt::type_hash<Component>::value()];
 	}
 private:
 	kanex::Buffer buffer_;
