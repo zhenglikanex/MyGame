@@ -9,7 +9,7 @@
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
-#include "Framework/Game/Component/Destory.hpp"
+#include "Framework/Game/Component/Destroy.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
@@ -32,7 +32,7 @@ struct FrameData
 	uint32_t local_entity_num;
 };
 
-NON_MEMEBER_BAR(FrameData, obj.frame, obj.identifier, obj.local_num);
+NON_MEMEBER_BAR(FrameData, obj.frame, obj.local_entity_identifier, obj.local_entity_num);
 
 template<class ... Components>
 struct TypeList
@@ -62,7 +62,7 @@ using RemoteComponents = TypeList
 	GameplayTagCountContainer,
 	GameplayAbilitySpec,
 	GameplayEffectSpec,
-	Destory
+	Destroy
 >;
 
 using SingleComponents = TypeList

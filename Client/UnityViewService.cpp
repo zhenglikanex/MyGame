@@ -7,7 +7,7 @@ std::unique_ptr<IViewImpl> UnityViewService::Create(std::string_view asset) cons
 	return std::make_unique<UnityViewImpl>(this,UnityBridge::Get().CallUnity<uint32_t>("CreateView", asset.data()));
 }
 
-void UnityViewService::Destory(const IViewImpl* view) const
+void UnityViewService::Destroy(const IViewImpl* view) const
 {
 	if (!view)
 	{

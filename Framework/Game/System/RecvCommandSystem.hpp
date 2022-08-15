@@ -51,26 +51,9 @@ struct RecvCommandSystem : public System
 				command.gameplay_ability_command.value.clear();
 			}
 
-			for (auto& spec : input_command.move_command.value)
-			{
-				command.move_command.value.push_back(spec);
-			}
+			command.move_command.value.insert(command.move_command.value.end(), input_command.move_command.value.begin(), input_command.move_command.value.end());
+			command.gameplay_ability_command.value.insert(input_command.gameplay_ability_command.value.begin(), input_command.gameplay_ability_command.value.end());
 
-			for (auto& item : input_command.gameplay_ability_command.value)
-			{
-				if (input_command.gameplay_ability_command.value.find(item.first)
-					!= input_command.gameplay_ability_command.value.end())
-				{
-					input_command.gameplay_ability_command.value.emplace(item.first,std::move(item.second));
-					continue;
-				}
-				
-				auto& gameplay_ability_command = input_command.gameplay_ability_command.value[item.first];
-				for (auto& spec : item.second)
-				{
-					gameplay_ability_command.push_back(spec);
-				}
-			}
 		}
 	}
 

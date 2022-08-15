@@ -1,15 +1,10 @@
 #pragma once
 
-#include <array>
-#include <memory>
-#include <algorithm>
-
 #include "Framework/Game/GameConfig.hpp"
 
 #include "Framework/Game/GAS/GameplayTagDefine.hpp"
 #include "Framework/Game/GAS/GameplayTag.hpp"
 
-#include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/MoveCommand.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
@@ -31,7 +26,7 @@ struct MoveCommandSystem : public System
 	MoveCommandSystem(Registry& _registry)
 		: System(_registry)
 	{ }
-	~MoveCommandSystem() {}
+	~MoveCommandSystem() override {}
 
 	bool Initialize() override
 	{

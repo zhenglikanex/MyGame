@@ -2,12 +2,8 @@
 
 #include <vector>
 #include <memory>
-#include <chrono>
-#include <unordered_map>
-#include <cassert>
 #include <cstdint>
 
-#include "Framework/Game/GameConfig.hpp"
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/PlayerInfo.hpp"
 #include "Framework/Game/Registry.hpp"
@@ -19,8 +15,13 @@ class GameHelper;
 class Game
 {
 public:
-	Game(std::unique_ptr<GameHelper> game_helper, Locator locator,std::vector<PlayerInfo> players);
+	Game(std::unique_ptr<GameHelper> game_helper, Locator locator, std::vector<PlayerInfo> players);
+	Game(const Game&) = delete;
+	Game(Game&&) = delete;
 	~Game();
+
+	const Game& operator=(const Game&) = delete;
+	const Game& operator=(Game&&) = delete;
 
 	bool Initialize();
 	void Update(uint64_t dt);
@@ -28,7 +29,7 @@ public:
 	void UpdateLogic(float dt);
 	void UpdateFixedLogic();
 
-	template<class ... Systems>
+	template <class ... Systems>
 	void AddSystem()
 	{
 		(systems_.emplace_back(std::make_unique<Systems>(registry_)), ...);

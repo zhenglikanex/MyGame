@@ -9,9 +9,9 @@ class IViewImpl;
 class ViewService : public Service
 {
 public:
-	virtual ~ViewService() = 0 {}
+	~ViewService() override = 0 {}
 
 	virtual std::unique_ptr<IViewImpl> Create(std::string_view asset) const = 0;
-	virtual void Destory(const IViewImpl* view) const = 0;
+	virtual void Destroy(const IViewImpl* view) const = 0;
 private:
 };

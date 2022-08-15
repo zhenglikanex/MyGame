@@ -5,7 +5,7 @@
 #include "Framework/Game/GAS/GameplayEffectExecutionCalculation.hpp"
 
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
-#include "Framework/Game/Component/Destory.hpp"
+#include "Framework/Game/Component/Destroy.hpp"
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
@@ -33,7 +33,7 @@ public:
 	{
 		std::vector<entt::entity> entities;
 		
-		auto view = registry.view<GameplayEffectSpec>(entt::exclude<Destory>);
+		auto view = registry.view<GameplayEffectSpec>(entt::exclude<Destroy>);
 		for (auto e : view)
 		{
 			const auto& spec = view.get<GameplayEffectSpec>(e);
@@ -201,7 +201,7 @@ public:
 			});
 
 		// todo:ÒÆ³ý¼¼ÄÜµÈ
-		registry.emplace<Destory>(target_ge);
+		registry.emplace<Destroy>(target_ge);
 	}
 
 private:

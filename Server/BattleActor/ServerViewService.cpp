@@ -8,7 +8,7 @@ std::unique_ptr<IViewImpl> ServerViewService::Create(std::string_view asset) con
 	return nullptr;
 }
 
-void ServerViewService::Destory(const IViewImpl* view) const
+void ServerViewService::Destroy(const IViewImpl* view) const
 {
 	
 }

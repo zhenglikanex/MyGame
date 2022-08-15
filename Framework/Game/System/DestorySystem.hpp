@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Framework/Game/Component/Destory.hpp"
+#include "Framework/Game/Component/Destroy.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 
 #include "Framework/Game/System.hpp"
@@ -22,7 +22,7 @@ public:
 	void FixedUpdate(float dt) override
 	{
 		// 缓存下当帧销毁的entity,将在销毁中被销毁的关联对象移到下一帧销毁
-		auto view = registry.view<Destory>();
+		auto view = registry.view<Destroy>();
 		std::vector<entt::entity> entities;
 		entities.reserve(view.size());
 		for (auto e : view)
@@ -37,7 +37,7 @@ public:
 	void DestoryGameplayAbility()
 	{
 		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
-		auto view = registry.view<GameplayAbilitySpec,Destory>();
+		auto view = registry.view<GameplayAbilitySpec,Destroy>();
 		for (auto e : view)
 		{
 			auto& spec = view.get<GameplayAbilitySpec>(e);
@@ -57,7 +57,7 @@ public:
 				auto e = registry.get(item.second);
 				if (e != entt::null)
 				{
-					registry.emplace<Destory>(e);
+					registry.emplace<Destroy>(e);
 				}
 			}
 		}

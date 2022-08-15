@@ -13,7 +13,7 @@
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
-#include "Framework/Game/Component/Destory.hpp"
+#include "Framework/Game/Component/Destroy.hpp"
 #include "Framework/Game/Component/GAS/GameplayAttributeSet.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
@@ -53,7 +53,7 @@ using RemoteComponents = TypeList
 	GameplayTagCountContainer,
 	GameplayAbilitySpec,
 	GameplayEffectSpec,
-	Destory
+	Destroy
 >;
 
 using SingleComponents = TypeList
@@ -78,28 +78,29 @@ public:
 		, stream_(buffer_)
 		, iar_(stream_)
 		, oar_(stream_)
+		, frame_data_()
 	{
-
 	}
+
 public:
 	void Clear()
 	{
 		buffer_.Clear();
 	}
 
-	void Serialize(const Registry& registry,const SyncInstance& sync_instance)
+	void Serialize(Registry& registry,const SyncInstance& sync_instance)
 	{
 		SerializeCommon(registry);
 		SerializeInstance(registry, sync_instance);
 	}
 
-	void SerializeCommon(const Registry& registry)
+	void SerializeCommon(Registry& registry)
 	{
 		SerializeRemoteEntity(registry);
 		SerializeSingleEntity(registry);
 	}
 
-	void SerializeInstance(const Registry& registry, const SyncInstance& sync_instance)
+	void SerializeInstance(Registry& registry, const SyncInstance& sync_instance)
 	{
 		SerializeFrameData(registry, sync_instance);
 		SerializeLocalEntity(registry, sync_instance);
@@ -116,7 +117,7 @@ public:
 		DeserializeLocalEntity();
 	}
 private:
-	void SerializeFrameData(const Registry& registry, const SyncInstance& sync_instance)
+	void SerializeFrameData(Registry& registry, const SyncInstance& sync_instance)
 	{
 		auto& game_state = registry.ctx<GameState>();
 		frame_data_.frame = game_state.run_frame;
@@ -136,20 +137,20 @@ private:
 		oar_(frame_data_);
 	}
 
-	void SerializeLocalEntity(const Registry& registry, const SyncInstance& sync_instance)
+	void SerializeLocalEntity(Registry& registry, const SyncInstance& sync_instance)
 	{
 		SerializeLocalEntityComponent(registry, sync_instance, LocalComponents{});
 		SerializeLocalEntityComponent(registry, sync_instance, RemoteComponents{});
 	}
 
 	template<class ... Components>
-	void SerializeLocalEntityComponent(const Registry& registry, const SyncInstance& sync_instance, TypeList<Components...> = {})
+	void SerializeLocalEntityComponent(Registry& registry, const SyncInstance& sync_instance, TypeList<Components...>)
 	{
 		(SerializeLocalEntityComponent<Components>(registry, sync_instance), ...);
 	}
 
 	template<class Component>
-	void SerializeLocalEntityComponent(const Registry& registry, const SyncInstance& sync_instance)
+	void SerializeLocalEntityComponent(Registry& registry, const SyncInstance& sync_instance)
 	{
 		auto& components = GetLocalEntityComponents<Component>();
 		components.clear();
@@ -167,19 +168,19 @@ private:
 		oar_(components);
 	}
 
-	void SerializeRemoteEntity(const Registry& registry)
+	void SerializeRemoteEntity(Registry& registry)
 	{
 		SerializeRemoteEntityComponent(registry,RemoteComponents{});
 	}
 
 	template<class ... Components>
-	void SerializeRemoteEntityComponent(const Registry& registry,TypeList<Components...> = {})
+	void SerializeRemoteEntityComponent(Registry& registry,TypeList<Components...>)
 	{
 		(SerializeRemoteEntityComponent<Components>(registry), ...);
 	}
 
 	template<class Component>
-	void SerializeRemoteEntityComponent(const Registry& registry)
+	void SerializeRemoteEntityComponent(Registry& registry)
 	{
 		auto& components = GetRemoteEntityComponents<Component>();
 		components.clear();
@@ -194,19 +195,19 @@ private:
 		oar_(components);
 	}
 
-	void SerializeSingleEntity(const Registry& registry)
+	void SerializeSingleEntity(Registry& registry)
 	{
 		SerializeSingleEntityComponent(registry,SingleComponents{});
 	}
 
 	template<class ... Components>
-	void SerializeSingleEntityComponent(const Registry& registry,TypeList<Components...> = {})
+	void SerializeSingleEntityComponent(Registry& registry,TypeList<Components...>)
 	{
-		(GetSingleEntityComponents<Components>(registry), ...);
+		(SerializeSingleEntityComponent<Components>(registry), ...);
 	}
 
 	template<class Component>
-	void SerializeSingleEntityComponent(const Registry& registry)
+	void SerializeSingleEntityComponent(Registry& registry)
 	{
 		auto& components = GetSingleEntityComponents<Component>();
 		components.clear();
@@ -233,7 +234,7 @@ private:
 	}
 
 	template<class ... Components>
-	void DeserializeLocalEntityComponent(TypeList<Components...> = {})
+	void DeserializeLocalEntityComponent(TypeList<Components...>)
 	{
 		(DeserializeLocalEntityComponent<Components>(), ...);
 	}
@@ -253,7 +254,7 @@ private:
 	}
 
 	template<class ... Components>
-	void DeserializeRemoteEntityComponent(TypeList<Components...> = {})
+	void DeserializeRemoteEntityComponent(TypeList<Components...>)
 	{
 		(DeserializeRemoteEntityComponent<Components>(), ...);
 	}
@@ -273,7 +274,7 @@ private:
 	}
 
 	template<class ... Components>
-	void DeserializeSingleEntityComponent(TypeList<Components...> = {})
+	void DeserializeSingleEntityComponent(TypeList<Components...>)
 	{
 		(GetSingleEntityComponents<Components>(), ...);
 	}
@@ -293,37 +294,37 @@ public:
 	template<class Component>
 	std::unordered_map<Local, Component>& GetLocalEntityComponents()
 	{
-		auto it = local_component_enities_.find(entt::type_hash<Component>::value());
-		if (it == local_component_enities_.end())
+		auto it = local_component_entities_.find(entt::type_hash<Component>::value());
+		if (it == local_component_entities_.end())
 		{
-			local_component_enities_.emplace(entt::type_hash<Component>::value(), std::unordered_map<Local, Component>{});
+			local_component_entities_.emplace(entt::type_hash<Component>::value(), std::unordered_map<Local, Component>{});
 		}
 
-		return local_component_enities_[entt::type_hash<Component>::value()];
+		return std::any_cast<std::unordered_map<Local, Component>>(local_component_entities_[entt::type_hash<Component>::value()]);
 	}
 
 	template<class Component>
 	std::unordered_map<Remote, Component>& GetRemoteEntityComponents()
 	{
-		auto it = remote_component_enities_.find(entt::type_hash<Component>::value());
-		if (it == remote_component_enities_.end())
+		auto it = remote_component_entities_.find(entt::type_hash<Component>::value());
+		if (it == remote_component_entities_.end())
 		{
-			remote_component_enities_.emplace(entt::type_hash<Component>::value(), std::unordered_map<Remote, Component>{});
+			remote_component_entities_.emplace(entt::type_hash<Component>::value(), std::unordered_map<Remote, Component>{});
 		}
 
-		return remote_component_enities_[entt::type_hash<Component>::value()];
+		return std::any_cast<std::unordered_map<Remote, Component>>(remote_component_entities_[entt::type_hash<Component>::value()]);
 	}
 
 	template<class Component>
 	std::vector<Component>& GetSingleEntityComponents()
 	{
-		auto it = single_component_enities_.find(entt::type_hash<Component>::value());
-		if (it == single_component_enities_.end())
+		auto it = single_component_entities_.find(entt::type_hash<Component>::value());
+		if (it == single_component_entities_.end())
 		{
-			single_component_enities_.emplace(entt::type_hash<Component>::value(), std::vector<Component>{});
+			single_component_entities_.emplace(entt::type_hash<Component>::value(), std::vector<Component>{});
 		}
 
-		return single_component_enities_[entt::type_hash<Component>::value()];
+		return std::any_cast<std::vector<Component>>(single_component_entities_[entt::type_hash<Component>::value()]);
 	}
 private:
 	kanex::Buffer buffer_;
@@ -334,11 +335,11 @@ private:
 	FrameData frame_data_;
 
 	//所有local entity的component数据,存储RemoteComponent和LocalComponent
-	std::unordered_map<uint32_t, std::any> local_component_enities_;
+	std::unordered_map<uint32_t, std::any> local_component_entities_;
 
 	//所有remote entity的component数据,只存储RemoteComponent
-	std::unordered_map<uint32_t, std::any> remote_component_enities_;
+	std::unordered_map<uint32_t, std::any> remote_component_entities_;
 
 	//存储SingleComponent
-	std::unordered_map<uint32_t, std::any> single_component_enities_;
+	std::unordered_map<uint32_t, std::any> single_component_entities_;
 };

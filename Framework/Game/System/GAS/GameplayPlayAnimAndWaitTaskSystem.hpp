@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Framework/Game/Component/Destory.hpp"
+#include "Framework/Game/Component/Destroy.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"

@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Framework/Game/Locator.hpp"
-#include "Framework/Game/GameHelper.hpp"
-
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
@@ -11,7 +8,6 @@
 
 #include "Framework/Game/Utility/PhysicsUtility.hpp"
 #include "Framework/Game/Utility/RollbackUtility.hpp"
-#include "Framework/Game/Utility/PhysicsUtility.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -27,7 +23,7 @@ public:
 	{
 	}
 
-	~GameplayHitTestTaskSystem() {}
+	~GameplayHitTestTaskSystem() override {}
 
 	bool Initialize() override
 	{
@@ -48,31 +44,32 @@ public:
 			auto& [spec, script, task] = registry.get<GameplayAbilitySpec, GameplayAbilityScript, GameplayHitTestTask>(e);
 			if (registry.valid(spec.source))
 			{
-				entt::entity source = registry.get(spec.source);
-				auto& command = registry.get<Command>(source);
+				bool rollback = false;
 
-				if (rollback_utility::CheckRollback(registry, command.verified_frame))
+				if (rollback_utility::CheckRollback(registry, 0))
 				{
-					rollback_utility::RollbackPhysicActor(registry, command.verified_frame);
+					rollback = true;
+					rollback_utility::RollbackPhysicActor(registry, 0);
 				}
 
-				for (auto& spec : task.value)
+				for (auto& gameplay_hit_test_spec : task.value)
 				{
 					hits.clear();
 
-					switch (spec.type)
+					switch (gameplay_hit_test_spec.type)
 					{
 					case GameplayHitType::kRay:
 						break;
+
 					case GameplayHitType::kOverlap:
 					{
-						auto& geometry = spec.collider.geometry;
-						auto transform = PhysicsUtility::Transform(spec.transform) * PhysicsUtility::Transform(spec.collider.transform);
+						auto& geometry = gameplay_hit_test_spec.collider.geometry;
+						auto transform = PhysicsUtility::Transform(gameplay_hit_test_spec.transform) * PhysicsUtility::Transform(gameplay_hit_test_spec.collider.transform);
 						if (geometry.type() == GeometryType::kSphere)
 						{
 							PhysicsUtility::CheckSphereOverlap(registry, PxSphereGeometry(geometry.sphere().r), transform, hits);
 						}
-						else if (spec.collider.geometry.type() == GeometryType::kBox)
+						else if (gameplay_hit_test_spec.collider.geometry.type() == GeometryType::kBox)
 						{
 							PhysicsUtility::CheckBoxOverlap(registry, PxBoxGeometry(geometry.box().e.x, geometry.box().e.y, geometry.box().e.z), transform, hits);
 						}
@@ -89,18 +86,16 @@ public:
 
 					}
 
-					if (spec.on_hit != "")
+					if (gameplay_hit_test_spec.on_hit != "")
 					{
-						script.value[spec.on_hit](script.value,hits);
+						script.value[gameplay_hit_test_spec.on_hit](script.value,hits);
 					}
 				}
 
 				if (rollback)
 				{
-					RollbackUtility::RollbackPhysicActor(registry,game_state.run_frame);
+					rollback_utility::RollbackPhysicActor(registry,game_state.run_frame);
 				}
-				
-				
 			}
 
 			task.value.clear();

@@ -22,7 +22,7 @@ public:
 		, local_map_(registry_.set<EntityByLocalMap>())
 		, unique_map_(registry_.set<EntityByUniqueIdMap>())
 	{
-		registry_.set<Locator>(locator);
+		registry_.set<Locator>(std::move(locator));
 
 		registry_.on_construct<Local>().connect<&Registry::ConnectLocalIdToEntity>();
 		registry_.on_destroy<Local>().connect<&Registry::DisconnectLocalIdToEntity>();
@@ -373,8 +373,6 @@ public:
 
 		return e;
 	}
-
-
 private:
 	static void ConnectUniqueIdToEntity(entt::registry& registry, entt::entity e)
 	{
@@ -407,7 +405,7 @@ private:
 		auto& map = registry.ctx<EntityByLocalMap>();
 		map.value.erase(local_id);
 	}
-private:
+
 	entt::registry registry_;
 	GameMode game_mode_;
 	EntityByLocalMap& local_map_;

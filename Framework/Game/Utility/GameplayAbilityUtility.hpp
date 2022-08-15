@@ -17,29 +17,6 @@
 struct GameplayAbilityUtility
 {
 public:
-	static void BuildGameplayAbilityCommand(
-		Registry& registry,
-		entt::entity source,
-		std::string_view ability,
-		entt::entity target = entt::null)
-	{
-		auto& try_ga = registry.ctx_or_set<::GameplayAbilityCommand>();
-		if (try_ga.value.find(source) == try_ga.value.end())
-		{
-			try_ga.value.emplace(source, std::vector<GameplayAbilityCommandSpec>());
-		}
-		try_ga.value[source].emplace_back(ability, source, target);
-	}
-
-	static void BuildGameplayAbilityCommand(
-		Registry& registry,
-		Remote source,
-		std::string_view ability,
-		Remote target = Remote::null)
-	{
-		GameplayAbilityUtility::BuildGameplayAbilityCommand(registry,registry.get(source), ability, registry.get(target));
-	}
-
 	static void CommitGameplayAbilityCost(Registry& registry,entt::entity ability)
 	{
 		if (registry.valid(ability))

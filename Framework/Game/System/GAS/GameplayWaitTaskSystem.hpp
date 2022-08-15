@@ -3,7 +3,7 @@
 #include <functional>
 
 #include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
-#include "Framework/Game/Component/Destory.hpp"
+#include "Framework/Game/Component/Destroy.hpp"
 
 #include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
 #include "Framework/Game/Component/GAS/GameplayWaitTask.hpp"
@@ -30,7 +30,7 @@ public:
 
 	void FixedUpdate(float dt) override
 	{
-		auto view = registry.view<GameplayAbilityScript,GameplayWaitTask>(entt::exclude<Destory>);
+		auto view = registry.view<GameplayAbilityScript,GameplayWaitTask>(entt::exclude<Destroy>);
 		for (auto e : view)
 		{
 			auto& [script,task] = registry.get<GameplayAbilityScript,GameplayWaitTask>(e);

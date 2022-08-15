@@ -84,6 +84,7 @@ System/GAS/DestroyModifierAttributeSystem.hpp
 Component/GameState.hpp
 Component/Command.hpp
 Component/MoveCommand.hpp
+Component/KeyboardCommand.hpp
 Component/Player.hpp
 Component/View.hpp
 Component/Transform.hpp

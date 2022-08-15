@@ -152,7 +152,11 @@ NON_MEMEBER_BAR(CharacterMovement,obj.base_velocity, obj.attached_rigidbody_velo
 
 struct IgnoreGravity
 {
+	bool b;
+	IgnoreGravity() = default;
 };
+
+EMPTY_NON_MEMEBER_BAR(IgnoreGravity);
 
 struct MovePositionTarget
 {

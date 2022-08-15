@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/MoveCommand.hpp"
 
@@ -12,7 +13,7 @@ struct CommandSystem : public System
 	CommandSystem(Registry& _registry)
 		: System(_registry)
 	{ }
-	~CommandSystem() {}
+	~CommandSystem() override {}
 
 	bool Initialize() override
 	{

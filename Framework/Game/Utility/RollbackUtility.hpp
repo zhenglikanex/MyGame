@@ -2,13 +2,12 @@
 
 #include <cstdint>
 
+#include "Framework/Game/Registry.hpp"
 #include "Framework/Game/GameConfig.hpp"
 
 #include "Framework/Game/Component/GameState.hpp"
-#include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/TransformState.hpp"
 #include "Framework/Game/Component/PhysicsActor.hpp"
-#include "Framework/Game/Component/PhysicsWorld.hpp"
 
 #include "Framework/Game/Utility/PhysicsUtility.hpp"
 
@@ -16,7 +15,6 @@
 
 namespace rollback_utility
 {
-
 	inline bool CheckRollback(Registry& registry, uint32_t verified_frame)
 	{
 		auto& game_state = registry.ctx<GameState>();
@@ -25,10 +23,10 @@ namespace rollback_utility
 
 	inline void RollbackTransform(uint32_t frame)
 	{
-		
+
 	}
 
-	inline void RollbackPhysicActor(Registry& registry,uint32_t frame)
+	inline void RollbackPhysicActor(Registry& registry, uint32_t frame)
 	{
 		auto view = registry.view<TransformState, PhysicsActor>();
 		for (auto e : view)
@@ -44,4 +42,4 @@ namespace rollback_utility
 	{
 
 	}
-};
+}

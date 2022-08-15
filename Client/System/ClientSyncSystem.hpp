@@ -146,7 +146,7 @@ public:
 		(ReplicationLocalEntityComponent<Components>(), ...);
 	}
 
-	template<class Components>
+	template<class Component>
 	void ReplicationLocalEntityComponent()
 	{
 		auto& components = serialization_manager.GetLocalEntityComponents<Component>();
@@ -209,7 +209,7 @@ public:
 		(ReplicationSingleEntityComponent<Components>(), ...);
 	}
 
-	template<class Components>
+	template<class Component>
 	void ReplicationSingleEntityComponent()
 	{
 		auto& components = serialization_manager.GetSingleEntityComponents<Component>();

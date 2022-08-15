@@ -67,32 +67,29 @@ public:
 		}
 	}
 
-	void BuildCommand(const Command& command,const Input& input)
+	void BuildCommand(Command& command,const Input& input) const
 	{
 		BuildMoveCommand(command,input);
 		BuildAbilityCommand(command,input);
 	}
 
-	void BuildMoveCommand(const Command& command, const Input& input)
+	void BuildMoveCommand(Command& command, const Input& input) const
 	{
 		if (input.x_axis > 0 || input.y_axis > 0)
 		{
-			auto& move_command = registry.ctx_or_set<MoveCommand>();
-			move_command.value.emplace_back(registry.get<Remote>(player), input.x_axis, input.y_axis);
+			command.move_command.value.emplace_back(registry.get<Remote>(player), input.x_axis, input.y_axis);
 		}
 	}
 
-	void BuildAbilityCommand(const Command& command, const Input& input)
+	void BuildAbilityCommand(Command& command, const Input& input) const
 	{
-		for (auto& item : input.abilities)
+		auto source = registry.get<Remote>(player);
+		std::unordered_map<std::string,GameplayAbilityCommandSpec>& ability_command_specs = command.gameplay_ability_command.value[source];
+		for (auto& [ability,input_key_status] : input.abilities)
 		{
-			if (item.second == InputKeyStatus::kDown)
+			if(ability_command_specs.find(ability) == ability_command_specs.end())
 			{
-				GameplayAbilityUtility::BuildGameplayAbilityCommand(registry, player, item.first);
-			}
-			else if (item.second == InputKeyStatus::kUp)
-			{
-				
+				ability_command_specs.emplace(ability,GameplayAbilityCommandSpec(ability, source, Remote::null, input_key_status == InputKeyStatus::kDown));
 			}
 		}
 	}

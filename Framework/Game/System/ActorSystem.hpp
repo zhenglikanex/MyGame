@@ -13,7 +13,7 @@ struct ActorSystem : public System
 	ActorSystem(Registry& _registry)
 		: System(_registry)
 	{ }
-	~ActorSystem() {}
+	~ActorSystem() override {}
 
 	bool Initialize() override
 	{
@@ -30,10 +30,10 @@ struct ActorSystem : public System
 		auto view = registry.view<Local,GameplayTagCountContainer, AnimationClip, CharacterMovement>();
 		for (auto e : view)
 		{
-			auto&[tag_count, animation_clip, character_movment] = view.get<GameplayTagCountContainer, AnimationClip, CharacterMovement>(e);
+			auto&[tag_count, animation_clip, character_movement] = view.get<GameplayTagCountContainer, AnimationClip, CharacterMovement>(e);
 			
 			ProcessIdle(animation_clip, e);
-			UpdateGrounded(character_movment, tag_count);
+			UpdateGrounded(character_movement, tag_count);
 			UpdateGravity(tag_count, e);
 		}
 	}

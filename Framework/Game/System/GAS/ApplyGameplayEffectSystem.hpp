@@ -4,7 +4,7 @@
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 
-#include "Framework/Game/Component/Destory.hpp"
+#include "Framework/Game/Component/Destroy.hpp"
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"

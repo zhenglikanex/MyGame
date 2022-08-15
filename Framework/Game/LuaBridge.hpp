@@ -17,7 +17,7 @@
 #include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/ParentAnimBone.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
-#include "Framework/Game/Component/Destory.hpp"
+#include "Framework/Game/Component/Destroy.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/SyncManager.hpp"
 #include "Framework/Game/Component/CollisionReceiver.hpp"
@@ -271,11 +271,6 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, effect, level, target);
 	};
 
-	lua["TryGameplayAbility"] = [&registry](Remote source, std::string_view ability, entt::entity target)
-	{
-		GameplayAbilityUtility::BuildGameplayAbilityCommand(registry, source, ability, target);
-	};
-
 	lua["GameplayWait"] = [&registry](entt::entity ability, float time, std::string_view completed)
 	{
 		auto& task = registry.get_or_emplace<GameplayWaitTask>(ability);
@@ -360,9 +355,9 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 	
 	auto destory1 = [&registry](entt::entity entity) 
 	{
-		if (!registry.all_of<Destory>(entity))
+		if (!registry.all_of<Destroy>(entity))
 		{
-			registry.emplace<Destory>(entity);
+			registry.emplace<Destroy>(entity);
 		}
 	};
 
@@ -371,9 +366,9 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		entt::entity e = registry.get(local);
 		if (e != entt::null)
 		{
-			if (!registry.all_of<Destory>(e))
+			if (!registry.all_of<Destroy>(e))
 			{
-				registry.emplace<Destory>(e);
+				registry.emplace<Destroy>(e);
 			}
 		}
 	};

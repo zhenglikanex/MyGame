@@ -41,7 +41,7 @@ struct GameplayAbilitySystem : public System
 			} 
 			else
 			{
-				registry.emplace<Destory>(e);
+				registry.emplace<Destroy>(e);
 				assert("LoadGameplayAbilityFailed!" && false);
 			}
 		}

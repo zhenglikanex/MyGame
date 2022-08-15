@@ -8,7 +8,6 @@
 #include <variant>
 #include <iostream>
 #include <bitset>
-#include "Framework/Game/Proto.hpp"
 
 using namespace std::chrono;
 
@@ -25,16 +24,13 @@ int Func1(uint32_t i)
 	return 1;
 }
 
-template<class ... Components>
-void Func(TypeList<Components...> = {})
-{
-	(Func1<Components>(), ...);
-}
-
 
 TEST_CASE_METHOD(Serialize1, "NetMessage")
 {
-	Func(LocalComponents{});
+	
+	 Serialize1 S{};
+	std::unordered_map<int, Serialize1> map;
+	map.emplace(1, S);
 	
 
 	//std::numeric_limits<float>::epsilon()

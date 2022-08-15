@@ -81,3 +81,13 @@ inline void Serialize(kanex::BinaryInputArchive& ar, class_name& obj)		\
 	ar(__VA_ARGS__);												\
 }																	\
 }
+
+#define EMPTY_NON_MEMEBER_BAR(class_name)								\
+namespace kanex {													\
+inline void Serialize(kanex::BinaryOutputArchive& ar, class_name& obj)		\
+{																	\
+}																	\
+inline void Serialize(kanex::BinaryInputArchive& ar, class_name& obj)		\
+{																	\
+}																	\
+}

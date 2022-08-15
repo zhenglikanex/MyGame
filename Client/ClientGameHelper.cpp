@@ -100,7 +100,7 @@ void ClientGameHelper::CreateSystems(Game* game) const
 	> ();
 }
 
-float ClientGameHelper::GameFrameTime() const
+uint64_t ClientGameHelper::GameFrameTime() const
 {
 	// todo:可以根据延迟动态调整
 	return GameConfig::kFrameTime;

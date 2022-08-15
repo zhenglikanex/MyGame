@@ -25,14 +25,14 @@ struct GameplayEffectSystem : public System
 	{
 		auto& ge_manager = registry.ctx<GameplayEffectManager>();
 
-		auto view = registry.view<Local,GameplayEffectSpec>(entt::exclude<Destory>);
+		auto view = registry.view<Local,GameplayEffectSpec>(entt::exclude<Destroy>);
 		for (auto e : view)
 		{
 			auto& spec = view.get<GameplayEffectSpec>(e);
 			
 			if (!registry.valid(spec.target))
 			{
-				registry.emplace<Destory>(e);
+				registry.emplace<Destroy>(e);
 				continue;
 			}
 
@@ -68,7 +68,7 @@ struct GameplayEffectSystem : public System
 				}
 				else
 				{
-					registry.emplace<Destory>(e);
+					registry.emplace<Destroy>(e);
 				}
 			}
 		}

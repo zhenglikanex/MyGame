@@ -2,7 +2,7 @@
 
 #include "Client/UnityViewService.hpp"
 
-UnityViewImpl::UnityViewImpl(UnityViewService* service, int handle)
+UnityViewImpl::UnityViewImpl(const UnityViewService* service, int handle)
 	: IViewImpl()
 	, service_(service)
 	, handle_(handle)
@@ -11,7 +11,7 @@ UnityViewImpl::UnityViewImpl(UnityViewService* service, int handle)
 
 UnityViewImpl::~UnityViewImpl()
 {
-	service_->Destory(this);
+	service_->Destroy(this);
 }
 
 void UnityViewImpl::UpdatePosition(const vec3& pos)
