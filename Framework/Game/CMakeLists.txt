@@ -101,7 +101,7 @@ Component/Collider.hpp
 Component/PhysicsWorld.hpp
 Component/Character.hpp
 Component/PhysicsActor.hpp
-Component/Destory.hpp
+Component/Destroy.hpp
 Component/Remote.hpp
 Component/EntityByUniqueIdMap.hpp
 Component/Local.hpp

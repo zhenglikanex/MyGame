@@ -36,25 +36,25 @@ uint32_t g_my_id = 0;
 uint32_t g_ping = 0;
 uint64_t g_last_time = 0;
 
-std::unordered_map<std::string,std::queue<std::unique_ptr<NetMessage>>> g_game_messages;
+std::unordered_map<std::string,std::queue<NetMessage>> g_game_messages;
 
-std::unique_ptr<NetMessage> RecvGameMessage(const std::string& name)
+std::optional<NetMessage> RecvGameMessage(const std::string& name)
 {
 	if (g_game_messages.find(name) == g_game_messages.end())
 	{
-		return nullptr;
+		return {};
 	}
 
 	auto& messages = g_game_messages[name];
 
 	if (messages.empty())
 	{
-		return nullptr;
+		return {};
 	}
 
 	auto message = std::move(messages.front());
 	messages.pop();
-	return std::move(message);
+	return message;
 }
 
 void SendGameMessage(std::string_view name,std::vector<uint8_t>&& data)
@@ -206,11 +206,11 @@ extern "C"
 					{
 						if (g_game_messages.find(message.name()) == g_game_messages.end())
 						{
-							g_game_messages.emplace(message.name(), std::queue<std::unique_ptr<NetMessage>>());
+							g_game_messages.emplace(message.name(), std::queue<NetMessage>());
 						}
 
 						auto& messges = g_game_messages[message.name()];
-						messges.emplace(std::make_unique<NetMessage>(std::move(message)));
+						messges.emplace(std::move(message));
 					}
 				});
 

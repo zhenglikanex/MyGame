@@ -13,7 +13,7 @@ struct RecvCommandSystem : public System
 	RecvCommandSystem(Registry& _registry)
 		: System(_registry)
 	{ }
-	~RecvCommandSystem() {}
+	~RecvCommandSystem() override {}
 
 	bool Initialize() override
 	{
@@ -23,9 +23,9 @@ struct RecvCommandSystem : public System
 	void FixedUpdate(float dt) override
 	{
 		auto& network_service = registry.ctx<Locator>().Ref<const NetworkService>();
-		while (auto message = network_service.Recv("input_command"))
+		while (auto result = network_service.Recv("input_command"))
 		{
-			auto& data = *message;
+			auto& data = *result;
 
 			kanex::Buffer buffer(std::move(data));
 			kanex::BinaryStream stream(buffer);

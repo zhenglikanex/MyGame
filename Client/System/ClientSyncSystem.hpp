@@ -12,7 +12,6 @@
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/GAS/GameplayState.hpp"
 
-#include "Kanex.hpp"
 
 #include "3rdparty/include/glm/gtx/vector_angle.hpp"
 
@@ -26,7 +25,7 @@ struct ClientSyncSystem : public System
 
 	}
 
-	~ClientSyncSystem()
+	~ClientSyncSystem() override
 	{
 
 	}

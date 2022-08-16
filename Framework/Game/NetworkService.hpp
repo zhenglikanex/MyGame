@@ -1,16 +1,14 @@
 #pragma once
 
-#include <functional>
+
 #include <vector>
-#include <any>
+#include <optional>
 
 #include "Framework/Game/Service.hpp"
 
 class NetworkService : public Service
 {
 public:
-	virtual ~NetworkService() = 0 {}
-
-	virtual std::unique_ptr<std::vector<uint8_t>> Recv(const std::string& name) const = 0;
+	virtual std::optional<std::vector<uint8_t>> Recv(const std::string& name) const = 0;
 	virtual void Send(std::string_view name, std::vector<uint8_t>&& data) const = 0;
 };

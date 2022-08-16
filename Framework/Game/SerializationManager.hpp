@@ -300,7 +300,7 @@ public:
 			local_component_entities_.emplace(entt::type_hash<Component>::value(), std::unordered_map<Local, Component>{});
 		}
 
-		return std::any_cast<std::unordered_map<Local, Component>>(local_component_entities_[entt::type_hash<Component>::value()]);
+		return std::any_cast<std::unordered_map<Local, Component>&>(local_component_entities_[entt::type_hash<Component>::value()]);;
 	}
 
 	template<class Component>
@@ -312,7 +312,7 @@ public:
 			remote_component_entities_.emplace(entt::type_hash<Component>::value(), std::unordered_map<Remote, Component>{});
 		}
 
-		return std::any_cast<std::unordered_map<Remote, Component>>(remote_component_entities_[entt::type_hash<Component>::value()]);
+		return std::any_cast<std::unordered_map<Remote, Component>&>(remote_component_entities_[entt::type_hash<Component>::value()]);
 	}
 
 	template<class Component>
@@ -324,7 +324,7 @@ public:
 			single_component_entities_.emplace(entt::type_hash<Component>::value(), std::vector<Component>{});
 		}
 
-		return std::any_cast<std::vector<Component>>(single_component_entities_[entt::type_hash<Component>::value()]);
+		return std::any_cast<std::vector<Component>&>(single_component_entities_[entt::type_hash<Component>::value()]);
 	}
 private:
 	kanex::Buffer buffer_;

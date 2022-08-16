@@ -12,18 +12,16 @@ ServerNetworkService::ServerNetworkService(
 }
 
 ServerNetworkService::~ServerNetworkService()
-{
+= default;
 
-}
-
-std::unique_ptr<std::vector<uint8_t>> ServerNetworkService::Recv(const std::string & name) const
+std::optional<std::vector<uint8_t>> ServerNetworkService::Recv(const std::string& name) const
 {
 	if (recv_handler_)
 	{
 		return recv_handler_(name);
 	}
 
-	return nullptr;
+	return {};
 }
 
 void ServerNetworkService::Send(std::string_view name, std::vector<uint8_t>&& data) const

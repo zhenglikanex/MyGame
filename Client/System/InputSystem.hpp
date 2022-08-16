@@ -25,8 +25,6 @@ public:
 	{
 	}
 
-	~InputSystem() {}
-
 	bool Initialize() override
 	{
 		return true;

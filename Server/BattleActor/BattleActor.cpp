@@ -5,10 +5,10 @@
 #include "Framework/Proto/NetMessage.hpp"
 
 #include "Server/BattleActor/ServerFileService.hpp"
-#include "Server/BattleActor/ServerInputService.hpp"
-#include "Server/BattleActor/ServerViewService.hpp"
 #include "Server/BattleActor/ServerGameHelper.hpp"
 #include "Server/BattleActor/ServerNetworkService.hpp"
+
+#include "Framework/Proto/Battle.pb.h"
 
 #include "Kanex.hpp"
 
@@ -22,11 +22,6 @@ BattleActor::BattleActor(ActorId id)
 
 }
 
-BattleActor::~BattleActor()
-{
-
-}
-
 bool BattleActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 {
 	if (!Actor::Init(actor_net))
@@ -35,7 +30,7 @@ bool BattleActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 	}
 
 	ActorConnect("start_battle", &BattleActor::StartBattle, this);
-	ActorConnect("input_command", &BattleActor::RecvGameMessage, this);
+	ActorConnect("push_game_message", &BattleActor::PushGameMessage, this);
 
 	return true;
 }
@@ -102,7 +97,7 @@ void BattleActor::StartBattle(const std::any& data)
 		std::bind(&BattleActor::RecvGameMessage, this, std::placeholders::_1),
 		std::bind(&BattleActor::SendGameMessage, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
 	
-	game_ = std::make_unique<Game>(std::move(locator),std::move(players));
+	game_ = std::make_unique<Game>(std::make_unique<ServerGameHelper>(),std::move(locator),std::move(players));
 	if (!game_->Initialize())
 	{
 		game_->Finalize();
@@ -127,29 +122,29 @@ void BattleActor::Update()
 
 void BattleActor::PushGameMessage(const std::any& data)
 {
-	auto& [name, message_data] = std::any_cast<std::tuple<std::string, std::vector<uint8_t>>>(data);
+	auto& [name, message_data] = std::any_cast<std::tuple<std::string, std::vector<uint8_t>>&>(data);
 	
 	if (game_messages_.find(name) == game_messages_.end())
 	{
-		game_messages_.emplace(name, std::vector<std::unique_ptr<std::vector<uint8_t>>>());
+		game_messages_.emplace(name, std::queue<std::vector<uint8_t>>());
 	}
 	
 	auto& messages = game_messages_[name];
-	messages.emplace(std::move(data));
+	messages.emplace(std::move(message_data));
 }
 
-std::unique_ptr<std::vector<uint8_t>> BattleActor::RecvGameMessage(const std::string & name)
+std::optional<std::vector<uint8_t>> BattleActor::RecvGameMessage(const std::string & name)
 {
 	if (game_messages_.find(name) == game_messages_.end())
 	{
-		return nullptr;
+		return {};
 	}
 
 	auto& messages = game_messages_[name];
 
 	if (messages.empty())
 	{
-		return nullptr;
+		return {};
 	}
 
 	auto message = std::move(messages.front());
@@ -157,12 +152,11 @@ std::unique_ptr<std::vector<uint8_t>> BattleActor::RecvGameMessage(const std::st
 	return message;
 }
 
-void BattleActor::SendGameMessage(uint32_t id,std::string_view name, std::vector<uint8_t>&& data)
+void BattleActor::SendGameMessage(uint32_t player,std::string_view name, std::vector<uint8_t>&& data)
 {
-
 	for (auto& item : ids_)
 	{
-		if (id == item.second)
+		if (player == item.second)
 		{
 			Call(item.first, "send", std::make_tuple(std::string(name.data()), data));
 		}
