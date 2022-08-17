@@ -4,7 +4,7 @@
 #include <string>
 #include <string_view>
 
-#include "Framework/Game/Service.hpp"
+#include "Framework/Game/Service/Service.hpp"
 #include "Framework/Game/Fmt.hpp"
 #include "Framework/Game/Math.hpp"
 

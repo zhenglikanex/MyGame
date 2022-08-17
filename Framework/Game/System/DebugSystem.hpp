@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Framework/Game/Locator.hpp"
-#include "Framework/Game/DebugService.hpp"
+#include "Framework/Game/Service/DebugService.hpp"
 
 #include "Framework/Game/Component/Collider.hpp"
 

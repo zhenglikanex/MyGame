@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <string>
-#include "Framework/Game/Service.hpp"
+#include "Framework/Game/Service/Service.hpp"
 
 class IViewImpl;
 

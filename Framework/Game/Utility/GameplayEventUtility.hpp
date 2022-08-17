@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "Framework/Game/Component/GAS/GameplayEvent.hpp"
 
 namespace gameplay_event_utility

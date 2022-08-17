@@ -38,6 +38,10 @@ struct PhysicsWorld
 	}
 };
 
+inline PxDefaultAllocator PhysicsWorld::s_allocator;
+inline PxDefaultErrorCallback PhysicsWorld::s_error_callback;
+
+
 class IgnoreTiggerQueryCallback : public PxQueryFilterCallback
 {
 public:
@@ -56,6 +60,6 @@ public:
 		return PxQueryHitType::eTOUCH;
 	}
 
-	~IgnoreTiggerQueryCallback() {}
+	~IgnoreTiggerQueryCallback() override {}
 };
 

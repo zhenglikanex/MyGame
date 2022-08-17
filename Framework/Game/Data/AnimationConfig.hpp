@@ -3,10 +3,7 @@
 #include <unordered_map>
 #include <string>
 #include <unordered_map>
-#include <mutex>
 
-#include "Framework/Game/Locator.hpp"
-#include "Framework/Game/FileService.hpp"
 #include "Framework/Game/Math.hpp"
 #include "Framework/Game/GameConfig.hpp"
 
@@ -92,7 +89,7 @@ inline void from_json(const nlohmann::json& j, AnimationClipInfo& clip_info)
 
 	if (j.contains("events"))
 	{
-		auto& anim_events = j.at("events").get<std::vector<AnimEvent>>();
+		auto anim_events = j.at("events").get<std::vector<AnimEvent>>();
 		for (auto& event : anim_events)
 		{
 			uint32_t frame = event.time / GameConfig::kFrameTime;

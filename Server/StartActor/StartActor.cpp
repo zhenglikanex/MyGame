@@ -3,7 +3,7 @@
 #include <iostream>
 
 StartActor::StartActor(uint32_t id)
-	:Actor(id)
+	: Actor(id)
 {
 
 }

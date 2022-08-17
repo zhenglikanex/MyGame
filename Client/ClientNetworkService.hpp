@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "Framework/Game/NetworkService.hpp"
+#include "Framework/Game/Service/NetworkService.hpp"
 
 #include "Framework/Proto/NetMessage.hpp"
 

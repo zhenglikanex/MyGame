@@ -2,7 +2,6 @@
 
 #include "Framework/Game/System.hpp"
 
-#include "Framework/Game/Component/EntityByLocalMap.hpp"
 #include "Framework/Game/Component/PhysicsWorld.hpp"
 #include "Framework/Game/Component/PhysicsActor.hpp"
 
@@ -20,7 +19,7 @@ struct PhysicsSystem : public System,public PxSimulationEventCallback
 
 	bool Initialize() override
 	{
-		registry.set<PhysicsWorld>(PhysicsUtility::CreatePhysicsWorld(this,registry));
+		registry.set<PhysicsWorld>(physics_utility::CreatePhysicsWorld(this,registry));
 		
 		return true;
 	}
@@ -38,7 +37,7 @@ struct PhysicsSystem : public System,public PxSimulationEventCallback
 
 	void Finalize() override
 	{
-		PhysicsUtility::DestoryPhysicsWorld(registry.ctx<PhysicsWorld>());
+		physics_utility::DestoryPhysicsWorld(registry.ctx<PhysicsWorld>());
 		registry.unset<PhysicsWorld>();
 	}
 
@@ -49,7 +48,7 @@ struct PhysicsSystem : public System,public PxSimulationEventCallback
 		{
 			auto& transform = view.get<Transform>(e);
 			auto& physics_actor = view.get<PhysicsActor>(e);
-			PhysicsUtility::UpdateActorPose(physics_actor.actor, transform);
+			physics_utility::UpdateActorPose(physics_actor.actor, transform);
 		}
 	}
 

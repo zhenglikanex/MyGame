@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Framework/Game/DebugService.hpp"
+#include "Framework/Game/Service/DebugService.hpp"
 
 #ifdef WIN32
 #include <windows.h>

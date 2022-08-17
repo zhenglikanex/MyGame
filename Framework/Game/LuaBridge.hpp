@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Framework/Game/Locator.hpp"
-#include "Framework/Game/FileService.hpp"
-#include "Framework/Game/DebugService.hpp"
+#include "Framework/Game/Service/FileService.hpp"
+#include "Framework/Game/Service/DebugService.hpp"
 #include "Framework/Game/Registry.hpp"
 
 #include "Framework/Game/GAS/GameplayTag.hpp"
@@ -267,7 +267,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["ApplyGameplayEffectToTarget"] = [&registry](entt::entity source, std::string_view effect, uint32_t level, entt::entity target)
 	{
-		GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, effect, level, target);
+		gameplay_effect_utility::ApplyGameEffectToTarget(registry, source, effect, level, target);
 	};
 
 	lua["GameplayWait"] = [&registry](entt::entity ability, float time, std::string_view completed)
@@ -485,19 +485,19 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	auto ApplyGameplayEffectToTarget1 = [&registry](entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
 	{
-		GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, effect_name, level, target);
+		gameplay_effect_utility::ApplyGameEffectToTarget(registry, source, effect_name, level, target);
 	};
 
 	auto ApplyGameplayEffectToTarget2 = [&registry](entt::entity source, const GameplayEffectSpec& spec)
 	{
-		GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, spec);
+		gameplay_effect_utility::ApplyGameEffectToTarget(registry, source, spec);
 	};
 
 	lua["ApplyGameplayEffectToTarget"] = sol::overload(ApplyGameplayEffectToTarget1, ApplyGameplayEffectToTarget2);
 
 	lua["MakeGameplayEffectSpec"] = [&registry](entt::entity source, std::string_view effect, uint32_t level, entt::entity target)
 	{
-		return GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, effect, level, target);
+		return gameplay_effect_utility::MakeGameplayEffectSpec(registry, source, effect, level, target);
 	};
 
 	auto GetEntity1 = [&registry](Remote id)

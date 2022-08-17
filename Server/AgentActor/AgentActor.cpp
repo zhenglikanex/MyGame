@@ -68,7 +68,7 @@ void AgentActor::ClientReceive(std::any& data)
 	{
 		if (battle_ != kNull)
 		{
-			Call(battle_, "push_game_message",std::make_tuple(message.name(),message.data()));
+			Call(battle_, "push_game_message",std::make_tuple(message.name(),message.MoveData()));
 		}
 	}
 }

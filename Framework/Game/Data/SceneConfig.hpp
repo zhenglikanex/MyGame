@@ -2,13 +2,9 @@
 
 #include <vector>
 
-#include "Framework/Game/Locator.hpp"
-#include "Framework/Game/FileService.hpp"
 #include "Framework/Game/Json.hpp"
 
 #include "Framework/Game/Component/Collider.hpp"
-
-#include "3rdparty/include/entt/entt.hpp"
 
 struct Obstacle
 {

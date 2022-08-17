@@ -1,4 +1,6 @@
-#include "Framework/Game/FileService.hpp"
+#pragma once
+
+#include "Framework/Game/Service/FileService.hpp"
 
 class ServerFileService : public FileService
 {

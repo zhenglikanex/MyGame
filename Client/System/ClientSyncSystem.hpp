@@ -4,7 +4,8 @@
 
 #include "Framework/Game/SerializationManager.hpp"
 #include "Framework/Game/Locator.hpp"
-#include "Framework/Game/NetworkService.hpp"
+
+#include "Framework/Game/Service/NetworkService.hpp"
 
 #include "Framework/Game/Component/SyncManager.hpp"
 #include "Framework/Game/Component/LocalEntityState.hpp"

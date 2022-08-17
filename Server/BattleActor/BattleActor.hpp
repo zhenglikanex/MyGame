@@ -28,7 +28,7 @@ public:
 	void Update();
 private:
 	void StartBattle(const std::any& data);
-	void PushGameMessage(const std::any& data);
+	void PushGameMessage(std::any& data);
 private:
 	std::optional<std::vector<uint8_t>> RecvGameMessage(const std::string& name);
 	void SendGameMessage(uint32_t player, std::string_view name, std::vector<uint8_t>&& data);

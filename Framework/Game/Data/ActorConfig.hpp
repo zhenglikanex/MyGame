@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 #include "Framework/Game/Locator.hpp"
-#include "Framework/Game/FileService.hpp"
+#include "Framework/Game/Service/FileService.hpp"
 #include "Framework/Game/Json.hpp"
 
 #include "Framework/Game/Component/Collider.hpp"

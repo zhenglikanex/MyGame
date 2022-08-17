@@ -5,7 +5,7 @@
 #include "Framework/Game/Component/Animation.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 
-#include "Framework/Game/Utility/anim_event_utility.hpp"
+#include "Framework/Game/Utility/AnimEventUtility.hpp"
 
 #include "Framework/Game/System.hpp"
 

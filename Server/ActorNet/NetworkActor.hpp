@@ -65,18 +65,18 @@ namespace actor_net
 	class UdpServer
 	{
 	public:
-		using UdpReceiveHanlder = std::function<void(asio::ip::udp::endpoint, Buffer&&)>;
+		using UdpReceiveHandler = std::function<void(asio::ip::udp::endpoint, Buffer&&)>;
 
 		UdpServer(uint32_t owner_id, asio::io_context& io_context, uint16_t port);
 		void Start();
 		void Send(const asio::ip::udp::endpoint& udp_remote_endpoint,Buffer&& buffer);
-		void set_receive_handler(const UdpReceiveHanlder handler) { receive_handler_ = handler; }
+		void set_receive_handler(const UdpReceiveHandler handler) { receive_handler_ = handler; }
 	private:
 		uint32_t owner_id_;
 		asio::ip::udp::socket socket_;
 		asio::ip::udp::endpoint udp_remote_endpoint_;
 		std::array<uint8_t, kMaxMsgSize> data_;
-		UdpReceiveHanlder receive_handler_;
+		UdpReceiveHandler receive_handler_;
 	};
 
 	class NetworkActor

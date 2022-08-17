@@ -2,9 +2,6 @@
 
 #include <algorithm>
 
-#include "Framework/Game/DebugService.hpp"
-
-#include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/Player.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Movement.hpp"
@@ -13,18 +10,19 @@
 #include "Framework/Game/Component/PhysicsWorld.hpp"
 #include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/PhysicsActor.hpp"
-#include "Framework/Game/Component/PhysicsWorld.hpp"
+
 
 #include "Framework/Game/System.hpp"
 
 #include "Framework/Game/Utility/PhysicsUtility.hpp"
+
 
 //包含碰撞稳定性(是否可以站立)评估的所有信息
 struct HitStabilityReport
 {
 	bool is_stable = false;
 	vec3 inner_normal = vec3(0);
-	vec3 outer_noraml = vec3(0);
+	vec3 outer_normal = vec3(0);
 	
 	bool vaild_step_detected = false;
 	PxRigidActor* stepped_collider = nullptr;
@@ -60,7 +58,7 @@ struct KinematicCharacterMovementSystem : public System
 	PxRigidBody* last_attached_rigidbody;
 	bool solve_movement_collisions = true;
 	bool solve_grounding = true;
-	bool move_poistion_dirty = false;
+	bool move_position_dirty = false;
 	vec3 move_position_target = vec3(0);
 	bool move_rotation_dirty = false;
 	quat move_rotation_target = glm::identity<quat>();
@@ -190,7 +188,7 @@ struct KinematicCharacterMovementSystem : public System
 								overlap->getShapes(&overlap_shape, 1);
 								auto overlap_transform = overlap->getGlobalPose();
 
-								auto my_tmp_transform = PhysicsUtility::Transform(transient_position_, transient_rotation_);
+								auto my_tmp_transform = physics_utility::Transform(transient_position_, transient_rotation_);
 
 								PxVec3 resolution_direction;
 								float resolution_distance;
@@ -202,7 +200,7 @@ struct KinematicCharacterMovementSystem : public System
 									overlap_shape->getGeometry().any(),
 									overlap_transform * overlap_shape->getLocalPose()))
 								{
-									vec3 resolution_dir = PhysicsUtility::Vec3(resolution_direction);
+									vec3 resolution_dir = physics_utility::Vec3(resolution_direction);
 									resolution_dir = GetObstructionNormal(resolution_dir, IsStableOnNormal(resolution_dir));
 									
 									// 这里用的是修正后的方向,有可能移动后还是会重叠,但是这里每次会重新检查
@@ -329,7 +327,7 @@ struct KinematicCharacterMovementSystem : public System
 					
 					// 从附加的刚体旋转
 					vec3 new_forward = Normalize(ProjectOnPlane(
-						quat(glm::degrees(PhysicsUtility::Vec3(rigidbody->getAngularVelocity() * dt))) * (transient_rotation_ * vec3(0, 0, 1)),
+						quat(glm::degrees(physics_utility::Vec3(rigidbody->getAngularVelocity() * dt))) * (transient_rotation_ * vec3(0, 0, 1)),
 						character_up_));
 
 					transient_rotation_ = LookRotation(new_forward, character_up_);
@@ -434,7 +432,7 @@ struct KinematicCharacterMovementSystem : public System
 						upwards_offset,
 						closest_hit))
 					{
-						if (closest_hit.actor == character_movement_->attached_rigidbody && IsStableOnNormal(PhysicsUtility::Vec3(closest_hit.normal)))
+						if (closest_hit.actor == character_movement_->attached_rigidbody && IsStableOnNormal(physics_utility::Vec3(closest_hit.normal)))
 						{
 							float distance_moveed_up = (upwards_offset - closest_hit.distance);
 							transient_position_ = transient_position_ + (character_up_ * distance_moveed_up) + (character_up_ * kCollisionOffset);
@@ -458,7 +456,7 @@ struct KinematicCharacterMovementSystem : public System
 							PxShape* collision_shape;
 							rigid->getShapes(&collision_shape, 1);
 
-							PxTransform my_tmp_transform = PhysicsUtility::Transform(transient_position_, transient_rotation_);
+							PxTransform my_tmp_transform = physics_utility::Transform(transient_position_, transient_rotation_);
 
 							PxVec3 resolution_direction;
 							float resolution_distance;
@@ -470,7 +468,7 @@ struct KinematicCharacterMovementSystem : public System
 								collision_shape->getGeometry().any(),
 								rigid->getGlobalPose() * collision_shape->getLocalPose()))
 							{
-								vec3 resolution_dir = PhysicsUtility::Vec3(resolution_direction);
+								vec3 resolution_dir = physics_utility::Vec3(resolution_direction);
 								resolution_dir = GetObstructionNormal(resolution_dir, IsStableOnNormal(resolution_dir));
 								
 								//解决重叠
@@ -628,7 +626,7 @@ struct KinematicCharacterMovementSystem : public System
 						bool hit_body_is_dynamic =!(rigidbody->getRigidBodyFlags() & PxRigidBodyFlag::eKINEMATIC);
 						float hit_body_mass = rigidbody->getMass();
 						float hit_body_mass_at_point = rigidbody->getMass();
-						vec3 hit_body_velocity = PhysicsUtility::Vec3(rigidbody->getLinearVelocity());
+						vec3 hit_body_velocity = physics_utility::Vec3(rigidbody->getLinearVelocity());
 				
 						//计算角色质量占总质量的比例
 						float character_to_body_mass_ratio = 1.f;
@@ -667,7 +665,7 @@ struct KinematicCharacterMovementSystem : public System
 						
 						if (hit_body_is_dynamic)
 						{
-							rigidbody->addForce(PhysicsUtility::Vec3(velocity_change_on_body),PxForceMode::eVELOCITY_CHANGE);
+							rigidbody->addForce(physics_utility::Vec3(velocity_change_on_body),PxForceMode::eVELOCITY_CHANGE);
 						}
 						
 						
@@ -752,17 +750,17 @@ struct KinematicCharacterMovementSystem : public System
 				vec3 target_position = ground_sweep_position + (ground_sweep_direction * ground_sweep_hit.distance);
 				HitStabilityReport ground_hit_stability_report = EvaluateHitStability(
 					ground_sweep_hit.actor,
-					PhysicsUtility::Vec3(ground_sweep_hit.normal),
-					PhysicsUtility::Vec3(ground_sweep_hit.position),
+					physics_utility::Vec3(ground_sweep_hit.normal),
+					physics_utility::Vec3(ground_sweep_hit.position),
 					target_position,
 					transient_rotation_);
 				
 				grounding_report.found_any_ground = true;
-				grounding_report.ground_normal = PhysicsUtility::Vec3(ground_sweep_hit.normal);
+				grounding_report.ground_normal = physics_utility::Vec3(ground_sweep_hit.normal);
 				grounding_report.inner_ground_normal = ground_hit_stability_report.inner_normal;
-				grounding_report.outer_ground_normal = ground_hit_stability_report.outer_noraml;
+				grounding_report.outer_ground_normal = ground_hit_stability_report.outer_normal;
 				grounding_report.ground_collider = ground_sweep_hit.actor;
-				grounding_report.ground_point = PhysicsUtility::Vec3(ground_sweep_hit.position);
+				grounding_report.ground_point = physics_utility::Vec3(ground_sweep_hit.position);
 				grounding_report.snpping_prevented = false;
 
 				//有找到稳定的地面
@@ -794,7 +792,7 @@ struct KinematicCharacterMovementSystem : public System
 					ground_probe_distance_remaining = std::min(kGroundProbeReboundDistance, std::max(ground_probe_distance_remaining - glm::length(sweep_movement), 0.f));
 					
 					// 调整探测的方向，沿着碰撞的斜坡探测
-					ground_sweep_direction = Normalize(ProjectOnPlane(ground_sweep_direction, PhysicsUtility::Vec3(ground_sweep_hit.normal)));
+					ground_sweep_direction = Normalize(ProjectOnPlane(ground_sweep_direction, physics_utility::Vec3(ground_sweep_hit.normal)));
 					
 				}
 			}
@@ -818,12 +816,12 @@ struct KinematicCharacterMovementSystem : public System
 
 		if (dt > 0.f)
 		{
-			vec3 effective_mover_velocity = PhysicsUtility::Vec3(dynamic_rigidbody->getLinearVelocity());
-			vec3 angular_velocity = PhysicsUtility::Vec3(dynamic_rigidbody->getAngularVelocity());
+			vec3 effective_mover_velocity = physics_utility::Vec3(dynamic_rigidbody->getLinearVelocity());
+			vec3 angular_velocity = physics_utility::Vec3(dynamic_rigidbody->getAngularVelocity());
 
 			if (angular_velocity != vec3(0))
 			{
-				vec3 ceneter_of_rotation = PhysicsUtility::Vec3((dynamic_rigidbody->getGlobalPose() * dynamic_rigidbody->getCMassLocalPose()).transform(PxVec3(0)));
+				vec3 ceneter_of_rotation = physics_utility::Vec3((dynamic_rigidbody->getGlobalPose() * dynamic_rigidbody->getCMassLocalPose()).transform(PxVec3(0)));
 				vec3 center_of_rotation_to_point = at_point - ceneter_of_rotation;
 				quat rotation_from_interactive_rigidbody = quat(glm::degrees(angular_velocity * dt));
 				vec3 final_point_position = ceneter_of_rotation + (rotation_from_interactive_rigidbody * center_of_rotation_to_point);
@@ -933,7 +931,7 @@ struct KinematicCharacterMovementSystem : public System
 						PxShape* collision_shape;
 						rigid->getShapes(&collision_shape, 1);
 
-						PxTransform my_tmp_transform = PhysicsUtility::Transform(tmp_moved_position, transient_rotation_);
+						PxTransform my_tmp_transform = physics_utility::Transform(tmp_moved_position, transient_rotation_);
 
 						PxVec3 resolution_direction;
 						float resolution_distance;
@@ -945,15 +943,15 @@ struct KinematicCharacterMovementSystem : public System
 							collision_shape->getGeometry().any(),
 							rigid->getGlobalPose() * collision_shape->getLocalPose()))
 						{
-							float dot_product = PhysicsUtility::Vec3(remaining_movement_direction).dot(resolution_direction);
+							float dot_product = physics_utility::Vec3(remaining_movement_direction).dot(resolution_direction);
 							//寻找最近碰撞点，相当于就是更移动方向夹角最大的一个碰撞
 							if (dot_product < 0.f && dot_product < most_obstructing_overlap_normal_dot_product)
 							{
 								most_obstructing_overlap_normal_dot_product = dot_product;
 
-								closeset_sweep_hit_normal = PhysicsUtility::Vec3(resolution_direction);
+								closeset_sweep_hit_normal = physics_utility::Vec3(resolution_direction);
 								closest_sweep_hit_rigid = rigid;
-								closest_sweep_hit_point = tmp_moved_position + (transient_rotation_ * vec3(0, px_caspule_.halfHeight, 0)) + PhysicsUtility::Vec3(resolution_direction * resolution_distance);
+								closest_sweep_hit_point = tmp_moved_position + (transient_rotation_ * vec3(0, px_caspule_.halfHeight, 0)) + physics_utility::Vec3(resolution_direction * resolution_distance);
 
 								found_closest_hit = true;
 
@@ -975,9 +973,9 @@ struct KinematicCharacterMovementSystem : public System
 					closest_hit);
 				if (hits.size() > 0)
 				{
-					closeset_sweep_hit_normal = PhysicsUtility::Vec3(closest_hit.normal);
+					closeset_sweep_hit_normal = physics_utility::Vec3(closest_hit.normal);
 					closest_sweep_hit_distance = closest_hit.distance;
-					closest_sweep_hit_point = PhysicsUtility::Vec3(closest_hit.position);
+					closest_sweep_hit_point = physics_utility::Vec3(closest_hit.position);
 					closest_sweep_hit_rigid = closest_hit.actor;
 
 					found_closest_hit = true;
@@ -1333,7 +1331,7 @@ struct KinematicCharacterMovementSystem : public System
 
 		stability_report.is_stable = IsStableOnNormal(hit_normal);
 		stability_report.inner_normal = hit_normal;
-		stability_report.outer_noraml = hit_normal;
+		stability_report.outer_normal = hit_normal;
 
 		// 
 		if (character_->support_step && !stability_report.is_stable)
@@ -1412,13 +1410,13 @@ struct KinematicCharacterMovementSystem : public System
 			{
 				PxRaycastHit outer_slope_hit;
 				if (CharacterCollisionsRaycast(
-					PhysicsUtility::Vec3(farthest_hit.position) + (character_up * kSecondaryProbesVertical) + (-inner_hit_direction * kSecondaryProbesHorizontal),
+					physics_utility::Vec3(farthest_hit.position) + (character_up * kSecondaryProbesVertical) + (-inner_hit_direction * kSecondaryProbesHorizontal),
 					-character_up,
 					character_->max_step_height + kSecondaryProbesVertical,
 					outer_slope_hit,
 					true).size() > 0)
 				{
-					if (IsStableOnNormal(PhysicsUtility::Vec3(outer_slope_hit.normal)))
+					if (IsStableOnNormal(physics_utility::Vec3(outer_slope_hit.normal)))
 					{
 						PxSweepHit tmp_up_obstruction_hit;
 						// 向上投射胶囊体检测是否有碰撞
@@ -1446,7 +1444,7 @@ struct KinematicCharacterMovementSystem : public System
 									inner_step_hit,
 									true).size() > 0)
 								{
-									if (IsStableOnNormal(PhysicsUtility::Vec3(inner_step_hit.normal)))
+									if (IsStableOnNormal(physics_utility::Vec3(inner_step_hit.normal)))
 									{
 										inner_step_valid = true;
 									}
@@ -1457,13 +1455,13 @@ struct KinematicCharacterMovementSystem : public System
 							{
 								// 在步进点内部
 								if (CharacterCollisionsRaycast(
-									PhysicsUtility::Vec3(farthest_hit.position) + (inner_hit_direction * kSecondaryProbesHorizontal),
+									physics_utility::Vec3(farthest_hit.position) + (inner_hit_direction * kSecondaryProbesHorizontal),
 									-character_up,
 									character_->max_step_height,
 									inner_step_hit,
 									true).size() > 0)
 								{
-									if (IsStableOnNormal(PhysicsUtility::Vec3(inner_step_hit.normal)))
+									if (IsStableOnNormal(physics_utility::Vec3(inner_step_hit.normal)))
 									{
 										inner_step_valid = true;
 									}
@@ -1500,7 +1498,7 @@ struct KinematicCharacterMovementSystem : public System
 		PxQueryFilterData filter_data(PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC | PxQueryFlag::ePREFILTER);
 		IgnoreTiggerQueryCallback filter_callback;
 		auto& physics_world = registry.ctx<PhysicsWorld>();
-		physics_world.scene->sweep(px_caspule_, PhysicsUtility::Transform(position, rotation) * shape_transform_, PhysicsUtility::Vec3(direction), distance, hit_callback, PxHitFlag::eDEFAULT, filter_data, &filter_callback);
+		physics_world.scene->sweep(px_caspule_, physics_utility::Transform(position, rotation) * shape_transform_, physics_utility::Vec3(direction), distance, hit_callback, PxHitFlag::eDEFAULT, filter_data, &filter_callback);
 
 
 		// Hits filter
@@ -1538,7 +1536,7 @@ struct KinematicCharacterMovementSystem : public System
 		PxQueryFilterData filter_data(PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC | PxQueryFlag::ePREFILTER);
 		IgnoreTiggerQueryCallback filter_callback;
 		auto& physics_world = registry.ctx<PhysicsWorld>();
-		physics_world.scene->raycast(PhysicsUtility::Vec3(position), PhysicsUtility::Vec3(direction), distance, hit_callback, PxHitFlag::eDEFAULT, filter_data, &filter_callback);
+		physics_world.scene->raycast(physics_utility::Vec3(position), physics_utility::Vec3(direction), distance, hit_callback, PxHitFlag::eDEFAULT, filter_data, &filter_callback);
 		
 		float closest_distance = std::numeric_limits<float>::infinity();
 
@@ -1577,7 +1575,7 @@ struct KinematicCharacterMovementSystem : public System
 		PxQueryFilterData filter_data(PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC | PxQueryFlag::ePREFILTER);
 		IgnoreTiggerQueryCallback filter_callback;
 		auto& physics_world = registry.ctx<PhysicsWorld>();
-		physics_world.scene->sweep(px_caspule_, PhysicsUtility::Transform(position, rotation) * shape_transform_, PhysicsUtility::Vec3(direction), distance, hit_callback, PxHitFlag::eDEFAULT, filter_data, &filter_callback);
+		physics_world.scene->sweep(px_caspule_, physics_utility::Transform(position, rotation) * shape_transform_, physics_utility::Vec3(direction), distance, hit_callback, PxHitFlag::eDEFAULT, filter_data, &filter_callback);
 
 		// Hits filter
 		float closest_distance = std::numeric_limits<float>::infinity();
@@ -1616,7 +1614,7 @@ struct KinematicCharacterMovementSystem : public System
 		PxQueryFilterData filter_data(PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC | PxQueryFlag::ePREFILTER);
 		IgnoreTiggerQueryCallback filter_callback;
 		auto& physics_world = registry.ctx<PhysicsWorld>();
-		physics_world.scene->overlap(px_caspule_, PhysicsUtility::Transform(position, rotation) * shape_transform_, hit_callback, filter_data, &filter_callback);
+		physics_world.scene->overlap(px_caspule_, physics_utility::Transform(position, rotation) * shape_transform_, hit_callback, filter_data, &filter_callback);
 
 		std::vector<PxRigidActor*> collisions;
 		collisions.reserve(hit_callback.getNbTouches());

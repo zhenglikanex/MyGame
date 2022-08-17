@@ -32,7 +32,7 @@ namespace gameplay_ability_utility
 			auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);
 
-			GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, ga.cost_gameplay_effect, spec.level, source);
+			gameplay_effect_utility::ApplyGameEffectToTarget(registry, source, ga.cost_gameplay_effect, spec.level, source);
 		}
 	}
 
@@ -57,7 +57,7 @@ namespace gameplay_ability_utility
 				return;
 			}
 
-			auto effect_spec = GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, ga.cooldown_gameplay_effect,spec.level, source);
+			auto effect_spec = gameplay_effect_utility::MakeGameplayEffectSpec(registry, source, ga.cooldown_gameplay_effect,spec.level, source);
 			effect_spec.duration = ga.cooldown_duration;
 
 			for (auto it = ga.cooldown_tags.Begin(); it != ga.cooldown_tags.End(); ++it)
@@ -65,7 +65,7 @@ namespace gameplay_ability_utility
 				effect_spec.dynamic_granted_tags.Push(*it);
 			}
 
-			GameplayEffectUtility::ApplyGameEffectToTarget(registry, source, std::move(effect_spec));
+			gameplay_effect_utility::ApplyGameEffectToTarget(registry, source, std::move(effect_spec));
 		}
 	}
 

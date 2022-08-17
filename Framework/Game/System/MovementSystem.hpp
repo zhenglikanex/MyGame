@@ -1,17 +1,10 @@
 #pragma once
 
-#include <algorithm>
-
-#include "Framework/Game/DebugService.hpp"
-
-#include "Framework/Game/Component/Command.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/Local.hpp"
 
 #include "Framework/Game/System.hpp"
-
-#include "PxPhysicsAPI.h"
 
 inline quat ForwardRotation(const vec3& forward)
 {

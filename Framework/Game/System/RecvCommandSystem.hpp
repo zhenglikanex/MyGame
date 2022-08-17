@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Framework/Game/GameHelper.hpp"
-#include "Framework/Game/NetworkService.hpp"
+#include "Framework/Game/Service/NetworkService.hpp"
 
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Command.hpp"

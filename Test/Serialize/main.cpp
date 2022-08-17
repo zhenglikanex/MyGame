@@ -5,7 +5,6 @@
 #include "Kanex.hpp"
 #include "3rdparty/include/glm/gtc/quaternion.hpp"
 #include "Framework/Game/Math.hpp"
-#include "Framework/Game/Component/ActorState.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/Transform.hpp"
@@ -261,18 +260,7 @@ TEST_CASE_METHOD(Serialize, "Player")
 
 TEST_CASE_METHOD(Serialize, "Command")
 {
-	Command output1;
-	output1.x_axis = 100;
-	output1.y_axis = 100;
-
-	oar(output1);
-
-	Command intput1;
-	iar(intput1);
-
-	REQUIRE(output1.x_axis == intput1.x_axis);
-	REQUIRE(output1.y_axis == intput1.y_axis);
-	REQUIRE(buffer.IsFinish());
+	
 }
 
 TEST_CASE_METHOD(Serialize, "SnapshotPerformance")

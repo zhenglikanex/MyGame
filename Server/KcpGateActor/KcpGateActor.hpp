@@ -36,7 +36,7 @@ public:
 	void DisconnectHandler(const asio::ip::udp::endpoint& endpoint, kcp_conv_t conv);
 public:
 	// actor handler
-	void Send(const std::any& data);
+	void Send(std::any& data);
 private:
 	std::shared_ptr<NetworkComponent> network_component_;
 	std::unordered_map<kcp_conv_t, std::shared_ptr<KcpConnection>> connections_;

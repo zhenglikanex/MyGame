@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Framework/Game/Locator.hpp"
-#include "Framework/Game/ViewService.hpp"
+#include "Framework/Game/Service/ViewService.hpp"
 
 #include "Framework/Game/Component/View.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"

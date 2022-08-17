@@ -2,4 +2,4 @@
 
 #include <functional>
 
-#include "Framework/Game/InputService.hpp"
+#include "Framework/Game/Service/InputService.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Framework/Game/DebugService.hpp"
+#include "Framework/Game/Service/DebugService.hpp"
 
 class ServerDebugService : public DebugService
 {

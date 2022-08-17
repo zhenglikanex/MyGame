@@ -186,7 +186,7 @@ void KcpGateActor::DisconnectHandler(const asio::ip::udp::endpoint& endpoint, kc
 	ForceDisconnection(conv);
 }
 
-void KcpGateActor::Send(const std::any& data)
+void KcpGateActor::Send(std::any& data)
 {
 	auto& [conv, message] = std::any_cast<std::tuple<uint32_t, NetMessage>&>(data);
 	Buffer buffer(message.GetByteSize());

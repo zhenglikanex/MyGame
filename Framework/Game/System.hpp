@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-#include "Framework/Game/DebugService.hpp"
+#include "Framework/Game/Service/DebugService.hpp"
 #include "Framework/Game/Registry.hpp"
 
 struct System

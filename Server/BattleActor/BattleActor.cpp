@@ -126,7 +126,7 @@ void BattleActor::Update()
 	}
 }
 
-void BattleActor::PushGameMessage(const std::any& data)
+void BattleActor::PushGameMessage(std::any& data)
 {
 	auto& [name, message_data] = std::any_cast<std::tuple<std::string, std::vector<uint8_t>>&>(data);
 	

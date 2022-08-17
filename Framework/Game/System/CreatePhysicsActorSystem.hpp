@@ -2,7 +2,7 @@
 
 #include "Framework/Game/System.hpp"
 
-#include "Framework/Game/DebugService.hpp"
+#include "Framework/Game/Service/DebugService.hpp"
 
 #include "Framework/Game/Component/PhysicsWorld.hpp"
 #include "Framework/Game/Component/PhysicsActor.hpp"
@@ -42,53 +42,53 @@ struct CreatePhysicsActorSystem : public System
 			auto& [transform,collider] = view.get<Transform,Collider>(e);
 
 			PxRigidActor* actor = nullptr;
-			PxTransform px_transform(PhysicsUtility::Transform(transform));
-			PxTransform offset(PhysicsUtility::Transform(collider.transform));
+			PxTransform px_transform(physics_utility::Transform(transform));
+			PxTransform offset(physics_utility::Transform(collider.transform));
 
 			auto& geom = collider.geometry;
 			if (geom.type() == GeometryType::kBox)
 			{
 				if (collider.rigid_type == RigidType::kDynamic)
 				{
-					actor = PhysicsUtility::CreateDynamic(registry, px_transform, PxBoxGeometry(geom.box().e.x, geom.box().e.y, geom.box().e.z), collider.trigger, offset);
+					actor = physics_utility::CreateDynamic(registry, px_transform, PxBoxGeometry(geom.box().e.x, geom.box().e.y, geom.box().e.z), collider.trigger, offset);
 				}
 				else if(collider.rigid_type == RigidType::kStatic)
 				{
-					actor = PhysicsUtility::CreateStatic(registry, px_transform, PxBoxGeometry(geom.box().e.x, geom.box().e.y, geom.box().e.z), collider.trigger, offset);
+					actor = physics_utility::CreateStatic(registry, px_transform, PxBoxGeometry(geom.box().e.x, geom.box().e.y, geom.box().e.z), collider.trigger, offset);
 				}
 				else if (collider.rigid_type == RigidType::kKinematic)
 				{
-					actor = PhysicsUtility::CreateKinematic(registry, px_transform, PxBoxGeometry(geom.box().e.x, geom.box().e.y, geom.box().e.z), collider.trigger, offset);
+					actor = physics_utility::CreateKinematic(registry, px_transform, PxBoxGeometry(geom.box().e.x, geom.box().e.y, geom.box().e.z), collider.trigger, offset);
 				}
 			}
 			else if (geom.type() == GeometryType::kCapsule)
 			{
 				if (collider.rigid_type == RigidType::kDynamic)
 				{
-					actor = PhysicsUtility::CreateDynamic(registry, px_transform, PxCapsuleGeometry(geom.capsule().r, geom.capsule().h), collider.trigger, offset);
+					actor = physics_utility::CreateDynamic(registry, px_transform, PxCapsuleGeometry(geom.capsule().r, geom.capsule().h), collider.trigger, offset);
 				}
 				else if (collider.rigid_type == RigidType::kStatic)
 				{
-					actor = PhysicsUtility::CreateStatic(registry, px_transform, PxCapsuleGeometry(geom.capsule().r, geom.capsule().h), collider.trigger, offset);
+					actor = physics_utility::CreateStatic(registry, px_transform, PxCapsuleGeometry(geom.capsule().r, geom.capsule().h), collider.trigger, offset);
 				}
 				else if (collider.rigid_type == RigidType::kKinematic)
 				{
-					actor = PhysicsUtility::CreateKinematic(registry, px_transform, PxCapsuleGeometry(geom.capsule().r, geom.capsule().h), collider.trigger, offset);
+					actor = physics_utility::CreateKinematic(registry, px_transform, PxCapsuleGeometry(geom.capsule().r, geom.capsule().h), collider.trigger, offset);
 				}
 			}
 			else if (geom.type() == GeometryType::kSphere)
 			{
 				if (collider.rigid_type == RigidType::kDynamic)
 				{
-					actor = PhysicsUtility::CreateDynamic(registry, px_transform, PxSphereGeometry(geom.sphere().r), collider.trigger, offset);
+					actor = physics_utility::CreateDynamic(registry, px_transform, PxSphereGeometry(geom.sphere().r), collider.trigger, offset);
 				}
 				else if (collider.rigid_type == RigidType::kStatic)
 				{
-					actor = PhysicsUtility::CreateStatic(registry, px_transform, PxSphereGeometry(geom.sphere().r), collider.trigger, offset);
+					actor = physics_utility::CreateStatic(registry, px_transform, PxSphereGeometry(geom.sphere().r), collider.trigger, offset);
 				}
 				else if (collider.rigid_type == RigidType::kKinematic)
 				{
-					actor = PhysicsUtility::CreateKinematic(registry, px_transform, PxSphereGeometry(geom.sphere().r), collider.trigger, offset);
+					actor = physics_utility::CreateKinematic(registry, px_transform, PxSphereGeometry(geom.sphere().r), collider.trigger, offset);
 				}
 			}
 			

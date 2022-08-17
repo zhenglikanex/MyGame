@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Framework/Game/Locator.hpp"
-#include "Framework/Game/UIService.hpp"
+#include "Framework/Game/Service/UIService.hpp"
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 

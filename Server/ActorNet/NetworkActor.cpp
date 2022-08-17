@@ -185,7 +185,7 @@ namespace actor_net
 				}
 				else if (actor_msg.name() == "tcp_send")
 				{
-					auto& [id, send_data] = std::any_cast<std::tuple<uint16_t, Buffer>>(actor_msg.data());
+					auto& [id, send_data] = std::any_cast<std::tuple<uint16_t, Buffer>&>(actor_msg.data());
 					TcpSend(id, std::move(send_data));
 				}
 				else if (actor_msg.name() == "tcp_close")
@@ -204,7 +204,7 @@ namespace actor_net
 				}
 				else if (actor_msg.name() == "udp_send")
 				{
-					auto& [udp_remote_endpoint,send_data] = std::any_cast<std::tuple<asio::ip::udp::endpoint, Buffer>>(actor_msg.data());
+					auto& [udp_remote_endpoint,send_data] = std::any_cast<std::tuple<asio::ip::udp::endpoint, Buffer>&>(actor_msg.data());
 					UdpSend(src,udp_remote_endpoint, std::move(send_data));
 				}
 			});

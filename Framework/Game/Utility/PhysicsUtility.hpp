@@ -287,7 +287,7 @@ namespace physics_utility
 		{
 			if (hit_callback.getTouch(i).actor->userData)
 			{
-				entt::entity e = (entt::entity)reinterpret_cast<uint32_t>(hit_callback.getTouch(i).actor->userData);
+				entt::entity e = (entt::entity)reinterpret_cast<uint64_t>(hit_callback.getTouch(i).actor->userData);
 				if (registry.valid(e))
 				{
 					hits.push_back(e);
@@ -318,7 +318,7 @@ namespace physics_utility
 		{
 			if (hit_callback.getTouch(i).actor->userData)
 			{
-				entt::entity e = (entt::entity)reinterpret_cast<uint32_t>(hit_callback.getTouch(i).actor->userData);
+				entt::entity e = (entt::entity)reinterpret_cast<uint64_t>(hit_callback.getTouch(i).actor->userData);
 				if (registry.valid(e))
 				{
 					hits.push_back(e);

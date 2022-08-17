@@ -3,15 +3,13 @@
 #include <unordered_map>
 
 #include "Framework/Game/Locator.hpp"
-#include "Framework/Game/FileService.hpp"
+#include "Framework/Game/Service/FileService.hpp"
 
 #include "Framework/Game/Component/ActorAsset.hpp"
-#include "Framework/Game/Component/ActorState.hpp"
 #include "Framework/Game/Component/ViewAsset.hpp"
 #include "Framework/Game/Component/AnimationAsset.hpp"
 #include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/Weapon.hpp"
-#include "Framework/Game/Component/Collider.hpp"
 #include "Framework/Game/Component/Character.hpp"
 #include "Framework/Game/Component/Movement.hpp"
 #include "Framework/Game/Component/TransformState.hpp"
@@ -23,7 +21,6 @@
 
 #include "Framework/Game/Data/ActorConfig.hpp"
 
-#include "Framework/Game/Utility/ActorStateUtility.hpp"
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 
 struct CreateActorSystem : public System
@@ -81,7 +78,7 @@ struct CreateActorSystem : public System
 			abilitys.value.emplace("GA_DashHeavyAttack", ActiveGameplayAbility("GA_DashHeavyAttack", 1));
 			abilitys.value.emplace("GA_JumpAttackA", ActiveGameplayAbility("GA_JumpAttackA", 1));
 
-			GameplayEffectUtility::ApplyGameEffectToTarget(registry, e, actor_info.ge(), 1, e);
+			gameplay_effect_utility::ApplyGameEffectToTarget(registry, e, actor_info.ge(), 1, e);
 		}
 	}
 
