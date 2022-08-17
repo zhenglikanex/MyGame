@@ -2,7 +2,6 @@
 
 #include <cstdint>
 #include <functional>
-#include <chrono>
 #include <atomic>
 #include <cstdint>
 
@@ -30,6 +29,11 @@ public:
 
 	ClientNetworkImpl();
 	~ClientNetworkImpl();
+
+	ClientNetworkImpl(const ClientNetworkImpl&) = delete;
+	ClientNetworkImpl(ClientNetworkImpl&&) = delete;
+	ClientNetworkImpl& operator=(const ClientNetworkImpl&) = delete;
+	ClientNetworkImpl& operator=(ClientNetworkImpl&&) = delete;
 
 	void Run();
 	void Stop();

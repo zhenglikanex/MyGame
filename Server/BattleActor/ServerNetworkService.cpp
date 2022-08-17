@@ -11,9 +11,6 @@ ServerNetworkService::ServerNetworkService(
 
 }
 
-ServerNetworkService::~ServerNetworkService()
-= default;
-
 std::optional<std::vector<uint8_t>> ServerNetworkService::Recv(const std::string& name) const
 {
 	if (recv_handler_)

@@ -10,6 +10,11 @@ public:
 	UnityViewImpl(const UnityViewService* service, int handle);
 	~UnityViewImpl() override;
 
+	UnityViewImpl(const UnityViewImpl&) = delete;
+	UnityViewImpl(UnityViewImpl&&) = delete;
+	UnityViewImpl& operator=(const UnityViewImpl&) = delete;
+	UnityViewImpl& operator=(UnityViewImpl&&) = delete;
+
 	void UpdatePosition(const vec3& pos) override;
 	void UpdateRotation(const quat& rotation) override;
 	void MovePosition(const vec3& pos) override;

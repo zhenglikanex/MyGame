@@ -47,11 +47,6 @@ ClientGameHelper::ClientGameHelper(uint32_t local_id)
 
 }
 
-ClientGameHelper::~ClientGameHelper()
-{
-
-}
-
 GameMode ClientGameHelper::GetGameMode() const
 {
 	return GameMode::kSimulation;

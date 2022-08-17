@@ -10,10 +10,9 @@
 
 struct ActorSystem : public System
 {
-	ActorSystem(Registry& _registry)
+	explicit ActorSystem(Registry& _registry)
 		: System(_registry)
 	{ }
-	~ActorSystem() override {}
 
 	bool Initialize() override
 	{

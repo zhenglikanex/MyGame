@@ -13,6 +13,11 @@ struct System
 		: registry(_registry) 
 	{ }
 
+	System(const System&) = delete;
+	System(System&&) = delete;
+	System& operator=(const System&) = delete;
+	System& operator=(System&&) = delete;
+
 	virtual ~System() = 0 {}
 
 	virtual bool Initialize() = 0;

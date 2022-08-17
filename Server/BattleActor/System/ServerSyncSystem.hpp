@@ -25,11 +25,6 @@ struct ServerSyncSystem : public System
 
 	}
 
-	~ServerSyncSystem()
-	{
-
-	}
-
 	bool Initialize() override
 	{
 		return true;

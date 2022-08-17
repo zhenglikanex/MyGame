@@ -10,7 +10,13 @@ class UnityDebugService : public DebugService
 {
 public:
 	UnityDebugService();
-	~UnityDebugService();
+	~UnityDebugService() override;
+
+	UnityDebugService(const UnityDebugService&) = delete;
+	UnityDebugService(UnityDebugService&&) = default;
+	UnityDebugService& operator=(const UnityDebugService&) = delete;
+	UnityDebugService& operator=(UnityDebugService&&) = default;
+	
 
 	void Info(std::string_view view) const override;
 	void Warning(std::string_view view) const override;

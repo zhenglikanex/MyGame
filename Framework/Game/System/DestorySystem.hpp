@@ -9,10 +9,9 @@
 struct DestorySystem : System
 {
 public:
-	DestorySystem(Registry& _registry) : System(_registry)
+	explicit DestorySystem(Registry& _registry) : System(_registry)
 	{
 	}
-	~DestorySystem() {}
 
 	bool Initialize() override
 	{

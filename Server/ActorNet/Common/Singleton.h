@@ -6,10 +6,13 @@ template<typename T>
 class Singleton
 {
 public:
-	Singleton(const Singleton& rhs) = delete;
-	Singleton& operator=(const Singleton& rhs) = delete;
+	Singleton() = default;
+	virtual ~Singleton() = default;
 
-	Singleton() {}
+	Singleton(const Singleton& rhs) = delete;
+	Singleton(Singleton&& rhs) = delete;
+	Singleton& operator=(const Singleton& rhs) = delete;
+	Singleton& operator=(Singleton&& rhs) = delete;
 
 	static std::shared_ptr<T>  GetInstance()
 	{

@@ -1,10 +1,10 @@
 #include "ClientNetworkService.hpp"
 
 ClientNetworkService::ClientNetworkService(
-	const std::function<std::optional<NetMessage>(const std::string&)>& recv_handler,
-	const std::function<void(std::string_view, std::vector<uint8_t>)>& send_handler)
-	: recv_handler_(recv_handler)
-	, send_handler_(send_handler)
+	std::function<std::optional<NetMessage>(const std::string&)> recv_handler,
+	std::function<void(std::string_view, std::vector<uint8_t>)> send_handler)
+	: recv_handler_(std::move(recv_handler))
+	, send_handler_(std::move(send_handler))
 {
 
 }

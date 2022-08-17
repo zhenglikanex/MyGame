@@ -94,8 +94,14 @@ void BattleActor::StartBattle(const std::any& data)
 	Locator locator;
 	locator.Set<FileService>(std::make_unique<ServerFileService>());
 	locator.Set<NetworkService>(std::make_unique<ServerNetworkService>(
-		std::bind(&BattleActor::RecvGameMessage, this, std::placeholders::_1),
-		std::bind(&BattleActor::SendGameMessage, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)));
+		[this](const std::string& name)
+	{
+		return RecvGameMessage(name);
+	},
+		[this](uint32_t player,std::string_view name,std::vector<uint8_t>&& data)
+	{
+		SendGameMessage(player, name, std::move(data));
+	}));
 	
 	game_ = std::make_unique<Game>(std::make_unique<ServerGameHelper>(),std::move(locator),std::move(players));
 	if (!game_->Initialize())

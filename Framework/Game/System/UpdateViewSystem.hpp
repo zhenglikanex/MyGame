@@ -11,13 +11,11 @@ struct UpdateViewSystem : public System
 	entt::observer mover{ registry, entt::collector.group<Transform, View>().update<Transform>().where<View>() };
 	entt::observer animator{ registry, entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>() };
 
-	UpdateViewSystem(Registry& _registry) 
+	explicit UpdateViewSystem(Registry& _registry) 
 		: System(_registry)
 	{
 
 	}
-
-	~UpdateViewSystem() {}
 
 	bool Initialize() override
 	{

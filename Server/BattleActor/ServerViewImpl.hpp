@@ -5,9 +5,6 @@
 class ServerViewImpl : public IViewImpl
 {
 public:
-	ServerViewImpl();
-	~ServerViewImpl();
-
 	void UpdatePosition(const vec3& pos) override;
 	void UpdateRotation(const quat& rotation) override;
 	void MovePosition(const vec3& pos) override;

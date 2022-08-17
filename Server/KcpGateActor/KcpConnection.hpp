@@ -19,12 +19,17 @@ using KcpSendHanlder = std::function<void(const KcpConnection&, Buffer&&)>;
 class KcpConnection
 {
 public:
-	static const uint32_t kTimeoutTime = 5 * 60 * 1000;	// 5min
-	static const uint16_t kMaxMsgSize = 0xFFFF;
+	static constexpr uint32_t kTimeoutTime = 5 * 60 * 1000;	// 5min
+	static constexpr uint16_t kMaxMsgSize = 0xFFFF;
 public:
 	KcpConnection(kcp_conv_t conv,const asio::ip::udp::endpoint& endpoint,uint32_t cur_clock);
 	~KcpConnection();
-	
+
+	KcpConnection(const KcpConnection&) = delete;
+	KcpConnection(KcpConnection&&) = delete;
+	KcpConnection& operator=(const KcpConnection&) = delete;
+	KcpConnection& operator=(KcpConnection&&) = delete;
+
 	void Receive(Buffer&& buffer,uint32_t cur_clock);
 	void Send(Buffer&& buffer);
 
@@ -36,7 +41,7 @@ public:
 	void set_send_handler(const KcpSendHanlder& handler) { send_handler_ = handler; }
 
 	kcp_conv_t conv() const { return conv_; }
-	const asio::ip::udp::endpoint endpoint() const { return endpoint_; }
+	const asio::ip::udp::endpoint& endpoint() const { return endpoint_; }
 	const ikcpcb* kcp() const { return kcp_; }
 private:
 	static int UdpOutput(const char* buf, int len, ikcpcb* kcp, void* user);

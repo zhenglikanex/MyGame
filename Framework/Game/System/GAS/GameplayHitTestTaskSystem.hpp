@@ -23,8 +23,6 @@ public:
 	{
 	}
 
-	~GameplayHitTestTaskSystem() override {}
-
 	bool Initialize() override
 	{
 		return true;
@@ -64,14 +62,14 @@ public:
 					case GameplayHitType::kOverlap:
 					{
 						auto& geometry = gameplay_hit_test_spec.collider.geometry;
-						auto transform = PhysicsUtility::Transform(gameplay_hit_test_spec.transform) * PhysicsUtility::Transform(gameplay_hit_test_spec.collider.transform);
+						auto transform = physics_utility::Transform(gameplay_hit_test_spec.transform) * physics_utility::Transform(gameplay_hit_test_spec.collider.transform);
 						if (geometry.type() == GeometryType::kSphere)
 						{
-							PhysicsUtility::CheckSphereOverlap(registry, PxSphereGeometry(geometry.sphere().r), transform, hits);
+							physics_utility::CheckSphereOverlap(registry, PxSphereGeometry(geometry.sphere().r), transform, hits);
 						}
 						else if (gameplay_hit_test_spec.collider.geometry.type() == GeometryType::kBox)
 						{
-							PhysicsUtility::CheckBoxOverlap(registry, PxBoxGeometry(geometry.box().e.x, geometry.box().e.y, geometry.box().e.z), transform, hits);
+							physics_utility::CheckBoxOverlap(registry, PxBoxGeometry(geometry.box().e.x, geometry.box().e.y, geometry.box().e.z), transform, hits);
 						}
 						else
 						{

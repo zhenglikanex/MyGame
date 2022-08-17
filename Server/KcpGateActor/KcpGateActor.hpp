@@ -1,8 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <ctime>
-#include <iomanip>
 #include <chrono>
 
 #include "Actor.h"
@@ -17,8 +14,7 @@ using namespace std::chrono;
 class KcpGateActor : public Actor
 {
 public:
-	KcpGateActor(ActorId id);
-	virtual ~KcpGateActor();
+	explicit KcpGateActor(ActorId id);
 
 	bool Init(const std::shared_ptr<ActorNet>& actor_net) override;
 	void Stop() override;

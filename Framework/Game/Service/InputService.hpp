@@ -22,7 +22,5 @@ struct Input
 class InputService : public Service
 {
 public:
-	virtual ~InputService() = 0 {}
-
 	virtual Input GetInput() const = 0;
 };

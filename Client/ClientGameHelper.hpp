@@ -7,7 +7,6 @@ class ClientGameHelper : public GameHelper
 {
 public:
 	ClientGameHelper(uint32_t local_id);
-	~ClientGameHelper();
 	
 	GameMode GetGameMode() const override;
 

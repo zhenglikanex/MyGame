@@ -10,8 +10,8 @@
 
 namespace actor_net
 {
-	static const uint16_t kMaxMsgSize = 0xFFFF;
-	static const uint8_t kHeadSize = 2;
+	static constexpr uint16_t kMaxMsgSize = 0xFFFF;
+	static constexpr uint8_t kHeadSize = 2;
 
 	class Connection;
 	class ActorNet;
@@ -25,7 +25,6 @@ namespace actor_net
 	{
 	public:
 		Connection(uint32_t owner_id, asio::ip::tcp::socket&& socket);
-		~Connection();
 
 		void Receive();
 		void Send(Buffer&& buffer);
@@ -83,11 +82,12 @@ namespace actor_net
 	class NetworkActor
 	{
 	public:
-		NetworkActor(std::shared_ptr<ActorNet> actor_net);
+		explicit NetworkActor(std::shared_ptr<ActorNet> actor_net);
 		NetworkActor(const NetworkActor&) = delete;
 		NetworkActor(NetworkActor&&) = delete;
 		NetworkActor& operator=(const NetworkActor&) = delete;
 		NetworkActor& operator=(NetworkActor&&) = delete;
+		~NetworkActor() = default;
 
 		void Post(ActorMessage&& actor_msg);
 		void Run();
@@ -103,7 +103,7 @@ namespace actor_net
 		void CloseUdpServer(uint32_t src);
 		void UdpSend(uint32_t src,asio::ip::udp::endpoint udp_remote_endpoint, Buffer&& data);		
 	private:
-		static const uint16_t kMaxConnectionNum = 0xFFFF;
+		static constexpr uint16_t kMaxConnectionNum = 0xFFFF;
 
 		std::shared_ptr<ActorNet> actor_net_;
 		asio::io_context io_context_;

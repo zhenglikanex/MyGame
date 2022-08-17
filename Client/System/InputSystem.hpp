@@ -1,14 +1,13 @@
 #pragma once
 
 #include "Framework/Game/Locator.hpp"
-#include "Framework/Game/InputService.hpp"
-#include "Framework/Game/NetworkService.hpp"
+#include "Framework/Game/Service/InputService.hpp"
+#include "Framework/Game/Service/NetworkService.hpp"
 
 #include "Framework/Game/Component/MoveCommand.hpp"
 
 #include "Framework/Game/System.hpp"
 
-#include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
 
 struct InputSystem : System
 {
@@ -17,7 +16,7 @@ public:
 	kanex::Buffer buffer;
 	entt::entity player;
 
-	InputSystem(Registry& _registry) 
+	explicit InputSystem(Registry& _registry) 
 		: System(_registry)
 		, input_frame(0)
 		, buffer(0)

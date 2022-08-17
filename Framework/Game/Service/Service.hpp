@@ -5,7 +5,9 @@ class Service
 public:
 	Service() = default;
 	Service(const Service&) = delete;
-	const Service& operator=(const Service&) = delete;
+	Service(Service&&) = default;
+	Service& operator=(const Service&) = delete;
+	Service& operator=(Service&&) = default;
 
 	virtual ~Service() = 0 {}
 

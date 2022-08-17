@@ -11,14 +11,12 @@
 
 struct ComputeAnimBoneChildTransformSystem : public System
 {
-	ComputeAnimBoneChildTransformSystem(Registry& _registry) : System(_registry) { }
-	~ComputeAnimBoneChildTransformSystem() override {}
+	explicit ComputeAnimBoneChildTransformSystem(Registry& _registry) : System(_registry) { }
 
 	bool Initialize() override
 	{
 		return true;
 	}
-
 
 	const Bone* GetBone(const Animation* animation,const AnimationClip* clip,const std::string& bone)
 	{

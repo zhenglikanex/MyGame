@@ -15,7 +15,7 @@ namespace actor_net
 	class NetworkComponent
 	{
 	public:
-		NetworkComponent(std::weak_ptr<Actor> weak_actor);
+		explicit NetworkComponent(std::weak_ptr<Actor> weak_actor);
 
 		void CreateTcpServer(uint16_t port);
 		void CloseTcpServer();

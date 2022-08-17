@@ -8,11 +8,6 @@ StartActor::StartActor(uint32_t id)
 
 }
 
-StartActor::~StartActor()
-{
-
-}
-
 bool StartActor::Init(const std::shared_ptr<ActorNet>& actor_net_ptr)
 {
 	if (!Actor::Init(actor_net_ptr))

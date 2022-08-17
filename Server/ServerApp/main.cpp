@@ -4,7 +4,6 @@
 #include <sstream>
 #include "ActorNet.h"
 #include "rapidjson/document.h"
-#include "ActorMessage.h"
 
 int main()
 {

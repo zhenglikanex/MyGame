@@ -9,16 +9,11 @@
 
 namespace actor_net
 {
-	ActorNet::ActorNet(Config config)
+	ActorNet::ActorNet(const Config& config)
 		: config_(config)
 		, alloc_id_(0)
 	{
 
-	}
-
-	ActorNet::~ActorNet()
-	{
-		
 	}
 
 	bool ActorNet::Init()

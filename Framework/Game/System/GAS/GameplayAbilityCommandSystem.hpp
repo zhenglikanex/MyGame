@@ -20,7 +20,6 @@
 struct GameplayAbilityCommandSystem : public System
 {
 	GameplayAbilityCommandSystem(Registry& _registry) : System(_registry) { }
-	~GameplayAbilityCommandSystem() {}
 
 	bool Initialize() override
 	{
@@ -57,7 +56,7 @@ struct GameplayAbilityCommandSystem : public System
 			return true;
 		}
 
-		auto modifiers = GameplayEffectUtility::GetModifiers(registry, ga.cost_gameplay_effect);
+		auto modifiers = gameplay_effect_utility::GetModifiers(registry, ga.cost_gameplay_effect);
 		if (modifiers.size() > 0)
 		{
 			auto& attr_set = registry.get<GameplayAttributeSet>(e);
@@ -78,7 +77,7 @@ struct GameplayAbilityCommandSystem : public System
 	{
 		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 	
-		auto entities = GameplayAbilityUtility::GetActiveGameplayAbilities(registry, source);
+		auto entities = gameplay_ability_utility::GetActiveGameplayAbilities(registry, source);
 		for (auto e : entities)
 		{
 			auto& spec = registry.get<GameplayAbilitySpec>(e);

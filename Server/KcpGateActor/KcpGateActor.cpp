@@ -13,11 +13,6 @@ KcpGateActor::KcpGateActor(ActorId id)
 
 }
 
-KcpGateActor::~KcpGateActor()
-{
-
-}
-
 bool KcpGateActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 {
 	if (!Actor::Init(actor_net))
@@ -75,8 +70,8 @@ void KcpGateActor::NetworkReceive(ActorMessage&& actor_msg)
 {
 	if (actor_msg.name() == "udp_receive")
 	{
-		auto& [endpoint,buffer] = std::any_cast<std::tuple<asio::ip::udp::endpoint,Buffer>>(actor_msg.data());
-		if (IsReqKcpConnectMsg((char*)buffer.data(), buffer.size()))
+		auto& [endpoint,buffer] = std::any_cast<std::tuple<asio::ip::udp::endpoint,Buffer>&>(actor_msg.data());
+		if (IsReqKcpConnectMsg(reinterpret_cast<char*>(buffer.data()), buffer.size()))
 		{
 			ConnectHandler(endpoint);
 		}
@@ -193,7 +188,7 @@ void KcpGateActor::DisconnectHandler(const asio::ip::udp::endpoint& endpoint, kc
 
 void KcpGateActor::Send(const std::any& data)
 {
-	auto& [conv, message] = std::any_cast<std::tuple<uint32_t, NetMessage>>(data);
+	auto& [conv, message] = std::any_cast<std::tuple<uint32_t, NetMessage>&>(data);
 	Buffer buffer(message.GetByteSize());
 	message.Serialize(buffer.data());
 	KcpSend(conv, std::move(buffer));

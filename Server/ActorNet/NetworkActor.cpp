@@ -14,11 +14,6 @@ namespace actor_net
 
 	}
 
-	Connection::~Connection()
-	{
-
-	}
-
 	void Connection::Receive()
 	{
 		ReadHead();

@@ -122,7 +122,7 @@ extern "C"
 {
 	EXPORT_DLL void SetUnityDelegate(UnityDelegate delegate)
 	{
-		UnityBridge::Get().SetExecuteDelegate(delegate);
+		UnityBridge::SetExecuteDelegate(delegate);
 	}
 
 	

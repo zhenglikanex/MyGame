@@ -11,16 +11,15 @@ class AgentActor : public Actor
 public:
 	using ClientHandlerMap = std::unordered_map<std::string, std::function<void(const NetMessage&)>>;
 
-	AgentActor(ActorId id);
-	virtual ~AgentActor();
+	explicit AgentActor(ActorId id);
 
 	bool Init(const std::shared_ptr<ActorNet>& actor_net) override;
 	void Stop() override;
 
 	void Receive(ActorMessage&& actor_msg) override;
 
-	void Start(const std::any& data);
-	void ClientReceive(const std::any& data);
+	void Start(std::any& data);
+	void ClientReceive(std::any& data);
 private:
 	template<class Func>
 	void ClientConnect(const std::string& name, const Func& func)
@@ -29,10 +28,10 @@ private:
 	}
 
 private:
-	void Send(const std::any& data);
+	void Send(std::any& data);
 
 	//actor call
-	void JoinBattle(const std::any& data);
+	void JoinBattle(std::any& data);
 private:
 	//actor request
 private:

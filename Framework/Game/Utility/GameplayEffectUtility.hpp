@@ -4,7 +4,6 @@
 #include "Framework/Game/GAS/GameplayEffect.hpp"
 #include "Framework/Game/GAS/GameplayEffectExecutionCalculation.hpp"
 
-#include "Framework/Game/Component/EntityByUniqueIdMap.hpp"
 #include "Framework/Game/Component/Destroy.hpp"
 #include "Framework/Game/Component/GAS/ApplyGameplayEffect.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
@@ -13,9 +12,30 @@
 
 #include "3rdparty/include/entt/entt.hpp"
 
-class GameplayEffectUtility
+namespace gameplay_effect_utility
 {
-public:
+	static float GetModifyValue(const GameplayEffect::ModifierMagnitude& magnitude)
+	{
+		float value = 0;
+		if (magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::ScalableFloat)
+		{
+			// todo :
+			value = magnitude.value;
+		}
+		else if (magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::AttributeBased)
+		{
+			// todo :
+			value = magnitude.value;
+		}
+		else if (magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::CustomCalculationClass)
+		{
+			// todo :
+			value = magnitude.value;
+		}
+
+		return value;
+	}
+
 	static GameplayEffectExecutionCalculation* MakeExecutionCalculation(std::string_view class_name)
 	{
 		if (class_name == "RpgExecutionCalculation")
@@ -56,7 +76,7 @@ public:
 		{
 			for (auto& execution : ge.gameplay_effect.executions)
 			{
-				auto execut = GameplayEffectUtility::MakeExecutionCalculation(execution.class_name);
+				auto execut = MakeExecutionCalculation(execution.class_name);
 				execut->ExecutionCalculation(registry,spec);
 			}
 		}
@@ -95,15 +115,7 @@ public:
 		}		
 	}
 
-	static std::vector<std::tuple<uint32_t, float>> GetModifiers(Registry& registry,const std::string& name)
-	{
-		auto& ge_manager = registry.ctx<GameplayEffectManager>();
-		auto& ge = ge_manager.LoadGameplayEffect(name);
-
-		return GetModifiers(registry, ge);
-	}
-
-	static std::vector<std::tuple<uint32_t,float>> GetModifiers(Registry& registry, const GameplayEffect& ge)
+	static std::vector<std::tuple<uint32_t, float>> GetModifiers(Registry& registry, const GameplayEffect& ge)
 	{
 		std::vector<std::tuple<uint32_t, float>> modifiers;
 		modifiers.reserve(ge.gameplay_effect.modifiers.size());
@@ -115,6 +127,14 @@ public:
 		}
 
 		return modifiers;
+	}
+
+	static std::vector<std::tuple<uint32_t, float>> GetModifiers(Registry& registry,const std::string& name)
+	{
+		auto& ge_manager = registry.ctx<GameplayEffectManager>();
+		auto& ge = ge_manager.LoadGameplayEffect(name);
+
+		return GetModifiers(registry, ge);
 	}
 
 	static void RemoveModifiers(Registry& registry, const GameplayEffect& ge, entt::entity target)
@@ -142,22 +162,29 @@ public:
 		}
 	}
 
-	static void ApplyGameEffectToTarget(Registry& registry, entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
+	static GameplayEffectSpec MakeGameplayEffectSpec(Registry& registry, entt::entity source, std::string_view effect, uint32_t level, entt::entity target)
 	{
-		if (!registry.all_of<Remote>(source))
+		auto& id = registry.get<Remote>(source);
+		auto& target_id = registry.get<Remote>(target);
+		auto& attr_set = registry.get<GameplayAttributeSet>(source);
+
+		auto& ge = registry.ctx<GameplayEffectManager>().LoadGameplayEffect(effect.data());
+		GameplayEffectSpec spec(effect, id, target_id, level, ge.period.duration);
+		for (auto& modifier : ge.gameplay_effect.modifiers)
 		{
-			return;
+			//todo: snapshot_attrs
 		}
 
-		if (effect_name.size() <= 0)
+		for (auto& execution : ge.gameplay_effect.executions)
 		{
-			return;
+			auto execut = gameplay_effect_utility::MakeExecutionCalculation(execution.class_name);
+			execut->Capture(registry, spec);
 		}
 
-		GameplayEffectUtility::ApplyGameEffectToTarget(registry,source,GameplayEffectUtility::MakeGameplayEffectSpec(registry, source, effect_name, level, target));
+		return spec;
 	}
 
-	static void ApplyGameEffectToTarget(Registry& registry,entt::entity source,const GameplayEffectSpec& spec)
+	static void ApplyGameEffectToTarget(Registry& registry, entt::entity source, const GameplayEffectSpec& spec)
 	{
 		auto& apply_ge = registry.ctx_or_set<ApplyGameplayEffect>();
 		auto it = apply_ge.value.find(source);
@@ -168,26 +195,19 @@ public:
 		apply_ge.value[source].emplace_back(spec);
 	}
 
-	static GameplayEffectSpec MakeGameplayEffectSpec(Registry& registry,entt::entity source,std::string_view effect,uint32_t level, entt::entity target)
+	static void ApplyGameEffectToTarget(Registry& registry, entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)
 	{
-		auto& id = registry.get<Remote>(source);
-		auto& target_id = registry.get<Remote>(target);
-		auto& attr_set = registry.get<GameplayAttributeSet>(source);
-
-		auto& ge = registry.ctx<GameplayEffectManager>().LoadGameplayEffect(effect.data());
-		GameplayEffectSpec spec(effect, id, target_id, level,ge.period.duration);
-		for (auto& modifier : ge.gameplay_effect.modifiers)
+		if (!registry.all_of<Remote>(source))
 		{
-			//todo: snapshot_attrs
+			return;
 		}
 
-		for (auto& execution : ge.gameplay_effect.executions)
+		if (effect_name.empty())
 		{
-			auto execut = GameplayEffectUtility::MakeExecutionCalculation(execution.class_name);
-			execut->Capture(registry, spec);
+			return;
 		}
 
-		return spec;
+		ApplyGameEffectToTarget(registry,source,MakeGameplayEffectSpec(registry, source, effect_name, level, target));
 	}
 
 	static void RemoveGameplayEffectForTarget(Registry& registry,entt::entity target, entt::entity target_ge)
@@ -204,26 +224,5 @@ public:
 		registry.emplace<Destroy>(target_ge);
 	}
 
-private:
-	static float GetModifyValue(const GameplayEffect::ModifierMagnitude& magnitude)
-	{
-		float value = 0;
-		if (magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::ScalableFloat)
-		{
-			// todo :
-			value = magnitude.value;
-		}
-		else if (magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::AttributeBased)
-		{
-			// todo :
-			value = magnitude.value;
-		}
-		else if (magnitude.calculation_type == GameplayEffect::ModifierMagnitudeCalculationType::CustomCalculationClass)
-		{
-			// todo :
-			value = magnitude.value;
-		}
-
-		return value;
-	}
+	
 };

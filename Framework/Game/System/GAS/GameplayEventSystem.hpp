@@ -17,7 +17,6 @@ public:
 	GameplayEventSystem(Registry& _registry) : System(_registry)
 	{
 	}
-	~GameplayEventSystem() {}
 
 	bool Initialize() override
 	{
@@ -39,7 +38,7 @@ public:
 					}
 
 					auto view = registry.view<GameplayAbilityScript>();
-					auto abilities = GameplayAbilityUtility::GetActiveGameplayAbilities(registry, registry.get<Remote>(receiver));
+					auto abilities = gameplay_ability_utility::GetActiveGameplayAbilities(registry, registry.get<Remote>(receiver));
 					for (auto& event : sender.second)
 					{
 						for (auto ability : abilities)

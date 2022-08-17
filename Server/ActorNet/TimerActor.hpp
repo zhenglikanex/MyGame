@@ -39,8 +39,7 @@ namespace actor_net
 	class TimerActor
 	{
 	public:
-		TimerActor(const std::shared_ptr<ActorNet>& actor_net);
-		~TimerActor();
+		explicit TimerActor(const std::shared_ptr<ActorNet>& actor_net);
 
 		void Run();
 		void Stop();

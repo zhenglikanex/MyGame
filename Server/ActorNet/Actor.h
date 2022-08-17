@@ -16,7 +16,7 @@ namespace actor_net
 {
 	class ActorNet;
 
-	const ActorId kNull = std::numeric_limits<uint32_t>::max();
+	constexpr ActorId kNull = std::numeric_limits<uint32_t>::max();
 
 	template<class ... Args>
 	class Response
@@ -44,11 +44,16 @@ namespace actor_net
 	class Actor : public std::enable_shared_from_this<Actor>
 	{
 	public:
-		using ActorHandlerMap = std::unordered_map<std::string, std::function<void(const std::any&)>>;
-		using RequestHandlerMap = std::unordered_map<std::string, std::function<std::any(const std::any&)>>;
+		using ActorHandlerMap = std::unordered_map<std::string, std::function<void(std::any&)>>;
+		using RequestHandlerMap = std::unordered_map<std::string, std::function<std::any(std::any&)>>;
 
-		Actor(uint32_t id) :id_(id),session_id_(0) { }
-		virtual ~Actor() = 0 { }
+		explicit Actor(uint32_t id);
+		virtual ~Actor() = 0;
+
+		Actor(const Actor&) = delete;
+		Actor(Actor&&) = delete;
+		Actor& operator=(const Actor&) = delete;
+		Actor& operator=(Actor&&) = delete;
 
 		virtual bool Init(const std::shared_ptr<ActorNet>& actor_net)
 		{
@@ -86,7 +91,7 @@ namespace actor_net
 		void KillActor(ActorId id);
 		void KillActor(const std::string& name);
 
-		uint32_t AddTimer(uint32_t millisec, int32_t repeat, const std::function<void()>& callback);
+		uint32_t AddTimer(uint32_t millisec, int32_t repeat, const std::function<void()>& callback) const;
 		void CancelTimer(uint32_t id);
 
 		template<class Func,class Instance>
@@ -114,7 +119,7 @@ namespace actor_net
 		std::string name_;
 		ActorId id_;
 		
-		const static ActorMessage::SessionType kMaxSession = 0xFF;
+		constexpr static ActorMessage::SessionType kMaxSession = 0xFF;
 		ActorMessage::SessionType session_id_;
 		std::array<std::function<void(ActorMessage&&)>, kMaxSession> request_callbacks_;
 		ActorHandlerMap actor_handlers_;

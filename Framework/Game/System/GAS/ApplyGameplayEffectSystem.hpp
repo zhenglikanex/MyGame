@@ -19,7 +19,6 @@ struct ApplyGameplayEffectSystem : public System
 	std::vector<std::string> overflow_effects;
 
 	ApplyGameplayEffectSystem(Registry& _registry) : System(_registry) { }
-	~ApplyGameplayEffectSystem() {}
 
 	bool Initialize() override
 	{
@@ -88,7 +87,7 @@ struct ApplyGameplayEffectSystem : public System
 					auto& target_tag_count = registry.get<GameplayTagCountContainer>(target);
 					auto& source_tag_count = registry.get<GameplayTagCountContainer>(source);
 
-					auto& target_spec_entities = GameplayEffectUtility::GetGameplayEffectSpecEntitiesByOwner(registry,spec.target);
+					auto& target_spec_entities = gameplay_effect_utility::GetGameplayEffectSpecEntitiesByOwner(registry,spec.target);
 
 					if (HasApplicationImmunity(target_spec_entities, source_tag_count))
 					{
@@ -105,8 +104,8 @@ struct ApplyGameplayEffectSystem : public System
 						continue;
 					}
 					
-					GameplayEffectUtility::ApplyExecutions(registry, spec);
-					GameplayEffectUtility::ApplyModifiers(registry, spec);
+					gameplay_effect_utility::ApplyExecutions(registry, spec);
+					gameplay_effect_utility::ApplyModifiers(registry, spec);
 
 					if (ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Duration ||
 						ge.gameplay_effect.duration_policy == GameplayEffect::DurationPolicy::Infinite)
@@ -219,7 +218,7 @@ struct ApplyGameplayEffectSystem : public System
 			auto& act_ge = ge_manager.LoadGameplayEffect(act_sepc.effect);
 			if (act_ge.tag.gameplay_effect_asset_tags.HasAny(ge.tag.remove_gameplay_effects_with_tags))
 			{
-				GameplayEffectUtility::RemoveGameplayEffectForTarget(registry,target,e);
+				gameplay_effect_utility::RemoveGameplayEffectForTarget(registry,target,e);
 			}
 		}
 	}

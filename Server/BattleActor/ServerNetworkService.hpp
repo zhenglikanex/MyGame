@@ -12,7 +12,6 @@ class ServerNetworkService : public NetworkService
 public:
 	ServerNetworkService(const NetRecvHandler& recv_handler,
 		const NetSendHandler& send_handler);
-	~ServerNetworkService() override;
 
 	std::optional<std::vector<uint8_t>> Recv(const std::string& name) const override;
 	void Send(std::string_view name, std::vector<uint8_t>&& data) const override;

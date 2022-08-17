@@ -24,7 +24,6 @@ int Func1(uint32_t i)
 	return 1;
 }
 
-
 TEST_CASE_METHOD(Serialize1, "NetMessage")
 {
 	

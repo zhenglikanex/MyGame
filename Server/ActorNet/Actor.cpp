@@ -8,14 +8,24 @@
 
 namespace actor_net
 {
+	Actor::Actor(uint32_t id)
+		: id_(id)
+		, session_id_(0)
+	{
+		
+	}
+
+	Actor::~Actor() = default;
+
 	void Actor::OnReceive(ActorMessage&& actor_msg)
 	{
 		if (actor_msg.type() == ActorMessage::MessageType::kTypeResponse)
 		{
 			if (request_callbacks_[actor_msg.session()])
 			{
-				request_callbacks_[actor_msg.session()](std::move(actor_msg));
-				request_callbacks_[actor_msg.session()] = nullptr;
+				auto session = actor_msg.session();
+				request_callbacks_[session](std::move(actor_msg));
+				request_callbacks_[session] = nullptr;
 				return;
 			}
 			else 
@@ -26,7 +36,7 @@ namespace actor_net
 		}
 		else if(actor_msg.type() == ActorMessage::MessageType::kTypeTimer)
 		{			
-			auto& callback = std::any_cast<std::function<void()>>(actor_msg.data());
+			auto& callback = std::any_cast<std::function<void()>&>(actor_msg.data());
 			if (callback)
 			{
 				callback();
@@ -61,6 +71,8 @@ namespace actor_net
 
 		Receive(std::move(actor_msg));
 	}
+
+	
 
 	void Actor::Request(ActorId dest_id, const std::string_view func_name, std::any&& data, const std::function<void(ActorMessage&&)>& callback)
 	{
@@ -101,7 +113,7 @@ namespace actor_net
 		actor_net_->KillActor(name);
 	}
 
-	uint32_t Actor::AddTimer(uint32_t millisec, int32_t repeat, const std::function<void()>& callback)
+	uint32_t Actor::AddTimer(uint32_t millisec, int32_t repeat, const std::function<void()>& callback) const
 	{
 		return actor_net_->AddTimer(id_, millisec, repeat, callback);
 	}

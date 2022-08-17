@@ -28,7 +28,7 @@ constexpr uint16_t operator"" _u16(const char* s, size_t) {
 	return details::u16(s, 0);
 }
 
-class GameplayAttributeUtlity
+class gameplay_attribute_utlity
 {
 public:
 	static GameplayAttributeType GetAttributeType(std::string_view name)

@@ -13,13 +13,8 @@ struct CreateAnimationSystem : System
 	const std::string path = "Config/Anim/";
 	std::unordered_map<std::string, AnimationInfo> animation_infos;
 
-	CreateAnimationSystem(Registry& registry) 
+	explicit CreateAnimationSystem(Registry& registry) 
 		: System(registry)
-	{
-
-	}
-
-	~CreateAnimationSystem()
 	{
 
 	}
@@ -29,7 +24,7 @@ struct CreateAnimationSystem : System
 		return true;
 	}
 
-	void FixedUpdate(float dt)
+	void FixedUpdate(float dt) override
 	{
 		auto view = registry.view<AnimationAsset>(entt::exclude_t<Animation>{});
 		for (auto e : view)
@@ -44,7 +39,7 @@ struct CreateAnimationSystem : System
 		}
 	}
 
-	void Finalize()
+	void Finalize() override
 	{
 		
 	}

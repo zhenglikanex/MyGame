@@ -25,11 +25,6 @@ struct ClientSyncSystem : public System
 
 	}
 
-	~ClientSyncSystem() override
-	{
-
-	}
-
 	bool Initialize() override
 	{
 		return true;

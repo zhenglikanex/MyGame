@@ -12,6 +12,11 @@ public:
 	ClientNetwork();
 	~ClientNetwork();
 
+	ClientNetwork(const ClientNetwork&) = delete;
+	ClientNetwork(ClientNetwork&&) = delete;
+	ClientNetwork& operator=(const ClientNetwork&) = delete;
+	ClientNetwork& operator=(ClientNetwork&&) = delete;
+
 	bool Connect(const std::string& ip, uint16_t port, uint32_t timeout);
 	void Disconnect();
 

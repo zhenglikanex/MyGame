@@ -16,7 +16,9 @@ namespace actor_net
 	class MessageQueue
 	{
 	public:
-		MessageQueue(ActorId id);
+		explicit MessageQueue(ActorId id);
+		~MessageQueue() = default;
+
 		MessageQueue(const MessageQueue&) = delete;
 		MessageQueue(MessageQueue&&) = delete;
 		MessageQueue& operator=(const MessageQueue&) = delete;

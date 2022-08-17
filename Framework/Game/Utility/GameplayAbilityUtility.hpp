@@ -14,9 +14,8 @@
 
 #include "3rdparty/include/entt/entt.hpp"
 
-struct GameplayAbilityUtility
+namespace gameplay_ability_utility
 {
-public:
 	static void CommitGameplayAbilityCost(Registry& registry,entt::entity ability)
 	{
 		if (registry.valid(ability))

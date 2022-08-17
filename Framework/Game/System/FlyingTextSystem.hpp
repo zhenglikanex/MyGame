@@ -10,13 +10,11 @@
 
 struct FlyingTextSystem : public System
 {
-	FlyingTextSystem(Registry& _registry)
+	explicit FlyingTextSystem(Registry& _registry)
 		: System(_registry)
 	{
 
 	}
-
-	~FlyingTextSystem() {}
 
 	bool Initialize() override
 	{

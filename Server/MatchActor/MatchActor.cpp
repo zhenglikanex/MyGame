@@ -6,11 +6,6 @@ MatchActor::MatchActor(ActorId id)
 
 }
 
-MatchActor::~MatchActor()
-{
-
-}
-
 bool MatchActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 {
 	if (!Actor::Init(actor_net))

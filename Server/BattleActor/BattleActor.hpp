@@ -18,7 +18,7 @@ inline std::unique_ptr<DebugService> g_debug_service = std::make_unique<ServerDe
 class BattleActor : public Actor
 {
 public:
-	BattleActor(ActorId id);
+	explicit BattleActor(ActorId id);
 
 	bool Init(const std::shared_ptr<ActorNet>& actor_net) override;
 	void Stop() override;

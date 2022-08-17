@@ -21,8 +21,6 @@ public:
 	{
 	}
 
-	~GameplayWaitTaskSystem() {}
-
 	bool Initialize() override
 	{
 		return true;

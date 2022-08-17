@@ -11,7 +11,6 @@ public:
 	DestroyModifierAttributeSystem(Registry& _registry) : System(_registry)
 	{
 	}
-	~DestroyModifierAttributeSystem() {}
 
 	bool Initialize() override
 	{

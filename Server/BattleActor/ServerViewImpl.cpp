@@ -1,15 +1,5 @@
 #include "ServerViewImpl.hpp"
 
-ServerViewImpl::ServerViewImpl()
-{
-
-}
-
-ServerViewImpl::~ServerViewImpl()
-{
-	
-}
-
 void ServerViewImpl::UpdatePosition(const vec3& pos)
 {
 	

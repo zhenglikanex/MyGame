@@ -4,7 +4,7 @@
 #include <vector>
 #include <optional>
 
-#include "Framework/Game/Service.hpp"
+#include "Framework/Game/Service/Service.hpp"
 
 class NetworkService : public Service
 {

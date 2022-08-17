@@ -30,7 +30,7 @@ inline PxFilterFlags SubmarineFilterShader(
 	return PxFilterFlag::eDEFAULT;
 }
 
-struct PhysicsUtility
+namespace physics_utility
 {
 	enum class FilterGroup : PxU32
 	{
@@ -46,11 +46,11 @@ struct PhysicsUtility
 
 		switch (group)
 		{
-		case PhysicsUtility::FilterGroup::kActor:
+		case FilterGroup::kActor:
 			filter_mask = (PxU32)FilterGroup::kWeapon;
 
 			break;
-		case PhysicsUtility::FilterGroup::kWeapon:
+		case FilterGroup::kWeapon:
 			filter_mask = (PxU32)FilterGroup::kActor;
 
 			break;
@@ -59,6 +59,15 @@ struct PhysicsUtility
 		}
 
 		return filter_mask;
+	}
+
+	static void SetupFiltering(PxShape* shape, PxU32 filter_group, PxU32 filter_mask)
+	{
+		PxFilterData filter_data;
+		filter_data.word0 = filter_group;	// word0 = own ID
+		filter_data.word1 = filter_mask;	// word1 = ID mask to filter pairs that trigger a contact callback;
+
+		shape->setSimulationFilterData(filter_data);
 	}
 
 	static PhysicsWorld CreatePhysicsWorld(PxSimulationEventCallback* callback,Registry& reg)
@@ -210,15 +219,6 @@ struct PhysicsUtility
 		return kinematic;
 	}
 
-	static void SetupFiltering(PxShape* shape, PxU32 filter_group,PxU32 filter_mask)
-	{
-		PxFilterData filter_data;
-		filter_data.word0 = filter_group;	// word0 = own ID
-		filter_data.word1 = filter_mask;	// word1 = ID mask to filter pairs that trigger a contact callback;
-
-		shape->setSimulationFilterData(filter_data);
-	}
-
 	static PxVec2 Vec2(const vec2& v)
 	{
 		return PxVec2(v.x, v.y);
@@ -244,7 +244,7 @@ struct PhysicsUtility
 		return PxQuat(q.x, q.y, q.z, q.w);
 	}
 
-	static PxTransform Transform(const Transform& transform)
+	static PxTransform Transform(const ::Transform& transform)
 	{
 		PxVec3 pos(Vec3(transform.position));
 		PxQuat quat(Quat(transform.rotation));
@@ -269,7 +269,7 @@ struct PhysicsUtility
 
 		assert(rigid != nullptr);
 
-		rigid->setGlobalPose(PhysicsUtility::Transform(transform));
+		rigid->setGlobalPose(physics_utility::Transform(transform));
 	}
 
 	static void CheckSphereOverlap(Registry& registry, const PxSphereGeometry& sphere, const PxTransform& transform, std::vector<entt::entity>& hits)

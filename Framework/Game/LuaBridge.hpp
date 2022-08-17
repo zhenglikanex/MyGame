@@ -29,7 +29,6 @@
 #include "Framework/Game/Component/GAS/GameplayEvent.hpp"
 #include "Framework/Game/Component/GAS/GameplayHitTestTask.hpp"
 
-#include "Framework/Game/Utility/ActorStateUtility.hpp"
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 #include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
 #include "Framework/Game/Utility/GameplayEventUtility.hpp"
@@ -375,11 +374,6 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["Destory"] = sol::overload(destory1, destory2);
 
-	lua["ActorChangeState"] = [&registry](entt::entity e)
-	{
-		ActionStateUtility::ChangeState(registry, e, ActorStateType::kHurt);
-	};
-
 	lua["ApplyCueToTarget"] = [&registry](entt::entity e, std::string_view cue)
 	{
 		if (registry.all_of<View>(e))
@@ -481,12 +475,12 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["CommitGameplayAbilityCost"] = [&registry](entt::entity ability)
 	{
-		GameplayAbilityUtility::CommitGameplayAbilityCost(registry, ability);
+		gameplay_ability_utility::CommitGameplayAbilityCost(registry, ability);
 	};
 
 	lua["CommitGameplayAbilityCooldown"] = [&registry](entt::entity ability)
 	{
-		GameplayAbilityUtility::CommitGameplayAbilityCooldown(registry, ability);
+		gameplay_ability_utility::CommitGameplayAbilityCooldown(registry, ability);
 	};
 
 	auto ApplyGameplayEffectToTarget1 = [&registry](entt::entity source, std::string_view effect_name, uint32_t level, entt::entity target)

@@ -21,8 +21,6 @@
 class DebugService : public Service
 {
 public:
-	virtual ~DebugService() = 0 {}
-
 	template<class Format,class ... Args>
 	std::enable_if_t<std::integral_constant<bool,(sizeof...(Args)>0)>::value,void>
 		Info(const Format& fmt, Args&& ... args) const

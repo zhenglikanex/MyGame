@@ -15,7 +15,6 @@ struct GameplayAttributeSystem : public System
 	entt::observer modify_list{ registry, entt::collector.group<GameplayAttributeSet,InfiniteModifierAttributeSet>().update<InfiniteModifierAttributeSet>().where<GameplayAttributeSet>() };
 
 	GameplayAttributeSystem(Registry& _registry) : System(_registry) { }
-	~GameplayAttributeSystem() {}
 
 	bool Initialize() override
 	{

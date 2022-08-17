@@ -23,22 +23,21 @@ inline vec2 SquareToCircle(const vec2& input)
 
 struct MoveCommandSystem : public System
 {
-	MoveCommandSystem(Registry& _registry)
+	explicit MoveCommandSystem(Registry& _registry)
 		: System(_registry)
 	{ }
-	~MoveCommandSystem() override {}
 
 	bool Initialize() override
 	{
 		return true;
 	}
 
-	bool CanMove(const GameplayTagCountContainer& tag_count)
+	bool CanMove(const GameplayTagCountContainer& tag_count) const
 	{
 		return !tag_count.HasTagExact(GameplayTagDefine::kStateBlockMove);
 	}
 
-	bool IsSprint(const GameplayTagCountContainer& tag_count)
+	bool IsSprint(const GameplayTagCountContainer& tag_count) const
 	{
 		return tag_count.HasTagExact(GameplayTagDefine::kStateSprint);
 	}

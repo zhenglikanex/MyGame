@@ -8,13 +8,8 @@
 
 struct TransformStateSystem : public System
 {
-	TransformStateSystem(Registry& _registry)
+	explicit TransformStateSystem(Registry& _registry)
 		: System(_registry)
-	{
-
-	}
-
-	~TransformStateSystem()
 	{
 
 	}

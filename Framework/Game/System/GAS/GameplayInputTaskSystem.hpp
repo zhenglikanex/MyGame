@@ -16,8 +16,6 @@ public:
 	{
 	}
 
-	~GameplayPlayInputSystem() {}
-
 	bool Initialize() override
 	{
 		return true;

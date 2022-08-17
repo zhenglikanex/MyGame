@@ -50,8 +50,8 @@ namespace actor_net
 		ActorMessage(ActorMessage&& rhs) noexcept
 			: src_id_(rhs.src_id_)
 			, dest_id_(rhs.dest_id_)
-			, type_(rhs.type_)
 			, session_(rhs.session_)
+			, type_(rhs.type_)
 			, name_(std::move(rhs.name_))
 			, data_(std::move(rhs.data_))
 		{
@@ -71,7 +71,11 @@ namespace actor_net
 			session_ = rhs.session_;
 			name_ = std::move(rhs.name_);
 			data_ = std::move(rhs.data_);
+
+			return *this;
 		}
+
+		~ActorMessage() = default;
 
 		ActorMessage(const ActorMessage&) = delete;
 		ActorMessage& operator=(const ActorMessage&) = delete;
@@ -81,6 +85,7 @@ namespace actor_net
 		SessionType session() const { return session_; }
 		MessageType type() const { return type_; }
 		const std::string& name() const { return name_; }
+		std::any& data() { return data_; }
 		const std::any& data() const { return data_; }
 
 		void set_src_id(ActorId src_id) { src_id_ = src_id; }

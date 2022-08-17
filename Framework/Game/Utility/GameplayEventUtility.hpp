@@ -3,9 +3,8 @@
 
 #include "Framework/Game/Component/GAS/GameplayEvent.hpp"
 
-class GameplayEventUtility
+namespace gameplay_event_utility
 {
-public:
 	static void SendGameplayEvent(Registry& registry,entt::entity e,const GameplayTag& tag, const GameplayEventData& data)
 	{
 		auto& manager = registry.ctx_or_set<GameplayEventSendManager>();

@@ -14,11 +14,6 @@ struct GameplayStateSystem : public System
 
 	}
 
-	~GameplayStateSystem()
-	{
-
-	}
-
 	bool Initialize() override
 	{
 		return true;

@@ -18,8 +18,6 @@ struct PhysicsSystem : public System,public PxSimulationEventCallback
 
 	}
 
-	~PhysicsSystem() {}
-
 	bool Initialize() override
 	{
 		registry.set<PhysicsWorld>(PhysicsUtility::CreatePhysicsWorld(this,registry));
@@ -44,7 +42,7 @@ struct PhysicsSystem : public System,public PxSimulationEventCallback
 		registry.unset<PhysicsWorld>();
 	}
 
-	void UpdateKinematicActor()
+	void UpdateKinematicActor() const
 	{
 		auto view = registry.view<Transform, PhysicsKinematicTag, PhysicsActor>();
 		for (auto e : kinematic_updater)

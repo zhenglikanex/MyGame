@@ -9,8 +9,7 @@
 
 struct DebugSystem : public System
 {
-	DebugSystem(Registry& _registry) : System(_registry) { }
-	~DebugSystem() {}
+	explicit DebugSystem(Registry& _registry) : System(_registry) { }
 
 	bool Initialize() override
 	{

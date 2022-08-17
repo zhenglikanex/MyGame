@@ -7,8 +7,7 @@ using namespace actor_net;
 class StartActor : public Actor
 {
 public:
-	StartActor(uint32_t id);
-	virtual ~StartActor();
+	explicit StartActor(uint32_t id);
 
 	bool Init(const std::shared_ptr<ActorNet>& actor_net_ptr) override;
 	void Stop() override;

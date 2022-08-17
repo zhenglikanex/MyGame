@@ -10,10 +10,9 @@
 
 struct RecvCommandSystem : public System
 {
-	RecvCommandSystem(Registry& _registry)
+	explicit RecvCommandSystem(Registry& _registry)
 		: System(_registry)
 	{ }
-	~RecvCommandSystem() override {}
 
 	bool Initialize() override
 	{

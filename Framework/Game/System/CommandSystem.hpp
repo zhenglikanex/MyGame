@@ -10,10 +10,9 @@
 
 struct CommandSystem : public System
 {
-	CommandSystem(Registry& _registry)
+	explicit CommandSystem(Registry& _registry)
 		: System(_registry)
 	{ }
-	~CommandSystem() override {}
 
 	bool Initialize() override
 	{

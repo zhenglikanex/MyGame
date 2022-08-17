@@ -35,11 +35,6 @@
 
 #include "Server/BattleActor/System/ServerSyncSystem.hpp"
 
-ServerGameHelper::~ServerGameHelper()
-{
-
-}
-
 GameMode ServerGameHelper::GetGameMode() const
 {
 	return GameMode::kAuthority;

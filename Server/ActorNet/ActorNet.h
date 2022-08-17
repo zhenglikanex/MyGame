@@ -32,8 +32,14 @@ namespace actor_net
 	class ActorNet : public std::enable_shared_from_this<ActorNet>
 	{
 	public:
-		ActorNet(Config config);
-		~ActorNet();
+		explicit ActorNet(const Config& config);
+
+		ActorNet(const ActorNet&) = delete;
+		ActorNet(ActorNet&&) = delete;
+		ActorNet& operator=(const ActorNet&) = delete;
+		ActorNet& operator=(ActorNet&&) = delete;
+
+		~ActorNet() = default;
 	private:
 		bool Init();
 

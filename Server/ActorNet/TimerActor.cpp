@@ -77,11 +77,6 @@ namespace actor_net
 
 	}
 
-	TimerActor::~TimerActor()
-	{
-		
-	}
-
 	void TimerActor::Run()
 	{
 		TIME_BEGIN_PERIOD(1);

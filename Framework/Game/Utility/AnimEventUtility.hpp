@@ -9,7 +9,7 @@
 
 #include "3rdparty/include/entt/entt.hpp"
 
-struct AnimEventUtility
+namespace anim_event_utility
 {
 	static void SendAnimEvent(Registry& registry, entt::entity e, std::string_view event)
 	{
@@ -23,7 +23,5 @@ struct AnimEventUtility
 			//todo
 			//GameplayEventUtility::SendGameplayEvent(registry, e, GameplayTag("GA.OverInputTask"),e);
 		}
-
-		
 	}
 };

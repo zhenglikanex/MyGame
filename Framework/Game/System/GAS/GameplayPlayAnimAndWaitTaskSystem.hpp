@@ -17,8 +17,6 @@ public:
 	{
 	}
 
-	~GameplayPlayAnimAndWaitTaskSystem() {}
-
 	bool Initialize() override
 	{
 		return true;

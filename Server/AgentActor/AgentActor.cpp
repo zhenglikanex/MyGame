@@ -18,11 +18,6 @@ AgentActor::AgentActor(ActorId id)
 	
 }
 
-AgentActor::~AgentActor()
-{
-
-}
-
 bool AgentActor::Init(const std::shared_ptr<ActorNet>& actor_net)
 {
 	if (!Actor::Init(actor_net))
@@ -54,16 +49,16 @@ void AgentActor::Receive(ActorMessage&& actor_msg)
 
 }
 
-void AgentActor::Start(const std::any& data)
+void AgentActor::Start(std::any& data)
 {
-	auto&[gate, conv] = std::any_cast<std::tuple<ActorId, kcp_conv_t>>(data);
+	auto&[gate, conv] = std::any_cast<std::tuple<ActorId, kcp_conv_t>&>(data);
 	gate_ = gate;
 	conv_ = conv;
 }
 
-void AgentActor::ClientReceive(const std::any& data)
+void AgentActor::ClientReceive(std::any& data)
 {
-	auto& message = std::any_cast<const NetMessage&>(data);
+	auto& message = std::any_cast<NetMessage&>(data);
 	auto iter = client_handlers_.find(message.name());
 	if (iter != client_handlers_.end())
 	{
@@ -78,9 +73,9 @@ void AgentActor::ClientReceive(const std::any& data)
 	}
 }
 
-void AgentActor::Send(const std::any& data)
+void AgentActor::Send(std::any& data)
 {
-	auto& [name,buffer] = std::any_cast<std::tuple<std::string,std::vector<uint8_t>>>(data);
+	auto& [name,buffer] = std::any_cast<std::tuple<std::string,std::vector<uint8_t>>&>(data);
 
 	NetMessage push;
 	push.set_name(name);
@@ -89,7 +84,7 @@ void AgentActor::Send(const std::any& data)
 	Call(gate_, "send", std::make_tuple(conv_, push));
 }
 
-void AgentActor::JoinBattle(const std::any& data)
+void AgentActor::JoinBattle(std::any& data)
 {
 	battle_ = std::any_cast<ActorId>(data);
 }

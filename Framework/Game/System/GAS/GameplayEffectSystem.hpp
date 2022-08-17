@@ -14,7 +14,6 @@
 struct GameplayEffectSystem : public System
 {
 	GameplayEffectSystem(Registry& _registry) : System(_registry) { }
-	~GameplayEffectSystem() {}
 
 	bool Initialize() override
 	{
@@ -50,8 +49,8 @@ struct GameplayEffectSystem : public System
 				{
 					if (!CheckOngoingTagRequirements(target,ge))
 					{
-						GameplayEffectUtility::ApplyExecutions(registry, spec);
-						GameplayEffectUtility::ApplyModifiers(registry, spec);
+						gameplay_effect_utility::ApplyExecutions(registry, spec);
+						gameplay_effect_utility::ApplyModifiers(registry, spec);
 					}
 
 					spec.period -= ge.period.period;

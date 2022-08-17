@@ -8,13 +8,8 @@
 
 struct LocalEntityStateSystem : public System
 {
-	LocalEntityStateSystem(Registry& _registry)
+	explicit LocalEntityStateSystem(Registry& _registry)
 		: System(_registry)
-	{
-
-	}
-
-	~LocalEntityStateSystem()
 	{
 
 	}
