@@ -50,13 +50,13 @@ struct GameplayAbilityCommandSystem : public System
 
 	bool CheckCost(entt::entity e,const GameplayAbility& ga) const
 	{
-		if (ga.cost_gameplay_effect == "")
+		if (ga.cost_gameplay_effect.empty())
 		{
 			return true;
 		}
 
 		auto modifiers = gameplay_effect_utility::GetModifiers(registry, ga.cost_gameplay_effect);
-		if (modifiers.size() > 0)
+		if (!modifiers.empty())
 		{
 			auto& attr_set = registry.get<GameplayAttributeSet>(e);
 			for (auto&[attribute, value] : modifiers)
