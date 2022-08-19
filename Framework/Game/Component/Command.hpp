@@ -39,7 +39,7 @@ struct Command
 	GameplayAbilityCommand gameplay_ability_command;
 };
 
-NON_MEMEBER_BAR(Command,obj.move_command, obj.gameplay_ability_command);
+NON_MEMEBER_BAR(Command, obj.frame, obj.move_command, obj.gameplay_ability_command);
 
 struct CommandState
 {

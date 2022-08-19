@@ -28,6 +28,7 @@ struct ClientSyncSystem : public System
 
 	bool Initialize() override
 	{
+		serialization_manager.InitComponentIds();
 		return true;
 	}
 
@@ -43,6 +44,8 @@ struct ClientSyncSystem : public System
 			auto& frame_data = serialization_manager.frame_data();
 			auto& game_state = registry.ctx<GameState>();
 
+			INFO("sync server frame : {} clien run frame {}", frame_data.frame, game_state.run_frame);
+
 			game_state.verified_frame = frame_data.frame;
 
 			MappingLocalEntity();
@@ -50,6 +53,8 @@ struct ClientSyncSystem : public System
 
 			if (frame_data.frame >= game_state.run_frame)
 			{
+				INFO("server lead");
+
 				// 客户端比服务器慢(客户端卡了),直接复制服务器数据
 				ReplicationLocalEntity();
 				ReplicationLocalState();
@@ -153,7 +158,7 @@ public:
 				e = registry.create();
 				registry.emplace<Local>(e, item.first);
 			}
-
+			
 			registry.emplace_or_replace<Component>(e, item.second);
 		}
 	}

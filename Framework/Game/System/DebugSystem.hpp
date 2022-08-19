@@ -23,6 +23,7 @@ struct DebugSystem : public System
 
 	void DrawCollider()
 	{
+		g_debug_service->ClearDraw();
 		auto view = registry.view<Transform,Collider,PhysicsActor>();
 		for (auto e : view)
 		{

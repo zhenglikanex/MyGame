@@ -119,8 +119,10 @@ void Game::UpdateFixedLogic()
 	int run_frame_times = 0;
 	auto& game_state = registry_.ctx<GameState>();
 
+	INFO("begin UpdateFixedLogic {}", game_state.real_frame - game_state.run_frame);
 	while (game_state.run_frame < game_state.real_frame)
 	{
+		INFO("while UpdateFixedLogic");
 		for (auto& system : systems_)
 		{
 			system->FixedUpdate(GameConfig::kFrameTime);
@@ -134,6 +136,8 @@ void Game::UpdateFixedLogic()
 		++game_state.run_frame;
 		++run_frame_times;
 	}
+
+	INFO("end UpdateFixedLogic");
 }
 
 void Game::Finalize()

@@ -80,7 +80,7 @@ void BattleActor::StartBattle(const std::any& data)
 	}
 
 	start_ = true;
-	last_time_ = start_time;
+	last_time_ = duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();;
 	
 	std::vector<PlayerInfo> players;
 	for (auto iter = player_infos.player_infos().cbegin(); iter < player_infos.player_infos().cend(); ++iter)

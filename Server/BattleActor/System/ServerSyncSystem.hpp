@@ -27,6 +27,7 @@ struct ServerSyncSystem : public System
 
 	bool Initialize() override
 	{
+		serialization_manager.InitComponentIds();
 		return true;
 	}
 

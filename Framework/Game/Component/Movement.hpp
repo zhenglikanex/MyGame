@@ -60,7 +60,7 @@ public:
 	CharacterGroundingReport(CharacterTransientGroundingReport* transient_grounding_report);
 };
 
-NON_MEMEBER_BAR(CharacterGroundingReport, obj.ground_point);
+NON_MEMEBER_BAR(CharacterGroundingReport,obj.found_any_ground,obj.is_stable_on_ground,obj.snpping_prevented,obj.inner_ground_normal,obj.outer_ground_normal,obj.ground_point);
 
 class CharacterTransientGroundingReport
 {

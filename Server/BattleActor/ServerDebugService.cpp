@@ -17,6 +17,11 @@ void ServerDebugService::Error(std::string_view view) const
 	std::cout << "[ERROR]:" << view << std::endl;
 }
 
+void ServerDebugService::ClearDraw() const
+{
+
+}
+
 void ServerDebugService::DrawCube(const vec3& position, const quat& rotation, const vec3& size) const
 {
 

@@ -72,7 +72,7 @@ public:
 
 	void BuildMoveCommand(Command& command, const Input& input) const
 	{
-		if (input.x_axis > 0 || input.y_axis > 0)
+		if (input.x_axis != 0 || input.y_axis != 0)
 		{
 			command.move_command.value.emplace_back(registry.get<Remote>(player), input.x_axis, input.y_axis);
 		}
@@ -80,6 +80,11 @@ public:
 
 	void BuildAbilityCommand(Command& command, const Input& input) const
 	{
+		if(input.abilities.empty())
+		{
+			return;
+		}
+
 		auto source = registry.get<Remote>(player);
 		std::unordered_map<std::string,GameplayAbilityCommandSpec>& ability_command_specs = command.gameplay_ability_command.value[source];
 		for (auto& [ability,input_key_status] : input.abilities)
@@ -93,6 +98,11 @@ public:
 
 	void SendCommand(const Command& command)
 	{
+		if(command.move_command.value.empty() && command.gameplay_ability_command.value.empty())
+		{
+			return;
+		}
+
 		buffer.Clear();
 		kanex::BinaryStream stream(buffer);
 		kanex::BinaryOutputArchive ar(stream);

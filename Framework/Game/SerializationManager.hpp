@@ -80,9 +80,29 @@ public:
 		, oar_(stream_)
 		, frame_data_()
 	{
+		
 	}
 
 public:
+	void InitComponentIds()
+	{
+		InitComponentIds(LocalComponents{});
+		InitComponentIds(RemoteComponents{});
+		InitComponentIds(SingleComponents{});
+	}
+
+	template<class ... Components>
+	void InitComponentIds(TypeList<Components...>)
+	{
+		(InitComponentId<Components>(), ...);
+	}
+
+	template<class Component>
+	void InitComponentId()
+	{
+		INFO("component:{} id{}",typeid(Component).name(), entt::type_hash<Component>::value());
+	}
+
 	void Clear()
 	{
 		buffer_.Clear();
@@ -225,6 +245,7 @@ private:
 	void DeserializeFrameData()
 	{
 		iar_(frame_data_);
+		INFO("frame : {} local_entity_identifier : {}local_entity_num {}", frame_data_.frame, frame_data_.local_entity_identifier, frame_data_.local_entity_num);
 	}
 
 	void DeserializeLocalEntity()
@@ -276,7 +297,7 @@ private:
 	template<class ... Components>
 	void DeserializeSingleEntityComponent(TypeList<Components...>)
 	{
-		(GetSingleEntityComponents<Components>(), ...);
+		(DeserializeSingleEntityComponent<Components>(), ...);
 	}
 
 	template<class Component>

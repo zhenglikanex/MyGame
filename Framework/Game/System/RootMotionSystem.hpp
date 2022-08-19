@@ -20,42 +20,27 @@ struct RootMotionSystem : public System
 		auto view = registry.view<Animation,AnimationClip>();
 		for (auto e : view)
 		{
-			auto& animtion = view.get<Animation>(e);
+			auto& animation = view.get<Animation>(e);
 			auto& animation_clip = view.get<AnimationClip>(e);
 
-			if (animtion.value)
+			if (animation.value)
 			{
-				auto iter = animtion.value->clips.find(animation_clip.name);
-				if (iter != animtion.value->clips.end())
+				auto iter = animation.value->clips.find(animation_clip.name);
+				if (iter != animation.value->clips.end())
 				{
-					uint32_t frame = animation_clip.time / GameConfig::kFrameTime;
+					size_t frame = std::min(static_cast<size_t>(animation_clip.time / GameConfig::kFrameTime), iter->second.root_motions.size() - 1);
 
-					if (frame < iter->second.root_motions.size())
+					auto& root_motion = iter->second.root_motions[frame];
+					if (!registry.all_of<CharacterMovement>(e))
 					{
-						auto& root_motion = iter->second.root_motions[frame];
-						if (!registry.all_of<CharacterMovement>(e))
-						{
-							registry.emplace_or_replace<Movement>(e, root_motion.velocity, root_motion.angular_velocity);
-						}
-						else
-						{
-							auto& forward = registry.get<MovementForward>(e);
-							auto& character_movement = registry.get<CharacterMovement>(e);
-							character_movement.base_velocity = forward.value * root_motion.velocity.z;
-							character_movement.base_velocity.y += root_motion.velocity.y;
-						}
+						registry.emplace_or_replace<Movement>(e, root_motion.velocity, root_motion.angular_velocity);
 					}
 					else
 					{
-						if (!registry.all_of<CharacterMovement>(e))
-						{
-							registry.remove<Movement>(e);
-						}
-						else
-						{
-							auto& character_movement = registry.get<CharacterMovement>(e);
-							character_movement.base_velocity = vec3(0);
-						}
+						auto& forward = registry.get<MovementForward>(e);
+						auto& character_movement = registry.get<CharacterMovement>(e);
+						character_movement.base_velocity = forward.value * root_motion.velocity.z;
+						character_movement.base_velocity.y += root_motion.velocity.y;
 					}
 				}
 			}

@@ -22,7 +22,7 @@ struct TransformStateSystem : public System
 	void FixedUpdate(float dt) override
 	{
 		auto run_frame = registry.ctx<GameState>().run_frame;
-		INFO("TransformStateSystem {}", run_frame);
+		//INFO("TransformStateSystem {}", run_frame);
 		auto view = registry.view<Transform, TransformState>();
 		for (auto e : view)
 		{

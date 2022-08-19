@@ -85,7 +85,7 @@ struct KinematicCharacterMovementSystem : public System
 
 	void FixedUpdate(float dt) override
 	{
-		INFO("kcc update");
+		//INFO("kcc update");
 		UpdatePhase1(dt);
 		//
 		UpdatePhase2(dt);
@@ -96,7 +96,7 @@ struct KinematicCharacterMovementSystem : public System
 		auto view = registry.view<Local,Transform,CharacterMovement,Character,Collider,PhysicsActor>();
 		for (auto e : view)
 		{
-			INFO("UpdatePhase1{}",registry.get<Player>(e).id);
+			//INFO("UpdatePhase1{}",registry.get<Player>(e).id);
 			overlaps_count_ = 0;
 
 			auto&[transform, movement, character,collider, physics_actor] = 
@@ -106,7 +106,7 @@ struct KinematicCharacterMovementSystem : public System
 			character_ = &character;
 			character_movement_ = &movement;
 
-			INFO("base_velocity x{} y{} z{}", character_movement_->base_velocity.x, character_movement_->base_velocity.y, character_movement_->base_velocity.z);
+			//INFO("base_velocity x{} y{} z{}", character_movement_->base_velocity.x, character_movement_->base_velocity.y, character_movement_->base_velocity.z);
 
 			// 获取physx相关的数据
 			PxShape* shape;
@@ -362,7 +362,7 @@ struct KinematicCharacterMovementSystem : public System
 			}
 
 			registry.replace<Transform>(e, transient_position_, transient_rotation_);
-			INFO("update 1 transient_position_ x{} y{} z{}", transient_position_.x, transient_position_.y, transient_position_.z);
+			//INFO("update 1 transient_position_ x{} y{} z{}", transient_position_.x, transient_position_.y, transient_position_.z);
 		}
 
 		registry.clear<MovePositionTarget>();

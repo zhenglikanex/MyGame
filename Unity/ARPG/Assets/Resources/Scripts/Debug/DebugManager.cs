@@ -40,8 +40,6 @@ public class DebugManager : SceneGameObjectSingleton<DebugManager>
             transform.localRotation = rotation;
             transform.localScale = size;
         }
-
-        
     }
 
     public void DrawSphere(Vector3 position,float radius)

@@ -45,9 +45,12 @@ struct ActorSystem : public System
 		}
 	}
 
-	void UpdateGrounded(const CharacterMovement& character_movment,GameplayTagCountContainer& tag_count)
+	void UpdateGrounded(const CharacterMovement& character_movement,GameplayTagCountContainer& tag_count)
 	{
-		if (character_movment.grounding_status.is_stable_on_ground)
+		auto& game_state = registry.ctx<GameState>();
+		INFO("frame{} is_stable_on_ground {}", game_state.run_frame, character_movement.grounding_status.is_stable_on_ground);
+
+		if (character_movement.grounding_status.is_stable_on_ground)
 		{
 			tag_count.SetTagCount(GameplayTagDefine::kStateGrounded, 1);
 		}

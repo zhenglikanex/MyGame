@@ -67,6 +67,11 @@ void UnityDebugService::Error(std::string_view view) const
 	UnityBridge::Get().CallUnity<void>("LogError", view.data());
 }
 
+void UnityDebugService::ClearDraw() const
+{
+	UnityBridge::Get().CallUnity<void>("ClearDebugDraw");
+}
+
 void UnityDebugService::DrawCube(const vec3& position, const quat& rotation, const vec3& size) const
 {
 	UnityBridge::Get().CallUnity<void>(

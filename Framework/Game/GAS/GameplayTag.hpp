@@ -53,8 +53,8 @@ public:
 
 	BAR(mask_,value_);
 private:
-	uint64_t mask_;
-	uint64_t value_;
+	int64_t mask_;
+	int64_t value_;
 };
 
 namespace std

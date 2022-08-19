@@ -124,11 +124,6 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
             }
         }
 
-        if(func == "CreateView")
-        {
-            int a = 10;
-        }
-
         return "";
     }
 
@@ -183,9 +178,9 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         UnityViewServices.Instance.PlayAnim(id, str,(float)time);
     }
 
-    public static void InputHandler()
+    public static GameInput InputHandler()
     {
-        BattleController.Instance.InputHandler();
+        return BattleController.Instance.InputHandler();
     }
 
     public static void LogInfo(string message)
@@ -296,5 +291,10 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     public static string GetDataPath()
     {
         return Application.dataPath;
+    }
+
+    public static void ClearDebugDraw()
+    {
+        DebugManager.Instance.Clear();
     }
 }

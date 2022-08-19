@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Google.Protobuf;
 using System;
+using UnityEditor;
 
-enum KeyStatus
+public enum KeyStatus
 {
     kDown,
     kUp
 }
+
+public class GameInput
+{
+    public float xAxis;       // “°∏À ‰»Î
+    public float yAxis;       // “°∏À ‰»Î
+
+    public Dictionary<string, KeyStatus> abilities = new Dictionary<string, KeyStatus>();
+};
 
 public class BattleController : SceneGameObjectSingleton<BattleController>
 {
@@ -22,6 +31,7 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
 
     private Dictionary<KeyCode, List<string>> abilityBindInfos = new Dictionary<KeyCode, List<string>>();
     private Dictionary<KeyCode, KeyStatus> keyStatusDic = new Dictionary<KeyCode, KeyStatus>();
+    private GameInput _input = new GameInput();
 
     void Awake()
     {
@@ -75,7 +85,9 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
     // Start is called before the first frame update
     void Start()
     {
-        
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged += PlayModeStateChanged;
+#endif
     }
 
     // Update is called once per frame
@@ -125,14 +137,13 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
         }
     }
 
-    public void InputHandler()
+    public GameInput InputHandler()
     {
         if(IsBattleing)
         {
-            DebugManager.Instance.Clear();
-            Proto.CS2CPlusPlusCommand command = new Proto.CS2CPlusPlusCommand();
-            command.XAxis = Input.GetAxis("Horizontal");
-            command.YAxis = Input.GetAxis("Vertical");
+            _input.abilities.Clear();
+            _input.xAxis = Input.GetAxis("Horizontal");
+            _input.yAxis = Input.GetAxis("Vertical");
 
             foreach(var bindInfo in abilityBindInfos)
             {
@@ -140,15 +151,26 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
                 {
                     foreach(var ability in bindInfo.Value)
                     {
-                        command.Abilities.Add(ability,(uint)keyStatusDic[bindInfo.Key]);
+                        _input.abilities.Add(ability,keyStatusDic[bindInfo.Key]);
                     }
                 }
             }
 
             keyStatusDic.Clear();
 
-            var data = command.ToByteArray();
-            CPlusPlusBridge.GameInput(data, data.Length);
+            return _input;
+        }
+
+        return null;
+    }
+
+    static void PlayModeStateChanged(PlayModeStateChange obj)
+    {
+        switch (obj)
+        {
+            case PlayModeStateChange.ExitingPlayMode://Õ£÷π≤•∑≈¡¢º¥º‡Ã˝
+                BattleController.Instance.EndBattle();
+                break;
         }
     }
 }

@@ -88,7 +88,7 @@ void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time,uint32_t 
 	locator.Set<NetworkService>(std::make_unique<ClientNetworkService>(&RecvGameMessage, &SendGameMessage));
 
 	g_game = std::make_unique<Game>(std::make_unique<ClientGameHelper>(local_id),std::move(locator),std::move(players));
-	if (g_game->Initialize())
+	if (!g_game->Initialize())
 	{
 		g_game->Finalize();
 		g_game = nullptr;
@@ -138,7 +138,7 @@ extern "C"
 
 	EXPORT_DLL void UpdateGame(float dt)
 	{
-		std::this_thread::sleep_for(milliseconds(2));
+		std::this_thread::sleep_for(milliseconds(1));
 
 		if (g_network_service)
 		{
@@ -158,9 +158,20 @@ extern "C"
 
 		if (g_game)
 		{
-			uint64_t now = duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();
-			g_game->Update(now - g_last_time);
-			g_last_time = now;
+			try
+			{
+				uint64_t now = duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();
+				g_game->Update(now - g_last_time);
+				g_last_time = now;
+			}
+			catch (std::exception& exception)
+			{
+				INFO("exception : {}", exception.what());
+			}
+			catch (...)
+			{
+				//assert(false);
+			}
 		}
 	}
 
@@ -181,7 +192,7 @@ extern "C"
 					{
 						INFO("start_battle");
 						
-						g_last_time = duration_cast<milliseconds>(high_resolution_clock::now().time_since_epoch()).count();
+						g_last_time = duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();
 
 						Proto::StartBattleInfo info;
 						info.ParseFromArray(message.data().data(), message.data().size());
