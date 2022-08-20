@@ -19,7 +19,7 @@ MonoBehaviour:
     animations:
     - name: Locomotion
       min: 0
-      max: 1
+      max: 0
       step: 0.1
       param: forward
       isBlendTree: 1
@@ -60,6 +60,117 @@ MonoBehaviour:
       param: 
       isBlendTree: 0
     - name: Hurt
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+  - target: {fileID: 3160723097731855880, guid: e409240daa45e1b41ab42a367522269f,
+      type: 3}
+    animations:
+    - name: Idle
+      min: 0
+      max: 1
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: Sprint
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: Jump
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: DoubleJump
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: Roll
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: Locomotion
+      min: 0
+      max: 1
+      step: 0.1
+      param: forward
+      isBlendTree: 1
+    - name: LightAttackA
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: LightAttackB
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: LightAttackC
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: DashLightAttack
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: JumpAttackA
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: JumpAttackB
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: JumpAttackC
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: DashHeavyAttack
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: HeavyAttackA
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: HeavyAttackB
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: HeavyAttackC
+      min: 0
+      max: 0
+      step: 0.1
+      param: 
+      isBlendTree: 0
+    - name: HeavyAttackD
       min: 0
       max: 0
       step: 0.1

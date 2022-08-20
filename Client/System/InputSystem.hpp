@@ -57,10 +57,16 @@ public:
 
 			auto& command_state = registry.ctx_or_set<CommandState>();
 			Command& command = command_state.value[game_state.run_frame % command_state.value.size()];
-			command.frame = game_state.run_frame;
+			command.move_command.value.clear();
+			command.gameplay_ability_command.value.clear();
 
 			BuildCommand(command, input);
-			SendCommand(command);
+
+			if (!command.move_command.value.empty() || !command.gameplay_ability_command.value.empty())
+			{
+				command.frame = game_state.run_frame;
+				SendCommand(command);
+			}
 		}
 	}
 
@@ -89,6 +95,8 @@ public:
 		std::unordered_map<std::string,GameplayAbilityCommandSpec>& ability_command_specs = command.gameplay_ability_command.value[source];
 		for (auto& [ability,input_key_status] : input.abilities)
 		{
+			INFO("ability {} {}", ability, input_key_status == InputKeyStatus::kDown);
+
 			if(ability_command_specs.find(ability) == ability_command_specs.end())
 			{
 				ability_command_specs.emplace(ability,GameplayAbilityCommandSpec(ability, source, Remote::null, input_key_status == InputKeyStatus::kDown));
@@ -98,11 +106,6 @@ public:
 
 	void SendCommand(const Command& command)
 	{
-		if(command.move_command.value.empty() && command.gameplay_ability_command.value.empty())
-		{
-			return;
-		}
-
 		buffer.Clear();
 		kanex::BinaryStream stream(buffer);
 		kanex::BinaryOutputArchive ar(stream);

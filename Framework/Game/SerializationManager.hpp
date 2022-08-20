@@ -108,20 +108,10 @@ public:
 		buffer_.Clear();
 	}
 
-	void Serialize(Registry& registry,const SyncInstance& sync_instance)
+	void Serialize(Registry& registry, const SyncInstance& sync_instance)
 	{
-		SerializeCommon(registry);
-		SerializeInstance(registry, sync_instance);
-	}
-
-	void SerializeCommon(Registry& registry)
-	{
-		SerializeRemoteEntity(registry);
+		SerializeRemoteEntity(registry, sync_instance);
 		SerializeSingleEntity(registry);
-	}
-
-	void SerializeInstance(Registry& registry, const SyncInstance& sync_instance)
-	{
 		SerializeFrameData(registry, sync_instance);
 		SerializeLocalEntity(registry, sync_instance);
 	}
@@ -188,28 +178,33 @@ private:
 		oar_(components);
 	}
 
-	void SerializeRemoteEntity(Registry& registry)
+	void SerializeRemoteEntity(Registry& registry, const SyncInstance& sync_instance)
 	{
-		SerializeRemoteEntityComponent(registry,RemoteComponents{});
+		SerializeRemoteEntityComponent(registry,sync_instance,RemoteComponents{});
 	}
 
 	template<class ... Components>
-	void SerializeRemoteEntityComponent(Registry& registry,TypeList<Components...>)
+	void SerializeRemoteEntityComponent(Registry& registry, const SyncInstance& sync_instance,TypeList<Components...>)
 	{
-		(SerializeRemoteEntityComponent<Components>(registry), ...);
+		(SerializeRemoteEntityComponent<Components>(registry, sync_instance), ...);
 	}
 
 	template<class Component>
-	void SerializeRemoteEntityComponent(Registry& registry)
+	void SerializeRemoteEntityComponent(Registry& registry, const SyncInstance& sync_instance)
 	{
 		auto& components = GetRemoteEntityComponents<Component>();
 		components.clear();
 
 		auto view = registry.view<Remote,Component>();
+		auto local_view = registry.view<Local>();
 		for (auto e : view)
 		{
 			auto&[remote, component] = view.get<Remote,Component>(e);
-			components.emplace(remote, component);
+			auto local = registry.try_get<Local>(e);
+			if(!local || local->owner != sync_instance.owner)
+			{
+				components.emplace(remote, component);
+			}
 		}
 
 		oar_(components);
@@ -245,7 +240,6 @@ private:
 	void DeserializeFrameData()
 	{
 		iar_(frame_data_);
-		INFO("frame : {} local_entity_identifier : {}local_entity_num {}", frame_data_.frame, frame_data_.local_entity_identifier, frame_data_.local_entity_num);
 	}
 
 	void DeserializeLocalEntity()

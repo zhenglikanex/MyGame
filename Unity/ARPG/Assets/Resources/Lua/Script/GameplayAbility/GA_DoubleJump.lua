@@ -2,7 +2,7 @@ local GA_Jump =
 {
 	cooldown_gameplay_effect = "",
 	cost_gameplay_effect = "",
-	ability_tags = { GameplayTagDefine.kAbilityJump },
+	ability_tags = { GameplayTagDefine.kAbilityDoubleJump },
 	cancel_ability = { },
 	block_abilites_with_tag = { GameplayTagDefine.kAbilityDoubleJump },
 	activation_owned_tags = { GameplayTagDefine.kStateJump,GameplayTagDefine.kStateBlockMove },

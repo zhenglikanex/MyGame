@@ -4,7 +4,7 @@ local GA_DoubleJumpAScript = class("AttackGAScript",GAScript)
 function GA_DoubleJumpAScript:ActiveAbility()
     self:CommitAbility()
 
-    GameplayPlayAnimAndWait(self.entity,"Jump","AnimCompleted","AnimCanceled")
+    GameplayPlayAnimAndWait(self.entity,"DoubleJump","AnimCompleted","AnimCanceled")
 end
 
 function GA_DoubleJumpAScript:AnimCompleted()    

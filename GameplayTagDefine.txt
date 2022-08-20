@@ -18,6 +18,7 @@ State.BlockMove
 State.Grounded
 State.Attack
 State.Jump
+State.Jump.Double
 State.Roll
 State.Sprint
 State.Hurt.Normal

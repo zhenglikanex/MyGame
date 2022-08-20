@@ -170,6 +170,7 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     
     public static void PlayAnimation(int id,string str)
     {
+        Debug.Log(str);
         UnityViewServices.Instance.PlayAnim(id, str);
     }
 

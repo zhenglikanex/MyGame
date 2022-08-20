@@ -180,6 +180,8 @@ struct GameplayAbilityCommandSystem : public System
 					}
 				}
 
+				INFO("Apply Ability {}", command_spec.ability);
+
 				auto e = registry.create_predict(source);
 				registry.emplace<GameplayAbilitySpec>(e, command_spec.ability, active_ability->level, command_spec.source, command_spec.target);
 				registry.patch<GameplayTagCountContainer>(source, [&ga](GameplayTagCountContainer& tag_count)

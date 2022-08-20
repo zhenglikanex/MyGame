@@ -34,7 +34,7 @@ struct MoveCommandSystem : public System
 
 	bool CanMove(const GameplayTagCountContainer& tag_count) const
 	{
-		return !tag_count.HasTagExact(GameplayTagDefine::kStateBlockMove);
+		return !tag_count.HasTagExact(GameplayTagDefine::kStateBlockMove) && tag_count.HasTagExact(GameplayTagDefine::kStateGrounded);
 	}
 
 	bool IsSprint(const GameplayTagCountContainer& tag_count) const

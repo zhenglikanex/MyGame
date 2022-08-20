@@ -34,10 +34,6 @@ struct ServerSyncSystem : public System
 	void FixedUpdate(float dt) override
 	{
 		serialization_manager.Clear();
-		serialization_manager.SerializeCommon(registry);
-
-		std::vector<uint8_t> common_buffer(serialization_manager.buffer().Size());
-		serialization_manager.buffer().Read(common_buffer.data(), common_buffer.size());
 
 		auto& sync_manager = registry.ctx<SyncManager>();
 		for (auto& item : sync_manager.sync_instances)
@@ -49,13 +45,10 @@ struct ServerSyncSystem : public System
 				continue;
 			}
 
-			serialization_manager.Clear();
-			serialization_manager.SerializeInstance(registry,sync_instance);
+			serialization_manager.Serialize(registry,sync_instance);
 
-			std::vector<uint8_t> buffer(common_buffer.size() + serialization_manager.buffer().Size());
-			std::copy_n(common_buffer.begin(), common_buffer.size(), buffer.data());
-			serialization_manager.buffer().Read(buffer.data() + common_buffer.size(), serialization_manager.buffer().Size());
-
+			std::vector<uint8_t> buffer( serialization_manager.buffer().Size());
+			serialization_manager.buffer().Read(buffer.data(), buffer.size());
 			auto& network_service = dynamic_cast<ServerNetworkService&>(registry.ctx<Locator>().Ref<NetworkService>());
 			network_service.Send(sync_instance.owner, "sync_frame_data", std::move(buffer));
 		}

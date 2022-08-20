@@ -45,6 +45,9 @@ public:
 			auto source = registry.get(spec.source);
 			if (source != entt::null)
 			{
+				auto& game_state = registry.ctx<GameState>();
+				INFO("frame {} DestoryGameplayAbility {}", game_state.run_frame,e);
+
 				registry.patch<GameplayTagCountContainer>(source,[&ga](GameplayTagCountContainer& tag_count)
 					{
 						tag_count.UpdateTagCount(ga.activation_owned_tags, -1);
@@ -64,6 +67,12 @@ public:
 
 	void DestoryEntity(const std::vector<entt::entity>& entities) 
 	{
+		if(!entities.empty())
+		{
+			auto& game_state = registry.ctx<GameState>();
+			INFO("frame {} DestoryEntity size{}", entities.size(), game_state.run_frame);
+		}
+		
 		registry.destroy(entities.begin(), entities.end());
 	}
 

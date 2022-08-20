@@ -8,7 +8,7 @@
 struct DestroyModifierAttributeSystem : System
 {
 public:
-	DestroyModifierAttributeSystem(Registry& _registry) : System(_registry)
+	explicit DestroyModifierAttributeSystem(Registry& _registry) : System(_registry)
 	{
 	}
 

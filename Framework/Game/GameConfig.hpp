@@ -14,6 +14,7 @@ namespace GameConfig
 		const std::string kJump = "Jump";
 		const std::string kHurt = "Hurt";
 		const std::string kDeath = "Death";
+		const std::string kFall = "Fall";
 	}
 
 	constexpr uint64_t kFrameTimeNanoseconds = 33000000;	//дицК

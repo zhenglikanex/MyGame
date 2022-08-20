@@ -138,8 +138,6 @@ extern "C"
 
 	EXPORT_DLL void UpdateGame(float dt)
 	{
-		std::this_thread::sleep_for(milliseconds(1));
-
 		if (g_network_service)
 		{
 			if (g_network_service->IsConnected())

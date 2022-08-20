@@ -19,9 +19,23 @@ struct ActorSystem : public System
 		return true;
 	}
 
-	bool IsJump(const GameplayTagCountContainer& tag_count)
+	bool IsJump(const GameplayTagCountContainer& tag_count) const 
 	{
 		return tag_count.HasTag(GameplayTagDefine::kStateJump);
+	}
+
+	bool IsFall(const AnimationClip& animation_clip, const GameplayTagCountContainer& tag_count) const
+	{
+		return !tag_count.HasTag(GameplayTagDefine::kStateGrounded) && !IsJump(tag_count)
+			&& (animation_clip.is_done || animation_clip.name == GameConfig::ActionAnimation::kIdle)
+			&& animation_clip.name != GameConfig::ActionAnimation::kFall;
+	}
+
+	bool IsIdle(const AnimationClip& animation_clip, const GameplayTagCountContainer& tag_count) const
+	{
+		return tag_count.HasTag(GameplayTagDefine::kStateGrounded)
+			&& (animation_clip.is_done || animation_clip.name == GameConfig::ActionAnimation::kFall)
+			&& animation_clip.name != GameConfig::ActionAnimation::kIdle;
 	}
 
 	void FixedUpdate(float dt) override
@@ -30,16 +44,22 @@ struct ActorSystem : public System
 		for (auto e : view)
 		{
 			auto&[tag_count, animation_clip, character_movement] = view.get<GameplayTagCountContainer, AnimationClip, CharacterMovement>(e);
-			
-			ProcessIdle(animation_clip, e);
+
 			UpdateGrounded(character_movement, tag_count);
 			UpdateGravity(tag_count, e);
+			UpdateAnimation(animation_clip, tag_count,e);
 		}
 	}
 
-	void ProcessIdle(const AnimationClip& animation_clip, entt::entity e)
+	void UpdateAnimation(const AnimationClip& animation_clip,const GameplayTagCountContainer& tag_count,entt::entity e)
 	{
-		if (animation_clip.is_done && animation_clip.name != GameConfig::ActionAnimation::kIdle)
+		if(IsFall(animation_clip,tag_count))
+		{
+			registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kFall);
+			return;
+		}
+
+		if (IsIdle(animation_clip,tag_count))
 		{
 			registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
 		}
@@ -47,9 +67,6 @@ struct ActorSystem : public System
 
 	void UpdateGrounded(const CharacterMovement& character_movement,GameplayTagCountContainer& tag_count)
 	{
-		auto& game_state = registry.ctx<GameState>();
-		INFO("frame{} is_stable_on_ground {}", game_state.run_frame, character_movement.grounding_status.is_stable_on_ground);
-
 		if (character_movement.grounding_status.is_stable_on_ground)
 		{
 			tag_count.SetTagCount(GameplayTagDefine::kStateGrounded, 1);

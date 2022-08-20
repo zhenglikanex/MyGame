@@ -126,6 +126,7 @@ public class Actor : UnityView
             {
                 //Time.timeScale = 0;
             }
+            Debug.Log(str);
             string animName = str;
             //Debug.Log(name);
             //animator.SetFloat("forward", 0);

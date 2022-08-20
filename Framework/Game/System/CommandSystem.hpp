@@ -25,11 +25,18 @@ struct CommandSystem : public System
 		auto& command_state = registry.ctx_or_set<CommandState>();
 
 		auto& command = command_state.value[game_state.run_frame % command_state.value.size()];
-
 		auto& move_command = registry.ctx_or_set<MoveCommand>();
-		move_command.value = command.move_command.value;
+		move_command.value.clear();
 
 		auto& ability_command = registry.ctx_or_set<GameplayAbilityCommand>();
+		ability_command.value.clear();
+
+		if(command.frame != game_state.run_frame)
+		{
+			return;
+		}
+
+		move_command.value = command.move_command.value;
 		ability_command.value = command.gameplay_ability_command.value;
 	}
 

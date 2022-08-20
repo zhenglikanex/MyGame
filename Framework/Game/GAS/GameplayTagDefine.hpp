@@ -28,11 +28,12 @@ namespace GameplayTagDefine
 	const GameplayTag kStateBlockMove = GameplayTag(-281474976710656,145804037936119808);
 	const GameplayTag kStateGrounded = GameplayTag(-281474976710656,146085512912830464);
 	const GameplayTag kStateHurt = GameplayTag(-281474976710656,146648462866251776);
-	const GameplayTag kStateHurtFloating = GameplayTag(-1099511627776,146655059936018432);
-	const GameplayTag kStateHurtFlying = GameplayTag(-1099511627776,146657258959273984);
-	const GameplayTag kStateHurtKnockBack = GameplayTag(-1099511627776,146656159447646208);
-	const GameplayTag kStateHurtNormal = GameplayTag(-1099511627776,146653960424390656);
+	const GameplayTag kStateHurtFloating = GameplayTag(-1099511627776,146656159447646208);
+	const GameplayTag kStateHurtFlying = GameplayTag(-1099511627776,146658358470901760);
+	const GameplayTag kStateHurtKnockBack = GameplayTag(-1099511627776,146657258959273984);
+	const GameplayTag kStateHurtNormal = GameplayTag(-1099511627776,146655059936018432);
 	const GameplayTag kStateJump = GameplayTag(-281474976710656,144396663052566528);
+	const GameplayTag kStateJumpDouble = GameplayTag(-1099511627776,144402160610705408);
 	const GameplayTag kStateMeleeAttack = GameplayTag(-281474976710656,145522562959409152);
 	const GameplayTag kStateMeleeAttackHeavy = GameplayTag(-1099511627776,145524761982664704);
 	const GameplayTag kStateMeleeAttackHeavyA = GameplayTag(-4294967296,145524766277632000);

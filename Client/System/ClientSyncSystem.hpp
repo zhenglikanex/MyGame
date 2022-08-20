@@ -44,7 +44,7 @@ struct ClientSyncSystem : public System
 			auto& frame_data = serialization_manager.frame_data();
 			auto& game_state = registry.ctx<GameState>();
 
-			INFO("sync server frame : {} clien run frame {}", frame_data.frame, game_state.run_frame);
+			//INFO("sync server frame : {} clien run frame {}", frame_data.frame, game_state.run_frame);
 
 			game_state.verified_frame = frame_data.frame;
 
@@ -231,7 +231,8 @@ public:
 			return false;
 		}
 
-		if (frame_data.local_entity_identifier != state.nums[frame_data.frame % state.nums.size()])
+		INFO("server local_entity_num{} client local_entity_num{}", frame_data.local_entity_num, state.nums[frame_data.frame % state.nums.size()]);
+		if (frame_data.local_entity_num != state.nums[frame_data.frame % state.nums.size()])
 		{
 			INFO("CheckLocalState Num Rollback");
 			return false;
