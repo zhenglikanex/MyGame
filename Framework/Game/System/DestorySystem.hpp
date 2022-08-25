@@ -2,6 +2,7 @@
 
 #include "Framework/Game/Component/Destroy.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
+#include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -61,6 +62,30 @@ public:
 				{
 					registry.emplace<Destroy>(e);
 				}
+			}
+		}
+	}
+
+	void DestoryGameplayEffect()
+	{
+		auto& ge_manager = registry.ctx<GameplayEffectManager>();
+		auto view = registry.view<GameplayEffectSpec, Destroy>();
+		for(auto e : view)
+		{
+			auto& spec = view.get<GameplayEffectSpec>(e);
+
+			auto& ge =  ge_manager.LoadGameplayEffect(spec.effect);
+			auto target = registry.get(spec.target);
+			if (target != entt::null)
+			{
+				auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
+				registry.patch<GameplayTagCountContainer>(target, [&ge](GameplayTagCountContainer& tag_count)
+				{
+					tag_count.UpdateTagCount(ge.tag.granted_tags, -1);
+				});
+
+				// todo:ÒÆ³ý¼¼ÄÜµÈ
+				registry.emplace<Destroy>(e);
 			}
 		}
 	}

@@ -7,10 +7,11 @@
 struct GameplayEffect
 {	
 	GameplayEffect() = default;
-	GameplayEffect(GameplayEffect&&) = default;
-	GameplayEffect& operator=(GameplayEffect&&) = default;
+	GameplayEffect(GameplayEffect&&) = delete;
+	GameplayEffect& operator=(GameplayEffect&&) = delete;
 	GameplayEffect(const GameplayEffect&) = delete;
 	GameplayEffect& operator=(const GameplayEffect&) = delete;
+	~GameplayEffect() = default;
 
 	std::string name;
 
@@ -160,7 +161,7 @@ struct GameplayEffect
 	struct GrantedAbility
 	{
 		std::string ability;
-		uint32_t level;
+		uint32_t level = 1;
 		AbilityRemovalPolicy removal_policy = AbilityRemovalPolicy::DoNothing;
 	};
 
