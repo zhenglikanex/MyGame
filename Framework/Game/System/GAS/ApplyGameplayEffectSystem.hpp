@@ -59,7 +59,7 @@ struct ApplyGameplayEffectSystem : public System
 
 	void FixedUpdate(float dt) override
 	{
-		GameplayEffectManager& ge_manager = registry.ctx<GameplayEffectManager>();
+		auto& ge_manager = registry.ctx<GameplayEffectManager>();
 		
 		if (auto apply_ge = registry.try_ctx<ApplyGameplayEffect>())
 		{
@@ -87,7 +87,7 @@ struct ApplyGameplayEffectSystem : public System
 					auto& target_tag_count = registry.get<GameplayTagCountContainer>(target);
 					auto& source_tag_count = registry.get<GameplayTagCountContainer>(source);
 
-					auto& target_spec_entities = gameplay_effect_utility::GetGameplayEffectSpecEntitiesByOwner(registry,spec.target);
+					auto target_spec_entities = gameplay_effect_utility::GetGameplayEffectSpecEntitiesByOwner(registry,spec.target);
 
 					if (HasApplicationImmunity(target_spec_entities, source_tag_count))
 					{
@@ -116,7 +116,7 @@ struct ApplyGameplayEffectSystem : public System
 					RemoveGameplayEffectsWithTags(target,ge,target_spec_entities);
 					
 					// todo:
-					if (overflow_effects.size() > 0)
+					if (!overflow_effects.empty())
 					{
 
 					}
@@ -203,6 +203,7 @@ struct ApplyGameplayEffectSystem : public System
 			target_spec_entities.push_back(e);
 
 			// todo ¸³Óè¼¼ÄÜ
+			
 		}
 
 		//Ìí¼Ócue
@@ -218,7 +219,8 @@ struct ApplyGameplayEffectSystem : public System
 			auto& act_ge = ge_manager.LoadGameplayEffect(act_sepc.effect);
 			if (act_ge.tag.gameplay_effect_asset_tags.HasAny(ge.tag.remove_gameplay_effects_with_tags))
 			{
-				gameplay_effect_utility::RemoveGameplayEffectForTarget(registry,target,e);
+				registry.emplace<Destroy>(e);
+				//gameplay_effect_utility::RemoveGameplayEffectForTarget(registry,target,e);
 			}
 		}
 	}
