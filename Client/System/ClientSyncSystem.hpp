@@ -231,7 +231,6 @@ public:
 			return false;
 		}
 
-		INFO("server local_entity_num{} client local_entity_num{}", frame_data.local_entity_num, state.nums[frame_data.frame % state.nums.size()]);
 		if (frame_data.local_entity_num != state.nums[frame_data.frame % state.nums.size()])
 		{
 			INFO("CheckLocalState Num Rollback");

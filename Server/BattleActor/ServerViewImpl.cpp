@@ -20,12 +20,10 @@ void ServerViewImpl::MoveRotation(const quat& rotation)
 	
 }
 
-void ServerViewImpl::PlayAnimation(const std::string& name)
+void ServerViewImpl::PlayAnimation(const std::string& name, bool is_timeline)
 {
-	
 }
 
-void ServerViewImpl::PlayAnimation(const std::string& name, float normalized_time)
+void ServerViewImpl::PlayAnimation(const std::string& name, float noramlized_time, bool is_timeline)
 {
-	
 }

@@ -37,14 +37,14 @@ void UnityViewImpl::MoveRotation(const quat& rotation)
 	service_->MoveRotation(this, rotation.x, rotation.y, rotation.z, rotation.w);
 }
 
-void UnityViewImpl::PlayAnimation(const std::string& name)
+void UnityViewImpl::PlayAnimation(const std::string& name, bool is_timeline)
 {
-	service_->PlayAnimation(this, name);
+	service_->PlayAnimation(this, name,is_timeline);
 }
 
-void UnityViewImpl::PlayAnimation(const std::string& name, float normalized_time)
+void UnityViewImpl::PlayAnimation(const std::string& name, float normalized_time, bool is_timeline)
 {
-	service_->PlayAnimation(this, name, normalized_time);
+	service_->PlayAnimation(this, name, normalized_time,is_timeline);
 }
 
 void UnityViewImpl::ApplyCue(std::string_view name)

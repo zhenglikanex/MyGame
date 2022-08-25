@@ -22,6 +22,7 @@
 #include "Framework/Game/Component/GAS/GameplayInputTask.hpp"
 #include "Framework/Game/Component/GAS/GameplayHitTestTask.hpp"
 #include "Framework/Game/Component/GAS/ModifierAttribute.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilityTimelineTask.hpp"
 
 #include "Kanex.hpp"
 
@@ -39,6 +40,7 @@ using LocalComponents = TypeList
 	GameplayPlayAnimAndWaitTask,
 	GameplayInputTask,
 	GameplayHitTestTask,
+	GameplayAbilityTimelineTask,
 	IgnoreGravity
 >;
 

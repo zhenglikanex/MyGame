@@ -14,18 +14,16 @@
 #include "Framework/Game/System/TransformStateSystem.hpp"
 #include "Framework/Game/System/AnimationSystem.hpp"
 #include "Framework/Game/System/RootMotionSystem.hpp"
-#include "Framework/Game/System/DebugSystem.hpp"
 #include "Framework/Game/System/PhysicsSystem.hpp"
 #include "Framework/Game/System/KinematicCharacterMovementSystem.hpp"
 #include "Framework/Game/System/DestorySystem.hpp"
 #include "Framework/Game/System/GAS/ApplyGameplayEffectSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayEffectSystem.hpp"
-#include "Framework/Game/System/GAS/GameplayAbilityCommandSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
 #include "Framework/Game/system/GAS/GameplayAttributeSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayEventSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayStateSystem.hpp"
-#include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
+#include "Framework/Game/System/GAS/GameplayAbilityTimelineTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayWaitTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayInputTaskSystem.hpp"
@@ -53,6 +51,7 @@ void ServerGameHelper::CreateSystems(Game* game) const
 		CreatePhysicsActorSystem,
 		ActorSystem,
 		GameplayAbilitySystem,
+		GameplayAbilityTimelineTaskSystem,
 		GameplayWaitTaskSystem,
 		GameplayPlayAnimAndWaitTaskSystem,
 		GameplayPlayInputSystem,

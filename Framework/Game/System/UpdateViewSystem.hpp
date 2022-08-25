@@ -3,6 +3,7 @@
 #include "Framework/Game/Component/View.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilityTimelineTask.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -10,6 +11,7 @@ struct UpdateViewSystem : public System
 {
 	entt::observer mover{ registry, entt::collector.group<Transform, View>().update<Transform>().where<View>() };
 	entt::observer animator{ registry, entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>() };
+	entt::observer timelines{ registry, entt::collector.group<GameplayAbilityTimelineTask, View>().update<GameplayAbilityTimelineTask>().where<View>() };
 
 	explicit UpdateViewSystem(Registry& _registry) 
 		: System(_registry)
@@ -22,6 +24,7 @@ struct UpdateViewSystem : public System
 		return true;
 	}
 
+
 	void Update(float dt) override
 	{
 		UpdateTransform();
@@ -29,6 +32,7 @@ struct UpdateViewSystem : public System
 
 		mover.clear();
 		animator.clear();
+		timelines.clear();
 	}
 
 	void UpdateTransform()
@@ -63,11 +67,11 @@ struct UpdateViewSystem : public System
 				if (iter != animation.value->clips.end())
 				{
 					auto time = clip.time / iter->second.length;
-					view.value->PlayAnimation(clip.name,time);
+					view.value->PlayAnimation(clip.name,time,clip.is_timeline);
 				}
 				else
 				{
-					view.value->PlayAnimation(clip.name);
+					view.value->PlayAnimation(clip.name, clip.is_timeline);
 				}
 			}
 		}

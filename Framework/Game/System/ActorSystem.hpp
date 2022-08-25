@@ -24,14 +24,14 @@ struct ActorSystem : public System
 		return tag_count.HasTag(GameplayTagDefine::kStateJump);
 	}
 
-	bool IsFall(const AnimationClip& animation_clip, const GameplayTagCountContainer& tag_count) const
+	bool IsFall(const AnimationClip& animation_clip, const GameplayTagCountContainer& tag_count, entt::entity e) const
 	{
 		return !tag_count.HasTag(GameplayTagDefine::kStateGrounded) && !IsJump(tag_count)
 			&& (animation_clip.is_done || animation_clip.name == GameConfig::ActionAnimation::kIdle)
 			&& animation_clip.name != GameConfig::ActionAnimation::kFall;
 	}
 
-	bool IsIdle(const AnimationClip& animation_clip, const GameplayTagCountContainer& tag_count) const
+	bool IsIdle(const AnimationClip& animation_clip, const GameplayTagCountContainer& tag_count, entt::entity e) const
 	{
 		return tag_count.HasTag(GameplayTagDefine::kStateGrounded)
 			&& (animation_clip.is_done || animation_clip.name == GameConfig::ActionAnimation::kFall)
@@ -53,13 +53,13 @@ struct ActorSystem : public System
 
 	void UpdateAnimation(const AnimationClip& animation_clip,const GameplayTagCountContainer& tag_count,entt::entity e)
 	{
-		if(IsFall(animation_clip,tag_count))
+		if(IsFall(animation_clip,tag_count,e))
 		{
 			registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kFall);
 			return;
 		}
 
-		if (IsIdle(animation_clip,tag_count))
+		if (IsIdle(animation_clip,tag_count,e))
 		{
 			registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
 		}

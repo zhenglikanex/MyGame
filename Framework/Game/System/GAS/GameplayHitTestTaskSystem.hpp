@@ -61,13 +61,13 @@ public:
 
 					case GameplayHitType::kOverlap:
 					{
-						auto& geometry = gameplay_hit_test_spec.collider.geometry;
-						auto transform = physics_utility::Transform(gameplay_hit_test_spec.transform) * physics_utility::Transform(gameplay_hit_test_spec.collider.transform);
+						auto& geometry = gameplay_hit_test_spec.geometry;
+						auto transform = physics_utility::Transform(gameplay_hit_test_spec.transform) * physics_utility::Transform(gameplay_hit_test_spec.transform);
 						if (geometry.type() == GeometryType::kSphere)
 						{
 							physics_utility::CheckSphereOverlap(registry, PxSphereGeometry(geometry.sphere().r), transform, hits);
 						}
-						else if (gameplay_hit_test_spec.collider.geometry.type() == GeometryType::kBox)
+						else if (gameplay_hit_test_spec.geometry.type() == GeometryType::kBox)
 						{
 							physics_utility::CheckBoxOverlap(registry, PxBoxGeometry(geometry.box().e.x, geometry.box().e.y, geometry.box().e.z), transform, hits);
 						}

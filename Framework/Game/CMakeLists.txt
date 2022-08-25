@@ -37,6 +37,8 @@ GAS/GameplayAbility.hpp
 GAS/GameplayAbilityManager.hpp
 GAS/GameplayEffectExecutionCalculation.hpp
 GAS/GameplayTagDefine.hpp
+GAS/GameplayAbilityTimeline.hpp
+GAS/GameplayAbilityTimelineManager.hpp
 
 Utility/ActorUtility.hpp
 Utility/PhysicsUtility.hpp
@@ -80,6 +82,8 @@ System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp
 System/GAS/GameplayInputTaskSystem.hpp
 System/GAS/GameplayHitTestTaskSystem.hpp
 System/GAS/DestroyModifierAttributeSystem.hpp
+System/GAS/GameplayAbilityTimelineSystem.hpp
+System/GAS/GameplayAnimWaitTaskSystem.hpp
 
 Component/GameState.hpp
 Component/Command.hpp
@@ -122,7 +126,8 @@ Component/GAS/GameplayPlayAnimAndWaitTask.hpp
 Component/GAS/GameplayInputTask.hpp
 Component/GAS/GameplayHitTestTask.hpp
 Component/GAS/ActiveGameplayAbilityList.hpp
-
+Component/GAS/GameplayAbilityTimelineTask.hpp
+Component/GAS/GameplayAnimWaitTask.hpp
 
 Data/Config.hpp
 Data/Config.cpp

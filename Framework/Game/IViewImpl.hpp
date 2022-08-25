@@ -15,8 +15,8 @@ public:
 	virtual void UpdateRotation(const quat& rotation) = 0;
 	virtual void MovePosition(const vec3& pos) = 0;
 	virtual void MoveRotation(const quat& rotation) = 0;
-	virtual void PlayAnimation(const std::string& name) = 0;
-	virtual void PlayAnimation(const std::string& name, float normalized_time) = 0;
+	virtual void PlayAnimation(const std::string& name,bool is_timeline = false) = 0;
+	virtual void PlayAnimation(const std::string& name, float normalized_time,bool is_timeline = false) = 0;
 	virtual void ApplyCue(std::string_view name) = 0;
 	virtual void ApplyCue(const std::shared_ptr<IViewImpl>& view) = 0;
 };

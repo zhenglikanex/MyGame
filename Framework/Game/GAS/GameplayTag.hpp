@@ -7,9 +7,13 @@
 
 #include "Kanex.hpp"
 
+#include "3rdparty/include/nlohmann/json.hpp"
+
 class GameplayTag
 {
 public:
+	friend  inline void from_json(const nlohmann::json& json, GameplayTag& tag);
+
 	GameplayTag() = default;
 
 	explicit GameplayTag(uint64_t mask,uint64_t value)
@@ -57,6 +61,12 @@ private:
 	int64_t value_;
 };
 
+inline void from_json(const nlohmann::json& json, GameplayTag& tag)
+{
+	json.at("Mask").get_to(tag.mask_);
+	json.at("Value").get_to(tag.value_);
+}
+
 namespace std
 {
 	template<>
@@ -74,11 +84,15 @@ public:
 	GameplayTagArray() = default;
 
 	GameplayTagArray(std::initializer_list<GameplayTag> args)
+		: tags_(args)
 	{
-		for (auto& tag : args)
-		{
-			tags_.emplace_back(tag);
-		}
+
+	}
+
+	explicit GameplayTagArray(std::vector<GameplayTag> tags)
+		: tags_(std::move(tags))
+	{
+		
 	}
 
 	bool operator==(const GameplayTagArray& other) const

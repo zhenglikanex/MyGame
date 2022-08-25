@@ -19,7 +19,6 @@
 #include "Framework/Game/Component/Weapon.hpp"
 #include "Framework/Game/Component/Destroy.hpp"
 #include "Framework/Game/Component/Transform.hpp"
-#include "Framework/Game/Component/SyncManager.hpp"
 #include "Framework/Game/Component/CollisionReceiver.hpp"
 #include "Framework/Game/Component/AnimationClip.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
@@ -28,6 +27,8 @@
 #include "Framework/Game/Component/GAS/GameplayInputTask.hpp"
 #include "Framework/Game/Component/GAS/GameplayEvent.hpp"
 #include "Framework/Game/Component/GAS/GameplayHitTestTask.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilityTimelineTask.hpp"
+
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 #include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
@@ -314,8 +315,18 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["GameplayHitTest"] = [&registry](entt::entity ability, GameplayHitType type, const Collider& collider, const Transform& transform,std::string_view on_hit)
 	{
+		//todo:
 		auto& task = registry.get_or_emplace<GameplayHitTestTask>(ability);
-		task.value.emplace_back(type, collider, transform, on_hit);
+		task.value.emplace_back(type, collider.geometry, transform, on_hit);
+	};
+
+	lua["GameplayTimeline"] = [&registry](entt::entity ability, std::string_view name, std::string_view completed)
+	{
+		if(registry.all_of<GameplayAbilityTimelineTask>(ability))
+		{
+			return;
+		}
+		registry.emplace<GameplayAbilityTimelineTask>(ability, name, completed);
 	};
 
 	lua["CreateAnimBone"] = [&registry](Remote target, std::string_view bone)
