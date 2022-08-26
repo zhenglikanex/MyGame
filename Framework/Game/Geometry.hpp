@@ -3,6 +3,7 @@
 #include "Framework/Game/Math.hpp"
 
 #include "Kanex.hpp"
+#include "3rdparty/include/nlohmann/json.hpp"
 
 struct AABB 
 {
@@ -95,6 +96,8 @@ enum class GeometryType : uint8_t
 class Geometry
 {
 public:
+	friend inline void from_json(const nlohmann::json& j, Geometry& info);
+
 	Geometry() = default;
 
 	explicit Geometry(const Sphere& _sphere)

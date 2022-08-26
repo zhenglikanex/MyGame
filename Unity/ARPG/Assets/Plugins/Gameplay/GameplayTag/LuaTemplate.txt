@@ -1,0 +1,5 @@
+GameplayTagDefine =
+\{
+	{1}
+\}
+return GameplayTagDefine

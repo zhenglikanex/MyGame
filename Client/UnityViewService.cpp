@@ -62,24 +62,35 @@ void UnityViewService::MoveRotation(const IViewImpl* view, float x, float y, flo
 	UnityBridge::Get().CallUnity<void>("MoveRotation", unity_view.GetHandle(),x,y,z,w);
 }
 
-void UnityViewService::PlayAnimation(const IViewImpl* view,std::string_view name) const
+void UnityViewService::PlayAnimation(const IViewImpl* view,std::string_view name,bool is_timeline) const
 {
 	if (!view)
 	{
 		return;
 	}
 	auto& unity_view = dynamic_cast<const UnityViewImpl&>(*view);
-	UnityBridge::Get().CallUnity<void>("PlayAnimation", unity_view.GetHandle(), name.data());
+	UnityBridge::Get().CallUnity<void>("PlayAnimation", unity_view.GetHandle(), name.data(),is_timeline);
 }
 
-void UnityViewService::PlayAnimation(const IViewImpl* view, std::string_view name, float normalized_time) const
+void UnityViewService::PlayAnimation(const IViewImpl* view, std::string_view name, float normalized_time,bool is_timeline) const
 {
 	if (!view)
 	{
 		return;
 	}
 	auto& unity_view = dynamic_cast<const UnityViewImpl&>(*view);
-	UnityBridge::Get().CallUnity<void>("PlayAnimationToTime", unity_view.GetHandle(), name.data(),normalized_time);
+	UnityBridge::Get().CallUnity<void>("PlayAnimationToTime", unity_view.GetHandle(), name.data(),normalized_time,is_timeline);
+}
+
+void UnityViewService::PlayTimeline(const IViewImpl* view, std::string_view name, uint32_t frame) const
+{
+	if(!view)
+	{
+		return;
+	}
+
+	auto& unity_view = dynamic_cast<const UnityViewImpl&>(*view);
+	UnityBridge::Get().CallUnity<void>("PlayTimeline", unity_view.GetHandle(), name.data(),frame);
 }
 
 void UnityViewService::ApplyCue(const IViewImpl* view, std::string_view name) const

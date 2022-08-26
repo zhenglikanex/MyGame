@@ -42,7 +42,8 @@
         "GetGameplayAbilitySpec",
         "GetLocal",
         "GetGameplayTagCountContainer",
-        "GetEntity"
+        "GetEntity",
+        "GameplayAbilityTimeline"
     ],
     "files.exclude": {
         "**/.meta": true

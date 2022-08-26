@@ -1,12 +1,34 @@
-local GA_MelleAttackScript = require("GameplayAbility/GA_MeleeAttackScript")
-local GA_LightAttackAScript = class("GA_LightAttackAScript",GA_MelleAttackScript)
+local GAScript = require("GAS/GAScript")
+local GA_MeleeAttackScript = class("GA_MeleeAttackScript",GAScript)
 
-GA_LightAttackAScript.animation = "LightAttackA"
+GA_MeleeAttackScript.animation = "LightAttackA"
+GA_MeleeAttackScript.hit_tag = nil
 
---todo简单点不从用动作事件了,因为懒得做没做编辑器 懒
-GA_LightAttackAScript.granted_tag = GameplayTagDefine.kStateMeleeAttackLightA
-GA_LightAttackAScript.granted_time = 0.3
-GA_LightAttackAScript.remove_time = 1
+function GA_MeleeAttackScript:ActiveAbility()
+    self:CommitAbility()
+    
+    self:CreateAnimBone()
+    self:StartHitTest()
 
-return GA_LightAttackAScript
+    GameplayAbilityTimeline(self.entity,self.animation,"TimelineCompleted")
+end
 
+function GA_MeleeAttackScript:OnHit(hits)
+    local spec = self:GetSpec()
+    for _,e in pairs(hits) do
+        local unique_id = GetUniqueId(e)
+        if unique_id and unique_id ~= spec.source then
+            --ApplyCueToTarget(e,"Hurt")
+        end
+    end
+end
+
+function GA_MeleeAttackScript:TimelineCompleted()
+    self:EndAbility()
+end
+
+function GA_MeleeAttackScript:EndAbility()
+    GA_MeleeAttackScript.super.EndAbility(self)
+end
+
+return GA_MeleeAttackScript

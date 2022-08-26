@@ -1,0 +1,7 @@
+#pragma once
+#include "Framework/Game/GAS/GameplayTag.hpp"
+
+namespace GameplayTagDefine
+\{
+	{0}
+\}

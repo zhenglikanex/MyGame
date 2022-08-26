@@ -12,8 +12,9 @@ public:
 	void UpdateRotation(const IViewImpl* view, float x, float y, float z, float w) const;
 	void MovePosition(const IViewImpl* view, float x, float y, float z) const;
 	void MoveRotation(const IViewImpl* view, float x, float y, float z, float w) const;
-	void PlayAnimation(const IViewImpl* view, std::string_view name) const;
-	void PlayAnimation(const IViewImpl* view, std::string_view name,float normalized_time) const;
+	void PlayAnimation(const IViewImpl* view, std::string_view name,bool is_timeline) const;
+	void PlayAnimation(const IViewImpl* view, std::string_view name,float normalized_time, bool is_timeline) const;
+	void PlayTimeline(const IViewImpl* view, std::string_view name, uint32_t frame) const;
 	void ApplyCue(const IViewImpl* view, std::string_view name) const;
 private:
 };

@@ -31,10 +31,12 @@
 #include "Framework/Game/System/GAS/GameplayInputTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayHitTestTaskSystem.hpp"
 #include "Framework/Game/System/GAS/DestroyModifierAttributeSystem.hpp"
+#include "Framework/Game/System/GAS/GameplayAbilityTimelineTaskSystem.hpp"
 #include "Framework/Game/System/UpdatePlayerUISystem.hpp"
 #include "Framework/Game/System/LocalEntityStateSystem.hpp"
 #include "Framework/Game/System/ComputeAnimBoneChildTransform.hpp"
 #include "Framework/Game/System/FlyingTextSystem.hpp"
+
 
 #include "Client/System/InputSystem.hpp"
 #include "Client/System/ClientSyncSystem.hpp"
@@ -65,6 +67,7 @@ void ClientGameHelper::CreateSystems(Game* game) const
 		CreatePhysicsActorSystem,
 		ActorSystem,
 		GameplayAbilitySystem,
+		GameplayAbilityTimelineTaskSystem,
 		GameplayWaitTaskSystem,
 		GameplayPlayAnimAndWaitTaskSystem,
 		GameplayPlayInputSystem,

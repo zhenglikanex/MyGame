@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770f8276fbfa7a84ca34070fb266417f, type: 3}
+  m_Name: HeroBaseGE
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  Period: 0
+  Duration: 0
+  PeriodPolicy: 1
+  ChanceToApplyToTarget: 100
+  ImmunityRequireTags: 
+  ImmunityIgnoreTags: 
+  OverflowEffects:
+  - {fileID: 0}
+  DenyOverflowApplication: 1
+  ClearStackOnOverflow: 1
+  PrematureExpirationEffectClasses: 
+  RoutineExpirationEffectClasses: 
+  StackingType: 1
+  StackLimitCount: 0
+  StackDurationRefreshPolicy: 1
+  StackPeriodResetPolicy: 1
+  StackExpirationPolicy: 1
+  DurationPolicy: 2
+  Modifiers:
+  - Attribute: 0
+    ModifierOp: 1
+    MagnitudeType: 1
+    ScalableFloatValue:
+      Type: 1
+      Scale: 1
+      Value: 0
+      TableValue: []
+    AttributeBasedValue:
+      Scale: 1
+      Based: 0
+      Snapshot: 0
+    SourceRequireTags: 
+    SourceIgnoreTags: 
+    TargetRequireTags: 
+    TargetIgnoreTags: 
+  - Attribute: 0
+    ModifierOp: 1
+    MagnitudeType: 1
+    ScalableFloatValue:
+      Type: 1
+      Scale: 1
+      Value: 0
+      TableValue: []
+    AttributeBasedValue:
+      Scale: 1
+      Based: 0
+      Snapshot: 0
+    SourceRequireTags: 
+    SourceIgnoreTags: 
+    TargetRequireTags: 
+    TargetIgnoreTags: 
+  - Attribute: 0
+    ModifierOp: 1
+    MagnitudeType: 1
+    ScalableFloatValue:
+      Type: 1
+      Scale: 1
+      Value: 0
+      TableValue: []
+    AttributeBasedValue:
+      Scale: 1
+      Based: 0
+      Snapshot: 0
+    SourceRequireTags: 
+    SourceIgnoreTags: 
+    TargetRequireTags: 
+    TargetIgnoreTags: 
+  - Attribute: 0
+    ModifierOp: 1
+    MagnitudeType: 1
+    ScalableFloatValue:
+      Type: 1
+      Scale: 1
+      Value: 0
+      TableValue: []
+    AttributeBasedValue:
+      Scale: 1
+      Based: 0
+      Snapshot: 0
+    SourceRequireTags: 
+    SourceIgnoreTags: 
+    TargetRequireTags: 
+    TargetIgnoreTags: 
+  EnabledExecutions: 0
+  ExecutionsClass: RpgExecutionCalculation
+  GrantedAbilities: []
+  GameplayEffectAssetTags: 
+  GrantedTags: 00000000
+  OngoingTagRequirementsRequireTags: 
+  OngoingTagRequirementsIgnoreTags: 
+  ApplicationTagRequirementsRequireTags: 
+  ApplicationTagRequirementsIgnoreTags: 
+  RemoveGameplayEffectsWithTags: 
+  Cues: []
