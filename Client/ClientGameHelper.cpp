@@ -79,7 +79,7 @@ void ClientGameHelper::CreateSystems(Game* game) const
 		KinematicCharacterMovementSystem,
 		ComputeAnimBoneChildTransformSystem,
 		PhysicsSystem,
-		DestroyModifierAttributeSystem, //客户端自己创建ModifierAttribute
+		//DestroyModifierAttributeSystem, //客户端自己创建ModifierAttribute
 		ClientSyncSystem,
 		TransformStateSystem,
 		GameplayStateSystem,

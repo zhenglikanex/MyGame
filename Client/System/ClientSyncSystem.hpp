@@ -56,14 +56,15 @@ struct ClientSyncSystem : public System
 				INFO("server lead");
 
 				// 客户端比服务器慢(客户端卡了),直接复制服务器数据
-				ReplicationLocalEntity();
+				DestroyDeathLocalEntity();
+				ReplicationLocalEntityComponents();
 				ReplicationLocalState();
 			}
 			else if(IsNeedRollback())
 			{					
 				RollbackLocalEntity();
-
-				ReplicationLocalEntity();
+				DestroyDeathLocalEntity();
+				ReplicationLocalEntityComponents();
 				ReplicationLocalState();
 			}
 
@@ -134,7 +135,7 @@ public:
 		}
 	}
 
-	void ReplicationLocalEntity()
+	void ReplicationLocalEntityComponents()
 	{
 		ReplicationLocalEntityComponents(LocalComponents{});
 		ReplicationLocalEntityComponents(RemoteComponents{});
@@ -377,6 +378,22 @@ public:
 				{
 					registry.destroy(e);
 				}
+			}
+		}
+	}
+
+	//销毁已经死亡的local entity
+	void DestroyDeathLocalEntity()
+	{
+		auto& components = serialization_manager.GetLocalEntityComponents<Remote>();
+		auto view = registry.view<Local>();
+		for(auto e : view)
+		{
+			auto& local = registry.get<Local>(e);
+			if(components.find(local) == components.end())
+			{
+				//已经在服务器中销毁,需要同步销毁本地对象
+				registry.destroy(e);
 			}
 		}
 	}
