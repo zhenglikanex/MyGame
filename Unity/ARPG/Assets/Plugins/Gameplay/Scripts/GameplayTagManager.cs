@@ -5,6 +5,7 @@ using Sirenix.Utilities;
 using UnityEngine;
 using System;
 using System.IO;
+using System.Text;
 using UnityEditor;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities.Editor.Expressions;
@@ -146,9 +147,17 @@ namespace GameplayEditor
                     //{
                     //    tagMap.Add(genTagName, new Tag {Mask = mask, Value = value});
                     //}
-                    if (!tagMap.ContainsKey(gameplayTag.Name))
+
+
+                    string tagName = tokens[0];
+                    for (int j = 1; j <= i; ++j)
                     {
-                        tagMap.Add(gameplayTag.Name, new Tag { Mask = mask, Value = value });
+                        tagName = $"{tagName}.{tokens[j]}";
+                    }
+
+                    if (!tagMap.ContainsKey(tagName))
+                    {
+                        tagMap.Add(tagName, new Tag { Mask = mask, Value = value });
                     }
                 }
             }

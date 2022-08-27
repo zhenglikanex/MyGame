@@ -43,7 +43,8 @@
         "GetLocal",
         "GetGameplayTagCountContainer",
         "GetEntity",
-        "GameplayAbilityTimeline"
+        "GameplayAbilityTimeline",
+        "GameplayAnimWait"
     ],
     "files.exclude": {
         "**/.meta": true

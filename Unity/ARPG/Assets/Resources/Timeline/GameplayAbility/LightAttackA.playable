@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d21dcc2386d650c4597f3633c75a1f98, type: 3}
-  m_Name: Animation Track
+  m_Name: Player
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EulerAngles: {x: 0, y: 0, z: 0}
   m_AvatarMask: {fileID: 0}
   m_ApplyAvatarMask: 1
-  m_TrackOffset: 0
+  m_TrackOffset: 2
   m_InfiniteClip: {fileID: 0}
   m_OpenClipOffsetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Name: ColliderAsset
   m_EditorClassIdentifier: 
   Once: 0
-  Follow: 0
+  Follow: 1
   Position: {x: -0.2, y: 0.7, z: 1}
   Rotation: {x: 0, y: 0, z: 0}
   Type: 0
@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830c83305b1e0f441a182edb38813bd2, type: 3}
   m_Name: GameplayTagAsset
   m_EditorClassIdentifier: 
-  GrantedTags: 19000000
+  GrantedTags: 38000000
 --- !u!114 &2685169011723862747
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -328,10 +328,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 0.6166666666666667
+    m_Start: 0.85
     m_ClipIn: 0
     m_Asset: {fileID: 947774506629639530}
-    m_Duration: 0.19999999999999996
+    m_Duration: 0.3166666666666671
     m_TimeScale: 1
     m_ParentTrack: {fileID: 2685169011723862747}
     m_EaseInDuration: 0

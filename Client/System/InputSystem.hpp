@@ -95,8 +95,6 @@ public:
 		std::unordered_map<std::string,GameplayAbilityCommandSpec>& ability_command_specs = command.gameplay_ability_command.value[source];
 		for (auto& [ability,input_key_status] : input.abilities)
 		{
-			INFO("ability {} {}", ability, input_key_status == InputKeyStatus::kDown);
-
 			if(ability_command_specs.find(ability) == ability_command_specs.end())
 			{
 				ability_command_specs.emplace(ability,GameplayAbilityCommandSpec(ability, source, Remote::null, input_key_status == InputKeyStatus::kDown));

@@ -25,13 +25,13 @@
 #include "Framework/Game/System/GAS/GameplayAttributeSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayEventSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayStateSystem.hpp"
-#include "Framework/Game/System/GAS/GameplayAbilitySystem.hpp"
 #include "Framework/Game/System/GAS/GameplayWaitTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayInputTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayHitTestTaskSystem.hpp"
 #include "Framework/Game/System/GAS/DestroyModifierAttributeSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAbilityTimelineTaskSystem.hpp"
+#include "Framework/Game/System/GAS/GameplayAnimWaitTaskSystem.hpp"
 #include "Framework/Game/System/UpdatePlayerUISystem.hpp"
 #include "Framework/Game/System/LocalEntityStateSystem.hpp"
 #include "Framework/Game/System/ComputeAnimBoneChildTransform.hpp"
@@ -72,6 +72,7 @@ void ClientGameHelper::CreateSystems(Game* game) const
 		GameplayPlayAnimAndWaitTaskSystem,
 		GameplayPlayInputSystem,
 		GameplayHitTestTaskSystem,
+		GameplayAnimWaitTaskSystem,
 		GameplayEventSystem,
 		ApplyGameplayEffectSystem,
 		GameplayEffectSystem,

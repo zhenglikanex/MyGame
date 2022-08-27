@@ -11,6 +11,7 @@
 
 #include "Framework/Game/GAS/GameplayEffectManager.hpp"
 #include "Framework/Game/GAS/GameplayAbilityManager.hpp"
+#include "Framework/Game/GAS/GameplayAbilityTimelineManager.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -78,6 +79,7 @@ void Game::SetCtx()
 	registry_.set<sol::state>();
 	registry_.set<GameplayEffectManager>(registry_);
 	registry_.set<GameplayAbilityManager>(registry_);
+	registry_.set<GameplayAbilityTimelineManager>(registry_);
 	registry_.set<SyncManager>();
 }
 
@@ -116,9 +118,12 @@ void Game::UpdateLogic(float dt)
 
 void Game::UpdateFixedLogic()
 {
+	using namespace std::chrono;
+
+	auto start = system_clock::now();
+
 	int run_frame_times = 0;
 	auto& game_state = registry_.ctx<GameState>();
-
 	while (game_state.run_frame < game_state.real_frame)
 	{
 		for (auto& system : systems_)
@@ -135,6 +140,11 @@ void Game::UpdateFixedLogic()
 		++run_frame_times;
 	}
 
+	if(run_frame_times > 0)
+	{
+		auto duration = system_clock::now() - start;
+		RELEASE_INFO("run frame times:{} time:{}ms", run_frame_times, duration_cast<milliseconds>(duration).count());
+	}
 }
 
 void Game::Finalize()

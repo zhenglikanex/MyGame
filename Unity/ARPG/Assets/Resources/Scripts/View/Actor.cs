@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 public class Actor : UnityView
 {
     private Animator animator;
+    private PlayableDirector playableDirector;
     private Quaternion TargetRotation { get; set; }
     public Transform weapon;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        
+        playableDirector = GetComponent<PlayableDirector>();
     }
 
     // Start is called before the first frame update
@@ -23,7 +26,7 @@ public class Actor : UnityView
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public override void OnInit()
@@ -45,7 +48,6 @@ public class Actor : UnityView
     public override void UpdateRotation(float x, float y, float z,float w)
     {
         transform.rotation = new Quaternion(x, y, z, w);
-        //transform.rotation = Quaternion.Euler(0, 180, 0);
     }
 
     public override void MovePosition(float x, float y, float z)
@@ -59,8 +61,34 @@ public class Actor : UnityView
         transform.rotation = new Quaternion(x, y, z, w);
     }
 
-    public override void PlayAnim(string str)
+    public override void PlayAnim(string str,bool is_timeline)
     {
+        playableDirector.playableAsset = null;
+        playableDirector.Stop();
+
+        if (is_timeline)
+        {
+            var playable = Resources.Load<PlayableAsset>($"Timeline/GameplayAbility/{str}");
+
+            if (playable)
+            {
+                foreach (var binding in playable.outputs)
+                {
+                    var track = binding.sourceObject as TrackAsset;
+                    if (track != null && track.name == "Player")
+                    {
+                        playableDirector.SetGenericBinding(track, animator);
+                    }
+                }
+
+                playableDirector.time = 0;
+                playableDirector.playableAsset = playable;
+                playableDirector.Play();
+            }
+
+            return;
+        }
+
         string[] anim_params = str.Split('|');
         if (anim_params.Length == 2)
         {
@@ -72,10 +100,6 @@ public class Actor : UnityView
                 {
                     animator.Play(animName);
                 }
-                else
-                {
-                    Debug.LogError("!!!!!!!");
-                }
                 animator.SetFloat("forward", float.Parse(animParam));
             }
             else
@@ -85,19 +109,39 @@ public class Actor : UnityView
         }
         else
         {
-            if(str == "skill100010")
-            {
-                //Time.timeScale = 0;
-            }
             string animName = str;
-            Debug.Log(name);
-            //animator.SetFloat("forward", 0);
             animator.Play(animName);
         }
     }
 
-    public override void PlayAnim(string str,float time)
+    public override void PlayAnim(string str,float time,bool is_timeline)
     {
+        playableDirector.playableAsset = null;
+        playableDirector.Stop();
+
+        if (is_timeline)
+        {
+            var playable = Resources.Load<PlayableAsset>($"Timeline/GameplayAbility/{str}");
+            
+            if (playable)
+            {
+                foreach (var binding in playable.outputs)
+                {
+                    var track = binding.sourceObject as TrackAsset;
+                    if (track != null && track.name == "Player")
+                    {
+                        playableDirector.SetGenericBinding(track, animator);
+                    }
+                }
+
+                playableDirector.time = time * playable.duration;
+                playableDirector.playableAsset = playable;
+                playableDirector.Play();
+            }
+
+            return;
+        }
+
         string[] anim_params = str.Split('|');
         if (anim_params.Length == 2)
         {
@@ -109,10 +153,7 @@ public class Actor : UnityView
                 {
                     animator.Play(animName,0,time);
                 }
-                else
-                {
-                    //Debug.LogError("!!!!!!!");
-                }
+
                 animator.SetFloat("forward", float.Parse(animParam));
             }
             else
@@ -122,14 +163,7 @@ public class Actor : UnityView
         }
         else
         {
-            if (str == "skill100010")
-            {
-                //Time.timeScale = 0;
-            }
-            Debug.Log(str);
             string animName = str;
-            //Debug.Log(name);
-            //animator.SetFloat("forward", 0);
             animator.Play(animName,0,time);
         }
     }
@@ -139,4 +173,5 @@ public class Actor : UnityView
         var cue = PoolManager.Instance.Create(name);
         cue.transform.SetParent(transform);
     }
+
 }

@@ -67,7 +67,7 @@ public:
 
 				if(completed)
 				{
-					
+					task_spec.running = false;
 				}
 			}
 		}

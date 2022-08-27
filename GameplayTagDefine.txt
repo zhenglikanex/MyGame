@@ -1,3 +1,4 @@
+Ability
 Ability.Jump
 Ability.DoubleJump
 Ability.Sprint
@@ -14,6 +15,7 @@ Ability.MeleeAttack.Dash.Light
 Ability.MeleeAttack.Dash.Heavy
 Ability.MeleeAttack.Jump.A
 
+State
 State.BlockMove
 State.Grounded
 State.Attack

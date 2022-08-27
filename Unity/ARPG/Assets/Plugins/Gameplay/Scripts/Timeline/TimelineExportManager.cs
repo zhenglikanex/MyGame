@@ -61,7 +61,9 @@ namespace GameplayEditor
         public class TimelineInfo
         {
             public int FrameCount;
-            public List<Event> Events = new List<Event>();
+            public List<AnimationEvent> AnimationEvents = new List<AnimationEvent>();
+            public List<ColliderEvent> ColliderEvents = new List<ColliderEvent>();
+            public List<TagEvent> TagEvents = new List<TagEvent>();
         }
 #endif
 
@@ -74,6 +76,7 @@ namespace GameplayEditor
             foreach (var playableAsset in playableAssets)
             {
                 TimelineInfo timelineInfo = new TimelineInfo();
+                Debug.Log("111111111111");
                 Debug.Log(playableAsset.duration * FrameRate);
                 timelineInfo.FrameCount = Mathf.CeilToInt((float) (playableAsset.duration * FrameRate));
 
@@ -91,25 +94,35 @@ namespace GameplayEditor
                                 animationEvent.Name = timelineClip.displayName;
                                 animationEvent.StartFrame = (uint) (timelineClip.start * FrameRate);
                                 animationEvent.EndFrame = (uint) (timelineClip.end * FrameRate);
-                                timelineInfo.Events.Add(animationEvent);
-
+                                timelineInfo.AnimationEvents.Add(animationEvent);
                             }
+
                             ITimelineExport timelineExport = asset as ITimelineExport;
                             var timelineEvent = timelineExport?.Export(timelineClip);
                             if (timelineEvent != null)
                             {
-                                timelineInfo.Events.Add(timelineEvent);
+                                if (timelineEvent is ColliderEvent colliderEvent)
+                                {
+                                    timelineInfo.ColliderEvents.Add(colliderEvent);
+                                }
+
+                                if (timelineEvent is TagEvent tagEvent)
+                                {
+                                    timelineInfo.TagEvents.Add(tagEvent);
+                                }
                             }
                         }
                     }
                 }
 
+                
                 var json = LitJson.JsonMapper.ToJson(timelineInfo);
                 FileStream f = new FileStream($"Assets/Resources/Config/Timeline/{playableAsset.name}.json", FileMode.Create, FileAccess.Write);
                 StreamWriter stream = new StreamWriter(f);
                 stream.Write(json);
                 stream.Close();
                 AssetDatabase.Refresh();
+                
             }
         }
     }

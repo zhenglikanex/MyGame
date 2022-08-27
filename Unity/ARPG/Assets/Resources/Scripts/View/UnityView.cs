@@ -49,12 +49,12 @@ public class UnityView : PoolObject
 
     }
 
-    public virtual void PlayAnim(string name)
+    public virtual void PlayAnim(string name,bool is_timeline)
     {
 
     }
 
-    public virtual void PlayAnim(string name,float time)
+    public virtual void PlayAnim(string name,float time,bool is_timeline)
     {
 
     }

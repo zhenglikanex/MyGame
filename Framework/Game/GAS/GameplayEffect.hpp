@@ -7,8 +7,8 @@
 struct GameplayEffect
 {	
 	GameplayEffect() = default;
-	GameplayEffect(GameplayEffect&&) = delete;
-	GameplayEffect& operator=(GameplayEffect&&) = delete;
+	GameplayEffect(GameplayEffect&&) = default;
+	GameplayEffect& operator=(GameplayEffect&&) = default;
 	GameplayEffect(const GameplayEffect&) = delete;
 	GameplayEffect& operator=(const GameplayEffect&) = delete;
 	~GameplayEffect() = default;

@@ -12,69 +12,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9057c284e18d2b459d219614e3ddf9e, type: 3}
   m_Name: GameplayTagManager
   m_EditorClassIdentifier: 
-  TagId: 45
+  TagId: 63
   Tags:
   - Key: 0
-    Name: "Ability.Jump"
+    Name: Ability.Jump
   - Key: 1
-    Name: "Ability.DoubleJump"
+    Name: Ability.DoubleJump
   - Key: 2
-    Name: "Ability.Sprint"
+    Name: Ability.Sprint
   - Key: 3
-    Name: "Ability.Roll"
+    Name: Ability.Roll
   - Key: 4
-    Name: "Ability.MeleeAttack"
+    Name: Ability.MeleeAttack
   - Key: 5
-    Name: "Ability.MeleeAttack.Light.A"
+    Name: Ability.MeleeAttack.Light.A
   - Key: 6
-    Name: "Ability.MeleeAttack.Light.B"
+    Name: Ability.MeleeAttack.Light.B
   - Key: 7
-    Name: "Ability.MeleeAttack.Light.C"
+    Name: Ability.MeleeAttack.Light.C
   - Key: 8
-    Name: "Ability.MeleeAttack.Heavy.A"
+    Name: Ability.MeleeAttack.Heavy.A
   - Key: 9
-    Name: "Ability.MeleeAttack.Heavy.B"
+    Name: Ability.MeleeAttack.Heavy.B
   - Key: 10
-    Name: "Ability.MeleeAttack.Heavy.C"
+    Name: Ability.MeleeAttack.Heavy.C
   - Key: 11
-    Name: "Ability.MeleeAttack.Heavy.D"
+    Name: Ability.MeleeAttack.Heavy.D
   - Key: 12
-    Name: "Ability.MeleeAttack.Dash.Light"
+    Name: Ability.MeleeAttack.Dash.Light
   - Key: 13
-    Name: "Ability.MeleeAttack.Dash.Heavy"
+    Name: Ability.MeleeAttack.Dash.Heavy
   - Key: 14
-    Name: "Ability.MeleeAttack.Jump.A"
-  - Key: 15
-    Name: "State.BlockMove"
-  - Key: 16
-    Name: "State.Grounded"
-  - Key: 17
-    Name: "State.Attack"
-  - Key: 18
-    Name: "State.Jump"
-  - Key: 19
-    Name: "State.Roll"
-  - Key: 20
-    Name: "State.Sprint"
-  - Key: 21
-    Name: "State.Hurt.Normal"
-  - Key: 22
-    Name: "State.Hurt.Floating"
-  - Key: 23
-    Name: "State.Hurt.KnockBack"
-  - Key: 24
-    Name: "State.Hurt.Flying"
-  - Key: 25
-    Name: "State.MeleeAttack.Light.A"
-  - Key: 26
-    Name: "State.MeleeAttack.Light.B"
-  - Key: 27
-    Name: "State.MeleeAttack.Light.C"
-  - Key: 28
-    Name: "State.MeleeAttack.Heavy.A"
-  - Key: 29
-    Name: "State.MeleeAttack.Heavy.B"
-  - Key: 30
-    Name: "State.MeleeAttack.Heavy.C"
-  - Key: 31
+    Name: Ability.MeleeAttack.Jump.A
+  - Key: 45
+    Name: State.BlockMove
+  - Key: 46
+    Name: State.Grounded
+  - Key: 47
+    Name: State.Attack
+  - Key: 48
+    Name: State.Jump
+  - Key: 49
+    Name: State.Jump.Double
+  - Key: 50
+    Name: State.Roll
+  - Key: 51
+    Name: State.Sprint
+  - Key: 52
+    Name: State.Hurt.Normal
+  - Key: 53
+    Name: State.Hurt.Floating
+  - Key: 54
+    Name: State.Hurt.KnockBack
+  - Key: 55
+    Name: State.Hurt.Flying
+  - Key: 56
+    Name: State.MeleeAttack.Light.A
+  - Key: 57
+    Name: State.MeleeAttack.Light.B
+  - Key: 58
+    Name: State.MeleeAttack.Light.C
+  - Key: 59
+    Name: State.MeleeAttack.Heavy.A
+  - Key: 60
+    Name: State.MeleeAttack.Heavy.B
+  - Key: 61
+    Name: State.MeleeAttack.Heavy.C
+  - Key: 62
     Name: State.MeleeAttack.Heavy.D

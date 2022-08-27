@@ -5,6 +5,8 @@
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 
 #include "Framework/Game/System.hpp"
+#include "Framework/Game/Component/GAS/GameplayAbilityTimelineTask.hpp"
+#include "Framework/Game/GAS/GameplayAbilityTimelineManager.hpp"
 
 
 struct DestorySystem : System
@@ -30,11 +32,13 @@ public:
 			entities.push_back(e);
 		}
 
-		DestoryGameplayAbility();
-		DestoryEntity(entities);
+		DestroyGameplayAbility();
+		DestroyGameplayAbilityTimeline();
+		DestroyGameplayEffect();
+		DestroyEntity(entities);
 	}
 
-	void DestoryGameplayAbility()
+	void DestroyGameplayAbility()
 	{
 		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 		auto view = registry.view<GameplayAbilitySpec,Destroy>();
@@ -42,6 +46,8 @@ public:
 		{
 			auto& spec = view.get<GameplayAbilitySpec>(e);
 			auto& ga = ga_manager.LoadGameplayAbility(spec.ability);
+
+			INFO("Destory Ability {}", spec.ability);
 
 			auto source = registry.get(spec.source);
 			if (source != entt::null)
@@ -66,7 +72,47 @@ public:
 		}
 	}
 
-	void DestoryGameplayEffect()
+	void DestroyGameplayAbilityTimeline()
+	{
+		auto view = registry.view<GameplayAbilitySpec, GameplayAbilityTimelineTask, Destroy>();
+
+		for (auto e : view)
+		{
+			// 删除进行中的tag
+			auto& ability = view.get<GameplayAbilitySpec>(e);
+
+			entt::entity source = registry.get(ability.source);
+
+			if (source == entt::null)
+			{
+				return;
+			}
+
+			auto& spec = view.get<GameplayAbilityTimelineTask>(e);
+			auto& manager = registry.ctx<GameplayAbilityTimelineManager>();
+			auto& timeline = manager.LoadGameplayAbilityTimeline(spec.name);
+
+			std::vector<GameplayAbilityTimeline::Event> events = timeline.GetEvent(spec.frame);
+			for (auto& event : events)
+			{
+				if (event.type == timeline_event::EventType::kTag
+					&& (event.status == GameplayAbilityTimeline::EventStatus::kDoing 
+						|| event.status == GameplayAbilityTimeline::EventStatus::kEnd))
+				{
+					const timeline_event::TagEvent& tag_event = timeline.GetTagEventByIndex(event.index);
+					registry.patch<GameplayTagCountContainer>(source, [&tag_event](GameplayTagCountContainer& tag_count)
+						{
+							for(auto it = tag_event.granted_tags.Begin();it != tag_event.granted_tags.End();++it)
+							{
+								INFO("Remove Tag Value{} Mask{}", it->value(), it->mask());
+							}
+							tag_count.UpdateTagCount(tag_event.granted_tags, -1);
+						});
+				}
+			}
+		}
+	}
+	void DestroyGameplayEffect()
 	{
 		auto& ge_manager = registry.ctx<GameplayEffectManager>();
 		auto view = registry.view<GameplayEffectSpec, Destroy>();
@@ -90,7 +136,7 @@ public:
 		}
 	}
 
-	void DestoryEntity(const std::vector<entt::entity>& entities) 
+	void DestroyEntity(const std::vector<entt::entity>& entities)
 	{
 		if(!entities.empty())
 		{

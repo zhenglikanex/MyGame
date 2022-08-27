@@ -87,21 +87,21 @@ public class UnityViewServices : GlobalGameObjectSingleton<UnityViewServices>
         }
     }
 
-    public void PlayAnim(int id,string name)
+    public void PlayAnim(int id,string name,bool is_timeline)
     {
         if(views.ContainsKey(id))
         {
             var view = views[id];
-            view.PlayAnim(name);
+            view.PlayAnim(name,is_timeline);
         }
     }
 
-    public void PlayAnim(int id, string name,float time)
+    public void PlayAnim(int id, string name,float time,bool is_timeline)
     {
         if (views.ContainsKey(id))
         {
             var view = views[id];
-            view.PlayAnim(name,time);
+            view.PlayAnim(name,time,is_timeline);
         }
     }
 

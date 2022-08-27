@@ -27,7 +27,7 @@ public:
 		}
 
 		auto& locator = registry_.ctx<Locator>();
-		auto content = locator.Ref<FileService>().OpenFile(path + name);
+		auto content = locator.Ref<FileService>().OpenFile(path + name + ".json");
 
 		assert(content != "" && "not actor info");
 

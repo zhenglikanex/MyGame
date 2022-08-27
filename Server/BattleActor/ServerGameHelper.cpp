@@ -29,6 +29,7 @@
 #include "Framework/Game/System/GAS/GameplayInputTaskSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayHitTestTaskSystem.hpp"
 #include "Framework/Game/System/GAS/DestroyModifierAttributeSystem.hpp"
+#include "Framework/Game/System/GAS/GameplayAnimWaitTaskSystem.hpp"
 #include "Framework/Game/System/ComputeAnimBoneChildTransform.hpp"
 
 #include "Server/BattleActor/System/ServerSyncSystem.hpp"
@@ -56,6 +57,7 @@ void ServerGameHelper::CreateSystems(Game* game) const
 		GameplayPlayAnimAndWaitTaskSystem,
 		GameplayPlayInputSystem,
 		GameplayHitTestTaskSystem,
+		GameplayAnimWaitTaskSystem,
 		GameplayEventSystem,
 		ApplyGameplayEffectSystem,
 		GameplayEffectSystem,

@@ -23,4 +23,4 @@ struct GameplayAnimWaitTask
 	}
 };
 
-NON_MEMEBER_BAR(GameplayAnimWaitTask, obj.completed, obj.canceled);
+NON_MEMEBER_BAR(GameplayAnimWaitTask, obj.animation,obj.completed, obj.canceled,obj.running);

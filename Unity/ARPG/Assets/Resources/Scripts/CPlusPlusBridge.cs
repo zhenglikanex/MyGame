@@ -171,12 +171,12 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     public static void PlayAnimation(int id,string str,bool is_timeline)
     {
         Debug.Log(str);
-        UnityViewServices.Instance.PlayAnim(id, str);
+        UnityViewServices.Instance.PlayAnim(id, str,is_timeline);
     }
 
     public static void PlayAnimationToTime(int id, string str,double time,bool is_timeline)
     {
-        UnityViewServices.Instance.PlayAnim(id, str,(float)time);
+        UnityViewServices.Instance.PlayAnim(id, str,(float)time,is_timeline);
     }
 
     public static GameInput InputHandler()

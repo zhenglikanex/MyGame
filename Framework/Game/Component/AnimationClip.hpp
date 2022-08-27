@@ -35,4 +35,4 @@ struct AnimationClip
 	}
 };
 
-NON_MEMEBER_BAR(AnimationClip, obj.name, obj.time, obj.is_done);
+NON_MEMEBER_BAR(AnimationClip, obj.name, obj.time, obj.is_done,obj.is_timeline);

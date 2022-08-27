@@ -28,7 +28,7 @@
 #include "Framework/Game/Component/GAS/GameplayEvent.hpp"
 #include "Framework/Game/Component/GAS/GameplayHitTestTask.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilityTimelineTask.hpp"
-
+#include "Framework/Game/Component/GAS/GameplayAnimWaitTask.hpp"
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
 #include "Framework/Game/Utility/GameplayAbilityUtility.hpp"
@@ -320,13 +320,22 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 		task.value.emplace_back(type, collider.geometry, transform, on_hit);
 	};
 
-	lua["GameplayTimeline"] = [&registry](entt::entity ability, std::string_view name, std::string_view completed)
+	lua["GameplayAbilityTimeline"] = [&registry](entt::entity ability, std::string_view name, std::string_view completed)
 	{
 		if(registry.all_of<GameplayAbilityTimelineTask>(ability))
 		{
 			return;
 		}
 		registry.emplace<GameplayAbilityTimelineTask>(ability, name, completed);
+	};
+
+	lua["GameplayAnimWait"] = [&registry](entt::entity ability,std::string_view completed, std::string_view canceled)
+	{
+		if (registry.all_of<GameplayAnimWaitTask>(ability))
+		{
+			return;
+		}
+		registry.emplace<GameplayAnimWaitTask>(ability, completed, canceled);
 	};
 
 	lua["CreateAnimBone"] = [&registry](Remote target, std::string_view bone)

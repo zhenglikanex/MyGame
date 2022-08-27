@@ -1249,6 +1249,7 @@ GameObject:
   - component: {fileID: 3160723097731855883}
   - component: {fileID: 3160723097731855880}
   - component: {fileID: 2714237810186501525}
+  - component: {fileID: 7588533335256244491}
   m_Layer: 0
   m_Name: SuperHero
   m_TagString: Untagged
@@ -1308,6 +1309,29 @@ MonoBehaviour:
   OwnerPoolName: 
   Id: -1
   weapon: {fileID: 0}
+--- !u!320 &7588533335256244491
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3160723097731855881}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 0}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -6775435254305991541, guid: f283530190e05544fabd2ade5134c504, type: 2}
+    value: {fileID: 3160723097731855880}
+  - key: {fileID: -5187603902796794184, guid: f283530190e05544fabd2ade5134c504, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2685169011723862747, guid: f283530190e05544fabd2ade5134c504, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &3160723097743775420
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,42 +18,8 @@ struct GameplayAbilityTimelineTaskSystem : public System
 {
 	GameplayAbilityTimelineTaskSystem(Registry& _registry) : System(_registry) { }
 
-	void UpdateGameplayAbilityTimelineSpec(entt::registry& reg, entt::entity e)
-	{
-		// 删除进行中的tag
-		auto& ability = registry.get<GameplayAbilitySpec>(e);
-		
-		entt::entity source = registry.get(ability.source);
-
-		if(source == entt::null)
-		{
-			return;
-		}
-
-		auto& spec = registry.get<GameplayAbilityTimelineTask>(e);
-		auto& manager = registry.ctx<GameplayAbilityTimelineManager>();
-		auto& timeline = manager.LoadGameplayAbilityTimeline(spec.name);
-
-		std::vector<GameplayAbilityTimeline::Event> events = timeline.GetEvent(spec.frame);
-		for(auto& event : events)
-		{
-			if (event.type == timeline_event::EventType::kTag 
-				&& event.status == GameplayAbilityTimeline::EventStatus::kDoing)
-			{
-				const timeline_event::TagEvent& tag_event = timeline.GetTagEventByIndex(event.index);
-				registry.patch<GameplayTagCountContainer>(source, [&tag_event](GameplayTagCountContainer& tag_count)
-					{
-						tag_count.UpdateTagCount(tag_event.granted_tags, -1);
-					});
-			}
-		}
-	}
-
 	bool Initialize() override
 	{
-		registry.on_update<GameplayAbilityTimelineTask>()
-			.connect<&GameplayAbilityTimelineTaskSystem::UpdateGameplayAbilityTimelineSpec>(this);
-
 		return true;
 	}
 
@@ -110,9 +76,11 @@ struct GameplayAbilityTimelineTaskSystem : public System
 
 	void ProcessAnimationEvent(entt::entity e, const GameplayAbilityTimeline& timeline, const GameplayAbilityTimeline::Event& event) const
 	{
-		auto& animation_event = timeline.GetAnimationEventByIndex(event.index);
-		registry.replace<AnimationClip>(e, animation_event.name);
-		
+		if(event.status == GameplayAbilityTimeline::EventStatus::kStart)
+		{
+			auto& animation_event = timeline.GetAnimationEventByIndex(event.index);
+			registry.replace<AnimationClip>(e, animation_event.name,true);
+		}
 	}
 
 	void ProcessColliderEvent(entt::entity e,entt::entity ability, GameplayAbilityTimelineTask& spec,const GameplayAbilityTimeline& timeline, const GameplayAbilityTimeline::Event& event) const
@@ -132,9 +100,9 @@ struct GameplayAbilityTimelineTaskSystem : public System
 				// 记录下开始时的位置
 				if (event.status == GameplayAbilityTimeline::EventStatus::kStart)
 				{
-					if (event.index > spec.collider_event_start_transforms.size())
+					if (event.index >= spec.collider_event_start_transforms.size())
 					{
-						spec.collider_event_start_transforms.resize(event.index);
+						spec.collider_event_start_transforms.resize(event.index + 1);
 					}
 					spec.collider_event_start_transforms[event.index] = GetMatrix4x4(registry.get<Transform>(e)) * collider_event.transform;
 				}
@@ -143,7 +111,7 @@ struct GameplayAbilityTimelineTaskSystem : public System
 			}
 
 			auto& task = registry.get_or_emplace<GameplayHitTestTask>(ability);
-			task.value.emplace_back(GameplayHitType::kOverlap, collider_event.geometry, transform, "on_hit");
+			task.value.emplace_back(GameplayHitType::kOverlap, collider_event.geometry, transform, "OnHit");
 		}
 
 	}

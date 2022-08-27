@@ -34,4 +34,7 @@ function GAScript:EndAbility()
     Destory(entity)
 end
 
+function GAScript:OnHit()
+end
+
 return GAScript
