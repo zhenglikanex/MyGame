@@ -1,16 +1,30 @@
 #include "ClientProxy.hpp"
 
 #include <cstdint>
+#include <string>
 #include <Windows.h>
 
 extern "C"
 {
 	HMODULE  instance = 0;
 
-	PROXY_DLL void LoadDLL()
+	PROXY_DLL void LoadDLL(const char* path)
 	{
-		instance = LoadLibrary("MyGameClient.dll");
-		
+		TCHAR chCurDir[MAX_PATH] = { 0 };
+		GetCurrentDirectory(MAX_PATH, chCurDir);
+		SetCurrentDirectory(path);
+
+		std::string name = std::string(path) + "MyGameClient.dll";
+		instance = LoadLibrary(name.c_str());
+
+		SetCurrentDirectory(chCurDir);
+
+		if(!instance)
+		{
+			auto error = GetLastError();
+			(void)error;
+			int a = 19;
+		}
 	}
 
 	PROXY_DLL void FreeDLL()

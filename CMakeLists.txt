@@ -73,12 +73,11 @@ add_library(MyGame INTERFACE)
 
 #安装MyGameClient到Unity Plugins目录�??
 install(TARGETS MyGameClient
-    RUNTIME DESTINATION Unity/ARPG
-    LIBRARY DESTINATION Unity/ARPG
+    RUNTIME DESTINATION Unity/ARPG/Assets/Plugins
+    RUNTIME DESTINATION Unity/ARPG/Assets/Plugins
     )
-install(FILES ${PROJECT_SOURCE_DIR}/bin/debug/MyGameClient.pdb DESTINATION Unity/ARPG)
-install(FILES ${PROJECT_SOURCE_DIR}/bin/debug/MyGameClient.pdb DESTINATION UnityApp)
-install(FILES Unity/ARPG/MyGameClient.dll DESTINATION UnityApp)
+install(FILES ${PROJECT_SOURCE_DIR}/bin/debug/MyGameClient.pdb DESTINATION Unity/ARPG/Assets/Plugins)
+install(FILES ${PROJECT_SOURCE_DIR}/bin/debug/MyGameClient.pdb DESTINATION Unity/ARPG/Assets/Plugins)
 
 install(TARGETS ClientProxy
 RUNTIME DESTINATION Unity/ARPG/Assets/Plugins

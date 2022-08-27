@@ -80,7 +80,7 @@ void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time,uint32_t 
 
 	locator.Set<FileService>(std::make_unique<UnityFileService>());
 	auto& file_service = locator.Ref<FileService>();
-	file_service.set_cur_path(UnityBridge::Get().CallUnity<std::string>("GetDataPath") + "/Resources/");
+	file_service.set_cur_path(UnityBridge::Get().CallUnity<std::string>("GetDataPath") + "/");
 
 	locator.Set<ViewService>(std::make_unique<UnityViewService>());
 	locator.Set<InputService>(std::make_unique<UnityInputService>());

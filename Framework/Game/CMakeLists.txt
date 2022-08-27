@@ -82,7 +82,7 @@ System/GAS/GameplayPlayAnimAndWaitTaskSystem.hpp
 System/GAS/GameplayInputTaskSystem.hpp
 System/GAS/GameplayHitTestTaskSystem.hpp
 System/GAS/DestroyModifierAttributeSystem.hpp
-System/GAS/GameplayAbilityTimelineSystem.hpp
+System/GAS/GameplayAbilityTimelineTaskSystem.hpp
 System/GAS/GameplayAnimWaitTaskSystem.hpp
 
 Component/GameState.hpp

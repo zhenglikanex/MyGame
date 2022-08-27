@@ -6,7 +6,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-using static GameplayEditor.TimelineExportManager;
 
 namespace GameplayEditor
 {
@@ -21,7 +20,7 @@ namespace GameplayEditor
         {
             return Playable.Create(graph);
         }
-
+#if UNITY_EDITOR
         private IEnumerable GetAllGameplayTags
         {
             get
@@ -56,5 +55,6 @@ namespace GameplayEditor
 
             return tagEvent;
         }
+#endif
     }
 }

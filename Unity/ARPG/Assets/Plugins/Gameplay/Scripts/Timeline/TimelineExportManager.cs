@@ -1,4 +1,6 @@
-﻿using GameplayEditor;
+﻿#if UNITY_EDITOR
+
+using GameplayEditor;
 using LitJson;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,13 +11,14 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
+
 namespace GameplayEditor
 {
     public class TimelineExportManager
     {
         public static readonly double FrameRate = 30;
 
-#if UNITY_EDITOR
+
         public class Event
         {
             public uint StartFrame;
@@ -65,7 +68,6 @@ namespace GameplayEditor
             public List<ColliderEvent> ColliderEvents = new List<ColliderEvent>();
             public List<TagEvent> TagEvents = new List<TagEvent>();
         }
-#endif
 
         [MenuItem("Gameplay/ExportTimeline")]
         private static void ExportTimeline()
@@ -127,3 +129,5 @@ namespace GameplayEditor
         }
     }
 }
+
+#endif

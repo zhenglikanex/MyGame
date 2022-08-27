@@ -60,6 +60,8 @@ namespace GameplayEditor
         // Factory method that generates a playable based on this asset
         public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
         {
+
+#if UNITY_EDITOR
             var playable = ScriptPlayable<ColliderBehaviour>.Create(graph);
             ColliderBehaviour behaviour = playable.GetBehaviour();
             behaviour.Go = go;
@@ -73,7 +75,13 @@ namespace GameplayEditor
             behaviour.Capsule = Capsule;
 
             return playable;
+#else
+            return Playable.Create(graph);
+#endif
+
         }
+
+#if UNITY_EDITOR
 
         public TimelineExportManager.Event Export(TimelineClip clip)
         {
@@ -112,5 +120,6 @@ namespace GameplayEditor
                 return colliderEvent;
             }
         }
+#endif
     }
 }

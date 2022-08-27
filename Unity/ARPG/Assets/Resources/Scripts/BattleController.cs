@@ -164,6 +164,7 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
         return null;
     }
 
+#if UNITY_EDITOR
     static void PlayModeStateChanged(PlayModeStateChange obj)
     {
         switch (obj)
@@ -173,4 +174,5 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
                 break;
         }
     }
+#endif
 }

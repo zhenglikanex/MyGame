@@ -38,7 +38,7 @@ void MatchActor::Receive(ActorMessage&& actor_msg)
 
 void MatchActor::Match()
 {
-	if (matching_agent_.size() >= 1)
+	if (matching_agent_.size() >= 2)
 	{
 		std::cout << "match" << std::endl;
 		// todo 创建战斗服务

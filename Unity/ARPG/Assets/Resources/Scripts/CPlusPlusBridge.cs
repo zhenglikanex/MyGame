@@ -12,56 +12,7 @@ public class UnityResult
 
 public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 {
-//#if !UNITY_EDITOR
-//    private static IntPtr nativeLibraryPtr;
-
-//    public delegate void InitGame(byte[] data, int size);
-//    public delegate void DestoryGame();
-//    public delegate void UpdateGame(float dt);
-
-//    public delegate void SetUnityDelegate(UnityDelegate unity_delegate);
-//    public delegate string UnityDelegate(string func, string json_params);
-//    public static void CSetUnityDelegate(UnityDelegate unity_delegate)
-//    {
-//        Native.Invoke<SetUnityDelegate>(nativeLibraryPtr, unity_delegate);
-//    }
-
-//    public static void CInitGame(byte[] data, int size)
-//    {
-//        Native.Invoke<InitGame>(nativeLibraryPtr,data,size);
-//    }
-
-//    public static void CDestoryGame()
-//    {
-//        Native.Invoke<DestoryGame>(nativeLibraryPtr);
-//    }
-
-//    public static void CUpdateGame(float dt)
-//    {
-//        Native.Invoke<UpdateGame>(nativeLibraryPtr,dt);
-//    }
-
-//    public static void LoadDLL(string name)
-//    {
-//        if (nativeLibraryPtr != IntPtr.Zero) return;
-
-//        nativeLibraryPtr = Native.LoadLibrary(name);
-//        if (nativeLibraryPtr == IntPtr.Zero)
-//        {
-//            Debug.LogError("Failed to load native library");
-//        }
-//    }
-
-//    public static void FreeDLL()
-//    {
-//        if (nativeLibraryPtr == IntPtr.Zero) return;
-
-//        Debug.Log(Native.FreeLibrary(nativeLibraryPtr)
-//                      ? "Native library successfully unloaded."
-//                      : "Native library could not be unloaded.");
-//    }
-
-//#else
+#if UNITY_EDITOR
     public delegate string UnityDelegate(string func, string json_params);
     [DllImport("ClientProxy")]
     public static extern void SetUnityDelegate(UnityDelegate unity_delegate);
@@ -79,7 +30,7 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
     public static extern void GameRollback();
 
     [DllImport("ClientProxy")]
-    public static extern void LoadDLL();
+    public static extern void LoadDLL(string path);
 
     [DllImport("ClientProxy")]
     public static extern void FreeDLL();
@@ -89,7 +40,28 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
     [DllImport("ClientProxy")]
     public static extern void JoinMatch();
-//#endif
+
+#else
+    public delegate string UnityDelegate(string func, string json_params);
+    [DllImport("MyGameClient")]
+    public static extern void SetUnityDelegate(UnityDelegate unity_delegate);
+
+    [DllImport("MyGameClient")]
+    public static extern void InitGame(byte[] data, int size);
+
+    [DllImport("MyGameClient")]
+    public static extern void DestoryGame();
+
+    [DllImport("MyGameClient")]
+    public static extern void UpdateGame(float dt);
+
+    [DllImport("MyGameClient")]
+    public static extern void GameInput(byte[] data, int size);
+
+    [DllImport("MyGameClient")]
+    public static extern void JoinMatch();
+#endif
+
 
     public static string UnityCallback(string func, string json_params)
     {
@@ -242,6 +214,7 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
             return obj.ToString();
         }
         return "";
+
     }
 
     public static void SetMyId(int id)
@@ -291,7 +264,7 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
 
     public static string GetDataPath()
     {
-        return Application.dataPath;
+        return Application.streamingAssetsPath;
     }
 
     public static void ClearDebugDraw()

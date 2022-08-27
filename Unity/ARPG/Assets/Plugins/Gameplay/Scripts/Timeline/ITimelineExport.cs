@@ -8,6 +8,8 @@ namespace GameplayEditor
 {
     internal interface ITimelineExport
     {
+#if UNITY_EDITOR
         TimelineExportManager.Event Export(TimelineClip clip);
+#endif
     }
 }
