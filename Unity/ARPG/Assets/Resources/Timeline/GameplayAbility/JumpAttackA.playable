@@ -89,7 +89,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: Infinity
     m_PreExtrapolationTime: 0
-    m_DisplayName: HeavyAttackD
+    m_DisplayName: JumpAttackA
   m_Markers:
     m_Objects: []
   m_InfiniteClipPreExtrapolation: 0
