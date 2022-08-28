@@ -72,10 +72,10 @@ struct GameplayAbilityCommandSystem : public System
 	}
 
 	// 检查是否会被其他技能阻塞
-	bool CheckActiveAbiliesBlocked(entt::entity source,const GameplayAbility& ga) const
+	bool CheckActiveAbiliesBlocked(Remote source,const GameplayAbility& ga) const
 	{
 		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
-	
+		
 		auto entities = gameplay_ability_utility::GetActiveGameplayAbilities(registry, source);
 		for (auto e : entities)
 		{
@@ -150,7 +150,7 @@ struct GameplayAbilityCommandSystem : public System
 					continue;
 				}
 
-				if (!CheckActiveAbiliesBlocked(source, ga))
+				if (!CheckActiveAbiliesBlocked(command_spec.source, ga))
 				{
 					continue;
 				}

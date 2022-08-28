@@ -119,7 +119,7 @@ namespace GameplayEditor
 
                 
                 var json = LitJson.JsonMapper.ToJson(timelineInfo);
-                FileStream f = new FileStream($"Assets/Resources/Config/Timeline/{playableAsset.name}.json", FileMode.Create, FileAccess.Write);
+                FileStream f = new FileStream($"Assets/StreamingAssets/Config/Timeline/{playableAsset.name}.json", FileMode.Create, FileAccess.Write);
                 StreamWriter stream = new StreamWriter(f);
                 stream.Write(json);
                 stream.Close();

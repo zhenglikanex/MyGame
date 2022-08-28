@@ -13,7 +13,7 @@ struct Remote
 	{
         [[nodiscard]] operator Remote() const noexcept 
 		{
-            return std::numeric_limits<uint32_t>::max();
+            return static_cast<Remote>(std::numeric_limits<uint32_t>::max());
         }
 
         [[nodiscard]] constexpr bool operator==([[maybe_unused]] const Null other) const noexcept 
@@ -44,13 +44,13 @@ struct Remote
 
 	Remote() = default;
 
-	Remote(uint32_t _value)
+    explicit Remote(uint32_t _value)
 		: id(_value)
 	{
 		
 	}
 
-	Remote(entt::entity e)
+    explicit Remote(entt::entity e)
 		: id(static_cast<uint32_t>(e))
 	{
 
