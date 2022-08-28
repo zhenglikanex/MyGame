@@ -218,6 +218,7 @@ public:
 		{
 			auto e = registry.create();
 			registry.emplace<Component>(e, component);
+			INFO("ReplicationSingleEntityComponent")
 		}
 	}
 	
@@ -320,13 +321,13 @@ public:
 
 						for (size_t i = 0; i < server_attr_set.value.size(); ++i)
 						{
-							if (server_attr_set.value[i].base_value - local_attr_set.value[i].base_value > 0.1f)
+							if (std::abs(server_attr_set.value[i].base_value) - std::abs(local_attr_set.value[i].base_value) > 0.1f)
 							{
 								INFO("GameplayAttributeSet BaseValue Rollback");
 								return false;
 							}
 
-							if (server_attr_set.value[i].current_value - local_attr_set.value[i].current_value > 0.1f)
+							if (std::abs(server_attr_set.value[i].current_value) - std::abs(local_attr_set.value[i].current_value) > 0.1f)
 							{
 								INFO("GameplayTagCountContainer CurrentValue Rollback");
 								return false;

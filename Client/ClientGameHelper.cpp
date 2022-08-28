@@ -57,6 +57,7 @@ GameMode ClientGameHelper::GetGameMode() const
 void ClientGameHelper::CreateSystems(Game* game) const
 {
 	game->AddSystem <
+		
 		InputSystem,
 		CommandSystem,
 		MoveCommandSystem,
@@ -68,6 +69,8 @@ void ClientGameHelper::CreateSystems(Game* game) const
 		ActorSystem,
 		GameplayAbilitySystem,
 		GameplayAbilityTimelineTaskSystem,
+		RootMotionSystem,
+		AnimationSystem,
 		GameplayWaitTaskSystem,
 		GameplayPlayAnimAndWaitTaskSystem,
 		GameplayPlayInputSystem,
@@ -77,13 +80,10 @@ void ClientGameHelper::CreateSystems(Game* game) const
 		ApplyGameplayEffectSystem,
 		GameplayEffectSystem,
 		GameplayAttributeSystem,
-		RootMotionSystem,
-		AnimationSystem,
 		MovementSystem,
 		KinematicCharacterMovementSystem,
 		ComputeAnimBoneChildTransformSystem,
 		PhysicsSystem,
-		//DestroyModifierAttributeSystem, //客户端自己创建ModifierAttribute
 		ClientSyncSystem,
 		TransformStateSystem,
 		GameplayStateSystem,
@@ -92,7 +92,7 @@ void ClientGameHelper::CreateSystems(Game* game) const
 		UpdatePlayerUISystem,
 		UpdateViewSystem,
 		FlyingTextSystem,
-		DestroyModifierAttributeSystem, //服务器返回ModifierAttribute
+		DestroyModifierAttributeSystem,
 #if DEBUG
 		DebugSystem
 #endif

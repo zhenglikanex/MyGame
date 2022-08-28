@@ -43,7 +43,7 @@ struct AnimationSystem : public System
 				auto iter = animation.value->clips.find(animation_clip.name);
 				if (iter != animation.value->clips.cend())
 				{
-					if (animation_clip.time >= iter->second.length)
+					if (animation_clip.time >= iter->second.length + GameConfig::kFrameTime)
 					{
 						animation_clip.is_done = true;
 					}

@@ -12,7 +12,17 @@ function GA_MeleeAttackScript:ActiveAbility()
 end
 
 function GA_MeleeAttackScript:OnHit(hits)
-    
+    local spec = self:GetSpec()
+    for _,e in pairs(hits) do
+        print("GA_MeleeAttackScript:OnHit(hits)",e)
+
+        local unique_id = GetUniqueId(e)
+        if unique_id and unique_id ~= spec.source then
+            ApplyGameplayEffectToTarget(GetEntity(spec.source),"GE_Attack",spec.level,e)
+            ApplyCueToTarget(e,"Hurt")
+            
+        end
+    end
 end
 
 function GA_MeleeAttackScript:TimelineCompleted()

@@ -21,8 +21,9 @@ struct FlyingTextSystem : public System
 		return true;
 	}
 
-	void Update(float dt) override
+	void FixedUpdate(float dt) override
 	{
+		//todo:暂时加到这里fixed,应该在用一个CreateFlyTextSystem来收集FlyTextComponent
 		auto& ui_service = registry.ctx<Locator>().Ref<UIService>();
 		auto view = registry.view<ModifierAttribute>();
 		for (auto e : view)
@@ -30,6 +31,7 @@ struct FlyingTextSystem : public System
 			auto& modifier = view.get<ModifierAttribute>(e);
 			if (modifier.attribute == GameplayAttributeType::Hp)
 			{
+				INFO("flytext{}", e);
 				entt::entity target = registry.get(modifier.target);
 				if (target == entt::null || !registry.all_of<Transform>(target))
 				{

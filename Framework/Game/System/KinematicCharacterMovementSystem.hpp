@@ -378,6 +378,7 @@ struct KinematicCharacterMovementSystem : public System
 			auto& [transform, movement, forward, character, collider, physics_actor] =
 				view.get<Transform, CharacterMovement, MovementForward, Character, Collider, PhysicsActor>(e);
 
+			e_ = e;
 			character_ = &character;
 			character_movement_ = &movement;
 
