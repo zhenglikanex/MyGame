@@ -66,4 +66,4 @@ inline void from_json(const nlohmann::json& j, Collider& info)
 	j.at("rigid_type").get_to(info.rigid_type);
 }
 
-NON_MEMEBER_BAR(Collider, obj.geometry, obj.transform, obj.trigger);
+NON_MEMEBER_BAR(Collider, obj.geometry, obj.transform, obj.trigger,obj.rigid_type);

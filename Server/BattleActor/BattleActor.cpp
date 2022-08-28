@@ -55,9 +55,11 @@ void BattleActor::StartBattle(const std::any& data)
 	std::cout << "Battle Start Success!" << std::endl;
 	
 	// todo:不做上下线处理了
+	uint32_t id = 0;
 	Proto::GamePlayerInfos player_infos;
 	for (auto player : players_)
 	{
+		ids_[player] = id++;
 		auto player_info = player_infos.add_player_infos();
 		player_info->set_id(ids_[player]);
 		player_info->set_actor_asset("SuperHero.json");

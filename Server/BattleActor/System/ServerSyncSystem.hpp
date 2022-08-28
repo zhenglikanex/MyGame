@@ -45,6 +45,7 @@ struct ServerSyncSystem : public System
 				continue;
 			}
 
+			serialization_manager.Clear();
 			serialization_manager.Serialize(registry,sync_instance);
 
 			std::vector<uint8_t> buffer( serialization_manager.buffer().Size());

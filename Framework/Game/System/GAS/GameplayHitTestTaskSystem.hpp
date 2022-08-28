@@ -44,11 +44,11 @@ public:
 			{
 				bool rollback = false;
 
-				if (rollback_utility::CheckRollback(registry, 0))
+				/*if (rollback_utility::CheckRollback(registry, 0))
 				{
 					rollback = true;
 					rollback_utility::RollbackPhysicActor(registry, 0);
-				}
+				}*/
 
 				for (auto& gameplay_hit_test_spec : task.value)
 				{
@@ -62,7 +62,7 @@ public:
 					case GameplayHitType::kOverlap:
 					{
 						auto& geometry = gameplay_hit_test_spec.geometry;
-						auto transform = physics_utility::Transform(gameplay_hit_test_spec.transform) * physics_utility::Transform(gameplay_hit_test_spec.transform);
+						auto transform = physics_utility::Transform(gameplay_hit_test_spec.transform);
 						if (geometry.type() == GeometryType::kSphere)
 						{
 							physics_utility::CheckSphereOverlap(registry, PxSphereGeometry(geometry.sphere().r), transform, hits);
@@ -90,12 +90,22 @@ public:
 					}
 				}
 
-				if (rollback)
+				/*if (rollback)
 				{
 					rollback_utility::RollbackPhysicActor(registry,game_state.run_frame);
-				}
+				}*/
 			}
 
+			//task.value.clear();
+		}
+	}
+
+	void LateUpdate(float dt) override
+	{
+		auto view = registry.view<GameplayHitTestTask>();
+		for (auto e : view)
+		{
+			auto& task = registry.get<GameplayHitTestTask>(e);
 			task.value.clear();
 		}
 	}

@@ -98,6 +98,7 @@ void AgentActor::Ping(const NetMessage& request)
 	ping.ParseFromArray(request.data().data(), request.data().size());
 	uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 	uint32_t value = now - ping.time();
+	
 
 	Call(gate_, "send", std::move(data));
 }
