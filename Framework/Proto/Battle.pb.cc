@@ -256,8 +256,9 @@ void protobuf_AssignDesc_Battle_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FrameData, _is_default_instance_));
   FrameData_ActorsEntry_descriptor_ = FrameData_descriptor_->nested_type(0);
   Ping_descriptor_ = file->message_type(11);
-  static const int Ping_offsets_[1] = {
+  static const int Ping_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Ping, time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Ping, server_recv_time_),
   };
   Ping_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -397,8 +398,9 @@ void protobuf_AddDesc_Battle_2eproto() {
     "\020.Proto.Transform\"\211\001\n\tFrameData\022\r\n\005frame"
     "\030\001 \001(\r\022,\n\006actors\030\002 \003(\0132\034.Proto.FrameData"
     ".ActorsEntry\032\?\n\013ActorsEntry\022\013\n\003key\030\001 \001(\r"
-    "\022\037\n\005value\030\002 \001(\0132\020.Proto.ActorData:\0028\001\"\024\n"
-    "\004Ping\022\014\n\004time\030\001 \001(\rb\006proto3", 1027);
+    "\022\037\n\005value\030\002 \001(\0132\020.Proto.ActorData:\0028\001\".\n"
+    "\004Ping\022\014\n\004time\030\001 \001(\r\022\030\n\020server_recv_time\030"
+    "\002 \001(\rb\006proto3", 1053);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Battle.proto", &protobuf_RegisterTypes);
   PlayerInfo::default_instance_ = new PlayerInfo();
@@ -4507,6 +4509,7 @@ FrameData::mutable_actors() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Ping::kTimeFieldNumber;
+const int Ping::kServerRecvTimeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 Ping::Ping()
@@ -4531,6 +4534,7 @@ void Ping::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   time_ = 0u;
+  server_recv_time_ = 0u;
 }
 
 Ping::~Ping() {
@@ -4570,7 +4574,27 @@ Ping* Ping::New(::google::protobuf::Arena* arena) const {
 
 void Ping::Clear() {
 // @@protoc_insertion_point(message_clear_start:Proto.Ping)
-  time_ = 0u;
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(Ping, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<Ping*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(time_, server_recv_time_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
 }
 
 bool Ping::MergePartialFromCodedStream(
@@ -4589,6 +4613,21 @@ bool Ping::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &time_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_server_recv_time;
+        break;
+      }
+
+      // optional uint32 server_recv_time = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_server_recv_time:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &server_recv_time_)));
 
         } else {
           goto handle_unusual;
@@ -4626,6 +4665,11 @@ void Ping::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->time(), output);
   }
 
+  // optional uint32 server_recv_time = 2;
+  if (this->server_recv_time() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->server_recv_time(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:Proto.Ping)
 }
 
@@ -4635,6 +4679,11 @@ void Ping::SerializeWithCachedSizes(
   // optional uint32 time = 1;
   if (this->time() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->time(), target);
+  }
+
+  // optional uint32 server_recv_time = 2;
+  if (this->server_recv_time() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->server_recv_time(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:Proto.Ping)
@@ -4650,6 +4699,13 @@ int Ping::ByteSize() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->time());
+  }
+
+  // optional uint32 server_recv_time = 2;
+  if (this->server_recv_time() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->server_recv_time());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -4683,6 +4739,9 @@ void Ping::MergeFrom(const Ping& from) {
   if (from.time() != 0) {
     set_time(from.time());
   }
+  if (from.server_recv_time() != 0) {
+    set_server_recv_time(from.server_recv_time());
+  }
 }
 
 void Ping::CopyFrom(const ::google::protobuf::Message& from) {
@@ -4710,6 +4769,7 @@ void Ping::Swap(Ping* other) {
 }
 void Ping::InternalSwap(Ping* other) {
   std::swap(time_, other->time_);
+  std::swap(server_recv_time_, other->server_recv_time_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -4737,6 +4797,20 @@ void Ping::clear_time() {
   
   time_ = value;
   // @@protoc_insertion_point(field_set:Proto.Ping.time)
+}
+
+// optional uint32 server_recv_time = 2;
+void Ping::clear_server_recv_time() {
+  server_recv_time_ = 0u;
+}
+ ::google::protobuf::uint32 Ping::server_recv_time() const {
+  // @@protoc_insertion_point(field_get:Proto.Ping.server_recv_time)
+  return server_recv_time_;
+}
+ void Ping::set_server_recv_time(::google::protobuf::uint32 value) {
+  
+  server_recv_time_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Ping.server_recv_time)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

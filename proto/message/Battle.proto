@@ -80,4 +80,5 @@ message FrameData
 message Ping
 {
 	uint32 time = 1;
+	uint32 server_recv_time = 2;
 }

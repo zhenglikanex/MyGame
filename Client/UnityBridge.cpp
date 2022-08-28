@@ -208,6 +208,8 @@ extern "C"
 
 						uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 						g_ping = now - ping.time();
+						uint32_t recv_time = ping.server_recv_time();
+						INFO("ping : {}", now - ping.server_recv_time());
 
 						UnityBridge::Get().CallUnity<void>("SetPing", g_ping);
 					}

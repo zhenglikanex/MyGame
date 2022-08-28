@@ -1208,12 +1208,19 @@ class Ping : public ::google::protobuf::Message /* @@protoc_insertion_point(clas
   ::google::protobuf::uint32 time() const;
   void set_time(::google::protobuf::uint32 value);
 
+  // optional uint32 server_recv_time = 2;
+  void clear_server_recv_time();
+  static const int kServerRecvTimeFieldNumber = 2;
+  ::google::protobuf::uint32 server_recv_time() const;
+  void set_server_recv_time(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:Proto.Ping)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::uint32 time_;
+  ::google::protobuf::uint32 server_recv_time_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
   friend void protobuf_AssignDesc_Battle_2eproto();
@@ -1859,6 +1866,20 @@ inline void Ping::set_time(::google::protobuf::uint32 value) {
   
   time_ = value;
   // @@protoc_insertion_point(field_set:Proto.Ping.time)
+}
+
+// optional uint32 server_recv_time = 2;
+inline void Ping::clear_server_recv_time() {
+  server_recv_time_ = 0u;
+}
+inline ::google::protobuf::uint32 Ping::server_recv_time() const {
+  // @@protoc_insertion_point(field_get:Proto.Ping.server_recv_time)
+  return server_recv_time_;
+}
+inline void Ping::set_server_recv_time(::google::protobuf::uint32 value) {
+  
+  server_recv_time_ = value;
+  // @@protoc_insertion_point(field_set:Proto.Ping.server_recv_time)
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS

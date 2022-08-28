@@ -92,15 +92,26 @@ void AgentActor::JoinBattle(std::any& data)
 void AgentActor::Ping(const NetMessage& request)
 {
 	static int count = 0;
-	std::any data = std::make_tuple(conv_, request);
 	
 	Proto::Ping ping;
 	ping.ParseFromArray(request.data().data(), request.data().size());
 	uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 	uint32_t value = now - ping.time();
+	ping.set_server_recv_time(now);
+
+	std::vector<uint8_t> buffer(ping.ByteSize());
+	ping.SerializeToArray(buffer.data(), buffer.size());
+
+	NetMessage response;
+	response.set_session(request.session());
+	response.set_name("ping");
+	response.set_data(std::move(buffer));
+	std::any rev_data = std::make_tuple(conv_, std::move(response));
+
+	std::cout << "ping:" << value << std::endl;
 	
 
-	Call(gate_, "send", std::move(data));
+	Call(gate_, "send", std::move(rev_data));
 }
 
 void AgentActor::JoinMatch(const NetMessage& request)

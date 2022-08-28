@@ -29,6 +29,8 @@ KcpConnection::~KcpConnection()
 
 void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 {
+	//static uint32_t last_time = std::chrono::system_clock::now().time_since_epoch().count();
+	std::cout << "¼ä¸ô:" << cur_clock - last_recv_clock_ << std::endl;;
 	last_recv_clock_ = cur_clock;
 
 	char* data = (char*)buffer.data();
@@ -47,6 +49,10 @@ void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 			}
 			else
 			{
+				/*uint32_t now = std::chrono::system_clock::now().time_since_epoch().count();
+				std::cout << "kcp¼ä¸ô:" << now - last_time << std::endl;;
+				last_time = now;*/
+				
 				Buffer recv_buffer(kcp_recvd_bytes);
 				std::copy_n((uint8_t*)data_.data(), kcp_recvd_bytes, recv_buffer.data());
 				receive_handler_(*this, std::move(recv_buffer));

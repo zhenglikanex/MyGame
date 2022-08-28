@@ -44,7 +44,8 @@ namespace Proto {
             "cm0iiQEKCUZyYW1lRGF0YRINCgVmcmFtZRgBIAEoDRIsCgZhY3RvcnMYAiAD",
             "KAsyHC5Qcm90by5GcmFtZURhdGEuQWN0b3JzRW50cnkaPwoLQWN0b3JzRW50",
             "cnkSCwoDa2V5GAEgASgNEh8KBXZhbHVlGAIgASgLMhAuUHJvdG8uQWN0b3JE",
-            "YXRhOgI4ASIUCgRQaW5nEgwKBHRpbWUYASABKA1iBnByb3RvMw=="));
+            "YXRhOgI4ASIuCgRQaW5nEgwKBHRpbWUYASABKA0SGAoQc2VydmVyX3JlY3Zf",
+            "dGltZRgCIAEoDWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -59,7 +60,7 @@ namespace Proto {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Transform), global::Proto.Transform.Parser, new[]{ "Position", "Rotation" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.ActorData), global::Proto.ActorData.Parser, new[]{ "Transform" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto.FrameData), global::Proto.FrameData.Parser, new[]{ "Frame", "Actors" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Ping), global::Proto.Ping.Parser, new[]{ "Time" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto.Ping), global::Proto.Ping.Parser, new[]{ "Time", "ServerRecvTime" }, null, null, null)
           }));
     }
     #endregion
@@ -1828,6 +1829,7 @@ namespace Proto {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Ping(Ping other) : this() {
       time_ = other.time_;
+      serverRecvTime_ = other.serverRecvTime_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1846,6 +1848,17 @@ namespace Proto {
       }
     }
 
+    /// <summary>Field number for the "server_recv_time" field.</summary>
+    public const int ServerRecvTimeFieldNumber = 2;
+    private uint serverRecvTime_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint ServerRecvTime {
+      get { return serverRecvTime_; }
+      set {
+        serverRecvTime_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Ping);
@@ -1860,6 +1873,7 @@ namespace Proto {
         return true;
       }
       if (Time != other.Time) return false;
+      if (ServerRecvTime != other.ServerRecvTime) return false;
       return true;
     }
 
@@ -1867,6 +1881,7 @@ namespace Proto {
     public override int GetHashCode() {
       int hash = 1;
       if (Time != 0) hash ^= Time.GetHashCode();
+      if (ServerRecvTime != 0) hash ^= ServerRecvTime.GetHashCode();
       return hash;
     }
 
@@ -1881,6 +1896,10 @@ namespace Proto {
         output.WriteRawTag(8);
         output.WriteUInt32(Time);
       }
+      if (ServerRecvTime != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(ServerRecvTime);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1888,6 +1907,9 @@ namespace Proto {
       int size = 0;
       if (Time != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Time);
+      }
+      if (ServerRecvTime != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ServerRecvTime);
       }
       return size;
     }
@@ -1899,6 +1921,9 @@ namespace Proto {
       }
       if (other.Time != 0) {
         Time = other.Time;
+      }
+      if (other.ServerRecvTime != 0) {
+        ServerRecvTime = other.ServerRecvTime;
       }
     }
 
@@ -1912,6 +1937,10 @@ namespace Proto {
             break;
           case 8: {
             Time = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            ServerRecvTime = input.ReadUInt32();
             break;
           }
         }
