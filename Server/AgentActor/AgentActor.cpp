@@ -108,9 +108,6 @@ void AgentActor::Ping(const NetMessage& request)
 	response.set_data(std::move(buffer));
 	std::any rev_data = std::make_tuple(conv_, std::move(response));
 
-	std::cout << "ping:" << value << std::endl;
-	
-
 	Call(gate_, "send", std::move(rev_data));
 }
 

@@ -222,8 +222,8 @@ void ClientNetworkImpl::Connected(kcp_conv_t conv)
 	// 第五个参数 为是否禁用常规流控，这里禁止
 	//ikcp_nodelay(kcp_, 1, 10, 2, 1);
 	ikcp_nodelay(kcp_, 1, 10, 1, 1); // 设置成1次ACK跨越直接重传, 这样反应速度会更快. 内部时钟5毫秒.
-	ikcp_wndsize(kcp_, 1024, 1024);
-	kcp_->interval = 1;
+	ikcp_wndsize(kcp_, 10240, 10240);
+	kcp_->interval = 10;
 	kcp_->rx_minrto = 5;
 
 	type_ = ConnectType::kTypeConnected;
@@ -245,6 +245,7 @@ void ClientNetworkImpl::SendConnectedMsg()
 	// 发送连接上的消息
 	auto msg = std::make_shared<std::string>(MakeKcpConnectedMsg());
 	ikcp_send(kcp_, (char*)msg->data(), msg->size());
+	ikcp_flush(kcp_);
 }
 
 void ClientNetworkImpl::UdpSend(uint8_t* data, uint32_t len)

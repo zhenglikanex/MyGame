@@ -16,9 +16,9 @@ KcpConnection::KcpConnection(kcp_conv_t conv, const asio::ip::udp::endpoint& end
 	// 第五个参数 为是否禁用常规流控，这里禁止
 	//ikcp_nodelay(kcp_, 1, 10, 2, 1);
 	ikcp_nodelay(kcp_, 1, 10, 1, 1); // 设置成1次ACK跨越直接重传, 这样反应速度会更快. 内部时钟5毫秒.
-	kcp_->interval = 1;
+	kcp_->interval = 10;
 	kcp_->rx_minrto = 5;
-	ikcp_wndsize(kcp_, 1024, 1024);
+	ikcp_wndsize(kcp_, 10240, 10240);
 }
 
 KcpConnection::~KcpConnection()
@@ -29,15 +29,13 @@ KcpConnection::~KcpConnection()
 
 void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 {
-	//static uint32_t last_time = std::chrono::system_clock::now().time_since_epoch().count();
-	std::cout << "间隔:" << cur_clock - last_recv_clock_ << std::endl;;
 	last_recv_clock_ = cur_clock;
 
 	char* data = (char*)buffer.data();
 	size_t size = buffer.size();
 
 	ikcp_input(kcp_, data, size);
-	
+
 	{
 		while (true)
 		{
@@ -49,10 +47,6 @@ void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 			}
 			else
 			{
-				/*uint32_t now = std::chrono::system_clock::now().time_since_epoch().count();
-				std::cout << "kcp间隔:" << now - last_time << std::endl;;
-				last_time = now;*/
-				
 				Buffer recv_buffer(kcp_recvd_bytes);
 				std::copy_n((uint8_t*)data_.data(), kcp_recvd_bytes, recv_buffer.data());
 				receive_handler_(*this, std::move(recv_buffer));
