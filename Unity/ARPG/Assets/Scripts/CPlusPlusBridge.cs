@@ -104,7 +104,7 @@ public class CPlusPlusBridge : Singleton<CPlusPlusBridge>
         var view = UnityViewServices.Instance.CreateView(asset);
         if(view)
         {
-            if(view.Id == BattleController.Instance.MyId)
+            if(view.Id == 0)
             {
                 // todo:暂时加载这里
                 var controller = Camera.main.gameObject.GetComponent<CameraController>();

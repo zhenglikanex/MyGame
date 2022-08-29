@@ -1,5 +1,5 @@
 #include "MatchActor.hpp"
-
+#include <chrono>
 MatchActor::MatchActor(ActorId id)
 	: Actor(id)
 {
@@ -38,9 +38,11 @@ void MatchActor::Receive(ActorMessage&& actor_msg)
 
 void MatchActor::Match()
 {
+	using namespace std::chrono;
 	if (matching_agent_.size() >= 2)
 	{
 		std::cout << "match" << std::endl;
+		uint32_t start = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 		// todo 创建战斗服务
 		auto id = StartActor("BattleActor.dll");
 		if (id != kNull)
@@ -57,7 +59,8 @@ void MatchActor::Match()
 			}
 			Call(id, "start_battle", players);
 		}
-
+		uint32_t end = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+		std::cout << "start battle actor time : " << end - start << std::endl;
 		matching_agent_.clear();
 	}
 }

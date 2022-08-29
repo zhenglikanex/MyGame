@@ -53,7 +53,7 @@ void BattleActor::StartBattle(const std::any& data)
 {
 	players_ = std::any_cast<std::vector<ActorId>>(data);
 	std::cout << "Battle Start Success!" << std::endl;
-	
+
 	// todo:不做上下线处理了
 	uint32_t id = 0;
 	Proto::GamePlayerInfos player_infos;
@@ -65,14 +65,16 @@ void BattleActor::StartBattle(const std::any& data)
 		player_info->set_actor_asset("SuperHero.json");
 	}
 
+	last_time_ = duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();
+
 	auto start_time = duration_cast<milliseconds>(high_resolution_clock::now().time_since_epoch()).count();
 	for (auto player : players_)
 	{
 		Proto::StartBattleInfo info;
 		info.set_my_id(ids_[player]);
 
-		auto player_infos = info.mutable_player_infos();
-		auto player_info = player_infos->add_player_infos();
+		auto game_player_infos = info.mutable_player_infos();
+		auto player_info = game_player_infos->add_player_infos();
 		player_info->set_id(ids_[player]);
 		player_info->set_actor_asset("SuperHero.json");
 
@@ -82,8 +84,7 @@ void BattleActor::StartBattle(const std::any& data)
 	}
 
 	start_ = true;
-	last_time_ = duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();;
-	
+
 	std::vector<PlayerInfo> players;
 	for (auto iter = player_infos.player_infos().cbegin(); iter < player_infos.player_infos().cend(); ++iter)
 	{

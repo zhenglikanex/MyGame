@@ -80,6 +80,18 @@ public class BattleController : SceneGameObjectSingleton<BattleController>
             abilities.Add("GA_DashHeavyAttack");
             abilityBindInfos.Add(KeyCode.K, abilities);
         }
+
+        {
+            List<string> abilities = new List<string>();
+            abilities.Add("GA_HuoQiu");
+            abilityBindInfos.Add(KeyCode.L, abilities);
+        }
+
+        {
+            List<string> abilities = new List<string>();
+            abilities.Add("GA_LeiFa");
+            abilityBindInfos.Add(KeyCode.O, abilities);
+        }
     }
 
     // Start is called before the first frame update

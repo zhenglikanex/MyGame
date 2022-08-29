@@ -106,7 +106,7 @@ public:
 	template<class Component>
 	void InitComponentId()
 	{
-		INFO("component:{} id{}",typeid(Component).name(), entt::type_hash<Component>::value());
+		entt::type_hash<Component>::value();
 	}
 
 	void Clear()

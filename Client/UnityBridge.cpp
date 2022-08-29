@@ -190,7 +190,8 @@ extern "C"
 				
 					if (message.name() == "start_battle")
 					{
-						INFO("start_battle");
+						
+						INFO("start_battle{}", duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
 						
 						g_last_time = duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();
 
@@ -227,7 +228,6 @@ extern "C"
 
 			g_network_service->Request("join_match", std::vector<uint8_t>{}, [](const std::vector<uint8_t>& buffer)
 				{
-					INFO("join_match!")
 					// 偷懒不处理了
 				});
 		}

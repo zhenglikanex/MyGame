@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include "ActorNet.h"
+#include "ActorLoader.h"
 #include "rapidjson/document.h"
 
 int main()
@@ -35,6 +36,9 @@ int main()
 	{
 		std::cout << "Start Failed!" << std::endl;
 	}
+
+	//ÌáÇ°¼ÓÔØdll
+	actor_net::ActorLoader::GetInstance()->LoadActor("BattleActor.dll");
 
 	actor_net->StartActor("KcpGateActor.dll");
 	actor_net->StartUniqueActor("MatchActor.dll", "MatchActor");

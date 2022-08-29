@@ -111,6 +111,8 @@ public:
 		input.game_state = game_state;
 		input.command = command;
 
+		INFO("game_state {} {}", game_state.run_frame, game_state.verified_frame);
+
 		ar(input);
 
 		std::vector<uint8_t> data(buffer.Size());

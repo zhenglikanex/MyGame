@@ -15,6 +15,8 @@ namespace actor_net
 		ActorLoader();
 		~ActorLoader() override;
 
+		void LoadActor(const std::string& lib_path);
+
 		// 加载一个服务
 		ActorPtr CreateActor(const std::string& lib_path,ActorId id);
 	private:

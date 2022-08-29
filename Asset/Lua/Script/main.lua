@@ -1,6 +1,4 @@
-print(load_path)
 package.path=package.path ..";" .. load_path
-print("package.path",package.path)
 require("Base/Base")
 require("GAS/GAS")
 require("GAS/GEDefine")

@@ -28,6 +28,11 @@ ActorLoader::~ActorLoader()
 	// TODO : Ð¶ÔØ¶¯Ì¬¿â
 }
 
+void ActorLoader::LoadActor(const std::string& lib_path)
+{
+	GetActorInstance(lib_path);
+}
+
 ActorPtr ActorLoader::CreateActor(const std::string& lib_path,ActorId id)
 {
 	auto actor_instance = GetActorInstance(lib_path);
