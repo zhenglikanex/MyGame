@@ -18,9 +18,16 @@ function GA_MeleeAttackScript:OnHit(hits)
 
         local unique_id = GetUniqueId(e)
         if unique_id and unique_id ~= spec.source then
-            ApplyGameplayEffectToTarget(GetEntity(spec.source),"GE_Attack",spec.level,e)
+            ApplyGameplayEffectToTarget(GetEntity(spec.source),"GE_Attack",spec.level,e)            
             ApplyCueToTarget(e,"Hurt")
-            
+
+            --todo:
+            if IsAuthorityMode() then
+                local tag_count = GetGameplayTagCountContainer(e)
+                if tag_count then
+                    tag_count:SetTagCount(GameplayTagDefine.kStateHurtNormal,1)
+                end
+            end
         end
     end
 end

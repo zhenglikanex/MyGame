@@ -209,20 +209,4 @@ namespace gameplay_effect_utility
 
 		ApplyGameEffectToTarget(registry,source,MakeGameplayEffectSpec(registry, source, effect_name, level, target));
 	}
-
-	static void RemoveGameplayEffectForTarget(Registry& registry,entt::entity target, entt::entity target_ge)
-	{
-		auto& ge_manager = registry.ctx<GameplayEffectManager>();
-		auto& spec = registry.get<GameplayEffectSpec>(target_ge);
-		auto& ge = ge_manager.LoadGameplayEffect(spec.effect);
-		registry.patch<GameplayTagCountContainer>(target, [&ge](GameplayTagCountContainer& tag_count)
-			{
-				tag_count.UpdateTagCount(ge.tag.granted_tags, -1);
-			});
-
-		// todo:ÒÆ³ý¼¼ÄÜµÈ
-		registry.emplace<Destroy>(target_ge);
-	}
-
-	
 };

@@ -1,5 +1,5 @@
 local GA_Roll = {
-    cooldown_gameplay_effect = "",
+    cooldown_gameplay_effect = "DefaultCooldownGE",
 	cost_gameplay_effect = "",
 	ability_tags = { GameplayTagDefine.kAbilityRoll },
 	cancel_ability = { },
@@ -11,6 +11,9 @@ local GA_Roll = {
 	source_blocked_tags = {},
 	target_required_tags = {},
 	target_blocked_tags = {},
+
+	cooldown_duration = 10,
+	cooldown_tags = { GameplayTagDefine.kCooldownRoll },
 }
 
 return GA_Roll

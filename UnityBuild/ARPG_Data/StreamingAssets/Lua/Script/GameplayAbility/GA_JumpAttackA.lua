@@ -21,7 +21,7 @@ local GA_JumpAttack = {
 	{
 		GameplayTagDefine.kStateAttack,
 		GameplayTagDefine.kStateGrounded,
-		GameplayTagDefine.kStateAttack,
+		GameplayTagDefine.kStateHurt,
 	},
 	source_required_tags = {},
 	source_blocked_tags = {},

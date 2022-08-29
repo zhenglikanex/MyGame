@@ -12,8 +12,30 @@ if os.path.exists(source_path):
 
 shutil.copytree(source_path, target_path)
 
+source_path = os.path.abspath(r'.\\Unity\\ARPG\Assets\\StreamingAssets\\Lua')
+target_path = os.path.abspath(r'.\\UnityBuild\\ARPG_Data\\StreamingAssets\\Lua')
+
+if not os.path.exists(target_path):
+    os.makedirs(target_path)
+
+if os.path.exists(source_path):
+    shutil.rmtree(target_path)
+
+shutil.copytree(source_path, target_path)
+
 source_path = os.path.abspath(r'.\\Unity\\ARPG\Assets\\StreamingAssets\\Config')
 target_path = os.path.abspath(r'.\\Asset\\Config')
+
+if not os.path.exists(target_path):
+    os.makedirs(target_path)
+
+if os.path.exists(source_path):
+    shutil.rmtree(target_path)
+
+shutil.copytree(source_path, target_path)
+
+source_path = os.path.abspath(r'.\\Unity\\ARPG\Assets\\StreamingAssets\\Config')
+target_path = os.path.abspath(r'.\\UnityBuild\\ARPG_Data\\StreamingAssets\\Config')
 
 if not os.path.exists(target_path):
     os.makedirs(target_path)

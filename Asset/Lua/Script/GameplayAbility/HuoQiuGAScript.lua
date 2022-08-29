@@ -30,7 +30,6 @@ function HuoQiuGAScript:OnHit(hits)
     for _,e in pairs(hits) do
         local unique_id = GetUniqueId(e)
         if unique_id and unique_id ~= self.spec.source then
-            ActorChangeState(e)
             ApplyCueToTarget(e,"Hurt")
             self:RemoveHuoqiu()
         end

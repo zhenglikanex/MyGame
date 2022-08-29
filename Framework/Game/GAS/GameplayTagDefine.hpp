@@ -23,6 +23,8 @@ namespace GameplayTagDefine
 	const GameplayTag kAbilityMeleeAttackLightC = GameplayTag(-4294967296,73466081318010880);
 	const GameplayTag kAbilityRoll = GameplayTag(-281474976710656,73183493944770560);
 	const GameplayTag kAbilitySprint = GameplayTag(-281474976710656,72902018968059904);
+	const GameplayTag kCooldown = GameplayTag(-72057594037927936,216172782113783808);
+	const GameplayTag kCooldownRoll = GameplayTag(-281474976710656,217298682020626432);
 	const GameplayTag kState = GameplayTag(-72057594037927936,144115188075855872);
 	const GameplayTag kStateAttack = GameplayTag(-281474976710656,146366987889541120);
 	const GameplayTag kStateBlockMove = GameplayTag(-281474976710656,145804037936119808);

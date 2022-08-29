@@ -250,6 +250,11 @@ public:
 		return registry_;
 	}*/
 
+	GameMode game_mode() const
+	{
+		return game_mode_;
+	}
+
 	operator entt::registry&()
 	{
 		return registry_;
@@ -260,7 +265,7 @@ public:
 		return registry_;
 	}
 
-	entt::entity create_predict(uint32_t player)
+	entt::entity create_predict(uint32_t id)
 	{
 		auto e = registry_.create();
 		if (game_mode_ == GameMode::kAuthority)
@@ -269,7 +274,7 @@ public:
 		}
 
 		auto& sync_manager = registry_.ctx<SyncManager>();
-		auto& sync = sync_manager.sync_instances[player];
+		auto& sync = sync_manager.sync_instances[id];
 		registry_.emplace<Local>(e, sync.owner, sync.identifier++);
 
 		return e;
@@ -289,20 +294,11 @@ public:
 		}
 	}
 
-	entt::entity create_predict()
+	entt::entity create_remote()
 	{
 		assert(game_mode_ == GameMode::kAuthority && "只能在服务端上执行");
 
 		return create_predict(ServerInstance);
-	}
-
-	// 创建在客户端之间同步的实体
-	entt::entity create_unique() 
-	{
-		auto e = registry_.create();
-		registry_.emplace<Remote>(e, e);
-
-		return e;
 	}
 
 	// 根据source预测创建本地实体,不在客户端之间同步

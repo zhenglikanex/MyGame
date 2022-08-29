@@ -14,11 +14,11 @@ PlayerInfo.hpp
 Hash.hpp
 Geometry.hpp
 GameHelper.hpp
-Proto.hpp
 RandomEngine.hpp
 LuaBridge.hpp
 Registry.hpp
 SerializationManager.hpp
+PlayerInput.hpp
 
 Service/Service.hpp
 Service/DebugService.hpp
@@ -49,7 +49,7 @@ Utility/GameplayEventUtility.hpp
 Utility/AnimEventUtility.hpp
 Utility/RollbackUtility.hpp
 
-System/RecvCommandSystem.hpp
+System/RecvPlayerInputSystem.hpp
 System/CommandSystem.hpp
 System/MoveCommandSystem.hpp
 System/AnimationSystem.hpp
@@ -86,6 +86,7 @@ System/GAS/GameplayAbilityTimelineTaskSystem.hpp
 System/GAS/GameplayAnimWaitTaskSystem.hpp
 
 Component/GameState.hpp
+Component/PlayerGameStateMap.hpp
 Component/Command.hpp
 Component/MoveCommand.hpp
 Component/Player.hpp

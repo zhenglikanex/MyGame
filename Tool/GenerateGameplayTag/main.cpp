@@ -66,7 +66,7 @@ void OutLua(const std::string& enums)
 	)";
 
 
-	std::ofstream out("Unity/ARPG/Assets/Resources/Lua/Script/GAS/GameplayTagDefine.lua", std::ios_base::out);
+	std::ofstream out("Unity/ARPG/Assets/StreamingAssets/Lua/Script/GAS/GameplayTagDefine.lua", std::ios_base::out);
 	out << head + enums + "\n};\nreturn";
 
 }

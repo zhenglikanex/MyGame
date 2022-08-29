@@ -131,7 +131,6 @@ public:
 				});
 
 				// todo:ÒÆ³ý¼¼ÄÜµÈ
-				registry.emplace<Destroy>(e);
 			}
 		}
 	}

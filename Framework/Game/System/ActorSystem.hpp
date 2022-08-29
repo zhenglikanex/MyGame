@@ -5,6 +5,7 @@
 #include "Framework/Game/GAS/GameplayTag.hpp"
 
 #include "Framework/Game/Component/AnimationClip.hpp"
+#include "Framework/Game/Component/Movement.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -22,6 +23,11 @@ struct ActorSystem : public System
 	bool IsJump(const GameplayTagCountContainer& tag_count) const 
 	{
 		return tag_count.HasTag(GameplayTagDefine::kStateJump);
+	}
+
+	bool IsHurt(const GameplayTagCountContainer& tag_count) const
+	{
+		return tag_count.HasTagExact(GameplayTagDefine::kStateHurtNormal);
 	}
 
 	bool IsFall(const AnimationClip& animation_clip, const GameplayTagCountContainer& tag_count, entt::entity e) const
@@ -56,12 +62,25 @@ struct ActorSystem : public System
 		if(IsFall(animation_clip,tag_count,e))
 		{
 			registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kFall);
-			return;
 		}
 
 		if (IsIdle(animation_clip,tag_count,e))
 		{
 			registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
+		}
+
+		if (IsHurt(tag_count))
+		{
+			if (animation_clip.name != GameConfig::ActionAnimation::kHurt)
+			{
+				registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kHurt);
+			}
+			else if (animation_clip.is_done)
+			{
+				registry.patch<GameplayTagCountContainer>(e, [](GameplayTagCountContainer& tag_count) {
+					tag_count.SetTagCount(GameplayTagDefine::kStateHurtNormal, 0);
+					});
+			}
 		}
 	}
 

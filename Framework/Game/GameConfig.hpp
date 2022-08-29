@@ -3,8 +3,6 @@
 #include <cstdint>
 #include <string>
 
-#include "Framework/Game/FixedPoint.hpp"
-
 namespace GameConfig
 {
 	namespace ActionAnimation

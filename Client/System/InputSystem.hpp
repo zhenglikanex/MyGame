@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Framework/Game/Locator.hpp"
+#include "Framework/Game/PlayerInput.hpp"
 #include "Framework/Game/Service/InputService.hpp"
 #include "Framework/Game/Service/NetworkService.hpp"
 
-#include "Framework/Game/Component/MoveCommand.hpp"
+#include "Framework/Game/Component/Command.hpp"
 
 #include "Framework/Game/System.hpp"
 
@@ -62,11 +63,8 @@ public:
 
 			BuildCommand(command, input);
 
-			if (!command.move_command.value.empty() || !command.gameplay_ability_command.value.empty())
-			{
-				command.frame = game_state.run_frame;
-				SendCommand(command);
-			}
+			command.frame = game_state.run_frame;
+			SendInput(registry.get<Player>(player).id,game_state,command);
 		}
 	}
 
@@ -102,19 +100,24 @@ public:
 		}
 	}
 
-	void SendCommand(const Command& command)
+	void SendInput(uint32_t id, const GameState& game_state, const Command& command)
 	{
 		buffer.Clear();
 		kanex::BinaryStream stream(buffer);
 		kanex::BinaryOutputArchive ar(stream);
 
-		ar(command);
+		PlayerInput input;
+		input.id = id;
+		input.game_state = game_state;
+		input.command = command;
+
+		ar(input);
 
 		std::vector<uint8_t> data(buffer.Size());
 		buffer.Read(data.data(), data.size());
 
 		auto& network_service = registry.ctx<Locator>().Ref<NetworkService>();
-		network_service.Send("input_command", std::move(data));
+		network_service.Send("player_input", std::move(data));
 	}
 
 	void Finalize() override

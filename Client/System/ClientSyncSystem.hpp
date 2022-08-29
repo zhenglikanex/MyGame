@@ -194,7 +194,23 @@ public:
 			//todo:可能还会有其他需要屏蔽情况?
 			if (!registry.all_of<Local>(e))
 			{
-				registry.emplace_or_replace<Component>(e, item.second);
+				if constexpr (std::is_same_v<Component, AnimationClip>)
+				{
+					auto animation_clip = registry.try_get<AnimationClip>(e);
+					if (animation_clip && animation_clip->name == item.second.name)
+					{
+						*animation_clip = item.second;
+					}
+					else
+					{
+						registry.emplace_or_replace<Component>(e, item.second);
+					}
+				}
+				else 
+				{
+					registry.emplace_or_replace<Component>(e, item.second);
+				}
+				
 			}
 		}
 	}
@@ -218,7 +234,6 @@ public:
 		{
 			auto e = registry.create();
 			registry.emplace<Component>(e, component);
-			INFO("ReplicationSingleEntityComponent")
 		}
 	}
 	

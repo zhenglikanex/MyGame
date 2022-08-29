@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Framework/Game/Component/GameState.hpp"
-#include "Framework/Game/Component/Command.hpp"
+#include "Framework/Game/Component/PlayerGameStateMap.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
 #include "Framework/Game/Component/GAS/GameplayHitTestTask.hpp"
@@ -28,6 +28,29 @@ public:
 		return true;
 	}
 
+	uint32_t GetVerifiedFrame(Remote source) const
+	{
+		if(registry.game_mode() == GameMode::kAuthority)
+		{
+			// 如果source是玩家就回滚到玩家的确认帧
+			entt::entity e = registry.get(source);
+			if (auto player = registry.try_get<Player>(e))
+			{
+				auto& player_game_state_map = registry.ctx_or_set<PlayerGameStateMap>();
+				auto it = player_game_state_map.value.find(player->id);
+				return it->second.verified_frame;
+			}
+
+			auto& game_state = registry.ctx<GameState>();
+			return game_state.run_frame;
+		}
+		else
+		{
+			auto& game_state = registry.ctx<GameState>();
+			return game_state.run_frame;
+		}
+	}
+
 	void FixedUpdate(float dt) override
 	{
 		// todo:考虑是否要命中的判断放到一起处理
@@ -44,11 +67,13 @@ public:
 			{
 				bool rollback = false;
 
-				/*if (rollback_utility::CheckRollback(registry, 0))
+				uint32_t verified_frame = GetVerifiedFrame(spec.source);
+
+				if (rollback_utility::CheckRollback(registry, verified_frame))
 				{
 					rollback = true;
-					rollback_utility::RollbackPhysicActor(registry, 0);
-				}*/
+					rollback_utility::RollbackPhysicActor(registry, verified_frame);
+				}
 
 				for (auto& gameplay_hit_test_spec : task.value)
 				{
@@ -90,10 +115,10 @@ public:
 					}
 				}
 
-				/*if (rollback)
+				if (rollback)
 				{
 					rollback_utility::RollbackPhysicActor(registry,game_state.run_frame);
-				}*/
+				}
 			}
 
 			//task.value.clear();

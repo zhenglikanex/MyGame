@@ -16,6 +16,7 @@ local GA_HeavyAttackA = {
 	},
 	activation_blocked_tags =
 	{
+		GameplayTagDefine.kStateHurt,
 		GameplayTagDefine.kStateAttack,
 		GameplayTagDefine.kStateSprint,
 		GameplayAttribute.kStateJump

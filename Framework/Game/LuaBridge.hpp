@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Framework/Game/GameMode.hpp"
 #include "Framework/Game/Locator.hpp"
 #include "Framework/Game/Service/FileService.hpp"
 #include "Framework/Game/Service/DebugService.hpp"
@@ -545,5 +546,15 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 	lua["GetGameplayTagCountContainer"] = [&registry](entt::entity e)
 	{
 		return registry.try_get<GameplayTagCountContainer>(e);
+	};
+
+	lua["IsLocalEntity"] = [&registry](entt::entity e)
+	{
+		return registry.all_of<Local>(e);
+	};
+
+	lua["IsAuthorityMode"] = [&registry]()
+	{
+		return registry.game_mode() == GameMode::kAuthority;
 	};
 }

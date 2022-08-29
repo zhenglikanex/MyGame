@@ -17,6 +17,7 @@ local GA_LightA = {
 	},
 	activation_blocked_tags =
 	{
+		GameplayTagDefine.kStateHurt,
 	},
 	source_required_tags = {},
 	source_blocked_tags = {},

@@ -21,11 +21,6 @@ namespace rollback_utility
 		return  game_state.run_frame > verified_frame && game_state.run_frame - verified_frame <= GameConfig::kMaxRollbackFrameNum;
 	}
 
-	inline void RollbackTransform(uint32_t frame)
-	{
-
-	}
-
 	inline void RollbackPhysicActor(Registry& registry, uint32_t frame)
 	{
 		auto view = registry.view<TransformState, PhysicsActor>();

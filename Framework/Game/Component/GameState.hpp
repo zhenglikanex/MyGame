@@ -19,4 +19,4 @@ struct GameState
 	}
 };
 
-NON_MEMEBER_BAR(GameState,obj.run_frame,obj.verified_frame);
+NON_MEMEBER_BAR(GameState, obj.real_frame, obj.run_frame, obj.verified_frame);

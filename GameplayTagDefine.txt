@@ -34,3 +34,5 @@ State.MeleeAttack.Heavy.A
 State.MeleeAttack.Heavy.B
 State.MeleeAttack.Heavy.C
 State.MeleeAttack.Heavy.D
+
+Cooldown.Roll

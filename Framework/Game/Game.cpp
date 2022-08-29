@@ -86,6 +86,7 @@ void Game::SetCtx()
 void Game::UnSetCtx()
 {
 	registry_.unset<SyncManager>();
+	registry_.unset<GameplayAbilityTimelineManager>();
 	registry_.unset<GameplayAbilityManager>();
 	registry_.unset<GameplayEffectManager>();
 	registry_.unset<sol::state>();

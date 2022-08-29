@@ -2,7 +2,6 @@
 
 #include <unordered_map>
 
-#include "Framework/Game/Component/Local.hpp"
 
 // 服务端实例(上帝)
 constexpr uint32_t ServerInstance = std::numeric_limits<uint32_t>::max();

@@ -2,7 +2,7 @@
 
 #include "Framework/Game/Game.hpp"
 
-#include "Framework/Game/System/RecvCommandSystem.hpp"
+#include "Framework/Game/System/RecvPlayerInputSystem.hpp"
 #include "Framework/Game/System/CommandSystem.hpp"
 #include "Framework/Game/System/MoveCommandSystem.hpp"
 #include "Framework/Game/System/GAS/GameplayAbilityCommandSystem.hpp"
@@ -42,7 +42,7 @@ GameMode ServerGameHelper::GetGameMode() const
 void ServerGameHelper::CreateSystems(Game* game) const
 {
 	game->AddSystem <
-		RecvCommandSystem,
+		RecvPlayerInputSystem,
 		CommandSystem,
 		MoveCommandSystem,
 		GameplayAbilityCommandSystem,

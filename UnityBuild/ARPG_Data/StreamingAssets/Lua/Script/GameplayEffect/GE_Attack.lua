@@ -70,7 +70,7 @@ local HeroBaseGE =
             
         },
         granted_tags = { --存于GameplayEffect中且又用于GameplayEffect所应用ASC的标签. 当GameplayEffect移除时它们也会从ASC中移除. 该标签只作用于持续(Duration)和无限(Infinite)GameplayEffect(待考虑是否只作用这两个类型).
-            
+            GameplayTagDefine.kStateHurtNormal
         },
         ongoing_tag_requirements = { --在GameplayEffect应用期间，持续监测是否满足这些tag,(),提供关闭和重新开启的功能。 该标签只作用于持续(Duration)和无限(Infinite)GameplayEffect.
             require_tags = {
