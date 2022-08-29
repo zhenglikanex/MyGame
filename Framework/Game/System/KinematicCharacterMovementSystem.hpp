@@ -542,11 +542,12 @@ struct KinematicCharacterMovementSystem : public System
 			}
 
 			// 处理刚体碰撞/重叠以影响速度
+			/* todo:有bug还未修复
 			if (character_->interactive_rigid_body_handling)
 			{
 				ProcessVelocityForRigidbodyHits(character_movement_->base_velocity, dt);
 			}
-
+			*/
 			// Handle planar constraint
 			/*
 			if (HasPlanarConstraint)
@@ -668,9 +669,6 @@ struct KinematicCharacterMovementSystem : public System
 						{
 							rigidbody->addForce(physics_utility::Vec3(velocity_change_on_body),PxForceMode::eVELOCITY_CHANGE);
 						}
-						
-						
-
 					}
 				}
 			}

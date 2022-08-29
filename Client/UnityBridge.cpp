@@ -99,6 +99,7 @@ void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time,uint32_t 
 		//加上服务器到这里的延迟
 		uint32_t delay = duration_cast<milliseconds>(high_resolution_clock::now().time_since_epoch()).count() - start_time;
 
+		INFO("start game delay {} ping {} value {}", delay, g_ping, (delay + g_ping / 1.5 + 34));
 		//让客户端领先服务器1帧加半个rtt保证，使客户端的输入能在服务器执行当前帧时收到，后面可以再根据ping值来调整客户端领先的值
 		// todo:这里计算的g_ping有点不太准,暂时放大领先的帧数
 		g_game->Update((delay + g_ping / 1.5 + 34) * 1000000);

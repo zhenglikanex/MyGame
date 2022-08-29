@@ -91,7 +91,7 @@ public class DlgGame : NormalUI
 
              var info_dic = LitJson.JsonMapper.ToObject<Dictionary<string, CooldownInfo>>(json_info);
              CooldownInfo cooldown;
-             bool has = info_dic.TryGetValue("AttackGA", out cooldown);
+             bool has = info_dic.TryGetValue("GA_Roll", out cooldown);
              if (has)
              {
                  if (cooldown.remaining <= 0f)

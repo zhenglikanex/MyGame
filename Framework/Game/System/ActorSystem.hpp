@@ -59,16 +59,6 @@ struct ActorSystem : public System
 
 	void UpdateAnimation(const AnimationClip& animation_clip,const GameplayTagCountContainer& tag_count,entt::entity e)
 	{
-		if(IsFall(animation_clip,tag_count,e))
-		{
-			registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kFall);
-		}
-
-		if (IsIdle(animation_clip,tag_count,e))
-		{
-			registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
-		}
-
 		if (IsHurt(tag_count))
 		{
 			if (animation_clip.name != GameConfig::ActionAnimation::kHurt)
@@ -81,6 +71,16 @@ struct ActorSystem : public System
 					tag_count.SetTagCount(GameplayTagDefine::kStateHurtNormal, 0);
 					});
 			}
+		}
+
+		if(IsFall(animation_clip,tag_count,e))
+		{
+			registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kFall);
+		}
+
+		if (IsIdle(animation_clip,tag_count,e))
+		{
+			registry.replace<AnimationClip>(e, GameConfig::ActionAnimation::kIdle);
 		}
 	}
 

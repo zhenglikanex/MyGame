@@ -169,9 +169,9 @@ public class ExportAnimationEditor : EditorWindow
 
         float dt = 1.0f / config.FrameRate;
 
-        if (!Directory.Exists("Assets/Resources/Config/Anim/"))
+        if (!Directory.Exists("Assets/StreamingAssets/Config/Anim/"))
         {
-            Directory.CreateDirectory("Assets/Resources/Config/Anim/");
+            Directory.CreateDirectory("Assets/StreamingAssets/Config/Anim/");
         }
 
         foreach(var item in config.animators)
@@ -320,7 +320,7 @@ public class ExportAnimationEditor : EditorWindow
                 }
 
                 var json = JsonMapper.ToJson(cfgAnimation);
-                FileStream f = new FileStream(string.Format("Assets/Resources/Config/Anim/{0}.json", item.target.gameObject.name), FileMode.Create, FileAccess.Write);
+                FileStream f = new FileStream(string.Format("Assets/StreamingAssets/Config/Anim/{0}.json", item.target.gameObject.name), FileMode.Create, FileAccess.Write);
                 StreamWriter stream = new StreamWriter(f);
                 stream.Write(json);
                 stream.Close();

@@ -23,12 +23,6 @@ struct RootMotionSystem : public System
 			auto& animation = view.get<Animation>(e);
 			auto& animation_clip = view.get<AnimationClip>(e);
 
-			if(animation_clip.name == "Jump")
-			{
-				int a = 10;
-				INFO("23");
-			}
-
 			if (animation.value)
 			{
 				auto iter = animation.value->clips.find(animation_clip.name);
