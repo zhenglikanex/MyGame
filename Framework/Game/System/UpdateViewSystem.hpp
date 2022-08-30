@@ -10,7 +10,7 @@
 struct UpdateViewSystem : public System
 {
 	entt::observer mover{ registry, entt::collector.group<Transform, View>().update<Transform>().where<View>() };
-	entt::observer animator{ registry, entt::collector.group<AnimationClip, View>().update<AnimationClip>().where<View>() };
+	entt::observer animator{ registry, entt::collector.group<AnimationClip,View,Animation>().update<AnimationClip>().where<View,Animation>() };
 	entt::observer timelines{ registry, entt::collector.group<GameplayAbilityTimelineTask, View>().update<GameplayAbilityTimelineTask>().where<View>() };
 
 	explicit UpdateViewSystem(Registry& _registry) 

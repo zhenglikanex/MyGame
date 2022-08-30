@@ -57,7 +57,6 @@ GameMode ClientGameHelper::GetGameMode() const
 void ClientGameHelper::CreateSystems(Game* game) const
 {
 	game->AddSystem <
-		
 		InputSystem,
 		CommandSystem,
 		MoveCommandSystem,

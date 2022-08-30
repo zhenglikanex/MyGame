@@ -52,4 +52,5 @@ private:
 	Registry registry_;
 	std::vector<std::unique_ptr<System>> systems_;
 	std::vector<PlayerInfo> player_infos_;
+	bool running_;
 };

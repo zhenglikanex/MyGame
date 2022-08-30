@@ -9,6 +9,8 @@
 #include <iostream>
 #include <bitset>
 
+#include <thread>
+
 using namespace std::chrono;
 
 struct Serialize1
@@ -26,11 +28,7 @@ int Func1(uint32_t i)
 
 TEST_CASE_METHOD(Serialize1, "NetMessage")
 {
-	
-	 Serialize1 S{};
-	std::unordered_map<int, Serialize1> map;
-	map.emplace(1, S);
-	
+
 
 	//std::numeric_limits<float>::epsilon()
 	/*auto v2 = ProjectOnPlane(vec3(0,1.0,0), vec3(0, 1.0, 0));

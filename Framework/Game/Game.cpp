@@ -24,13 +24,17 @@ Game::Game(std::unique_ptr<GameHelper> game_helper, Locator locator,std::vector<
 	, game_helper_(std::move(game_helper))
 	, registry_(game_helper_->GetGameMode(), std::move(locator))
 	, player_infos_(players)
+	, running_(false)
 {
 
 }
 
 Game::~Game()
 {
-	
+	if(running_)
+	{
+		Finalize();
+	}
 }
 
 bool Game::Initialize()
@@ -54,6 +58,8 @@ bool Game::Initialize()
 			return false;
 		}
 	}
+
+	running_ = true;
 
 	return true;
 }
@@ -158,6 +164,8 @@ void Game::Finalize()
 	registry_.clear();
 
 	UnSetCtx();
+
+	running_ = false;
 }
 
 void Game::LoadScene(const std::string& name)

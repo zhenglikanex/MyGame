@@ -2,6 +2,7 @@
 
 #include "Framework/Game/Math.hpp"
 
+#include "Framework/Game/Registry.hpp"
 #include "Framework/Game/Component/PhysicsWorld.hpp"
 #include "Framework/Game/Component/Transform.hpp"
 

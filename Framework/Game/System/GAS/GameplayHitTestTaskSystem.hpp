@@ -117,7 +117,7 @@ public:
 
 				if (rollback)
 				{
-					rollback_utility::RollbackPhysicActor(registry,game_state.run_frame);
+					rollback_utility::RollbackPhysicActor(registry,game_state.run_frame - 1);
 				}
 			}
 
