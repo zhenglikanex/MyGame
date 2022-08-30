@@ -263,7 +263,7 @@ public:
 
 		{
 			auto& components = serialization_manager.GetLocalEntityComponents<Transform>();
-			auto view = registry.view<Local,TransformState>();
+			auto view = registry.view<Local,TransformState,Player>();
 			for (auto e : view)
 			{
 				auto& local = view.get<Local>(e);
@@ -292,11 +292,6 @@ public:
 						return false;
 					}
 				}
-				else
-				{
-					assert(false && "CheckLocalComponents!");
-					return false;
-				}
 			}
 		}
 
@@ -318,11 +313,6 @@ public:
 							INFO("GameplayTagCountContainer Rollback");
 							return false;
 						}
-					}
-					else
-					{
-						assert(false && "CheckLocalComponents!");
-						return false;
 					}
 				}
 
@@ -348,12 +338,6 @@ public:
 								return false;
 							}
 						}
-
-					}
-					else
-					{
-						assert(false && "CheckLocalComponents!");
-						return false;
 					}
 				}
 			}

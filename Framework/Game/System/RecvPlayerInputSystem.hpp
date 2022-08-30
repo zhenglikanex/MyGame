@@ -22,6 +22,7 @@ struct RecvPlayerInputSystem : public System
 
 	void FixedUpdate(float dt) override
 	{
+		INFO("--------------------------------------------------------");
 		auto& network_service = registry.ctx<Locator>().Ref<const NetworkService>();
 		while (auto result = network_service.Recv("player_input"))
 		{
@@ -43,6 +44,10 @@ struct RecvPlayerInputSystem : public System
 	{
 		auto& game_state_map = registry.ctx_or_set<PlayerGameStateMap>();
 		game_state_map.value[id] = game_state;
+
+		auto& server_game_state = registry.ctx<GameState>();
+		//INFO("server run frame {} local run frame {}", server_game_state.run_frame,game_state.run_frame);
+		//INFO("server real frame {} local real frame {}", server_game_state.real_frame, game_state.real_frame);
 	}
 
 	void InputCommand(Command& input_command)
@@ -50,6 +55,7 @@ struct RecvPlayerInputSystem : public System
 		auto& game_state = registry.ctx<GameState>();
 		if (game_state.run_frame > input_command.frame)
 		{
+			INFO("command miss server run frame {} local run frame {}", game_state.run_frame, input_command.frame);
 			return;
 		}
 

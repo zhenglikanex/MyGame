@@ -310,11 +310,11 @@ class StartBattleInfo : public ::google::protobuf::Message /* @@protoc_insertion
   ::Proto::GamePlayerInfos* release_player_infos();
   void set_allocated_player_infos(::Proto::GamePlayerInfos* player_infos);
 
-  // optional uint32 start_time = 3;
+  // optional uint64 start_time = 3;
   void clear_start_time();
   static const int kStartTimeFieldNumber = 3;
-  ::google::protobuf::uint32 start_time() const;
-  void set_start_time(::google::protobuf::uint32 value);
+  ::google::protobuf::uint64 start_time() const;
+  void set_start_time(::google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:Proto.StartBattleInfo)
  private:
@@ -322,8 +322,8 @@ class StartBattleInfo : public ::google::protobuf::Message /* @@protoc_insertion
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::Proto::GamePlayerInfos* player_infos_;
+  ::google::protobuf::uint64 start_time_;
   ::google::protobuf::uint32 my_id_;
-  ::google::protobuf::uint32 start_time_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_Battle_2eproto();
   friend void protobuf_AssignDesc_Battle_2eproto();
@@ -1385,15 +1385,15 @@ inline void StartBattleInfo::set_allocated_player_infos(::Proto::GamePlayerInfos
   // @@protoc_insertion_point(field_set_allocated:Proto.StartBattleInfo.player_infos)
 }
 
-// optional uint32 start_time = 3;
+// optional uint64 start_time = 3;
 inline void StartBattleInfo::clear_start_time() {
-  start_time_ = 0u;
+  start_time_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint32 StartBattleInfo::start_time() const {
+inline ::google::protobuf::uint64 StartBattleInfo::start_time() const {
   // @@protoc_insertion_point(field_get:Proto.StartBattleInfo.start_time)
   return start_time_;
 }
-inline void StartBattleInfo::set_start_time(::google::protobuf::uint32 value) {
+inline void StartBattleInfo::set_start_time(::google::protobuf::uint64 value) {
   
   start_time_ = value;
   // @@protoc_insertion_point(field_set:Proto.StartBattleInfo.start_time)

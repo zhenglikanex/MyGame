@@ -379,7 +379,7 @@ void protobuf_AddDesc_Battle_2eproto() {
     "erInfos\022\'\n\014player_infos\030\001 \003(\0132\021.Proto.Pl"
     "ayerInfo\"b\n\017StartBattleInfo\022\r\n\005my_id\030\001 \001"
     "(\r\022,\n\014player_infos\030\002 \001(\0132\026.Proto.GamePla"
-    "yerInfos\022\022\n\nstart_time\030\003 \001(\r\"\245\001\n\023CS2CPlu"
+    "yerInfos\022\022\n\nstart_time\030\003 \001(\004\"\245\001\n\023CS2CPlu"
     "sPlusCommand\022\016\n\006x_axis\030\001 \001(\002\022\016\n\006y_axis\030\002"
     " \001(\002\022<\n\tabilities\030\003 \003(\0132).Proto.CS2CPlus"
     "PlusCommand.AbilitiesEntry\0320\n\016AbilitiesE"
@@ -1063,7 +1063,7 @@ void StartBattleInfo::SharedCtor() {
   _cached_size_ = 0;
   my_id_ = 0u;
   player_infos_ = NULL;
-  start_time_ = 0u;
+  start_time_ = GOOGLE_ULONGLONG(0);
 }
 
 StartBattleInfo::~StartBattleInfo() {
@@ -1120,7 +1120,7 @@ void StartBattleInfo::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(my_id_, start_time_);
+  ZR_(start_time_, my_id_);
   if (GetArenaNoVirtual() == NULL && player_infos_ != NULL) delete player_infos_;
   player_infos_ = NULL;
 
@@ -1166,12 +1166,12 @@ bool StartBattleInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 start_time = 3;
+      // optional uint64 start_time = 3;
       case 3: {
         if (tag == 24) {
          parse_start_time:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &start_time_)));
 
         } else {
@@ -1216,9 +1216,9 @@ void StartBattleInfo::SerializeWithCachedSizes(
       2, *this->player_infos_, output);
   }
 
-  // optional uint32 start_time = 3;
+  // optional uint64 start_time = 3;
   if (this->start_time() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->start_time(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->start_time(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:Proto.StartBattleInfo)
@@ -1239,9 +1239,9 @@ void StartBattleInfo::SerializeWithCachedSizes(
         2, *this->player_infos_, false, target);
   }
 
-  // optional uint32 start_time = 3;
+  // optional uint64 start_time = 3;
   if (this->start_time() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->start_time(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->start_time(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:Proto.StartBattleInfo)
@@ -1266,10 +1266,10 @@ int StartBattleInfo::ByteSize() const {
         *this->player_infos_);
   }
 
-  // optional uint32 start_time = 3;
+  // optional uint64 start_time = 3;
   if (this->start_time() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
         this->start_time());
   }
 
@@ -1406,15 +1406,15 @@ void StartBattleInfo::set_allocated_player_infos(::Proto::GamePlayerInfos* playe
   // @@protoc_insertion_point(field_set_allocated:Proto.StartBattleInfo.player_infos)
 }
 
-// optional uint32 start_time = 3;
+// optional uint64 start_time = 3;
 void StartBattleInfo::clear_start_time() {
-  start_time_ = 0u;
+  start_time_ = GOOGLE_ULONGLONG(0);
 }
- ::google::protobuf::uint32 StartBattleInfo::start_time() const {
+ ::google::protobuf::uint64 StartBattleInfo::start_time() const {
   // @@protoc_insertion_point(field_get:Proto.StartBattleInfo.start_time)
   return start_time_;
 }
- void StartBattleInfo::set_start_time(::google::protobuf::uint32 value) {
+ void StartBattleInfo::set_start_time(::google::protobuf::uint64 value) {
   
   start_time_ = value;
   // @@protoc_insertion_point(field_set:Proto.StartBattleInfo.start_time)

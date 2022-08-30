@@ -65,7 +65,7 @@ void SendGameMessage(std::string_view name,std::vector<uint8_t>&& data)
 	}
 }
 
-void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time,uint32_t local_id)
+void InitGame(const Proto::GamePlayerInfos& infos, uint64_t start_time,uint32_t local_id)
 {
 	std::vector<PlayerInfo> players;
 	for (auto iter = infos.player_infos().cbegin(); iter < infos.player_infos().cend(); ++iter)
@@ -96,13 +96,14 @@ void InitGame(const Proto::GamePlayerInfos& infos, uint32_t start_time,uint32_t 
 
 	if (g_game)
 	{
-		//加上服务器到这里的延迟
-		uint32_t delay = duration_cast<milliseconds>(high_resolution_clock::now().time_since_epoch()).count() - start_time;
-
-		INFO("start game delay {} ping {} value {}", delay, g_ping, (delay + g_ping / 1.5 + 34));
 		//让客户端领先服务器1帧加半个rtt保证，使客户端的输入能在服务器执行当前帧时收到，后面可以再根据ping值来调整客户端领先的值
 		// todo:这里计算的g_ping有点不太准,暂时放大领先的帧数
-		g_game->Update((delay + g_ping / 1.5 + 34) * 1000000);
+		uint32_t ping = std::max(g_ping, 150u);
+		uint32_t lead_time = static_cast<uint32_t>(ping / 1.5 + 34) * 1000000;
+
+		uint64_t now = duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();
+		g_game->Update(now - start_time + lead_time);
+		g_last_time = now;
 	}
 }
 
@@ -192,8 +193,6 @@ extern "C"
 					{
 						
 						INFO("start_battle{}", duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
-						
-						g_last_time = duration_cast<nanoseconds>(high_resolution_clock::now().time_since_epoch()).count();
 
 						Proto::StartBattleInfo info;
 						info.ParseFromArray(message.data().data(), message.data().size());
@@ -211,6 +210,8 @@ extern "C"
 
 						uint32_t now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 						g_ping = now - ping.time();
+
+						//INFO("g_ping {}", g_ping);
 
 						UnityBridge::Get().CallUnity<void>("SetPing", g_ping);
 					}

@@ -61,6 +61,7 @@ struct CreateActorSystem : public System
 			registry.emplace<GameplayAttributeSet>(e);
 			registry.emplace<InfiniteModifierAttributeSet>(e);
 			registry.emplace<GameplayTagCountContainer>(e);
+
 			//todo:ÀÊ±„–¥À¿ ‘ ‘
 			auto& abilitys = registry.emplace<ActiveGameplayAbilityList>(e);
 			abilitys.value.emplace("GA_Roll", ActiveGameplayAbility("GA_Roll", 1));
@@ -77,6 +78,8 @@ struct CreateActorSystem : public System
 			abilitys.value.emplace("GA_DashLightAttack", ActiveGameplayAbility("GA_DashLightAttack", 1));
 			abilitys.value.emplace("GA_DashHeavyAttack", ActiveGameplayAbility("GA_DashHeavyAttack", 1));
 			abilitys.value.emplace("GA_JumpAttackA", ActiveGameplayAbility("GA_JumpAttackA", 1));
+			abilitys.value.emplace("GA_HuoQiu", ActiveGameplayAbility("GA_HuoQiu", 1));
+			abilitys.value.emplace("GA_LeiFa", ActiveGameplayAbility("GA_LeiFa", 1));
 
 			gameplay_effect_utility::ApplyGameEffectToTarget(registry, e, actor_info.ge(), 1, e);
 		}

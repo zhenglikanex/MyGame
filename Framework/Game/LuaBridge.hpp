@@ -535,7 +535,7 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["GetGameplayAbilitySpec"] = [&registry](entt::entity e)
 	{
-		return registry.get<GameplayAbilitySpec>(e);
+		return registry.try_get<GameplayAbilitySpec>(e);
 	};
 
 	lua["GetLocal"] = [&registry](entt::entity e)
