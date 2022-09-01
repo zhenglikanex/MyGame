@@ -150,9 +150,9 @@ public:
 		}
 	}
 
-	std::vector<Event> GetEvent(uint32_t frame) const
+	void GetEvent(uint32_t frame, std::vector<Event>& events) const
 	{
-		std::vector<Event> events;
+		events.clear();
 
 		for(auto& check : check_event_items_)
 		{
@@ -171,7 +171,6 @@ public:
 				events.emplace_back(check.type, check.index, EventStatus::kEnd);
 			}
 		}
-		return events;
 	}
 
 	const timeline_event::AnimationEvent& GetAnimationEventByIndex(uint16_t index) const

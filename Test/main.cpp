@@ -65,7 +65,7 @@ int main()
 {
 	using namespace  std::chrono;
 
-	int num = 20;
+	int num = 5000;
 	Registry registry(GameMode::kAuthority, {});
 	registry.set<GameState>();
 	for (auto i = 0; i < num; ++i)
@@ -74,32 +74,53 @@ int main()
 		registry.emplace<Remote>(e, e);
 		registry.emplace<Local>(e, i, 0);
 		registry.emplace<Transform>(e);
-		registry.emplace<AnimationClip>(e);
-		registry.emplace<GameplayAttributeSet>(e);
+		registry.emplace<AnimationClip>(e,"dfsdfdfewrdfdf",0,false);
+		registry.emplace<Player>(e);
+		registry.emplace<ActorAsset>(e,"SuperHero.json");
+		registry.emplace<ViewAsset>(e, "SuperHero.json");
+		registry.emplace<AnimationAsset>(e, "SuperHero.json");
+		registry.emplace<Collider>(e);
+		auto& tag_count = registry.emplace<GameplayTagCountContainer>(e);
+		tag_count.UpdateTagCount(GameplayTagDefine::kAbilityDoubleJump,1);
+		tag_count.UpdateTagCount(GameplayTagDefine::kAbilityMeleeAttack, 2);
+		tag_count.UpdateTagCount(GameplayTagDefine::kAbilityMeleeAttackDash, 2);
+		tag_count.UpdateTagCount(GameplayTagDefine::kAbilityMeleeAttackHeavy, 2);
+
 		//spec.effect = "1213131231444";
 
+		auto e2 = registry.create();
+		registry.emplace<Remote>(e2, e2);
+		registry.emplace<Local>(e2, i, 0);
 	}
 
-	SerializationManager manager;
-
-	for (int i = 0; i < 30; ++i)
+	
+	for (int j = 0; j < 10; ++j)
 	{
+
+
 		auto start = system_clock::now();
-		
-		for (uint32_t i = 0; i <= num; i++)
+		for (int i = 0; i < 1; ++i)
 		{
-			manager.Clear();
-			manager.Serialize(registry, { i,0 });
+			SerializationManager manager;
+			/*manager.SerializeRemoteEntity(registry);
+			size_t point = manager.buffer().Size();*/
 
-			std::vector<uint8_t> buffer(manager.buffer().Size());
-			manager.buffer().Read(buffer.data(), buffer.size());
+			for (uint32_t i = 0; i < num; i++)
+			{
+				manager.Clear();
+				//manager.buffer().set_write_cursor(point);
+				manager.Serialize(registry, { i,0 });
+
+				std::vector<uint8_t> buffer(manager.buffer().Size());
+				manager.buffer().Read(buffer.data(), buffer.size());
+			}
+
+
 		}
-
 		auto duration = system_clock::now() - start;
 
 		std::cout << "ms" << duration_cast<milliseconds>(duration).count() << std::endl;
 	}
-
 	std::unordered_map<Local, GameplayEffectSpec> map;
 	for (uint32_t i = 0; i < num; ++i)
 	{
@@ -109,7 +130,7 @@ int main()
 	}
 
 	
-	auto start = system_clock::now();
+	//auto start = system_clock::now();
 	kanex::Buffer buffer(1000);
 	kanex::BinaryStream stream(buffer);
 	kanex::BinaryOutputArchive iar(stream);
@@ -121,9 +142,8 @@ int main()
 		manager.buffer().Read(buffer.data(), buffer.size());*/
 	}
 
-	auto duration = system_clock::now() - start;
+	//auto duration = system_clock::now() - start;
 
-	std::cout << "2  ms" << duration_cast<milliseconds>(duration).count() << std::endl;
 
 	{
 

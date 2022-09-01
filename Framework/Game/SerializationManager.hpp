@@ -114,9 +114,10 @@ public:
 		buffer_.Clear();
 	}
 
+
 	void Serialize(Registry& registry, const SyncInstance& sync_instance)
 	{
-		SerializeRemoteEntity(registry, sync_instance);
+		//SerializeRemoteEntity(registry, sync_instance);
 		SerializeSingleEntity(registry);
 		SerializeFrameData(registry, sync_instance);
 		SerializeLocalEntity(registry, sync_instance);
@@ -132,7 +133,24 @@ public:
 		DeserializeFrameData();
 		DeserializeLocalEntity();
 	}
-private:
+
+	void SerializeRemoteWithLocal(Registry& registry)
+	{
+		auto size_ptr_point = buffer_.Size();
+		size_t size = 0;
+		oar_(size);
+
+		auto view = registry.view<Remote, Local>();
+		for(auto e : view)
+		{
+			auto& [remote, local] = view.get<Remote, Local>(e);
+			++size;
+		}
+
+		size_t* p = reinterpret_cast<size_t*>(buffer_.GetData() + size_ptr_point);
+		*p = size;
+	}
+
 	void SerializeFrameData(Registry& registry, const SyncInstance& sync_instance)
 	{
 		auto& game_state = registry.ctx<GameState>();
@@ -168,35 +186,43 @@ private:
 	template<class Component>
 	void SerializeLocalEntityComponent(Registry& registry, const SyncInstance& sync_instance)
 	{
-		auto& components = GetLocalEntityComponents<Component>();
-		components.clear();
+		/*auto& components = GetLocalEntityComponents<Component>();
+		components.clear();*/
+
+		auto size_ptr_point = buffer_.Size();
+		size_t size = 0;
+		oar_(size);
 
 		auto view = registry.view<Local, Component>();
 		for (auto e : view)
 		{
 			auto&[local, component] = view.get<Local, Component>(e);
-			if (local.owner == sync_instance.owner)
-			{
-				components.emplace(local, component);
-			}
+			//if (local.owner == sync_instance.owner)
+			//{
+				//oar_(local, component);
+				++size;
+			//}
 		}
 
-		oar_(components);
+		size_t* p = reinterpret_cast<size_t*>(buffer_.GetData() + size_ptr_point);
+		*p = size;
+
+		//oar_(components);
 	}
 
-	void SerializeRemoteEntity(Registry& registry, const SyncInstance& sync_instance)
+	void SerializeRemoteEntity(Registry& registry)
 	{
-		SerializeRemoteEntityComponent(registry,sync_instance,RemoteComponents{});
+		SerializeRemoteEntityComponent(registry,RemoteComponents{});
 	}
 
 	template<class ... Components>
-	void SerializeRemoteEntityComponent(Registry& registry, const SyncInstance& sync_instance,TypeList<Components...>)
+	void SerializeRemoteEntityComponent(Registry& registry,TypeList<Components...>)
 	{
-		(SerializeRemoteEntityComponent<Components>(registry, sync_instance), ...);
+		(SerializeRemoteEntityComponent<Components>(registry), ...);
 	}
 
 	template<class Component>
-	void SerializeRemoteEntityComponent(Registry& registry, const SyncInstance& sync_instance)
+	void SerializeRemoteEntityComponent(Registry& registry)
 	{
 		/*auto& components = GetRemoteEntityComponents<Component>();
 		components.clear();*/
@@ -210,13 +236,8 @@ private:
 		for (auto e : view)
 		{
 			auto&[remote, component] = view.get<Remote,Component>(e);
-			auto local = registry.try_get<Local>(e);
-			if(!local || local->owner != sync_instance.owner)
-			{
-				//components.emplace(remote, component);
-				oar_(remote,component);
-				++size;
-			}
+			oar_(remote, component);
+			++size;
 		}
 
 		size_t* p = reinterpret_cast<size_t*>(buffer_.GetData() + size_ptr_point);
@@ -239,17 +260,18 @@ private:
 	template<class Component>
 	void SerializeSingleEntityComponent(Registry& registry)
 	{
-		auto& components = GetSingleEntityComponents<Component>();
-		components.clear();
+		/*auto& components = GetSingleEntityComponents<Component>();
+		components.clear();*/
+
+		size_t size = registry.view<Component>().size();
+		oar_(size);
 
 		auto view = registry.view<Component>();
 		for (auto e : view)
 		{
 			auto& component = view.get<Component>(e);
-			components.emplace_back(component);
+			oar_(component);
 		}
-
-		oar_(components);
 	}
 private:
 	void DeserializeFrameData()
@@ -372,4 +394,7 @@ private:
 
 	//存储SingleComponent
 	std::unordered_map<uint32_t, std::any> single_component_entities_;
+
+	// 用于查询remote是否是本地组件
+	std::unordered_map<Remote, Local> remote_with_local_map_;
 };

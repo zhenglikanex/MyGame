@@ -32,6 +32,8 @@ struct CreateActorSystem : public System
 
 	bool Initialize() override
 	{
+		//todo:т╓╪стьр╩об
+		GetActorInfo("SuperHero.json");
 		return true;
 	}
 

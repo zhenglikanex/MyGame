@@ -262,7 +262,7 @@ namespace physics_utility
 		return PxTransform(Vec3(v), Quat(q));
 	}
 
-	static void UpdateActorPose(PxRigidActor* actor, const ::Transform& transform)
+	static void UpdateActorPose(PxRigidActor* actor, const ::Transform& transform,bool autowake = true)
 	{
 		assert(actor != nullptr);
 
@@ -270,7 +270,7 @@ namespace physics_utility
 
 		assert(rigid != nullptr);
 
-		rigid->setGlobalPose(physics_utility::Transform(transform));
+		rigid->setGlobalPose(physics_utility::Transform(transform), autowake);
 	}
 
 	static void CheckSphereOverlap(Registry& registry, const PxSphereGeometry& sphere, const PxTransform& transform, std::vector<entt::entity>& hits)

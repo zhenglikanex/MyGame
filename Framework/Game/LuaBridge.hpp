@@ -256,7 +256,12 @@ inline void RegisterLua(Registry& registry,sol::state& lua)
 
 	lua["load_path"] = file_service.cur_path() + "Lua/Script/?.lua";
 	lua.script_file(file_service.cur_path() + "Lua/Script/main.lua", sol::script_default_on_error);
+
+#if DEBUG
 	sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
+#else
+	lua["print"] = []() {};
+#endif
 
 	// todo:≤‚ ‘”√
 	lua["TestSphereCollider"] = [&registry](float raduis)

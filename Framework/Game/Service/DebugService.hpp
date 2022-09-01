@@ -10,7 +10,7 @@
 
 #ifdef DEBUG
 #define INFO(...)  g_debug_service->Info(__VA_ARGS__);
-#define RELEASE_INFO(...)  //g_debug_service->Info(__VA_ARGS__);
+#define RELEASE_INFO(...)  g_debug_service->Info(__VA_ARGS__);
 #define WARNING(...) g_debug_service->Warning(__VA_ARGS__);
 #define ERROR(...) g_debug_service->Error(__VA_ARGS__);
 #else

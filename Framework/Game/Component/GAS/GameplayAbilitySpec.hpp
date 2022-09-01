@@ -32,3 +32,8 @@ struct GameplayAbilitySpec
 };
 
 NON_MEMEBER_BAR(GameplayAbilitySpec, obj.ability, obj.level, obj.source, obj.target,obj.activation,obj.entity_manager);
+
+struct GameplayAbilityMap
+{
+	std::unordered_map<Remote, std::vector<entt::entity>> value;
+};

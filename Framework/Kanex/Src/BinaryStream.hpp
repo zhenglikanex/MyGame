@@ -16,7 +16,7 @@ namespace kanex
 		Buffer(std::vector<uint8_t>&& buffer) : buffer_(std::move(buffer)), write_cursor_(buffer.size()), read_cursor_(0) { }
 
 		Buffer& operator=(const Buffer&) = default;
-		Buffer& operator=(Buffer&& rhs)
+		Buffer& operator=(Buffer&& rhs) noexcept
 		{
 			if (this == &rhs)
 			{
@@ -65,6 +65,8 @@ namespace kanex
 		size_t Size() const { return write_cursor_; }
 		uint8_t* GetData() { return buffer_.data(); }
 		const uint8_t* GetData() const { return buffer_.data(); }
+
+		void set_write_cursor(size_t write_cursor) { write_cursor_ = write_cursor; }
 	private:
 		std::vector<uint8_t> buffer_;
 		size_t write_cursor_;

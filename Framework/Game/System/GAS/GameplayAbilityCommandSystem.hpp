@@ -18,6 +18,8 @@
 
 struct GameplayAbilityCommandSystem : public System
 {
+	std::vector<entt::entity> entities;
+
 	GameplayAbilityCommandSystem(Registry& _registry) : System(_registry) { }
 
 	bool Initialize() override
@@ -72,11 +74,11 @@ struct GameplayAbilityCommandSystem : public System
 	}
 
 	// 检查是否会被其他技能阻塞
-	bool CheckActiveAbiliesBlocked(Remote source,const GameplayAbility& ga) const
+	bool CheckActiveAbiliesBlocked(Remote source,const GameplayAbility& ga)
 	{
 		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 		
-		auto entities = gameplay_ability_utility::GetActiveGameplayAbilities(registry, source);
+		auto& entities = gameplay_ability_utility::GetActiveGameplayAbilities(registry, source);
 		for (auto e : entities)
 		{
 			auto& spec = registry.get<GameplayAbilitySpec>(e);
@@ -115,80 +117,78 @@ struct GameplayAbilityCommandSystem : public System
 		auto& ga_manager = registry.ctx<GameplayAbilityManager>();
 		auto& command = registry.ctx_or_set<GameplayAbilityCommand>();
 
-		for(auto& [_,command_map] : command.value)
+		for (auto& command_spec : command.value)
 		{
-			for(auto& [_,command_spec] : command_map)
+			entt::entity source = registry.get(command_spec.source);
+
+			if (!registry.valid(source))
 			{
-				entt::entity source = registry.get(command_spec.source);
-
-				if (!registry.valid(source))
-				{
-					continue;
-				}
-
-				if (!(registry.all_of<Remote>(source)) || !(registry.all_of<GameplayState>(source)))
-				{
-					continue;
-				}
-
-				auto& source_tag_count = registry.get<GameplayTagCountContainer>(source);
-
-				auto active_ability = GetActiveAbility(source, command_spec.ability);
-				if (!active_ability)
-				{
-					continue;
-				}
-
-				auto& ga = ga_manager.LoadGameplayAbility(command_spec.ability);
-				if (!CheckCoolDown(source, ga))
-				{
-					continue;
-				}
-
-				if (!CheckCost(source, ga))
-				{
-					continue;
-				}
-
-				if (!CheckActiveAbiliesBlocked(command_spec.source, ga))
-				{
-					continue;
-				}
-
-				if (!CheckActivationRequiredTags(source_tag_count, ga))
-				{
-					continue;
-				}
-
-				if (!CheckActivationBlockedTags(source_tag_count, ga))
-				{
-					continue;
-				}
-
-				if (registry.valid(command_spec.target))
-				{
-					entt::entity target = registry.get(command_spec.target);
-					auto& target_tag_count = registry.get<GameplayTagCountContainer>(target);
-					if (!CheckTargetRequiredTags(target_tag_count, ga))
-					{
-						continue;
-					}
-
-					if (!CheckTargetBlockedTags(target_tag_count, ga))
-					{
-						continue;
-					}
-				}
-
-				INFO("Apply Ability {}", command_spec.ability);
-
-				auto e = registry.create_predict(source);
-				registry.emplace<GameplayAbilitySpec>(e, command_spec.ability, active_ability->level, command_spec.source, command_spec.target);
-				registry.patch<GameplayTagCountContainer>(source, [&ga](GameplayTagCountContainer& tag_count)
-					{
-						tag_count.UpdateTagCount(ga.activation_owned_tags, 1);
-					});
+				continue;
 			}
+
+			if (!(registry.all_of<Remote>(source)) || !(registry.all_of<GameplayState>(source)))
+			{
+				continue;
+			}
+
+			auto& source_tag_count = registry.get<GameplayTagCountContainer>(source);
+
+			auto active_ability = GetActiveAbility(source, command_spec.ability);
+			if (!active_ability)
+			{
+				continue;
+			}
+
+			auto& ga = ga_manager.LoadGameplayAbility(command_spec.ability);
+			if (!CheckCoolDown(source, ga))
+			{
+				continue;
+			}
+
+			if (!CheckCost(source, ga))
+			{
+				continue;
+			}
+
+			if (!CheckActiveAbiliesBlocked(command_spec.source, ga))
+			{
+				continue;
+			}
+
+			if (!CheckActivationRequiredTags(source_tag_count, ga))
+			{
+				continue;
+			}
+
+			if (!CheckActivationBlockedTags(source_tag_count, ga))
+			{
+				continue;
+			}
+
+			if (registry.valid(command_spec.target))
+			{
+				entt::entity target = registry.get(command_spec.target);
+				auto& target_tag_count = registry.get<GameplayTagCountContainer>(target);
+				if (!CheckTargetRequiredTags(target_tag_count, ga))
+				{
+					continue;
+				}
+
+				if (!CheckTargetBlockedTags(target_tag_count, ga))
+				{
+					continue;
+				}
+			}
+
+			INFO("Apply Ability {}", command_spec.ability);
+
+			auto e = registry.create_predict(source);
+			registry.emplace<GameplayAbilitySpec>(e, command_spec.ability, active_ability->level, command_spec.source, command_spec.target);
+			registry.patch<GameplayTagCountContainer>(source, [&ga](GameplayTagCountContainer& tag_count)
+				{
+					tag_count.UpdateTagCount(ga.activation_owned_tags, 1);
+				});
+
 		}
 	}
 	

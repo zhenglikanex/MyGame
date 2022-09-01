@@ -35,6 +35,8 @@ struct ServerSyncSystem : public System
 	{
 		serialization_manager.Clear();
 
+		serialization_manager.SerializeRemoteEntity(registry);
+		size_t point = serialization_manager.buffer().Size();
 		auto& sync_manager = registry.ctx<SyncManager>();
 		for (auto& item : sync_manager.sync_instances)
 		{
@@ -46,6 +48,7 @@ struct ServerSyncSystem : public System
 			}
 
 			serialization_manager.Clear();
+			serialization_manager.buffer().set_write_cursor(point);
 			serialization_manager.Serialize(registry,sync_instance);
 
 			std::vector<uint8_t> buffer( serialization_manager.buffer().Size());

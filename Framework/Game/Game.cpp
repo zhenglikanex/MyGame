@@ -135,12 +135,14 @@ void Game::UpdateFixedLogic()
 	auto& game_state = registry_.ctx<GameState>();
 	while (game_state.run_frame < game_state.real_frame)
 	{
+		//RELEASE_INFO("--------------------------------------");
+
 		for (auto& system : systems_)
 		{
 			auto start = system_clock::now();
 			system->FixedUpdate(GameConfig::kFrameTime);
 			auto duration = system_clock::now() - start;
-			//INFO("system {} time:{}", typeid(*system.get()).name(), duration_cast<std::chrono::milliseconds>(duration).count());
+			//RELEASE_INFO("system {} time:{}", typeid(*system.get()).name(), duration_cast<std::chrono::microseconds>(duration).count());
 		}
 
 		for (auto& system : systems_)
@@ -150,12 +152,13 @@ void Game::UpdateFixedLogic()
 
 		++game_state.run_frame;
 		++run_frame_times;
+		//RELEASE_INFO("--------------------------------------");
 	}
 
 	if(run_frame_times > 0)
 	{
 		auto duration = system_clock::now() - total_start;
-		INFO("run frame times:{} time:{}ms", run_frame_times, duration_cast<milliseconds>(duration).count());
+		//RELEASE_INFO("run frame times:{} time:{}ms", run_frame_times, duration_cast<milliseconds>(duration).count());
 	}
 }
 

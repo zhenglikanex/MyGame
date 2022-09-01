@@ -12,6 +12,7 @@ add_subdirectory(AsioClient)
 add_subdirectory(AsioServer)
 add_subdirectory(Sol)
 add_subdirectory(GAS)
+add_subdirectory(BattleTest)
 #add_subdirectory(KcpClient)
 #add_subdirectory(PhysXTest)
 

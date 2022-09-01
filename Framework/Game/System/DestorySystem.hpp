@@ -92,7 +92,9 @@ public:
 			auto& manager = registry.ctx<GameplayAbilityTimelineManager>();
 			auto& timeline = manager.LoadGameplayAbilityTimeline(spec.name);
 
-			std::vector<GameplayAbilityTimeline::Event> events = timeline.GetEvent(spec.frame);
+			std::vector<GameplayAbilityTimeline::Event> events;
+			timeline.GetEvent(spec.frame, events);
+			
 			for (auto& event : events)
 			{
 				if (event.type == timeline_event::EventType::kTag

@@ -15,6 +15,9 @@ struct GameplayAbilitySystem : public System
 
 	bool Initialize() override
 	{
+		registry.on_construct<GameplayAbilitySpec>().connect<gameplay_ability_utility::AddGameplayAbilityToMap>();
+		registry.on_destroy<GameplayAbilitySpec>().connect<gameplay_ability_utility::RemoteGameplayAbilityFromMap>();
+
 		return true;
 	}
 

@@ -21,6 +21,8 @@ struct CreateAnimationSystem : System
 
 	bool Initialize() override
 	{
+		//todo:т╓╪стьр╩об
+		GetAnimationInfo("SuperHero.json");
 		return true;
 	}
 

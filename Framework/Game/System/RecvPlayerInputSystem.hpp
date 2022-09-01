@@ -2,6 +2,7 @@
 
 #include "Framework/Game/PlayerInput.hpp"
 #include "Framework/Game/Service/NetworkService.hpp"
+#include "Framework/Game/Component/Remote.hpp"
 
 #include "Framework/Game/Component/GameState.hpp"
 #include "Framework/Game/Component/Command.hpp"
@@ -38,6 +39,8 @@ struct RecvPlayerInputSystem : public System
 			InputGameState(input.id, input.game_state);
 			InputCommand(input.command);
 		}
+
+		TestCommand();
 	}
 
 	void InputGameState(uint32_t id,const GameState& game_state)
@@ -73,7 +76,32 @@ struct RecvPlayerInputSystem : public System
 		}
 
 		command.move_command.value.insert(command.move_command.value.end(), input_command.move_command.value.begin(), input_command.move_command.value.end());
-		command.gameplay_ability_command.value.insert(input_command.gameplay_ability_command.value.begin(), input_command.gameplay_ability_command.value.end());
+		command.gameplay_ability_command.value.insert(command.gameplay_ability_command.value.end(), input_command.gameplay_ability_command.value.begin(),input_command.gameplay_ability_command.value.end());
+	}
+
+	void TestCommand()
+	{
+		auto& game_state = registry.ctx_or_set<GameState>();
+		auto& command_state = registry.ctx_or_set<CommandState>();
+		auto& command = command_state.value[game_state.run_frame % command_state.value.size()];
+
+		if (command.frame != game_state.run_frame)
+		{
+			command.frame = game_state.run_frame;
+			command.move_command.value.clear();
+			command.gameplay_ability_command.value.clear();
+		}
+
+		auto view = registry.view<Player,Remote>();
+		for(auto e : view)
+		{
+			auto source = view.get<Remote>(e);
+
+			command.gameplay_ability_command.value.emplace_back("GA_JumpAttackA", source, Remote::null, true);
+			command.gameplay_ability_command.value.emplace_back("GA_LightAttackB", source, Remote::null, true);
+			command.gameplay_ability_command.value.emplace_back( "GA_LightAttackC", source ,Remote::null,true);
+			command.gameplay_ability_command.value.emplace_back("GA_LightAttackA", source, Remote::null, true);
+		}
 	}
 
 	void Finalize() override

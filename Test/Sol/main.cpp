@@ -10,7 +10,7 @@ int main() {
 
 	sol::state lua;
 	lua.open_libraries(sol::lib::base, sol::lib::package,sol::lib::string,sol::lib::math,sol::lib::table,sol::lib::debug,sol::lib::os);
-
+	//sol::function::set_default_handler(lua["__G__TRACKBACK__"]);
 	entt::registry registry;
 
 	entt::entity e1 = registry.create();

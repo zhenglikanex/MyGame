@@ -63,13 +63,13 @@ void ServerGameHelper::CreateSystems(Game* game) const
 		ApplyGameplayEffectSystem,
 		GameplayEffectSystem,
 		GameplayAttributeSystem,
-		GameplayStateSystem,
+		//GameplayStateSystem,
 		TransformStateSystem,
 		MovementSystem,
 		KinematicCharacterMovementSystem,
 		ComputeAnimBoneChildTransformSystem,
 		PhysicsSystem,
-		ServerSyncSystem,
+		//ServerSyncSystem,
 		DestorySystem,
 		DestroyModifierAttributeSystem
 	> ();

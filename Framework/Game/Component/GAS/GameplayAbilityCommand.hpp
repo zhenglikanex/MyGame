@@ -30,7 +30,8 @@ NON_MEMEBER_BAR(GameplayAbilityCommandSpec, obj.ability, obj.source, obj.target,
 
 struct GameplayAbilityCommand
 {
-	std::unordered_map<Remote,std::unordered_map<std::string,GameplayAbilityCommandSpec>> value;
+	std::vector<GameplayAbilityCommandSpec> value;
+	//std::unordered_map<Remote,std::unordered_map<std::string,GameplayAbilityCommandSpec>> value;
 };
 
 NON_MEMEBER_BAR(GameplayAbilityCommand, obj.value);

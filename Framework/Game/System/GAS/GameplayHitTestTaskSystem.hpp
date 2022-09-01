@@ -38,9 +38,17 @@ public:
 			{
 				auto& player_game_state_map = registry.ctx_or_set<PlayerGameStateMap>();
 				auto it = player_game_state_map.value.find(player->id);
-				return it->second.verified_frame;
+				if(it != player_game_state_map.value.end())
+				{
+					return it->second.verified_frame;
+				}
+				else
+				{
+					auto& game_state = registry.ctx<GameState>();
+					return game_state.run_frame;
+				}
 			}
-
+			
 			auto& game_state = registry.ctx<GameState>();
 			return game_state.run_frame;
 		}
@@ -59,20 +67,23 @@ public:
 		// 带来的时同步和预测回滚、复制的开销？
 		auto& game_state = registry.ctx<GameState>();
 
+		bool rollback = false;
 		auto view = registry.view<GameplayAbilitySpec, GameplayAbilityScript, GameplayHitTestTask>();
 		for (auto e : view)
 		{
 			auto& [spec, script, task] = registry.get<GameplayAbilitySpec, GameplayAbilityScript, GameplayHitTestTask>(e);
 			if (registry.valid(spec.source))
 			{
-				bool rollback = false;
-
 				uint32_t verified_frame = GetVerifiedFrame(spec.source);
 
 				if (rollback_utility::CheckRollback(registry, verified_frame))
 				{
 					rollback = true;
-					rollback_utility::RollbackPhysicActor(registry, verified_frame);
+					//rollback_utility::RollbackPhysicActor(registry, verified_frame);
+				}
+				else if (rollback)
+				{
+					//rollback_utility::RollbackPhysicActor(registry, game_state.run_frame - 1);
 				}
 
 				for (auto& gameplay_hit_test_spec : task.value)
@@ -114,15 +125,11 @@ public:
 						script.value[gameplay_hit_test_spec.on_hit](script.value,hits);
 					}
 				}
-
-				if (rollback)
-				{
-					rollback_utility::RollbackPhysicActor(registry,game_state.run_frame - 1);
-				}
 			}
 
 			//task.value.clear();
 		}
+
 	}
 
 	void LateUpdate(float dt) override

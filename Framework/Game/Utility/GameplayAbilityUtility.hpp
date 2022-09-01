@@ -5,7 +5,6 @@
 
 #include "Framework/Game/Component/Remote.hpp"
 #include "Framework/Game/Component/GAS/GameplayAbilitySpec.hpp"
-#include "Framework/Game/Component/GAS/GameplayAbilityScript.hpp"
 #include "Framework/Game/Component/GAS/GameplayEffectSpec.hpp"
 
 #include "Framework/Game/Utility/GameplayEffectUtility.hpp"
@@ -67,11 +66,14 @@ namespace gameplay_ability_utility
 		}
 	}
 
-	static std::vector<entt::entity> GetActiveGameplayAbilities(Registry& registry, const Remote& id)
+	static void GetActiveGameplayAbilities(Registry& registry, const Remote& id,std::vector<entt::entity>& abilities)
 	{
-		std::vector<entt::entity> abilities;
+		abilities.clear();
 
-		auto view = registry.view<GameplayAbilitySpec,GameplayAbilityScript>();
+		auto view = registry.view<GameplayAbilitySpec>();
+
+		abilities.reserve(view.size());
+
 		for (auto e : view)
 		{
 			auto& spec = view.get<GameplayAbilitySpec>(e);
@@ -80,7 +82,29 @@ namespace gameplay_ability_utility
 				abilities.emplace_back(e);
 			}
 		}
+	}
 
-		return abilities;
+	static const std::vector<entt::entity>& GetActiveGameplayAbilities(Registry& registry, Remote owner)
+	{
+		auto& map = registry.ctx_or_set<GameplayAbilityMap>();
+		return map.value[owner];
+	}
+
+	static void AddGameplayAbilityToMap(entt::registry& registry,entt::entity e)
+	{
+		auto& map = registry.ctx_or_set<GameplayAbilityMap>();
+		auto& spec = registry.get<GameplayAbilitySpec>(e);
+		map.value[spec.source].emplace_back(e);
+	}
+
+	static void RemoteGameplayAbilityFromMap(entt::registry& registry, entt::entity e)
+	{
+		auto& map = registry.ctx_or_set<GameplayAbilityMap>();
+		auto& spec = registry.get<GameplayAbilitySpec>(e);
+		auto it = std::find_if(map.value[spec.source].begin(), map.value[spec.source].end(), [e](entt::entity ability)
+		{
+				return ability == e;
+		});
+		map.value[spec.source].erase(it);
 	}
 };

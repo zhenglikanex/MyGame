@@ -16,6 +16,8 @@
 
 struct GameplayAbilityTimelineTaskSystem : public System
 {
+	std::vector<GameplayAbilityTimeline::Event> events;
+
 	GameplayAbilityTimelineTaskSystem(Registry& _registry) : System(_registry) { }
 
 	bool Initialize() override
@@ -46,8 +48,8 @@ struct GameplayAbilityTimelineTaskSystem : public System
 			}
 
 			const GameplayAbilityTimeline& timeline = manager.LoadGameplayAbilityTimeline(task.name);
-			std::vector<GameplayAbilityTimeline::Event> events = timeline.GetEvent(task.frame);
 
+			timeline.GetEvent(task.frame,events);
 			for(auto& event : events)
 			{
 				switch (event.type)
@@ -61,6 +63,7 @@ struct GameplayAbilityTimelineTaskSystem : public System
 
 				case EventType::kTag:
 					ProcessTagEvent(source,timeline, event);
+					break;
 				}
 			}
 
