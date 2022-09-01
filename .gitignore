@@ -49,3 +49,5 @@ sysinfo.txt
 *.tlog
 *.lastbuildstate
 *.tlog
+3rdparty/src/PhysX-3.4/PxShared/src/compiler/vc15win64/
+3rdparty/src/PhysX-3.4/PhysX_3.4/Source/compiler/vc15win64
