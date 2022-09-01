@@ -1,1 +1,491 @@
-﻿  PhysXCommon.vcxproj -> E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\bin\vc15win64\PhysX3CommonDEBUG_x64.dll
+﻿  CmWindowsDelayLoadHook.cpp
+  CmWindowsModuleUpdateLoader.cpp
+  CmBoxPruning.cpp
+  CmCollection.cpp
+  CmMathUtils.cpp
+  CmPtrTable.cpp
+  CmRadixSort.cpp
+  CmRadixSortBuffered.cpp
+  CmRenderOutput.cpp
+  CmVisualization.cpp
+  GuContactBoxBox.cpp
+  GuContactCapsuleBox.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmVisualization.cpp(112,31): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmVisualization.cpp(144,38): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmVisualization.cpp(144,55): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmVisualization.cpp(149,39): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmVisualization.cpp(149,56): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmVisualization.cpp(155,52): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmVisualization.cpp(155,69): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmVisualization.cpp(156,51): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmVisualization.cpp(156,68): warning C5219: 从“physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactBoxBox.cpp)
+  GuContactCapsuleCapsule.cpp
+  GuContactCapsuleConvex.cpp
+  GuContactCapsuleMesh.cpp
+  GuContactConvexConvex.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\Common\src\CmRenderOutput.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRenderOutput.cpp(229,36): warning C5219: 从“const physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRenderOutput.cpp(240,57): warning C5219: 从“const physx::PxU32”隐式转换到“physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactCapsuleBox.cpp)
+  GuContactConvexMesh.cpp
+  GuContactPlaneBox.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\contact\GuContactCapsuleConvex.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\contact\GuContactCapsuleConvex.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactConvexConvex.cpp)
+  GuContactPlaneCapsule.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactCapsuleMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactCapsuleConvex.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactCapsuleCapsule.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactConvexMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\contact\GuContactCapsuleMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\contact\GuContactCapsuleMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\contact\GuContactConvexMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\contact\GuContactConvexMesh.cpp)
+  GuContactPlaneConvex.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactPlaneCapsule.cpp)
+  GuContactPolygonPolygon.cpp
+  GuContactSphereBox.cpp
+  GuContactSphereCapsule.cpp
+  GuContactSphereMesh.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactPlaneBox.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactSphereCapsule.cpp)
+  GuContactSpherePlane.cpp
+  GuContactSphereSphere.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactPolygonPolygon.cpp)
+  GuFeatureCode.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactSphereBox.cpp)
+  GuLegacyContactBoxHeightField.cpp
+  GuLegacyContactCapsuleHeightField.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactPlaneConvex.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactSphereMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\contact\GuContactSphereMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\contact\GuContactSphereMesh.cpp)
+  GuLegacyContactConvexHeightField.cpp
+  GuLegacyContactSphereHeightField.cpp
+  GuBarycentricCoordinates.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactSpherePlane.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuContactSphereSphere.cpp)
+  GuSeparatingAxes.cpp
+  GuBigConvexData.cpp
+  GuConvexHelper.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactCapsuleHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactCapsuleHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactCapsuleHeightField.cpp)
+  GuConvexMesh.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+  GuConvexSupportTable.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\contact\GuLegacyContactCapsuleHeightField.cpp(221,19): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\contact\GuLegacyContactCapsuleHeightField.cpp(221,90): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp(425,45): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp(425,119): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(777,5): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\contact\GuLegacyTraceLineCallback.h(148): message : 查看对正在编译的函数 模板 实例化“void physx::Gu::HeightFieldTraceUtil::traceSegment<physx::Gu::GuContactTraceSegmentCallback,true,false>(const physx::PxVec3 &,const physx::PxVec3 &,const float,T *,const physx::PxBounds3 &,bool,const physx::PxVec3 *) const”的引用
+          with
+          [
+              T=physx::Gu::GuContactTraceSegmentCallback
+          ] (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(777,5): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(778,5): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(778,5): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+  GuConvexUtilsInternal.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,13): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,58): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,44): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,13): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,58): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,44): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactBoxHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp(391,45): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp(391,119): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(777,5): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\contact\GuLegacyTraceLineCallback.h(148): message : 查看对正在编译的函数 模板 实例化“void physx::Gu::HeightFieldTraceUtil::traceSegment<physx::Gu::GuContactTraceSegmentCallback,true,false>(const physx::PxVec3 &,const physx::PxVec3 &,const float,T *,const physx::PxBounds3 &,bool,const physx::PxVec3 *) const”的引用
+          with
+          [
+              T=physx::Gu::GuContactTraceSegmentCallback
+          ] (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(777,5): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(778,5): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(778,5): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,13): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,58): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,44): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,13): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,58): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,44): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactSphereHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\convex\GuConvexHelper.cpp)
+  GuHillClimbing.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactSphereHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\contact\GuLegacyContactSphereHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\convex\GuConvexMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\convex\GuConvexMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\convex\GuConvexMesh.cpp)
+  GuShapeConvex.cpp
+  GuDistancePointBox.cpp
+  GuDistancePointTriangle.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\convex\GuConvexUtilsInternal.cpp)
+  GuDistanceSegmentBox.cpp
+  GuDistanceSegmentSegment.cpp
+  GuDistanceSegmentTriangle.cpp
+  GuSweepBoxBox.cpp
+  GuSweepBoxSphere.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\convex\GuShapeConvex.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\convex\GuConvexUtilsInternal.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\convex\GuConvexUtilsInternal.cpp)
+  GuSweepBoxTriangle_FeatureBased.cpp
+  GuSweepBoxTriangle_SAT.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\distance\GuDistancePointBox.cpp)
+  GuSweepCapsuleBox.cpp
+  GuSweepCapsuleCapsule.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\sweep\GuSweepBoxBox.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\distance\GuDistanceSegmentBox.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\sweep\GuSweepBoxSphere.cpp)
+  GuSweepCapsuleTriangle.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\sweep\GuSweepBoxTriangle_FeatureBased.cpp)
+  GuSweepSphereCapsule.cpp
+  GuSweepSphereSphere.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\sweep\GuSweepBoxTriangle_SAT.cpp)
+  GuSweepSphereTriangle.cpp
+  GuSweepTriangleUtils.cpp
+  GuEPA.cpp
+  GuGJKSimplex.cpp
+  GuGJKTest.cpp
+  GuIntersectionBoxBox.cpp
+  GuIntersectionCapsuleTriangle.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\sweep\GuSweepCapsuleBox.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\sweep\GuSweepTriangleUtils.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\sweep\GuSweepCapsuleTriangle.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\sweep\GuSweepSphereTriangle.cpp)
+  GuIntersectionEdgeEdge.cpp
+  GuIntersectionRayBox.cpp
+  GuIntersectionRayCapsule.cpp
+  GuIntersectionRaySphere.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\intersection\GuIntersectionBoxBox.cpp)
+  GuIntersectionSphereBox.cpp
+  GuIntersectionTriangleBox.cpp
+  GuBV32.cpp
+  GuBV32Build.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\intersection\GuIntersectionEdgeEdge.cpp)
+  GuBV4.cpp
+  GuBV4Build.cpp
+  GuBV4_AABBSweep.cpp
+  GuBV4_BoxOverlap.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\gjk\GuGJKTest.cpp)
+  GuBV4_CapsuleSweep.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\intersection\GuIntersectionSphereBox.cpp)
+  GuBV4_CapsuleSweepAA.cpp
+  GuBV4_OBBSweep.cpp
+  GuBV4_Raycast.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\intersection\GuIntersectionTriangleBox.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuBV4Build.cpp)
+  GuBV4_SphereOverlap.cpp
+  GuBV4_SphereSweep.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuBV4_AABBSweep.cpp)
+  GuMeshQuery.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuBV4_CapsuleSweep.cpp)
+  GuMidphaseBV4.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuBV4_BoxOverlap.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuBV4_CapsuleSweepAA.cpp)
+  GuMidphaseRTree.cpp
+  GuOverlapTestsMesh.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuBV4_Raycast.cpp)
+  GuRTree.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuMeshQuery.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuBV4_SphereSweep.cpp)
+  GuRTreeQueries.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\mesh\GuMeshQuery.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\mesh\GuMeshQuery.cpp)
+  GuSweepsMesh.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuBV4_SphereOverlap.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuBV4_OBBSweep.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuMidphaseBV4.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\mesh\GuMidphaseBV4.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\mesh\GuMidphaseBV4.cpp)
+  GuTriangleMesh.cpp
+  GuTriangleMeshBV4.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuOverlapTestsMesh.cpp)
+  GuTriangleMeshRTree.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\mesh\GuOverlapTestsMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\mesh\GuOverlapTestsMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuMidphaseRTree.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\mesh\GuMidphaseRTree.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\mesh\GuMidphaseRTree.cpp)
+  GuHeightField.cpp
+  GuHeightFieldUtil.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuRTreeQueries.cpp)
+  GuOverlapTestsHF.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuSweepsMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\mesh\GuSweepsMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\mesh\GuSweepsMesh.cpp)
+  GuSweepsHF.cpp
+  GuPCMContactBoxBox.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuTriangleMesh.cpp)
+  GuPCMContactBoxConvex.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuTriangleMeshRTree.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\mesh\GuTriangleMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\mesh\GuTriangleMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\mesh\GuTriangleMeshRTree.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\mesh\GuTriangleMeshRTree.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\mesh\GuTriangleMeshBV4.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\mesh\GuTriangleMeshBV4.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\mesh\GuTriangleMeshBV4.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\hf\GuHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\hf\GuHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\hf\GuHeightFieldUtil.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\hf\GuHeightFieldUtil.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuHeightFieldUtil.cpp)
+  GuPCMContactCapsuleBox.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+  GuPCMContactCapsuleCapsule.cpp
+  GuPCMContactCapsuleConvex.cpp
+  GuPCMContactCapsuleHeightField.cpp
+  GuPCMContactCapsuleMesh.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+  GuPCMContactConvexCommon.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(298,38): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(298,167): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(340,20): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(340,49): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(351,20): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(351,49): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(360,20): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(360,57): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(370,20): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(370,49): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(509,25): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(509,55): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(522,20): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(522,57): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(546,20): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(546,49): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(559,25): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(559,63): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(629,20): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(629,49): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(638,20): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(638,49): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(645,20): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(645,57): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(653,20): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.cpp(653,49): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+  GuPCMContactConvexConvex.cpp
+  GuPCMContactConvexHeightField.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuOverlapTestsHF.cpp(462,56): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuOverlapTestsHF.cpp(462,126): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuOverlapTestsHF.cpp(667,39): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuOverlapTestsHF.cpp(667,101): warning C5219: 从“physx::PxU32”隐式转换到“const physx::PxReal”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactBoxBox.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactBoxConvex.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(777,5): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuOverlapTestsHF.cpp(355): message : 查看对正在编译的函数 模板 实例化“void physx::Gu::HeightFieldTraceUtil::traceSegment<physx::Gu::TriggerTraceSegmentCallback,false,false>(const physx::PxVec3 &,const physx::PxVec3 &,const float,T *,const physx::PxBounds3 &,bool,const physx::PxVec3 *) const”的引用
+          with
+          [
+              T=physx::Gu::TriggerTraceSegmentCallback
+          ]
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(777,5): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(778,5): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(778,5): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,13): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,58): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,44): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,13): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,58): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,44): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuOverlapTestsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactCapsuleCapsule.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactCapsuleBox.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(777,5): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuSweepsHF.cpp(71): message : 查看对正在编译的函数 模板 实例化“void physx::Gu::HeightFieldTraceUtil::traceSegment<T,false,true>(const physx::PxVec3 &,const physx::PxVec3 &,const float,T *,const physx::PxBounds3 &,bool,const physx::PxVec3 *) const”的引用
+          with
+          [
+              T=CapsuleTraceSegmentReport
+          ]
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuSweepsHF.cpp(252): message : 查看对正在编译的函数 模板 实例化“void HeightFieldTraceSegmentSweepHelper::traceSegment<CapsuleTraceSegmentReport>(const physx::PxVec3 &,const physx::PxVec3 &,const float,T *) const”的引用
+          with
+          [
+              T=CapsuleTraceSegmentReport
+          ]
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(777,5): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(778,5): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(778,5): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+  GuPCMContactConvexMesh.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,13): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,58): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,44): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,13): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,58): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,44): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\hf\GuSweepsHF.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactCapsuleConvex.cpp)
+  GuPCMContactGenBoxConvex.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactCapsuleMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactCapsuleHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactCapsuleHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactCapsuleHeightField.cpp)
+  GuPCMContactGenSphereCapsule.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactConvexCommon.cpp)
+  GuPCMContactPlaneBox.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactCapsuleMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactCapsuleMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactConvexConvex.cpp)
+  GuPCMContactPlaneCapsule.cpp
+  GuPCMContactPlaneConvex.cpp
+  GuPCMContactSphereBox.cpp
+  GuPCMContactSphereCapsule.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactConvexHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactConvexHeightField.cpp)
+  GuPCMContactSphereConvex.cpp
+  GuPCMContactSphereHeightField.cpp
+  GuPCMContactSphereMesh.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactGenBoxConvex.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactConvexMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactGenSphereCapsule.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactPlaneBox.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactConvexMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactConvexMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactPlaneConvex.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactPlaneCapsule.cpp)
+  GuPCMContactSpherePlane.cpp
+  GuPCMContactSphereSphere.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactSphereBox.cpp)
+  GuPCMShapeConvex.cpp
+  GuPCMTriangleContactGen.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactSphereCapsule.cpp)
+  GuPersistentContactManifold.cpp
+  GuCCDSweepConvexMesh.cpp
+  GuCCDSweepPrimitives.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactSphereMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactSphereHeightField.cpp)
+  GuBounds.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactSphereConvex.cpp)
+  GuBox.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactSphereHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactSphereHeightField.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactSphereMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactSphereMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactSphereSphere.cpp)
+  GuCapsule.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMTriangleContactGen.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMShapeConvex.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\pcm\GuPCMContactSpherePlane.cpp)
+  GuCCTSweepTests.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuBox.cpp)
+  GuGeometryQuery.cpp
+  GuGeometryUnion.cpp
+  GuInternal.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\ccd\GuCCDSweepConvexMesh.cpp)
+  GuMeshFactory.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\ccd\GuCCDSweepPrimitives.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuCapsule.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuBounds.cpp)
+  GuMetaData.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\GuBounds.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\GuBounds.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\ccd\GuCCDSweepConvexMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\ccd\GuCCDSweepConvexMesh.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\GuCCTSweepTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\GuCCTSweepTests.cpp)
+  GuMTD.cpp
+  GuOverlapTests.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuGeometryQuery.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\GuMetaData.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\GuMetaData.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuInternal.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\ccd\GuCCDSweepConvexMesh.cpp(185,37): warning C5219: 从“physx::PxU32”隐式转换到“float”，可能会丢失数据
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuCCTSweepTests.cpp)
+  GuRaycastTests.cpp
+  GuSerialize.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuMetaData.cpp)
+  GuSweepMTD.cpp
+  GuSweepSharedTests.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuMeshFactory.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\GuMeshFactory.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\GuMeshFactory.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuGeometryUnion.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\GuGeometryUnion.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\GuGeometryUnion.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\GuGeometryQuery.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\GuGeometryQuery.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuMTD.cpp)
+  GuSweepTests.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuOverlapTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\GuSweepMTD.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\GuSweepMTD.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\GuSweepSharedTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\GuSweepSharedTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuSweepSharedTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuSweepMTD.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\GuMTD.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\GuMTD.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(96,2): warning C5220: “physx::Cm::RefCountable::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\GeomUtils\src\GuOverlapTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\Common\src\CmRefCountable.h(95): message : 参见“physx::Cm::RefCountable::mRefCount”的声明 (编译源文件 ..\..\GeomUtils\src\GuOverlapTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(777,5): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\GuRaycastTests.cpp(528): message : 查看对正在编译的函数 模板 实例化“void physx::Gu::HeightFieldTraceUtil::traceSegment<`anonymous-namespace'::HFTraceSegmentCallback,false,false>(const physx::PxVec3 &,const physx::PxVec3 &,const float,T *,const physx::PxBounds3 &,bool,const physx::PxVec3 *) const”的引用
+          with
+          [
+              T=`anonymous-namespace'::HFTraceSegmentCallback
+          ]
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(777,5): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(778,5): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(778,5): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,13): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,58): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(983,44): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,13): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,58): warning C5219: 从“const physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\GeomUtils\src\hf\GuHeightFieldUtil.h(993,44): warning C5219: 从“physx::PxI32”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuRaycastTests.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\GeomUtils\src\GuSweepTests.cpp)
+    正在创建库 ./../../../Lib/vc15win64/PhysX3CommonDEBUG_x64.lib 和对象 ./../../../Lib/vc15win64/PhysX3CommonDEBUG_x64.exp
+  PhysXCommon.vcxproj -> E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\bin\vc15win64\PhysX3CommonDEBUG_x64.dll

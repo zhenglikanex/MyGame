@@ -1,1 +1,177 @@
-﻿  PhysXExtensions.vcxproj -> E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Lib\vc15win64\PhysX3ExtensionsDEBUG.lib
+﻿  ExtBroadPhase.cpp
+  ExtClothFabricCooker.cpp
+  ExtClothGeodesicTetherCooker.cpp
+  ExtClothMeshQuadifier.cpp
+  ExtClothSimpleTetherCooker.cpp
+  ExtCollection.cpp
+  ExtConvexMeshExt.cpp
+  ExtCpuWorkerThread.cpp
+  ExtD6Joint.cpp
+  ExtD6JointSolverPrep.cpp
+  ExtDefaultCpuDispatcher.cpp
+  ExtDefaultErrorCallback.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtCpuWorkerThread.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtCpuWorkerThread.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtDefaultCpuDispatcher.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtDefaultCpuDispatcher.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtClothGeodesicTetherCooker.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtClothMeshQuadifier.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtCollection.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtCollection.cpp)
+  ExtDefaultSimulationFilterShader.cpp
+  ExtDefaultStreams.cpp
+  ExtDistanceJoint.cpp
+  ExtDistanceJointSolverPrep.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtD6Joint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtD6Joint.cpp)
+  ExtExtensions.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtD6JointSolverPrep.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtD6JointSolverPrep.cpp)
+  ExtFixedJoint.cpp
+  ExtFixedJointSolverPrep.cpp
+  ExtJoint.cpp
+  ExtMetaData.cpp
+  ExtParticleExt.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtExtensions.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtExtensions.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtParticleExt.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtFixedJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtFixedJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtMetaData.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtMetaData.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtDistanceJointSolverPrep.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtDistanceJointSolverPrep.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtDistanceJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtDistanceJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtD6Joint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtD6JointSolverPrep.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtFixedJointSolverPrep.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtFixedJointSolverPrep.cpp)
+  ExtPrismaticJoint.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtExtensions.cpp)
+  ExtPrismaticJointSolverPrep.cpp
+  ExtPvd.cpp
+  ExtPxStringTable.cpp
+  ExtRaycastCCD.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtMetaData.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtPrismaticJointSolverPrep.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtPrismaticJointSolverPrep.cpp)
+  ExtRevoluteJoint.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtRaycastCCD.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtRaycastCCD.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtPrismaticJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtPrismaticJoint.cpp)
+  ExtRevoluteJointSolverPrep.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtPvd.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtPvd.cpp)
+  ExtRigidBodyExt.cpp
+  ExtSceneQueryExt.cpp
+  ExtSimpleFactory.cpp
+  ExtSmoothNormals.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtRevoluteJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtRevoluteJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtSceneQueryExt.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtSceneQueryExt.cpp)
+  ExtSphericalJoint.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtRigidBodyExt.cpp)
+  ExtSphericalJointSolverPrep.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtRevoluteJointSolverPrep.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtRevoluteJointSolverPrep.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtSmoothNormals.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtRigidBodyExt.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtRigidBodyExt.cpp)
+  ExtTriangleMeshExt.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtPvd.cpp)
+  SnBinaryDeserialization.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtSphericalJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtSphericalJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtSimpleFactory.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtSimpleFactory.cpp)
+  SnBinarySerialization.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtRevoluteJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtRevoluteJointSolverPrep.cpp)
+  SnConvX.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\ExtSphericalJointSolverPrep.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\ExtSphericalJointSolverPrep.cpp)
+  SnConvX_Align.cpp
+  SnConvX_Convert.cpp
+  SnConvX_Error.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): warning C5243: “physx::Sn::ConvertCallback”: 由于 ABI 限制，使用不完整的类“physx::Sn::ConvX”可能会导致潜在的一个定义规则冲突 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_Output.h(36): message : 参见“physx::Sn::ConvX”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): message : 请考虑在类的前向声明中使用继承关键字以避免问题:“class [__single_inheritance|__multiple_inheritance|__virtual_inheritance] class-name;” (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX.cpp)
+  SnConvX_MetaData.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): warning C5243: “physx::Sn::ConvertCallback”: 由于 ABI 限制，使用不完整的类“physx::Sn::ConvX”可能会导致潜在的一个定义规则冲突 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Align.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_Output.h(36): message : 参见“physx::Sn::ConvX”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Align.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): message : 请考虑在类的前向声明中使用继承关键字以避免问题:“class [__single_inheritance|__multiple_inheritance|__virtual_inheritance] class-name;” (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Align.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): warning C5243: “physx::Sn::ConvertCallback”: 由于 ABI 限制，使用不完整的类“physx::Sn::ConvX”可能会导致潜在的一个定义规则冲突 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Convert.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_Output.h(36): message : 参见“physx::Sn::ConvX”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Convert.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): message : 请考虑在类的前向声明中使用继承关键字以避免问题:“class [__single_inheritance|__multiple_inheritance|__virtual_inheritance] class-name;” (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Convert.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtSphericalJoint.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): warning C5243: “physx::Sn::ConvertCallback”: 由于 ABI 限制，使用不完整的类“physx::Sn::ConvX”可能会导致潜在的一个定义规则冲突 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Error.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_Output.h(36): message : 参见“physx::Sn::ConvX”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Error.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): message : 请考虑在类的前向声明中使用继承关键字以避免问题:“class [__single_inheritance|__multiple_inheritance|__virtual_inheritance] class-name;” (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Error.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): warning C5243: “physx::Sn::ConvertCallback”: 由于 ABI 限制，使用不完整的类“physx::Sn::ConvX”可能会导致潜在的一个定义规则冲突 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_Output.h(36): message : 参见“physx::Sn::ConvX”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): message : 请考虑在类的前向声明中使用继承关键字以避免问题:“class [__single_inheritance|__multiple_inheritance|__virtual_inheritance] class-name;” (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.cpp)
+  SnConvX_Output.cpp
+  SnConvX_Union.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\src\foundation\include\PsMathUtils.h(311,29): warning C5219: 从“int”隐式转换到“physx::PxF32”，可能会丢失数据 (编译源文件 ..\..\PhysXExtensions\src\ExtSphericalJointSolverPrep.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): warning C5243: “physx::Sn::ConvertCallback”: 由于 ABI 限制，使用不完整的类“physx::Sn::ConvX”可能会导致潜在的一个定义规则冲突 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Output.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_Output.h(36): message : 参见“physx::Sn::ConvX”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Output.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): message : 请考虑在类的前向声明中使用继承关键字以避免问题:“class [__single_inheritance|__multiple_inheritance|__virtual_inheritance] class-name;” (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Output.cpp)
+  SnSerializationContext.cpp
+  SnJointRepXSerializer.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): warning C5243: “physx::Sn::ConvertCallback”: 由于 ABI 限制，使用不完整的类“physx::Sn::ConvX”可能会导致潜在的一个定义规则冲突 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Union.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_Output.h(36): message : 参见“physx::Sn::ConvX”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Union.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): message : 请考虑在类的前向声明中使用继承关键字以避免问题:“class [__single_inheritance|__multiple_inheritance|__virtual_inheritance] class-name;” (编译源文件 ..\..\PhysXExtensions\src\serialization\Binary\SnConvX_Union.cpp)
+  SnRepXCoreSerializer.cpp
+  SnXmlSerialization.cpp
+  SnRepXUpgrader.cpp
+  SnSerialization.cpp
+  SnSerializationRegistry.cpp
+  SnSerialUtils.cpp
+  PxExtensionAutoGeneratedMetaDataObjects.cpp
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnRepXCoreSerializer.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnRepXCoreSerializer.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnJointRepXSerializer.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnJointRepXSerializer.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\serialization\SnSerialization.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\SnSerialization.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXMetaData\extensions\src\PxExtensionAutoGeneratedMetaDataObjects.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXMetaData\extensions\src\PxExtensionAutoGeneratedMetaDataObjects.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(329,1): warning C5220: “physx::PxLightCpuTask::mRefCount”: 具有易失限定类型的非静态数据成员不再推断出
+          编译器生成的复制/移动构造函数和复制/移动赋值运算符不常用 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnXmlSerialization.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PxShared\include\task\PxTask.h(326): message : 参见“physx::PxLightCpuTask::mRefCount”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\Xml\SnXmlSerialization.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): warning C5243: “physx::Sn::ConvertCallback”: 由于 ABI 限制，使用不完整的类“physx::Sn::ConvX”可能会导致潜在的一个定义规则冲突 (编译源文件 ..\..\PhysXExtensions\src\serialization\SnSerialization.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_Output.h(36): message : 参见“physx::Sn::ConvX”的声明 (编译源文件 ..\..\PhysXExtensions\src\serialization\SnSerialization.cpp)
+E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Source\PhysXExtensions\src\serialization\Binary\SnConvX_MetaData.h(93,21): message : 请考虑在类的前向声明中使用继承关键字以避免问题:“class [__single_inheritance|__multiple_inheritance|__virtual_inheritance] class-name;” (编译源文件 ..\..\PhysXExtensions\src\serialization\SnSerialization.cpp)
+  PhysXExtensions.vcxproj -> E:\MyProject\MyGame\3rdparty\src\PhysX-3.4\PhysX_3.4\Lib\vc15win64\PhysX3ExtensionsDEBUG.lib

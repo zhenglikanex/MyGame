@@ -45,3 +45,7 @@ sysinfo.txt
 *.apk
 *.unitypackage
 *.obj
+*.obj
+*.tlog
+*.lastbuildstate
+*.tlog
