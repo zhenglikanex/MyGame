@@ -16,6 +16,7 @@ Unity/ARPG/[Bb]uild/
 Unity/ARPG/[Bb]uilds/
 Unity/ARPG/Assets/AssetStoreTools*
 */.vs/*
+*.obj
 
 # Visual Studio 2015 cache directory
 Unity/ARPG/.vs/
@@ -43,3 +44,4 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+*.obj
