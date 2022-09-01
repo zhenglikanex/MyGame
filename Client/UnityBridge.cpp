@@ -136,6 +136,7 @@ extern "C"
 			g_game->Finalize();
 			g_game = nullptr;
 		}
+		g_game_messages.clear();
 	}
 
 	EXPORT_DLL void UpdateGame(float dt)

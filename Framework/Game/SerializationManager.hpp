@@ -43,6 +43,9 @@ using LocalComponents = TypeList
 	GameplayHitTestTask,
 	GameplayAbilityTimelineTask,
 	GameplayAnimWaitTask,
+	GameplayAttributeSet,
+	GameplayAbilitySpec,
+	GameplayEffectSpec,
 	IgnoreGravity
 >;
 
@@ -55,10 +58,7 @@ using RemoteComponents = TypeList
 	Transform,
 	Collider,
 	AnimationClip,
-	GameplayAttributeSet,
 	GameplayTagCountContainer,
-	GameplayAbilitySpec,
-	GameplayEffectSpec,
 	Destroy
 >;
 
@@ -198,22 +198,31 @@ private:
 	template<class Component>
 	void SerializeRemoteEntityComponent(Registry& registry, const SyncInstance& sync_instance)
 	{
-		auto& components = GetRemoteEntityComponents<Component>();
-		components.clear();
+		/*auto& components = GetRemoteEntityComponents<Component>();
+		components.clear();*/
 
 		auto view = registry.view<Remote,Component>();
-		auto local_view = registry.view<Local>();
+
+		auto size_ptr_point = buffer_.Size();
+		size_t size = 0;
+		oar_(size);
+
 		for (auto e : view)
 		{
 			auto&[remote, component] = view.get<Remote,Component>(e);
 			auto local = registry.try_get<Local>(e);
 			if(!local || local->owner != sync_instance.owner)
 			{
-				components.emplace(remote, component);
+				//components.emplace(remote, component);
+				oar_(remote,component);
+				++size;
 			}
 		}
 
-		oar_(components);
+		size_t* p = reinterpret_cast<size_t*>(buffer_.GetData() + size_ptr_point);
+		*p = size;
+
+		//oar_(components);
 	}
 
 	void SerializeSingleEntity(Registry& registry)

@@ -303,6 +303,7 @@ void ClientNetworkImpl::KcpReceive(uint8_t* data, uint32_t len)
 	auto conv = ikcp_getconv(kcp_);
 	if (conv == conv_)
 	{
+		
 		ikcp_input(kcp_, (char*)data, len);
 		while (true)
 		{

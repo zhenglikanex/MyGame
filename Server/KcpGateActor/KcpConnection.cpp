@@ -18,7 +18,7 @@ KcpConnection::KcpConnection(kcp_conv_t conv, const asio::ip::udp::endpoint& end
 	ikcp_nodelay(kcp_, 1, 10, 1, 1); // 设置成1次ACK跨越直接重传, 这样反应速度会更快. 内部时钟5毫秒.
 	kcp_->interval = 10;
 	kcp_->rx_minrto = 5;
-	ikcp_wndsize(kcp_, 10240, 10240);
+	ikcp_wndsize(kcp_, 1024, 1024);
 }
 
 KcpConnection::~KcpConnection()
@@ -58,7 +58,7 @@ void KcpConnection::Receive(Buffer&& buffer,uint32_t cur_clock)
 void KcpConnection::Send(Buffer&& buffer)
 {
 	int send_ret = ikcp_send(kcp_, (char*)buffer.data(), buffer.size());
-	ikcp_flush(kcp_);
+	//ikcp_flush(kcp_);
 	if (send_ret < 0)
 	{
 		std::cout << "send_ret<0: " << send_ret << std::endl;

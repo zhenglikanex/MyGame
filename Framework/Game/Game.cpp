@@ -127,7 +127,9 @@ void Game::UpdateFixedLogic()
 {
 	using namespace std::chrono;
 
-	auto start = system_clock::now();
+	auto total_start = system_clock::now();
+
+	// todo:注意服务器这边应该要处理每次game->update执行的最大fixedlogic帧数，追帧卡死，一直处理不了客户端的消息
 
 	int run_frame_times = 0;
 	auto& game_state = registry_.ctx<GameState>();
@@ -135,7 +137,10 @@ void Game::UpdateFixedLogic()
 	{
 		for (auto& system : systems_)
 		{
+			auto start = system_clock::now();
 			system->FixedUpdate(GameConfig::kFrameTime);
+			auto duration = system_clock::now() - start;
+			//INFO("system {} time:{}", typeid(*system.get()).name(), duration_cast<std::chrono::milliseconds>(duration).count());
 		}
 
 		for (auto& system : systems_)
@@ -149,8 +154,8 @@ void Game::UpdateFixedLogic()
 
 	if(run_frame_times > 0)
 	{
-		auto duration = system_clock::now() - start;
-		RELEASE_INFO("run frame times:{} time:{}ms", run_frame_times, duration_cast<milliseconds>(duration).count());
+		auto duration = system_clock::now() - total_start;
+		INFO("run frame times:{} time:{}ms", run_frame_times, duration_cast<milliseconds>(duration).count());
 	}
 }
 

@@ -1,4 +1,4 @@
-#define CATCH_CONFIG_MAIN
+
 
 #include "3rdparty/include/catch2/catch.hpp"
 #include <chrono>
@@ -10,6 +10,41 @@
 #include <bitset>
 
 #include <thread>
+
+#include "Framework/Game/System/CreateActorSystem.hpp"
+#include "Server/BattleActor/System/ServerSyncSystem.hpp"
+#include "Framework/Game/GAS/GameplayTagDefine.hpp"
+#include "Framework/Game/Registry.hpp"
+
+
+class Timer
+{
+public:
+	Timer()
+	{
+		start_ = std::chrono::system_clock::now();
+	}
+
+	uint32_t Elapsed()
+	{
+		return duration_cast<milliseconds>(system_clock::now() - start_).count();
+	}
+private:
+	std::chrono::system_clock::time_point start_;
+};
+
+class AutoTimer
+{
+public:
+	AutoTimer() = default;
+	AutoTimer(const std::string& _name) : name(_name) { }
+	~AutoTimer() {
+		std::cout << name << ":" << timer.Elapsed() << " ms" << std::endl;
+	}
+
+	Timer timer;
+	std::string name;
+};
 
 using namespace std::chrono;
 
@@ -26,25 +61,92 @@ int Func1(uint32_t i)
 	return 1;
 }
 
-TEST_CASE_METHOD(Serialize1, "NetMessage")
+int main()
 {
+	using namespace  std::chrono;
+
+	int num = 20;
+	Registry registry(GameMode::kAuthority, {});
+	registry.set<GameState>();
+	for (auto i = 0; i < num; ++i)
+	{
+		auto e = registry.create();
+		registry.emplace<Remote>(e, e);
+		registry.emplace<Local>(e, i, 0);
+		registry.emplace<Transform>(e);
+		registry.emplace<AnimationClip>(e);
+		registry.emplace<GameplayAttributeSet>(e);
+		//spec.effect = "1213131231444";
+
+	}
+
+	SerializationManager manager;
+
+	for (int i = 0; i < 30; ++i)
+	{
+		auto start = system_clock::now();
+		
+		for (uint32_t i = 0; i <= num; i++)
+		{
+			manager.Clear();
+			manager.Serialize(registry, { i,0 });
+
+			std::vector<uint8_t> buffer(manager.buffer().Size());
+			manager.buffer().Read(buffer.data(), buffer.size());
+		}
+
+		auto duration = system_clock::now() - start;
+
+		std::cout << "ms" << duration_cast<milliseconds>(duration).count() << std::endl;
+	}
+
+	std::unordered_map<Local, GameplayEffectSpec> map;
+	for (uint32_t i = 0; i < num; ++i)
+	{
+		GameplayEffectSpec spec;
+		spec.effect = "1213131231444";
+		map.emplace(Local{ 1,i }, spec);
+	}
+
+	
+	auto start = system_clock::now();
+	kanex::Buffer buffer(1000);
+	kanex::BinaryStream stream(buffer);
+	kanex::BinaryOutputArchive iar(stream);
+	for (uint32_t i = 0; i <= num; i++)
+	{
+		buffer.Clear();
+		iar(map);
+		/*std::vector<uint8_t> buffer(manager.buffer().Size());
+		manager.buffer().Read(buffer.data(), buffer.size());*/
+	}
+
+	auto duration = system_clock::now() - start;
+
+	std::cout << "2  ms" << duration_cast<milliseconds>(duration).count() << std::endl;
+
+	{
+
+		AutoTimer timer("map");
+		std::vector<GameplayEffectSpec> vec;
+		for (uint32_t i = 0; i < num; ++i)
+		{
+			GameplayEffectSpec spec;
+			spec.effect = "1213131231444";
+			vec.emplace_back(spec);
+		}
 
 
-	//std::numeric_limits<float>::epsilon()
-	/*auto v2 = ProjectOnPlane(vec3(0,1.0,0), vec3(0, 1.0, 0));
-	auto v1 = glm::normalize(vec3(0,0,0));
-	auto v = LookRotation(vec3(1, 0, 0), vec3(0, 1, 0));
+		kanex::Buffer buffer(1000);
+		kanex::BinaryStream stream(buffer);
+		kanex::BinaryOutputArchive iar(stream);
+		for (uint32_t i = 0; i <= num; i++)
+		{
+			buffer.Clear();
+			iar(vec);
+			/*std::vector<uint8_t> buffer(manager.buffer().Size());
+			manager.buffer().Read(buffer.data(), buffer.size());*/
+		}
 
-	int a = 10;
-	int* p1 = &a;
-	int* p2 = &a;
-	int* p3 = p1;
-
-	auto va = glm::cos(glm::radians(90.f));
-
-	std::cout << (&p1 == &p2) << (p1 == p3) << (p2 == p3) << std::endl;*/
-	/*std::vector<int> iv;
-	std::unique_ptr<NetMessage> m = std::make_unique<NetMessage>();
-	std::any a = std::make_any<std::unique_ptr<NetMessage>>(std::move(m));*/
-	//std::shared_ptr<void> vm = std::move(m);
+	}
 }

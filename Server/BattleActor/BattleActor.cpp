@@ -112,7 +112,7 @@ void BattleActor::StartBattle(const std::any& data)
 		game_ = nullptr;
 	}
 
-	AddTimer(1, -1, [this]()
+	AddTimer(30, -1, [this]()
 		{
 			Update();	
 		});

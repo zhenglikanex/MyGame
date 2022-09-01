@@ -35,12 +35,10 @@ public:
 		auto& game_state = registry.ctx<GameState>();
 		while (input_frame <= game_state.real_frame)
 		{
-			++input_frame;
-
 			// todo
 			if (player == entt::null || !registry.valid(player))
 			{
-				auto view = registry.view<Local, Remote, Player>();
+				auto view = registry.view<Local,Player>();
 				for (auto e : view)
 				{
 					player = e;
@@ -57,14 +55,16 @@ public:
 			Input input = input_service.GetInput();
 
 			auto& command_state = registry.ctx_or_set<CommandState>();
-			Command& command = command_state.value[game_state.run_frame % command_state.value.size()];
+			Command& command = command_state.value[input_frame % command_state.value.size()];
 			command.move_command.value.clear();
 			command.gameplay_ability_command.value.clear();
 
 			BuildCommand(command, input);
 
-			command.frame = game_state.run_frame;
+			command.frame = input_frame;
 			SendInput(registry.get<Player>(player).id,game_state,command);
+
+			++input_frame;
 		}
 	}
 
